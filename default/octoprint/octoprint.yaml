@@ -1,0 +1,92 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: octoprint
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
+spec:
+  rules:
+  - host: op.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: octoprint
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - op.sko.ai
+    secretName: ingress-cert-op
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: octoprint
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: octoprint
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.28
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: octoprint
+spec:
+  selector:
+    matchLabels:
+      app: octoprint
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: octoprint
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - octoprinter
+      containers:
+      - image: octoprint/octoprint:1.4.2
+        env:
+          - { name: "OCTOPRINT_PORT", value: "8080" }
+        name: octoprint
+        securityContext:
+          # Access to raw devices (such  as /dev/ttyACM0)
+          privileged: true
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: pv-octoprint
+          mountPath: /home/octoprint
+        - name: ttyacm0
+          mountPath: /dev/ttyACM0
+      volumes:
+      - name: pv-octoprint
+        persistentVolumeClaim:
+          claimName: octoprint
+      - name: ttyacm0
+        hostPath:
+          path: "/dev/ttyACM0"
