@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: qbittorrent
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+      version: 4.0.1
+  interval: 1m0s
+  values:
+    image:
+      repository: linuxserver/qbittorrent
+      tag: 14.2.5.99202004250119-7015-2c65b79ubuntu18.04.1-ls90
+    timezone: "Europe/London"
+    puid: 1000
+    pgid: 1000
+    umask: "022"
+    guiService:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.19
+    btService:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        kubernetes.io/ingress.class: "internal"
+        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+      hosts:
+      - "qb.sko.ai"
+      tls:
+      - hosts:
+        - "qb.sko.ai"
+        secretName: ingress-cert-qbittorrent
+    persistence:
+      config:
+        enabled: true
+        storageClass: "nfs-client"
+        size: 2Gi
+      downloads:
+        enabled: false
+      extraMounts:
+      - name: media-pv
+        claimName: nfs-media-pvc
+    resources:
+      requests:
+        memory: 250Mi
+        #cpu: 25m
+      limits:
+        memory: 6000Mi
