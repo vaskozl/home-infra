@@ -1,0 +1,14 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  creationTimestamp: null
+  name: gotk-system
+  namespace: gotk-system
+spec:
+  interval: 10m0s
+  path: ./
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: gotk-system
+status: {}

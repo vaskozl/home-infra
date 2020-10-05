@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  creationTimestamp: null
+  name: gotk-system
+  namespace: gotk-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  secretRef:
+    name: gotk-system
+  url: ssh://git@github.com/vaskozl/home-infra
+status: {}
