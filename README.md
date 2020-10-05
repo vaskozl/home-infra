@@ -1,8 +1,20 @@
 # home-infra - Home Cloud via GitOps Toolkit
 
-<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" width="40%">
+<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" width="20%">
 
 Home infrastructure running on 3x Raspberry Pi 4GB
+
+* [authelia](https://github.com/authelia/authelia) - SSO server
+* [octoprint](https://github.com/OctoPrint/OctoPrint) - 3D printer control
+* [home-assistant](https://github.com/home-assistant/core) - Home Automation
+* [plex](https://github.com/plexinc/pms-docker) - Movies and show server
+* [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent
+* [pihole](https://github.com/pi-hole/pi-hole) - Local DNS Server with ad blocking
+* [jellyfin](https://github.com/jellyfin/jellyfin) - Backup media server
+* [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
+* [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
+* [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
+* [metallb](https://github.com/metallb/metallb) - Load-balancer for bare-metal
 
 ## Installation
 
@@ -25,4 +37,3 @@ gotk bootstrap github \
   --personal \
   --verbose
 ```
-<img src="https://i.imgur.com/A5RkwYB.jpghttps://i.imgur.com/A5RkwYB.jpg" width="40%">
