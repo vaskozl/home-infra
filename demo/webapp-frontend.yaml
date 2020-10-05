@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: webapp-frontend
+  namespace: gotk-system
+spec:
+  dependsOn:
+  - name: webapp-backend
+  healthChecks:
+  - kind: Deployment
+    name: frontend
+    namespace: webapp
+  interval: 10m0s
+  path: ./deploy/webapp/frontend
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: webapp
+  timeout: 2m0s
+  validation: client
+
