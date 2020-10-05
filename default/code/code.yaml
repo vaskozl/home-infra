@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: code-server
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
+spec:
+  rules:
+  - host: code.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: code-server
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - code.sko.ai
+    secretName: ingress-cert-code
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-server
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: code-server
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.27
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+spec:
+  selector:
+    matchLabels:
+      app: code-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - image: codercom/code-server:3.5.0
+        name: code-server
+        env:
+        ports:
+        - containerPort: 8080
+          name: code-server
+        volumeMounts:
+        - name: pv-code-server
+          mountPath: /home/coder
+      volumes:
+      - name: pv-code-server
+        persistentVolumeClaim:
+          claimName: code-server
