@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: plex
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+      version: 2.0.2
+  interval: 1m0s
+  values:
+    image:
+      repository: linuxserver/plex
+      tag: 1.20.1.3252-a78fef9a9-ls117
+      pullPolicy: IfNotPresent
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        kubernetes.io/ingress.class: "internal"
+      hosts:
+      - "plex.sko.ai"
+      tls:
+      - hosts:
+        - "plex.sko.ai"
+        secretName: ingress-cert-plex
+    timezone: "Europe/London"
+    advertiseIp: "http://192.168.1.20:32400"
+    serviceTCP:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.20
+      annotations:
+        metallb.universe.tf/allow-shared-ip: plex
+    serviceUDP:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.20
+      annotations:
+        metallb.universe.tf/allow-shared-ip: plex
+    persistence:
+      config:
+        storageClass: "nfs-client"
+        accessMode: ReadWriteOnce
+      transcode:
+        enabled: false
+        emptyDir:
+          medium: "Memory"
+      data:
+        enabled: false
+      extraMounts:
+      - name: media-pv
+        claimName: nfs-media-pvc
+    resources:
+      requests:
+        cpu: 35m
+        memory: 1500Mi
+      limits:
+        memory: 3000Mi
