@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
   name: k8s-at-home
-  namespace: gotk-system
+  namespace: default
 spec:
   interval: 1m
   url: https://k8s-at-home.com/charts/
