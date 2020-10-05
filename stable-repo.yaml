@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: stable
+  namespace: gotk-system
+spec:
+  interval: 1h0m0s
+  url: https://kubernetes-charts.storage.googleapis.com
+
