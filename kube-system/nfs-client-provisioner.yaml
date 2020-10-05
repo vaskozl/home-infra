@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfs-client-provisioner
+  namespace: kube-system
+spec:
+  chart:
+    spec:
+      chart: nfs-client-provisioner
+      sourceRef:
+        kind: HelmRepository
+        name: google
+      version: 1.2.8
+  interval: 1m0s
+  values:
+    image:
+      repository: quay.io/external_storage/nfs-client-provisioner-arm
+      tag: v3.1.0-k8s1.11
+    nfs:
+      server: "192.168.1.10"
+      path: "/srv/nfs"
+      mountOptions:
+        - tcp
+        - intr
+        - hard
+        - noatime
+        - nodiratime
+        - rsize=32768
+        - wsize=32768
+    storageClass:
+      defaultClass: true
