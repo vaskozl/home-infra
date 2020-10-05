@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: authelia
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: gate.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: authelia
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - gate.sko.ai
+    secretName: ingress-cert-authelia
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authelia
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: authelia
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authelia
+spec:
+  selector:
+    matchLabels:
+      app: authelia
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: authelia
+    spec:
+      containers:
+      - image: authelia/authelia:4.22
+        name: authelia
+        env:
+        ports:
+        - containerPort: 80
+          name: authelia
+        volumeMounts:
+        - name: pv-authelia
+          mountPath: /config
+      volumes:
+      - name: pv-authelia
+        persistentVolumeClaim:
+          claimName: authelia
