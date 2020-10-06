@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: mojo2600
       version: 1.7.15
-  interval: 1m0s
+  interval: 1h
   values:
     serviceTCP:
       loadBalancerIP: 192.168.1.16

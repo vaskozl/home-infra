@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: jetstack
       version: 0.16.1
-  interval: 1m0s
+  interval: 1h
   values:
     webhook:
       enabled: true

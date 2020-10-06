@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: google
       version: 1.33.4
-  interval: 1m0s
+  interval: 1h
   values:
     controller:
       ingressClass: internal

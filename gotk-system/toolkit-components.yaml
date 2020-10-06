@@ -163,7 +163,7 @@ spec:
               insecure:
                 description: Insecure allows connecting to a non-TLS S3 HTTP endpoint.
                 type: boolean
-              interval:
+              interval: 1h
                 description: The interval at which to check for bucket updates.
                 type: string
               provider:
@@ -313,7 +313,7 @@ spec:
               ignore:
                 description: Ignore overrides the set of excluded patterns in the .sourceignore format (which is the same as .gitignore). If not provided, a default will be used, consult the documentation for your version to find out what those are.
                 type: string
-              interval:
+              interval: 1h
                 description: The interval at which to check for repository updates.
                 type: string
               ref:
@@ -500,7 +500,7 @@ spec:
               chart:
                 description: The name or path the Helm chart is available at in the SourceRef.
                 type: string
-              interval:
+              interval: 1h
                 description: The interval at which to check the Source for updates.
                 type: string
               sourceRef:
@@ -654,7 +654,7 @@ spec:
           spec:
             description: HelmRepositorySpec defines the reference to a Helm repository.
             properties:
-              interval:
+              interval: 1h
                 description: The interval at which to check the upstream for updates.
                 type: string
               secretRef:
@@ -943,7 +943,7 @@ spec:
                   - name
                   type: object
                 type: array
-              interval:
+              interval: 1h
                 description: The interval at which to reconcile the kustomization.
                 type: string
               kubeConfig:
@@ -1224,7 +1224,7 @@ spec:
                       chart:
                         description: The name or path the Helm chart is available at in the SourceRef.
                         type: string
-                      interval:
+                      interval: 1h
                         description: Interval at which to check the v1beta1.Source for updates. Defaults to 'HelmReleaseSpec.Interval'.
                         type: string
                       sourceRef:
@@ -1316,7 +1316,7 @@ spec:
                     description: Timeout is the time to wait for any individual Kubernetes operation (like Jobs for hooks) during the performance of a Helm install action. Defaults to 'HelmReleaseSpec.Timeout'.
                     type: string
                 type: object
-              interval:
+              interval: 1h
                 description: Interval at which to reconcile the Helm release.
                 type: string
               maxHistory:

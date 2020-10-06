@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: google
       version: 1.2.8
-  interval: 1m0s
+  interval: 1h
   values:
     image:
       repository: quay.io/external_storage/nfs-client-provisioner-arm

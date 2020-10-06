@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: google
       version: 0.12.0
-  interval: 1m0s
+  interval: 1h
   values:
     controller:
       image:
