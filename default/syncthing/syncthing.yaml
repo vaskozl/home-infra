@@ -1,0 +1,79 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: syncthing
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
+spec:
+  rules:
+  - host: st.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: syncthing
+          servicePort: 8384
+        path: /
+  tls:
+  - hosts:
+    - st.sko.ai
+    secretName: ingress-cert-syncthing
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncthing
+spec:
+  ports:
+  - protocol: TCP
+    port: 8384
+    targetPort: 8384
+    name: syncthing
+  - protocol: TCP
+    port: 22000
+    targetPort: 22000
+    name: listener
+  - protocol: UDP
+    port: 21027
+    targetPort: 21027
+    name: discovery
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.33
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncthing
+spec:
+  selector:
+    matchLabels:
+      app: syncthing
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: syncthing
+    spec:
+      containers:
+      - image: linuxserver/syncthing:version-v1.10.0
+        name: syncthing
+        env:
+        ports:
+        - name: syncthing
+          containerPort: 8384
+        - name: listener
+          containerPort: 22000
+          protocol: TCP
+        - name: discovery
+          containerPort: 21027
+          protocol: UDP
+        volumeMounts:
+        - name: pv-syncthing
+          mountPath: /config
+      volumes:
+      - name: pv-syncthing
+        persistentVolumeClaim:
+          claimName: syncthing
