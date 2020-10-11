@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: photoprism
+  namespace: default
+spec:
+  interval: 1h
+  url: https://p80n.github.io/photoprism-helm/
