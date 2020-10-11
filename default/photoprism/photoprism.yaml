@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: photoprism
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: photoprism
+      sourceRef:
+        kind: HelmRepository
+        name: photoprism
+      version: 1.0.0
+  interval: 1h
+  values:
+    image:
+      repository: "photoprism/photoprism-arm64"
+      tag: "20201009"
+    guiService:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.19
+    btService:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+    resources:
+      requests:
+        memory: 3Gi
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        kubernetes.io/ingress.class: "internal"
+        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+      hosts:
+      - host: "p.sko.ai"
+        paths:
+        - /
+      tls:
+      - hosts:
+        - "p.sko.ai"
+        secretName: ingress-cert-photoprism
+    persistence:
+      enabled: true
+      storagePath:   &storagePath    /photoprism/storage
+      originalsPath: &originalsPath /photoprism/originals
+
+      volumeMounts:
+      - name: originals
+        mountPath: *originalsPath
+        subPath: Photos
+      - name: storage
+        mountPath: *storagePath
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: photoprism-pvc
+      - name: originals
+        persistentVolumeClaim:
+          claimName: nfs-media-pvc
