@@ -30,17 +30,7 @@ spec:
         - "pl.sko.ai"
         secretName: ingress-cert-pl
     timezone: "Europe/London"
-    advertiseIp: "http://192.168.1.20:32400"
-    serviceTCP:
-      type: LoadBalancer
-      loadBalancerIP: 192.168.1.20
-      annotations:
-        metallb.universe.tf/allow-shared-ip: plex
-    serviceUDP:
-      type: LoadBalancer
-      loadBalancerIP: 192.168.1.20
-      annotations:
-        metallb.universe.tf/allow-shared-ip: plex
+    advertiseIp: "https://pl.sko.ai"
     persistence:
       config:
         storageClass: "nfs-client"

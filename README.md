@@ -20,7 +20,7 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 
 ## Installation
 
-### Install Rancher's k3
+### Install Rancher's k3s
 
 User onedr0p has written amazing instructions which this repo is based on:
 
