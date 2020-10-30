@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitea
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: gitea
+      sourceRef:
+        kind: HelmRepository
+        name: gitea
+      version: 2.0.2
+  interval: 1h
+  values:
+    image:
+      repository: gitea/gitea
+      tag: 1.12.5
+    persistence:
+      enabled: true
+      storageClass: "nfs-client"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        kubernetes.io/ingress.class: "internal"
+        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+      hosts:
+      - "git.sko.ai"
+      tls:
+      - hosts:
+        - "git.sko.ai"
+        secretName: ingress-cert-gitea
