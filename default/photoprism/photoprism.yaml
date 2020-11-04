@@ -17,12 +17,6 @@ spec:
     image:
       repository: "photoprism/photoprism-arm64"
       tag: "20201009"
-    guiService:
-      type: LoadBalancer
-      loadBalancerIP: 192.168.1.19
-    btService:
-      type: LoadBalancer
-      externalTrafficPolicy: Local
     resources:
       requests:
         memory: 2.0Gi
