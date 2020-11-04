@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: emberstack
-      version: 0.1.0
+      version: 1.1.8
   interval: 1h
   values:
     image:
@@ -22,6 +22,14 @@ spec:
       type: LoadBalancer
       loadBalancerIP: 192.168.1.17
       port: 22
+    storage:
+      volumes:
+        - name: media-pv
+          persistentVolumeClaim:
+            claimName: nfs-media-pvc
+      volumeMounts:
+        - name: media-pv
+          mountPath: /media
     configuration:
       users:
         - Username: demo
