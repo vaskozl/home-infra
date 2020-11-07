@@ -1,0 +1,94 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: radicale
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: rc.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: radicale
+          servicePort: 5232
+        path: /
+  tls:
+  - hosts:
+    - rc.sko.ai
+    secretName: ingress-cert-radicale
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radicale
+spec:
+  ports:
+  - protocol: TCP
+    port: 5232
+    targetPort: 5232
+  selector:
+    app: radicale
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radicale
+spec:
+  selector:
+    matchLabels:
+      app: radicale
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: radicale
+    spec:
+      containers:
+      - image: tomsquest/docker-radicale:3.0.6.0
+        name: radicale
+        env:
+        ports:
+        - containerPort: 5232
+          name: radicale
+        volumeMounts:
+        - name: pv-radicale
+          mountPath: /data
+        - name: config
+          mountPath: /config
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5232
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5232
+      volumes:
+      - name: pv-radicale
+        persistentVolumeClaim:
+          claimName: radicale
+      - name: config
+        configMap:
+          name: radicale-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: radicale-config
+  namespace: default
+data:
+  config: |
+    [server]
+    hosts = 0.0.0.0:5232
+
+    [auth]
+    type = htpasswd
+    htpasswd_filename = /data/users
+    htpasswd_encryption = md5
+
+    [storage]
+    filesystem_folder = /data/collections
