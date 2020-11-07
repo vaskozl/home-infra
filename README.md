@@ -1,4 +1,4 @@
-# home-infra - Home Cloud via GitOps Toolkit
+# home-infra - Home Cloud via Flux v2 | GitOps Toolkit
 
 <img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" width="20%">
 
