@@ -11,12 +11,13 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 * [home-assistant](https://github.com/home-assistant/core) - Home Automation
 * [plex](https://github.com/plexinc/pms-docker) - Movies and show server
 * [jellyfin](https://github.com/jellyfin/jellyfin) - Backup media server
-* [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent clienit
+* [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent client
 * [pihole](https://github.com/pi-hole/pi-hole) - Local DNS Server with ad blocking
 * [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
 * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
 * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
 * [metallb](https://github.com/metallb/metallb) - Load-balancer for bare-metal
+* [docker-sftp](https://github.com/emberstack/docker-sftp) - SFTP server
 
 ## Installation
 

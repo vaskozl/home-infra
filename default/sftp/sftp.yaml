@@ -24,16 +24,15 @@ spec:
       port: 22
     storage:
       volumes:
+        - name: app-config
+          secret:
+            secretName: sftp
         - name: media-pv
           persistentVolumeClaim:
             claimName: nfs-media-pvc
       volumeMounts:
+        - name: app-config
+          mountPath: /app/config
+          readOnly: true
         - name: media-pv
-          mountPath: /media
-    configuration:
-      users:
-        - Username: demo
-          Password: demo
-        - Username: vsz
-          Password: null
-          PublicKeys: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDb93dk1TfpbUOPtSaN3+t5YwxrwWPywikeqQ/yWlxaqsPsKWjaTAweiro4Hfv1XWci84H/XINARylQrt3e3F7hTh+EFKUgnkTyc4cs53etXaL9eS4IluMDM2DIpKis/nXnMBI3rli0eoxGCoxSobY0MEi1qoNPpn/95WZ3m3cT/9O05+fmW0yZgEwN+O3HkySCsevBIxbRyKsGBBzpvxXaBcjRmKe7c5MyYsIhlZb0nWH5aGWSPS2QM3WO9ku3OlxAPkek8f7xCW2pBU9BCFCNFMfMwWCrwDBYNg/aqCQ7YtXQIXgmX7DLPKD3axse1igGvh8xl+NWfwhBTlSk6fmd v@skozl.com"
+          mountPath: /home/vsz/media
