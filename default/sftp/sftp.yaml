@@ -21,7 +21,7 @@ spec:
     service:
       type: LoadBalancer
       loadBalancerIP: 192.168.1.17
-      port: 22
+      port: 51722
     storage:
       volumes:
         - name: app-config
