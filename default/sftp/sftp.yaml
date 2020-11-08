@@ -30,9 +30,14 @@ spec:
         - name: media-pv
           persistentVolumeClaim:
             claimName: nfs-media-pvc
+        - name: photos
+          persistentVolumeClaim:
+            claimName: photos
       volumeMounts:
         - name: app-config
           mountPath: /app/config
           readOnly: true
         - name: media-pv
           mountPath: /home/vsz/media
+        - name: photos
+          mountPath: /home/vsz/photos
