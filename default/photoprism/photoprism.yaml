@@ -19,7 +19,11 @@ spec:
       tag: "20201021"
     resources:
       requests:
+        cpu: "1000m"
         memory: 2.0Gi
+      limits:
+        cpu: "3000m"
+        memory: 2.5Gi
     ingress:
       enabled: true
       annotations:
