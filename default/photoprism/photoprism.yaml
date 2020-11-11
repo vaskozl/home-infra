@@ -14,6 +14,9 @@ spec:
       version: 1.0.0
   interval: 1h
   values:
+    config:
+      PHOTOPRISM_PUBLIC: true
+      PHOTOPRISM_DEBUG: false
     image:
       repository: "photoprism/photoprism-arm64"
       tag: "20201021"
