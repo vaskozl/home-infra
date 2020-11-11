@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http-echo
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $user $upstream_http_remote_user;
+      auth_request_set $groups $upstream_http_remote_groups;
+      proxy_set_header Remote-User $user;
+      proxy_set_header Remote-Groups $groups;
+      proxy_set_header Remote-User $user;
+      proxy_set_header Remote-Groups $groups;
+spec:
+  rules:
+  - host: echo.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: http-echo
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - echo.sko.ai
+    secretName: ingress-cert-httpecho
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: http-echo
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: http-echo
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-echo
+  labels:
+    app: http-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-echo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: http-echo
+    spec:
+      terminationGracePeriodSeconds: 3
+      containers:
+      - name: http-echo
+        image: gsmlg/echo:latest
+        ports:
+        - name: http
+          containerPort: 80
+        resources:
+          limits:
+            cpu: 10m
+            memory: 100Mi
