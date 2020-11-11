@@ -1,45 +1,10 @@
 apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: sftp
+  namespace: default
 data:
   sssd.conf: W3Nzc2RdCmNvbmZpZ19maWxlX3ZlcnNpb24gPSAyCnNlcnZpY2VzID0gbnNzLCBwYW0KZGVidWdfbGV2ZWwgPSA1CgpbcGFtXQoKW25zc10KZmFsbGJhY2tfaG9tZWRpciA9IC9ob21lLyV1CmRlZmF1bHRfc2hlbGwgPSAvdXNyL3NiaW4vbm9sb2dpbg==
   sftp.json: ewogICJ1c2VycyI6IFsKICAgIHsKICAgICAgIlB1YmxpY0tleXMiOiBbInNzaC1yc2EgQUFBQUIzTnphQzF5YzJFQUFBQURBUUFCQUFBQkFRRGI5M2RrMVRmcGJVT1B0U2FOMyt0NVl3eHJ3V1B5d2lrZXFRL3lXbHhhcXNQc0tXamFUQXdlaXJvNEhmdjFYV2NpODRIL1hJTkFSeWxRcnQzZTNGN2hUaCtFRktVZ25rVHljNGNzNTNldFhhTDllUzRJbHVNRE0yRElwS2lzL25Ybk1CSTNybGkwZW94R0NveFNvYlkwTUVpMXFvTlBwbi85NVdaM20zY1QvOU8wNStmbVcweVpnRXdOK08zSGt5U0NzZXZCSXhiUnlLc0dCQnpwdnhYYUJjalJtS2U3YzVNeVlzSWhsWmIwbldINWFHV1NQUzJRTTNXTzlrdTNPbHhBUGtlazhmN3hDVzJwQlU5QkNGQ05GTWZNd1dDcndEQllOZy9hcUNRN1l0WFFJWGdtWDdETFBLRDNheHNlMWlnR3ZoOHhsK05XZndoQlRsU2s2Zm1kIHZAc2tvemwuY29tIiwKICAgICAgInNzaC1yc2EgQUFBQUIzTnphQzF5YzJFQUFBQURBUUFCQUFBQmdRRENlUjdiV0RtNGlBdm1LN3hHcmFKQ2RiQjU3VFFBcHJWYTJzMEpmYVhUbFk0ZHdzR3dVTUo3aEowa3NTZFk1TWNOZWhObU01TmovU0dOcVlnSm1vMGI1cm5CTWRsQlhVOGg5UDdYZk9UaCt3MldXcUFqOGpCNmdqcmVsaWh6ZWNhTnRieUlrcEE0bGR4dVpnSE5GZVA1SHVMQVdkWm5QWkVpQ0JoTUJSTkI3SzF1bC9TQzFuV0hpVTRvRzhMYVdZMGg3MDNnUkRMOW9VQVFCdDB1MU5FNjZOVFpVOWI4YXZxc0hKanZvNXdFQnZ3ZFgrL1ZqbGV3eXFWY0JUekRkVEVxRUNFS09aQ1ROTzM5bk5aRUVVOE12a3lDSXdreVJzYXg0YnVId0kwczlkNnh3c0xONnJaNVFCNVVrUktFWHVYQllNekpqMzNtMFBEaVo3RGdzaFpBRTVxODEvdjF1MWU1NDd2dUgrcDl4WHNMR2d4UVNab3ExN1VyT0wrVTJvMXVEWW5HN1FzOGFuN1d1RmVZWk42T3hDOFRSc2ZiZzFKVlQ1RWs3T2pEYWxHdk90d3cxUDdxUkNUWGZ0dTBnSUQ2UERidyt6TVdZMUxxK3dZTFUxbmhBTGZWWTRCWWJYT0luZlR4R2YveloyaEdPdGxNWkMycnFSNS9BQUc1SGRNPSB2c3pAcGhvdG9zeW5jIl0sCiAgICAgICJVc2VybmFtZSI6ICJ2c3oiCiAgICB9CiAgXQp9Cg==
-kind: Secret
-metadata:
-  annotations:
-    meta.helm.sh/release-name: sftp
-    meta.helm.sh/release-namespace: default
-  creationTimestamp: "2020-11-05T12:00:30Z"
-  labels:
-    app.kubernetes.io/instance: sftp
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: sftp
-    app.kubernetes.io/version: 1.1.8
-    helm.sh/chart: sftp-1.1.8
-  managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:sftp.json: {}
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:meta.helm.sh/release-name: {}
-          f:meta.helm.sh/release-namespace: {}
-        f:labels:
-          .: {}
-          f:app.kubernetes.io/instance: {}
-          f:app.kubernetes.io/managed-by: {}
-          f:app.kubernetes.io/name: {}
-          f:app.kubernetes.io/version: {}
-          f:helm.sh/chart: {}
-      f:type: {}
-    manager: Go-http-client
-    operation: Update
-    time: "2020-11-05T12:00:30Z"
-  name: sftp
-  namespace: default
-  resourceVersion: "15547254"
-  selfLink: /api/v1/namespaces/default/secrets/sftp
-  uid: 2a41d4f9-1cca-4b6f-9673-bd87d21c5f41
-type: Opaque
+
