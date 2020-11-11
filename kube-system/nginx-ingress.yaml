@@ -29,9 +29,6 @@ spec:
       config:
         ssl-protocols: "TLSv1.3 TLSv1.2"
         # Setting use-proxy-protocol to true will break the proxy
-        use-proxy-protocol: "false"
-        proxy-body-size: "0"
-        use-forwarded-headers: "true"
       resources:
         requests:
           memory: 250Mi
