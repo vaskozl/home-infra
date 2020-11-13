@@ -7,11 +7,9 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 * [authelia](https://github.com/authelia/authelia) - SSO server
 * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
 * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
-* [syncthing](https://github.com/syncthing/syncthing) - File synchronization
 * [octoprint](https://github.com/OctoPrint/OctoPrint) - 3D printer control
 * [home-assistant](https://github.com/home-assistant/core) - Home Automation
-* [plex](https://github.com/plexinc/pms-docker) - Movies and show server
-* [jellyfin](https://github.com/jellyfin/jellyfin) - Backup media server
+* [jellyfin](https://github.com/jellyfin/jellyfin) - Movies and shows server
 * [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent client
 * [pihole](https://github.com/pi-hole/pi-hole) - Local DNS Server with ad blocking
 * [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
