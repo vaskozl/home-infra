@@ -14,6 +14,13 @@ spec:
       version: 2.0.1
   interval: 1h
   values:
+    resources:
+      requests:
+        cpu: "1000m"
+        memory: 2.0Gi
+      limits:
+        cpu: "1500m"
+        memory: 2.1Gi
     image:
       pullPolicy: IfNotPresent
       repository: linuxserver/jellyfin
