@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mosquitto
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: mosquitto
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+      version: 0.4.0
+  interval: 1h
+  values:
+    image:
+      repository: nolte/mosquitto-exporter
+      tag: v0.6.3
+    service:
+      type: LoadBalancer
+      loadBalancerIP: 192.168.1.31
+    persistence:
+      enabled: True
+      storageClass: nfs-client
