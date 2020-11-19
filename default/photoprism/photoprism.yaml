@@ -24,10 +24,10 @@ spec:
     resources:
       requests:
         cpu: "1000m"
-        memory: 2.0Gi
+        memory: 2.5Gi
       limits:
         cpu: "3000m"
-        memory: 2.5Gi
+        memory: 3.0Gi
     ingress:
       enabled: true
       annotations:
