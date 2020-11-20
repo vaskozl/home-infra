@@ -1,0 +1,68 @@
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: omada
+#  annotations:
+#    kubernetes.io/tls-acme: "true"
+#    kubernetes.io/ingress.class: "internal"
+#    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+#    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+#    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+#spec:
+#  rules:
+#  - host: omada.sko.ai
+#    http:
+#      paths:
+#      - backend:
+#          serviceName: omada
+#          servicePort: 8043
+#        path: /
+#  tls:
+#  - hosts:
+#    - omada.sko.ai
+#    secretName: ingress-cert-omada
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omada
+spec:
+  ports:
+  - protocol: TCP
+    port: 8043
+    targetPort: 8043
+  selector:
+    app: omada
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omada
+spec:
+  selector:
+    matchLabels:
+      app: omada
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: omada
+    spec:
+      hostNetwork: true
+      containers:
+      - image: mbentley/omada-controller:4.1-arm64
+        name: omada
+        env:
+        ports:
+        - containerPort: 8043
+          name: omada
+        volumeMounts:
+        - name: pv-omada
+          mountPath: /opt/tplink/EAPController/data
+      volumes:
+      - name: pv-omada
+        persistentVolumeClaim:
+          claimName: omada
