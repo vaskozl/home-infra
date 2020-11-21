@@ -27,7 +27,6 @@ spec:
       publishService:
         enabled: true
       config:
-        ssl-protocols: "TLSv1.3 TLSv1.2"
         use-proxy-protocol: "false"
         use-forwarded-headers: "true"
         forwarded-for-header: "CF-Connecting-IP"
