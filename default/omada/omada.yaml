@@ -1,28 +1,3 @@
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  name: omada
-#  annotations:
-#    kubernetes.io/tls-acme: "true"
-#    kubernetes.io/ingress.class: "internal"
-#    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-#    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
-#    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#    nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
-#spec:
-#  rules:
-#  - host: omada.sko.ai
-#    http:
-#      paths:
-#      - backend:
-#          serviceName: omada
-#          servicePort: 8043
-#        path: /
-#  tls:
-#  - hosts:
-#    - omada.sko.ai
-#    secretName: ingress-cert-omada
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -53,7 +28,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - image: mbentley/omada-controller:4.1-arm64
+      - image: mbentley/omada-controller:4.2-arm64
         name: omada
         env:
         ports:
