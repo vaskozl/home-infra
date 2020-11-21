@@ -1,0 +1,14 @@
+[k3s_master]
+192.168.1.10 hostname=pi0
+
+[k3s_worker]
+192.168.1.11 hostname=pi1
+192.168.1.12 hostname=pi2
+
+[k3s_cluster:children]
+k3s_master
+k3s_worker
+
+[k3s_cluster:vars]
+deploy_target=pi
+ansible_user=pi

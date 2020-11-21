@@ -1,0 +1,67 @@
+---
+- name: copy authorized_keys
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    exclusive: True
+    key: "{{ item }}"
+  with_file:
+    - authorized_keys
+- name: check if neofetch config directory exists
+  stat:
+    path: "/home/{{ ansible_user }}/.config/neofetch"
+  register: stat_result
+
+- name: Remove motd
+  command: update-rc.d motd remove
+  when: stat_result.stat.exists == false
+
+- name: Quite the login prompt
+  file:
+    dest: "/home/{{ ansible_user }}/.hushlogin"
+    state: touch
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775
+
+- name: Create config directory
+  file:
+    path: "/home/{{ ansible_user }}/.config"
+    state: directory
+    recurse: true
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775
+
+- name: Create neofetch directory
+  file:
+    path: "/home/{{ ansible_user }}/.config/neofetch"
+    state: directory
+    recurse: true
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775
+
+- name: Add custom neofetch config
+  copy:
+    src: neofetch.conf
+    dest: "/home/{{ ansible_user }}/.config/neofetch/config.conf"
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775
+
+- name: Add small neofetch raspberry pi logo
+  copy:
+    src: rpi-small
+    dest: "/home/{{ ansible_user }}/.config/neofetch/rpi-small"
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775
+
+- name: Enable neofetch on login
+  copy:
+    content: "neofetch --source /home/{{ ansible_user }}/.config/neofetch/rpi-small"
+    dest: "/home/{{ ansible_user }}/.bash_profile"
+    group: "users"
+    owner: "{{ ansible_user }}"
+    mode: 0775

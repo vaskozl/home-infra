@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  become: true
+  gather_facts: true
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - include_role:
+        name: system
+      tags: ['system']
+    - include_role:
+        name: user
+      tags: ['user']
+
+    - name: Rebooting hosts
+      reboot:
+        msg: "Pis are being rebooted"
+        reboot_timeout: 60
+      ignore_errors: true
