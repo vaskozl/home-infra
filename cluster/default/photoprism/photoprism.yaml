@@ -39,7 +39,8 @@ spec:
       hosts:
       - host: "p.sko.ai"
         paths:
-        - /
+        - path: /
+          pathType: Prefix
       tls:
       - hosts:
         - "p.sko.ai"
