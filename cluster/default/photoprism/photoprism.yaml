@@ -10,17 +10,18 @@ spec:
       chart: photoprism
       sourceRef:
         kind: HelmRepository
-        name: photoprism
+        name: k8s-at-home
       version: 1.0.0
   interval: 1h
   values:
-    config:
+    env:
+      PHOTOPRISM_SITE_URL: "https://p.sko.ai/"
       PHOTOPRISM_PUBLIC: true
       PHOTOPRISM_DEBUG: false
       PHOTOPRISM_THUMB_SIZE: 2048
     image:
       repository: "photoprism/photoprism-arm64"
-      tag: "20201021"
+      tag: "20201121"
     resources:
       requests:
         cpu: "1000m"
@@ -44,20 +45,10 @@ spec:
         - "p.sko.ai"
         secretName: ingress-cert-photoprism
     persistence:
-      enabled: true
-      storagePath:   &storagePath    /photoprism/storage
-      originalsPath: &originalsPath /photoprism/originals
-
-      volumeMounts:
-      - name: originals
-        mountPath: *originalsPath
-        subPath: Photos
-      - name: storage
-        mountPath: *storagePath
-      volumes:
-      - name: storage
-        persistentVolumeClaim:
-          claimName: photoprism-pvc
-      - name: originals
-        persistentVolumeClaim:
-          claimName: photos
+      config:
+        enabled: true
+        existingClaim: photoprism-pvc
+      originals:
+        enabled: true
+        existingClaim: photos
+        readOnly: true
