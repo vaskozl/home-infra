@@ -48,7 +48,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.22
+      - image: authelia/authelia:4.24
         name: authelia
         env:
         ports:
