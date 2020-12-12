@@ -17,8 +17,8 @@ spec:
   values:
     controllerType: deployment
     image:
-      repository: vaskozl/flood
-      tag: 4.3.1-2
+      repository: jesec/flood
+      tag: master
       pullPolicy: Always
     env:
       FLOOD_OPTION_RUNDIR: /data
