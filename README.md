@@ -12,10 +12,13 @@ Home infrastructure running on 3x Raspberry Pi 4GB
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Movies and shows server
   * [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent client
+  * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [pihole](https://github.com/pi-hole/pi-hole) - Local DNS Server with ad blocking
   * [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
   * [docker-sftp](https://github.com/emberstack/docker-sftp) - SFTP server
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
+  * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
+  * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
