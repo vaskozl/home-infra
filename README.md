@@ -1,6 +1,13 @@
-# home-infra - Home Cloud via Flux v2 | GitOps Toolkit
+<img src="https://camo.githubusercontent.com/bd0df216af51c1525f14e62155608e448562cb4033554e001a0ac2009e545aec/68747470733a2f2f726173706265726e657465732e6769746875622e696f2f696d672f6c6f676f2e737667" align="left" width="144px" height="144px"/>
 
-<img src="https://download.logo.wine/logo/Kubernetes/Kubernetes-Logo.wine.png" width="20%">
+#### home-infra - Home Cloud via Flux v2 | GitOps Toolkit
+> GitOps state for my cluster using flux v2
+
+[![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square)](https://discord.gg/DNCynrJ)
+[![k3s](https://img.shields.io/badge/k3s-v1.19.2-orange?style=flat-square)](https://k3s.io/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/vaskozl/home-infra?style=flat-square)](https://github.com/vaskozl/home-infra/commits/master)
+
+<br />
 
 Home infrastructure running on 3x Raspberry Pi 4GB
 
@@ -32,17 +39,3 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 User onedr0p has written amazing instructions which this repo is based on:
 
 [onedr0p/k3s-gitops-arm](https://github.com/onedr0p/k3s-gitops-arm)
-
-### Install FluxCD's GitOps toolkit
-
-```
-flux bootstrap github \
-  --components=source-controller,kustomize-controller,helm-controller,notification-controller \
-  --arch=arm64 \
-  --version=latest \
-  --owner='vaskozl' \
-  --repository='home-infra' \
-  --branch='main' \
-  --personal \
-  --verbose
-```
