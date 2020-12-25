@@ -10,7 +10,7 @@ spec:
         spec:
           containers:
           - name: photoprism-index
-            image: photoprism/photoprism-arm64:202012009
+            image: photoprism/photoprism-arm64:20201225
             imagePullPolicy: IfNotPresent
             args:
             - /photoprism/bin/photoprism
