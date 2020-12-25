@@ -15,5 +15,16 @@ spec:
             args:
             - /photoprism/bin/photoprism
             - index
+            volumeMounts:
+            - mountPath: /photoprism/storage
+              name: config
+            - mountPath: /photoprism/originals
+              name: originals
+          volumes:
+          - name: config
+            persistentVolumeClaim:
+              claimName: photoprism-pvc
+          - name: originals
+            persistentVolumeClaim:
+              claimName: photos
           restartPolicy: OnFailure
-
