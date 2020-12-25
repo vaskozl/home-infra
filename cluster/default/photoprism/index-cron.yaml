@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: index-photoprism
+spec:
+  schedule: "0 */1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: photoprism-index
+            image: photoprism/photoprism-arm64:202012009
+            imagePullPolicy: IfNotPresent
+            args:
+            - /photoprism/bin/photoprism
+            - index
+          restartPolicy: OnFailure
+
