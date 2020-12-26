@@ -27,6 +27,11 @@ spec:
         loadBalancerIP: 192.168.1.19
         annotations:
           metallb.universe.tf/allow-shared-ip: qbittorrent
+        port:
+          port: 6881
+          name: bittorrent
+          protocol: TCP
+          targetPort: 6881
     ingress:
       enabled: true
       annotations:
