@@ -35,7 +35,10 @@ spec:
             return 403;
           }
       hosts:
-      - "ha.sko.ai"
+        - host: "ha.sko.ai"
+          paths:
+          - path: /
+            pathType: Prefix
       tls:
       - hosts:
         - "ha.sko.ai"
