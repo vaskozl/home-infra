@@ -11,26 +11,21 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
-      version: 4.0.1
+      version: 7.1.1
   interval: 1h
   values:
     image:
-      repository: linuxserver/qbittorrent
-      tag: 4.4.0202012081504-7139-d484c0e7cubuntu18.04.1-ls124
-    timezone: "Europe/London"
-    puid: 1000
-    pgid: 1000
-    umask: "022"
-    guiService:
-      type: LoadBalancer
-      loadBalancerIP: 192.168.1.19
-      annotations:
-        metallb.universe.tf/allow-shared-ip: qbittorrent
-    btService:
-      type: LoadBalancer
-      loadBalancerIP: 192.168.1.19
-      annotations:
-        metallb.universe.tf/allow-shared-ip: qbittorrent
+      repository: k8sathome/qbittorrent
+      tag: v4.3.1
+    env:
+      TZ: "Europe/London"
+    service:
+      additionalServices:
+      - enabled: true
+        type: LoadBalancer
+        loadBalancerIP: 192.168.1.19
+        annotations:
+          metallb.universe.tf/allow-shared-ip: qbittorrent
     ingress:
       enabled: true
       annotations:
@@ -39,7 +34,10 @@ spec:
         nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
         nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
       hosts:
-      - "qb.sko.ai"
+        - host: "qb.sko.ai"
+          paths:
+          - path: /
+            pathType: Prefix
       tls:
       - hosts:
         - "qb.sko.ai"
@@ -51,8 +49,12 @@ spec:
         size: 2Gi
       downloads:
         enabled: false
-      extraMounts:
-      - name: media-pv
+    additionalVolumeMounts:
+    - name: media
+      mountPath: "/media"
+    additionalVolumes:
+    - name: media
+      persistentVolumeClaim:
         claimName: nfs-media-pvc
     resources:
       requests:
