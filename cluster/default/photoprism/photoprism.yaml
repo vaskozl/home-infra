@@ -13,12 +13,12 @@ spec:
         name: k8s-at-home
       version: 2.2.1
   interval: 1h
-  env:
-    PHOTOPRISM_SITE_URL: "https://p.sko.ai/"
-    PHOTOPRISM_PUBLIC: true
-    PHOTOPRISM_DEBUG: false
-    PHOTOPRISM_THUMB_SIZE: 2048
   values:
+    env:
+      PHOTOPRISM_SITE_URL: "https://p.sko.ai/"
+      PHOTOPRISM_PUBLIC: true
+      PHOTOPRISM_DEBUG: false
+      PHOTOPRISM_THUMB_SIZE: 2048
     image:
       repository: "photoprism/photoprism-arm64"
       tag: "20201225"
