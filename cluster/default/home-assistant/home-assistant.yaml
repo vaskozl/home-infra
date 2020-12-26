@@ -11,18 +11,19 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
-      version: 2.0.0
+      version: 5.2.1
   interval: 1h
   values:
     image:
       repository: homeassistant/home-assistant
       tag: 0.117.6
-    extraEnv:
+    env:
       TZ: "Europe/London"
     persistence:
-      enabled: true
-      size: 10Gi
-      storageClass: "nfs-client"
+      config:
+        enabled: true
+        size: 10Gi
+        storageClass: "nfs-client"
     ingress:
       enabled: true
       annotations:
@@ -48,13 +49,9 @@ spec:
         enabled: false
       readiness:
         enabled: false
-    vscode:
-      enabled: false
     resources:
       limits:
         memory: 1000Mi
       requests:
         cpu: 35m
         memory: 800Mi
-    monitoring:
-      enabled: false
