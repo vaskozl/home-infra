@@ -10,8 +10,8 @@ spec:
       chart: nfs-client-provisioner
       sourceRef:
         kind: HelmRepository
-        name: google
-      version: 1.2.8
+        name: helm-stable
+      version: 1.2.11
   interval: 1h
   values:
     image:

@@ -11,8 +11,8 @@ spec:
       chart: metallb
       sourceRef:
         kind: HelmRepository
-        name: google
-      version: 0.12.0
+        name: helm-stable
+      version: 0.12.1
   interval: 1h
   values:
     controller:
