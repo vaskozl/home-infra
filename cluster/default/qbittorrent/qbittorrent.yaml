@@ -57,7 +57,7 @@ spec:
         enabled: false
     additionalVolumeMounts:
     - name: media
-      mountPath: "/media"
+      mountPath: "/media-pv"
     additionalVolumes:
     - name: media
       persistentVolumeClaim:
