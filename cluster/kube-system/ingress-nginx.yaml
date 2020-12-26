@@ -2,16 +2,16 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: nginx-ingress
+  name: ingress-nginx
   namespace: kube-system
 spec:
   chart:
     spec:
-      chart: nginx-ingress
+      chart: ingress-nginx
       sourceRef:
         kind: HelmRepository
-        name: google
-      version: 1.33.4
+        name: ingress-nginx-charts
+      version: 3.17.0
   interval: 1h
   values:
     controller:
