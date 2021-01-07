@@ -31,9 +31,6 @@ spec:
         kubernetes.io/ingress.class: "internal"
         nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
         nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-        nginx.ingress.kubernetes.io/configuration-snippet: |
-          sub_filter '</head><body>' '<meta name="apple-mobile-web-app-capable" content="yes"></head><body>';
       hosts:
       - host: fl.sko.ai
         paths:
