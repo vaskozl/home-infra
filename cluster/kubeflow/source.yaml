@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: kubeflow-manifests
+  namespace: flux-system
+spec:
+  interval: 1h0m0s
+  ref:
+    tag: v1.2.0
+  url: https://github.com/kubeflow/manifests
