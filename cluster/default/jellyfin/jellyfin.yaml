@@ -17,10 +17,10 @@ spec:
     resources:
       requests:
         cpu: "1000m"
-        memory: 2.0Gi
+        memory: 1.0Gi
       limits:
         cpu: "1500m"
-        memory: 2.1Gi
+        memory: 1.1Gi
     image:
       pullPolicy: IfNotPresent
       repository: linuxserver/jellyfin

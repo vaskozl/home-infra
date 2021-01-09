@@ -31,6 +31,12 @@ spec:
       containers:
       - image: mbentley/omada-controller:4.2-arm64
         name: omada
+        resources:
+          requests:
+            cpu: "100m"
+            memory: 400Mi
+          limits:
+            memory: 1.0Gi
         env:
         ports:
         - containerPort: 8043
