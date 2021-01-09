@@ -58,7 +58,7 @@ spec:
         name: gitlab
         resources:
           requests:
-            cpu: "100m"
+            cpu: "3000m"
             memory: 1.5Gi
           limits:
             memory: 2.0Gi
