@@ -5,8 +5,8 @@ metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/auth-url: "https://git.sko.ai/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://git.sko.ai"
+    #nginx.ingress.kubernetes.io/auth-url: "https://git.sko.ai/api/verify"
+    #nginx.ingress.kubernetes.io/auth-signin: "https://git.sko.ai"
 spec:
   rules:
   - host: git.sko.ai
