@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: http-echo
+  name: gitea
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "internal"
@@ -12,60 +12,67 @@ metadata:
       auth_request_set $groups $upstream_http_remote_groups;
       proxy_set_header Remote-User $user;
       proxy_set_header Remote-Groups $groups;
-      proxy_set_header Remote-Groups $groups;
 spec:
   rules:
-  - host: echo.sko.ai
+  - host: git.sko.ai
     http:
       paths:
       - backend:
-          serviceName: http-echo
-          servicePort: 80
+          serviceName: gitea
+          servicePort: http
         path: /
   tls:
   - hosts:
-    - echo.sko.ai
-    secretName: ingress-cert-httpecho
+    - git.sko.ai
+    secretName: ingress-cert-git
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: http-echo
+  name: gitea
 spec:
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 80
+    port: 3000
+    targetPort: 3000
+    name: http
+  - protocol: TCP
+    port: 22
+    targetPort: 22
+    name: ssh
   selector:
-    app: http-echo
-  type: ClusterIP
+    app: gitea
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.21
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: http-echo
-  labels:
-    app: http-echo
+  name: gitea
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: http-echo
+      app: gitea
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: http-echo
+        app: gitea
     spec:
-      terminationGracePeriodSeconds: 3
       containers:
-      - name: http-echo
-        image: gsmlg/echo:latest
+      - image: gitea/gitea:1.13.1
+        name: gitea
+        env:
         ports:
-        - name: http
-          containerPort: 80
-        resources:
-          limits:
-            cpu: 10m
-            memory: 100Mi
+        - containerPort: 3000
+          name: http
+        - containerPort: 22
+          name: ssh
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: gitea-pvc

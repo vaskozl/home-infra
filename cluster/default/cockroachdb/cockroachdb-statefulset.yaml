@@ -191,18 +191,9 @@ spec:
       terminationGracePeriodSeconds: 60
       volumes:
       - name: datadir
-        persistentVolumeClaim:
-          claimName: datadir
+        hostPath:
+          # TODO: Replace "YOUR_FILESYSTEM_PATH_HERE" with the path where you want CockroachDB's data stored on your Kubernetes nodes.
+          path: /cockroachdb
   podManagementPolicy: Parallel
   updateStrategy:
     type: RollingUpdate
-  volumeClaimTemplates:
-  - metadata:
-      name: datadir
-    spec:
-      accessModes:
-        - "ReadWriteOnce"
-      storageClassName: longhorn
-      resources:
-        requests:
-          storage: 3Gi
