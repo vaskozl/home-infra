@@ -19,6 +19,9 @@ spec:
   values:
     persistence:
       defaultClassReplicaCount: 3
+    defaultSettings:
+      defaultReplicaCount: 3
+      defualtDataPath: /var/lib/rancher/longhorn
     ingress:
       enabled: true
       annotations:
@@ -26,12 +29,6 @@ spec:
         kubernetes.io/ingress.class: "internal"
         nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
         nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
-      hosts:
-        - host: "lh.sko.ai"
-          paths:
-          - path: /
-            pathType: Prefix
-      tls:
-      - hosts:
-        - "lh.sko.ai"
-        secretName: ingress-cert-longhorn
+      host: lh.sko.ai
+      tlsSecret: ingress-cert-longhorn
+      tls: true
