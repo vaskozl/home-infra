@@ -202,7 +202,7 @@ spec:
     spec:
       accessModes:
         - "ReadWriteOnce"
-      storageClassName: nfs-client
+      storageClassName: longhorn
       resources:
         requests:
-          storage: 10Gi
+          storage: 3Gi
