@@ -18,9 +18,9 @@ spec:
       interval: 5m
   values:
     persistence:
-      defaultClassReplicaCount: 3
+      defaultClassReplicaCount: 2
     defaultSettings:
-      defaultReplicaCount: 3
+      defaultReplicaCount: 2
       defualtDataPath: /var/lib/rancher/longhorn
     ingress:
       enabled: true
