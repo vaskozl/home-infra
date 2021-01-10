@@ -14,7 +14,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: longhorn-charts
-        namespace: flux-system
+        namespace: longhorn-system
       interval: 5m
   values:
     persistence:
