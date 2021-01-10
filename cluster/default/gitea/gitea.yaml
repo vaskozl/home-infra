@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: gitea
-  namespace: default
 spec:
   chart:
     spec:
@@ -11,15 +10,16 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: gitea
-      version: 2.0.2
+      version: 2.1.3
   interval: 1h
   values:
     image:
       repository: gitea/gitea
-      tag: 1.12.5
+      tag: 1.13.1
     persistence:
       enabled: true
-      storageClass: "nfs-client"
+      #storageClass: "nfs-client"
+      existingClaim: gitea-pvc
     ingress:
       enabled: true
       annotations:
@@ -33,3 +33,20 @@ spec:
       - hosts:
         - "git.sko.ai"
         secretName: ingress-cert-gitea
+    gitea:
+      cache:
+        builtIn:
+          enabled: false
+      database:
+        builtIn:
+          postgresql:
+            enabled: false
+      config:
+        database:
+          DB_TYPE: postgres
+          HOST: cockroachdb-public:26257
+          NAME: gitea
+          USER: root
+          PASSWD: gitea
+          SCHEMA: gitea
+  
