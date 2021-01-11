@@ -29,7 +29,7 @@ spec:
             secretName: sftp
         - name: media-pv
           persistentVolumeClaim:
-            claimName: nfs-media-pvc
+            claimName: nfs-hdd-raid-pvc
         - name: photos
           persistentVolumeClaim:
             claimName: photos

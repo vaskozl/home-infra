@@ -65,7 +65,7 @@ spec:
     additionalVolumes:
     - name: media
       persistentVolumeClaim:
-        claimName: nfs-media-pvc
+        claimName: nfs-hdd-raid-pvc
     resources:
       requests:
         memory: 100Mi

@@ -41,7 +41,7 @@ spec:
         accessMode: ReadWriteOnce
         storageClass: nfs-client
       extraExistingClaimMounts:
-      - existingClaim: nfs-media-pvc
+      - existingClaim: nfs-hdd-raid-pvc
         mountPath: /media-pv
         name: media
       movies:
