@@ -6,6 +6,12 @@ metadata:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
+    nginx.ingress.kubernetes.io/configuration-snippet: |    
+      # https://www.authelia.com/docs/security/measures.html
+      add_header Cache-Control "no-store";
+      add_header Pragma "no-cache";
+      add_header X-Frame-Options "SAMEORIGIN";
+      add_header X-XSS-Protection "1; mode=block";
 spec:
   rules:
   - host: gate.sko.ai
