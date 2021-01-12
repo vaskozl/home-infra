@@ -38,7 +38,7 @@ kind: Deployment
 metadata:
   name: authelia
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: authelia
@@ -50,7 +50,7 @@ spec:
         app: authelia
     spec:
       containers:
-      - image: authelia/authelia:4.24
+      - image: authelia/authelia:4.25.1
         name: authelia
         env:
         ports:
