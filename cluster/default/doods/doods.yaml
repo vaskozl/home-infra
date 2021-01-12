@@ -27,7 +27,6 @@ spec:
       labels:
         app: doods
     spec:
-      hostNetwork: true
       containers:
       - image: snowzach/doods:latest
         name: doods
