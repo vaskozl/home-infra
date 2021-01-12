@@ -55,6 +55,10 @@ spec:
         ports:
         - containerPort: 80
           name: authelia
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 80
         volumeMounts:
         - name: pv-authelia
           mountPath: /config
