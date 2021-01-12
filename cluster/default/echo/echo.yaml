@@ -61,7 +61,7 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: http-echo
-        image: gsmlg/echo:latest
+        image: r.sko.ai/gsmlg/echo:latest
         ports:
         - name: http
           containerPort: 80
