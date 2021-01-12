@@ -5,8 +5,6 @@ metadata:
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
 spec:
   rules:
   - host: st.sko.ai

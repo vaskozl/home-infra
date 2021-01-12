@@ -3,7 +3,8 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: jellyfin
-  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/enable-global-auth: false
 spec:
   chart:
     spec:
