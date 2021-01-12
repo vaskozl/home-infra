@@ -39,20 +39,32 @@ spec:
   loadBalancerIP: 192.168.1.22
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: registry
 spec:
+  serviceName: "registry"
+  replicas: 3
   selector:
     matchLabels:
       app: registry
-  strategy:
-    type: Recreate
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: registry
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - registry
+              topologyKey: "kubernetes.io/hostname"
       containers:
       - image: registry:2.7.1
         name: registry
