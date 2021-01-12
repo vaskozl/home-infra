@@ -38,6 +38,7 @@ kind: Deployment
 metadata:
   name: authelia
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: authelia
