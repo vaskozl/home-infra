@@ -81,11 +81,11 @@ spec:
         readinessProbe:
           tcpSocket:
             port: http
-          initialDelaySeconds: 30
+          initialDelaySeconds: 20
           timeoutSeconds: 3
           periodSeconds: 30
           successThreshold: 1
-          failureThreshold: 3
+          failureThreshold: 10
         resources:
           limits:
             cpu: 2000m
