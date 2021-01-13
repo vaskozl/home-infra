@@ -7,6 +7,19 @@ metadata:
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       sendfile on;
+      access_log off;
+      gzip off;
+      fastcgi_read_timeout 999;
+      log_not_found  off;
+      server_tokens off;
+      error_page  405     =200 $uri;
+      error_log /dev/null;
+      tcp_nodelay on;
+      tcp_nopush on;
+      open_file_cache max=200000 inactive=20s;
+      open_file_cache_valid 30s;
+      open_file_cache_min_uses 2;
+      open_file_cache_errors on;
 spec:
   rules:
   - host: st.sko.ai
