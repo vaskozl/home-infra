@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
   name: ingress-nginx-charts
-  namespace: kube-system
+  namespace: ingress-nginx
 spec:
   interval: 1h
   url: https://kubernetes.github.io/ingress-nginx
