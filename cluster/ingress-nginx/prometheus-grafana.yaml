@@ -1,0 +1,39 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  interval: 1h0s
+  ref:
+    branch: master
+  url: https://github.com/kubernetes/ingress-nginx
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ingress-nginx-prometheus
+  namespace: ingress-nginx
+spec:
+  interval: 10m0s
+  path: ./deploy/prometheus
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: ingress-nginx
+  validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ingress-nginx-grafana
+  namespace: ingress-nginx
+spec:
+  interval: 10m0s
+  path: ./deploy/grafana
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: ingress-nginx
+  validation: client
