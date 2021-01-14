@@ -50,7 +50,7 @@ kind: Deployment
 metadata:
   name: gitea
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gitea
