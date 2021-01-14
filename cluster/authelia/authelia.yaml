@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: authelia
+  namespace: authelia
   annotations:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/ingress.class: "internal"
@@ -30,6 +31,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: authelia
+  namespace: authelia
 spec:
   ports:
   - protocol: TCP
@@ -43,6 +45,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authelia
+  namespace: authelia
 spec:
   replicas: 3
   selector:
