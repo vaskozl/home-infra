@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: r.sko.ai/library/redis:6.0.9-alpine3.12
+        image: redis:6.0.9-alpine3.12
         ports:
         - containerPort: 6379
 
