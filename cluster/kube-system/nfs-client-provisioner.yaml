@@ -18,7 +18,7 @@ spec:
       repository: quay.io/external_storage/nfs-client-provisioner-arm
       tag: v3.1.0-k8s1.11
     nfs:
-      server: "pi1"
+      server: "pi0"
       path: "/srv/nfs"
       mountOptions:
         - tcp
