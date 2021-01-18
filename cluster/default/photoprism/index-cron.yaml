@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: index-photoprism
 spec:
-  schedule: "0 */1 * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 100
