@@ -29,7 +29,7 @@ spec:
       annotations:
         kubernetes.io/tls-acme: "true"
         kubernetes.io/ingress.class: "internal"
-        nginx.ingress.kubernetes.io/enable-global-auth: "false"
+        #nginx.ingress.kubernetes.io/enable-global-auth: "false"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           location /local {
             deny all;
