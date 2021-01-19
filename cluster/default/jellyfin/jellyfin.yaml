@@ -3,8 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: jellyfin
-  annotations:
-    nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
   chart:
     spec:
@@ -30,6 +28,7 @@ spec:
       annotations:
         kubernetes.io/ingress.class: internal
         kubernetes.io/tls-acme: "true"
+        nginx.ingress.kubernetes.io/enable-global-auth: "false"
       enabled: true
       hosts:
       - jf.sko.ai
