@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: torrent-sort
+  namespace: default
+data:
+  torrent-sort.sh: |
+    #!/usr/bin/sh
+    hdd_dir="/media-pv"
+    rarfs_dir="$hdd_dir/torrents"
+    shows_dir="$hdd_dir/links/shows"
+    movies_dir="$hdd_dir/links/movies"
+    mkdir -p "$shows_dir"
+    mkdir -p "$movies_dir"
+
+    find $rarfs_dir/ -maxdepth 1 -regex '.*\(\(480\|720\|1080\|2160\)p\|[sS][0-9]\).*' | \
+    while read path; do
+        file=$(basename "$path")
+        if [[ $file =~ [sS][0-9] || $file =~ [Ss]eason || $file =~ [Ss]eries || 
+          $file =~ 'Planet.Earth' ||
+          $file =~ 'SpaceTime Odyssey' ||
+          $file =~ 'Blue.Planet'
+          ]]; then 
+          show_name=$(echo $file | perl -pe 's/[\s\.]?(S\d\d?|Season.?\d\d?).*$//i; s/[\(\)-]/./g; s/[\.\s]+/./g; s/\.(\w)/.\U$1/g; s/\.$//')
+          [ -d "$shows_dir/$show_name/$file" ] || [ -f "$shows_dir/$show_name/$file" ] && continue
+          echo "NEW SHOW: $show_name - $file"
+          mkdir -p "$shows_dir/$show_name"
+          ln -s "../../../torrents/$file" "$shows_dir/$show_name/$file"
+        elif [[ $file =~ [0-9][0-9][0-9][0-9] ]]; then
+          [ -d "$movies_dir/$file" ] || [ -f "$movies_dir/$file" ] && continue
+          echo "NEW MOVIE: $file"
+          ln -s "../../torrents/$file" "$movies_dir/$file"
+        else 
+          echo "Could not sort $file"
+          true
+        fi
+    done

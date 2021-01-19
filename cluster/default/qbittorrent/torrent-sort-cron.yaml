@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: torrent-sort
+spec:
+  schedule: "0 */1 * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      template:
+        spec:
+          containers:
+          - name: torrent-sort
+            image: perl:5.32-slim
+            imagePullPolicy: IfNotPresent
+            command: [ "/bin/bash" ]
+            args: [ "/script/torrent-sort.sh" ]
+            volumeMounts:
+            - name: script
+              mountPath: /script
+            - name: media-pv
+              mountPath: /media-pv
+          volumes:
+          - name: script
+            configMap:
+              name: torrent-sort
+          - name: media-pv
+            persistentVolumeClaim:
+              claimName: nfs-hdd-raid-pvc
+          restartPolicy: Never
