@@ -4,7 +4,7 @@
 > GitOps state for my cluster using flux v2
 
 [![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square)](https://discord.gg/DNCynrJ)
-[![k3s](https://img.shields.io/badge/k3s-v1.19.2-orange?style=flat-square)](https://k3s.io/)
+[![k8s](https://img.shields.io/badge/k8s-v1.20.2-orange?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/vaskozl/home-infra?style=flat-square)](https://github.com/vaskozl/home-infra/commits/master)
 
 <br />
@@ -39,8 +39,6 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 
 ## Installation
 
-### Install Rancher's k3s
+### Install
 
-User onedr0p has written amazing instructions which this repo is based on:
-
-[onedr0p/k3s-gitops-arm](https://github.com/onedr0p/k3s-gitops-arm)
+Installed via kubeadm on manjaro-arm lite with bootsrtap/kubeadm.yaml.
