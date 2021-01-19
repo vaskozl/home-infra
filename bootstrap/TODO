@@ -1,0 +1,13 @@
+# Manual steps before bootstraping nodes
+* enable kuelet and containerd
+* add swap no fail to kubelet.env
+* disable etcd and clean it
+* install nfs-utils
+* add CNI plugins
+* after kubeadm join, quickly remove ephermal
+* edit the node to have PreferNoSchedule and the correct CIDR
+** AFTER connection:
+* k edit no to add CIDR
+* k edit no to set to PreferNoSchedule
+* add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
+* install logrotate, enable it and add /etc/logrotate.d/allpodlogs
