@@ -1,8 +1,0 @@
-[Unit]
-Description=Fancontrol service
-
-[Service]
-ExecStart=/usr/bin/fancontrol.py
-
-[Install]
-WantedBy=multi-user.target
