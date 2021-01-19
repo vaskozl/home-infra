@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: torrent-sort
 spec:
-  schedule: "0 */1 * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 100
