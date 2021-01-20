@@ -42,3 +42,14 @@ Home infrastructure running on 3x Raspberry Pi 4GB
 ### Install
 
 Installed via kubeadm on manjaro-arm lite with bootsrtap/kubeadm.yaml.
+
+## Secret management
+
+I [mozilla SOPS](https://github.com/mozilla/sops) for secret encryption as it [supported out of the box in Flux2](https://toolkit.fluxcd.io/guides/mozilla-sops/).
+
+I use a [pre-commit hook](.git/hooks/pre-commit) to ensure that secrets are never pushed unencrypted. Assuming you have a `.sosp.yaml` the only thing you need to do is:
+
+```
+sops -e -i my-secret.yaml # That's it
+sops my-secret.yaml # To edit it directly in you $EDITOR
+```
