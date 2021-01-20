@@ -11,3 +11,4 @@
 * k edit no to set to PreferNoSchedule
 * add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
 * install logrotate, enable it and add /etc/logrotate.d/allpodlogs
+* add --election-timeout=2000 to the etcd manifest
