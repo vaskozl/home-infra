@@ -18,9 +18,8 @@ spec:
       ingressClass: internal
       kind: DaemonSet
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       hostPort:
-        enabled: true
-      publishService:
         enabled: true
       config:
         proxy-body-size: '0'
