@@ -15,7 +15,7 @@ jobs:
         run: brew install fluxcd/tap/flux
 
       - name: Run Flux Auto-Update
-        run: ./bootstrap/update.sh
+        run: ./scripts/update.sh
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
