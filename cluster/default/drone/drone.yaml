@@ -34,7 +34,7 @@ spec:
     env:
       DRONE_SERVER_HOST: "dr.sko.ai"
       DRONE_GIT_ALWAYS_AUTH: true
-      DRONE_GITEA_SERVER: "https://git.sko.ai"
+      DRONE_GITEA_SERVER: "http://gitea:3000"
       DRONE_SERVER_PROTO: https
       DRONE_USER_CREATE: "username:vasko,admin:true"
       DRONE_LOGS_TEXT: true
