@@ -8,8 +8,8 @@ steps:
   image: alpine:3.7
   commands:
   - env
-  - apk add git
-  - wget https://toolkit.fluxcd.io/install.sh -O - | /bin/sh
+  - apk add git bash
+  - wget https://toolkit.fluxcd.io/install.sh -O - | /bin/bash
   - flux install --export > ./cluster/flux-system/gotk-components.yaml
   - git diff --exit-code || export DIFF=1
   - \[ -z $DIFF \] || git push origin --delete update/flux || true
