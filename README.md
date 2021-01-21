@@ -16,6 +16,7 @@ Home infrastructure running on 3x Raspberry Pi 4GB
   * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
   * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
   * [gitea](https://gitea.io) - Internal git server (useful for passwords/secrets)
+  * [drone](https://www.drone.io/) - CI with a native Kubernetes Runner
   * [octoprint](https://github.com/OctoPrint/OctoPrint) - 3D printer control
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Movies and shows server
