@@ -10,7 +10,7 @@ steps:
   - env
   - apk add git bash
   - wget https://toolkit.fluxcd.io/install.sh -O - | /bin/bash
-  - flux install --export > ./cluster/flux-system/gotk-components.yaml
+  - ./scripts/update.sh
   - git diff --exit-code || export DIFF=1
   - \[ -z $DIFF \] || git push origin --delete update/flux || true
   - \[ -z $DIFF \] || git checkout -b update/flux
