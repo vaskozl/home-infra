@@ -18,5 +18,4 @@ steps:
   - \[ -z $DIFF \] || git config --global user.email 'flux@sko.ai'
   - \[ -z $DIFF \] || git commit -a -m 'Auto-update flux version'
   - \[ -z $DIFF \] || git status
-  - \[ -z $DIFF \] || git remote set-url origin "ssh://git@ssh.sko.ai/doudous/flux-infra"
   - \[ -z $DIFF \] || git push -o merge_request.create origin update/flux
