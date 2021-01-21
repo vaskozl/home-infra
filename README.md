@@ -47,7 +47,7 @@ Installed via kubeadm on manjaro-arm lite with bootsrtap/kubeadm.yaml.
 
 I [mozilla SOPS](https://github.com/mozilla/sops) for secret encryption as it [supported out of the box in Flux2](https://toolkit.fluxcd.io/guides/mozilla-sops/).
 
-I use a [pre-commit hook](.git/hooks/pre-commit) to ensure that secrets are never pushed unencrypted. Assuming you have a `.sosp.yaml` the only thing you need to do is:
+I use a [pre-commit hook](scripts/find-unencrypted-secrets.sh) to ensure that secrets are never pushed unencrypted. Assuming you have a `.sosp.yaml` the only thing you need to do is:
 
 ```
 sops -e -i my-secret.yaml # That's it
