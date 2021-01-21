@@ -23,6 +23,7 @@ spec:
     ingress:
       enabled: true
       annotations:
+        kubernetes.io/tls-acme: "true"
         kubernetes.io/ingress.class: "internal"
       hosts:
       - host: "dr.sko.ai"
@@ -31,11 +32,12 @@ spec:
       tls:
       - hosts:
         - "dr.sko.ai"
+        secretName: ingress-cert-drone
     env:
-      DRONE_SERVER_HOST: "drone"
-      DRONE_SERVER_PROTO: http
+      DRONE_SERVER_HOST: "dr.sko.ai"
+      DRONE_SERVER_PROTO: https
       DRONE_GIT_ALWAYS_AUTH: true
-      DRONE_GITEA_SERVER: "http://gitea:3000"
+      DRONE_GITEA_SERVER: "https://git.sko.ai"
       DRONE_USER_CREATE: "username:vasko,admin:true"
       DRONE_LOGS_TEXT: true
       DRONE_LOGS_PRETTY: true
