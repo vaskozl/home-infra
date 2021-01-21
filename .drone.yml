@@ -1,0 +1,22 @@
+---
+kind: pipeline
+type: kubernetes
+name: update_flux
+
+steps:
+- name: job:update_flux
+  image: alpine:3.7
+  commands:
+  - env
+  - apk add git
+  - wget https://toolkit.fluxcd.io/install.sh -O - | /bin/sh
+  - flux install --export > ./cluster/flux-system/gotk-components.yaml
+  - git diff --exit-code || export DIFF=1
+  - \[ -z $DIFF \] || git push origin --delete update/flux || true
+  - \[ -z $DIFF \] || git checkout -b update/flux
+  - \[ -z $DIFF \] || git config --global user.name 'Flux Updater'
+  - \[ -z $DIFF \] || git config --global user.email 'flux@sko.ai'
+  - \[ -z $DIFF \] || git commit -a -m 'Auto-update flux version'
+  - \[ -z $DIFF \] || git status
+  - \[ -z $DIFF \] || git remote set-url origin "ssh://git@ssh.sko.ai/doudous/flux-infra"
+  - \[ -z $DIFF \] || git push -o merge_request.create origin update/flux
