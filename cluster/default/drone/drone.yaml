@@ -1,0 +1,48 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: drone
+  namespace: default
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: drone
+      version: 0.1.7
+      sourceRef:
+        kind: HelmRepository
+        name: drone-charts
+      interval: 1h
+  values:
+    image:
+      repository: drone/drone
+      tag: 1.10.1
+    updateStrategy:
+      type: Recreate
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "internal"
+      hosts:
+      - host: "dr.sko.ai"
+        paths:
+        - "/"
+      tls:
+      - hosts:
+        - "dr.sko.ai"
+    env:
+      DRONE_SERVER_HOST: "dr.sko.ai"
+      DRONE_GIT_ALWAYS_AUTH: true
+      DRONE_GITEA_SERVER: "https://git.sko.ai"
+      DRONE_SERVER_PROTO: https
+      DRONE_USER_CREATE: "username:vasko,admin:true"
+      DRONE_LOGS_TEXT: true
+      DRONE_LOGS_PRETTY: true
+      DRONE_LOGS_COLOR: true
+    persistentVolume:
+      enabled: true
+      storageClass: "nfs-client"
+  valuesFrom:
+  - kind: Secret
+    name: "drone-values"
