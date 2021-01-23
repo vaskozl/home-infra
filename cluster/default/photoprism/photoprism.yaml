@@ -24,10 +24,10 @@ spec:
       tag: "20201225"
     resources:
       requests:
-        cpu: "1000m"
+        cpu: "100m"
         memory: 0.5Gi
       limits:
-        cpu: "3000m"
+        cpu: "2000m"
         memory: 1.0Gi
     ingress:
       enabled: true
