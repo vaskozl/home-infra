@@ -12,6 +12,13 @@ spec:
           containers:
           - name: photoprism-index
             image: photoprism/photoprism-arm64:20201225
+            resources:
+              requests:
+                memory: "500Mi"
+                cpu: "1000m"
+              limits:
+                memory: "2Gi"
+                cpu: "2000m"
             imagePullPolicy: IfNotPresent
             args:
             - /photoprism/bin/photoprism
