@@ -16,7 +16,7 @@ data:
            fallthrough in-addr.arpa ip6.arpa
            ttl 30
         }
-        k8s_external k8s.sko.ai
+        k8s_external k8s
         prometheus :9153
         forward . 192.168.1.1 {
            max_concurrent 1000
