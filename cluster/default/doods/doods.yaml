@@ -10,7 +10,6 @@ spec:
   selector:
     app: doods
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.31
 ---
 apiVersion: apps/v1
 kind: Deployment

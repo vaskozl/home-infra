@@ -45,7 +45,6 @@ spec:
   selector:
     app: speedtest
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.45
 ---
 apiVersion: apps/v1
 kind: Deployment

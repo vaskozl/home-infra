@@ -33,7 +33,6 @@ spec:
   selector:
     app: code-server
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.27
 ---
 apiVersion: apps/v1
 kind: Deployment

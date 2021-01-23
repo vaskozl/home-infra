@@ -36,7 +36,6 @@ spec:
   selector:
     app: registry
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.22
 ---
 apiVersion: apps/v1
 kind: StatefulSet
