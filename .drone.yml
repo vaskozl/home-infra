@@ -18,3 +18,19 @@ steps:
   - \[ -z $DIFF \] || git commit -a -m 'Auto-update flux version'
   - \[ -z $DIFF \] || git status
   - \[ -z $DIFF \] || git push -o merge_request.create origin update/flux
+
+trigger:
+  event:
+  - cron
+  cron:
+  - nightly
+---
+kind: pipeline
+type: kubernetes
+name: validate_manifest
+
+steps:
+- name: validate_manifests
+  image: r.sko.ai/kube-validate:0.0.2
+  commands:
+  - validate.sh ./cluster

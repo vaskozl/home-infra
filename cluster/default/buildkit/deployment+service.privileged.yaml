@@ -54,17 +54,18 @@ spec:
             - name: certs
               readOnly: true
               mountPath: /certs
-            - name: tmp
-              mountPath: /var/lib
+            - name: var-lib
+              mountPath: /var/lib/buildkit
       volumes:
         # buildkit-daemon-certs must contain ca.pem, cert.pem, and key.pem
         - name: certs
           secret:
             secretName: buildkit-daemon-certs
-        - name: tmp
+        - name: var-lib
           hostPath:
-            path: /buildkitd-tmp
+            path: /dev/shm
             type: Directory
+
 ---
 apiVersion: v1
 kind: Service
