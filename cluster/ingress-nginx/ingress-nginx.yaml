@@ -28,7 +28,6 @@ spec:
         use-forwarded-headers: "true"
         compute-full-forwarded-for: "true"
         forwarded-for-header: X-Forwarded-For
-        proxy-real-ip: 192.168.1.1
         global-auth-url: "https://gate.sko.ai/api/verify"
         global-auth-signin: "https://gate.sko.ai"
       resources:
