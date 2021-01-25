@@ -15,10 +15,10 @@ spec:
   values:
     resources:
       requests:
-        cpu: "1000m"
+        cpu: "200m"
         memory: 1.0Gi
       limits:
-        cpu: "1500m"
+        cpu: "1000m"
         memory: 1.1Gi
     image:
       pullPolicy: IfNotPresent
