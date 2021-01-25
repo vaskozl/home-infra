@@ -31,6 +31,6 @@ name: validate_manifest
 
 steps:
 - name: validate_manifests
-  image: r.sko.ai/kube-validate:0.0.3
+  image: r.sko.ai/kube-validate:0.0.4
   commands:
   - validate.sh ./cluster
