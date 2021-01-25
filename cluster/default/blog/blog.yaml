@@ -40,7 +40,7 @@ metadata:
   labels:
     app: blog
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: blog
