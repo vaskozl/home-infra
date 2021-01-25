@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: blog
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: va.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: blog
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - va.sko.ai
+    secretName: ingress-cert-vasko
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    app: blog
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blog
+  labels:
+    app: blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      terminationGracePeriodSeconds: 3
+      containers:
+      - name: blog
+        image: r.sko.ai/vasko-blog:0.0.1
+        imagePullPolicy: Always
+        ports:
+        - name: blog
+          containerPort: 80
+        resources:
+          limits:
+            cpu: 10m
+            memory: 100Mi
