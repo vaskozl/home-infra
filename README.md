@@ -33,7 +33,6 @@ Home infrastructure running on 3x Raspberry Pi 4GB
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [metallb](https://github.com/metallb/metallb) - Load-balancer for bare-metal
-  * [metrics-server](https://github.com/metallb/metallb) - Load-balancer for bare-metal
   * [redis](https://hub.docker.com/_/redis) - KV store for authelia
   * [cockroachdb](https://hub.docker.com/r/cockroachdb/cockroach) - Postgress like DB for gitea/authelia
   * [registry](https://hub.docker.com/_/registry) - Plain and light docker registry, runs on arm64
