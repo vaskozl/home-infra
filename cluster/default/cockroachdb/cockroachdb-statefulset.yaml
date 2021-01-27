@@ -106,6 +106,8 @@ spec:
       labels:
         app: cockroachdb
     spec:
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
