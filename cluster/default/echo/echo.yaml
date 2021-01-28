@@ -20,12 +20,12 @@ spec:
       paths:
       - backend:
           serviceName: http-echo
-          servicePort: 8080
+          servicePort: 80
         path: /
   tls:
   - hosts:
     - echo.sko.ai
-    secretName: ingress-cert-echo
+    secretName: ingress-cert-httpecho
 ---
 apiVersion: v1
 kind: Service
@@ -34,8 +34,8 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 80
+    targetPort: 80
   selector:
     app: http-echo
   type: ClusterIP
@@ -61,10 +61,10 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: http-echo
-        image: claudiubelu/echoserver:2.3
+        image: gsmlg/echo:latest
         ports:
         - name: http
-          containerPort: 8080
+          containerPort: 80
         resources:
           limits:
             cpu: 10m
