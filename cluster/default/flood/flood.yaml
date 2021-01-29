@@ -23,6 +23,8 @@ spec:
             FLOOD_OPTION_RUNDIR: /data
             FLOOD_OPTION_AUTH: none
             FLOOD_OPTION_QBURL: http://qbittorrent:8080
+            FLOOD_OPTION_QBUSER: vsz
+            FLOOD_OPTION_QBPASS: ENC[AES256_GCM,data:AYmrewD40Ktzib1sBqIrhw==,iv:9Fr1+fcD6Gp6Tfi4aNKiXXO5IwyEwkhTcbP/I1xLB+g=,tag:GW1fXjTQ4Rnzym4g7BFhNg==,type:str]
         ingress:
             enabled: true
             annotations:
@@ -42,7 +44,7 @@ spec:
         persistence:
             data:
                 enabled: true
-                storageClass: ENC[AES256_GCM,data:21/graSfANCBZg==,iv:lCQr9L0BlgXgX2pB5CfEagSjbJVRPg+Kishd2BJzP0E=,tag:1+rxg+nEeoUrOL970gT8kQ==,type:str]
+                storageClass: nfs-client
                 accessMode: ReadWriteOnce
                 size: 1Gi
         resources:
@@ -51,42 +53,39 @@ spec:
                 cpu: 500m
             limits:
                 memory: 1500Mi
-    valuesFrom:
-    -   kind: Secret
-        name: flood-helm-values
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-01-29T15:46:28Z'
-    mac: ENC[AES256_GCM,data:if+1pDXOS+uNinCSF58Kcdvkr+6+zIf28B7ql6uIjJFEDSlNRJDt8Awek4sSJiT6ynBPbrHBEQnpRx+HUKjv64NXM4sa0v3e4fcIEJXCkYAGn95jNS4gq8/iDbDHL1Rgo2yWURpPug7HFUyQABHFY531avUc7lK5q5r1/lbemjA=,iv:liKnWSeczbRQ5lrmSvtSOYg8yjQUDWJF9/C4Zaq1pWY=,tag:82YZnvg8qei6fwqknJe9Lw==,type:str]
+    lastmodified: '2021-01-29T16:33:53Z'
+    mac: ENC[AES256_GCM,data:7R8Ik/qby2jte1IGKX+qG8vriWZ5nBxHDebKWjZe3dShyg++yT5zVk3N66pR1GnKz3Mb02+x9bux8jzyuVy1Fq5DZPOzD8CpGDUrFOvsWzCY+r3VCMBgFP7po//E1cGS6K//Nxk7LbdpTak3AFZB6VuAoI+MkgEpH1FJKUf2VP4=,iv:IM6ksjh/3bGdjNqh6l44bJaXT4IaudoPpqOJqBYx5hQ=,tag:7RPTbRpVleF2ZOUpHteYJw==,type:str]
     pgp:
-    -   created_at: '2021-01-29T15:46:28Z'
+    -   created_at: '2021-01-29T16:33:52Z'
         enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQMOA4x50yY5upzjEAv7BngRpj0ENZkWC7tE5fBBvOyMPf7Tgs7BBMSVxTmU4XmQ
-            f0ojf/QZxYjdSPuzDlfSlwXQcuzsrYEoNa56IX8lYg9RcaIhcuoAJ0fFb9x5j73f
-            6M1dso4izz6W8dKSY7eoSby6ndv/i4fUZLa6r9ZWZAunzswOWDgz1hFmF6u41M88
-            sVI8iAjcoxZbA2lXuRo+GqqXDkvs+ileL3NvUnvLvFH3xfs2YJfYWvo0A4lGO0ML
-            Y7ry+qBOhx72hxL5piA/+GjguAxplQbPwCxxlhQzCcgIaDW26zhtgxi/NeqcaBMn
-            mbmN428XdKmsU8HRw7HwWVQKTASH/Xb6juntSPN9NcMbRy1aCd9PBEfq25ui6wHz
-            +ZAntGFmsnzQthDfFyox0O7Qpd0GTnYrsw6NNO/TLd1ZkN97Kf0WtSxJQJI/6MA1
-            sL5cnqdv4b9lfu61bPMCw0sR0ABieqqYJgd7Qz0c3c3FMWjAOfniyg7jS4XOmhBD
-            QzvaOu6s2/s4Iz2VziBHC/45/ZINwpujYBhNuAhpR3ZG7PeJ8C5GC3vL2znuAiDX
-            RwHV+5BHEdMkyKw5Uwc1Y7ii6TQx4v9jdARyn0HT/GUf5oU+0EVx1TzPS9/eUTD7
-            HQNCono21ZTEbil+d3nyyN+MSjxIv0KZoPy8JZ49WKmtfNSBgyLIVKgOhZEfHawf
-            rYX93kjZARll1p5TPoOqHe1kyy021nhoJ7wpo7mqhJ2CcfVil4Nyjke8XoRCdniw
-            Z8/Khf8KgLfar5llJtsKZwpCAFSHkxRIdtORLAB4J8K/MNDaeT+t2W1hWi3qSxD3
-            87/SsiPyk7mipjyJ4RCfFiKw/UtULotuomxfwRhDh2/ytXqAP8yhjYBuBvFgFWE4
-            kpOuiRZ8lOv79Ba1GMSkLbzMz37OMKPU9pKanBS91NwkGrS9zubGMuHi+pQ7KfeS
-            Xv+x7mS8Kmr4ZWvGPEw6i5a9nf8ELfk9m5mNZqklurT5X7ehtoU0l9X4lcR3wDXF
-            ccrdDwMeiv45LwRqoPp2RiDSXAEdNTDhAA3Gaj50BVrFZown4JdRP9KUVXkcX6rp
-            sPo8f4FZ2NBeLrRqbQBlki+04hloZ/NqkoIZe9xYRqKSkKAJwBsiovqngtQcEvlQ
-            VsEoQ48r7F4M7IiIvzli
-            =haoO
+            hQMOA4x50yY5upzjEAwArt6U8b6/vk/zeUDYoAxJwuWvVTAdImF8bn8gprHCdbY/
+            xkRx9leID/wRPSbMkYsYhj9ZqZY50njo1+qWVbetYEfVJ3D0mjpPVwqOMMlL/MrE
+            iK6Px2hcsXSHTSobvDraQvcdKnmMxLBFTlX013qCIPALzxr3YfC1z3AQ/ZkeFX3v
+            tbEBX/zcfiD8RAABiSaFQck3Y+UAO0Uhox7L/hR2+H9uPh//kDq6Hk920I6Dr7S8
+            q47JAvvsKlkmCix+y4BD1ltaZgeVZNcG/l4fPIb2rcUeI7FR2+e0zwH3yie/CR65
+            Ri5DkptiL+uK7R5IudDQSIKS+J9V5pFjeSPjV/hwFgqEUWjN9WdnzLU6eukpK1+k
+            CJGbZ9xVEuUlSdQ64eAOdFoHuc5/R/h7YRhkHMpGqKK6Abz5mbEDnMQMVZqhb+IR
+            zFblSQ7TfUV+f0ukk346zZ90eBY5YeSua40C61H1FnaD2AhSMRlcfZn3Lxu+nBxo
+            oBgWUK71DhG7d5qDP6+SDAC3PGqAWtiO7snnaY82S3hMeAoFbH3qiClRGJassHOO
+            +M1NGyqkpcoELm2EV0P80OALaGTg61EZXAzeDETIvEmPIQ1Nr5gqznrDgsyY2PT7
+            YTug4ar6J3VoKPgNyl142GeYsfnyuFMsBrFM0puqhDDXKYUXx0fC4UiR58Cc0oIC
+            dqux/YJB9LdoNSK9H7aPHn6wszy8hKPMuuhZCJ2LI8Kg16CEAlw0EjL/qdVejCOW
+            7OI5YvG0zWhh7lqhDAN4pXNgIX1F9bh3RuZivrHelJ0awqVfV151RyCvgvuUMv3d
+            3d31aVief2obWYZT5/0z1l/nLwXgmhAUcdquz81pJi4yVU8D9Oj2ZFOEZGj75U0j
+            TA+vq3BqSKBLTolhu6HULaoPF/ruoArCVZWLKaeawpiUUevtifj6xpDA9lQPb01o
+            0GzU8pSrex92fsR65MajWVbdmKd1j955a1rqubKMsKOqxrD7AyQ2ZoRh2p/u5Rlg
+            XdptZqsAnm3GQ5/p++Tz5rPSXgGYffaszMI4qbKHUssIu1fTj+Q7LvXKU8C+7jXD
+            1UO+ugZEatGkYzm6/Co/Q+mTVTct0wF19kA8rB6t6Hlgx29/esVRDqg+hCxJufCw
+            XAqPujgqXENi3U3rhc815ig=
+            =BkCZ
             -----END PGP MESSAGE-----
         fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: ^storageClass$
+    encrypted_regex: ((?i)pass)
     version: 3.6.1
