@@ -19,6 +19,7 @@ spec:
       PHOTOPRISM_PUBLIC: true
       PHOTOPRISM_DEBUG: false
       PHOTOPRISM_THUMB_SIZE: 2048
+      PHOTOPRISM_THUMB_UNCACHED: true
     image:
       repository: "photoprism/photoprism-arm64"
       tag: "20210128"
