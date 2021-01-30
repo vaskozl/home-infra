@@ -1,50 +1,85 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: drone
-  namespace: default
+    name: drone
+    namespace: default
 spec:
-  interval: 1h
-  chart:
-    spec:
-      chart: drone
-      version: 0.1.7
-      sourceRef:
-        kind: HelmRepository
-        name: drone-charts
-      interval: 1h
-  values:
-    image:
-      repository: drone/drone
-      tag: 1.10.1
-    updateStrategy:
-      type: Recreate
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/tls-acme: "true"
-        kubernetes.io/ingress.class: "internal"
-      hosts:
-      - host: "dr.sko.ai"
-        paths:
-        - "/"
-      tls:
-      - hosts:
-        - "dr.sko.ai"
-        secretName: ingress-cert-drone
-    env:
-      DRONE_SERVER_HOST: "dr.sko.ai"
-      DRONE_SERVER_PROTO: https
-      DRONE_GIT_ALWAYS_AUTH: true
-      DRONE_GITEA_SERVER: "https://git.sko.ai"
-      DRONE_USER_CREATE: "username:vasko,admin:true"
-      DRONE_LOGS_TEXT: true
-      DRONE_LOGS_PRETTY: true
-      DRONE_LOGS_COLOR: true
-    persistentVolume:
-      enabled: true
-      storageClass: "nfs-client"
-  valuesFrom:
-  - kind: Secret
-    name: "drone-values"
+    interval: 1h
+    chart:
+        spec:
+            chart: drone
+            version: 0.1.7
+            sourceRef:
+                kind: HelmRepository
+                name: drone-charts
+            interval: 1h
+    values:
+        image:
+            repository: drone/drone
+            tag: 1.10.1
+        updateStrategy:
+            type: Recreate
+        ingress:
+            enabled: true
+            annotations:
+                kubernetes.io/tls-acme: "true"
+                kubernetes.io/ingress.class: internal
+            hosts:
+            -   host: dr.sko.ai
+                paths:
+                - /
+            tls:
+            -   hosts:
+                - dr.sko.ai
+                secretName: ingress-cert-drone
+        env:
+            DRONE_SERVER_HOST: dr.sko.ai
+            DRONE_SERVER_PROTO: https
+            DRONE_GIT_ALWAYS_AUTH: true
+            DRONE_GITEA_SERVER: https://git.sko.ai
+            DRONE_USER_CREATE: username:vasko,admin:true
+            DRONE_LOGS_TEXT: true
+            DRONE_LOGS_PRETTY: true
+            DRONE_LOGS_COLOR: true
+            DRONE_RPC_SECRET: ENC[AES256_GCM,data:Ue5uHDlQk8Y6fHhzSKuCZbmE8c5Cv54HWjmeAmRC6ss=,iv:Q/kIxzfq8lARqTVmk9pH7teIn8RfiDxdz/qTRiromBQ=,tag:0amuqiyqMp7qoWgBdGVAKg==,type:str]
+            DRONE_GITEA_CLIENT_ID: afebfd5e-8391-4268-9052-3b2c985f7695
+            DRONE_GITEA_CLIENT_SECRET: ENC[AES256_GCM,data:QWTz5TIBkCcp3YLml9zMFGe7ijd+cVUMz9+VjkHpU9uRYi8xxNmZbf5KRgc=,iv:H/SnBeJWNvu4mXm2GZ5fjPHpMUVmI4PvyzZNJDMnmRc=,tag:AUpq4CwDtn+GgTb+kdXcmA==,type:str]
+        persistentVolume:
+            enabled: true
+            storageClass: nfs-client
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    lastmodified: '2021-01-30T00:58:13Z'
+    mac: ENC[AES256_GCM,data:Qme7j7YVeSopPFpQfa2vL1FeQgxyHcI7RiSr3GJpFpDc6hS32f2M/tFU1fk5XDYkX7zz/jGllMT9UPR5PHSVzTLwxQcJTMP9aB7X4MeVpbr4jFlpUaBtT/s7BLgZpUzWioN/bhUBmj6MEQKWwRlEAP4rNBya+/T5nksEh7Log1c=,iv:Acg0pJUo2eqlClbMAaSfbUIjlRZcImfKvgzc1tSK3qc=,tag:5Pf247GHxDt/zoizNL4Whg==,type:str]
+    pgp:
+    -   created_at: '2021-01-30T00:58:12Z'
+        enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv/UxPTiKR23bTlDQFnOX1oAfY/PSnmZqgCYqjL4V/EGdwm
+            HLL8Q9E75KeLRTiqSDuClMTXS3rERHHnEpt8RDmQ8Th6D5w8kDRLy8eUHeGMA9Bb
+            0P1p84CUV7OaDXYyEx/U9OTWIagk9O6j+SyeMOEJw9fU8ijfugGzLdTesrDLsTvA
+            pEd8AnfPgGCcGOY5eXeNmFKcy+X8T6YyZ9BTEWJqmQXIuXz8ucymUSDdif3apWeH
+            qQ65H1NOVQn7zg/EDZYtSsUDpcreSqg7jHVT0V1ppaeH4U45yvesKzANA9/6tBlY
+            3XfZ42mbESmsTwZvYc5SwWKN6kStaLNfKjit2k3Wb849+WnUtwR0UY0dD53rfAQB
+            78we4ucoN8MI25sejDSnWPeWFD/TTpk2UM/uB6/eXcPDOaaBtdh3MCWgOvTx4pW/
+            WdOZzMIQUjxdEBr58NPRv0kbv9KtjbzGJUQ0OpkG7uIDHbLvNIK+dEP9RaLj37dN
+            dBneZLYmC0buOC2F5JNwDAC5kx+2DZVr+4VYpVz+BpuH2RYS7htHpmhuWNDX9r5Q
+            b99t/xLOk62lRuJ8MMGEx+qjFW7Y+DQ+n+o0kpJ4IUkvUfwNjO16JGqKM7GamspI
+            tgMr7aXNB/0I8/XFbJrZeN5gANe3Zu/Oj9qNDU9bjgJRXyrJxk4rg7RUn0gzy8UK
+            UelgHI+nosvnBKVTMQgxRl+GcnMCPEFS2oEB+ysBJX1eaOxuCg5gydQwaGuuMd4S
+            jgbWF9cnU5LaUzMLULxZzc/DnjgrEKFboDqjjbXkv3oaW+8mKaKJrhrelq8ewM1T
+            LrmFlKPAlau3yjIRaGA1/QddMHGUJIFf3ej9uFVI93y+NB602540zUA3pWQixqpm
+            NFRi4aGlBy8o5JwwWT1aFRVtO684HQHmk7OgQ7BnGlofLWUEYN3yqEAdeCE6w413
+            PiI/PcoFTSS6fgBhPHpK72tpw5i/dEhHCcCyFJ8+f2YQkOuCSmEpgEEgn3Q1DNrV
+            cvxt9C5RuHUHvUCdQ25u04zSXgHJsg2miggNEUkZHB5YEK2ejBXVhtvMdkUkXlCc
+            XhSb5xHditLBaIn5UmwH4FLghYQTiPhWCYEKoag9o0DggQT4Ieqx9rbMPEfWHYes
+            0nIHLyHWePDRCc/rOFjC1yk=
+            =freN
+            -----END PGP MESSAGE-----
+        fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+    version: 3.6.1
