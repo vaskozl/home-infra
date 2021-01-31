@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdav
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webdav
+  template:
+    metadata:
+      labels:
+        app: webdav
+    spec:
+      containers:
+      - name: webdav
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
+          readOnly: true
+          name: webdav-conf
+        - mountPath: /mnt/photos
+          name: photos
+        - mountPath: /mnt/media
+          name: media-pv
+      volumes:
+      - name: webdav-conf
+        configMap:
+          name: webdav-conf 
+      - name: media-pv
+        persistentVolumeClaim:
+          claimName: nfs-hdd-raid-pvc
+      - name: photos
+        persistentVolumeClaim:
+          claimName: photos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webdav
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: webdav
+
