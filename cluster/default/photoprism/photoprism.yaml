@@ -18,8 +18,9 @@ spec:
       PHOTOPRISM_SITE_URL: "https://p.sko.ai/"
       PHOTOPRISM_PUBLIC: true
       PHOTOPRISM_DEBUG: false
-      PHOTOPRISM_THUMB_SIZE: 2048
+      PHOTOPRISM_THUMB_SIZE: 1280
       PHOTOPRISM_THUMB_UNCACHED: true
+      PHOTOPRISM_THUMB_SIZE_UNCACHED: 1280
     image:
       repository: "photoprism/photoprism-arm64"
       tag: "20210128"
