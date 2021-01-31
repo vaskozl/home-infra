@@ -23,7 +23,7 @@ spec:
     image:
       pullPolicy: IfNotPresent
       repository: linuxserver/jellyfin
-      tag: 'nightly-version-20210130.3-unstable'
+      tag: 10.6.4-1-ls77
     ingress:
       annotations:
         kubernetes.io/ingress.class: internal
