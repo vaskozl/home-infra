@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kodi-headless
+  namespace: media
+spec:
+  ports:
+  - port: 8080
+    name: http
+    targetPort: http
+  - port: 9090
+    name: ws
+    targetPort: ws
+  selector:
+    app: kodi-headless
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kodi-headless
+  namespace: media
+spec:
+  selector:
+    matchLabels:
+      app: kodi-headless
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kodi-headless
+    spec:
+      containers:
+      - image:  lsioarmhf/kodi-headless-aarch64:44
+        name: kodi-headless
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9090
+          name: ws
+        volumeMounts:
+        - name: config-kodi
+          mountPath: /config/.kodi/userdata/advancedsettings.xml
+          subPath: advancedsettings.xml
+      volumes:
+      - name: config-kodi
+        secret:
+          secretName: advancedsettings
