@@ -12,3 +12,4 @@
 * add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
 * install logrotate, enable it and add /etc/logrotate.d/allpodlogs
 * add --election-timeout=2000 to the etcd manifest
+* sysctl net.ipv4.ip_unprivileged_port_start=0 to /etc

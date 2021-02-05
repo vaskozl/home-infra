@@ -3,16 +3,22 @@ kind: CronJob
 metadata:
   name: torrent-sort
 spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
   schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 100
+      backoffLimit: 0
       template:
         spec:
           containers:
           - name: torrent-sort
-            image: perl:5.32-slim
+            image: perl:5.32-buster
             imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: kodipass
             command: [ "/bin/bash" ]
             args: [ "/script/torrent-sort.sh" ]
             volumeMounts:
