@@ -40,10 +40,16 @@ spec:
         - containerPort: 9090
           name: ws
         volumeMounts:
-        - name: config-kodi
+        - name: advancedsettings-xml
           mountPath: /config/.kodi/userdata/advancedsettings.xml
           subPath: advancedsettings.xml
+        - name: kodi-userdata
+          mountPath: /config/.kodi/userdata/sources.xml
+          subPath: sources.xml
       volumes:
-      - name: config-kodi
+      - name: kodi-userdata
+        configMap:
+          name: kodi-userdata
+      - name: advancedsettings-xml
         secret:
-          secretName: advancedsettings
+          secretName: advancedsettings-xml
