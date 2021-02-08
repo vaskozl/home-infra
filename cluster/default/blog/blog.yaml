@@ -57,6 +57,14 @@ spec:
         ports:
         - name: blog
           containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /blog
+            port: 80
+        livenessProbe:
+          httpGet:
+            path: /blog
+            port: 80
         resources:
           limits:
             cpu: 10m
