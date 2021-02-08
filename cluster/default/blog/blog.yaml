@@ -52,7 +52,7 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: blog
-        image: r.sko.ai/vasko-blog:0.0.1
+        image: r.sko.ai/vasko-blog:0.0.2
         imagePullPolicy: Always
         ports:
         - name: blog
