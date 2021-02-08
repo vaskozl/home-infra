@@ -18,11 +18,11 @@ spec:
     controller:
       image:
         repository: metallb/controller
-        tag: v0.9.3
+        tag: v0.9.5
     speaker:
       image:
         repository: metallb/speaker
-        tag: v0.9.3
+        tag: v0.9.5
     configInline:
       address-pools:
       - name: default

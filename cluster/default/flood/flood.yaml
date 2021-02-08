@@ -17,7 +17,7 @@ spec:
         controllerType: deployment
         image:
             repository: jesec/flood
-            tag: master
+            tag: 4.4.1
             pullPolicy: Always
         env:
             FLOOD_OPTION_RUNDIR: /data
@@ -58,8 +58,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-01-29T16:33:53Z'
-    mac: ENC[AES256_GCM,data:7R8Ik/qby2jte1IGKX+qG8vriWZ5nBxHDebKWjZe3dShyg++yT5zVk3N66pR1GnKz3Mb02+x9bux8jzyuVy1Fq5DZPOzD8CpGDUrFOvsWzCY+r3VCMBgFP7po//E1cGS6K//Nxk7LbdpTak3AFZB6VuAoI+MkgEpH1FJKUf2VP4=,iv:IM6ksjh/3bGdjNqh6l44bJaXT4IaudoPpqOJqBYx5hQ=,tag:7RPTbRpVleF2ZOUpHteYJw==,type:str]
+    lastmodified: '2021-02-08T21:41:26Z'
+    mac: ENC[AES256_GCM,data:Zr7YaEUIQMdWWT7YMHZbzWp3ndzxdfAqQrs8b6M9Y7CMw9s9FNEeAmDXf7/2k+zHh+lqEf42giIXWRH5zfQUc1uYtfVVuFaJzjY8sSSiOy9HIWVJ4AuLfPFm8gvql6n895yMRB8J8XsbIxGo5XmrWKLTrRx318557pyg1VQT7S0=,iv:8zVSbHMJE0PdwjjA4cXgDHZbI2ZobQq26EMfSopsuRQ=,tag:VucRzRJYztWO13dcbTXpfA==,type:str]
     pgp:
     -   created_at: '2021-01-29T16:33:52Z'
         enc: |
