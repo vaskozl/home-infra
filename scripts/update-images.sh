@@ -10,21 +10,27 @@ grep -lRP 'image:' cluster | while read file; do \
     } else {
       ($image, $tag) = ($2, $4) if $2;
     }
-    if ($image and $tag and $image !~ /(\.io|\.ai)/){
+    if ($image and $tag and $image !~ /(\.io)/){
       $image =~ s/["]//g;
       $tag =~ s/["]//g;
       my $tag_regex = quotemeta($tag);
       $tag_regex =~ s/\d+/\\d\+/g;
-      $image = "library/$image" unless $image =~ m!/!;
       sub rd { $_ = shift; s/[^\.\d]//g; $_ }
-      my @versions = sort { versioncmp(rd($a),rd($b)) } grep { /^$tag_regex$/ } map { $_->{name} } @{g("https://hub.docker.com/v2/repositories/$image/tags/?page=1&page_size=1000")->json->{results}};
+      my @tags;
+      if ($image =~ s!r\.sko\.ai/!!) {
+        @tags = @{g("https://r.sko.ai/v2/$image/tags/list")->json->{tags}};
+      } else {
+        $image = "library/$image" unless $image =~ m!/!;
+        @tags = map { $_->{name} } @{g("https://hub.docker.com/v2/repositories/$image/tags/?page=1&page_size=1000")->json->{results}};
+      }
+      my @versions = sort { versioncmp(rd($a),rd($b)) } grep { /^$tag_regex$/ } @tags;
       if (@versions) {
         my $newest = pop @versions;
         if ($newest ne $tag) {
           $line =~ s/\Q$tag\E/$newest/g;
-          warn "$image:$tag -> $newest" ;
+          print STDERR "new: $image:$tag -> $newest\n" ;
         } else { 
-          warn "already newest $image:$tag";
+          print STDERR "latest: $image:$tag\n";
         }
       } else {
         warn "Could not retrieve version for $image";
