@@ -3,10 +3,10 @@ apiVersion: v1
 metadata:
   name: registry-pvc
   annotations:
-    volume.beta.kubernetes.io/storage-class: "nfs-client"
+    volume.beta.kubernetes.io/storage-class: "longhorn"
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 1Mi
+      storage: 1Gi
