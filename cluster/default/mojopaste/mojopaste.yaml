@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mojopaste
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: mp.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: mojopaste
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - mp.sko.ai
+    secretName: ingress-cert-mojopaste
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mojopaste
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: mojopaste
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mojopaste
+  labels:
+    app: mojopaste
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mojopaste
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mojopaste
+    spec:
+      terminationGracePeriodSeconds: 3
+      containers:
+      - name: mojopaste
+        image: r.sko.ai/vasko/mojopaste:1.04.3
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 10m
+            memory: 100Mi
+        volumeMounts:
+        - name: pv-mojopaste
+          mountPath: /app/data
+      volumes:
+      - name: pv-mojopaste
+        persistentVolumeClaim:
+          claimName: mojopaste-pvc
