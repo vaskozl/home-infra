@@ -20,6 +20,7 @@ spec:
     persistence:
       defaultClassReplicaCount: 2
     defaultSettings:
+      backupTarget: nfs://blind:/srv/nfs/longhorn-backupstore
       defaultReplicaCount: 2
       defaultDataPath: /longhorn
     ingress:
