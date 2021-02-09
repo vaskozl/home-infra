@@ -21,6 +21,7 @@ spec:
       defaultClassReplicaCount: 2
     defaultSettings:
       backupTarget: nfs://blind:/srv/nfs/longhorn-backupstore
+      createDefaultDiskLabeledNodes: true
       defaultReplicaCount: 2
       defaultDataPath: /longhorn
     ingress:
