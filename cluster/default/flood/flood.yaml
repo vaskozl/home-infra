@@ -8,7 +8,7 @@ spec:
     chart:
         spec:
             chart: flood
-            version: 2.2.1
+            version: 2.4.0
             sourceRef:
                 kind: HelmRepository
                 name: k8s-at-home
@@ -20,11 +20,15 @@ spec:
             tag: 4.4.1
             pullPolicy: Always
         env:
-            FLOOD_OPTION_RUNDIR: /data
             FLOOD_OPTION_AUTH: none
+            FLOOD_OPTION_RUNDIR: /data
             FLOOD_OPTION_QBURL: http://qbittorrent:8080
             FLOOD_OPTION_QBUSER: vsz
             FLOOD_OPTION_QBPASS: ENC[AES256_GCM,data:AYmrewD40Ktzib1sBqIrhw==,iv:9Fr1+fcD6Gp6Tfi4aNKiXXO5IwyEwkhTcbP/I1xLB+g=,tag:GW1fXjTQ4Rnzym4g7BFhNg==,type:str]
+        podSecurityContext:
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
         ingress:
             enabled: true
             annotations:
@@ -58,8 +62,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-02-09T18:51:32Z'
-    mac: ENC[AES256_GCM,data:9xztqDx7LnLaoUBCk2p4YLeOzPWMSXt5kFXZ5fAo9Hy6DYuSYlTKWduSof1mY3ZPI/DwRws1jxJytgZ0WjwLdCOLxlHfYAgYENF3Vb5/gt2PZrDMDPe9tgT5/+qoHL1ABZxh/mrqaCWMDzLUAqXp630FDFRX5dB+hVcbG389Puw=,iv:Tr1hTmMpCxxkodNb2MYCCq36FB6C5HhJcIvQ3L7L8pA=,tag:HgA9a1CCdBpDTDTelQ/sJQ==,type:str]
+    lastmodified: '2021-02-09T21:38:24Z'
+    mac: ENC[AES256_GCM,data:0dby/xNu7GRz08krKJah6g3e2DgRZ/mlKcK8I1CNgFQHJayuFr955PZKyKtryQuBkn48NJK8xCBjSEp7Dvn3OrunaSV0ta73pTwgpkCd3wIGpLk0iTOUwnOnjf3B5FlNumQWzSyZ5ZyG7EEThkFy6oxoBzkDEu7bNNATvRPFg6s=,iv:UuGxy2r9md234s8y9H/uPZPsUqItYvrjSs5YrVBJ++U=,tag:lBeE1RgPRDVJHlt1C6Ld4w==,type:str]
     pgp:
     -   created_at: '2021-01-29T16:33:52Z'
         enc: |
