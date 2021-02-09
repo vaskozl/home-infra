@@ -30,14 +30,14 @@ spec:
         - name: media-pv
           persistentVolumeClaim:
             claimName: nfs-hdd-raid-pvc
-        - name: photos
+        - name: camera
           persistentVolumeClaim:
-            claimName: photos
+            claimName: camera
       volumeMounts:
         - name: app-config
           mountPath: /app/config
           readOnly: true
         - name: media-pv
           mountPath: /home/vsz/media
-        - name: photos
+        - name: camera
           mountPath: /home/vsz/photos

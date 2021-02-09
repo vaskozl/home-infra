@@ -59,6 +59,10 @@ spec:
         volumeMounts:
         - name: pv-code-server
           mountPath: /home/coder
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       volumes:
       - name: pv-code-server
         persistentVolumeClaim:

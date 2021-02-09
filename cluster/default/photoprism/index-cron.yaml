@@ -34,5 +34,5 @@ spec:
               claimName: photoprism-pvc
           - name: originals
             persistentVolumeClaim:
-              claimName: photos
+              claimName: camera
           restartPolicy: OnFailure
