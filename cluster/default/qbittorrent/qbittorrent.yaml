@@ -19,6 +19,10 @@ spec:
       tag: v4.3.3
     env:
       TZ: "Europe/London"
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
     service:
       type: LoadBalancer
       loadBalancerIP: 192.168.1.19
@@ -55,7 +59,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: "nfs-client"
+        storageClass: longhorn
         size: 2Gi
       downloads:
         enabled: false
