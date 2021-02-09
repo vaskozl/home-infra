@@ -3,10 +3,13 @@ kind: CronJob
 metadata:
   name: index-photoprism
 spec:
+  concurrencyPolicy: Forbid
   schedule: "0 */1 * * *"
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 100
+      backoffLimit: 0
       template:
         spec:
           containers:
