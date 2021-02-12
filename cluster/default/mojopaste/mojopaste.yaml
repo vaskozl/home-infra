@@ -59,11 +59,15 @@ spec:
           containerPort: 8080
         resources:
           limits:
-            cpu: 10m
+            cpu: 500m
             memory: 100Mi
         volumeMounts:
         - name: pv-mojopaste
           mountPath: /app/data
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       volumes:
       - name: pv-mojopaste
         persistentVolumeClaim:
