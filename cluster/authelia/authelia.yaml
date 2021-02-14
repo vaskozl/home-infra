@@ -36,7 +36,7 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: authelia
   type: ClusterIP
@@ -58,17 +58,21 @@ spec:
       labels:
         app: authelia
     spec:
+      securityContext:
+        runAsUser:  4000
+        runAsGroup: 4000
+        fsGroup:    4000
       containers:
       - image: authelia/authelia:4.25.1
         name: authelia
         env:
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: authelia
         livenessProbe:
           httpGet:
             path: /api/health
-            port: 80
+            port: authelia
         volumeMounts:
         - name: pv-authelia
           mountPath: /config
