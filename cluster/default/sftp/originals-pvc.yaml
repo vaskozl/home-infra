@@ -1,7 +1,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: originals
+  name: original-photos
   annotations:
     volume.beta.kubernetes.io/storage-class: "nfs-client"
 spec:
@@ -9,4 +9,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 30Gi
+      storage: 1Mi

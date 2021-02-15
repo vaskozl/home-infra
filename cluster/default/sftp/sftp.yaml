@@ -32,7 +32,7 @@ spec:
             claimName: nfs-hdd-raid-pvc
         - name: originals
           persistentVolumeClaim:
-            claimName: originals
+            claimName: original-photos
       volumeMounts:
         - name: app-config
           mountPath: /app/config
