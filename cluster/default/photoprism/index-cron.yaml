@@ -38,4 +38,4 @@ spec:
           - name: originals
             persistentVolumeClaim:
               claimName: camera
-          restartPolicy: OnFailure
+          restartPolicy: Never
