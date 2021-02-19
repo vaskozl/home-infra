@@ -30,6 +30,7 @@ spec:
         forwarded-for-header: X-Forwarded-For
         global-auth-url: "https://gate.sko.ai/api/verify"
         global-auth-signin: "https://gate.sko.ai"
+        hsts: false
       resources:
         requests:
           memory: 250Mi
