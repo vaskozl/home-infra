@@ -15,16 +15,37 @@ spec:
   interval: 1h
   values:
     controller:
+      replicaCount: 3
+      containerPort:
+        http:  9080
+        https: 9443
+      extraArgs:
+        http-port: 9080
+        https-port: 9443
+      service:
+        type: NodePort
+        externalIPs:
+        - 10.99.10.10
+        externalTrafficPolicy: Local
       ingressClass: internal
-      kind: DaemonSet
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
-      hostPort:
-        enabled: true
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                - ingress-nginx
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                - controller
+            topologyKey: "kubernetes.io/hostname"
       config:
         proxy-body-size: '0'
         ssl-protocols: "TLSv1.3 TLSv1.2"
-        use-proxy-protocol: "true"
+        #use-proxy-protocol: "true"
         use-forwarded-headers: "true"
         compute-full-forwarded-for: "true"
         forwarded-for-header: X-Forwarded-For

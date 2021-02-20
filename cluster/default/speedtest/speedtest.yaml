@@ -38,6 +38,8 @@ kind: Service
 metadata:
   name: speedtest
 spec:
+  type: NodePort
+  externalTrafficPolicy: Local
   ports:
   - protocol: TCP
     port: 8080
