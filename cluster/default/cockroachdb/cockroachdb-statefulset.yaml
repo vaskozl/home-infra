@@ -32,7 +32,7 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  externalIPs: [ '10.99.10.11' ]
+  externalIPs: [ '192.168.99.2' ]
   ports:
   # The main port, served by gRPC, serves Postgres-flavor SQL, internode
   # traffic and the cli.
