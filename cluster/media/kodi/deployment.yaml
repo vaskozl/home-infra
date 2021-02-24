@@ -4,6 +4,7 @@ metadata:
   name: kodi-headless
   namespace: media
 spec:
+  externalTrafficPolicy: Local
   ports:
   - port: 8080
     name: http
