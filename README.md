@@ -29,7 +29,7 @@ Home infrastructure running on 3x Raspberry Pi 4GB
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
-  * [my blog](https://va.sko.ai) - Built with buildkitd+drone and hosted in gitea
+  * [my blog](https://sko.ai) - Built with buildkitd+drone and hosted in gitea
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
