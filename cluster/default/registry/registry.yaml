@@ -9,6 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       allow 192.168.1.0/24;
       allow 10.0.0.0/8;
@@ -21,7 +22,15 @@ spec:
       - backend:
           serviceName: registry
           servicePort: 5000
+        path: /.+
+      - backend:
+          serviceName: reg
+          servicePort: 8080
         path: /
+      - backend:
+          serviceName: reg
+          servicePort: 8080
+        path: /(repo|static)
   tls:
   - hosts:
     - r.sko.ai

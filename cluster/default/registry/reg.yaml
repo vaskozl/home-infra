@@ -1,23 +1,3 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: reg
-  annotations:
-    kubernetes.io/tls-acme: "true"
-    kubernetes.io/ingress.class: "internal"
-spec:
-  rules:
-  - host: reg.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: reg
-          servicePort: 8080
-        path: /
-  tls:
-  - hosts:
-    - reg.sko.ai
-    secretName: ingress-cert-reg
 ---
 apiVersion: v1
 kind: Service
