@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: reg
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: reg.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: reg
+          servicePort: 8080
+        path: /
+  tls:
+  - hosts:
+    - reg.sko.ai
+    secretName: ingress-cert-reg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reg
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: reg
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reg
+  labels:
+    app: reg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reg
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: reg
+    spec:
+      terminationGracePeriodSeconds: 3
+      containers:
+      - name: reg
+        image: r.sko.ai/vasko/reg:v0.16.1.2
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        args:
+        - server
+        - --registry=r.sko.ai
