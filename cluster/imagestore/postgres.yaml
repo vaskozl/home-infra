@@ -48,7 +48,7 @@ spec:
         fsGroup: 1000
       containers:
       - name: postgres
-        image: postgres:11
+        image: postgres:13
         envFrom:
         - configMapRef:
             name: postgres-config
