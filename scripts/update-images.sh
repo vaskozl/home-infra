@@ -3,7 +3,7 @@ grep -lRP 'image:' cluster | while read file; do \
   perl -M'Sort::Versions' -MJSON -M'Data::Dump qw(dump)' -ne '
   our ($image, $tag);
   my $line = $_;
-  if (/^\s+(image|repository):\s*(\S*?)($|:)(.*)/ and $2 or
+  if (/^[\s\-]+(image|repository):\s*(\S*?)($|:)(.*)/ and $2 or
       /^\s+(tag):\s*([\S]+)/) {
     if ($1 eq "tag") {
       $tag = $2; 
