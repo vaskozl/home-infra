@@ -7,7 +7,7 @@ steps:
   image: alpine:3.7
   commands:
   - env
-  - apk add git bash
+  - apk add git bash perl skopeo
   - wget https://toolkit.fluxcd.io/install.sh -O - | /bin/bash
   - ./scripts/update.sh
   - git diff --exit-code || export DIFF=1
@@ -18,6 +18,14 @@ steps:
   - \[ -z $DIFF \] || git commit -a -m 'Auto-update flux version'
   - \[ -z $DIFF \] || git status
   - \[ -z $DIFF \] || git push -o merge_request.create origin update/flux
+  - ./scripts/update-images.sh
+  - \[ -z $DIFF \] || git push origin --delete update/images || true
+  - \[ -z $DIFF \] || git checkout -b update/images
+  - \[ -z $DIFF \] || git config --global user.name 'Image Updater'
+  - \[ -z $DIFF \] || git config --global user.email 'git@sko.ai'
+  - \[ -z $DIFF \] || git commit -a -m 'Auto-update images'
+  - \[ -z $DIFF \] || git status
+  - \[ -z $DIFF \] || git push -o merge_request.create origin update/images
 
 trigger:
   event:
