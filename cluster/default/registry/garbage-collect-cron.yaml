@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: registry-garbage-collect
+spec:
+  concurrencyPolicy: Forbid
+  schedule: "0 */1 * * *"
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
+          - image: registry:2.7.1
+            name: registry
+            imagePullPolicy: IfNotPresent
+            args:
+            - garbage-collect
+            - /etc/docker/registry/config.yml
+            volumeMounts:
+            - name: var-lib-registry
+              mountPath: /var/lib/registry
+          volumes:
+          - name: var-lib-registry
+            persistentVolumeClaim:
+              claimName: registry-pvc
+          restartPolicy: Never
+      parallelism: 1
