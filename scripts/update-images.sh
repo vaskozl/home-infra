@@ -1,16 +1,22 @@
-grep -lRP 'image:' cluster | while read file; do \
+#!/bin/sh
+grep -lRP 'image:' ${1:-cluster} | while read file; do \
   mv $file $file.bak
   perl -M'Sort::Versions' -MJSON -M'Data::Dump qw(dump)' -ne '
   our ($image, $tag);
   my $line = $_;
-  if (/^[\s\-]+(image|repository):\s*(\S*?)($|:)(.*)/ and $2 or
-      /^\s+(tag):\s*([\S]+)/) {
+  if (/^[\s\-]+(image|repository):\s*(\S*?)($|:)(.*)/ and $2
+          or /^\s+(tag):\s*([\S]+)/) {
     if ($1 eq "tag") {
       $tag = $2; 
     } else {
       ($image, $tag) = ($2, $4) if $2;
     }
     if ($image and $tag){
+      if (/no-up$/) {
+        print STDERR "noup: $image:$tag\n";
+        print;
+        next
+      }
       $image =~ s/["]//g;
       $tag =~ s/["]//g;
       my $tag_regex = quotemeta($tag);
