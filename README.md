@@ -33,6 +33,7 @@ Home infrastructure running on 3x Raspberry Pi 4GB
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
   * [my blog](https://sko.ai) - Built with buildkitd+drone and hosted in gitea
   * [reg](https://github.com/genuinetools/reg) - Docker Registry UI
+  * [wireguard](https://github.com/linuxserver/docker-wireguard) - The best VPN
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
