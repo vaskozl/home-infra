@@ -35,6 +35,9 @@ spec:
             deny all;
             return 403;
           }
+          allow 192.168.1.0/24;
+          allow 10.0.0.0/8;
+          deny all;
       hosts:
         - host: "ha.sko.ai"
           paths:
