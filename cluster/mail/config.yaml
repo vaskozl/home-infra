@@ -8,7 +8,7 @@ metadata:
 data:
     postfix-accounts.cf: ENC[AES256_GCM,data:UDkblvLMXFA+oCvhHzsqPEI2aNU5nmgMVcQDqx1noCJ1t6UQZNKV+AAFQdA1XE0FP4MZjPDKKglAlxbyN/FfsKIShUmk9+ozSNEZI6OpnSyJu1qhcfh5722KiJwgudbJFXlxYQ2hZiJm/w8DPs9I8tcSJaJ0oS5oqVMFG6yhUiCJLA==,iv:TLImB4bzJo2ojl5/DieEbfTiiJEPHT+wFnsEuHyyVuU=,tag:cnwp/TyxuP8SnkcWcssw7A==,type:str]
     postfix-virtual.cf: |
-        root@sko.ai v@sko.ai
+        @sko.ai v@sko.ai
     #dovecot.cf: |
     #  service stats {
     #    unix_listener stats-reader {
@@ -35,8 +35,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-03-06T21:32:36Z'
-    mac: ENC[AES256_GCM,data:RShwuVbb9YETcOyVHbjacsQJ5QZg7x0KihhopBQutziKuhO/tggN+CDWHqMvLy3vEgGj/Pxb7Cvh3ci48cU/L2611ODWgPyFJM+thWFw02tmXDo/GTLwy1gSNghjpPRI+yNwedEanq/fwDd1pT7mZNJlw4AF8FK8YmEqs7mB79Q=,iv:Ii6mgiEttTyWan6mFk7PBFUnaBqIZeJQY8WR1f9TP5E=,tag:WZ6U2qMPKIl+NoeJAJaqAQ==,type:str]
+    lastmodified: '2021-03-11T09:42:05Z'
+    mac: ENC[AES256_GCM,data:KkDl4PBvbz+7yvMMiCCk3PV3CDjImo7JSKRHBOkeuvNTjnpvjwRRh288NXddpS4+w+wQg+3dqLASMFDFeo1dSNSMFrlobNGtfAULD1qXoJz8jNSYPndanq88xqIboGDCL/AvjrdSxb2vxv1HGfEu+bar5wPjb1FlbFJGt65cc6Y=,iv:SGuVTGErYImH9lBZxlnx2DOb1zAemUDW8x1QuTvdNiY=,tag:kIZQDPIx8+TAmq+dOpB+Xw==,type:str]
     pgp:
     -   created_at: '2021-03-06T21:32:36Z'
         enc: |
