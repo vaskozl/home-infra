@@ -14,6 +14,9 @@ spec:
      name: letsencrypt-staging
    # Enable the HTTP-01 challenge provider
    solvers:
-   - http01:
-       ingress:
-         class: internal
+    - dns01:
+        cloudflare:
+          email: v@sko.ai
+          apiKeySecretRef:
+            name: cloudflare-api-token-secret
+            key: cloudflare-api-token-secret
