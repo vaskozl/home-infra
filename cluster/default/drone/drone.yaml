@@ -23,6 +23,7 @@ spec:
             enabled: true
             annotations:
                 kubernetes.io/tls-acme: "true"
+    acme.cert-manager.io/http01-ingress-class: "external"
                 kubernetes.io/ingress.class: internal
             hosts:
             -   host: dr.sko.ai

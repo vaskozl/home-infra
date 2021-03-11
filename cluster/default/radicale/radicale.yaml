@@ -4,6 +4,7 @@ metadata:
   name: radicale
   annotations:
     kubernetes.io/tls-acme: "true"
+    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
