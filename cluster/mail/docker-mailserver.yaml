@@ -1,26 +1,3 @@
----  
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: mailserver.env.config
-  namespace: mailserver
-  labels:
-    app: mailserver
-data:
-  OVERRIDE_HOSTNAME: "mail.sko.ai"
-  ENABLE_FETCHMAIL: "0"
-  FETCHMAIL_POLL: "120"
-  ENABLE_CLAMAV: "0"
-  ENABLE_FAIL2BAN: "0"
-  ENABLE_SPAMASSASSIN: "1"
-  SPAMASSASSIN_SPAM_TO_INBOX: "1"
-  ENABLE_POSTGREY: "0"
-  ONE_DIR: "1"
-  DMS_DEBUG: "0"
-  SSL_TYPE: 'manual'
-  SSL_CERT_PATH: '/etc/ssl/mailserver/tls.crt'
-  SSL_KEY_PATH: '/etc/ssl/mailserver/tls.key'
-
 ---
 kind: Service
 apiVersion: v1
