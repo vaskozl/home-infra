@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: radicale
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
@@ -19,7 +17,6 @@ spec:
   tls:
   - hosts:
     - rc.sko.ai
-    secretName: ingress-cert-radicale
 ---
 apiVersion: v1
 kind: Service

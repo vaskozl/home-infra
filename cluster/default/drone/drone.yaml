@@ -22,8 +22,6 @@ spec:
         ingress:
             enabled: true
             annotations:
-                kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
                 kubernetes.io/ingress.class: internal
             hosts:
             -   host: dr.sko.ai
@@ -32,7 +30,6 @@ spec:
             tls:
             -   hosts:
                 - dr.sko.ai
-                secretName: ingress-cert-drone
         env:
             DRONE_SERVER_HOST: dr.sko.ai
             DRONE_SERVER_PROTO: https
@@ -53,8 +50,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-02-09T18:35:20Z'
-    mac: ENC[AES256_GCM,data:4lQmnWaEwN+cIInGjxUmMzNZ6JWwZSdbyoa8ccX9csc6Q3X/OUX0vcuxifa3WT8FxqUkg61i4suv9iqn1Ar48Z/ZwrVQnh7lTQKf7W0s6nT4R9isXi7BuIVR5EZIzzE57syToFJk8PxmqIBRsaP+xgFtCHdw4/ac7yx9h+ajpXM=,iv:b6C8nv8AbnJsfYoUXwwRbOyiN9gEZrms2nJBK4en0qQ=,tag:ksroja2PjLN2AOHEQGdFVg==,type:str]
+    lastmodified: '2021-03-11T22:13:14Z'
+    mac: ENC[AES256_GCM,data:xQeN1stQh4eJuR9rF98BNdDoC1lK3GKzJ0Ly6X1ap8mGSYmnD878GMbW8VpNk/fJi5GhFv5+6bwzTDEys8Tmn3LfuA8rYw58K7oZo2v27EKiI1MgsVzICsEwDt3a6p0+QBLuIOvIzinXuc2ecOeiB2ZBKvJgrCtj1tn9KxaESXY=,iv:+WcbRkXBBpJGkEBOyiPxFfWrxUXFcRQic/3G44EEh7I=,tag:BwkHAJYVBv2Wf0x+3x4coA==,type:str]
     pgp:
     -   created_at: '2021-01-30T00:58:12Z'
         enc: |

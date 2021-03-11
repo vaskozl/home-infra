@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: blog
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "external"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
@@ -19,7 +17,6 @@ spec:
   tls:
   - hosts:
     - sko.ai
-    secretName: ingress-cert-vasko
 ---
 apiVersion: v1
 kind: Service

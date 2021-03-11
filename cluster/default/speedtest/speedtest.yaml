@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: speedtest
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       sendfile on;
@@ -32,7 +30,6 @@ spec:
   tls:
   - hosts:
     - st.sko.ai
-    secretName: ingress-cert-speedtest
 ---
 apiVersion: v1
 kind: Service

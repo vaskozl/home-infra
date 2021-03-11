@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: filebrowser
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       auth_request_set $user $upstream_http_remote_user;
@@ -26,4 +24,3 @@ spec:
   tls:
   - hosts:
     - f.sko.ai
-    secretName: ingress-cert-filebrowser

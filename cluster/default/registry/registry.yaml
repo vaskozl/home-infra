@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: registry
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
@@ -35,7 +33,6 @@ spec:
   tls:
   - hosts:
     - r.sko.ai
-    secretName: ingress-cert-registry
 ---
 apiVersion: v1
 kind: Service

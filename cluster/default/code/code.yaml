@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: code-server
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
     nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
@@ -20,7 +18,6 @@ spec:
   tls:
   - hosts:
     - code.sko.ai
-    secretName: ingress-cert-code
 ---
 apiVersion: v1
 kind: Service

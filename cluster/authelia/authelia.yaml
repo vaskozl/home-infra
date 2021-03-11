@@ -4,8 +4,6 @@ metadata:
   name: authelia
   namespace: authelia
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
     nginx.ingress.kubernetes.io/configuration-snippet: |    
@@ -26,7 +24,6 @@ spec:
   tls:
   - hosts:
     - gate.sko.ai
-    secretName: ingress-cert-authelia
 ---
 apiVersion: v1
 kind: Service

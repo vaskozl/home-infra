@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: mojopaste
   annotations:
-    kubernetes.io/tls-acme: "true"
-    acme.cert-manager.io/http01-ingress-class: "external"
     kubernetes.io/ingress.class: "internal"
 spec:
   rules:
@@ -18,7 +16,6 @@ spec:
   tls:
   - hosts:
     - mp.sko.ai
-    secretName: ingress-cert-mojopaste
 ---
 apiVersion: v1
 kind: Service
