@@ -48,6 +48,8 @@ spec:
         global-auth-url: "https://gate.sko.ai/api/verify"
         global-auth-signin: "https://gate.sko.ai"
         hsts: false
+      extraArgs:
+        default-ssl-certificate: "cert-manager/sko-ai-tls"
       resources:
         requests:
           memory: 250Mi
