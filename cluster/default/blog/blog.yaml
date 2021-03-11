@@ -4,7 +4,7 @@ metadata:
   name: blog
   annotations:
     kubernetes.io/tls-acme: "true"
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: "external"
     nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
   rules:
