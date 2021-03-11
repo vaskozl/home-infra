@@ -17,6 +17,6 @@ spec:
     - dns01:
         cloudflare:
           email: v@sko.ai
-          apiKeySecretRef:
+          apiTokenSecretRef:
             name: cloudflare-api-token-secret
-            key: cloudflare-api-token-secret
+            key: api-token

@@ -19,9 +19,6 @@ spec:
       containerPort:
         http:  9080
         https: 9443
-      extraArgs:
-        http-port: 9080
-        https-port: 9443
       service:
         type: NodePort
         externalIPs:
@@ -49,6 +46,8 @@ spec:
         global-auth-signin: "https://gate.sko.ai"
         hsts: false
       extraArgs:
+        http-port: 9080
+        https-port: 9443
         default-ssl-certificate: "cert-manager/sko-ai-tls"
       resources:
         requests:

@@ -20,9 +20,13 @@ spec:
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
     - --dns01-recursive-nameservers-only
-    ingressShim:
-      defaultIssuerName: "letsencrypt-prod"
-      defaultIssuerKind: "ClusterIssuer"
+    cainjector:
+      replicaCount: 1
+    podDnsPolicy: "None"
+    podDnsConfig:
+      nameservers:
+      - "1.1.1.1"
+      - "8.8.8.8"
     # Enabled once prometheus-operator is installed
     prometheus:
       enabled: false
