@@ -11,11 +11,14 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: jetstack
-      version: 0.16.1
+      version: v1.2.0
   interval: 1h
   values:
     webhook:
       enabled: true
+    extraArgs:
+    - --dns01-recursive-nameservers=1.1.1.1:53
+    - --dns01-recursive-nameservers-only
     ingressShim:
       defaultIssuerName: "letsencrypt-prod"
       defaultIssuerKind: "ClusterIssuer"
