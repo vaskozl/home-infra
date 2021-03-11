@@ -9,7 +9,7 @@
 
 <br />
 
-Home infrastructure running on 3x Raspberry Pi 4GB
+Home infrastructure running on 3x Master Raspberry Pi 4GB + 1x Worker 8GB
 
 * Apps:
   * [authelia](https://github.com/authelia/authelia) - SSO server
