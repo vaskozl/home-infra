@@ -5,7 +5,7 @@ metadata:
   namespace: mailserver
   annotations:
     kubernetes.io/ingress.class: "internal"
-    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
   - host: mail.sko.ai
