@@ -66,3 +66,7 @@ spec:
           limits:
             cpu: 10m
             memory: 100Mi
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
