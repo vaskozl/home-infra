@@ -149,4 +149,5 @@ spec:
         - name: tmp-files
           emptyDir: {}
         - name: tls
-          secret:
+          secret: 
+            secretName: mail-cert

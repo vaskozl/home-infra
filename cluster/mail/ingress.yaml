@@ -5,6 +5,7 @@ metadata:
   namespace: mailserver
   annotations:
     kubernetes.io/ingress.class: "internal"
+    kubernetes.io/tls-acme: "true"
 spec:
   rules:
   - host: mail.sko.ai
@@ -17,3 +18,4 @@ spec:
   tls:
   - hosts:
     - mail.sko.ai
+    secretName: mail-cert
