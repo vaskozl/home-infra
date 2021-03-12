@@ -12,7 +12,7 @@ spec:
       paths:
       - backend:
           serviceName: blog
-          servicePort: 80
+          servicePort: 8080
         path: /
   tls:
   - hosts:
@@ -25,8 +25,8 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 80
+    port: 8080
+    targetPort: 8080
   selector:
     app: blog
   type: ClusterIP
@@ -50,23 +50,19 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: blog
-        image: r.sko.ai/vasko/blog:0.0.6
+        image: r.sko.ai/vasko/blog:0.0.7
         ports:
         - name: blog
-          containerPort: 80
+          containerPort: 8080
         readinessProbe:
           httpGet:
             path: /blog
-            port: 80
+            port: 8080
         livenessProbe:
           httpGet:
             path: /blog
-            port: 80
+            port: 8080
         resources:
           limits:
             cpu: 10m
             memory: 100Mi
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
