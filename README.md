@@ -20,7 +20,7 @@ Home infrastructure running on 3x Master Raspberry Pi 4GB + 1x Worker 8GB
   * [imagestore](https://github.com/gregordr/ImageStore) - Microservices based Photo browser
   * [octoprint](https://github.com/OctoPrint/OctoPrint) - 3D printer control
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
-  * [jellyfin](https://github.com/jellyfin/jellyfin) - Movies and shows server
+  * [kodi-headless](https://hub.docker.com/r/linuxserver/kodi-headless) - Centralised Kodi Library indexer
   * [mojopatse](https://github.com/jhthorsen/app-mojopaste) - Pastebin written with Mojolicious
   * [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent client
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
