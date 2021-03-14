@@ -20,7 +20,7 @@ spec:
       pullPolicy: IfNotPresent
     service:
       type: LoadBalancer
-      loadBalancerIP: 192.168.1.17
+      externalIPs: ['192.168.99.17']
       port: 51722
     storage:
       volumes:
