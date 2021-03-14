@@ -50,6 +50,9 @@ spec:
       containers:
       - image: codercom/code-server:3.9.1
         name: code-server
+        args:
+        - --auth
+        - "none"
         env:
         ports:
         - containerPort: 8080
