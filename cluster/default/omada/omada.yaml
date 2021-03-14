@@ -9,8 +9,6 @@ spec:
     targetPort: 8043
   selector:
     app: omada
-  type: LoadBalancer
-  loadBalancerIP: 192.168.1.44
 ---
 apiVersion: apps/v1
 kind: Deployment
