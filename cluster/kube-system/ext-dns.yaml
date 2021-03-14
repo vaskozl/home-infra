@@ -7,7 +7,8 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "DNS"
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.60
+  externalIPs: 
+  - 192.168.99.60
   ports:
   - port: 53
     targetPort: 53
@@ -24,7 +25,8 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "DNS"
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.60
+  externalIPs: 
+  - 192.168.99.60
   ports:
   - port: 53
     targetPort: 53
