@@ -9,6 +9,8 @@ spec:
   selector:
     app: mysql
   type: LoadBalancer
+  externalIPs:
+  - 192.168.99.6
 ---
 apiVersion: apps/v1
 kind: Deployment
