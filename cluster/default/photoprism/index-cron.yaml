@@ -18,11 +18,11 @@ spec:
             image: photoprism/photoprism-arm64:20210222
             resources:
               requests:
-                memory: "500Mi"
+                memory: "1Gi"
                 cpu: "1000m"
               limits:
-                memory: "2Gi"
-                cpu: "2000m"
+                memory: "1Gi"
+                cpu: "1000m"
             imagePullPolicy: IfNotPresent
             args:
             - /photoprism/bin/photoprism
