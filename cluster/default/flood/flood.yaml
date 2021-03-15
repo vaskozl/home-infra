@@ -17,7 +17,7 @@ spec:
         controllerType: deployment
         image:
             repository: jesec/flood
-            tag: 4.4.1
+            tag: 4.5.0
             pullPolicy: Always
         env:
             FLOOD_OPTION_AUTH: none
