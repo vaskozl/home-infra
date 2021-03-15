@@ -31,7 +31,7 @@ spec:
         app: filebrowser
     spec:
       containers:
-      - image: filebrowser/filebrowser:v2.12.1
+      - image: filebrowser/filebrowser:v2.13.0
         name: filebrowser
         command: [ 'sh' ]
         args:
