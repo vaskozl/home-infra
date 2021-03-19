@@ -129,8 +129,10 @@ spec:
         resources:
           requests:
             memory: "700Mi"
+            cpu: 300m
           limits:
-              memory: "2Gi" 
+            memory: "700Mi" 
+            cpu: 300m
         ports:
         - containerPort: 26257
           name: grpc
