@@ -35,7 +35,7 @@ spec:
           volumes:
           - name: config
             persistentVolumeClaim:
-              claimName: photoprism
+              claimName: photoprism-pvc
           - name: originals
             persistentVolumeClaim:
               claimName: original-photos
