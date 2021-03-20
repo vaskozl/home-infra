@@ -22,8 +22,7 @@ spec:
     persistence:
       config:
         enabled: true
-        size: 10Gi
-        storageClass: "nfs-client"
+        existingClaim: hass
     ingress:
       enabled: true
       annotations:
