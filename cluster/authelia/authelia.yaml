@@ -72,9 +72,9 @@ spec:
             path: /api/health
             port: authelia
         volumeMounts:
-        - name: pv-authelia
+        - name: config
           mountPath: /config
       volumes:
-      - name: pv-authelia
-        persistentVolumeClaim:
-          claimName: authelia
+      - name: config
+        configMap:
+          name: authelia-config
