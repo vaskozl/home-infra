@@ -12,7 +12,11 @@
 * add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
 * install logrotate, enable it and add /etc/logrotate.d/allpodlogs
 * add --election-timeout=2000 to the etcd manifest
+* set MaxUse for journald to 200M
+* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
 * sysctl net.ipv4.ip_unprivileged_port_start=0 to /etc
 * add to /var/lib/kubelet/config.yaml:
 allowedUnsafeSysctls:
   - 'net.ipv4.ip_forward'
+evictionHard: 
+  memory.available: "300Mi"
