@@ -1,0 +1,12 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: kube-prometheus
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  ref:
+    tag: v0.7.0
+  url: https://github.com/prometheus-operator/kube-prometheus
+
