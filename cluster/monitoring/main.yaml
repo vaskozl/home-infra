@@ -26,6 +26,7 @@ spec:
             containers:
             - name: kube-state-metrics
               image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-beta
+    # Add Grafana dashboards and disable password
     - apiVersion: apps/v1
       kind: Deployment
       metadata:
@@ -43,3 +44,29 @@ spec:
                 value: "true"
               - name: GF_AUTH_ANONYMOUS_ORG_ROLE
                 value: Admin
+              volumeMounts:
+              - name: grafana-dashboard-k8s-flux
+                mountPath: /grafana-dashboard-definitions/0/flux
+            volumes:
+            - name: grafana-dashboard-k8s-flux
+              configMap:
+                name: grafana-dashboard-k8s-flux
+                defaultMode: 420
+    # Let prometheus scrape all namespaces (like flux-system)
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: prometheus-k8s
+      rules:
+      - apiGroups:
+        - ""
+        resources:
+        - nodes
+        - services
+        - endpoints
+        - pods
+        verbs: ["get", "list", "watch"]
+      - nonResourceURLs:
+        - /metrics
+        verbs:
+        - get
