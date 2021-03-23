@@ -39,7 +39,7 @@ spec:
       - flux-system
   selector:
     matchLabels:
-      app: kutstomize-controller
+      app: kustomize-controller
   podMetricsEndpoints:
   - port: http-prom
 ---
@@ -57,4 +57,3 @@ spec:
       app: notification-controller
   podMetricsEndpoints:
   - port: http-prom
----
