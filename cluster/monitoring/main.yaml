@@ -26,3 +26,20 @@ spec:
             containers:
             - name: kube-state-metrics
               image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-beta
+    - apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: grafana
+        namespace: monitoring
+      spec:
+        template:
+          spec:
+            containers:
+            - name: grafana
+              env:
+              - name: GF_AUTH_BASIC_ENABLED
+                value: "false"
+              - name: GF_AUTH_ANONYMOUS_ENABLED
+                value: "true"
+              - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+                value: Admin
