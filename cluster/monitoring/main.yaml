@@ -76,3 +76,18 @@ spec:
         - /metrics
         verbs:
         - get
+    # Reduce replica counts
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Alertmanager
+      metadata:
+        name: main
+        namespace: monitoring
+      spec:
+        replicas: 1
+    - apiVersion: monitoring.coreos.com/v1
+      kind: Prometheus
+      metadata:
+        name: k8s
+        namespace: monitoring
+      spec:
+        replicas: 1
