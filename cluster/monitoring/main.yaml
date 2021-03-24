@@ -83,7 +83,7 @@ spec:
         name: main
         namespace: monitoring
       spec:
-        replicas: 1
+        replicas: 0
     - apiVersion: monitoring.coreos.com/v1
       kind: Prometheus
       metadata:
