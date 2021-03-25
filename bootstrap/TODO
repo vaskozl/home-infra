@@ -1,22 +1,29 @@
 # Manual steps before bootstraping nodes
-* enable kuelet and containerd
-* add swap no fail to kubelet.env
-* disable etcd and clean it
-* install nfs-utils
-* add CNI plugins
+o* enable kuelet and containerd
+o* add swap no fail to kubelet.env
+o* set MaxUse for journald to 200M
+o* install logrotate, enable it and add /etc/logrotate.d/allpodlogs
+o* disable etcd and clean it
+o* install nfs-utils
+o* add /etc/sysctl.d/*
+o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
+* add cgroups memory to cmdline
+* add pir and hostname to /etc/hosts
+* disable pigpiod && fancontrol
+* install open-iscsi
+* add to /var/lib/kubelet/config.yaml:
+  allowedUnsafeSysctls:
+    - 'net.ipv4.ip_forward'
+  evictionHard: 
+    memory.available: "300Mi"
+
+# master
 * after kubeadm join, quickly remove ephermal
 * edit the node to have PreferNoSchedule and the correct CIDR
 ** AFTER connection:
 * k edit no to add CIDR
 * k edit no to set to PreferNoSchedule
 * add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
-* install logrotate, enable it and add /etc/logrotate.d/allpodlogs
 * add --election-timeout=2000 to the etcd manifest
-* set MaxUse for journald to 200M
-* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
 * sysctl net.ipv4.ip_unprivileged_port_start=0 to /etc
-* add to /var/lib/kubelet/config.yaml:
-allowedUnsafeSysctls:
-  - 'net.ipv4.ip_forward'
-evictionHard: 
-  memory.available: "300Mi"
+
