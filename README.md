@@ -42,6 +42,7 @@ Home infrastructure running on 3x Master Raspberry Pi 4GB + 1x Worker 8GB
   * [redis](https://hub.docker.com/_/redis) - KV store for authelia
   * [cockroachdb](https://hub.docker.com/r/cockroachdb/cockroach) - Postgress like DB for gitea/authelia
   * [registry](https://hub.docker.com/_/registry) - Plain and light docker registry, runs on arm64
+  * [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests) - Prometheus and friends
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
 
 
@@ -53,7 +54,7 @@ Installed via kubeadm on manjaro-arm lite with bootsrtap/kubeadm.yaml.
 
 ## Secret management
 
-I [mozilla SOPS](https://github.com/mozilla/sops) for secret encryption as it [supported out of the box in Flux2](https://toolkit.fluxcd.io/guides/mozilla-sops/). After adding a passwordless secret key to your cluster, add it to your `flux-system/gotk-sync.yaml` if you want to be able do decrypt secrets in the main `flux-system` kustomization.
+I use [mozilla SOPS](https://github.com/mozilla/sops) for secret encryption as it [supported out of the box in Flux2](https://toolkit.fluxcd.io/guides/mozilla-sops/). After adding a passwordless secret key to your cluster, add it to your `flux-system/gotk-sync.yaml` if you want to be able do decrypt secrets in the main `flux-system` kustomization.
 
 I use a [pre-commit hook](scripts/find-unencrypted-secrets.sh) to ensure that secrets are never pushed unencrypted. Assuming you have a `.sosp.yaml` the only thing you need to do is:
 
