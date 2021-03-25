@@ -9,7 +9,7 @@
 
 <br />
 
-Home infrastructure running on 3x Master Raspberry Pi 4GB + 1x Worker 8GB
+Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 2x Worker 8GB running at 2.3Ghz:
 
 * Apps:
   * [authelia](https://github.com/authelia/authelia) - SSO server
