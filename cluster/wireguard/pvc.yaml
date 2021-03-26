@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pv-claim-wireguard 
+  name: wireguard 
   namespace: wireguard
 spec:
-  storageClassName: "longhorn"
+  storageClassName: "rook-ceph-block"
   accessModes:
     - ReadWriteOnce
   resources:
