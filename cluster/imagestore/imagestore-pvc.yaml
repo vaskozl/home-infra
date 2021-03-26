@@ -4,7 +4,7 @@ metadata:
   name: imagestore
   namespace: imagestore
   annotations:
-    volume.beta.kubernetes.io/storage-class: "longhorn"
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
   accessModes:
     - ReadWriteOnce
