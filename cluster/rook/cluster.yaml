@@ -46,6 +46,9 @@ spec:
     config:
       osdsPerDevice: "1"
     nodes:
+    - name: "pi0"
+      devices:
+      - name: "sda5"
     - name: "pi1"
       devices:
       - name: "sda5"

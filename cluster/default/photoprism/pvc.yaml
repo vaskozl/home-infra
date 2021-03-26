@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: photoprism
   annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+    volume.beta.kubernetes.io/storage-class: "rook-cephfs"
 spec:
   accessModes:
     - ReadWriteMany
