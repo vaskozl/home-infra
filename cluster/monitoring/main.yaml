@@ -45,12 +45,18 @@ spec:
               - name: GF_AUTH_ANONYMOUS_ORG_ROLE
                 value: Admin
               volumeMounts:
-              - name: dashboards
-                mountPath: /grafana-dashboard-definitions/0/custom
+              - name: flux-dashboards
+                mountPath: /grafana-dashboard-definitions/0/flux
+              - name: ceph-dashboards
+                mountPath: /grafana-dashboard-definitions/0/ceph
             volumes:
-            - name: dashboards
+            - name: flux-dashboards
               configMap:
-                name: grafana-dashboards
+                name: grafana-dashboards-flux
+                defaultMode: 420
+            - name: ceph-dashboards
+              configMap:
+                name: grafana-dashboards-ceph
                 defaultMode: 420
     # Let prometheus scrape all namespaces (like flux-system)
     - apiVersion: rbac.authorization.k8s.io/v1
