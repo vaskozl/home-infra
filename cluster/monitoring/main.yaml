@@ -45,12 +45,12 @@ spec:
               - name: GF_AUTH_ANONYMOUS_ORG_ROLE
                 value: Admin
               volumeMounts:
-              - name: grafana-dashboard-k8s-flux
-                mountPath: /grafana-dashboard-definitions/0/flux
+              - name: dashboards
+                mountPath: /grafana-dashboard-definitions/0/custom
             volumes:
-            - name: grafana-dashboard-k8s-flux
+            - name: dashboards
               configMap:
-                name: grafana-dashboard-k8s-flux
+                name: grafana-dashboards
                 defaultMode: 420
     # Let prometheus scrape all namespaces (like flux-system)
     - apiVersion: rbac.authorization.k8s.io/v1

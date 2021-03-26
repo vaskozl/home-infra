@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prometheus
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: prom.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: prometheus-k8s
+          servicePort: 9090
+        path: /
+  tls:
+  - hosts:
+    - prom.sko.ai
