@@ -1,9 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: gitea
+  name: gitea-pvc
   annotations:
-    volume.beta.kubernetes.io/storage-class: "longhorn"
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
   accessModes:
     - ReadWriteOnce

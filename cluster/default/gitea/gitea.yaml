@@ -71,4 +71,4 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: gitea
+          claimName: gitea-pvc

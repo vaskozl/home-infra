@@ -1,13 +1,13 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mail-storage
+  name: mail-storage-data
   namespace: mailserver
   annotations:
-    volume.beta.kubernetes.io/storage-class: "longhorn"
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 3Gi
+      storage: 5Gi

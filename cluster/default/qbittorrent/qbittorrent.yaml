@@ -53,8 +53,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: longhorn
-        size: 3Gi
+        existingClaim: qbittorrent
       downloads:
         enabled: false
     additionalVolumeMounts:
