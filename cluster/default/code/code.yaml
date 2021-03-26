@@ -4,8 +4,6 @@ metadata:
   name: code-server
   annotations:
     kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai"
 spec:
   rules:
   - host: code.sko.ai
@@ -67,4 +65,4 @@ spec:
       volumes:
       - name: pv-code-server
         persistentVolumeClaim:
-          claimName: code-server
+          claimName: code-server-data

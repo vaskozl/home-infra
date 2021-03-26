@@ -1,9 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: photoprism-pvc
+  name: photoprism
   annotations:
-    volume.beta.kubernetes.io/storage-class: "longhorn"
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
   accessModes:
     - ReadWriteMany

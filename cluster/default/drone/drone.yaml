@@ -44,14 +44,14 @@ spec:
             DRONE_GITEA_CLIENT_SECRET: ENC[AES256_GCM,data:QWTz5TIBkCcp3YLml9zMFGe7ijd+cVUMz9+VjkHpU9uRYi8xxNmZbf5KRgc=,iv:H/SnBeJWNvu4mXm2GZ5fjPHpMUVmI4PvyzZNJDMnmRc=,tag:AUpq4CwDtn+GgTb+kdXcmA==,type:str]
         persistentVolume:
             enabled: true
-            storageClass: longhorn
+            storageClass: rook-ceph-block
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-03-11T22:13:14Z'
-    mac: ENC[AES256_GCM,data:xQeN1stQh4eJuR9rF98BNdDoC1lK3GKzJ0Ly6X1ap8mGSYmnD878GMbW8VpNk/fJi5GhFv5+6bwzTDEys8Tmn3LfuA8rYw58K7oZo2v27EKiI1MgsVzICsEwDt3a6p0+QBLuIOvIzinXuc2ecOeiB2ZBKvJgrCtj1tn9KxaESXY=,iv:+WcbRkXBBpJGkEBOyiPxFfWrxUXFcRQic/3G44EEh7I=,tag:BwkHAJYVBv2Wf0x+3x4coA==,type:str]
+    lastmodified: '2021-03-26T18:19:41Z'
+    mac: ENC[AES256_GCM,data:r1L03M02A9ofoxEm4E7lJ251KeW/47Luxper1MwacUf9rDOmZC3WGVVc5pQ0JK26ur2D+j0xI5ECtfL5k/uYcEGBxEm4PRNjGmg79RS37gn7a2MUcu+AMmjYrqxTgxkIu6L6IGrRJLw6YO3l4OMSRsUbizTq81xL/6pnrGC/H68=,iv:WUFolslogU5aX/x99S8soQAnozExFs7jsufqsQsasPg=,tag:0b7XOq1m9N2mDFwdQ33v1g==,type:str]
     pgp:
     -   created_at: '2021-01-30T00:58:12Z'
         enc: |
