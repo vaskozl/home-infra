@@ -4,7 +4,7 @@ metadata:
   name: backend
   namespace: imagestore
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
