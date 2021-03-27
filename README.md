@@ -44,7 +44,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 2x Wo
   * [registry](https://hub.docker.com/_/registry) - Plain and light docker registry, runs on arm64
   * [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests) - Prometheus and friends
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-
+  * [rook-ceph](https://rook.io/) - K8s storage that works properly
 
 ## Installation
 
