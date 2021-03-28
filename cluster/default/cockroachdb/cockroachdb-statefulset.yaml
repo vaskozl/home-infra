@@ -128,10 +128,10 @@ spec:
         #   kubectl describe nodes
         resources:
           requests:
-            memory: "700Mi"
+            memory: "500Mi"
             cpu: 300m
           limits:
-            memory: "700Mi" 
+            memory: "500Mi" 
             cpu: 300m
         ports:
         - containerPort: 26257
