@@ -40,6 +40,15 @@ spec:
     osdMaintenanceTimeout: 30
     manageMachineDisruptionBudgets: false
     machineDisruptionBudgetNamespace: openshift-machine-api
+  placement:
+    osd:
+      tolerations:
+      - effect: NoExecute
+        operator: Exists 
+      - effect: NoSchedule
+        operator: Exists 
+      - effect: PreferNoSchedule
+        operator: Exists 
   storage:
     useAllNodes: false
     useAllDevices: false
