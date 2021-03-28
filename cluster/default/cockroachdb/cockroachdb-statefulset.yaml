@@ -119,6 +119,11 @@ spec:
                 values:
                 - cockroachdb
             topologyKey: kubernetes.io/hostname
+      tolerations:
+      - effect: NoExecute
+        operator: Exists
+      - effect: NoSchedule
+        operator: Exists
       containers:
       - name: cockroachdb
         image: marceloglezer/cockroach:v20.2.0
