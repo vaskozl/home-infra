@@ -97,3 +97,16 @@ spec:
         namespace: monitoring
       spec:
         replicas: 1
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name:  node-exporter
+        namespace: monitoring
+      spec:
+        template:
+          spec:
+            containers:
+              - name: kube-rbac-proxy
+                resources:
+                  limits:
+                    memory: 100Mi
