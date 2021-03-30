@@ -1,10 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: omada
+  name: omada-pvc
   annotations:
-    volume.beta.kubernetes.io/storage-class: "longhorn"
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   resources:

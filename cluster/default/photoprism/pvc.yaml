@@ -5,6 +5,7 @@ metadata:
   annotations:
     volume.beta.kubernetes.io/storage-class: "rook-cephfs"
 spec:
+  storageClassName: "rook-cephfs"
   accessModes:
     - ReadWriteMany
   resources:
