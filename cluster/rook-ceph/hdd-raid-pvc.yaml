@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-hdd-raid-pvc
+  namespace: rook-ceph
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: hdd-raid-rook
+  resources:
+    requests:
+      storage: 1Mi
