@@ -49,6 +49,14 @@ spec:
         operator: Exists 
       - effect: PreferNoSchedule
         operator: Exists 
+    mon:
+      tolerations:
+      - effect: NoExecute
+        operator: Exists 
+      - effect: NoSchedule
+        operator: Exists 
+      - effect: PreferNoSchedule
+        operator: Exists 
   storage:
     useAllNodes: false
     useAllDevices: false
