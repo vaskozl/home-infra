@@ -13,6 +13,7 @@ data:
     ENABLE_FAIL2BAN: "1"
     ENABLE_SPAMASSASSIN: "1"
     SPAMASSASSIN_SPAM_TO_INBOX: "1"
+    POSTFIX_MESSAGE_SIZE_LIMIT: "31457280"
     ENABLE_POSTGREY: "0"
     ONE_DIR: "1"
     DMS_DEBUG: "0"
@@ -28,8 +29,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-03-11T18:39:42Z'
-    mac: ENC[AES256_GCM,data:aS+s8ibt98yjQaQ2SAPvCuSxbZE2qDaWXuPxC8lBS0hte0oM5yT5HLJdBRytQzXCIbavrCjb5K4POfXU1x7bcNENIxyOuQJOrqO3F5Aqycr+BkCgeZWYBXuROTyFNvNKk0cPQ399zovwEwOdLA5EdcMrphIHj8J3/MQ8IxMcY1U=,iv:lzoj7rfKoNX+6uhaqRraT9EfOUdfs4JCostzfKws/8A=,tag:MKTFEozELml1J7GX4S/Cxw==,type:str]
+    lastmodified: '2021-04-02T23:06:24Z'
+    mac: ENC[AES256_GCM,data:LDpJoDQExqvvpZMR8ohhZVkXKiTAZpqXRVEImXu8mjblG/hwnoXBgnZCpQNq7sATyDO3xcUWShUXVSS3yD6QxKBslsgVk3iQ3qXNrPVN5Ubtr7erhr02T0Z6PX70Elt7y36+aGoJkovX5We9zpwkRBTX5mZp82YdVlgRBwFJtD8=,iv:0u4nrrmuPjPyqj8EyV6LTtA/OzIeKEfgOeMWfRI/M34=,tag:MfroSexYls+5P6tpEKk5KQ==,type:str]
     pgp:
     -   created_at: '2021-03-11T18:22:34Z'
         enc: |
@@ -97,8 +98,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-03-11T18:39:42Z'
-    mac: ENC[AES256_GCM,data:aS+s8ibt98yjQaQ2SAPvCuSxbZE2qDaWXuPxC8lBS0hte0oM5yT5HLJdBRytQzXCIbavrCjb5K4POfXU1x7bcNENIxyOuQJOrqO3F5Aqycr+BkCgeZWYBXuROTyFNvNKk0cPQ399zovwEwOdLA5EdcMrphIHj8J3/MQ8IxMcY1U=,iv:lzoj7rfKoNX+6uhaqRraT9EfOUdfs4JCostzfKws/8A=,tag:MKTFEozELml1J7GX4S/Cxw==,type:str]
+    lastmodified: '2021-04-02T23:06:24Z'
+    mac: ENC[AES256_GCM,data:LDpJoDQExqvvpZMR8ohhZVkXKiTAZpqXRVEImXu8mjblG/hwnoXBgnZCpQNq7sATyDO3xcUWShUXVSS3yD6QxKBslsgVk3iQ3qXNrPVN5Ubtr7erhr02T0Z6PX70Elt7y36+aGoJkovX5We9zpwkRBTX5mZp82YdVlgRBwFJtD8=,iv:0u4nrrmuPjPyqj8EyV6LTtA/OzIeKEfgOeMWfRI/M34=,tag:MfroSexYls+5P6tpEKk5KQ==,type:str]
     pgp:
     -   created_at: '2021-03-11T18:22:34Z'
         enc: |
