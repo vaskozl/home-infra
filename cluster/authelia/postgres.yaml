@@ -61,12 +61,13 @@ spec:
       volumes:
       - name: pv-data
         persistentVolumeClaim:
-          claimName: postgres-authelia
+          claimName: postgres
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-authelia
+  name: postgres
+  namespace: authelia
   labels:
     app: postgres
 spec:
