@@ -40,8 +40,8 @@ spec:
             DRONE_LOGS_PRETTY: true
             DRONE_LOGS_COLOR: true
             DRONE_RPC_SECRET: ENC[AES256_GCM,data:Ue5uHDlQk8Y6fHhzSKuCZbmE8c5Cv54HWjmeAmRC6ss=,iv:Q/kIxzfq8lARqTVmk9pH7teIn8RfiDxdz/qTRiromBQ=,tag:0amuqiyqMp7qoWgBdGVAKg==,type:str]
-            DRONE_GITEA_CLIENT_ID: afebfd5e-8391-4268-9052-3b2c985f7695
-            DRONE_GITEA_CLIENT_SECRET: ENC[AES256_GCM,data:QWTz5TIBkCcp3YLml9zMFGe7ijd+cVUMz9+VjkHpU9uRYi8xxNmZbf5KRgc=,iv:H/SnBeJWNvu4mXm2GZ5fjPHpMUVmI4PvyzZNJDMnmRc=,tag:AUpq4CwDtn+GgTb+kdXcmA==,type:str]
+            DRONE_GITEA_CLIENT_ID: cdf027d3-b855-4c77-8dce-dcb2e92cd4ed
+            DRONE_GITEA_CLIENT_SECRET: ENC[AES256_GCM,data:ReGknjPehp/cZH2KrpCN/e/hkxeJ8aPfZNtVB7Axedpz9omvHAgs1Po3/fI=,iv:lQ+ncyQrBp++SIOvfd7SPrqNR/AjRd0q4ga1lAG+NMU=,tag:ikZWPkZqmxbE4zjBA8CSnA==,type:str]
         persistentVolume:
             enabled: true
             storageClass: rook-ceph-block
@@ -50,8 +50,8 @@ sops:
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-03-26T18:19:41Z'
-    mac: ENC[AES256_GCM,data:r1L03M02A9ofoxEm4E7lJ251KeW/47Luxper1MwacUf9rDOmZC3WGVVc5pQ0JK26ur2D+j0xI5ECtfL5k/uYcEGBxEm4PRNjGmg79RS37gn7a2MUcu+AMmjYrqxTgxkIu6L6IGrRJLw6YO3l4OMSRsUbizTq81xL/6pnrGC/H68=,iv:WUFolslogU5aX/x99S8soQAnozExFs7jsufqsQsasPg=,tag:0b7XOq1m9N2mDFwdQ33v1g==,type:str]
+    lastmodified: '2021-04-02T22:46:12Z'
+    mac: ENC[AES256_GCM,data:vgNp5inRjimvf7OPkV66oeqh4G41qq4QNaoPOQzSZnx0ngr/5TzhSS0rd9tJ6Rcd3FRCA96RIBZz4T/ZB3Ab9PplkRNxddg9l4fuvf1gtG1uuLOR8Pbp7nbNYIf27TJ72BhJMo+2P/+CzOitXxxnKxvOOBiTgTsiEanUgLcm18w=,iv:aNLRtCjbcfUHhXHjbt2U5bnLg/YHM+JS+95OYosU5DQ=,tag:P5VY40nJoX+tYHBsrazI5Q==,type:str]
     pgp:
     -   created_at: '2021-01-30T00:58:12Z'
         enc: |
