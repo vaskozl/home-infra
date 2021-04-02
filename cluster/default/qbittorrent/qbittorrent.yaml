@@ -65,7 +65,7 @@ spec:
         claimName: nfs-hdd-raid-pvc
     resources:
       requests:
-        memory: 100Mi
+        memory: 500Mi
         cpu: 25m
       limits:
-        memory: 500Mi
+        memory: 800Mi
