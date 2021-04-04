@@ -34,6 +34,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 2x Wo
   * [my blog](https://sko.ai) - Built with buildkitd+drone and hosted in gitea
   * [reg](https://github.com/genuinetools/reg) - Docker Registry UI
   * [wireguard](https://github.com/linuxserver/docker-wireguard) - The best VPN
+  * [thelounge](https://thelounge.chat/) - IRC client
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller

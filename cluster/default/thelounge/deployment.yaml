@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: thelounge
+  annotations:
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: irc.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: thelounge
+          servicePort: 9000
+        path: /
+  tls:
+  - hosts:
+    - irc.sko.ai
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thelounge
+spec:
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+  selector:
+    app: thelounge
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thelounge
+spec:
+  selector:
+    matchLabels:
+      app: thelounge
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: thelounge
+    spec:
+      containers:
+      - image: ghcr.io/linuxserver/thelounge:version-4.2.0
+        name: thelounge
+        env:
+        ports:
+        - containerPort: 9000
+          name: thelounge
+        volumeMounts:
+        - name: pv-thelounge
+          mountPath: /config
+      volumes:
+      - name: pv-thelounge
+        persistentVolumeClaim:
+          claimName: thelounge
