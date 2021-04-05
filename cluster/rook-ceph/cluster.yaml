@@ -6,7 +6,7 @@ metadata:
   namespace: rook-ceph
 spec:
   cephVersion:
-    image: ceph/ceph:v15.2.10
+    image: ceph/ceph:v15.2.7
     allowUnsupported: false
   dataDirHostPath: /var/lib/rook
   skipUpgradeChecks: false
@@ -71,4 +71,4 @@ spec:
       - name: "sda5"
     - name: "pi2"
       devices:
-      - name: "sda5"
+      - name: "sda3"
