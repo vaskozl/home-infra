@@ -72,8 +72,6 @@ spec:
         - services
         - endpoints
         - pods
-        - ingresses
-        - leases
         verbs: ["get", "list", "watch"]
       - apiGroups:
         - extensions
