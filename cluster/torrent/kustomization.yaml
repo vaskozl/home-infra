@@ -9,6 +9,8 @@ resources:
 - flood/flood.yaml
 - sort/torrent-sort-configmap.yaml 
 - sort/torrent-sort-cron.yaml
+- sort/kodipass.yaml
+
 
 configMapGenerator:
   - name: rtorrent-config
