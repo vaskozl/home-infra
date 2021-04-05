@@ -1,0 +1,25 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: gitlab-data
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: gitlab-config
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 300Mi

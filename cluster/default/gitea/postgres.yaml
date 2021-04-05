@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-gitea-config
+  namespace: default
+  labels:
+    app: postgres-gitea
+data:
+  POSTGRES_DB: gitea
+  POSTGRES_USER: gitea
+  POSTGRES_PASSWORD: gitea
+  PGDATA: /var/lib/postgresql/data/pgdata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-gitea
+  namespace: default
+  labels:
+    app: postgres-gitea
+spec:
+  type: NodePort
+  ports:
+   - port: 5432
+  selector:
+   app: postgres-gitea
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-gitea
+  namespace: default
+  labels:
+    app: postgres-gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-gitea
+  template:
+    metadata:
+      labels:
+        app: postgres-gitea
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+      - name: postgres
+        image: postgres:11 # no-up
+        envFrom:
+        - configMapRef:
+            name: postgres-config
+        ports:
+        - containerPort: 5432
+          name: postgresdb
+        volumeMounts:
+        - name: pv-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: pv-data
+        persistentVolumeClaim:
+          claimName: postgres-gitea
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-gitea
+  labels:
+    app: postgres-gitea
+spec:
+  storageClassName: "rook-ceph-block"
+  capacity:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
