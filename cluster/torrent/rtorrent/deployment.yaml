@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rtorrent
+  namespace: torrent
+spec:
+  ports:
+  - protocol: TCP
+    port: 1337
+    targetPort: 1337
+  selector:
+    app: rtorrent
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtorrent
+  namespace: torrent
+spec:
+  selector:
+    matchLabels:
+      app: rtorrent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: rtorrent
+    spec:
+      containers:
+      - image: jesec/rtorrent:0.9.8-r9
+        name: rtorrent
+        args:
+        env:
+        ports:
+        - containerPort: 1337
+          name: rtorrent
+        volumeMounts:
+        - name: pv-media
+          mountPath: /media
+        - name: config
+          mountPath: /etc/rtorrent
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      volumes:
+      - name: pv-media
+        persistentVolumeClaim:
+          claimName: nfs-hdd-raid-pvc
+      - name: config
+        configMap:
+          name: rtorrent-config
