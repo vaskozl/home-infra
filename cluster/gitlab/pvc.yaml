@@ -2,9 +2,11 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: gitlab-data
+  namespace: gitlab
   annotations:
     volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
@@ -15,9 +17,11 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: gitlab-config
+  namespace: gitlab
   annotations:
     volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
+  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
