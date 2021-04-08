@@ -22,7 +22,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 2x Wo
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [kodi-headless](https://hub.docker.com/r/linuxserver/kodi-headless) - Centralised Kodi Library indexer
   * [mojopatse](https://github.com/jhthorsen/app-mojopaste) - Pastebin written with Mojolicious
-  * [qbittorrent](https://github.com/qbittorrent/qBittorrent) - BitTorrent client
+  * [rtorrent](https://github.com/jesec/rtorrent) - BitTorrent client
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
   * [docker-sftp](https://github.com/emberstack/docker-sftp) - SFTP server
@@ -39,13 +39,12 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 2x Wo
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
-  * [metallb](https://github.com/metallb/metallb) - Load-balancer for bare-metal
-  * [redis](https://hub.docker.com/_/redis) - KV store for authelia
-  * [cockroachdb](https://hub.docker.com/r/cockroachdb/cockroach) - Postgress like DB for gitea/authelia
+  * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
   * [registry](https://hub.docker.com/_/registry) - Plain and light docker registry, runs on arm64
   * [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests) - Prometheus and friends
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [rook-ceph](https://rook.io/) - K8s storage that works properly
+  * [rook-ceph-backup-tools](https://gitlab.com/jrevolt/rook-ceph-backup) - Backup with differential ceph rbd snapshots
 
 ## Installation
 
@@ -61,5 +60,5 @@ I use a [pre-commit hook](scripts/find-unencrypted-secrets.sh) to ensure that se
 
 ```
 sops -e -i my-secret.yaml # That's it
-sops my-secret.yaml # To edit it directly in you $EDITOR
+sops my-secret.yaml # To edit it directly in your $EDITOR
 ```
