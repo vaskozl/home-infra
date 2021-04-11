@@ -108,5 +108,4 @@ spec:
             containers:
               - name: kube-rbac-proxy
                 resources:
-                  limits:
-                    memory: 100Mi
+                  limits: {}
