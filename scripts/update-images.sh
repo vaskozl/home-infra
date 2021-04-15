@@ -13,7 +13,7 @@ grep -lRP 'image:' ${1:-cluster} | while read file; do \
     }
     if ($image and $tag){
       if (/no-up$/) {
-        print STDERR "noup: $image:$tag\n";
+        print STDERR "no-up: $image:$tag\n";
         print;
         next
       }
