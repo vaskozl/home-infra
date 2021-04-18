@@ -81,6 +81,10 @@ network.scgi.open_port = 0.0.0.0:1337
 #   Groups = connection_* dht_* peer_* rpc_* storage_* thread_* tracker_* torrent_*
 log.open_file = "log", /dev/stdout
 log.add_output = "info", "log"
+log.add_output = "warn", "log"
+log.add_output = "notice", "log"
+log.add_output = "critical", "log"
+log.add_output = "error", "log"
 #log.add_output = "tracker_debug", "log"
 
 ### END of rtorrent.rc ###
