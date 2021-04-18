@@ -7,6 +7,7 @@
 #############################################################################
 
 # Instance layout (base paths)
+session.use_lock.set = no
 method.insert = cfg.basedir,  private|const|string, (cat,"/media/rtor/")
 method.insert = cfg.download, private|const|string, (cat,"/media/torrents/")
 method.insert = cfg.session,  private|const|string, (cat,(cfg.basedir),".session/")
@@ -82,5 +83,4 @@ log.open_file = "log", /dev/stdout
 log.add_output = "info", "log"
 #log.add_output = "tracker_debug", "log"
 
-check_hash = no
 ### END of rtorrent.rc ###
