@@ -41,6 +41,7 @@ spec:
           mountPath: /media
         - name: config
           mountPath: /etc/rtorrent
+      terminationGracePeriodSeconds: 90
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
