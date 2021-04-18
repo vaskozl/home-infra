@@ -74,20 +74,14 @@ spec:
         - pods
         verbs: ["get", "list", "watch"]
       - apiGroups:
-        - networking.k8s.io
+        - extensions
         resources:
-        - networkpolicies
         - ingresses
+        verbs: ["get", "list", "watch"]
+      - nonResourceURLs:
+        - /metrics
         verbs:
-        - list
-        - watch
-      - apiGroups:
-        - coordination.k8s.io
-        resources:
-        - leases
-        verbs:
-        - list
-        - watch
+        - get
     # Reduce replica counts
     - apiVersion: monitoring.coreos.com/v1
       kind: Alertmanager
