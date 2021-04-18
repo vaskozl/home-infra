@@ -48,7 +48,7 @@ network.xmlrpc.size_limit.set = 4M
 
 # Other operational settings (check & adapt)
 encoding.add = utf8
-system.umask.set = 0027
+system.umask.set = 0022
 directory.default.set = (cat, (cfg.download))
 system.cwd.set = (directory.default)
 network.http.dns_cache_timeout.set = 25
