@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: wireguard
-        image: ghcr.io/linuxserver/wireguard:version-v1.0.20210315
+        image: ghcr.io/linuxserver/wireguard:version-v1.0.20210424
         envFrom:
         - configMapRef:
             name: wireguard-configmap 
