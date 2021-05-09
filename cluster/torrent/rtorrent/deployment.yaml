@@ -30,6 +30,11 @@ spec:
     spec:
       containers:
       - image: jesec/rtorrent:0.9.8-r13
+        resources:
+          requests:
+            cpu: "250m"
+          limits:
+            cpu: "700m"
         name: rtorrent
         args:
         env:
