@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba
+  namespace: media
+spec:
+  ports:
+  - port: 139
+    name: netbios
+  - port: 445
+    name: samba
+  selector:
+    app: samba
+  type: LoadBalancer
+  externalIPs:
+  - 192.168.99.8
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba
+  namespace: media
+spec:
+  selector:
+    matchLabels:
+      app: samba
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: samba
+    spec:
+      containers:
+      - image: dperson/samba@sha256:4cb487986c024c4b42c7900b03ee5cc051d66ba57ec687c9f393e64a54cac3e3
+        name: samba
+        envFrom:
+        - secretRef:
+            name: samba-env
+        ports:
+        - containerPort: 139
+          name: netbios
+        - containerPort: 445
+          name: samba
+        volumeMounts:
+        - name: users
+          mountPath: /srv
+      volumes:
+      - name: users
+        persistentVolumeClaim:
+          claimName: samba-v1
