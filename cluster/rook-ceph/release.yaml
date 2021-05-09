@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph
-      version: v1.5.9
+      version: v1.6.2
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: rook/ceph
-      tag: v1.5.9
+      tag: v1.6.2
     csi:
       kubeletDirPath: /var/lib/kubelet
     resources:
