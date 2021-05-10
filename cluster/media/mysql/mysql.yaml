@@ -9,6 +9,7 @@ spec:
   selector:
     app: mysql
   type: LoadBalancer
+  externalTrafficPolicy: Local
   externalIPs:
   - 192.168.99.6
 ---

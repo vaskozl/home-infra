@@ -12,6 +12,7 @@ spec:
   selector:
     app: samba
   type: LoadBalancer
+  externalTrafficPolicy: Local
   externalIPs:
   - 192.168.99.8
 ---
