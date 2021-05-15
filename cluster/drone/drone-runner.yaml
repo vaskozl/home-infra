@@ -22,6 +22,6 @@ spec:
       DRONE_RPC_PROTO: http
       DRONE_NAMESPACE_DEFAULT: drone
       DRONE_RPC_SECRET: ${DRONE_RPC_SECRET}
-      DRONE_SECRET_PLUGIN_ENDPOINT: http://drone-secrets:3000
+      DRONE_SECRET_PLUGIN_ENDPOINT: http://drone-secrets-drone-kubernetes-secrets:3000
       DRONE_SECRET_PLUGIN_TOKEN: ${DRONE_SECRET_EXPORTER_KEY}
 
