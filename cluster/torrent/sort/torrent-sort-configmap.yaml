@@ -3,6 +3,8 @@ kind: ConfigMap
 metadata:
   name: torrent-sort
   namespace: torrent
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 data:
   torrent-sort.sh: |
     #!/usr/bin/bash
