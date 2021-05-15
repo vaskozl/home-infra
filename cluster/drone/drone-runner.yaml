@@ -14,6 +14,9 @@ spec:
         name: drone-charts
       interval: 1h
   values:
+    rbac:
+      buildNamespaces:
+      - drone
     env:
       DRONE_RPC_HOST: drone
       DRONE_RPC_PROTO: http
