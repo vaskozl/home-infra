@@ -9,7 +9,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs: 
-  - 192.168.99.60
+  - ${EI_EXT_DNS}
   ports:
   - port: 53
     targetPort: 53
@@ -27,7 +27,7 @@ metadata:
 spec:
   type: LoadBalancer
   externalIPs: 
-  - 192.168.99.60
+  - ${EI_EXT_DNS}
   ports:
   - port: 53
     targetPort: 53

@@ -22,7 +22,7 @@ spec:
       service:
         type: NodePort
         externalIPs:
-        - 192.168.99.4
+        - ${EI_INGRESS_EX}
         externalTrafficPolicy: Local
       ingressClass: external
       affinity:

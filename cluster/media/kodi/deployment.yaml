@@ -16,7 +16,7 @@ spec:
     app: kodi-headless
   type: LoadBalancer
   externalIPs:
-  - 192.168.99.5
+  - ${EI_KODI_HEADLESS}
 ---
 apiVersion: apps/v1
 kind: Deployment
