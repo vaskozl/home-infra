@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -20,24 +19,25 @@ spec:
       pullPolicy: IfNotPresent
     service:
       type: LoadBalancer
-      externalIPs: ['192.168.99.17']
+      externalIPs:
+      - ${EI_SFTP}
       port: 51722
     storage:
       volumes:
-        - name: app-config
-          secret:
-            secretName: sftp
-        - name: media-pv
-          persistentVolumeClaim:
-            claimName: nfs-hdd-raid-pvc
-        - name: originals
-          persistentVolumeClaim:
-            claimName: original-photos-v2
+      - name: app-config
+        secret:
+          secretName: sftp
+      - name: media-pv
+        persistentVolumeClaim:
+          claimName: nfs-hdd-raid-pvc
+      - name: originals
+        persistentVolumeClaim:
+          claimName: original-photos-v2
       volumeMounts:
-        - name: app-config
-          mountPath: /app/config
-          readOnly: true
-        - name: media-pv
-          mountPath: /home/vsz/media
-        - name: originals
-          mountPath: /home/vsz/photos
+      - name: app-config
+        mountPath: /app/config
+        readOnly: true
+      - name: media-pv
+        mountPath: /home/vsz/media
+      - name: originals
+        mountPath: /home/vsz/photos

@@ -28,7 +28,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs:
-    - 192.168.99.33
+    - ${EI_MAILSERVER}
 ---
 apiVersion: apps/v1
 kind: Deployment
