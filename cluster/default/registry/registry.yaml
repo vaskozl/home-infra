@@ -78,6 +78,8 @@ spec:
       - image: registry:2.7.1
         name: registry
         env:
+        - name: REGISTRY_STORAGE_DELETE_ENABLED
+          value: "true"
         - name: REGISTRY_HTTP_ADDR
           value: '0.0.0.0:5000'
         ports:
