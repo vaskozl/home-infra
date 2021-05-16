@@ -18,7 +18,7 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs:
-  - 192.168.99.7
+  - ${EI_GITEA}
 ---
 apiVersion: apps/v1
 kind: Deployment
