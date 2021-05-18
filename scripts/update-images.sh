@@ -12,7 +12,7 @@ grep -lRP 'image:' ${1:-cluster} | while read file; do \
       ($image, $tag) = ($2, $4) if $2;
     }
     if ($image and $tag){
-      if (/no-up$/) {
+      if (/no-up$/ or /sha256/) {
         print STDERR "no-up: $image:$tag\n";
         print;
         next
