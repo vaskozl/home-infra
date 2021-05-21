@@ -46,7 +46,7 @@ spec:
         app: code-server
     spec:
       containers:
-      - image: codercom/code-server:3.10.0
+      - image: codercom/code-server:3.10.1
         name: code-server
         args:
         - --auth
