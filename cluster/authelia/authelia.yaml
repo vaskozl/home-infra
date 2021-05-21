@@ -61,7 +61,7 @@ spec:
         runAsGroup: 4000
         fsGroup:    4000
       containers:
-      - image: authelia/authelia:4.29.2
+      - image: authelia/authelia:4.29.3
         name: authelia
         env:
         ports:
