@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reg-rgw
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: reg-rgw
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reg-rgw
+  labels:
+    app: reg-rgw
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reg-rgw
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: reg-rgw
+    spec:
+      terminationGracePeriodSeconds: 3
+      containers:
+      - name: reg-rgw
+        image: r.sko.ai/vasko/reg:v0.16.1.4
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        args:
+        - server
+        - --registry=r3.sko.ai
