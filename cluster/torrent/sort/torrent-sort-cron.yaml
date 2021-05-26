@@ -15,7 +15,7 @@ spec:
         spec:
           containers:
           - name: torrent-sort
-            image: perl:5.32-buster
+            image: perl:5.34-buster
             imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
