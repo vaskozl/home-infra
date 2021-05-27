@@ -40,6 +40,28 @@ spec:
     osdMaintenanceTimeout: 30
     manageMachineDisruptionBudgets: false
     machineDisruptionBudgetNamespace: openshift-machine-api
+  resources:
+    mgr:
+      requests:
+          cpu: "500m"
+          memory: "512Mi"
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+    mon:
+      requests:
+          cpu: "500m"
+          memory: "512Mi"
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+    osd:
+      requests:
+          cpu: "500m"
+          memory: "1024Mi"
+      limits:
+        cpu: "1"
+        memory: "2048Mi"
   placement:
     osd:
       tolerations:
