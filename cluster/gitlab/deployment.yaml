@@ -1,0 +1,79 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gitlab
+  namespace: gitlab
+  annotations:
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: gl.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: gitlab
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - gl.sko.ai
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+  - protocol: TCP
+    port: 22
+    targetPort: 22
+    name: ssh
+  selector:
+    app: gitlab
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  selector:
+    matchLabels:
+      app: gitlab
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+      - image: ulm0/gitlab:13.10.0
+        name: gitlab
+        resources:
+          requests:
+            cpu: "1000m"
+            memory: 1.5Gi
+          limits:
+            memory: 2.0Gi
+        ports:
+        - containerPort: 80
+          name: gitlab
+        volumeMounts:
+        - name: pv-gitlab-config
+          mountPath: /etc/gitlab
+        - name: pv-gitlab-data
+          mountPath: /var/opt/gitlab
+      volumes:
+      - name: pv-gitlab-config
+        persistentVolumeClaim:
+          claimName: gitlab-config
+      - name: pv-gitlab-data
+        persistentVolumeClaim:
+          claimName: gitlab-data
+
