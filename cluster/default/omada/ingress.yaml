@@ -4,11 +4,10 @@ metadata:
   name: omada
   annotations:
     kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
-    nginx.ingress.kubernetes.io/upstream-vhost: "omada:8043"
+    nginx.ingress.kubernetes.io/upstream-vhost: "omada.sko.ai:8043"
+    nginx.ingress.kubernetes.io/app-root: /login
 spec:
   rules:
   - host: omada.sko.ai
