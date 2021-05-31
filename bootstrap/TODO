@@ -23,7 +23,6 @@ o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
 ** AFTER connection:
 * k edit no to add CIDR
 * k edit no to set to PreferNoSchedule
-* add - --feature-gates=RemoveSelfLink=false to the api-server yaml config, maybe as extraflags
 * add --election-timeout=2000 to the etcd manifest
 * sysctl net.ipv4.ip_unprivileged_port_start=0 to /etc
 
