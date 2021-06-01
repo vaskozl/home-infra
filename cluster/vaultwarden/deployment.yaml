@@ -1,0 +1,69 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+  annotations:
+    kubernetes.io/ingress.class: "internal"
+spec:
+  rules:
+  - host: bw.sko.ai
+    http:
+      paths:
+      - backend:
+          serviceName: vaultwarden
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - bw.sko.ai
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+  selector:
+    app: vaultwarden
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+spec:
+  selector:
+    matchLabels:
+      app: vaultwarden
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+      - image: vaultwarden/server:1.21.0
+        name: vaultwarden
+        resources:
+          requests:
+            cpu: "100m"
+            memory: 0.2Gi
+          limits:
+            memory: 1.0Gi
+        ports:
+        - containerPort: 80
+          name: vaultwarden
+        volumeMounts:
+        - name: pv-vaultwarden-data
+          mountPath: /data
+      volumes:
+      - name: pv-vaultwarden-data
+        persistentVolumeClaim:
+          claimName: vaultwarden-data
