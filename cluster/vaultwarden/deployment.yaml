@@ -5,6 +5,7 @@ metadata:
   namespace: vaultwarden
   annotations:
     kubernetes.io/ingress.class: "internal"
+    nginx.ingress.kubernetes.io/enable-global-auth: "false"
 spec:
   rules:
   - host: bw.sko.ai
@@ -14,6 +15,10 @@ spec:
           serviceName: vaultwarden
           servicePort: 80
         path: /
+      - backend:
+          serviceName: vaultwarden
+          servicePort: 3012
+        path: /notifications/hub
   tls:
   - hosts:
     - bw.sko.ai
@@ -29,6 +34,10 @@ spec:
     port: 80
     targetPort: 80
     name: http
+  - protocol: TCP
+    port: 3012
+    targetPort: 3012
+    name: websocket
   selector:
     app: vaultwarden
 ---
@@ -51,6 +60,9 @@ spec:
       containers:
       - image: vaultwarden/server:1.21.0
         name: vaultwarden
+        env:
+          - name: WEBSOCKET_ENABLED
+            value: "true"
         resources:
           requests:
             cpu: "100m"
@@ -59,7 +71,9 @@ spec:
             memory: 1.0Gi
         ports:
         - containerPort: 80
-          name: vaultwarden
+          name: http
+        - containerPort: 3012
+          name: websocket
         volumeMounts:
         - name: pv-vaultwarden-data
           mountPath: /data
