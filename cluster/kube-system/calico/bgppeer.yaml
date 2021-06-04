@@ -11,5 +11,7 @@ kind: BGPConfiguration
 metadata:
   name: default
 spec:
+  serviceClusterIPs:
+  - cidr: 10.53.0.0/16
   serviceExternalIPs:
   - cidr: 192.168.99.0/24

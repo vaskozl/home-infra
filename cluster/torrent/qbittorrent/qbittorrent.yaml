@@ -1,0 +1,71 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: torrent
+spec:
+  chart:
+    spec:
+      chart: qbittorrent
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: default
+      version: 7.1.1
+  interval: 1h
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/qbittorrent
+      tag: v4.3.4.1
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+    service:
+      additionalServices:
+      - enabled: true
+        nameSuffix: bittorrent
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+        - 192.168.99.19
+        port:
+          port: 6881
+          name: bittorrent
+          protocol: TCP
+          targetPort: 6881
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "internal"
+        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
+        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+      hosts:
+        - host: "qb.sko.ai"
+          paths:
+          - path: /
+            pathType: Prefix
+      tls:
+      - hosts:
+        - "qb.sko.ai"
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent
+      downloads:
+        enabled: false
+    additionalVolumeMounts:
+    - name: media
+      mountPath: "/media-pv"
+    additionalVolumes:
+    - name: media
+      persistentVolumeClaim:
+        claimName: nfs-hdd-raid-pvc
+    resources:
+      requests:
+        memory: 500Mi
+        cpu: 25m
+      limits:
+        cpu: 2000m
+        memory: 800Mi
