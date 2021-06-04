@@ -47,8 +47,8 @@ network.max_open_sockets.set = 300
 
 # Memory resource usage (increase if you have a large number of items loaded,
 # and/or the available resources to spend)
-pieces.memory.max.set = 1800M
-network.xmlrpc.size_limit.set = 4M
+pieces.memory.max.set = 400M
+network.xmlrpc.size_limit.set = 1M
 
 # Other operational settings (check & adapt)
 encoding.add = utf8
