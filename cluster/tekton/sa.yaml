@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot
+  namespace: drone
+secrets:
+  - name: ssh-key

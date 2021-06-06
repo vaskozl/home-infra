@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: ssh-key
+    namespace: drone
+    annotations:
+        # Described below
+        tekton.dev/git-0: github.com
+type: kubernetes.io/ssh-auth
+stringData:
+    ssh-privatekey: ENC[AES256_GCM,data:ltDQEoFKHj0HP7E5toPC0hoW3LTCECcx09bsQBK+7+7rKqPgJwP/yEozBypW10zC73lS/kFI9WzptReFJD35u0VR/OgC1lOy2IcU5Petyn7DU04oc14PVzZLEHfat6abTGMi015uuw4FYktre27xMtSBP1VE+8U3F96Xny2evHRgsgjwpLRI6XtgNLamruENCNd6AKdQRPOzn4suMP4KD5p9jNZ7aQ6Vr6T54oTn6PRepn5z/9g+mfrdnRu48P7X9AU2bprYcxUYTIIQrsBIAbH28uclAnesaR/LrWE51vjNMSDcG/5ymvY9SpYmY/txWj4ayBtBggRs+OCVI6a9XmWATCoG3TZtyQHwlJkMBxsy6r0014h4DrzF6598E7tf2WD8KegdbFzQ2i24u9bv2THJ/Tb4RMBTuvSmwcdlLhta/gqo0pNSqf7MAJunVM+IO8q2Cn2iryl/VRyyesLlg8tKRc8dSMQvPC6OWyoQ7FpyvW8baMbMYghXeEuNU0rkuzYX4muG9LCVSbutQd7t,iv:WfWyk+oRrXLiyLkM2dHdkxW4kukAi2H0jNvzoJ3J1xQ=,tag:AOaLRiYvnNhgN26Fa7K2dw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-06-06T17:32:04Z"
+    mac: ENC[AES256_GCM,data:zd8C78ROxUr8mMXiE6h+frzM1I1NRHl9BsLqN+SIBZSV5y9RpQgEGmAgjWgbqcbn/Vdg9HSj1wR18S0j8cwQcstbX3AO3m2uSujav065GZYjsaLQzNfxDAkp6SNc0ffM61oKKCgP7tW2BusSiNYFNHgWQD1VYxcm/J78lZF8mK0=,iv:qMlPYHOwA+9sZGKD9wEx9yu8QkfAYsvD2YwrTr8i9ZY=,tag:DiCG/w14o136gifi1BGa5A==,type:str]
+    pgp:
+        - created_at: "2021-06-06T17:32:04Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAwAzrljCGPYMuHSC7HP7ygtrJ1WvJ22CAiA2JkU5FIHrUiU
+            LkGTkLYLKiwU1sQEfysOho07Ln3GYFJ3SBzrfefhsovo/5cANm+f2M3SXdqUM01H
+            /3ECuo31+yudKCr99/X324suVRMN2RC4yhXHVsnnw5hQiVSFOE3xTxzOrv2XfQfk
+            CuQAhfgqgCOA/2361DhBpFx1zbRHUm8kBXcAmuAbxLhIRqFbHvkThNt0djkpjpK1
+            BH18gG88wqgRa1pokb1KWOy7H6aLELfBFEG1kkEUF5i2LHqwBQUwOOa7mUfQW56F
+            PsOW1OREeXzuAG3buakX550Fsdd5QBMMCKPW0iTm9M00OIOlqFidohaJP5BzuQTR
+            eGxD+4PKgjfNctDbz0WSa/H8DQcDwi0epW/Yh6vjyqB7Zbz+LoapxhjoXVhb9jio
+            su7srnvxvKPn6lbNiw9zEJx/tYi5UxxfVbcjPtKsGJE/Cl2691bZDReOO9LZHm23
+            SEn93plTHEFAsG8OOn22DACvWdn+oYpkOQ7tN44a6hey7ziY4qaXT62mwDEpCtiT
+            QxUG27SEw6Zu+hIaorXeplT2c90SJqJBvm8fICFY0tSAQRx0Km6M9EVa2sH7t4AK
+            jEBcc0AreD0kz7EOGHJor2BAvysMxAhjsA7heKje1w6c9AnWeVO2ml5fLYiaKJoB
+            p9aPV9rFv3GtLflNhxUAPXvjhbRg+fEWUhp2T7S8px1Dp50fqq2yj/RW2gVlW0hJ
+            NtNA1MnoWqIk8FmFE0DaJczQ/gGF7UsBGa6PVJ7s/bYdyqbeGfk3mQo4bzIcUbwE
+            pXJ9z1zjZMhFgHhUzwVoERrJRl9rMubG8C431SFsTyc30GvUHJp2e2ajbMKuIrzI
+            TjlKe8p2pLatfaB0+jwZStO8EOVDXB0D/8lBmPscl5+RjSIIgfniQ2kPxzOCOzHv
+            AYCHQco8Crp2kCaBexGviBZBVPEDHSlRaOrfCZNRlCYSHycQo3qdyyyZYOtRcfz2
+            Zz0iTc7PThimp3k93HdOv/vSXgHpJci92nuLllW8fVQT6odsczkjMgSUZAKWcmlJ
+            55Oh3bIQKR3WNj1K35C4GgKCfQ3DRr8vWrQ2cVAaZ4D8MCgGQ+/5GCEt/SRMVVoI
+            O/7x0ESLnK4KBr9d6Y9yFw8=
+            =605j
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+    version: 3.7.1

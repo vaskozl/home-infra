@@ -1,0 +1,67 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: git-build
+  namespace: drone
+  labels:
+    app.kubernetes.io/version: '0.1'
+  annotations:
+    tekton.dev/pipelines.minVersion: '0.12.1'
+    tekton.dev/tags: clone, build, push
+spec:
+  description: >-
+    This Pipeline clones, builds and pushes, and deploys your application to a OCI registry.
+  workspaces:
+    - name: git-source
+      description: The workspace containing the source code which is to be build, pushed and deployed
+  params:
+    - name: gitUrl
+      description: Git repository url
+    - name: gitRevision
+      description: Git revision to check out
+      default: master
+    - name: pathToContext
+      type: string
+      description: The path to the build context relative to your source repo's root. 
+      default: .
+    - name: pathToDockerFile
+      type: string
+      description: The path to the dockerfile to build, relative to the context.
+      default: Dockerfile
+    - name: imageUrl
+      type: string
+      description: URL of image repository.
+    - name: imageTag
+      type: string
+      description: Tag to apply to the built image.
+      default: latest
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: git-source
+      params:
+        - name: url
+          value: "$(params.gitUrl)"
+        - name: revision
+          value: "$(params.gitRevision)"
+        - name: subdirectory
+          value: "."
+        - name: deleteExisting
+          value: "true"
+    - name: source-to-oci-image
+      taskRef:
+        name: buildkit
+      runAfter:
+        - clone-repo
+      workspaces:
+        - name: source
+          workspace: git-source
+      params:
+        - name: CONTEXT
+          value: '$(params.pathToContext)'
+        - name: IMAGE
+          value: '$(params.imageUrl):$(params.imageTag)'

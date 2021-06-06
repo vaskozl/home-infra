@@ -13,8 +13,13 @@ spec:
     This Task builds source into a container image using Moby BuildKit.
   params:
   - name: DOCKERFILE
-    description: The name of the Dockerfile
+    description: The name (or path) of the Dockerfile
     default: "Dockerfile"
+  - name: IMAGE
+    description: Name (reference) of the image to build.
+  - name: CONTEXT
+    description: The docker context
+    default: "."
   - name: BUILDKIT_CLIENT_IMAGE
     description: The name of the BuildKit client (buildctl) image
     # The image needs to be rootful because Tekton creates /builder/home/.docker/config.json owned by root:root with 0600
@@ -28,10 +33,11 @@ spec:
     default: "buildkit-client-certs"
   workspaces:
   - name: source
-  resources:
-    outputs:
-    - name: image
-      type: image
+    description: Holds the context and docker file
+  - name: dockerconfig
+    description: Includes a docker `config.json`
+    optional: true
+    mountPath: /kaniko/.docker
   volumes:
   - name: certs
     secret:
@@ -53,7 +59,5 @@ spec:
               "--progress=plain",
               "--frontend=dockerfile.v0",
               "--opt", "filename=$(params.DOCKERFILE)",
-              "--local", "context=.", "--local", "dockerfile=.",
-              "--output", "type=image,name=$(resources.outputs.image.url),push=true",
-              "--export-cache", "type=inline",
-              "--import-cache", "type=registry,ref=$(resources.outputs.image.url)"]
+              "--local", "context=$(params.CONTEXT)", "--local", "dockerfile=.",
+              "--output", "type=image,name=$(params.IMAGE),push=true"]
