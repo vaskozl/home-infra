@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.3.4.1
+      tag: v4.3.5
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -65,7 +65,7 @@ spec:
     resources:
       requests:
         memory: 500Mi
-        cpu: 25m
+        cpu: 500m
       limits:
         cpu: 2000m
         memory: 800Mi
