@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/version: "0.3"
   annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
     tekton.dev/pipelines.minVersion: "0.21.0"
     tekton.dev/tags: git
     tekton.dev/displayName: "git clone"
