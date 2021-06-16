@@ -44,7 +44,7 @@ spec:
       tls:
       - hosts:
         - "ha.sko.ai"
-    hostNetwork: false
+    hostNetwork: true
     probes:
       liveness:
         enabled: false
