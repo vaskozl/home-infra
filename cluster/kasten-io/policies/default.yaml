@@ -1,0 +1,37 @@
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Policy
+metadata:
+  name: default
+  namespace: kasten-io
+spec:
+  frequency: "@daily"
+  actions:
+    - action: backup
+      backupParameters:
+        filters:
+          includeResources:
+            - resource: persistentvolumeclaims
+          excludeResources:
+            - resource: persistentvolumeclaims
+              name: nfs-hdd-raid-pvc
+            - resource: persistentvolumeclaims
+              name: original-photos
+    - action: export
+      exportParameters:
+        frequency: "@daily"
+        profile:
+          name: minio
+          namespace: kasten-io
+        exportData:
+          enabled: true
+  retention:
+    daily: 7
+    weekly: 4
+    monthly: 3
+    yearly: 1
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - default
