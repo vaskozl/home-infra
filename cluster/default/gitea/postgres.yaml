@@ -51,7 +51,7 @@ spec:
         image: postgres:11 # no-up
         envFrom:
         - configMapRef:
-            name: postgres-config
+            name: postgres-gitea-config
         ports:
         - containerPort: 5432
           name: postgresdb
