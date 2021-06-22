@@ -47,14 +47,14 @@ spec:
           memory: "512Mi"
       limits:
         cpu: "1"
-        memory: "512Mi"
+        memory: "1024Mi"
     mon:
       requests:
           cpu: "500m"
           memory: "512Mi"
       limits:
         cpu: "1"
-        memory: "512Mi"
+        memory: "1024Mi"
     osd:
       requests:
           cpu: "500m"
