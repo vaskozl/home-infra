@@ -56,6 +56,16 @@ spec:
       labels:
         app: authelia
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - registry
+              topologyKey: "kubernetes.io/hostname"
       securityContext:
         runAsUser:  4000
         runAsGroup: 4000
