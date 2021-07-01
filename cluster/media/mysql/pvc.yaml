@@ -1,12 +1,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mysql-pvc
+  name: mysql-pvc-v2
   namespace: media
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
