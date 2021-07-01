@@ -1,10 +1,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: samba-v1
+  name: samba-v2
   namespace: media
 spec:
-  storageClassName: rook-cephfs
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
