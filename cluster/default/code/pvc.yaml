@@ -1,11 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: code-server-data
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+  name: code-server-data-v2
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
