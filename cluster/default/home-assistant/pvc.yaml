@@ -1,11 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: hass-pvc
+  name: hass-pvc-v2
   annotations:
     volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
