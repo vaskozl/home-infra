@@ -24,12 +24,12 @@ spec:
             annotations:
                 kubernetes.io/ingress.class: internal
             hosts:
-            -   host: dr.sko.ai
-                paths:
-                - /
+                - host: dr.sko.ai
+                  paths:
+                    - /
             tls:
-            -   hosts:
-                - dr.sko.ai
+                - hosts:
+                    - dr.sko.ai
         env:
             DRONE_SERVER_HOST: dr.sko.ai
             DRONE_SERVER_PROTO: https
@@ -44,17 +44,18 @@ spec:
             DRONE_GITEA_CLIENT_SECRET: ENC[AES256_GCM,data:ReGknjPehp/cZH2KrpCN/e/hkxeJ8aPfZNtVB7Axedpz9omvHAgs1Po3/fI=,iv:lQ+ncyQrBp++SIOvfd7SPrqNR/AjRd0q4ga1lAG+NMU=,tag:ikZWPkZqmxbE4zjBA8CSnA==,type:str]
         persistentVolume:
             enabled: true
-            storageClass: rook-ceph-block
+            storageClass: nfs-client
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
-    lastmodified: '2021-04-02T22:46:12Z'
-    mac: ENC[AES256_GCM,data:vgNp5inRjimvf7OPkV66oeqh4G41qq4QNaoPOQzSZnx0ngr/5TzhSS0rd9tJ6Rcd3FRCA96RIBZz4T/ZB3Ab9PplkRNxddg9l4fuvf1gtG1uuLOR8Pbp7nbNYIf27TJ72BhJMo+2P/+CzOitXxxnKxvOOBiTgTsiEanUgLcm18w=,iv:aNLRtCjbcfUHhXHjbt2U5bnLg/YHM+JS+95OYosU5DQ=,tag:P5VY40nJoX+tYHBsrazI5Q==,type:str]
+    age: []
+    lastmodified: "2021-07-01T20:38:07Z"
+    mac: ENC[AES256_GCM,data:wkotsmFwUVI5yo6krvf7srCS4/eNwYT0ZW0wMiTZKNv5S+sB9NXszjBuYr7ELndrBSs4YiCBrHW6XzxFIReB/C4VxCGogMeCAWw0NXJP72lv3+ei17ZVHPZ+I8o69/cYCZaCkAwBIwCihpJkpBt8+KqYO5bAJuJFcaE4l3/uby0=,iv:WIEgtXnr1CtAzXZrxqrFb6h3NyWXq9EE2I5QIgn1w6M=,tag://U6PsojmSgmsqN9xDf+zw==,type:str]
     pgp:
-    -   created_at: '2021-01-30T00:58:12Z'
-        enc: |
+        - created_at: "2021-01-30T00:58:12Z"
+          enc: |
             -----BEGIN PGP MESSAGE-----
 
             hQMOA4x50yY5upzjEAv/UxPTiKR23bTlDQFnOX1oAfY/PSnmZqgCYqjL4V/EGdwm
@@ -78,6 +79,6 @@ sops:
             0nIHLyHWePDRCc/rOFjC1yk=
             =freN
             -----END PGP MESSAGE-----
-        fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
     encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
-    version: 3.6.1
+    version: 3.7.1
