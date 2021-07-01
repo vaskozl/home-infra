@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wireguard 
+  name: wireguard-v2
   namespace: wireguard
 spec:
-  storageClassName: "rook-ceph-block"
+  storageClassName: "nfs-client"
   accessModes:
     - ReadWriteOnce
   resources:

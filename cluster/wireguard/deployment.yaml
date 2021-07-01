@@ -44,7 +44,7 @@ spec:
       volumes:
         - name: wg-config
           persistentVolumeClaim:
-            claimName: wireguard
+            claimName: wireguard-v2
         - name: host-volumes
           hostPath:
             path: /lib/modules
