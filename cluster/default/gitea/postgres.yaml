@@ -61,16 +61,16 @@ spec:
       volumes:
       - name: pv-data
         persistentVolumeClaim:
-          claimName: postgres-gitea
+          claimName: postgres-gitea-v2
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-gitea
+  name: postgres-gitea-v2
   labels:
     app: postgres-gitea
 spec:
-  storageClassName: "rook-ceph-block"
+  storageClassName: "nfs-client"
   capacity:
   accessModes:
     - ReadWriteOnce
