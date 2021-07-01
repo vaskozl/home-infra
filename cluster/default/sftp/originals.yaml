@@ -1,9 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: original-photos-v2
+  name: original-photos-v3
 spec:
-  storageClassName: "rook-cephfs"
+  storageClassName: "nfs-client"
   accessModes:
     - ReadWriteMany
   resources:

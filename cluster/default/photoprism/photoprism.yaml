@@ -48,8 +48,8 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: photoprism
+        existingClaim: photoprism-v2
       originals:
         enabled: true
-        existingClaim: original-photos-v2
+        existingClaim: original-photos-v3
         readOnly: true
