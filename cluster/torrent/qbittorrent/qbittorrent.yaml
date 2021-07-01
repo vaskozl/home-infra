@@ -52,7 +52,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: qbittorrent
+        existingClaim: qbittorrent-v2
       downloads:
         enabled: false
     additionalVolumeMounts:
