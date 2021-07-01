@@ -1,12 +1,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: vaultwarden-data
+  name: vaultwarden-data-v2
   namespace: vaultwarden
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:
