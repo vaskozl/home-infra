@@ -35,7 +35,7 @@ spec:
           claimName: nfs-hdd-raid-pvc
       - name: photos
         persistentVolumeClaim:
-          claimName: original-photos-v2
+          claimName: original-photos-v3
 ---
 apiVersion: v1
 kind: Service

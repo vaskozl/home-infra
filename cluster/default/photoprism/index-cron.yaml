@@ -35,6 +35,6 @@ spec:
               claimName: photoprism
           - name: originals
             persistentVolumeClaim:
-              claimName: original-photos-v2
+              claimName: original-photos-v3
           restartPolicy: Never
       parallelism: 1
