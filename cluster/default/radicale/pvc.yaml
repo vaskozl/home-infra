@@ -1,11 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: radicale
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
+  name: radicale-v2
 spec:
-  storageClassName: rook-ceph-block
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteOnce
   resources:

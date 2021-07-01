@@ -69,7 +69,7 @@ spec:
       volumes:
       - name: pv-radicale
         persistentVolumeClaim:
-          claimName: radicale
+          claimName: radicale-v2
       - name: config
         configMap:
           name: radicale-config
