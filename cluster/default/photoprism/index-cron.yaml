@@ -32,7 +32,7 @@ spec:
           volumes:
           - name: config
             persistentVolumeClaim:
-              claimName: photoprism
+              claimName: photoprism-v2
           - name: originals
             persistentVolumeClaim:
               claimName: original-photos-v3
