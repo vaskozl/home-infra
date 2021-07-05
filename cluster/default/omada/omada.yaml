@@ -27,7 +27,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - image: mbentley/omada-controller:4.3-arm64
+      - image: mbentley/omada-controller:4.4-arm64
         name: omada
         resources:
           requests:

@@ -30,7 +30,7 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: arm64v8/mariadb:10.6.1
+      - image: arm64v8/mariadb:10.6.2
         name: mysql
         envFrom:
         - secretRef:
