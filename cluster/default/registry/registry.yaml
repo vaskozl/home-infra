@@ -53,7 +53,7 @@ metadata:
   name: registry
 spec:
   serviceName: "registry"
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: registry
@@ -74,6 +74,11 @@ spec:
                     values:
                     - registry
               topologyKey: "kubernetes.io/hostname"
+      tolerations:
+      - effect: NoExecute
+        operator: Exists
+      - effect: NoSchedule
+        operator: Exists
       containers:
       - image: registry:2.7.1
         name: registry
@@ -91,4 +96,4 @@ spec:
       volumes:
       - name: var-lib-registry
         persistentVolumeClaim:
-          claimName: registry-v2
+          claimName: registry-v3
