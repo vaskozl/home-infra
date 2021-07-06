@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  namespace: drone
+  generateName: build-blog-
+spec:
+  pipelineRef:
+    name: git-build
+  params:
+    - name: gitUrl
+      value: http://git.sko.ai/vasko/blog.git
+    - name: gitRevision
+      value: 1.0.0
+    - name: imageUrl
+      value: r.sko.ai/blog
+    - name: imageTag
+      value: "1.0.0"
+  serviceAccountName: build-bot
+  workspaces:
+    - name: git-source
+      persistentVolumeClaim:
+        claimName: git-source-pvc

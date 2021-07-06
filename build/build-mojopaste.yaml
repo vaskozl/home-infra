@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  namespace: drone
+  generateName: build-mp-
+spec:
+  pipelineRef:
+    name: git-build
+  params:
+    - name: gitUrl
+      value: https://github.com/jhthorsen/app-mojopaste.git
+    - name: gitRevision
+      value: '1.05'
+    - name: imageUrl
+      value: r.sko.ai/mojopaste
+    - name: imageTag
+      value: '1.05'
+  serviceAccountName: build-bot
+  workspaces:
+    - name: git-source
+      persistentVolumeClaim:
+        claimName: git-source-pvc
