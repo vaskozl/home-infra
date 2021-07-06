@@ -64,7 +64,7 @@ spec:
                   - key: "app"
                     operator: In
                     values:
-                    - registry
+                    - authelia
               topologyKey: "kubernetes.io/hostname"
       securityContext:
         runAsUser:  4000
