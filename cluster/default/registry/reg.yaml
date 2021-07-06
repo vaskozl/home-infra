@@ -33,7 +33,7 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: reg
-        image: r.sko.ai/vasko/reg:v0.16.1.4
+        image: r.sko.ai/genuinetools/reg:v0.16.1
         ports:
         - name: http
           containerPort: 8080
