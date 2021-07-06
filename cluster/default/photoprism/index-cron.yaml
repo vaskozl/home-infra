@@ -16,10 +16,10 @@ spec:
             resources:
               requests:
                 memory: "1.5Gi"
-                cpu: "600m"
+                cpu: "300m"
               limits:
                 memory: "1.5Gi"
-                cpu: "600m"
+                cpu: "300m"
             imagePullPolicy: IfNotPresent
             args:
             - /photoprism/bin/photoprism
