@@ -8,13 +8,13 @@ spec:
     name: git-build
   params:
     - name: gitUrl
-      value: https://github.com/jhthorsen/app-mojopaste.git
+      value: https://github.com/vaskozl/app-mojopaste.git
     - name: gitRevision
-      value: '1.05'
+      value: '1.0.6'
     - name: imageUrl
       value: r.sko.ai/mojopaste
     - name: imageTag
-      value: '1.05'
+      value: '1.0.6'
   serviceAccountName: build-bot
   workspaces:
     - name: git-source

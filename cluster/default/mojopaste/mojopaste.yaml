@@ -51,7 +51,7 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
       - name: mojopaste
-        image: r.sko.ai/vasko/mojopaste:1.04.3
+        image: r.sko.ai/mojopaste:1.0.6
         ports:
         - name: http
           containerPort: 8080
