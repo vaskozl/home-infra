@@ -53,7 +53,7 @@ metadata:
   name: registry
 spec:
   serviceName: "registry"
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: registry
