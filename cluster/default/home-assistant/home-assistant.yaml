@@ -26,7 +26,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "internal"
+        kubernetes.io/ingress.class: "external"
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           location /local {
