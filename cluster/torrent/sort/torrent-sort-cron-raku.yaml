@@ -1,0 +1,37 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: torrent-sort-raku
+  namespace: torrent
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 100
+      backoffLimit: 0
+      template:
+        spec:
+          containers:
+          - name: torrent-sort
+            image: rakudo-star:2021.04
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: kodipass
+            command: [ "/usr/bin/raku" ]
+            args: [ "/script/torrent-sort.raku" ]
+            volumeMounts:
+            - name: script
+              mountPath: /script
+            - name: media-pv
+              mountPath: /media-pv
+          volumes:
+          - name: script
+            configMap:
+              name: torrent-sort-raku
+          - name: media-pv
+            persistentVolumeClaim:
+              claimName: nfs-hdd-raid-pvc
+          restartPolicy: Never
