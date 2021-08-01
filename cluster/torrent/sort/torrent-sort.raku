@@ -24,16 +24,16 @@ class Show is IO::Path {
 
   method name {
     $.basename.subst(
-     /:i <[\s\.]>?(S\d\d?|Season.?\d\d?).*$/,
+     /:i <[\s\.]>?(S\d\d?|Season.?\d\d?).*$/, # Remove everything past the season
      '', :gi
-    ).subst(/\(.*?\)/, '', :g
-    ).subst(/<["']>/, '', :g
-    ).subst(/<[\s+]>/, '.', :g
+    ).subst(/\(.*?\)/, '', :g #               # Remove everything in (parens)
+    ).subst(/<["']>/, '', :g                  # Remove quotes
+    ).subst(/<[\s+]>/, '.', :g                # Replace whitespace with dots
     ).subst(
-     /<[\(\)-]>|<[\.\s]>+/,
+     /<[\(\)-]>|<[\.\s]>+/,                   # Replace space and parens with dots
      '.', :g
     ).subst(
-      /(^\w|<[\.\s]>\w)/,
+      /(^\w|<[\.\s]>\w)/,                     # Capitalize words after dots
       {$0.uc}, :g
     )
   }
