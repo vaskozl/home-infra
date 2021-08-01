@@ -25,16 +25,16 @@ class Show is IO::Path {
   method name {
     $.basename.subst(
      /:i <[\s\.]>?(S\d\d?|Season.?\d\d?).*$/,
-     '', :i
+     '', :gi
     ).subst(/\(.*?\)/, '', :g
     ).subst(/<["']>/, '', :g
     ).subst(/<[\s+]>/, '.', :g
     ).subst(
      /<[\(\)-]>|<[\.\s]>+/,
-     '.'
+     '.', :g
     ).subst(
       /(^\w|<[\.\s]>\w)/,
-      {$0.uc}
+      {$0.uc}, :g
     )
   }
 
