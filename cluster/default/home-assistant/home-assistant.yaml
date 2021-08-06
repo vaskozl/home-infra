@@ -30,7 +30,10 @@ spec:
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
         nginx.ingress.kubernetes.io/auth-url: https://ha.sko.ai/404page
         nginx.ingress.kubernetes.io/auth-snippet: |
-          if ($request_uri ~ ^/api/webhook/) {
+          if ($request_uri ~ ^/api/) {
+            return 200;
+          }
+          if ($request_uri ~ ^/auth/) {
             return 200;
           }
           if ($remote_addr ~ ^(192\.168\.|10\.)) {
