@@ -62,7 +62,7 @@ spec:
       #      mountPath: /tmp/files
       containers:
       - name: docker-mailserver
-        image: mailserver/docker-mailserver:10.0.0
+        image: mailserver/docker-mailserver:10.1.0
         volumeMounts:
           - name: config
             subPath: postfix-accounts.cf
