@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: receiver
+  namespace: flux-system
+spec:
+  type: LoadBalancer
+  selector:
+    app: notification-controller
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 9292
