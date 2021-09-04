@@ -4,7 +4,7 @@ metadata:
   name: backend
   namespace: imagestore
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -34,4 +34,4 @@ spec:
       volumes:
         - name: media
           persistentVolumeClaim:
-            claimName: imagestore-v2
+            claimName: imagestore-v3
