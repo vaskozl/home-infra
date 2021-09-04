@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: imagestore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+      containers:
+        - env:
+            - name: PGSTRING
+              value: postgres://admin:admin123@postgres:5432/imagestore
+          image: imagestored/backend
+          name: backend
+          ports:
+            - containerPort: 4000
+          volumeMounts:
+            - mountPath: /code/media/
+              name: media
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: imagestore
