@@ -61,17 +61,16 @@ spec:
       volumes:
       - name: pv-data
         persistentVolumeClaim:
-          claimName: postgres
+          claimName: postgres-v1
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres
+  name: postgres-v1
   namespace: imagestore
   labels:
     app: postgres
 spec:
-  storageClassName: "rook-ceph-block"
   capacity:
   accessModes:
     - ReadWriteOnce

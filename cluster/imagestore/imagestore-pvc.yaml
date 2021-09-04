@@ -1,12 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: imagestore
+  name: imagestore-v2
   namespace: imagestore
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "rook-ceph-block"
 spec:
-  storageClassName: rook-ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
