@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -9,7 +10,7 @@ spec:
     matchLabels:
       app: backend
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -19,12 +20,13 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
+        fsGroupChangePolicy: OnRootMismatch
       containers:
         - env:
             - name: PGSTRING
               value: postgres://admin:admin123@postgres:5432/imagestore
-          image: imagestored/backend
+          image: 'vaskozl/imagestored-backend:1.0.0'
+          imagePullPolicy: IfNotPresent
           name: backend
           ports:
             - containerPort: 4000
