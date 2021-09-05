@@ -62,12 +62,12 @@ spec:
       volumes:
         - name: pv-data
           persistentVolumeClaim:
-            claimName: postgres-v1
+            claimName: postgres-v2
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-v1
+  name: postgres-v2
   namespace: imagestore
   labels:
     app: postgres
