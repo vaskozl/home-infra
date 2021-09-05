@@ -1,9 +1,10 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: speedtest
   annotations:
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: internal
     nginx.ingress.kubernetes.io/configuration-snippet: |
       sendfile on;
       gzip off;
@@ -20,16 +21,16 @@ metadata:
       open_file_cache_errors on;
 spec:
   rules:
-  - host: st.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: speedtest
-          servicePort: 8080
-        path: /
+    - host: st.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: speedtest
+              servicePort: 8080
+            path: /
   tls:
-  - hosts:
-    - st.sko.ai
+    - hosts:
+        - st.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -38,9 +39,9 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: speedtest
   type: LoadBalancer
@@ -61,9 +62,9 @@ spec:
         app: speedtest
     spec:
       containers:
-      - image: openspeedtest/latest@sha256:9ac74275825da609949d4ffb0d6731792d1ff06da56920cc47028053bee26a65
-        name: speedtest
-        env:
-        ports:
-        - containerPort: 8080
+        - image: openspeedtest/latest@sha256:9ac74275825da609949d4ffb0d6731792d1ff06da56920cc47028053bee26a65
           name: speedtest
+          env:
+          ports:
+            - containerPort: 8080
+              name: speedtest

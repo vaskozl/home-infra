@@ -5,20 +5,20 @@ metadata:
   name: gitea
 spec:
   ports:
-  - protocol: TCP
-    port: 3000
-    targetPort: 3000
-    name: http
-  - protocol: TCP
-    port: 22
-    targetPort: 22
-    name: ssh
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      name: http
+    - protocol: TCP
+      port: 22
+      targetPort: 22
+      name: ssh
   selector:
     app: gitea
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs:
-  - ${EI_GITEA}
+    - ${EI_GITEA}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,41 +37,41 @@ spec:
         app: gitea
     spec:
       containers:
-      - image: gitea/gitea:1.15.2
-        name: gitea
-        env:
-        ports:
-        - containerPort: 3000
-          name: http
-        - containerPort: 22
-          name: ssh
-        livenessProbe:
-          tcpSocket:
-            port: http
-          initialDelaySeconds: 200
-          timeoutSeconds: 3
-          periodSeconds: 30
-          successThreshold: 1
-          failureThreshold: 10
-        readinessProbe:
-          tcpSocket:
-            port: http
-          initialDelaySeconds: 20
-          timeoutSeconds: 3
-          periodSeconds: 30
-          successThreshold: 1
-          failureThreshold: 10
-        resources:
-          limits:
-            cpu: 2000m
-            memory: 1Gi
-          requests:
-            cpu: 500m
-            memory: 215Mi
-        volumeMounts:
-        - name: data
-          mountPath: /data
+        - image: gitea/gitea:1.15.2
+          name: gitea
+          env:
+          ports:
+            - containerPort: 3000
+              name: http
+            - containerPort: 22
+              name: ssh
+          livenessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 200
+            timeoutSeconds: 3
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 10
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 20
+            timeoutSeconds: 3
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 10
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 215Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: gitea-pvc-v2
+        - name: data
+          persistentVolumeClaim:
+            claimName: gitea-pvc-v2

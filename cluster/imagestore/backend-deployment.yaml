@@ -25,7 +25,7 @@ spec:
         - env:
             - name: PGSTRING
               value: postgres://admin:admin123@postgres:5432/imagestore
-          image: 'vaskozl/imagestored-backend:1.0.0'
+          image: vaskozl/imagestored-backend:1.0.0
           imagePullPolicy: IfNotPresent
           name: backend
           ports:

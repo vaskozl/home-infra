@@ -1,21 +1,22 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mailserver
   namespace: mailserver
   annotations:
-    kubernetes.io/ingress.class: "internal"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubernetes.io/ingress.class: internal
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-  - host: mail.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: http-echo
-          servicePort: 80
-        path: /mailserver
+    - host: mail.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: http-echo
+              servicePort: 80
+            path: /mailserver
   tls:
-  - hosts:
-    - mail.sko.ai
-    secretName: mail-cert
+    - hosts:
+        - mail.sko.ai
+      secretName: mail-cert

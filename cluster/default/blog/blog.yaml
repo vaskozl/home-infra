@@ -1,22 +1,23 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: blog
   annotations:
-    kubernetes.io/ingress.class: "external"
-    nginx.ingress.kubernetes.io/enable-global-auth: "false"
+    kubernetes.io/ingress.class: external
+    nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-  - host: sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: blog
-          servicePort: 8080
-        path: /
+    - host: sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: blog
+              servicePort: 8080
+            path: /
   tls:
-  - hosts:
-    - sko.ai
+    - hosts:
+        - sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -24,9 +25,9 @@ metadata:
   name: blog
 spec:
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: blog
   type: ClusterIP
@@ -49,20 +50,20 @@ spec:
     spec:
       terminationGracePeriodSeconds: 3
       containers:
-      - name: blog
-        image: r.sko.ai/vasko/blog:1.0.4
-        ports:
         - name: blog
-          containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /blog
-            port: 8080
-        livenessProbe:
-          httpGet:
-            path: /blog
-            port: 8080
-        resources:
-          limits:
-            cpu: 10m
-            memory: 100Mi
+          image: r.sko.ai/vasko/blog:1.0.4
+          ports:
+            - name: blog
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /blog
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /blog
+              port: 8080
+          resources:
+            limits:
+              cpu: 10m
+              memory: 100Mi

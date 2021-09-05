@@ -4,9 +4,9 @@ kind: Ingress
 metadata:
   name: gitea
   annotations:
-    kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-    nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+    kubernetes.io/ingress.class: internal
+    nginx.ingress.kubernetes.io/auth-url: https://gate.sko.ai/api/verify
+    nginx.ingress.kubernetes.io/auth-signin: https://gate.sko.ai/
     nginx.ingress.kubernetes.io/configuration-snippet: |
       auth_request_set $user $upstream_http_remote_user;
       auth_request_set $groups $upstream_http_remote_groups;
@@ -14,13 +14,13 @@ metadata:
       proxy_set_header Remote-Groups $groups;
 spec:
   rules:
-  - host: git.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: gitea
-          servicePort: http
-        path: /
+    - host: git.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: gitea
+              servicePort: http
+            path: /
   tls:
-  - hosts:
-    - git.sko.ai
+    - hosts:
+        - git.sko.ai

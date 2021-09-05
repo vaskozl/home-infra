@@ -1,8 +1,9 @@
+---
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: kubernetes-services-endpoint
   namespace: kube-system
 data:
-  KUBERNETES_SERVICE_HOST: "pir"
-  KUBERNETES_SERVICE_PORT: "6443"
+  KUBERNETES_SERVICE_HOST: pir
+  KUBERNETES_SERVICE_PORT: '6443'

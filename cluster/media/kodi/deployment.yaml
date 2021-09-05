@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,17 +7,17 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-  - port: 8080
-    name: http
-    targetPort: http
-  - port: 9090
-    name: ws
-    targetPort: ws
+    - port: 8080
+      name: http
+      targetPort: http
+    - port: 9090
+      name: ws
+      targetPort: ws
   selector:
     app: kodi-headless
   type: LoadBalancer
   externalIPs:
-  - ${EI_KODI_HEADLESS}
+    - ${EI_KODI_HEADLESS}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,24 +36,24 @@ spec:
         app: kodi-headless
     spec:
       containers:
-      - image:  lsioarmhf/kodi-headless-aarch64:44
-        name: kodi-headless
-        ports:
-        - containerPort: 8080
-          name: http
-        - containerPort: 9090
-          name: ws
-        volumeMounts:
-        - name: advancedsettings-xml
-          mountPath: /config/.kodi/userdata/advancedsettings.xml
-          subPath: advancedsettings.xml
-        - name: kodi-userdata
-          mountPath: /config/.kodi/userdata/sources.xml
-          subPath: sources.xml
+        - image: lsioarmhf/kodi-headless-aarch64:44
+          name: kodi-headless
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 9090
+              name: ws
+          volumeMounts:
+            - name: advancedsettings-xml
+              mountPath: /config/.kodi/userdata/advancedsettings.xml
+              subPath: advancedsettings.xml
+            - name: kodi-userdata
+              mountPath: /config/.kodi/userdata/sources.xml
+              subPath: sources.xml
       volumes:
-      - name: kodi-userdata
-        configMap:
-          name: kodi-userdata
-      - name: advancedsettings-xml
-        secret:
-          secretName: advancedsettings-xml
+        - name: kodi-userdata
+          configMap:
+            name: kodi-userdata
+        - name: advancedsettings-xml
+          secret:
+            secretName: advancedsettings-xml

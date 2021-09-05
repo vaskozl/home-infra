@@ -1,22 +1,23 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
- name: letsencrypt-staging
- namespace: cert-manager
+  name: letsencrypt-staging
+  namespace: cert-manager
 spec:
- acme:
+  acme:
    # The ACME server URL
-   server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
    # Email address used for ACME registration
-   email: v@sko.ai
+    email: v@sko.ai
    # Name of a secret used to store the ACME account private key
-   privateKeySecretRef:
-     name: letsencrypt-staging
+    privateKeySecretRef:
+      name: letsencrypt-staging
    # Enable the HTTP-01 challenge provider
-   solvers:
-    - dns01:
-        cloudflare:
-          email: v@sko.ai
-          apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token
+    solvers:
+      - dns01:
+          cloudflare:
+            email: v@sko.ai
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token

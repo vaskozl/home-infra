@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -910,7 +911,7 @@ data:
       "uid": "flux-cluster",
       "version": 1
     }
-  control-plane.json: |
+  control-plane.json: |-
     {
       "annotations": {
         "list": [

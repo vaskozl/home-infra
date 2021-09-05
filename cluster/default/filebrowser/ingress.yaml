@@ -1,9 +1,10 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: filebrowser
   annotations:
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: internal
     nginx.ingress.kubernetes.io/configuration-snippet: |
       auth_request_set $user $upstream_http_remote_user;
       auth_request_set $groups $upstream_http_remote_groups;
@@ -11,16 +12,16 @@ metadata:
       proxy_set_header Remote-Groups $groups;
 spec:
   rules:
-  - host: f.sko.ai
-    http:
-      paths:
-      - backend:
-          service:
-            name: filebrowser
-            port:
-              name: http
-        path: /
-        pathType: Prefix
+    - host: f.sko.ai
+      http:
+        paths:
+          - backend:
+              service:
+                name: filebrowser
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - f.sko.ai
+    - hosts:
+        - f.sko.ai

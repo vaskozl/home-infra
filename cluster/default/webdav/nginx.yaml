@@ -14,28 +14,28 @@ spec:
         app: webdav
     spec:
       containers:
-      - name: webdav
-        image: nginx
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
-          readOnly: true
-          name: webdav-conf
-        - mountPath: /mnt/photos
-          name: photos
-        - mountPath: /mnt/media
-          name: media-pv
+        - name: webdav
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
+              readOnly: true
+              name: webdav-conf
+            - mountPath: /mnt/photos
+              name: photos
+            - mountPath: /mnt/media
+              name: media-pv
       volumes:
-      - name: webdav-conf
-        configMap:
-          name: webdav-conf 
-      - name: media-pv
-        persistentVolumeClaim:
-          claimName: nfs-hdd-raid-pvc
-      - name: photos
-        persistentVolumeClaim:
-          claimName: original-photos-v3
+        - name: webdav-conf
+          configMap:
+            name: webdav-conf
+        - name: media-pv
+          persistentVolumeClaim:
+            claimName: nfs-hdd-raid-pvc
+        - name: photos
+          persistentVolumeClaim:
+            claimName: original-photos-v3
 ---
 apiVersion: v1
 kind: Service
@@ -44,8 +44,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
   selector:
     app: webdav
-

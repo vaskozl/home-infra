@@ -1,19 +1,20 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: grafana
   namespace: monitoring
   annotations:
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: internal
 spec:
   rules:
-  - host: graf.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: grafana
-          servicePort: 3000
-        path: /
+    - host: graf.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: grafana
+              servicePort: 3000
+            path: /
   tls:
-  - hosts:
-    - graf.sko.ai
+    - hosts:
+        - graf.sko.ai

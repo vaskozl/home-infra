@@ -1,3 +1,4 @@
+---
 apiVersion: crd.projectcalico.org/v1
 kind: BGPPeer
 metadata:
@@ -12,6 +13,6 @@ metadata:
   name: default
 spec:
   serviceClusterIPs:
-  - cidr: 10.53.0.0/16
+    - cidr: 10.53.0.0/16
   serviceExternalIPs:
-  - cidr: 192.168.99.0/24
+    - cidr: 192.168.99.0/24

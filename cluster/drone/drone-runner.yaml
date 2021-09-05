@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -16,7 +17,7 @@ spec:
   values:
     rbac:
       buildNamespaces:
-      - drone
+        - drone
     env:
       DRONE_RPC_HOST: drone
       DRONE_RPC_PROTO: http
@@ -24,4 +25,3 @@ spec:
       DRONE_RPC_SECRET: ${DRONE_RPC_SECRET}
       DRONE_SECRET_PLUGIN_ENDPOINT: http://drone-secrets-drone-kubernetes-secrets:3000
       DRONE_SECRET_PLUGIN_TOKEN: ${DRONE_SECRET_EXPORTER_KEY}
-

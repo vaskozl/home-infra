@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-  - name: kube-prometheus-setup
+    - name: kube-prometheus-setup
   interval: 1h0m0s
   path: ./manifests
   prune: true
@@ -24,8 +24,8 @@ spec:
         template:
           spec:
             containers:
-            - name: kube-state-metrics
-              image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-beta
+              - name: kube-state-metrics
+                image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-beta
     # Add Grafana dashboards and disable password
     - apiVersion: apps/v1
       kind: Deployment
@@ -36,52 +36,52 @@ spec:
         template:
           spec:
             containers:
-            - name: grafana
-              env:
-              - name: GF_AUTH_BASIC_ENABLED
-                value: "false"
-              - name: GF_AUTH_ANONYMOUS_ENABLED
-                value: "true"
-              - name: GF_AUTH_ANONYMOUS_ORG_ROLE
-                value: Admin
-              volumeMounts:
-              - name: flux-dashboards
-                mountPath: /grafana-dashboard-definitions/0/flux
-              - name: ceph-dashboards
-                mountPath: /grafana-dashboard-definitions/0/ceph
+              - name: grafana
+                env:
+                  - name: GF_AUTH_BASIC_ENABLED
+                    value: 'false'
+                  - name: GF_AUTH_ANONYMOUS_ENABLED
+                    value: 'true'
+                  - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+                    value: Admin
+                volumeMounts:
+                  - name: flux-dashboards
+                    mountPath: /grafana-dashboard-definitions/0/flux
+                  - name: ceph-dashboards
+                    mountPath: /grafana-dashboard-definitions/0/ceph
             volumes:
-            - name: flux-dashboards
-              configMap:
-                name: grafana-dashboards-flux
-                defaultMode: 420
-            - name: ceph-dashboards
-              configMap:
-                name: grafana-dashboards-ceph
-                defaultMode: 420
+              - name: flux-dashboards
+                configMap:
+                  name: grafana-dashboards-flux
+                  defaultMode: 420
+              - name: ceph-dashboards
+                configMap:
+                  name: grafana-dashboards-ceph
+                  defaultMode: 420
     # Let prometheus scrape all namespaces (like flux-system)
     - apiVersion: rbac.authorization.k8s.io/v1
       kind: ClusterRole
       metadata:
         name: prometheus-k8s
       rules:
-      - apiGroups:
-        - ""
-        resources:
-        - nodes
-        - nodes/metrics
-        - services
-        - endpoints
-        - pods
-        verbs: ["get", "list", "watch"]
-      - apiGroups:
-        - extensions
-        resources:
-        - ingresses
-        verbs: ["get", "list", "watch"]
-      - nonResourceURLs:
-        - /metrics
-        verbs:
-        - get
+        - apiGroups:
+            - ''
+          resources:
+            - nodes
+            - nodes/metrics
+            - services
+            - endpoints
+            - pods
+          verbs: [get, list, watch]
+        - apiGroups:
+            - extensions
+          resources:
+            - ingresses
+          verbs: [get, list, watch]
+        - nonResourceURLs:
+            - /metrics
+          verbs:
+            - get
     # Reduce replica counts
     - apiVersion: monitoring.coreos.com/v1
       kind: Alertmanager
@@ -100,7 +100,7 @@ spec:
     - apiVersion: apps/v1
       kind: DaemonSet
       metadata:
-        name:  node-exporter
+        name: node-exporter
         namespace: monitoring
       spec:
         template:

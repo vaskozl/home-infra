@@ -1,10 +1,11 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: coredns
   namespace: kube-system
 data:
-  Corefile: |
+  Corefile: |-
     .:53 {
         errors
         health {

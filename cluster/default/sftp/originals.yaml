@@ -1,9 +1,10 @@
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: original-photos-v3
 spec:
-  storageClassName: "nfs-client"
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteMany
   resources:

@@ -1,12 +1,13 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: omada
 spec:
   ports:
-  - protocol: TCP
-    port: 8043
-    targetPort: 8043
+    - protocol: TCP
+      port: 8043
+      targetPort: 8043
   selector:
     app: omada
 ---
@@ -27,22 +28,22 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - image: mbentley/omada-controller:4.4-arm64
-        name: omada
-        resources:
-          requests:
-            cpu: "100m"
-            memory: 400Mi
-          limits:
-            memory: 1.0Gi
-        env:
-        ports:
-        - containerPort: 8043
+        - image: mbentley/omada-controller:4.4-arm64
           name: omada
-        volumeMounts:
-        - name: pv-omada
-          mountPath: /opt/tplink/EAPController/data
+          resources:
+            requests:
+              cpu: 100m
+              memory: 400Mi
+            limits:
+              memory: 1.0Gi
+          env:
+          ports:
+            - containerPort: 8043
+              name: omada
+          volumeMounts:
+            - name: pv-omada
+              mountPath: /opt/tplink/EAPController/data
       volumes:
-      - name: pv-omada
-        persistentVolumeClaim:
-          claimName: omada-pvc-v2
+        - name: pv-omada
+          persistentVolumeClaim:
+            claimName: omada-pvc-v2

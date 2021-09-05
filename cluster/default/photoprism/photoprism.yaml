@@ -15,36 +15,36 @@ spec:
   interval: 1h
   values:
     env:
-      PHOTOPRISM_SITE_URL: "https://p.sko.ai/"
+      PHOTOPRISM_SITE_URL: https://p.sko.ai/
       PHOTOPRISM_PUBLIC: true
       PHOTOPRISM_DEBUG: false
       PHOTOPRISM_THUMB_SIZE: 1280
       PHOTOPRISM_THUMB_UNCACHED: true
       PHOTOPRISM_THUMB_SIZE_UNCACHED: 1280
     image:
-      repository: "photoprism/photoprism-arm64"
-      tag: "20210523"
+      repository: photoprism/photoprism-arm64
+      tag: '20210523'
     resources:
       requests:
-        cpu: "100m"
+        cpu: 100m
         memory: 0.5Gi
       limits:
-        cpu: "2000m"
+        cpu: 2000m
         memory: 1.0Gi
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "internal"
-        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+        kubernetes.io/ingress.class: internal
+        nginx.ingress.kubernetes.io/auth-url: https://gate.sko.ai/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: https://gate.sko.ai/
       hosts:
-      - host: "p.sko.ai"
-        paths:
-        - path: /
-          pathType: Prefix
+        - host: p.sko.ai
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
-      - hosts:
-        - "p.sko.ai"
+        - hosts:
+            - p.sko.ai
     persistence:
       config:
         enabled: true

@@ -24,31 +24,31 @@ spec:
       fsGroup: 1000
     service:
       additionalServices:
-      - enabled: true
-        nameSuffix: bittorrent
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        externalIPs:
-        - 192.168.99.19
-        port:
-          port: 6881
-          name: bittorrent
-          protocol: TCP
-          targetPort: 6881
+        - enabled: true
+          nameSuffix: bittorrent
+          type: LoadBalancer
+          externalTrafficPolicy: Local
+          externalIPs:
+            - 192.168.99.19
+          port:
+            port: 6881
+            name: bittorrent
+            protocol: TCP
+            targetPort: 6881
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "internal"
-        nginx.ingress.kubernetes.io/auth-url: "https://gate.sko.ai/api/verify"
-        nginx.ingress.kubernetes.io/auth-signin: "https://gate.sko.ai/"
+        kubernetes.io/ingress.class: internal
+        nginx.ingress.kubernetes.io/auth-url: https://gate.sko.ai/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: https://gate.sko.ai/
       hosts:
-        - host: "qb.sko.ai"
+        - host: qb.sko.ai
           paths:
-          - path: /
-            pathType: Prefix
+            - path: /
+              pathType: Prefix
       tls:
-      - hosts:
-        - "qb.sko.ai"
+        - hosts:
+            - qb.sko.ai
     persistence:
       config:
         enabled: true
@@ -56,12 +56,12 @@ spec:
       downloads:
         enabled: false
     additionalVolumeMounts:
-    - name: media
-      mountPath: "/media-pv"
+      - name: media
+        mountPath: /media-pv
     additionalVolumes:
-    - name: media
-      persistentVolumeClaim:
-        claimName: nfs-hdd-raid-pvc
+      - name: media
+        persistentVolumeClaim:
+          claimName: nfs-hdd-raid-pvc
     resources:
       requests:
         memory: 500Mi

@@ -9,8 +9,8 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: "sko.ai"
+  commonName: sko.ai
   dnsNames:
-  - "sko.ai"
-  - "*.sko.ai"
-  - "*.k8s.sko.ai"
+    - sko.ai
+    - '*.sko.ai'
+    - '*.k8s.sko.ai'

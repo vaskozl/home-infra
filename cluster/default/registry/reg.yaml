@@ -5,9 +5,9 @@ metadata:
   name: reg
 spec:
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: reg
   type: ClusterIP
@@ -32,16 +32,16 @@ spec:
     spec:
       terminationGracePeriodSeconds: 3
       containers:
-      - name: reg
-        image: r.sko.ai/genuinetools/reg:v0.16.1
-        ports:
-        - name: http
-          containerPort: 8080
-        resources:
-          limits:
-            cpu: 500m
-            memory: 100Mi
-        args:
-        - server
-        - --registry=r.sko.ai
-        - --interval=5m0s
+        - name: reg
+          image: r.sko.ai/genuinetools/reg:v0.16.1
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: 500m
+              memory: 100Mi
+          args:
+            - server
+            - --registry=r.sko.ai
+            - --interval=5m0s

@@ -1,9 +1,10 @@
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: index-photoprism
 spec:
-  schedule: "0 */1 * * *"
+  schedule: 0 */1 * * *
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -11,30 +12,30 @@ spec:
       template:
         spec:
           containers:
-          - name: photoprism-index
-            image: photoprism/photoprism-arm64:20210523
-            resources:
-              requests:
-                memory: "1.5Gi"
-                cpu: "300m"
-              limits:
-                memory: "1.5Gi"
-                cpu: "300m"
-            imagePullPolicy: IfNotPresent
-            args:
-            - /photoprism/bin/photoprism
-            - index
-            volumeMounts:
-            - mountPath: /photoprism/storage
-              name: config
-            - mountPath: /photoprism/originals
-              name: originals
+            - name: photoprism-index
+              image: photoprism/photoprism-arm64:20210523
+              resources:
+                requests:
+                  memory: 1.5Gi
+                  cpu: 300m
+                limits:
+                  memory: 1.5Gi
+                  cpu: 300m
+              imagePullPolicy: IfNotPresent
+              args:
+                - /photoprism/bin/photoprism
+                - index
+              volumeMounts:
+                - mountPath: /photoprism/storage
+                  name: config
+                - mountPath: /photoprism/originals
+                  name: originals
           volumes:
-          - name: config
-            persistentVolumeClaim:
-              claimName: photoprism-v2
-          - name: originals
-            persistentVolumeClaim:
-              claimName: original-photos-v3
+            - name: config
+              persistentVolumeClaim:
+                claimName: photoprism-v2
+            - name: originals
+              persistentVolumeClaim:
+                claimName: original-photos-v3
           restartPolicy: Never
       parallelism: 1

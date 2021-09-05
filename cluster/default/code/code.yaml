@@ -1,21 +1,22 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: code-server
   annotations:
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: internal
 spec:
   rules:
-  - host: code.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: code-server
-          servicePort: 8080
-        path: /
+    - host: code.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: code-server
+              servicePort: 8080
+            path: /
   tls:
-  - hosts:
-    - code.sko.ai
+    - hosts:
+        - code.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -23,9 +24,9 @@ metadata:
   name: code-server
 spec:
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: code-server
   type: LoadBalancer
@@ -46,23 +47,23 @@ spec:
         app: code-server
     spec:
       containers:
-      - image: codercom/code-server:3.11.1
-        name: code-server
-        args:
-        - --auth
-        - "none"
-        env:
-        ports:
-        - containerPort: 8080
+        - image: codercom/code-server:3.11.1
           name: code-server
-        volumeMounts:
-        - name: pv-code-server
-          mountPath: /home/coder
+          args:
+            - --auth
+            - none
+          env:
+          ports:
+            - containerPort: 8080
+              name: code-server
+          volumeMounts:
+            - name: pv-code-server
+              mountPath: /home/coder
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
       volumes:
-      - name: pv-code-server
-        persistentVolumeClaim:
-          claimName: code-server-data-v2
+        - name: pv-code-server
+          persistentVolumeClaim:
+            claimName: code-server-data-v2

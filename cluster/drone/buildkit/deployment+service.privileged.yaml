@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,7 +66,6 @@ spec:
           hostPath:
             path: /dev/shm
             type: Directory
-
 ---
 apiVersion: v1
 kind: Service

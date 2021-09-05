@@ -18,7 +18,7 @@ spec:
       repository: homeassistant/home-assistant
       tag: 2021.9.2
     env:
-      TZ: "Europe/London"
+      TZ: Europe/London
     persistence:
       config:
         enabled: true
@@ -26,8 +26,8 @@ spec:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "external"
-        nginx.ingress.kubernetes.io/enable-global-auth: "false"
+        kubernetes.io/ingress.class: external
+        nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         nginx.ingress.kubernetes.io/auth-url: https://ha.sko.ai/404page
         nginx.ingress.kubernetes.io/auth-snippet: |
           if ($request_uri ~ ^/api/) {
@@ -46,13 +46,13 @@ spec:
             return 403;
           }
       hosts:
-        - host: "ha.sko.ai"
+        - host: ha.sko.ai
           paths:
-          - path: /
-            pathType: Prefix
+            - path: /
+              pathType: Prefix
       tls:
-      - hosts:
-        - "ha.sko.ai"
+        - hosts:
+            - ha.sko.ai
     hostNetwork: true
     probes:
       liveness:

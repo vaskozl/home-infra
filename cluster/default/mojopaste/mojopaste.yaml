@@ -1,21 +1,22 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mojopaste
   annotations:
-    kubernetes.io/ingress.class: "internal"
+    kubernetes.io/ingress.class: internal
 spec:
   rules:
-  - host: mp.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: mojopaste
-          servicePort: 8080
-        path: /
+    - host: mp.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: mojopaste
+              servicePort: 8080
+            path: /
   tls:
-  - hosts:
-    - mp.sko.ai
+    - hosts:
+        - mp.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -23,9 +24,9 @@ metadata:
   name: mojopaste
 spec:
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: mojopaste
   type: ClusterIP
@@ -50,23 +51,23 @@ spec:
     spec:
       terminationGracePeriodSeconds: 3
       containers:
-      - name: mojopaste
-        image: r.sko.ai/mojopaste:1.0.6
-        ports:
-        - name: http
-          containerPort: 8080
-        resources:
-          limits:
-            cpu: 500m
-            memory: 100Mi
-        volumeMounts:
-        - name: pv-mojopaste
-          mountPath: /app/data
+        - name: mojopaste
+          image: r.sko.ai/mojopaste:1.0.6
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: 500m
+              memory: 100Mi
+          volumeMounts:
+            - name: pv-mojopaste
+              mountPath: /app/data
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
       volumes:
-      - name: pv-mojopaste
-        persistentVolumeClaim:
-          claimName: mojopaste-v2
+        - name: pv-mojopaste
+          persistentVolumeClaim:
+            claimName: mojopaste-v2

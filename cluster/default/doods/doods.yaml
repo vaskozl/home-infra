@@ -1,12 +1,13 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: doods
 spec:
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: doods
   type: LoadBalancer
@@ -27,15 +28,15 @@ spec:
         app: doods
     spec:
       containers:
-      - image: snowzach/doods:latest
-        name: doods
-        env:
-        ports:
-        - containerPort: 8080
+        - image: snowzach/doods:latest
           name: doods
-        resources:
-          requests:
-            cpu: "300m"
-            memory: 600Mi
-          limits:
-            memory: 1.1Gi
+          env:
+          ports:
+            - containerPort: 8080
+              name: doods
+          resources:
+            requests:
+              cpu: 300m
+              memory: 600Mi
+            limits:
+              memory: 1.1Gi

@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
@@ -6,7 +7,7 @@ metadata:
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 1
-  schedule: "*/10 * * * *"
+  schedule: '*/10 * * * *'
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 100
@@ -14,24 +15,24 @@ spec:
       template:
         spec:
           containers:
-          - name: torrent-sort
-            image: perl:5.34-buster
-            imagePullPolicy: IfNotPresent
-            envFrom:
-            - secretRef:
-                name: kodipass
-            command: [ "/bin/bash" ]
-            args: [ "/script/torrent-sort.sh" ]
-            volumeMounts:
-            - name: script
-              mountPath: /script
-            - name: media-pv
-              mountPath: /media-pv
+            - name: torrent-sort
+              image: perl:5.34-buster
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: kodipass
+              command: [/bin/bash]
+              args: [/script/torrent-sort.sh]
+              volumeMounts:
+                - name: script
+                  mountPath: /script
+                - name: media-pv
+                  mountPath: /media-pv
           volumes:
-          - name: script
-            configMap:
-              name: torrent-sort
-          - name: media-pv
-            persistentVolumeClaim:
-              claimName: nfs-hdd-raid-pvc
+            - name: script
+              configMap:
+                name: torrent-sort
+            - name: media-pv
+              persistentVolumeClaim:
+                claimName: nfs-hdd-raid-pvc
           restartPolicy: Never

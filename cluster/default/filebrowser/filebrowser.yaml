@@ -1,17 +1,18 @@
+---
 kind: ConfigMap
 apiVersion: v1
 metadata:
-    name: config
+  name: config
 data:
-    .filebrowser.json: |
-      {
-        "port": 8080,
-        "baseURL": "",
-        "address": "",
-        "log": "stdout",
-        "database": "/database.db",
-        "root": "/srv"
-      }
+  .filebrowser.json: |
+    {
+      "port": 8080,
+      "baseURL": "",
+      "address": "",
+      "log": "stdout",
+      "database": "/database.db",
+      "root": "/srv"
+    }
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,22 +32,24 @@ spec:
         app: filebrowser
     spec:
       containers:
-      - image: filebrowser/filebrowser:v2.17.2
-        name: filebrowser
-        command: [ 'sh' ]
-        args:
-          - '-c'
-          - '/filebrowser config init && /filebrowser users add vasko foo && /filebrowser users add leane foo && /filebrowser config set --auth.method=proxy --auth.header=Remote-User && /filebrowser'
-        ports:
-          - containerPort: 8080
-        volumeMounts:
-          - mountPath: /srv/media/
-            name: media-pv
-          - mountPath: /srv/photos/
-            name: originals
-          - mountPath: /.filebrowser.json
-            subPath: .filebrowser.json
-            name: config
+        - image: filebrowser/filebrowser:v2.17.2
+          name: filebrowser
+          command: [sh]
+          args:
+            - -c
+            - /filebrowser config init && /filebrowser users add vasko foo && /filebrowser
+              users add leane foo && /filebrowser config set --auth.method=proxy --auth.header=Remote-User
+              && /filebrowser
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /srv/media/
+              name: media-pv
+            - mountPath: /srv/photos/
+              name: originals
+            - mountPath: /.filebrowser.json
+              subPath: .filebrowser.json
+              name: config
       volumes:
         - name: originals
           persistentVolumeClaim:

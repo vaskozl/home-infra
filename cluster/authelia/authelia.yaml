@@ -1,12 +1,13 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: authelia
   namespace: authelia
   annotations:
-    kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/enable-global-auth: "false"
-    nginx.ingress.kubernetes.io/configuration-snippet: |    
+    kubernetes.io/ingress.class: internal
+    nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+    nginx.ingress.kubernetes.io/configuration-snippet: |
       # https://www.authelia.com/docs/security/measures.html
       add_header Cache-Control "no-store";
       add_header Pragma "no-cache";
@@ -14,16 +15,16 @@ metadata:
       add_header X-XSS-Protection "1; mode=block";
 spec:
   rules:
-  - host: gate.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: authelia
-          servicePort: 80
-        path: /
+    - host: gate.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: authelia
+              servicePort: 80
+            path: /
   tls:
-  - hosts:
-    - gate.sko.ai
+    - hosts:
+        - gate.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -32,9 +33,9 @@ metadata:
   namespace: authelia
 spec:
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
   selector:
     app: authelia
   type: ClusterIP
@@ -62,30 +63,30 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: "app"
+                  - key: app
                     operator: In
                     values:
-                    - authelia
-              topologyKey: "kubernetes.io/hostname"
+                      - authelia
+              topologyKey: kubernetes.io/hostname
       securityContext:
-        runAsUser:  4000
+        runAsUser: 4000
         runAsGroup: 4000
-        fsGroup:    4000
+        fsGroup: 4000
       containers:
-      - image: authelia/authelia:4.30.4
-        name: authelia
-        env:
-        ports:
-        - containerPort: 8080
+        - image: authelia/authelia:4.30.4
           name: authelia
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: authelia
-        volumeMounts:
-        - name: config
-          mountPath: /config
+          env:
+          ports:
+            - containerPort: 8080
+              name: authelia
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: authelia
+          volumeMounts:
+            - name: config
+              mountPath: /config
       volumes:
-      - name: config
-        configMap:
-          name: authelia-config
+        - name: config
+          configMap:
+            name: authelia-config

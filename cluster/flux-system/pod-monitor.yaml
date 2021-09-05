@@ -1,3 +1,4 @@
+---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
@@ -11,7 +12,7 @@ spec:
     matchLabels:
       app: source-controller
   podMetricsEndpoints:
-  - port: http-prom
+    - port: http-prom
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -26,7 +27,7 @@ spec:
     matchLabels:
       app: helm-controller
   podMetricsEndpoints:
-  - port: http-prom
+    - port: http-prom
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -41,7 +42,7 @@ spec:
     matchLabels:
       app: kustomize-controller
   podMetricsEndpoints:
-  - port: http-prom
+    - port: http-prom
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
@@ -56,4 +57,4 @@ spec:
     matchLabels:
       app: notification-controller
   podMetricsEndpoints:
-  - port: http-prom
+    - port: http-prom

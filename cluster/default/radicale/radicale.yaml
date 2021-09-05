@@ -1,22 +1,23 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: radicale
   annotations:
-    kubernetes.io/ingress.class: "internal"
-    nginx.ingress.kubernetes.io/enable-global-auth: "false"
+    kubernetes.io/ingress.class: internal
+    nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-  - host: rc.sko.ai
-    http:
-      paths:
-      - backend:
-          serviceName: radicale
-          servicePort: 5232
-        path: /
+    - host: rc.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: radicale
+              servicePort: 5232
+            path: /
   tls:
-  - hosts:
-    - rc.sko.ai
+    - hosts:
+        - rc.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -24,9 +25,9 @@ metadata:
   name: radicale
 spec:
   ports:
-  - protocol: TCP
-    port: 5232
-    targetPort: 5232
+    - protocol: TCP
+      port: 5232
+      targetPort: 5232
   selector:
     app: radicale
   type: ClusterIP
@@ -47,32 +48,32 @@ spec:
         app: radicale
     spec:
       containers:
-      - image: tomsquest/docker-radicale:3.0.6.2
-        name: radicale
-        env:
-        ports:
-        - containerPort: 5232
+        - image: tomsquest/docker-radicale:3.0.6.2
           name: radicale
-        volumeMounts:
-        - name: pv-radicale
-          mountPath: /data
-        - name: config
-          mountPath: /config
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 5232
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 5232
+          env:
+          ports:
+            - containerPort: 5232
+              name: radicale
+          volumeMounts:
+            - name: pv-radicale
+              mountPath: /data
+            - name: config
+              mountPath: /config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5232
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5232
       volumes:
-      - name: pv-radicale
-        persistentVolumeClaim:
-          claimName: radicale-v2
-      - name: config
-        configMap:
-          name: radicale-config
+        - name: pv-radicale
+          persistentVolumeClaim:
+            claimName: radicale-v2
+        - name: config
+          configMap:
+            name: radicale-config
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -80,7 +81,7 @@ metadata:
   name: radicale-config
   namespace: default
 data:
-  config: |
+  config: |-
     [server]
     hosts = 0.0.0.0:5232
 

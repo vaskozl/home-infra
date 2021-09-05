@@ -1,9 +1,10 @@
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: photoprism-v2
 spec:
-  storageClassName: "nfs-client"
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteMany
   resources:
