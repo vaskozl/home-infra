@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: photoprismdb
+  namespace: default
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photoprismdb
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mariadb
+          image: arm64v8/mariadb:10.6.4
+          env:
+            - name: MYSQL_DATABASE
+              value: photoprism
+            - name: MYSQL_USER
+              value: photoprism
+            - name: MYSQL_PASSWORD
+              value: photoprism
+            - name: MYSQL_ROOT_PASSWORD
+              value: photoprism
+          args:
+            - mysqld
+            - --transaction-isolation=READ-COMMITTED 
+            - --character-set-server=utf8mb4 
+            - --collation-server=utf8mb4_unicode_ci 
+            - --max-connections=512 
+            - --innodb-rollback-on-timeout=OFF 
+            - --innodb-lock-wait-timeout=50
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: photoprismdb-pvc-v1

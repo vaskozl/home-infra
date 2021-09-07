@@ -21,6 +21,14 @@ spec:
       PHOTOPRISM_THUMB_SIZE: 1280
       PHOTOPRISM_THUMB_UNCACHED: true
       PHOTOPRISM_THUMB_SIZE_UNCACHED: 1280
+      TENSORFLOW_API: 'http://blind:8501/v1/models/model:predict'
+      PHOTOPRISM_DETECT_NSFW: false
+      PHOTOPRISM_DISABLE_FFMPEG: true
+      PHOTOPRISM_DATABASE_DRIVER: "mysql"
+      PHOTOPRISM_DATABASE_SERVER: "photoprismdb:3306"
+      PHOTOPRISM_DATABASE_NAME: "photoprism"
+      PHOTOPRISM_DATABASE_USER: "root"
+      PHOTOPRISM_DATABASE_PASSWORD: "photoprism"
     image:
       repository: photoprism/photoprism-arm64
       tag: '20210523'
