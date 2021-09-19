@@ -13,7 +13,7 @@ spec:
         spec:
           containers:
             - name: photoprism-index
-              image: photoprism/photoprism-arm64:20210523
+              image: vaskozl/photoprism:20210909
               resources:
                 requests:
                   memory: 1.5Gi
@@ -22,9 +22,27 @@ spec:
                   memory: 1.5Gi
                   cpu: 300m
               imagePullPolicy: IfNotPresent
+              env:
+              - name: TENSORFLOW_API
+                value: 'http://blind:8501/v1/models/model:predict'
+              - name: PHOTOPRISM_DETECT_NSFW
+                value: 'false'
+              - name: PHOTOPRISM_DISABLE_FFMPEG
+                value: 'true'
+              - name: PHOTOPRISM_DATABASE_DRIVER 
+                value: "mysql"
+              - name: PHOTOPRISM_DATABASE_SERVER
+                value: "photoprismdb:3306"
+              - name: PHOTOPRISM_DATABASE_NAME
+                value: "photoprism"
+              - name: PHOTOPRISM_DATABASE_PASSWORD
+                value: "photoprism"
+              - name: PHOTOPRISM_DATABASE_USER
+                value: "root"
               args:
-                - /photoprism/bin/photoprism
-                - index
+                - sh
+                - -c
+                - "curl  https://storage.googleapis.com/bit_models/imagenet21k_wordnet_lemmas.txt --output /photoprism/assets/nasnet/labels-21k.txt && /photoprism/bin/photoprism index"
               volumeMounts:
                 - mountPath: /photoprism/storage
                   name: config
