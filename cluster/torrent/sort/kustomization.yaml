@@ -4,8 +4,6 @@ kind: Kustomization
 namespace: torrent
 resources:
   - kodipass.yaml
-  - torrent-sort-configmap.yaml
-  - torrent-sort-cron.yaml
   - torrent-sort-cron-raku.yaml
 
 configMapGenerator:
