@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - name: torrent-sort
-              image: rakudo-star:2021.04
+              image: rakudo-star:2021.04-alpine
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
