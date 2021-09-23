@@ -29,6 +29,7 @@ spec:
       PHOTOPRISM_DATABASE_NAME: "photoprism"
       PHOTOPRISM_DATABASE_USER: "root"
       PHOTOPRISM_DATABASE_PASSWORD: "photoprism"
+      PHOTOPRISM_DISABLE_FFMPEG: true
     image:
       repository: vaskozl/photoprism
       tag: '20210909'
