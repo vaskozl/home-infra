@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serving
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serving
+  template:
+    metadata:
+      labels:
+        app: serving
+    spec:
+      containers:
+        - image: emacski/tensorflow-serving:2.5.0
+          name: serving
+          command: [sleep, inf]
+          ports:
+            - containerPort: 8501
