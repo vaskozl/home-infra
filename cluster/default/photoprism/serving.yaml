@@ -1,4 +1,17 @@
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serving
+  namespace: default
+spec:
+  ports:
+    - port: 8501
+  selector:
+    app: serving
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,8 +28,13 @@ spec:
         app: serving
     spec:
       containers:
-        - image: emacski/tensorflow-serving:2.5.0
+        - image: emacski/tensorflow-serving:2.5.1-debug
           name: serving
-          command: [sleep, inf]
+          command: [sh, -c]
+          args:
+          - >
+            mkdir -p /models/model/1/ && 
+            wget 'https://tfhub.dev/google/imagenet/efficientnet_v2_imagenet21k_s/classification/2?tf-hub-format=compressed' -O - | tar xvz -C /models/model/1 && 
+            /usr/bin/tf_serving_entrypoint.sh
           ports:
             - containerPort: 8501
