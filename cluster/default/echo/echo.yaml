@@ -19,52 +19,50 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: http-echo
-              servicePort: 80
+              serviceName: echo
+              servicePort: 8080
             path: /
   tls:
     - hosts:
         - echo.sko.ai
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: http-echo
-spec:
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  selector:
-    app: http-echo
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: http-echo
-  labels:
-    app: http-echo
+  name: echo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: http-echo
-  strategy:
-    type: Recreate
+      app: echo
   template:
     metadata:
       labels:
-        app: http-echo
+        app: echo
     spec:
-      terminationGracePeriodSeconds: 3
       containers:
-        - name: http-echo
-          image: gsmlg/echo:latest
+        - name: echo
+          image: openresty/openresty:1.19.9.1-1-alpine
           ports:
-            - name: http
-              containerPort: 80
-          resources:
-            limits:
-              cpu: 10m
-              memory: 100Mi
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+              name: echo-conf
+      volumes:
+        - name: echo-conf
+          configMap:
+            name: echo-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: echo
