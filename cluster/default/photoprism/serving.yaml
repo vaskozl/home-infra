@@ -40,5 +40,10 @@ spec:
             mkdir -p /models/model/1/ && 
             wget 'https://tfhub.dev/google/imagenet/efficientnet_v2_imagenet21k_s/classification/2?tf-hub-format=compressed' -O - | tar xvz -C /models/model/1 && 
             /usr/bin/tf_serving_entrypoint.sh
+          livenessProbe:
+            httpGet:
+              path: /v1/models/model
+              port: 8501
+            initialDelaySeconds: 30
           ports:
             - containerPort: 8501
