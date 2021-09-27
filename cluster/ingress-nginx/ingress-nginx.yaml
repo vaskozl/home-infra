@@ -46,7 +46,7 @@ spec:
         ssl-protocols: TLSv1.3 TLSv1.2
         global-auth-url: https://gate.sko.ai/api/verify
         global-auth-signin: https://gate.sko.ai
-        global-auth-cache-key: $host$cookie_authelia_session
+        global-auth-cache-key: $cookie_authelia_session
         hsts: false
       extraArgs:
         http-port: 9080
