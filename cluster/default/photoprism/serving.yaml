@@ -31,6 +31,10 @@ spec:
         - image: emacski/tensorflow-serving:2.5.1-debug
           name: serving
           command: [sh, -c]
+          resources:
+            limits:
+              cpu: 900m
+              memory: 1Gi
           args:
           - >
             mkdir -p /models/model/1/ && 
