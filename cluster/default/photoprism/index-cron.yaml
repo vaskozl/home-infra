@@ -24,7 +24,7 @@ spec:
               imagePullPolicy: IfNotPresent
               env:
               - name: TENSORFLOW_API
-                value: 'http://blind:8501/v1/models/model:predict'
+                value: 'http://serving:8501/v1/models/model:predict'
               - name: PHOTOPRISM_DETECT_NSFW
                 value: 'false'
               - name: PHOTOPRISM_DISABLE_FFMPEG
