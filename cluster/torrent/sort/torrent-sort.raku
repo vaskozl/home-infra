@@ -16,7 +16,7 @@ class Movie is IO::Path {
         absolute => False,
       )
     }
-    CATCH { when X::IO::DoesNotExist { $*ERR.say: "Movie didn't exist" } };
+    CATCH { when X::IO::DoesNotExist { $*ERR.say: "some kind of IO exception was caught!" } };
   }
 };
 
@@ -50,7 +50,7 @@ class Show is IO::Path {
         absolute => False,
       )
     }
-    CATCH { when X::IO::DoesNotExist { $*ERR.say: "Show didn't exist" } };
+    CATCH { when X::IO::DoesNotExist { $*ERR.say: "some kind of IO exception was caught!" } };
   }
 };
 

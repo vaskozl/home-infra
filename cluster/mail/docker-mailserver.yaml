@@ -47,22 +47,43 @@ spec:
         role: mail
         tier: backend
     spec:
-      # nodeSelector:
-      #  kubernetes.io/hostname: local.k8s
-      # initContainers:
-      #- name: init-myservice
-      #  image: busybox
-      #  command: ["/bin/sh", "-c", "cp /tmp/user-patches.sh /tmp/files"]
-      #  volumeMounts:
-      #    - name: config
-      #      subPath: user-patches.sh
-      #      mountPath: /tmp/user-patches.sh
-      #      readOnly: true
-      #    - name: tmp-files
-      #      mountPath: /tmp/files
       containers:
-        - name: docker-mailserver
+        - name: mailserver
           image: mailserver/docker-mailserver:10.1.2
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            privileged: false
+            capabilities:
+              add:
+                # file permission capabilities
+                - CHOWN
+                - FOWNER
+                - MKNOD
+                - SETGID
+                - SETUID
+                - DAC_OVERRIDE
+                # network capabilities
+                - NET_ADMIN  # needed for F2B
+                - NET_RAW    # needed for F2B
+                - NET_BIND_SERVICE
+                # miscellaneous  capabilities
+                - SYS_CHROOT
+                - SYS_PTRACE
+                - KILL
+              drop: [ALL]
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              memory: 2Gi
+              cpu: 1500m
+            requests:
+              memory: 250Mi
+              cpu: 50m
           volumeMounts:
             - name: config
               subPath: postfix-accounts.cf
@@ -136,6 +157,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: mailserver.env.config
+      restartPolicy: Always
       volumes:
         - name: config
           configMap:
