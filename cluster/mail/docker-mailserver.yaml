@@ -49,7 +49,7 @@ spec:
     spec:
       containers:
         - name: mailserver
-          image: mailserver/docker-mailserver:10.1.2
+          image: mailserver/docker-mailserver:10.2.0
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false

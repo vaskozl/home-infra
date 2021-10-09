@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: echo
-          image: openresty/openresty:1.19.9.1-1-alpine
+          image: openresty/openresty:1.19.9.1-2-alpine
           ports:
             - containerPort: 8080
           volumeMounts:
