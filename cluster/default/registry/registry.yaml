@@ -94,6 +94,10 @@ spec:
           volumeMounts:
             - name: var-lib-registry
               mountPath: /var/lib/registry
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
       volumes:
         - name: var-lib-registry
           persistentVolumeClaim:
