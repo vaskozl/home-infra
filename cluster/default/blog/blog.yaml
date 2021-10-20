@@ -3,6 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: blog
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: external
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
@@ -23,6 +24,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blog
+  namespace: default
 spec:
   ports:
     - protocol: TCP
@@ -36,6 +38,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: blog
+  namespace: default
   labels:
     app: blog
 spec:

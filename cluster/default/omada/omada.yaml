@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: omada
+  namespace: default
 spec:
   ports:
     - protocol: TCP
@@ -15,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: omada
+  namespace: default
 spec:
   selector:
     matchLabels:

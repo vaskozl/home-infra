@@ -3,6 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: registry
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: internal
     nginx.ingress.kubernetes.io/proxy-body-size: '0'
@@ -39,6 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: registry
+  namespace: default
 spec:
   ports:
     - protocol: TCP
@@ -52,6 +54,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: registry
+  namespace: default
 spec:
   serviceName: registry
   replicas: 1

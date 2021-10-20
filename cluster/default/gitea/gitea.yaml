@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gitea
+  namespace: default
 spec:
   ports:
     - protocol: TCP
@@ -24,6 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gitea
+  namespace: default
 spec:
   replicas: 1
   selector:

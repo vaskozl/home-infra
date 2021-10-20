@@ -3,6 +3,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: omada
+  namespace: default
   annotations:
     kubernetes.io/ingress.class: internal
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
