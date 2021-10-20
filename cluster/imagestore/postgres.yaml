@@ -72,7 +72,6 @@ metadata:
   labels:
     app: postgres
 spec:
-  capacity:
   accessModes:
     - ReadWriteOnce
   resources:

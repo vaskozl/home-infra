@@ -73,7 +73,6 @@ metadata:
     app: postgres
 spec:
   storageClassName: nfs-client
-  capacity:
   accessModes:
     - ReadWriteOnce
   resources:
