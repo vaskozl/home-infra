@@ -1,91 +1,54 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-    name: flood
-    namespace: torrent
+  name: flood
+  namespace: torrent
 spec:
-    interval: 5m
-    chart:
-        spec:
-            chart: flood
-            version: 2.4.0
-            sourceRef:
-                kind: HelmRepository
-                name: k8s-at-home
-                namespace: default
-            interval: 30m
-    values:
-        controllerType: deployment
-        image:
-            repository: jesec/flood
-            tag: 4.7.0
-            pullPolicy: Always
-        env:
-            FLOOD_OPTION_AUTH: none
-            FLOOD_OPTION_RUNDIR: /data
-            FLOOD_OPTION_QBURL: http://qbittorrent:8080
-            FLOOD_OPTION_QBUSER: vsz
-            FLOOD_OPTION_QBPASS: ENC[AES256_GCM,data:CwioeIwpZSnPwSGSEc2wRA==,iv:WW7dANPK9ATq4qYB0jstdgipIPrPrvvydHSpFJ4hLsQ=,tag:FN4q+0e8QjxkEduX5BRnpw==,type:str]
-        podSecurityContext:
-            runAsUser: 1001
-            runAsGroup: 1001
-            fsGroup: 1001
-        ingress:
-            enabled: true
-            hosts:
-                - host: fl.sko.ai
-                  paths:
-                    - path: /
-                      pathType: Prefix
-            tls:
-                - hosts:
-                    - fl.sko.ai
-        persistence:
-            data:
-                enabled: ENC[AES256_GCM,data:NmRsDw==,iv:V6Q5qc9DyY5WAov+fn2VRK2ZFxjXmsjb19D3Tt7wItc=,tag:2hsklpJLxNGy//QiwzGrig==,type:bool]
-                storageClass: ENC[AES256_GCM,data:L52WD4+kq/QKDw==,iv:qyFod2jBg9KALbUg20xNJZdtYxk5kzCu64gZpsbmpLg=,tag:UulfC4x5DlLGGmuB/EQ1+A==,type:str]
-                accessMode: ENC[AES256_GCM,data:mQZcWrkE7H97lgkMYg==,iv:fqH/XEzYlzxQf34zGGm1WLNyPUfIC1aBkL2z1zxglhk=,tag:z9LgnxBcC3XCXNRsplWQtA==,type:str]
-                size: ENC[AES256_GCM,data:2oFV,iv:LIpo5lsKAGjw/v/SHlbhNH85IROYmBp9iIoTMUpgd4k=,tag:hg6ojW4D9Z4W20UKLi7thA==,type:str]
-        resources:
-            requests:
-                memory: 250Mi
-                cpu: 500m
-            limits:
-                memory: 1500Mi
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2021-10-20T00:34:14Z"
-    mac: ENC[AES256_GCM,data:Fp3y7HcamQji8vCrd9p3UKtVDIgRm5mY1kNjmNBDNvh/ZzK+6HwgA0MXa/glmwpCutb9G2qJOZQzOElY2q26OjWlr1HSw0PJuYQ76VLcHQDlJ0RmzKOS3u+fRWrs3gujvohbI8TqYziRy5BYf0t5Pzo1qHRFLezRrLAV59P1iyE=,iv:jODBkfmJgnmYWq9i5nGZe07oIfROBfX1z/d4CAqUO6g=,tag:8qD5IP6LygTRqp2z2rl+sw==,type:str]
-    pgp:
-        - created_at: "2021-03-26T20:02:24Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
-
-            hQMOA4x50yY5upzjEAwAus1HNEMlIccHDKAKcX6nKVqo0tzLMSppMa7aQZ2I7nIg
-            awLibt9zgU8UFcVJyNT0VwiR7/gIQCt1VuHCZlzswSVv3s6WrUymOqZcEg7X5C14
-            SkMqEi1j7bSp2GHMap+u2hDjAGG3sJ644gmraD0ulWyOv73VegGhGAiFi7oIfKbt
-            VD622iuQpSYLVLw00ZK+lC+Zd0ujdQHZPodw9PEbI8pcW9I+xJbwYm99W8kVDutd
-            Uswx7oChdZRaR3VTl0GOdSqNrIPBaNlAy4I9pr5IjAwULCey7Nd8Y8qrsHuq7Iuh
-            BSLsXQQmVpGjgHG/J4bwgw3eIxWT48ux6s6Z3RoXcX7fcquLDDSGw9ZLUB0BYIwj
-            VTlkdJuCK5oDCWAmIhypj/OuiQp38EfxVhl8CcdS0IiMaZI3fO82mnNdyF+TMjnl
-            s1698Q6RH/UqFAPpO0Ylg/oViO6jitWBPvKpkZn9qNECszbQ8ocfN7A63y5Y3myR
-            /3FU/+WoEaglj88TlhPzDACHoh0yf0nZkoQp7DhRO5aHnikrKal3AOTaWaspQAoT
-            P5eQT0cLVks9mhJwOczR2RpyEIOsh8XhvCvymX2YTYT/mXpqjvU1cmtTb31lxRBB
-            w//KyfGaMs5hxjhd6XH+Iwd+kAOZAVQLLvTVAWxn0jYO57NB9RULGsZ9NzuoeM9J
-            vS6eCSnYAumCnX6LvufJpWlUIxJgk4EMGQYs5MJL5R1jlm1xS7KFRWMcE2rV5LSl
-            HSCX0owdK0cat4UMt2CYv2UIvCUfoQyJovuqHpVd87b7KwDsyZE80q2WH1C7dIl9
-            ThlxVHlY+Jo2LYUo9dyuC2xQL3raeSi/Wtro4Q8m6bNa+sHEdmV3IzJ+DsAdS7Ob
-            3zPqAav3XF1shF4YsGobblVusN9bsllDS5M4TmAs7+h6nyeOQd+0Y5t824oQSskw
-            jQiBiRteBcRd+OUnK2qHa2I8s1xBV4ARV828ytaxZlcwinX7IyryZqNsvGx1Jt00
-            t1DN5G1e6djc8ZlAPVvrhorSXgG8O1ctWAOaEzutSXIdZSlOwpRzswk5DJBF9bzH
-            LQFp9bTkyAOpp3nfpDbHZHzatcTQyKNBPnxEVYpzgHVyzRACAw+RBhO6jpzcXBfS
-            YvV1Qbwq0NjmxbVQwMTIXnw=
-            =/mF1
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
-    version: 3.7.1
+  chart:
+    spec:
+      chart: flood
+      interval: 30m
+      sourceRef:
+        name: k8s-at-home
+        namespace: default
+        kind: HelmRepository
+      version: 2.4.0
+  interval: 5m
+  values:
+    image:
+      pullPolicy: Always
+      repository: jesec/flood
+      tag: 4.7.0
+    env:
+      FLOOD_OPTION_AUTH: none
+      FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
+      FLOOD_OPTION_QBURL: http://qbittorrent:8080
+      FLOOD_OPTION_QBUSER: vsz
+      FLOOD_OPTION_RUNDIR: /data
+    resources:
+      limits:
+        memory: 1500Mi
+      requests:
+        cpu: 500m
+        memory: 250Mi
+    controllerType: deployment
+    ingress:
+      enabled: true
+      hosts:
+      - host: fl.sko.ai
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - fl.sko.ai
+    persistence:
+      data:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 1Gi
+        storageClass: nfs-client
+    podSecurityContext:
+      fsGroup: 1001
+      runAsGroup: 1001
+      runAsUser: 1001
