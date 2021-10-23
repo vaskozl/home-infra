@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: zigbee2mqtt
