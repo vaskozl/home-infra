@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zigbee2mqtt
+spec:
+  selector:
+    matchLabels:
+      app: zigbee2mqtt
+  template:
+    metadata:
+      labels:
+        app: zigbee2mqtt
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - zigbee-controller
+      containers:
+        - image: koenkk/zigbee2mqtt:1.21.2
+          name: zigbee2mqtt
+          volumeMounts:
+          - mountPath: /dev/ttyUSB0
+            name: zzh
+          - mountPath: /app/data
+            name: data
+          securityContext:
+            privileged: true
+      volumes:
+      - name: zzh
+        hostPath:
+          path: /dev/ttyUSB0
+      - name: data
+        persistentVolumeClaim:
+          claimName: zigbee2mqtt-v1
