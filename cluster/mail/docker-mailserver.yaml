@@ -37,6 +37,8 @@ metadata:
   namespace: mailserver
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mailserver
