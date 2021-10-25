@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zigbee2mqtt
+spec:
+  rules:
+    - host: zm.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: zigbee2mqtt
+              servicePort: http
+            path: /
+  tls:
+    - hosts:
+        - zm.sko.ai

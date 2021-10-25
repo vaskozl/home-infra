@@ -33,6 +33,8 @@ spec:
             name: data
           securityContext:
             privileged: true
+          ports:
+            - containerPort: 8989
       volumes:
       - name: zzh
         hostPath:
