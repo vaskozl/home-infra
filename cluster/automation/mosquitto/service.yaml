@@ -13,3 +13,7 @@ spec:
       targetPort: 9001
   selector:
     app: mosquitto
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  externalIPs:
+    - ${EI_MQTT}
