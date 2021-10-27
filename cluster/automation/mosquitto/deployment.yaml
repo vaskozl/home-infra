@@ -7,10 +7,12 @@ spec:
   selector:
     matchLabels:
       app: mosquitto
+      mqtt: primary
   template:
     metadata:
       labels:
         app: mosquitto
+        mqtt: primary
     spec:
       containers:
         - image: eclipse-mosquitto:2.0.12
