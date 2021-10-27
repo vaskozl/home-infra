@@ -26,10 +26,6 @@ spec:
           args:
             - -c 
             - /mosquitto-no-auth.conf
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: mosquitto-v1
       securityContext:
         runAsUser: 1883
         runAsGroup: 1883

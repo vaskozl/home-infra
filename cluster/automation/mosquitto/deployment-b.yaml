@@ -29,9 +29,6 @@ spec:
             - -c 
             - /mosquitto/config/mosquitto.conf
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: mosquitto-b-v1
       - name: config
         configMap:
           name: bridge-conf
