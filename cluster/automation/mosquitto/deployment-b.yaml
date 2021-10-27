@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mosquitto
+  name: mosquitto-b
 spec:
   selector:
     matchLabels:
@@ -21,15 +21,20 @@ spec:
           volumeMounts:
           - mountPath: /mosquitto/data
             name: data
+          - mountPath: /mosquitto/config
+            name: config
           command:
-            - mosquitto
+            - mosquitto 
           args:
             - -c 
-            - /mosquitto-no-auth.conf
+            - /mosquitto/config/mosquitto.conf
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: mosquitto-v1
+          claimName: mosquitto-b-v1
+      - name: config
+        configMap:
+          name: bridge-conf
       securityContext:
         runAsUser: 1883
         runAsGroup: 1883
