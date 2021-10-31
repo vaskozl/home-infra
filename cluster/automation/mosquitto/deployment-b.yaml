@@ -7,10 +7,12 @@ spec:
   selector:
     matchLabels:
       app: mosquitto
+      type: bridge
   template:
     metadata:
       labels:
         app: mosquitto
+        type: bridge
     spec:
       containers:
         - image: eclipse-mosquitto:2.0.12

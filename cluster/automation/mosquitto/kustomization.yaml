@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: automation
 resources:
 - service.yaml
+- service-p.yaml
 - deployment.yaml
 - deployment-b.yaml
 

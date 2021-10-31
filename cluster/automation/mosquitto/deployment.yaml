@@ -11,6 +11,7 @@ spec:
     metadata:
       labels:
         app: mosquitto
+        type: primary
     spec:
       containers:
         - image: eclipse-mosquitto:2.0.12
