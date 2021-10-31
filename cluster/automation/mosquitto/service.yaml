@@ -17,3 +17,20 @@ spec:
   externalTrafficPolicy: Local
   externalIPs:
     - ${EI_MQTT}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto-primary
+spec:
+  ports:
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+    - name: wss
+      port: 9001
+      targetPort: 9001
+  selector:
+    mqtt: primary
+  type: LoadBalancer
+  externalTrafficPolicy: Local

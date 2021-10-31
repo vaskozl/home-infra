@@ -7,7 +7,6 @@ spec:
   selector:
     matchLabels:
       app: mosquitto
-      type: bridge
   template:
     metadata:
       labels:
@@ -21,8 +20,6 @@ spec:
             - containerPort: 1883
             - containerPort: 9001
           volumeMounts:
-          - mountPath: /mosquitto/data
-            name: data
           - mountPath: /mosquitto/config
             name: config
           command:
