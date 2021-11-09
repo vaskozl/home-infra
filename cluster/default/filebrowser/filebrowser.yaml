@@ -33,7 +33,7 @@ spec:
         app: filebrowser
     spec:
       containers:
-        - image: filebrowser/filebrowser:v2.17.2
+        - image: filebrowser/filebrowser:v2.18.0
           name: filebrowser
           command: [sh]
           args:
