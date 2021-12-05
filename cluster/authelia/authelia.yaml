@@ -111,10 +111,6 @@ spec:
           ports:
             - containerPort: 8080
               name: http
-          livenessProbe:
-            httpGet:
-              path: /api/health
-              port: authelia
           volumeMounts:
             - name: config
               mountPath: /config
