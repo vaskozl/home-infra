@@ -51,7 +51,7 @@ spec:
     matchLabels:
       app: authelia
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -76,9 +76,41 @@ spec:
         - image: authelia/authelia:4.33.1
           name: authelia
           env:
+            - name: AUTHELIA_SERVER_DISABLE_HEALTHCHECK
+              value: "true"
+          startupProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /api/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /api/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /api/health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
           ports:
             - containerPort: 8080
-              name: authelia
+              name: http
           livenessProbe:
             httpGet:
               path: /api/health
