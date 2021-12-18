@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-12-18T15:11:01Z"
-    mac: ENC[AES256_GCM,data:S2Tv34OKxsMitjeC5xc9PZbA5TPoHeaoR8NFbIM1yNIsbXKVTZzKO8X5GZCIlrkj+GjcCvArdIe9DAWBiEbn6kxK8V8QPYVGJCVKku0uhbUV2o+eEKplWVHo5Ks8ixzu5axC2hQEnW+8FnoQS4btS9iQCiPH/kimXdMHt7zugvs=,iv:Lz1XsPU6zdXCh63LL82+pCMKyqFWKkdA/kdELbzTUvc=,tag:Zb3lqWrW4NHGwYCr+HAvyA==,type:str]
+    lastmodified: "2021-12-18T15:38:44Z"
+    mac: ENC[AES256_GCM,data:ArNrlnGsMdiB6hiAUBqZaHrReJyn9WGfc0JxMuv4/vc+WMi/b1649jmdWWKlZEO5X3VBL2T7TQAv8DEVcasx+DnjOrX6ZglxPyzwEIVbBdp/9G7p6Pg1mgbaOkLI1+MzxazQaX4qOwPQG0TAc4bTpGRXN0smqcHXUaVMul1cbTU=,iv:5elvUN1bPpYjv7e80bmrYUTVGG7zuUa2ADKQuO68+8s=,tag:y7eY9nyoP1LP4cRUR3Qoqg==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -73,6 +73,8 @@ metadata:
 data:
     postfix-main.cf: |
         postscreen_dnsbl_action = ignore
+        postscreen_dnsbl_sites =
+        smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, check_policy_service unix:private/policyd-spf, reject_unauth_pipelining, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_unknown_recipient_domain
     postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
     postfix-virtual.cf: |
         @sko.ai v@sko.ai
@@ -104,8 +106,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-12-18T15:11:01Z"
-    mac: ENC[AES256_GCM,data:S2Tv34OKxsMitjeC5xc9PZbA5TPoHeaoR8NFbIM1yNIsbXKVTZzKO8X5GZCIlrkj+GjcCvArdIe9DAWBiEbn6kxK8V8QPYVGJCVKku0uhbUV2o+eEKplWVHo5Ks8ixzu5axC2hQEnW+8FnoQS4btS9iQCiPH/kimXdMHt7zugvs=,iv:Lz1XsPU6zdXCh63LL82+pCMKyqFWKkdA/kdELbzTUvc=,tag:Zb3lqWrW4NHGwYCr+HAvyA==,type:str]
+    lastmodified: "2021-12-18T15:38:44Z"
+    mac: ENC[AES256_GCM,data:ArNrlnGsMdiB6hiAUBqZaHrReJyn9WGfc0JxMuv4/vc+WMi/b1649jmdWWKlZEO5X3VBL2T7TQAv8DEVcasx+DnjOrX6ZglxPyzwEIVbBdp/9G7p6Pg1mgbaOkLI1+MzxazQaX4qOwPQG0TAc4bTpGRXN0smqcHXUaVMul1cbTU=,iv:5elvUN1bPpYjv7e80bmrYUTVGG7zuUa2ADKQuO68+8s=,tag:y7eY9nyoP1LP4cRUR3Qoqg==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
