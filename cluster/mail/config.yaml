@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-25T23:26:39Z"
-    mac: ENC[AES256_GCM,data:U2XG4pmNKEdwebb01O54UiwHt29u+KkTsvpZyD6dbJg2QOba/MlzTscdCqjV9F4NuRkUoATcii/kflpZOeksBdugwgcWT80JN8haCcmXVFv/x8LDs58DsE6NXxFse29eRbwK3a8cH7mt4XYdaX4blG+bPm0WjT0t2HPQs6BseoY=,iv:yzwbDcU8mlM8tdxnOQFsah1bl86tp/IwOpm6iJqQ5aU=,tag:bJN7T3ZgN8OvOSXdMKLVPw==,type:str]
+    lastmodified: "2021-12-18T15:11:01Z"
+    mac: ENC[AES256_GCM,data:S2Tv34OKxsMitjeC5xc9PZbA5TPoHeaoR8NFbIM1yNIsbXKVTZzKO8X5GZCIlrkj+GjcCvArdIe9DAWBiEbn6kxK8V8QPYVGJCVKku0uhbUV2o+eEKplWVHo5Ks8ixzu5axC2hQEnW+8FnoQS4btS9iQCiPH/kimXdMHt7zugvs=,iv:Lz1XsPU6zdXCh63LL82+pCMKyqFWKkdA/kdELbzTUvc=,tag:Zb3lqWrW4NHGwYCr+HAvyA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -71,6 +71,8 @@ metadata:
     labels:
         app: mailserver
 data:
+    postfix-main.cf: |
+        postscreen_dnsbl_action = ignore
     postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
     postfix-virtual.cf: |
         @sko.ai v@sko.ai
@@ -102,8 +104,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-10-25T23:26:39Z"
-    mac: ENC[AES256_GCM,data:U2XG4pmNKEdwebb01O54UiwHt29u+KkTsvpZyD6dbJg2QOba/MlzTscdCqjV9F4NuRkUoATcii/kflpZOeksBdugwgcWT80JN8haCcmXVFv/x8LDs58DsE6NXxFse29eRbwK3a8cH7mt4XYdaX4blG+bPm0WjT0t2HPQs6BseoY=,iv:yzwbDcU8mlM8tdxnOQFsah1bl86tp/IwOpm6iJqQ5aU=,tag:bJN7T3ZgN8OvOSXdMKLVPw==,type:str]
+    lastmodified: "2021-12-18T15:11:01Z"
+    mac: ENC[AES256_GCM,data:S2Tv34OKxsMitjeC5xc9PZbA5TPoHeaoR8NFbIM1yNIsbXKVTZzKO8X5GZCIlrkj+GjcCvArdIe9DAWBiEbn6kxK8V8QPYVGJCVKku0uhbUV2o+eEKplWVHo5Ks8ixzu5axC2hQEnW+8FnoQS4btS9iQCiPH/kimXdMHt7zugvs=,iv:Lz1XsPU6zdXCh63LL82+pCMKyqFWKkdA/kdELbzTUvc=,tag:Zb3lqWrW4NHGwYCr+HAvyA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
