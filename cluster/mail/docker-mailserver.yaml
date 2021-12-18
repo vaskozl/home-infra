@@ -91,10 +91,10 @@ spec:
               subPath: postfix-accounts.cf
               mountPath: /tmp/docker-mailserver/postfix-accounts.cf
               readOnly: true
-          #- name: config
-          #  subPath: postfix-main.cf
-          #  mountPath: /tmp/docker-mailserver/postfix-main.cf
-          #  readOnly: true
+            - name: config
+              subPath: postfix-main.cf
+              mountPath: /tmp/docker-mailserver/postfix-main.cf
+              readOnly: true
             - name: config
               subPath: postfix-virtual.cf
               mountPath: /tmp/docker-mailserver/postfix-virtual.cf
