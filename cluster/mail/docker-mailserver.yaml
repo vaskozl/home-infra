@@ -141,6 +141,11 @@ spec:
             - name: tls
               mountPath: /etc/ssl/mailserver
               readOnly: true
+          livenessProbe:
+            tcpSocket:
+              port: 25
+            initialDelaySeconds: 15
+            periodSeconds: 20
           ports:
             - name: smtp
               containerPort: 25
