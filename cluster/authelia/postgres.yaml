@@ -59,6 +59,16 @@ spec:
           volumeMounts:
             - name: pv-data
               mountPath: /var/lib/postgresql/data
+      readinessProbe:
+        exec:
+          command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
+        initialDelaySeconds: 15
+        timeoutSeconds: 2
+      livenessProbe:
+        exec:
+          command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
+        initialDelaySeconds: 45
+        timeoutSeconds: 2
       volumes:
         - name: pv-data
           persistentVolumeClaim:
