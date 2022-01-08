@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T18:07:02Z"
-    mac: ENC[AES256_GCM,data:VvYKhqcJKMpQ2UdFExOCnf1kfjs2k7zFI6HzrFlaFpo/euXVopU8bm5QsCV90w96V57HHhdpzMLFQREsF/vouQEikyV/b11/s/uqZvZmayqkZ4iSBJWuOxBDC8LF1ms/429EkdncSJyUDWAEH1DQLbUrPPVww0rQxMPExMaJxDE=,iv:Q7Qun20sfVN0ND/Ss9kEeXanGaWn4wfKA+0WWpDpssg=,tag:H6QEgqSpkODeTstTU8HzwQ==,type:str]
+    lastmodified: "2022-01-08T18:28:09Z"
+    mac: ENC[AES256_GCM,data:agiEVz2ycpqGJUrsN2kH0EVbdMs6ZzJkGB3aPo7ByBXhlNpnxqxYyvwSHAqCGDKi7fI/n0ijq3ElViVxi7WAACNXxhn5FJecpZMX6GdA8penVNIraTvX7qcem3ce9MqIG199KHw2mYn/MDHECvho32X8I3wiERjlCrfAtWy9qVg=,iv:PtDazoc2AowR2IqGmeLbE0u0ywkNGShPRBtBRe7IbPI=,tag:rOzK3eGtQyEKimhsj19KTw==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -80,36 +80,36 @@ data:
     postfix-virtual.cf: |
         @sko.ai v@sko.ai
         @skozl.com v@sko.ai
-        # dovecot.cf: |
-        #  service stats {
-        #    unix_listener stats-reader {
-        #      group = docker
-        #      mode = 0666
-        #    }
-        #    unix_listener stats-writer {
-        #      group = docker
-        #      mode = 0666
-        #    }
-        #  }
+    # dovecot.cf: |
+    #  service stats {
+    #    unix_listener stats-reader {
+    #      group = docker
+    #      mode = 0666
+    #    }
+    #    unix_listener stats-writer {
+    #      group = docker
+    #      mode = 0666
+    #    }
+    #  }
     SigningTable: |
         *@sko.ai mail._domainkey.sko.ai
     KeyTable: |
         mail._domainkey.sko.ai sko.ai:mail:/etc/opendkim/keys/sko.ai-mail.key
     TrustedHosts: |
-        .baikal.default.svc.k8s.sko.ai
         127.0.0.1
         localhost
-        # user-patches.sh: |
-        #  #!/bin/bash
-        # fetchmail.cf: |
+        .baikal.default.svc.k8s.sko.ai
+    # user-patches.sh: |
+    #  #!/bin/bash
+    # fetchmail.cf: |
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T18:07:02Z"
-    mac: ENC[AES256_GCM,data:VvYKhqcJKMpQ2UdFExOCnf1kfjs2k7zFI6HzrFlaFpo/euXVopU8bm5QsCV90w96V57HHhdpzMLFQREsF/vouQEikyV/b11/s/uqZvZmayqkZ4iSBJWuOxBDC8LF1ms/429EkdncSJyUDWAEH1DQLbUrPPVww0rQxMPExMaJxDE=,iv:Q7Qun20sfVN0ND/Ss9kEeXanGaWn4wfKA+0WWpDpssg=,tag:H6QEgqSpkODeTstTU8HzwQ==,type:str]
+    lastmodified: "2022-01-08T18:28:09Z"
+    mac: ENC[AES256_GCM,data:agiEVz2ycpqGJUrsN2kH0EVbdMs6ZzJkGB3aPo7ByBXhlNpnxqxYyvwSHAqCGDKi7fI/n0ijq3ElViVxi7WAACNXxhn5FJecpZMX6GdA8penVNIraTvX7qcem3ce9MqIG199KHw2mYn/MDHECvho32X8I3wiERjlCrfAtWy9qVg=,iv:PtDazoc2AowR2IqGmeLbE0u0ywkNGShPRBtBRe7IbPI=,tag:rOzK3eGtQyEKimhsj19KTw==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
