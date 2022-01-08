@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-12-18T15:38:44Z"
-    mac: ENC[AES256_GCM,data:ArNrlnGsMdiB6hiAUBqZaHrReJyn9WGfc0JxMuv4/vc+WMi/b1649jmdWWKlZEO5X3VBL2T7TQAv8DEVcasx+DnjOrX6ZglxPyzwEIVbBdp/9G7p6Pg1mgbaOkLI1+MzxazQaX4qOwPQG0TAc4bTpGRXN0smqcHXUaVMul1cbTU=,iv:5elvUN1bPpYjv7e80bmrYUTVGG7zuUa2ADKQuO68+8s=,tag:y7eY9nyoP1LP4cRUR3Qoqg==,type:str]
+    lastmodified: "2022-01-08T14:37:17Z"
+    mac: ENC[AES256_GCM,data:EWKCGvSI0ypawtEjQq9fH816tLKmcx+A22Xw+P0zTLwt6qkI0fYR8QrzaMuJMXC8l47NLmZ3Rp2C52aXDKAD1lnRxv3O5E3jSv0STuaStDTO8Gc8Mt9bT6422H1lZUPqh60J60/V+6AXZKKCAlEV0DwjFw/M2TZtkWneRtkLWJU=,iv:GqL5Itmsgn5HcP4X7UcnFk2rbVkNgq7f6QREHu0+1H8=,tag:TrUixD8SFNxD8M6duygqiQ==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -72,6 +72,7 @@ metadata:
         app: mailserver
 data:
     postfix-main.cf: |
+        mynetworks = 192.168.1.0/24, 10.0.0.0/8
         postscreen_dnsbl_action = ignore
         postscreen_dnsbl_sites =
         smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, check_policy_service unix:private/policyd-spf, reject_unauth_pipelining, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_unknown_recipient_domain
@@ -106,8 +107,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-12-18T15:38:44Z"
-    mac: ENC[AES256_GCM,data:ArNrlnGsMdiB6hiAUBqZaHrReJyn9WGfc0JxMuv4/vc+WMi/b1649jmdWWKlZEO5X3VBL2T7TQAv8DEVcasx+DnjOrX6ZglxPyzwEIVbBdp/9G7p6Pg1mgbaOkLI1+MzxazQaX4qOwPQG0TAc4bTpGRXN0smqcHXUaVMul1cbTU=,iv:5elvUN1bPpYjv7e80bmrYUTVGG7zuUa2ADKQuO68+8s=,tag:y7eY9nyoP1LP4cRUR3Qoqg==,type:str]
+    lastmodified: "2022-01-08T14:37:17Z"
+    mac: ENC[AES256_GCM,data:EWKCGvSI0ypawtEjQq9fH816tLKmcx+A22Xw+P0zTLwt6qkI0fYR8QrzaMuJMXC8l47NLmZ3Rp2C52aXDKAD1lnRxv3O5E3jSv0STuaStDTO8Gc8Mt9bT6422H1lZUPqh60J60/V+6AXZKKCAlEV0DwjFw/M2TZtkWneRtkLWJU=,iv:GqL5Itmsgn5HcP4X7UcnFk2rbVkNgq7f6QREHu0+1H8=,tag:TrUixD8SFNxD8M6duygqiQ==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
