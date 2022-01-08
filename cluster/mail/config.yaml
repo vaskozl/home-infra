@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T14:37:17Z"
-    mac: ENC[AES256_GCM,data:EWKCGvSI0ypawtEjQq9fH816tLKmcx+A22Xw+P0zTLwt6qkI0fYR8QrzaMuJMXC8l47NLmZ3Rp2C52aXDKAD1lnRxv3O5E3jSv0STuaStDTO8Gc8Mt9bT6422H1lZUPqh60J60/V+6AXZKKCAlEV0DwjFw/M2TZtkWneRtkLWJU=,iv:GqL5Itmsgn5HcP4X7UcnFk2rbVkNgq7f6QREHu0+1H8=,tag:TrUixD8SFNxD8M6duygqiQ==,type:str]
+    lastmodified: "2022-01-08T18:04:37Z"
+    mac: ENC[AES256_GCM,data:4jKqHN1dvxn3eE0Kpko50BkG/TF8AiaUtuIgDu9ilq8VuwWXmpKV29/nIw8lq4n6a9K7npa3BY6WXKjHAD315sAhesFkiZVflFjYPD1G2UrLsE+X0A0qWpUAf8A5RWMLHcSNVujU95WNIs5znKxLABNjBurJiXk9kcAVjW2slIk=,iv:nUc4j1E6FSh1NRvu+hs9VuaAaiMW2t6c2quSol3imac=,tag:YULKOvYbnf6QGJa4qAvLwA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -96,6 +96,7 @@ data:
     KeyTable: |
         mail._domainkey.sko.ai sko.ai:mail:/etc/opendkim/keys/sko.ai-mail.key
     TrustedHosts: |
+        baikal.default.svc.k8s.sko.ai
         127.0.0.1
         localhost
         # user-patches.sh: |
@@ -107,8 +108,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T14:37:17Z"
-    mac: ENC[AES256_GCM,data:EWKCGvSI0ypawtEjQq9fH816tLKmcx+A22Xw+P0zTLwt6qkI0fYR8QrzaMuJMXC8l47NLmZ3Rp2C52aXDKAD1lnRxv3O5E3jSv0STuaStDTO8Gc8Mt9bT6422H1lZUPqh60J60/V+6AXZKKCAlEV0DwjFw/M2TZtkWneRtkLWJU=,iv:GqL5Itmsgn5HcP4X7UcnFk2rbVkNgq7f6QREHu0+1H8=,tag:TrUixD8SFNxD8M6duygqiQ==,type:str]
+    lastmodified: "2022-01-08T18:04:37Z"
+    mac: ENC[AES256_GCM,data:4jKqHN1dvxn3eE0Kpko50BkG/TF8AiaUtuIgDu9ilq8VuwWXmpKV29/nIw8lq4n6a9K7npa3BY6WXKjHAD315sAhesFkiZVflFjYPD1G2UrLsE+X0A0qWpUAf8A5RWMLHcSNVujU95WNIs5znKxLABNjBurJiXk9kcAVjW2slIk=,iv:nUc4j1E6FSh1NRvu+hs9VuaAaiMW2t6c2quSol3imac=,tag:YULKOvYbnf6QGJa4qAvLwA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
