@@ -22,7 +22,7 @@ spec:
     env:
       FLOOD_OPTION_AUTH: none
       FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
-      FLOOD_OPTION_QBURL: http://qbittorrent:8080
+      FLOOD_OPTION_QBURL: http://blind:55555
       FLOOD_OPTION_QBUSER: vsz
       FLOOD_OPTION_RUNDIR: /data
     resources:
