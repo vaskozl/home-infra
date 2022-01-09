@@ -1,0 +1,100 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: baikal
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: internal
+    nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+spec:
+  rules:
+    - host: bk.sko.ai
+      http:
+        paths:
+          - backend:
+              serviceName: baikal
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - bk.sko.ai
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: baikal
+  namespace: default
+spec:
+  ports:
+    - protocol: TCP
+      name: smtp
+      port: 25
+      targetPort: 25
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: baikal
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baikal
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: baikal
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: baikal
+    spec:
+      containers:
+        - image: ckulka/baikal:experimental-nginx
+          name: baikal
+          command:
+            - sh
+            - -c 
+            # sendmail hangs for a minute if it's missing FQDN
+            # Dance around replacing /etc/hosts a little
+            # Remap sendmail
+            - >
+              mv /usr/sbin/sendmail /usr/sbin/sendmail-og && 
+              echo '#!/bin/sh' > /usr/sbin/sendmail && chmod +x /usr/sbin/sendmail &&  
+              echo '/usr/sbin/sendmail-og -f baikal@sko.ai $@' >> /usr/sbin/sendmail &&
+              echo 'nginx' >> /etc/mail/trusted-users &&
+              echo "define(\`SMART_HOST', \`mail.sko.ai')dnl" >> /etc/mail/sendmail.mc &&
+              cp /etc/hosts /etc/hosts.new && 
+              sed -i "s/$HOSTNAME/$HOSTNAME baikal.default.svc.k8s.sko.ai/" /etc/hosts.new && 
+              cp /etc/hosts.new /etc/hosts && 
+              service sendmail start && 
+              /etc/init.d/php8.0-fpm start && 
+              chown -R nginx:nginx /var/www/baikal/Specific && 
+              nginx -g "daemon off;"
+          env:
+          ports:
+            - containerPort: 80
+              name: baikal
+          volumeMounts:
+            - name: pv-baikal
+              mountPath: /var/www/baikal/Specific
+            - name: pv-baikal
+              mountPath: /var/www/baikal/config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+      volumes:
+        - name: pv-baikal
+          persistentVolumeClaim:
+            claimName: baikal-v1
