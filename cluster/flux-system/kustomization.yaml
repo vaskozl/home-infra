@@ -11,6 +11,7 @@ resources:
 - webhook/receiver-service.yaml
 - webhook/receiver.yaml
 - webhook/webhook-token.enc.yaml
+- sources/helm/grafana-charts.yaml
 
 patches:
 - path: gotk-on-master.yaml
