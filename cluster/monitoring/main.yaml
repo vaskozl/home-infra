@@ -103,3 +103,33 @@ spec:
               - name: kube-rbac-proxy
                 resources:
                   limits: {}
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: grafana-datasources
+        namespace: monitoring
+      stringData:
+        datasources.yaml: |
+          {
+              "apiVersion": 1,
+              "datasources": [
+                  {
+                      "access": "proxy",
+                      "editable": false,
+                      "name": "prometheus",
+                      "orgId": 1,
+                      "type": "prometheus",
+                      "url": "http://prometheus-k8s.monitoring.svc:9090",
+                      "version": 1
+                  },
+                  {
+                      "access": "proxy",
+                      "editable": false,
+                      "name": "loki",
+                      "orgId": 1,
+                      "type": "loki",
+                      "url": "http://loki.monitoring.svc:3100",
+                      "version": 1
+                  }
+              ]
+          }
