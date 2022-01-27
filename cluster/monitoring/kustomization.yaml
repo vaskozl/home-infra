@@ -9,3 +9,12 @@ resources:
   - main.yaml
   - prom-ingress.yaml
   - flux-dashboards.yaml
+
+configMapGenerator:
+  - name: loki-logs-dashboard
+    files:
+      - loki-logs-dashboard.json=https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/loki/dashboards/loki-logs.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

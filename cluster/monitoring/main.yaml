@@ -15,17 +15,6 @@ spec:
     name: kube-prometheus
   timeout: 2m0s
   patchesStrategicMerge:
-    - apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: kube-state-metrics
-        namespace: monitoring
-      spec:
-        template:
-          spec:
-            containers:
-              - name: kube-state-metrics
-                image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0-beta
     # Add Grafana dashboards and disable password
     - apiVersion: apps/v1
       kind: Deployment
@@ -47,10 +36,16 @@ spec:
                 volumeMounts:
                   - name: flux-dashboards
                     mountPath: /grafana-dashboard-definitions/0/flux
+                  - name: loki-dashboards
+                    mountPath: /grafana-dashboard-definitions/0/loki
             volumes:
               - name: flux-dashboards
                 configMap:
                   name: grafana-dashboards-flux
+                  defaultMode: 420
+              - name: loki-dashboards
+                configMap:
+                  name: loki-logs-dashboard
                   defaultMode: 420
     # Let prometheus scrape all namespaces (like flux-system)
     - apiVersion: rbac.authorization.k8s.io/v1
@@ -128,7 +123,7 @@ spec:
                       "name": "loki",
                       "orgId": 1,
                       "type": "loki",
-                      "url": "http://loki.monitoring.svc:3100",
+                      "url": "http://loki-stack.monitoring.svc:3100",
                       "version": 1
                   }
               ]
