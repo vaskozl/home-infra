@@ -56,7 +56,7 @@ spec:
         app: baikal
     spec:
       containers:
-        - image: ckulka/baikal:experimental-nginx
+        - image: ckulka/baikal:0.9.1-nginx
           name: baikal
           command:
             - sh
@@ -74,7 +74,7 @@ spec:
               sed -i "s/$HOSTNAME/$HOSTNAME baikal.default.svc.k8s.sko.ai/" /etc/hosts.new && 
               cp /etc/hosts.new /etc/hosts && 
               service sendmail start && 
-              /etc/init.d/php8.0-fpm start && 
+              /etc/init.d/php8.1-fpm start && 
               chown -R nginx:nginx /var/www/baikal/Specific && 
               nginx -g "daemon off;"
           env:
