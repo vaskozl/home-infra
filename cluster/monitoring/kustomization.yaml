@@ -9,6 +9,7 @@ resources:
   - main.yaml
   - prom-ingress.yaml
   - flux-dashboards.yaml
+  - loki/
 
 configMapGenerator:
   - name: loki-logs-dashboard
