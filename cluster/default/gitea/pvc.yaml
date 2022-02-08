@@ -2,10 +2,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: gitea-pvc-v2
+  name: gitea-pvc-v4
   namespace: default
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:
