@@ -31,5 +31,5 @@ spec:
         - retrans=3
         - timeo=600
     storageClass:
-      defaultClass: true
+      defaultClass: false
       provisionerName: k8s-sigs.io/nfs-subdir-external-provisioner
