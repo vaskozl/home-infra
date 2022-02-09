@@ -35,6 +35,8 @@ metadata:
     app: postgres
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: postgres
@@ -43,10 +45,12 @@ spec:
       labels:
         app: postgres
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+      initContainers:
+        - name: init-inotify-limit
+          image: busybox
+          command: ['sysctl', '-w', 'fs.inotify.max_user_instances=102400']
+          securityContext:
+            privileged: true
       containers:
         - name: postgres
           image: postgres:11 # no-up
@@ -59,32 +63,32 @@ spec:
           volumeMounts:
             - name: pv-data
               mountPath: /var/lib/postgresql/data
-      readinessProbe:
-        exec:
-          command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
-        initialDelaySeconds: 15
-        timeoutSeconds: 2
-      livenessProbe:
-        exec:
-          command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
-        initialDelaySeconds: 45
-        timeoutSeconds: 2
+          readinessProbe:
+            exec:
+              command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+          livenessProbe:
+            exec:
+              command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
+            initialDelaySeconds: 45
+            timeoutSeconds: 2
       volumes:
         - name: pv-data
           persistentVolumeClaim:
-            claimName: postgres-v2
+            claimName: postgres-v3
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-v2
+  name: postgres-v3
   namespace: authelia
   labels:
     app: postgres
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 100Mi
+      storage: 1Gi

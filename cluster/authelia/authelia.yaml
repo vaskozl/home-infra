@@ -46,7 +46,7 @@ metadata:
   name: authelia
   namespace: authelia
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: authelia
