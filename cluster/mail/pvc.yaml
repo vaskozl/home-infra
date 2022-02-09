@@ -2,12 +2,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mail-storage-data-v2
+  name: mail-storage-data-v3
   namespace: mailserver
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi

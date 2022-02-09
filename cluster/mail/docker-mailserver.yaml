@@ -174,7 +174,7 @@ spec:
             secretName: mailserver.opendkim.keys
         - name: data
           persistentVolumeClaim:
-            claimName: mail-storage-data-v2
+            claimName: mail-storage-data-v3
         - name: tmp-files
           emptyDir: {}
         - name: tls
