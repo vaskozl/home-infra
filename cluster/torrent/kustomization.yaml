@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - _namespace.yaml
 - flood.yaml
-- hdd-raid-pv.yaml
-- hdd-raid-pvc.yaml
+- torrents-pv.yaml
+- torrents-pvc.yaml
 - limit-range.yaml
 - sort
