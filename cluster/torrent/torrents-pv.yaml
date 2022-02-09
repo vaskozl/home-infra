@@ -2,23 +2,27 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-hdd-raid-pv-torrent
+  name: torrents-pv
   namespace: torrent
 spec:
-  storageClassName: hdd-raid-torrent
+  storageClassName: torrents-pv
   capacity:
     storage: 1Mi
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: blind
-    path: /srv/nfs
+    server: syno
+    path: /volume2/Torrents
   mountOptions:
-    - tcp
-    - intr
+    - nfsvers=4.1
     - hard
     - noatime
+    - noacl
+    - nocto
     - nodiratime
     - rsize=32768
     - wsize=32768
+    - async
+    - retrans=3
+    - timeo=600

@@ -34,5 +34,5 @@ spec:
                 name: torrent-sort-raku
             - name: media-pv
               persistentVolumeClaim:
-                claimName: nfs-hdd-raid-pvc
+                claimName: torrents-v2
           restartPolicy: Never
