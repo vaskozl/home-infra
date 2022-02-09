@@ -22,7 +22,7 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        size: 20Gi
+        existingClaim: loki-v1
       config:
         table_manager:
           retention_deletes_enabled: true
