@@ -2,12 +2,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: radicale-v2
+  name: radicale-v3
   namespace: default
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 300Mi
+      storage: 1Gi
