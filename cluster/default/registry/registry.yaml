@@ -84,7 +84,7 @@ spec:
         - effect: NoSchedule
           operator: Exists
       containers:
-        - image: registry:2.7.1
+        - image: registry:2.8.0
           name: registry
           env:
             - name: REGISTRY_STORAGE_DELETE_ENABLED
