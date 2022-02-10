@@ -2,12 +2,12 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mojopaste-v2
+  name: mojopaste-v3
   namespace: default
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 30Mi
+      storage: 1Gi
