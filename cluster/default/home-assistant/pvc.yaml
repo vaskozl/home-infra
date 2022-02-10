@@ -2,10 +2,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: hass-pvc-v2
+  name: hass-pvc-v3
   namespace: default
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:

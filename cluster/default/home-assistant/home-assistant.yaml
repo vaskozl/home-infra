@@ -22,7 +22,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: hass-pvc-v2
+        existingClaim: hass-pvc-v3
     ingress:
       enabled: true
       annotations:
