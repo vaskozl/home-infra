@@ -5,7 +5,7 @@ metadata:
   name: mojopaste-v3
   namespace: default
 spec:
-  storageClassName: ssd-raid
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:
