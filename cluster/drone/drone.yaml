@@ -34,7 +34,7 @@ spec:
             DRONE_SERVER_HOST: dr.sko.ai
             DRONE_SERVER_PROTO: https
             DRONE_GIT_ALWAYS_AUTH: true
-            DRONE_GITEA_SERVER: https://git.sko.ai
+            DRONE_GITEA_SERVER: http://gitea.default.svc.k8s.sko.ai:3000
             DRONE_USER_CREATE: username:vasko,admin:true
             DRONE_LOGS_TEXT: true
             DRONE_LOGS_PRETTY: true
@@ -52,8 +52,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-02-10T23:50:57Z"
-    mac: ENC[AES256_GCM,data:UdYB/1RgHJw4GUsN0AAKiPmEpZuG9oFaU57KUCe6LtGBcpcAgHpgL4xEBs9324NeZnyUL1n3A8f5iT9xaaMsvnW38BMBB2q5DfkWQWzwwhVzljdVrqrEq8VmjrqM0t2JFQ/3CdmESnTJ488voG0EY2TSdHeF68yNcg80Rc1y3TM=,iv:yZRv0bEkQSWgYGR8rl4ItG4uLiLrRv/QS1RJuenfwNw=,tag:aBPhgxc9AUcu9p3sMkgMnQ==,type:str]
+    lastmodified: "2022-02-12T19:09:00Z"
+    mac: ENC[AES256_GCM,data:Tyl0MhIAU2ZVp5qq+764cTeul4Z9pbcIWQ+AsLxlxnmPEaPbyq7FR4733dFIjuIQ+NBkBqrinhcsgFaDvEIhNp4K5atS9TYERzzw91I2U5A804kflSJvnlb/Vedl1egcBVbbz9Z2K1zAlstyYwwMh6amIBQKSNZyOza0TXjX/6o=,iv:Dsg/C/Ekdf0BB1aeXV+8RAeyywyyYb7NnKoSf7yaQxI=,tag:jLsPCJP0rz/LzdNDM/l0EA==,type:str]
     pgp:
         - created_at: "2021-01-30T00:58:12Z"
           enc: |
