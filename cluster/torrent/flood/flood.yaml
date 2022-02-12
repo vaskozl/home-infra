@@ -44,10 +44,8 @@ spec:
         - fl.sko.ai
     persistence:
       data:
-        accessMode: ReadWriteOnce
         enabled: true
-        size: 1Gi
-        storageClass: nfs-client
+        existingClaim: flood
     podSecurityContext:
       fsGroup: 1001
       runAsGroup: 1001
