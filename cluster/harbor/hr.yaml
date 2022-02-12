@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfs-provisioner
+  namespace: harbor
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: harbor
+      version: 1.8.1
+      sourceRef:
+        kind: HelmRepository
+        name: harbor
+        namespace: flux-system
+      interval: 1h
+  values:
+    expose:
+      tls:
+        # The ingress controller has a default certificate so we don't need to configure it
+        certSource: none
+      ingress:
+        hosts:
+          core: core.harbor.sko.ai
+          notary: notary.harbor.sko.ai
+    externalURL: https://core.harbor.sko.ai
+    trivy:
+      enabled: false
+    chartmuseum:
+      enabled: false
+
+    portal:
+      image:
+        repository: liupeng0518/harbor-portal
+        tag: v2.3.4
+    core:
+      image:
+        repository: liupeng0518/harbor-core
+        tag: v2.3.4
+    jobservice:
+      image:
+        repository: liupeng0518/harbor-jobservice
+        tag: v2.3.4
+    registry:
+      registry:
+        image:
+          repository: liupeng0518/registry-photon
+          tag: v2.3.4
+      controller:
+        image:
+          repository: liupeng0518/harbor-registryctl
+          tag: v2.3.4
+    notary:
+      server:
+        image:
+          repository: liupeng0518/notary-server-photon
+          tag: v2.3.4
+      signer:
+        image:
+          repository: liupeng0518/notary-signer-photon
+          tag: v2.3.4
+    database:
+      internal:
+        image: liupeng0518/harbor-db
+        tag: v2.3.4
+    redis:
+      internal:
+        image: liupeng0518/redis-photon
+        tag: v2.3.4
+    exporter:
+      image: liupeng0518/harbor-exporter
+      tag: v2.3.4
+
+    persistence:
+      enabled: true
+      persistentVolumeClaim:
+        registry:
+          existingClaim:
+        jobservice:
+          existingClaim:
+        database:
+          existingClaim:
+        redis:
+          existingClaim:
+
