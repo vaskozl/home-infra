@@ -2,10 +2,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mysql-pvc-v2
+  name: mysql-pvc-v3
   namespace: media
 spec:
-  storageClassName: nfs-client
+  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:
