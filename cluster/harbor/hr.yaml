@@ -62,15 +62,18 @@ spec:
           tag: v2.3.4
     database:
       internal:
-        image: liupeng0518/harbor-db
-        tag: v2.3.4
+        image: 
+          repository: liupeng0518/harbor-db
+          tag: v2.3.4
     redis:
       internal:
-        image: liupeng0518/redis-photon
-        tag: v2.3.4
+        image: 
+          repository: liupeng0518/redis-photon
+          tag: v2.3.4
     exporter:
-      image: liupeng0518/harbor-exporter
-      tag: v2.3.4
+      image: 
+        repository: liupeng0518/harbor-exporter
+        tag: v2.3.4
 
     persistence:
       enabled: true
