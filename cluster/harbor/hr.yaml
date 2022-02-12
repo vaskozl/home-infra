@@ -21,13 +21,18 @@ spec:
         # The ingress controller has a default certificate so we don't need to configure it
         certSource: none
       ingress:
+        annotations:
+          kubernetes.io/ingress.class: internal
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         hosts:
-          core: core.harbor.sko.ai
-          notary: notary.harbor.sko.ai
-    externalURL: https://core.harbor.sko.ai
+          core: harbor.sko.ai
+    externalURL: https://harbor.sko.ai
+
     trivy:
       enabled: false
     chartmuseum:
+      enabled: false
+    notary:
       enabled: false
 
     portal:
@@ -51,20 +56,11 @@ spec:
         image:
           repository: liupeng0518/harbor-registryctl
           tag: v2.3.4
-    notary:
-      server:
-        image:
-          repository: liupeng0518/notary-server-photon
-          tag: v2.3.4
-      signer:
-        image:
-          repository: liupeng0518/notary-signer-photon
-          tag: v2.3.4
     database:
       internal:
         image: 
-          repository: liupeng0518/harbor-db
-          tag: v2.3.4
+          repository: cocl666/harbor-db
+          tag: v2.2.2
     redis:
       internal:
         image: 
