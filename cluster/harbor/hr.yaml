@@ -35,6 +35,12 @@ spec:
     notary:
       enabled: false
 
+    # # Enable When you have found good graphs
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+
     portal:
       image:
         repository: liupeng0518/harbor-portal
@@ -75,11 +81,11 @@ spec:
       enabled: true
       persistentVolumeClaim:
         registry:
-          existingClaim:
+          existingClaim: registry
         jobservice:
-          existingClaim:
+          existingClaim: jobservice
         database:
-          existingClaim:
+          existingClaim: database
         redis:
-          existingClaim:
+          existingClaim: redis
 
