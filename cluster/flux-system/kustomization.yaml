@@ -14,6 +14,7 @@ resources:
 - sources/helm/grafana-charts.yaml
 - sources/helm/harbor-charts.yaml
 - sources/git/external-snapshotter.yaml
+- kustomizations
 
 patches:
 - path: gotk-on-master.yaml
