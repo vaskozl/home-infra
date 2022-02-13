@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  releaseName: k10
+  interval: 1h
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.kasten.io/
+      chart: k10
+      version: 4.5.9
+      sourceRef:
+        kind: HelmRepository
+        name: kasten-charts
+        namespace: flux-system
+      interval: 1h
+  install:
+    createNamespace: true
+  upgrade:
+    crds: CreateReplace
+  values:
+    # For some reason they the gateway can't access the frontend on calico
+    networkPolicy:
+      create: false
+    eula:
+      accept: true
+      company: Vasko
+      email: "devnull@sko.ai"
+    global:
+      persistence:
+        storageClass: ssd-raid5
+    auth:
+      tokenAuth:
+        enabled: false
+    clusterName: k8s
+    grafana:
+      enabled: false
+    prometheus:
+      networkPolicy:
+        enabled: false
+      server:
+        enabled: false
+      serviceAccounts:
+        server:
+          create: false
+            #ingress:
+            #  create: true
+            #  host: "k10.sko.ai"
+            #  urlPath: k10
+            #  hosts:
+            #  - "k10.sko.ai"

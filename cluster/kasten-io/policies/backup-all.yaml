@@ -1,0 +1,56 @@
+apiVersion: config.kio.kasten.io/v1alpha1
+kind: Policy
+metadata:
+  name: backup-all
+  namespace: kasten-io
+spec:
+  comment: ""
+  frequency: "@daily"
+  paused: false
+  actions:
+    - action: backup
+      backupParameters:
+        profile:
+          namespace: kasten-io
+          name: backblaze-b2
+        filters:
+          includeResources:
+            - group: ""
+              version: ""
+              resource: persistentvolumeclaims
+              name: ""
+              matchExpressions: []
+          excludeResources: []
+    - action: export
+      exportParameters:
+        frequency: "@daily"
+        migrationToken:
+          name: ""
+          namespace: ""
+        profile:
+          name: backblaze-b2
+          namespace: kasten-io
+        # This is needed if all goes wrong and we need to restore
+        #receiveString: bIzAPpoanmET4DVKlUlVovR0X0MTIFDB0j+F/kgWNLMBBvF2x0eyRJ/BfNXEoqsMMhnwzKuNGU+u7zELhTr92iQuklkUE/PXRY6sz8+UjN2Rv45Z4HJMek+NpLGPN6FfWKcwo0cXydRmq7OQ7NzT60yQN4/x5nBJ8V3HMkvLxfSHz4A4XWutonK840TdFxM/4aI7dNKVtHRc00o3MTiL9929XXSzHSjrpihH94zbaJdioYyeZS3AdosHtK2Qh965Mo7HabrPKMRhBWz4oUwm8nKIr/WQa+LO0QWYBGUlBWZ8WzKL+Wsz+XH56p3JpJkgwEE1apYKjnQAk8k+qSqRCuV676REKUdB2cRmxNG5v7P/w0SEgomH/SkqlFWuhH9o4Jz5OJgemfisQnF8mImsdRq+y+sQRLbS9g33m8VNOSxBkvZGLt/DdyZ0H0ff0Or3KkbfqeYvb/HdHV1HqEc0bzC5iJBj66pmPGXxO29HvIRG4VAvgBKBFA58OWFFCsrw1baQdwTYhC5y7ogezk2/kSFBv+0vXvCASSNpe9PlgWku+cZCa/SCi7n0mNX4XXbTrgC8
+        exportData:
+          enabled: true
+      retention:
+        daily: 0
+        weekly: 0
+        monthly: 0
+        yearly: 0
+  retention:
+    daily: 7
+    weekly: 4
+    monthly: 12
+    yearly: 7
+  selector:
+    matchExpressions:
+      - key: k10.kasten.io/appNamespace
+        operator: In
+        values:
+          - automation
+          - authelia
+          - mailserver
+          - vaultwarden
+
