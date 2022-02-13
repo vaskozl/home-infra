@@ -20,7 +20,7 @@ spec:
           excludeResources: []
     - action: export
       exportParameters:
-        frequency: "@hourly"
+        frequency: "@daily"
         migrationToken:
           name: backup-all-migration-token-6j2br
           namespace: kasten-io
