@@ -3,6 +3,7 @@ kind: VolumeSnapshotClass
 metadata:
   name: syno
   annotations:
+    k10.kasten.io/is-snapshot-class: "true"
     storageclass.kubernetes.io/is-default-class: "false"
 driver: csi.san.synology.com
 deletionPolicy: Delete
