@@ -13,6 +13,7 @@ resources:
 - webhook/webhook-token.enc.yaml
 - sources/helm/grafana-charts.yaml
 - sources/helm/harbor-charts.yaml
+- sources/git/external-snapshotter.yaml
 
 patches:
 - path: gotk-on-master.yaml
