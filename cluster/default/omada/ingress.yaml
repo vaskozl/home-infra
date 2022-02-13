@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: omada
@@ -17,9 +17,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: omada
-              servicePort: 8043
+              service:
+                name: omada
+                port: 
+                  number: 8043
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - omada.sko.ai

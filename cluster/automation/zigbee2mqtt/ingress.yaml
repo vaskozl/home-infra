@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: zigbee2mqtt
@@ -9,9 +9,9 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: zigbee2mqtt
-              servicePort: http
+              service:
+                name: zigbee2mqtt
+                port:
+                  name: http
             path: /
-  tls:
-    - hosts:
-        - zm.sko.ai
+            pathType: Prefix

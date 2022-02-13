@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: vaultwarden
@@ -13,16 +13,19 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: vaultwarden
-              servicePort: 80
+              service:
+                name: vaultwarden
+                port:
+                  name: http
             path: /
+            pathType: Prefix
           - backend:
-              serviceName: vaultwarden
-              servicePort: 3012
+              service:
+                name: vaultwarden
+                port:
+                  name: websocket
             path: /notifications/hub
-  tls:
-    - hosts:
-        - bw.sko.ai
+            pathType: Prefix
 ---
 apiVersion: v1
 kind: Service

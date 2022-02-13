@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: baikal
@@ -13,9 +13,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: baikal
-              servicePort: 80
+              service:
+                name: baikal
+                port: 
+                  number: 80
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - bk.sko.ai

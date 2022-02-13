@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: authelia
@@ -19,12 +19,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: authelia
-              servicePort: 80
+              service:
+                name: authelia
+                port: 
+                  number: 80
             path: /
-  tls:
-    - hosts:
-        - gate.sko.ai
+            pathType: Prefix
 ---
 apiVersion: v1
 kind: Service

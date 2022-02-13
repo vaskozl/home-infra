@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: grafana
@@ -12,9 +12,9 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: grafana
-              servicePort: 3000
+              service:
+                name: grafana
+                port:
+                  number: 3000
             path: /
-  tls:
-    - hosts:
-        - graf.sko.ai
+            pathType: Prefix

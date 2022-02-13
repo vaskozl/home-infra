@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: blog
@@ -13,12 +13,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: blog
-              servicePort: 8080
+              service:
+                name: blog
+                port:
+                  number: 8080
             path: /
-  tls:
-    - hosts:
-        - sko.ai
+            pathType: Prefix
 ---
 apiVersion: v1
 kind: Service

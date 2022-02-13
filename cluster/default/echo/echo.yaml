@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-echo
@@ -19,12 +19,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: echo
-              servicePort: 8080
+              service: 
+                name: echo
+                port:
+                  number: 8080
             path: /
-  tls:
-    - hosts:
-        - echo.sko.ai
+            pathType: Prefix
 ---
 apiVersion: apps/v1
 kind: Deployment

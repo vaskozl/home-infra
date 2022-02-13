@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: registry
@@ -21,20 +21,26 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: registry
-              servicePort: 5000
+              service:
+                name: registry
+                port:
+                  number: 5000
             path: /.+
+            pathType: Prefix
           - backend:
-              serviceName: reg
-              servicePort: 8080
+              service:
+                name: reg
+                port:
+                  number: 8080
             path: /
+            pathType: Prefix
           - backend:
-              serviceName: reg
-              servicePort: 8080
+              service:
+                name: reg
+                port:
+                  number: 8080
             path: /(repo|static)
-  tls:
-    - hosts:
-        - r.sko.ai
+            pathType: Prefix
 ---
 apiVersion: v1
 kind: Service

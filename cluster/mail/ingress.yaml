@@ -1,5 +1,6 @@
 ---
-apiVersion: extensions/v1beta1
+# All this does is  grab a certificate
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mailserver
@@ -13,9 +14,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: http-echo
-              servicePort: 80
+              service:
+                name: http-echo
+                port:
+                  number: 80
             path: /mailserver
+            pathType: Prefix
   tls:
     - hosts:
         - mail.sko.ai

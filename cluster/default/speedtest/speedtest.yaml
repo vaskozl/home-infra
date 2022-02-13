@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: speedtest
@@ -26,12 +26,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: speedtest
-              servicePort: 8080
+              service:
+                name: speedtest
+                port:
+                  number: 8080
             path: /
-  tls:
-    - hosts:
-        - st.sko.ai
+            pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
