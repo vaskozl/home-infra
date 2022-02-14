@@ -31,6 +31,7 @@ spec:
         receiveString: bIzAPpoanmEBwiVtlkdogeVqZEVON0PB1COxwHwCSI0tc+xcqke3QLKDZs+5gOEoHBLWzKuNGU+u7zELhTr9vzAfmA0PBcGvYpSN+NO71bXXhrsz+H9mMgKVys33NKBFRr4ws0dl1fRJ4LOQ7NzByVy3NIHMxWFXyluaJVjLw+iz8bQsIVWB12+WjkTYEz59+7hGVpixmn9600o3MTiL9929XXSzHSjrpihH94zbaJdioYyeZS3AdosHtK2Qh965Mo7HabrPKMRhBWz4oUwm8nKIr/WQa+LO0QWYBGUlBWZ8WzKL+Wsz+XH56p3JpJkgwEE1apYKjnQAk8k+qSqRCuV676REKUdB2cRmxNG5v7P/w0SEgomH/SkqlFWuhH9o4Jz5OJgemfisQnF8mImsdRq+y+sQRLbS9g33m8VNOSxBkvZGLt/DdyZ0H0ff0Or3KkbfqeYvb/HdHV1HqEc0bzC5iJBj66pmPGXxO29HvIRG4VAvgBKBFA58OWFFCsrw1baQdwTYhC5y7ogezk2/kSFBv+0vXvCASSNpe9PlgWku+caM+z8Z76idNCd4iyNG7jsj
         exportData:
           enabled: true
+          exporterStorageClassName: ssd-raid5-reclaim
       retention: {}
   retention:
     daily: 7
