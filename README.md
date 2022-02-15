@@ -17,34 +17,26 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [gitea](https://gitea.io) - Internal git server (useful for passwords/secrets)
   * [drone](https://www.drone.io/) - CI with a native Kubernetes Runner
   * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
-  * [imagestore](https://github.com/gregordr/ImageStore) - Microservices based Photo browser
-  * [octoprint](https://github.com/OctoPrint/OctoPrint) - 3D printer control
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [kodi-headless](https://hub.docker.com/r/linuxserver/kodi-headless) - Centralised Kodi Library indexer
   * [mojopatse](https://github.com/jhthorsen/app-mojopaste) - Pastebin written with Mojolicious
-  * [rtorrent](https://github.com/jesec/rtorrent) - BitTorrent client
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
-  * [code-server](https://github.com/cdr/code-server) - ~~Visual Studio~~ Code Server
-  * [docker-sftp](https://github.com/emberstack/docker-sftp) - SFTP server
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
-  * [filebrowser](https://github.com/filebrowser/filebrowser) - Fast web filebrowser written in Go
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
   * [my blog](https://sko.ai) - Built with buildkitd+drone and hosted in gitea
-  * [reg](https://github.com/genuinetools/reg) - Docker Registry UI
-  * [wireguard](https://github.com/linuxserver/docker-wireguard) - The best VPN
+  * [harbor](https://github.com/goharbor/harbor) - Docker Registry UI
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
-  * [nginx-ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller
+  * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
-  * [registry](https://hub.docker.com/_/registry) - Plain and light docker registry, runs on arm64
   * [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests) - Prometheus and friends
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-  * [rook-ceph](https://rook.io/) - K8s storage that works properly
-  * [rook-ceph-backup-tools](https://gitlab.com/jrevolt/rook-ceph-backup) - Backup with differential ceph rbd snapshots
+  * [synology-csi](https://github.com/SynologyOpenSource/synology-csi) - Synology official CSI driver
+  * [k10-kasten](https://www.kasten.io/)
 
 ## Installation
 
