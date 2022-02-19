@@ -52,3 +52,19 @@ spec:
             #  urlPath: k10
             #  hosts:
             #  - "k10.sko.ai"
+  postRenderers:
+    # Instruct helm-controller to use built-in "kustomize" post renderer.
+    - kustomize:
+        # Array of inline strategic merge patch definitions as YAML object.
+        # Note, this is a YAML object and not a string, to avoid syntax
+        # indention errors.
+        patchesStrategicMerge:
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: foo
+            spec:
+              template:
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
