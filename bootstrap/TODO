@@ -16,6 +16,7 @@ o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
     - 'net.ipv4.ip_forward'
   evictionHard: 
     memory.available: "300Mi"
+* Ensure systemd-timesyncd is enabled
 
 # master
 * after kubeadm join, quickly remove ephermal
