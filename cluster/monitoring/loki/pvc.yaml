@@ -2,10 +2,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: loki-v1
+  name: loki-v2
   namespace: monitoring
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: ssd-btrfs
   accessModes:
     - ReadWriteOnce
   resources:

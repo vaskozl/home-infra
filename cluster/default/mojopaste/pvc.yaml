@@ -2,10 +2,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mojopaste-v3
+  name: mojopaste-v4
   namespace: default
 spec:
-  storageClassName: ssd-raid5
   accessModes:
     - ReadWriteOnce
   resources:

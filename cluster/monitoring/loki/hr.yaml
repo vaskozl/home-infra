@@ -22,7 +22,7 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        existingClaim: loki-v1
+        existingClaim: loki-v2
       config:
         table_manager:
           retention_deletes_enabled: true

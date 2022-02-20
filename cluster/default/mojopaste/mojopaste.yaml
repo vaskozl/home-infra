@@ -55,7 +55,7 @@ spec:
       terminationGracePeriodSeconds: 3
       containers:
         - name: mojopaste
-          image: r.sko.ai/mojopaste:1.0.6
+          image: alpine:latest
           ports:
             - name: http
               containerPort: 8080
