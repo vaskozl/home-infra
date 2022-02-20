@@ -36,6 +36,10 @@ spec:
       tokenAuth:
         enabled: false
     clusterName: k8s
+    cluster:
+      domainName: "k8s.sko.ai"
+    metering:
+      mode: airgap
     grafana:
       enabled: false
     prometheus:
