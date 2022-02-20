@@ -1,0 +1,14 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd-btrfs
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: csi.san.synology.com
+# if all params are empty, synology CSI will choose an available location to create volume
+parameters:
+  location: '/volume3'
+  thin_provisioning: "true"
+  fsType: 'btrfs'
+reclaimPolicy: Delete
+allowVolumeExpansion: true
