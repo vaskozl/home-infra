@@ -2,6 +2,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: ssd-raid5-reclaim
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.san.synology.com
 # if all params are empty, synology CSI will choose an available location to create volume
 parameters:
