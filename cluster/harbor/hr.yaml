@@ -42,40 +42,28 @@ spec:
     #     enabled: true
 
     portal:
-      image:
-        repository: liupeng0518/harbor-portal
-        tag: v2.3.4
+      nodeSelector:
+        kubernetes.io/arch: amd64
     core:
-      image:
-        repository: liupeng0518/harbor-core
-        tag: v2.3.4
+      nodeSelector:
+        kubernetes.io/arch: amd64
     jobservice:
-      image:
-        repository: liupeng0518/harbor-jobservice
-        tag: v2.3.4
+      nodeSelector:
+        kubernetes.io/arch: amd64
     registry:
-      registry:
-        image:
-          repository: liupeng0518/registry-photon
-          tag: v2.3.4
-      controller:
-        image:
-          repository: liupeng0518/harbor-registryctl
-          tag: v2.3.4
+      nodeSelector:
+        kubernetes.io/arch: amd64
     database:
       internal:
-        image: 
-          repository: cocl666/harbor-db
-          tag: v2.2.2
+        nodeSelector:
+          kubernetes.io/arch: amd64
     redis:
       internal:
-        image: 
-          repository: liupeng0518/redis-photon
-          tag: v2.3.4
+        nodeSelector:
+          kubernetes.io/arch: amd64
     exporter:
-      image: 
-        repository: liupeng0518/harbor-exporter
-        tag: v2.3.4
+      nodeSelector:
+        kubernetes.io/arch: amd64
 
     persistence:
       enabled: true
