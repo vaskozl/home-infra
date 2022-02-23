@@ -29,6 +29,7 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+      name: http
   selector:
     app: mojopaste
   type: ClusterIP
@@ -52,10 +53,12 @@ spec:
       labels:
         app: mojopaste
     spec:
+      nodeSelector:
+         kubernetes.io/arch: arm64
       terminationGracePeriodSeconds: 3
       containers:
         - name: mojopaste
-          image: alpine:latest
+          image: harbor.sko.ai/library/mojopaste:1.0.6
           ports:
             - name: http
               containerPort: 8080
