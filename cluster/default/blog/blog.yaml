@@ -50,11 +50,13 @@ spec:
     metadata:
       labels:
         app: blog
+    nodeSelector:
+      kubernetes.io/arch: amd64
     spec:
       terminationGracePeriodSeconds: 3
       containers:
         - name: blog
-          image: r.sko.ai/vasko/blog:1.0.7
+          image: harbor.sko.ai/library/blog:1.0.7
           ports:
             - name: blog
               containerPort: 8080
