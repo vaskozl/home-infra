@@ -39,7 +39,7 @@ spec:
         app: gitea
     spec:
       containers:
-        - image: gitea/gitea:1.16.3
+        - image: gitea/gitea:1.16.6
           name: gitea
           env:
           ports:

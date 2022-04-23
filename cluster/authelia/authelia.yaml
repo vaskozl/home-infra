@@ -73,7 +73,7 @@ spec:
         runAsGroup: 4000
         fsGroup: 4000
       containers:
-        - image: authelia/authelia:4.34.3
+        - image: authelia/authelia:4.35.0
           name: authelia
           env:
             - name: AUTHELIA_SERVER_DISABLE_HEALTHCHECK
