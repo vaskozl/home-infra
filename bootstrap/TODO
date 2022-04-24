@@ -17,6 +17,7 @@ o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
   evictionHard: 
     memory.available: "300Mi"
 * Ensure systemd-timesyncd is enabled
+* Add '*           hard    nofile     8192' to /etc/security/limits.conf
 
 # master
 * after kubeadm join, quickly remove ephermal
