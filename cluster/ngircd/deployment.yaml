@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngircd
+  namespace: default
+spec:
+  ports:
+    - name: irc
+      protocol: TCP
+      port: 6667
+      targetPort: irc
+    - name: ssl
+      protocol: TCP
+      port: 6697
+      targetPort: ssl
+  selector:
+    app: ngircd
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  externalIPs:
+    - ${EI_NGIRCD}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngircd
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: ngircd
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ngircd
+    spec:
+      containers:
+        - image: ghcr.io/linuxserver/ngircd:version-26.1-r0
+          name: ngircd
+          env:
+          ports:
+            - containerPort: 6667
+              name: irc
+            - containerPort: 6697
+              name: ssl
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: tls
+              mountPath: /etc/ssl/ngircd
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: ngircd-config
+        - name: tls
+          secret:
+            secretName: netpub-cert
+
