@@ -46,6 +46,11 @@ spec:
               name: irc
             - containerPort: 6697
               name: ssl
+          livenessProbe:
+            tcpSocket:
+              port: 6698
+            initialDelaySeconds: 15
+            periodSeconds: 5
           volumeMounts:
             - name: config
               mountPath: /config
