@@ -18,16 +18,18 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [drone](https://www.drone.io/) - CI with a native Kubernetes Runner
   * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
+  * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
   * [kodi-headless](https://hub.docker.com/r/linuxserver/kodi-headless) - Centralised Kodi Library indexer
   * [mojopatse](https://github.com/jhthorsen/app-mojopaste) - Pastebin written with Mojolicious
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
-  * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
-  * [my blog](https://sko.ai) - Built with buildkitd+drone and hosted in gitea
+  * [my blog](https://sko.ai) - Built with buildkitd + drone and hosted in gitea
   * [harbor](https://github.com/goharbor/harbor) - Docker Registry UI
   * [thelounge](https://thelounge.chat/) - IRC client
+  * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
+  * [znc](https://github.com/znc/znc) - IRC bouncer
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller
