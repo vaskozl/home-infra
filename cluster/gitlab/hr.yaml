@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitlab
+  namespace: gitlab
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: gitlab
+      version: 6.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: gitlab
+        namespace: flux-system
+      interval: 1h
+  values:
+    global:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      edition: ce
+      hosts:
+        domain: sko.ai
+      ingress:
+        class: internal-nginx
+        # We have our wildcard configured by default
+        configureCertmanager: false
+        # We enable TLS by default dont let gitlab override it
+        tls:
+          enabled: false
+    # Disable things we handle by ourselves
+    certmanager:
+      install: false
+    nginx-ingress:
+      enabled: false
+    prometheus:
+      install: false
+    grafana:
+      enabled: false
