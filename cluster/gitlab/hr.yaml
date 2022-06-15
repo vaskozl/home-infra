@@ -23,10 +23,11 @@ spec:
       hosts:
         domain: sko.ai
       ingress:
-        class: internal-nginx
-        # We have our wildcard configured by default
+        annotations:
+          kubernetes.io/ingress.class: internal
+        # Wildcard is configured by default
         configureCertmanager: false
-        # We enable TLS by default dont let gitlab override it
+        # TLS is enabled by default
         tls:
           enabled: false
         kas:
@@ -40,3 +41,30 @@ spec:
       install: false
     grafana:
       enabled: false
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: dummy-app
+              spec:
+                template:
+                  spec:
+                    nodeSelector:
+                      beta.kubernetes.io/arch: amd64
+            target:
+              kind: Deployment
+          - patch: |-
+              apiVersion: apps/v1
+              kind: StatefulSet
+              metadata:
+                name: dummy-app
+              spec:
+                template:
+                  spec:
+                    nodeSelector:
+                      beta.kubernetes.io/arch: amd64
+            target:
+              kind: StatefulSet
