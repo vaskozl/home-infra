@@ -25,6 +25,7 @@ spec:
       ingress:
         annotations:
           kubernetes.io/ingress.class: internal
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         # Wildcard is configured by default
         configureCertmanager: false
         # TLS is enabled by default
