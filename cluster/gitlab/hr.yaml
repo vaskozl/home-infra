@@ -23,8 +23,8 @@ spec:
       hosts:
         domain: sko.ai
       ingress:
+        ingressClass: internal
         annotations:
-          kubernetes.io/ingress.class: internal
           nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         # Wildcard is configured by default
         configureCertmanager: false
