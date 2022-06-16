@@ -64,3 +64,5 @@ spec:
           memory: 500Mi
     defaultBackend:
       enabled: false
+    tcp:
+      '22': 'gitlab/gitlab-gitlab-shell:22'
