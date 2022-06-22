@@ -35,6 +35,16 @@ spec:
         enabled: false
       pages:
         enabled: true
+      omniauth:
+        enabled: true
+        autoSignInWithProvider: [authelia]
+        syncProfileFromProvider: [authelia]
+        allowSingleSignOn: [authelia]
+        allowBypassTwoFactor: [authelia]
+        syncProfileAttributes: [email]
+        blockAutoCreatedUsers: false
+        providers: 
+          - secret: authelia-oauth2
     # Disable things we handle by ourselves
     certmanager:
       install: false
