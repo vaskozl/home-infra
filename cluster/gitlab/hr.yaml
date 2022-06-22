@@ -35,6 +35,15 @@ spec:
         enabled: false
       pages:
         enabled: true
+      email:
+        display_name: 'GitLab'
+        from: 'gitlab@sko.ai'
+        reply_to: 'noreply@sko.ai'
+      smtp:
+        enabled: true
+        address: 'mail.sko.ai'
+        tls: true
+        authentication: ''
       omniauth:
         enabled: true
         autoSignInWithProvider: [authelia]
