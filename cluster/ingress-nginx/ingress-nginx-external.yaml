@@ -44,6 +44,8 @@ spec:
       config:
         proxy-body-size: '0'
         ssl-protocols: TLSv1.3 TLSv1.2
+        # Helps prevent auth loops
+        force-ssl-redirect: true
         global-auth-url: https://gate.sko.ai/api/verify
         global-auth-signin: https://gate.sko.ai
         hsts: false
