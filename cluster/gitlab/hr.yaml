@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gitlab
-      version: 6.1.0
+      version: 6.0.3
       sourceRef:
         kind: HelmRepository
         name: gitlab
@@ -47,10 +47,10 @@ spec:
       appConfig:
         omniauth:
           enabled: true
-          autoSignInWithProvider: [authelia]
-          syncProfileFromProvider: [authelia]
-          allowSingleSignOn: [authelia]
-          allowBypassTwoFactor: [authelia]
+          autoSignInWithProvider: [openid_connect]
+          syncProfileFromProvider: [openid_connect]
+          allowSingleSignOn: [openid_connect]
+          allowBypassTwoFactor: [openid_connect]
           syncProfileAttributes: [email]
           blockAutoCreatedUsers: false
           providers: 
