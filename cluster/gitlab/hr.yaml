@@ -42,6 +42,7 @@ spec:
       smtp:
         enabled: true
         address: 'mailserver.mailserver'
+        port: 25
         tls: true
         authentication: ''
       appConfig:
