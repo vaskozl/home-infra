@@ -14,14 +14,10 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
 * Apps:
   * [authelia](https://github.com/authelia/authelia) - SSO server
   * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
-  * [gitea](https://gitea.io) - Internal git server (useful for passwords/secrets)
-  * [drone](https://www.drone.io/) - CI with a native Kubernetes Runner
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
-  * [kodi-headless](https://hub.docker.com/r/linuxserver/kodi-headless) - Centralised Kodi Library indexer
-  * [mojopatse](https://github.com/jhthorsen/app-mojopaste) - Pastebin written with Mojolicious
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
