@@ -75,6 +75,10 @@ spec:
       install: false
     grafana:
       enabled: false
+    gitlab-runner:
+      runners:
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
   postRenderers:
     - kustomize:
         patches:
