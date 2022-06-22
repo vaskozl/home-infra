@@ -44,16 +44,28 @@ spec:
         address: 'mail.sko.ai'
         tls: true
         authentication: ''
-      omniauth:
-        enabled: true
-        autoSignInWithProvider: [authelia]
-        syncProfileFromProvider: [authelia]
-        allowSingleSignOn: [authelia]
-        allowBypassTwoFactor: [authelia]
-        syncProfileAttributes: [email]
-        blockAutoCreatedUsers: false
-        providers: 
-          - secret: authelia-oauth2
+      appConfig:
+        omniauth:
+          enabled: true
+          autoSignInWithProvider: [authelia]
+          syncProfileFromProvider: [authelia]
+          allowSingleSignOn: [authelia]
+          allowBypassTwoFactor: [authelia]
+          syncProfileAttributes: [email]
+          blockAutoCreatedUsers: false
+          providers: 
+            - secret: authelia-oauth2
+    # Reduce memory usage
+    gitlab:
+      webservice:
+        minReplicas: 1
+        maxReplicas: 1
+      sidekiq:
+        minReplicas: 1
+        maxReplicas: 1
+      gitlab-shell:
+        minReplicas: 1
+        maxReplicas: 1
     # Disable things we handle by ourselves
     certmanager:
       install: false
