@@ -4,7 +4,7 @@ name: update_flux
 
 steps:
 - name: job:update_flux
-  image: alpine:3.7
+  image: alpine:3.16
   commands:
   - env
   - apk add git bash perl skopeo
