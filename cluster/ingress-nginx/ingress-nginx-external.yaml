@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx-charts
-      version: 3.20.1
+      version: 4.1.4
   interval: 1h
   values:
     controller:
