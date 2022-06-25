@@ -25,6 +25,10 @@ spec:
           - ${EI_INGRESS_IN}
         externalTrafficPolicy: Local
       ingressClass: internal
+      ingressClassResource:
+        name: internal
+        enabled: true
+        default: true
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
