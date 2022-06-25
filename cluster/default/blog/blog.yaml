@@ -50,8 +50,6 @@ spec:
     metadata:
       labels:
         app: blog
-    nodeSelector:
-      kubernetes.io/arch: amd64
     spec:
       terminationGracePeriodSeconds: 3
       containers:
