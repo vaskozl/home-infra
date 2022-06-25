@@ -1,8 +1,0 @@
-[Unit]
-Description=CephBackup
-
-[Service]
-User=vsz
-Type=oneshot
-ExecStart=/usr/bin/docker run --rm -v /home/vsz/.kube/config:/root/.kube/config -v /etc/rook-ceph-backup.yaml:/app/config/local.yaml registry.gitlab.com/jrevolt/rook-ceph-backup backup --all-namespaces --all-workloads -s
-ExecStart=/usr/bin/docker run --rm -v /home/vsz/.kube/config:/root/.kube/config -v /etc/rook-ceph-backup.yaml:/app/config/local.yaml registry.gitlab.com/jrevolt/rook-ceph-backup consolidate --all-namespaces --all-workloads

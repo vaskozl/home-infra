@@ -1,9 +1,0 @@
-[Unit]
-Description=Backup Ceph Daily
-
-[Timer]
-OnCalendar=daily
-AccuracySec=1m
-
-[Install]
-WantedBy=multi-user.target
