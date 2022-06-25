@@ -1,0 +1,4 @@
+val:cluster:
+  image: stefanprodan/kube-tools:v1.7.1
+  script:
+    - scripts/validate.sh
