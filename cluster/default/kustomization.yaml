@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- baikal/baikial.yaml
+- baikal/pvc.yaml
+- blog/blog.yaml
+- doods/doods.yaml
+- echo
+- home-assistant/home-assistant.yaml
+- home-assistant/pvc.yaml
+- limit-range.yaml
+- omada/ingress.yaml
+- omada/omada.yaml
+- omada/pvc.yaml
+- radicale/pvc.yaml
+- radicale/radicale.yaml
+- repos/emberstack.yaml
+- repos/gitea.yaml
+- repos/k8s-at-home.yaml
+- repos/local-storage.yaml
+- speedtest/speedtest.yaml
+- thelounge/deployment.yaml
+- thelounge/pvc.yaml
+- znc/deployment.yaml
+- znc/pvc.yaml

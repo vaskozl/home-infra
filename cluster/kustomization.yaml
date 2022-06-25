@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- authelia
+- automation
+- buildkit
+- cert-manager
+- default
+- flux-system
+- gitlab
+- harbor
+- ingress-nginx
+- kasten-io
+- kube-system
+- mail
+- monitoring
+- ngircd
+- synology-csi
+- torrent
+- vaultwarden
