@@ -9,6 +9,9 @@
     "enabled": true
   },
   "ignoreDeps": [
+    "docker.io/calico/cni",
+    "docker.io/calico/kube-controllers",
+    "docker.io/calico/",
     "ghcr.io/fluxcd/helm-controller",
     "ghcr.io/fluxcd/image-automation-controller",
     "ghcr.io/fluxcd/image-reflector-controller",
