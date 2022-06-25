@@ -45,7 +45,7 @@ kubeconform_config=("-strict" "-ignore-missing-schemas" "-schema-location" "defa
 echo "INFO - Validating cluster"
 find ./cluster -type f -name '*.yaml' -print0 | while IFS= read -r -d $'\0' file;
   do
-    kubeconform "${kubeconform_config[@]}" "${file}"
+    cat "${file}" | yq "del(.sops)" | kubeconform "${kubeconform_config[@]}"
     if [[ ${PIPESTATUS[0]} != 0 ]]; then
       exit 1
     fi
