@@ -58,6 +58,13 @@ spec:
             - secret: authelia-oauth2
     # Reduce memory usage
     gitlab:
+      gitaly:
+        resources:
+          requests:
+            cpu: 80m
+            memory: 340M
+          limits:
+            cpu: 1800m
       webservice:
         minReplicas: 1
         maxReplicas: 1
