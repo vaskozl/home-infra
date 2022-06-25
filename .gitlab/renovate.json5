@@ -8,6 +8,14 @@
   "pre-commit": {
     "enabled": true
   },
+  "ignoreDeps": [
+    "ghcr.io/fluxcd/helm-controller",
+    "ghcr.io/fluxcd/image-automation-controller",
+    "ghcr.io/fluxcd/image-reflector-controller",
+    "ghcr.io/fluxcd/kustomize-controller",
+    "ghcr.io/fluxcd/notification-controller",
+    "ghcr.io/fluxcd/source-controller"
+  ],
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$"]
   },
