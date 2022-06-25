@@ -15,14 +15,13 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [authelia](https://github.com/authelia/authelia) - SSO server
   * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
-  * [photoprism](https://github.com/photoprism/photoprism) - Photo browser using NASNet
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
-  * [my blog](https://sko.ai) - Built with buildkitd + drone and hosted in gitea
+  * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
   * [harbor](https://github.com/goharbor/harbor) - Docker Registry UI
   * [thelounge](https://thelounge.chat/) - IRC client
   * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
