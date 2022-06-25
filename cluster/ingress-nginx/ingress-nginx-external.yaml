@@ -29,6 +29,7 @@ spec:
         name: external
         enabled: true
         default: false
+        controllerValue: "k8s.io/external-ingress-nginx"
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
