@@ -47,7 +47,7 @@ echo "INFO - Validating cluster"
 kustomize_flags=("--load-restrictor=LoadRestrictionsNone")
 
 echo "INFO - Validating kustomization cluster/kustomization.yaml"
-kustomize build cluster/kustomization.yaml "${kustomize_flags[@]}" | \
+kustomize build cluster/ "${kustomize_flags[@]}" | \
   yq e "del(.sops)" - | \
   kubeconform "${kubeconform_config[@]}"
 
