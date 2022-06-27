@@ -45,16 +45,6 @@ spec:
         port: 25
         tls: false
         authentication: ''
-      praefect:
-        enabled: true
-        replaceInternalGitaly: false
-        virtualStorages:
-        - name: gitaly-virtual-storage
-          gitalyReplicas: 3
-          maxUnavailable: 1
-          persistence:
-            enabled: true
-            size: 20Gi
       appConfig:
         omniauth:
           enabled: true
