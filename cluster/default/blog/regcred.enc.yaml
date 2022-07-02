@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: regcred
+    namespace: default
+type: kubernetes.io/dockerconfigjson
+data:
+    .dockerconfigjson: ENC[AES256_GCM,data:DVof6AfCCFon1rYE3mCrFM3eKsSJoeA+jnYdJGctGajDiM+3hAVawP9cFPiYYY8tUvg4TsCPa85Im4khNt9TQhptts/xF86t3FNZyS9TRZrnnRc2tiinGdfwexoXz5Cjji9eLc9vojULdeMJW5J9JyHjichMIdBtVA9AIiAurpcy2GggikmxX8qK9/8xdc8YhpvuiJCBV/an/sHj,iv:6B8erNmYu2CFSOisYcE3GDAX/IRDncxS3APLqI9ZKNQ=,tag:3J3vOIGz4ai81ZV7M/A5iQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2022-07-02T10:41:18Z"
+    mac: ENC[AES256_GCM,data:/CCgmkOKeSz8ayFgyQnInjEjIQvCxPzB88PW3xWOBEsFBvoN4YyKU5siQwHwy7JJgWBiykO/JdwpqUKgXkbV1ZVuJTybvvaiOJwmRTJZm4oZc2fx4sAaO0+YK8m6D21zBJE8bCEhXyK8KQRG5OkrUgJx9bl9VYZSt/dVANdgQT8=,iv:QFIzmSQ3d9+hOx8ftIo+F2qCcsjSp/dzQROTeIhP1MM=,tag:zAqnowJE3ST+WbMmhtFyfw==,type:str]
+    pgp:
+        - created_at: "2022-07-02T10:41:18Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAwAp3H/b36obde7IGsM9OyjOO8J/eUuKaHcYfQVAu0wld9K
+            Z7bu1vW+IHT1qltC6L4ZVANNp606JrQAWI4JJx9pLWv+cmqkplzJNBS/mUAYirRW
+            t4dxAh35yRheV2f2YUgJi14Il14RYZyvzkwGKtdcSE9ivmQl/jXqstLdC4E7emB6
+            HFosz4YZaDX6HclYgBhrqjdPNpLiBI5nv1J5KXRiM2XiMbzFehSnjH0RP0qusYa4
+            efSlQaIHqkGYTrLSJN+BLjNMzRUTQ4Hs8LmaBZNBcgzG60CTVJ2jF8xEfyisF3gU
+            IgMa8VLHN09vypZSB09QjfhNKtCgD40e+dIcA2ZWJpuOtxKs07OnsHXe4S8mpbxJ
+            Fygp41pk6wHOjA+tXUMG/4YsHdx3i9l36/GqWSh7LEceQ4rt9AWY4xnioHc8YOqP
+            sPbDKJCvH+Kzk5f7HE+1dAqH6wdolFcgEeesFmFahGPLAh1qQ3KJP92o+yOJ7NRt
+            9CZA4wj1QbpF8BqG37teC/9pkJkcooWCpKFjgZ6SufFG7M8l+FBC5Pun4K815Ibd
+            ti95T9LUTrZnef2Tyowm3nRarpgiEnBmEyMelGfsWIA747eYkdTvTzHKLXzNtEsK
+            IA49GxlRnRhYuufEFrlfP8Rkw3p4uQDs6A9XdhmdI1ziVxrgkAe9XB0iX+Ev5+fw
+            cfiFJSEzdypgpbKJnhuiPl8g09ksd6DXtJdfbJiC6XxWbMsfdLXCVr+R9u6/t4Sm
+            nC3wgCW4ZIK9lO7e9+/RWFWqgbI0rIQp1l3EQEzXT6Um4/e1X7ioyMxPp+ysiosc
+            tTvKe6MWcsMK46QR1LilBT5dSqzUmJ7hGcXtfPIQ868H2t6MisxUxPZz2E4bp+O9
+            9+8mCR3ktJN8ozMjpc6sB/V4v0Sl7GMA6l/u6pZAbUZDXWIA+KjHVdqcH1Swf04Q
+            QhCDe2qCKOEPZTS1/mvJ7A+TUn3jUm2qFsXhaz1hKREoZY3qXMyAwysFA+Q798Bc
+            7dgQC/rz97SSWTUGvuu1LOTSXgHeq7nn4ynryKWWklHwQN6/3tfubbp8Q03kB4mE
+            plltezmhuwtUfwSb0guimyC28O7TCCFZYxrZZthdAzybK27HAACrWqtoYJEr/Su1
+            WLh4ioFu0XR3GjVawagkfw8=
+            =ju0u
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: dockerconfigjson
+    version: 3.7.3
