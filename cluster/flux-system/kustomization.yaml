@@ -17,8 +17,3 @@ resources:
 - sources/helm/gitlab-charts.yaml
 - sources/git/external-snapshotter.yaml
 - kustomizations
-
-patches:
-- path: gotk-on-master.yaml
-  target:
-    kind: Deployment
