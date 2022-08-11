@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: buildkitd
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
