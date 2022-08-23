@@ -30,7 +30,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - image: mbentley/omada-controller:5.4
+        - image: mbentley/omada-controller:5.5
           name: omada
           resources:
             requests:
