@@ -29,7 +29,7 @@ spec:
               service:
                 name: speedtest
                 port:
-                  number: 8080
+                  number: 3000
             path: /
             pathType: Prefix
 ---
@@ -42,7 +42,7 @@ spec:
   externalTrafficPolicy: Local
   ports:
     - protocol: TCP
-      port: 8080
+      port: 3000
       targetPort: 8080
   selector:
     app: speedtest
