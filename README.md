@@ -26,6 +26,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [thelounge](https://thelounge.chat/) - IRC client
   * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
   * [znc](https://github.com/znc/znc) - IRC bouncer
+  * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
 * System:
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller

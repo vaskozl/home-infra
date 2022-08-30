@@ -1,0 +1,150 @@
+---
+# Homepage configuration
+# See https://fontawesome.com/v5/search for icons options
+
+title: "Doudou dashboard"
+subtitle: "Homer"
+logo: "logo.png"
+# icon: "fas fa-skull-crossbones" # Optional icon
+
+header: true
+footer: false
+
+# Optional theme customization
+theme: default
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#ffffff"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link: "#3273dc"
+    link-hover: "#363636"
+  dark:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#131313"
+    card-background: "#2b2b2b"
+    text: "#eaeaea"
+    text-header: "#ffffff"
+    text-title: "#fafafa"
+    text-subtitle: "#f5f5f5"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link: "#3273dc"
+    link-hover: "#ffdd57"
+
+# Optional navbar
+# links: [] # Allows for navbar (dark mode, layout, and search) without any links
+links:
+  - name: "Contribute"
+    icon: "fab fa-github"
+    url: "https://github.com/vaskozl/flux-infra"
+    target: "_blank" # optional html a tag target attribute
+
+# Services
+# First level array represent a group.
+# Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+# Place the icons in "assets/tools/"
+services:
+  - name: "Cloud"
+    icon: "fas fa-cloud"
+    items:
+      - name: "Bitwarden"
+        logo: "https://www.svgrepo.com/show/331319/bitwarden-v2.svg"
+        subtitle: "Password Manager"
+        tag: "passwords"
+        url: "https://bw.sko..ai/"
+        target: "_blank" # optional html a tag target attribute
+      - name: "Syno Photos"
+        logo: "https://global.download.synology.com/download/Package/img/SynologyPhotos/1.3.0-0317/thumb_256.png"
+        subtitle: "Photo storage and viewer"
+        tag: "cloud"
+        url: "http://syno.sko.ai:5000/?launchApp=SYNO.Foto.AppInstance&SynoToken=Mtx6nH7eLR0f2#/search/keyword=france/shared_space?_k=adz42n"
+        target: "_blank"
+  
+  - name: "Repositories"
+    icon: "fas fa-archive"
+    items:
+      - name: "Gitlab"
+        logo: "https://about.gitlab.com/images/press/logo/svg/gitlab-logo-500.svg"
+        subtitle: "Self-hosted Gitlab"
+        tag: "git"
+        url: "https://gitlab.sko.ai/"
+        target: "_blank"
+
+  - name: "Media"
+    icon: "fas fa-film"
+    items:
+      - name: "Plex"
+        logo: "https://www.svgrepo.com/show/349479/plex.svg"
+        subtitle: "Media Center"
+        tag: "video"
+        url: "http://syno.sko.ai:32400/web"
+        target: "_blank"
+
+  - name: "Download"
+    icon: "fas fa-download"
+    items:
+      - name: "Flood WebUI"
+        logo: "https://flood.js.org/assets/img/logo.png"
+        subtitle: "Beautiful WebUI for torrent clients"
+        tag: "torrent"
+        url: "https://fl.sko.ai/"
+        target: "_blank"
+      - name: "Qbittorrent"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/New_qBittorrent_Logo.svg/900px-New_qBittorrent_Logo.svg.png"
+        subtitle: "Torrent client"
+        tag: "torrent"
+        url: "https://syno.sko.ai:55555/"
+        target: "_blank"
+
+  - name: "Tools"
+    icon: "fas fa-tools"
+    items:
+      - name: "AdGuard Home"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/4/4c/AdGuard.svg"
+        subtitle: "DNS-level Ad Blocking"
+        tag: "adblocker"
+        url: "http://192.168.1.1:3000/"
+        target: "_blank"
+      - name: "Authelia"
+        logo: "https://www.authelia.com/images/branding/logo-cropped.png"
+        subtitle: "SSO Authentication"
+        tag: "authentication"
+        url: "https://gate.sko.ai/"
+        target: "_blank"
+      - name: "Home Assistant"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg"
+        subtitle: "Smart Home Management"
+        tag: "home"
+        url: "https://ha.sko.ai/"
+        target: "_blank"
+      
+  - name: "Server"
+    icon: "fas fa-server"
+    items:
+      - name: "Grafana"
+        logo: "https://cdn.worldvectorlogo.com/logos/grafana.svg"
+        subtitle: "Server Monitoring Dashboards" 
+        tag: "monitoring"
+        url: "https://graf.sko.ai/"
+        target: "_blank"
+      - name: "Prometheus"
+        logo: "https://cdn.worldvectorlogo.com/logos/prometheus.svg"
+        subtitle: "Server Metrics" 
+        tag: "monitoring"
+        url: "https://prom.sko.ai/"
+        target: "_blank"
+      - name: "Loki"
+        logo: "https://img.stackshare.io/service/10079/loki.png"
+        subtitle: "Server logs" 
+        tag: "monitoring"
+        url: "https://graf.sko.ai/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22loki%22,%7B%7D%5D"
+        target: "_blank"
