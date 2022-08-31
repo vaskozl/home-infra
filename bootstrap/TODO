@@ -4,7 +4,6 @@ o* add swap no fail to kubelet.env
 o* set MaxUse for journald to 200M
 o* install logrotate, enable it and add /etc/logrotate.d/allpodlogs
 o* disable etcd and clean it
-o* install nfs-utils
 o* add /etc/sysctl.d/*
 o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
 * add cgroups memory to cmdline
@@ -18,6 +17,7 @@ o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
     memory.available: "300Mi"
 * Ensure systemd-timesyncd is enabled
 * Add '*           hard    nofile     8192' to /etc/security/limits.conf
+* install nfs-utils
 
 # master
 * after kubeadm join, quickly remove ephermal
