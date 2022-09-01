@@ -22,7 +22,6 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    # For some reason they the gateway can't access the frontend on calico
     networkPolicy:
       create: true
     eula:
@@ -67,3 +66,18 @@ spec:
               - op: add
                 path: /spec/template/spec/nodeSelector
                 value: { "kubernetes.io/arch": "amd64" }
+          - target:
+              version: v1
+              kind: NetworkPolicy
+              name: allow-external
+            patch: |-
+              - op: replace
+                path: /spec/ingress:
+                value: 
+                  - from:
+                      - namespaceSelector:
+                          matchLabels:
+                            kubernetes.io/metadata.name: "ingress-nginx"
+                    ports:
+                      - port: 8000
+                        protocol: TCP
