@@ -71,13 +71,9 @@ spec:
               kind: NetworkPolicy
               name: allow-external
             patch: |-
-              - op: replace
-                path: /spec/ingress:
+              - op: add
+                path: /spec/ingress/0/from
                 value: 
-                  - from:
-                      - namespaceSelector:
-                          matchLabels:
-                            kubernetes.io/metadata.name: "ingress-nginx"
-                    ports:
-                      - port: 8000
-                        protocol: TCP
+                  - namespaceSelector:
+                      matchLabels:
+                        kubernetes.io/metadata.name: "ingress-nginx"
