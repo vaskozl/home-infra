@@ -59,11 +59,11 @@ spec:
   postRenderers:
     # Instruct helm-controller to use built-in "kustomize" post renderer.
     - kustomize:
-        patchesJson6902:
+        patches:
           - target:
               version: v1
               kind: Deployment
-            patch:
+            patch: |-
               - op: add
                 path: /spec/template/spec/nodeSelector
                 value: { "kubernetes.io/arch": "amd64" }
