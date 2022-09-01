@@ -15,10 +15,10 @@ spec:
         paths:
           - backend:
               service:
-                name: http-echo
+                name: roundcube
                 port:
                   number: 80
-            path: /mailserver
+            path: /
             pathType: Prefix
   tls:
     - hosts:
