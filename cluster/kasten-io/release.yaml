@@ -24,7 +24,7 @@ spec:
   values:
     # For some reason they the gateway can't access the frontend on calico
     networkPolicy:
-      create: false
+      create: true
     eula:
       accept: true
       company: Vasko
