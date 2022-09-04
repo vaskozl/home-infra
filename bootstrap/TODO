@@ -6,15 +6,15 @@ o* install logrotate, enable it and add /etc/logrotate.d/allpodlogs
 o* disable etcd and clean it
 o* add /etc/sysctl.d/*
 o* add NoUpgrade   = /boot/*txt  to /etc/pacman.conf
-* add cgroups memory to cmdline
-* add pir and hostname to /etc/hosts
-* disable pigpiod && fancontrol
-* install open-iscsi
-* add to /var/lib/kubelet/config.yaml:
+o* add pir and hostname to /etc/hosts
+o* add to /var/lib/kubelet/config.yaml:
   allowedUnsafeSysctls:
     - 'net.ipv4.ip_forward'
   evictionHard: 
     memory.available: "300Mi"
+* add cgroups memory to cmdline
+* disable pigpiod && fancontrol
+* install open-iscsi
 * Ensure systemd-timesyncd is enabled
 * Add '*           hard    nofile     8192' to /etc/security/limits.conf
 * install nfs-utils
