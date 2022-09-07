@@ -54,7 +54,7 @@ metadata:
     addonmanager.kubernetes.io/mode: Reconcile
 data:
   Corefile: |
-    k8s.sko.ai:53 {
+    cluster.local:53 {
         errors
         cache {
                 success 9984 30
