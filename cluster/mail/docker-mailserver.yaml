@@ -85,7 +85,7 @@ spec:
               cpu: 1500m
             requests:
               memory: 250Mi
-              cpu: 50m
+              cpu: 150m
           volumeMounts:
             - name: config
               subPath: postfix-accounts.cf
