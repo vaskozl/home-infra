@@ -45,12 +45,6 @@ spec:
       labels:
         app: postgres
     spec:
-      initContainers:
-        - name: init-inotify-limit
-          image: busybox
-          command: ['sysctl', '-w', 'fs.inotify.max_user_instances=102400']
-          securityContext:
-            privileged: true
       containers:
         - name: postgres
           image: postgres:11 # no-up
