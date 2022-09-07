@@ -58,6 +58,7 @@ spec:
     spec:
       serviceAccount: csi-node-sa
       hostNetwork: true
+      hostPID: true
       containers:
         - name: csi-driver-registrar
           securityContext:
@@ -86,7 +87,7 @@ spec:
           securityContext:
             privileged: true
           imagePullPolicy: IfNotPresent
-          image: synology/synology-csi:v1.0.1
+          image: ghcr.io/zebernst/synology-csi:v1.1.0
           args:
             - --nodeid=$(KUBE_NODE_NAME)
             - --endpoint=$(CSI_ENDPOINT)

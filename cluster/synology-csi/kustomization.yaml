@@ -5,9 +5,9 @@ resources:
 - csi-driver.yml
 - namespace.yml
 - node.yml
-- secret.yaml.enc
-- snapshotter/snapshotter.yaml
-- snapshotter/volume-snapshot-class.yml
+- secret.yaml
+  #- snapshotter/snapshotter.yaml
+  #- snapshotter/volume-snapshot-class.yml
 - storage-classes/ssd-btrfs.yaml
 - storage-classes/ssd-raid5-reclaim.yaml
 - storage-classes/ssd-raid5.yaml
