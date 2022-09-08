@@ -51,18 +51,25 @@ spec:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-jobservice
     registry:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-photon
+      registry:
+        image:
+          repository: ghcr.io/octohelm/harbor/registry-photon
+      controller:
+        image:
+          repository: ghcr.io/octohelm/harbor/harbor-registryctl
     database:
-      image:
-        repository: ghcr.io/octohelm/harbor/harbor-db
+      internal:
+        image:
+          repository: postgres
+          tag: '13'
     redis:
-      image:
-        repository: ghcr.io/octohelm/harbor/redis-photon
+      internal:
+        image:
+          repository: redis
+          tag: '7.0'
     exporter:
       image:
         repository: ghcr.io/octohelm/harbor/harbor-exporter
-
     persistence:
       enabled: true
       persistentVolumeClaim:
