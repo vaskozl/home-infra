@@ -52,11 +52,9 @@ spec:
         app: blog
     spec:
       terminationGracePeriodSeconds: 3
-      imagePullSecrets:
-      - name: regcred
       containers:
         - name: blog
-          image: registry.sko.ai/vasko/blog:1.0.12
+          image: harbor.sko.ai/library/blog:1.0.7
           ports:
             - name: blog
               containerPort: 8080
