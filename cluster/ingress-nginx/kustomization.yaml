@@ -5,3 +5,8 @@ resources:
 - ingress-nginx-external.yaml
 - ingress-nginx.yaml
 - repos/nginx-git.yaml
+
+configMapGenerator:
+- name: nginx-template
+  files:
+  - nginx.tmpl
