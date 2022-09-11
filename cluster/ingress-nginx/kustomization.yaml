@@ -11,3 +11,5 @@ configMapGenerator:
 - name: nginx-template
   files:
   - nginx.tmpl
+generatorOptions:
+  disableNameSuffixHash: true
