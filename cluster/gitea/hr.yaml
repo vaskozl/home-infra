@@ -49,6 +49,7 @@ spec:
         service:
           ENABLE_REVERSE_PROXY_AUTHENTICATION: "true"
           ENABLE_REVERSE_PROXY_AUTO_REGISTRATION: "true"
+        repository:
           ENABLE_PUSH_CREATE_USER: "true"
           ENABLE_PUSH_CREATE_ORG: "true"
         security: 
