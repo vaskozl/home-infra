@@ -34,9 +34,10 @@ spec:
           proxy_set_header Remote-Email $email;
           proxy_set_header Remote-Groups $groups;
     service:
-      externalTrafficPolicy: Local
-      type: LoadBalancer
-      externalIPs:
+      ssh: 
+        externalTrafficPolicy: Local
+        type: LoadBalancer
+        externalIPs:
         - ${EI_GITEA}
     persistence:
       enabled: true
