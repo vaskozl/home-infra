@@ -12,12 +12,12 @@ spec:
           containers:
             - name: renovate
               image: renovate/renovate:32.202.3
-              args:
-                - user/repo
               # Environment Variables
               env:
                 - name: LOG_LEVEL
                   value: debug
+                - name: BINARY_SOURCE
+                  value: install
               envFrom:
                 - secretRef:
                     name: renovate-env
