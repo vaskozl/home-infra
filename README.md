@@ -15,6 +15,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [authelia](https://github.com/authelia/authelia) - SSO server
   * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
   * [gitea](https://gitea.io) - Internal git server (useful for passwords/secrets)
+  * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
