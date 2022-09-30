@@ -74,6 +74,12 @@ spec:
       gitlab-shell:
         minReplicas: 1
         maxReplicas: 1
+      gitlab-pages:
+        # The default requests are massive for a static server
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
     # Disable things we handle by ourselves
     certmanager:
       install: false
