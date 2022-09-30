@@ -68,6 +68,14 @@ spec:
       webservice:
         minReplicas: 1
         maxReplicas: 1
+        # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
+        workerProcesses: 1
+        resources:
+          limits:
+            memory: 1.5Gi # roughly, 1.5GB/worker
+          requests:
+            cpu: "0.9" # requests.cpu <= workerProcesses
+            memory: 1.25Gi # roughly, 1.25GB/worker
       sidekiq:
         minReplicas: 1
         maxReplicas: 1
