@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: gitlab
   annotations:
-    pod-security.kubernetes.io/warn: "privileged"
+    pod-security.kubernetes.io/enforce: privileged
