@@ -29,10 +29,6 @@ spec:
         app: omada
     spec:
       hostNetwork: true
-      securityContext:
-        sysctls:
-          - name: net.ipv4.ip_unprivileged_port_start
-            value: "0"
       containers:
         - image: mbentley/omada-controller:5.5
           name: omada
