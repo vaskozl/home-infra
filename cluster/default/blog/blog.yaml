@@ -51,6 +51,8 @@ spec:
       labels:
         app: blog
     spec:
+      nodeSelector:
+        kubernetes.io/arch: arm64
       terminationGracePeriodSeconds: 3
       imagePullSecrets:
       - name: regcred
