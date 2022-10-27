@@ -9,6 +9,8 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
     nginx.ingress.kubernetes.io/limit-connections: '5'
     nginx.ingress.kubernetes.io/limit-rpm: '80'
+    nginx.ingress.kubernetes.io/configuration-snippet : |
+      add_header Cache-Control "public";
 spec:
   rules:
     - host: sko.ai
