@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: torrents-v1
+  name: torrents-v2
   namespace: torrent
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: torrents-pv
+  storageClassName: torrents-pv-v2
   resources:
     requests:
       storage: 1Mi
