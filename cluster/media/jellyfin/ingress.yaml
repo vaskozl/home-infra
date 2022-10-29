@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1
 kind: Ingress
 metadata:
   name: jellyfin
@@ -12,6 +12,9 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: jellyfin
-              servicePort: 80
+              service:
+                name: jellyfin
+                port: 
+                  number: 80
             path: /
+            pathType: Prefix
