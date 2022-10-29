@@ -11,7 +11,7 @@ class Movie is IO::Path {
     unless $.movies_dir.IO.add($.basename).l {
       say "NEW (MOVIE): $.basename";
       $.movies_dir.IO.mkdir;
-      '../../rarfs/'.IO.add($.basename).symlink(
+      './'.IO.add($.basename).symlink(
         $.movies_dir.IO.add($.basename),
         absolute => False,
       )
@@ -45,7 +45,7 @@ class Show is IO::Path {
 
     unless $sd.add($.basename).l {
       say "NEW (SHOW): $.basename";
-      '../../../rarfs/'.IO.add($.basename).symlink(
+      './'.IO.add($.basename).symlink(
         $sd.add($.basename),
         absolute => False,
       )
@@ -58,8 +58,8 @@ class Show is IO::Path {
 sub MAIN(
   Str :h(:$hdd_dir) = "/media-pv",
   Str :t(:$torrent_dir) = "$hdd_dir/torrents", #= Raw torrent directory
-  Str :s(:$shows_dir)   = "$hdd_dir/linksr/shows", #= Where to symlink shows
-  Str :m(:$movies_dir)  = "$hdd_dir/linksr/movies", #= Where to symlink movies
+  Str :s(:$shows_dir)   = "$hdd_dir/links/shows", #= Where to symlink shows
+  Str :m(:$movies_dir)  = "$hdd_dir/links/movies", #= Where to symlink movies
   Bool :v(:$verbose), #= Print more things to STDOUT
   Bool :n(:$dryrun) = False, #= Don't actually symlink anything
 ) {
