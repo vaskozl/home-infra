@@ -11,7 +11,7 @@ class Movie is IO::Path {
     unless $.movies_dir.IO.add($.basename).l {
       say "NEW (MOVIE): $.basename";
       $.movies_dir.IO.mkdir;
-      './'.IO.add($.basename).symlink(
+      '../../torrents/'.IO.add($.basename).symlink(
         $.movies_dir.IO.add($.basename),
         absolute => False,
       )
@@ -45,7 +45,7 @@ class Show is IO::Path {
 
     unless $sd.add($.basename).l {
       say "NEW (SHOW): $.basename";
-      './'.IO.add($.basename).symlink(
+      '../../../torrents/'.IO.add($.basename).symlink(
         $sd.add($.basename),
         absolute => False,
       )
