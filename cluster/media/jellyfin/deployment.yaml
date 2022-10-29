@@ -35,10 +35,32 @@ spec:
               mountPath: /dev/dri
             - name: cache
               mountPath: /cache
-            - name: torrents-v1
+            - name: torrents-v1-rarfs
               mountPath: /media/torrents-v1
-            - name: torrents-v2
+              mountPropagation: HostToContainer
+            - name: torrents-v2-rarfs
               mountPath: /media/torrents-v2
+              mountPropagation: HostToContainer
+        - image: zimme/rar2fs@sha256:f306c8829f5a5044d8a2129ce1d2c7ea3d59e472d25f334007b13e93748f5148
+          name: rar2fs-v1
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: torrents-v1
+              mountPath: /source
+            - name: torrents-v1-rarfs
+              mountPath: /destination
+              mountPropagation: Bidirectional
+        - image: zimme/rar2fs@sha256:f306c8829f5a5044d8a2129ce1d2c7ea3d59e472d25f334007b13e93748f5148
+          name: rar2fs-v2
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: torrents-v2
+              mountPath: /source
+            - name: torrents-v2-rarfs
+              mountPath: /destination
+              mountPropagation: Bidirectional
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -51,6 +73,10 @@ spec:
         - name: torrents-v1
           persistentVolumeClaim:
             claimName: torrents-v1
+        - name: torrents-v1-rarfs
+          emptyDir: {}
         - name: torrents-v2
           persistentVolumeClaim:
             claimName: torrents-v2
+        - name: torrents-v2-rarfs
+          emptyDir: {}
