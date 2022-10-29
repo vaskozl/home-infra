@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+spec:
+  selector:
+    matchLabels:
+      app: jellyfin
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - image: jellyfin/jellyfin:10.8.6
+          name: jellyfin
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2.0Gi
+            limits:
+              memory: 8.0Gi
+          ports:
+            - containerPort: 8096
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: dev-dri
+              mountPath: /dev/dri
+            - name: cache
+              mountPath: /cache
+            - name: torrents-v1
+              mountPath: /media/torrents-v1
+            - name: torrents-v2
+              mountPath: /media/torrents-v2
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-data-v0
+        - name: dev-dri
+          hostPath:
+            path: /dev/dri
+        - name: cache
+          emptyDir: {}
+        - name: torrents-v1
+          persistentVolumeClaim:
+            claimName: torrents-v1
+        - name: torrents-v2
+          persistentVolumeClaim:
+            claimName: torrents-v2
