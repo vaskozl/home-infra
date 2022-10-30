@@ -19,11 +19,14 @@ spec:
       containers:
         - image: jellyfin/jellyfin:10.8.6
           name: jellyfin
+          securityContext:
+            privileged: true
           resources:
             requests:
               cpu: 500m
               memory: 2.0Gi
             limits:
+              cpu: 5000m
               memory: 8.0Gi
           ports:
             - containerPort: 8096
