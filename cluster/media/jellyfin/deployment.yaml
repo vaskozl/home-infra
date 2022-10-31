@@ -56,3 +56,6 @@ spec:
         - name: torrents-v1
           persistentVolumeClaim:
             claimName: torrents-v1
+        - name: torrents-v2
+          persistentVolumeClaim:
+            claimName: torrents-v2
