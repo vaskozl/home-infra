@@ -13,6 +13,9 @@ data:
     ENABLE_FAIL2BAN: "0"
     ENABLE_SPAMASSASSIN: "1"
     SPAMASSASSIN_SPAM_TO_INBOX: "1"
+    SA_TAG: "100000.0"
+    SA_TAG2: "3.75"
+    SA_KILL: "100000.0"
     POSTFIX_MESSAGE_SIZE_LIMIT: "31457280"
     ENABLE_POSTGREY: "0"
     ONE_DIR: "1"
@@ -31,8 +34,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-11-28T20:53:53Z"
-    mac: ENC[AES256_GCM,data:Jq1cacN2kcC1pDlmNlNRntcpA6fNfedFt3ejrvuofLu+TGofe24wZbmRrpYdhL+sHEZhu/HE97YQk9mJHQRxi5k9tPQuJ/zixbKFEhn4Ibr/KrKJJpnZotU7s6InBKpMCEEAm/OyGaJRiBKD/9g462qUNiS/f0MeCO6MA6khSTc=,iv:aj2wjpbEG5OwBdek5QxXtHoI9Y5fs99XnoJzmjl5OpU=,tag:dvDLCO0PKeJ9jmNzI8G65Q==,type:str]
+    lastmodified: "2022-11-28T21:17:54Z"
+    mac: ENC[AES256_GCM,data:2aVD0dWSjOP3S9tHrQVroypIR0VmOAYzbqDtTewZduBnIqOlKrJWQ0WVJ69A9+fXNbRpXOxYJiC6dOWwg/iQ/cxlIa6I9gwPrWwCsPdNA3oRbhzxuU6w3SHTEEl07dZHvq7RJNdsYYHOEAOD0S/MhtJ4/itoDKd/4rgchoFrtKw=,iv:SO/zMOMUK51V4ArBF6KRfTHHQyRDsw/Qes/Ytgx0pvI=,tag:O3O0GVSpn/KxVQrP2LdbwA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -79,6 +82,7 @@ data:
     postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
     postfix-virtual.cf: |
         jszvy@sko.ai devnull
+        fos@sko.ai devnull
         @sko.ai v@sko.ai
         @skozl.com v@sko.ai
     postfix-aliases.cf: |
@@ -111,8 +115,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-11-28T20:53:53Z"
-    mac: ENC[AES256_GCM,data:Jq1cacN2kcC1pDlmNlNRntcpA6fNfedFt3ejrvuofLu+TGofe24wZbmRrpYdhL+sHEZhu/HE97YQk9mJHQRxi5k9tPQuJ/zixbKFEhn4Ibr/KrKJJpnZotU7s6InBKpMCEEAm/OyGaJRiBKD/9g462qUNiS/f0MeCO6MA6khSTc=,iv:aj2wjpbEG5OwBdek5QxXtHoI9Y5fs99XnoJzmjl5OpU=,tag:dvDLCO0PKeJ9jmNzI8G65Q==,type:str]
+    lastmodified: "2022-11-28T21:17:54Z"
+    mac: ENC[AES256_GCM,data:2aVD0dWSjOP3S9tHrQVroypIR0VmOAYzbqDtTewZduBnIqOlKrJWQ0WVJ69A9+fXNbRpXOxYJiC6dOWwg/iQ/cxlIa6I9gwPrWwCsPdNA3oRbhzxuU6w3SHTEEl07dZHvq7RJNdsYYHOEAOD0S/MhtJ4/itoDKd/4rgchoFrtKw=,iv:SO/zMOMUK51V4ArBF6KRfTHHQyRDsw/Qes/Ytgx0pvI=,tag:O3O0GVSpn/KxVQrP2LdbwA==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
