@@ -100,6 +100,10 @@ spec:
               mountPath: /tmp/docker-mailserver/postfix-virtual.cf
               readOnly: true
             - name: config
+              subPath: postfix-aliases.cf
+              mountPath: /tmp/docker-mailserver/postfix-aliases.cf
+              readOnly: true
+            - name: config
               subPath: fetchmail.cf
               mountPath: /tmp/docker-mailserver/fetchmail.cf
               readOnly: true

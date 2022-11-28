@@ -31,8 +31,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T18:28:09Z"
-    mac: ENC[AES256_GCM,data:agiEVz2ycpqGJUrsN2kH0EVbdMs6ZzJkGB3aPo7ByBXhlNpnxqxYyvwSHAqCGDKi7fI/n0ijq3ElViVxi7WAACNXxhn5FJecpZMX6GdA8penVNIraTvX7qcem3ce9MqIG199KHw2mYn/MDHECvho32X8I3wiERjlCrfAtWy9qVg=,iv:PtDazoc2AowR2IqGmeLbE0u0ywkNGShPRBtBRe7IbPI=,tag:rOzK3eGtQyEKimhsj19KTw==,type:str]
+    lastmodified: "2022-11-28T20:53:53Z"
+    mac: ENC[AES256_GCM,data:Jq1cacN2kcC1pDlmNlNRntcpA6fNfedFt3ejrvuofLu+TGofe24wZbmRrpYdhL+sHEZhu/HE97YQk9mJHQRxi5k9tPQuJ/zixbKFEhn4Ibr/KrKJJpnZotU7s6InBKpMCEEAm/OyGaJRiBKD/9g462qUNiS/f0MeCO6MA6khSTc=,iv:aj2wjpbEG5OwBdek5QxXtHoI9Y5fs99XnoJzmjl5OpU=,tag:dvDLCO0PKeJ9jmNzI8G65Q==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -61,7 +61,7 @@ sops:
             -----END PGP MESSAGE-----
           fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
     encrypted_regex: (?i)(postfix-accounts|password)
-    version: 3.7.1
+    version: 3.7.3
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -78,8 +78,11 @@ data:
         smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, check_policy_service unix:private/policyd-spf, reject_unauth_pipelining, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_unknown_recipient_domain
     postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
     postfix-virtual.cf: |
+        jszvy@sko.ai devnull
         @sko.ai v@sko.ai
         @skozl.com v@sko.ai
+    postfix-aliases.cf: |
+        devnull: /dev/null
     # dovecot.cf: |
     #  service stats {
     #    unix_listener stats-reader {
@@ -108,8 +111,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-08T18:28:09Z"
-    mac: ENC[AES256_GCM,data:agiEVz2ycpqGJUrsN2kH0EVbdMs6ZzJkGB3aPo7ByBXhlNpnxqxYyvwSHAqCGDKi7fI/n0ijq3ElViVxi7WAACNXxhn5FJecpZMX6GdA8penVNIraTvX7qcem3ce9MqIG199KHw2mYn/MDHECvho32X8I3wiERjlCrfAtWy9qVg=,iv:PtDazoc2AowR2IqGmeLbE0u0ywkNGShPRBtBRe7IbPI=,tag:rOzK3eGtQyEKimhsj19KTw==,type:str]
+    lastmodified: "2022-11-28T20:53:53Z"
+    mac: ENC[AES256_GCM,data:Jq1cacN2kcC1pDlmNlNRntcpA6fNfedFt3ejrvuofLu+TGofe24wZbmRrpYdhL+sHEZhu/HE97YQk9mJHQRxi5k9tPQuJ/zixbKFEhn4Ibr/KrKJJpnZotU7s6InBKpMCEEAm/OyGaJRiBKD/9g462qUNiS/f0MeCO6MA6khSTc=,iv:aj2wjpbEG5OwBdek5QxXtHoI9Y5fs99XnoJzmjl5OpU=,tag:dvDLCO0PKeJ9jmNzI8G65Q==,type:str]
     pgp:
         - created_at: "2021-03-11T18:22:34Z"
           enc: |
@@ -138,4 +141,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
     encrypted_regex: (?i)(postfix-accounts|password)
-    version: 3.7.1
+    version: 3.7.3
