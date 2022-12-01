@@ -1,0 +1,17 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prowlarr
+spec:
+  rules:
+    - host: prowlarr.sko.ai
+      http:
+        paths:
+          - backend:
+              service:
+                name: prowlarr
+                port: 
+                  number: 80
+            path: /
+            pathType: Prefix
