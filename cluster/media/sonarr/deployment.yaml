@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+spec:
+  selector:
+    matchLabels:
+      app: sonarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+      containers:
+        - image: ghcr.io/onedr0p/sonarr-develop:4.0.0.202@sha256:668748f62badcd44d05b39ff84ff4227a6dda26b0f9ecae1f62003cb5ecb819e
+          name: sonarr
+          resources:
+            requests:
+              cpu: 15m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - containerPort: 8989
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: torrents-v1
+              mountPath: /media/torrents-v1
+            - name: torrents-v2
+              mountPath: /media/torrents-v2
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: sonarr-config
+        - name: torrents-v1
+          persistentVolumeClaim:
+            claimName: torrents-v1
+        - name: torrents-v2
+          persistentVolumeClaim:
+            claimName: torrents-v2
