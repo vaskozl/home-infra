@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+spec:
+  selector:
+    matchLabels:
+      app: radarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+      containers:
+        - image: ghcr.io/onedr0p/radarr-develop:4.3.0.6671@sha256:38661472f781ab30aa0c8c031c3e8314f99eddffd636bd44f2b9b1bc651f684c
+          name: radarr
+          resources:
+            requests:
+              cpu: 15m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - containerPort: 7878
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: torrents-v1
+              mountPath: /media/torrents-v1
+            - name: torrents-v2
+              mountPath: /media/torrents-v2
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: radarr-config
+        - name: torrents-v1
+          persistentVolumeClaim:
+            claimName: torrents-v1
+        - name: torrents-v2
+          persistentVolumeClaim:
+            claimName: torrents-v2
