@@ -34,17 +34,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: torrents-v1
-              mountPath: /media/torrents-v1
             - name: torrents-v2
               mountPath: /media/torrents-v2
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: radarr-config
-        - name: torrents-v1
-          persistentVolumeClaim:
-            claimName: torrents-v1
         - name: torrents-v2
           persistentVolumeClaim:
             claimName: torrents-v2
