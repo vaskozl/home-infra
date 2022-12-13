@@ -1,0 +1,136 @@
+# This is an example configuration file that documents all the options.
+# It will need to be modified for your specific use case.
+# Please refer to the link below for more details on how to set up the configuration file
+# https://github.com/StuffAnThings/qbit_manage/wiki/Config-Setup
+commands:
+    # The commands defined below will IGNORE any commands used in command line and docker env variables.
+    dry_run: false
+    cross_seed: false
+    recheck: false
+    cat_update: false
+    tag_update: false
+    rem_unregistered: true
+    tag_tracker_error: false
+    rem_orphaned: true
+    tag_nohardlinks: true
+    skip_cleanup: false
+qbt:
+    # qBittorrent parameters
+    host: ENC[AES256_GCM,data:+dWOx/0hsWgkWGB1h51P2JI=,iv:bq9/6jjyXOtMh+FC6OwvdEyZHf/ZM3sJGLomTnEk/5o=,tag:BrgCecYwMdTZ4axsDgtHog==,type:str]
+    user: ENC[AES256_GCM,data:Lxwn,iv:D+dO5T/IoeJ8q1rd0PxV/RjSR3cLBliFA3kq6iZkGug=,tag:18JULRHlaWHGV0Tj94fT6w==,type:str]
+    pass: ENC[AES256_GCM,data:vo3vvZeGGiqZsUeYg0WMFg==,iv:OGVH2Tj8nQ8/wE5GhE9y2hZsElfOb6YvGpngkiOhEV4=,tag:pZ/SMDU8pD3a+tVuF09TZg==,type:str]
+settings:
+    # Will force qBittorrent to enable Automatic Torrent Management for each torrent.
+    force_auto_tmm: false
+    # Will set the tag of any torrents that do not have a working tracker.
+    tracker_error_tag: issue
+    # When running tag-update function, it will update torrent tags for a given torrent even if the torrent has one or more of the tags defined here.
+    ignoreTags_OnUpdate:
+        - noHL
+        - issue
+        - cross-seed
+directory:
+    root_dir: /torrents/
+    remote_dir: /torrents/torrents/
+    orphaned_dir: /torrents/torrents/orphaned_data
+    recycle_bin: /torrents/torrents/.RecycleBin
+    cross_seed: null
+    torrents_dir: null
+cat:
+    radarr: /torrents
+    tv-sonarr: /torrents
+    legacy: /torrents
+tracker:
+    # Tag Parameters
+    # <Tracker URL Keyword>:    # <MANDATORY> This is the keyword in the tracker url
+    # <MANDATORY> Set tag name. Can be a list of tags or a single tag
+    #   tag: <Tag Name>
+    # <OPTIONAL> Will set the torrent Maximum share ratio until torrent is stopped from seeding/uploading. -2 means the global limit should be used, -1 means no limit.
+    #   max_ratio: 5.0
+    # <OPTIONAL> Will set the torrent Maximum seeding time (min) until torrent is stopped from seeding. -2 means the global limit should be used, -1 means no limit.
+    #   max_seeding_time: 129600
+    # <OPTIONAL> Will ensure that noHL torrents from this tracker are not deleted by cleanup variable if torrent has not yet met the minimum seeding time (min).
+    #   min_seeding_time: 2000
+    # <OPTIONAL> Will limit the upload speed KiB/s (KiloBytes/second) (-1 means no limit)
+    #   limit_upload_speed: 150
+    # <OPTIONAL> Set this to the notifiarr react name. This is used to add indexer reactions to the notifications sent by Notifiarr
+    passthepopcorn:
+        tag: ENC[AES256_GCM,data:wPbWCwJQnwr4u+arNwI=,iv:eof8zlE3DWM5S7fXRmDyr21ZguKXGnnoXP3DU1uK2OQ=,tag:XFQKG8LgPDis012sq3wBdg==,type:str]
+        notifiarr: ENC[AES256_GCM,data:zOmCMMQayzI2Uutr8F0=,iv:5yqPIWNkJ2d4PWbfCblD3VKSAyau+XT0Um2XmbQ40n4=,tag:A5Y62n0woi1YEanLbFtk0A==,type:str]
+    tleechreload:
+        tag: TorrentLeech
+        notifiarr: torrentleech
+    torrentleech:
+        tag: TorrentLeech
+        notifiarr: torrentleech
+    other:
+        tag: other
+nohardlinks:
+    # Tag Movies/Series that are not hard linked
+    # Mandatory to fill out directory parameter above to use this function (root_dir/remote_dir)
+    # This variable should be set to your category name of your completed movies/completed series in qbit. Acceptable variable can be any category you would like to tag if there are no hardlinks found
+    radarr:
+        cleanup: false
+        exclude_tags: null
+    tv-sonarr:
+        cleanup: false
+        exclude_tags: null
+recyclebin:
+    enabled: true
+    empty_after_x_days: 30
+    save_torrents: false
+    split_by_category: false
+webhooks:
+    error: null
+    run_start: null
+    run_end: null
+    function:
+        cross_seed: null
+        recheck: null
+        cat_update: null
+        tag_update: null
+        rem_unregistered: null
+        tag_tracker_error: null
+        rem_orphaned: null
+        tag_nohardlinks: null
+        cleanup_dirs: null
+orphaned:
+    empty_after_x_days: null
+    exclude_patterns: null
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2022-12-13T10:01:32Z"
+    mac: ENC[AES256_GCM,data:F0rIo2j4pJ4tokFKcbigIB5U8/wb7mniiR6m0f2lIWhvFRshA31qIuExFUpqOB9DK54gLJMFeVXgBgr7UwaNuwDfYv+IvkPmTzeoXyUSwXQuE24o+lcLJkzUu1jGajEAiCrFX0qWexvFXK/uZ1tCOzFfIo1SLdC9mg9vSMIPUoA=,iv:EXb2dPDfpIHlw1UR9NRCwaie9MdQsKQen9WnndHPg0A=,tag:oKCA+A59d224mzh8lFd24w==,type:str]
+    pgp:
+        - created_at: "2022-12-13T10:01:32Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv/WZpe4EJIviNofDWjcILJQ7a6/qtjkN1YwnYLuypOcpgY
+            PcLTm9+LydBdUiAW0SovHP3Zu3Zx5U2/bJcdFbIaNH3zIRqRg+TbcfhIA9LSm5v3
+            fdYLq+nSCIcVPPboHQyaL8smyMhx0CXuTMmaBsjTZDWHzJ3rAziKFk7FtnAY0MYJ
+            Ii0VIpo/3Nny2nK0vyQ1zizDpfyxbU2/uI8oMFLB5+q5FE+c+l9EZdHlBILeapi5
+            6wrwLehJ8pEg8lFd7uuWYqxMRiiYUmjusf2A4FVU7+VJMjxaVeMIOglh6K1k776v
+            lpOC6Sv128jAxTp4vXdY+JjycCnSpT+FL/gk42XQxub3NnuaRmpEeSXca2knX4Eo
+            8FVfc3Iicd3ZBHBxDiszgrIHGguDjIkgnase1IkU6QvY2YJfLHeBfupEYIuTUChO
+            gKpuCW9l7FFS8ZpIFJE8iZmWYmcdaL5kowdTCTOk7Hi9ncPW2BB5eXgakx3mdqoc
+            8FYU1x+Cc2uUBp7rBIk9DADLErsMcxJ2UkcwKiTz0fEPB8UOQWEn8BsKOG8DR+nB
+            /4wlartUkQbITtgE9zpktl5r0NWjHPgp13wUxxEKyLG8jDgpGIEudcsY9feADWIH
+            oPUFzLIr+z782/TJS03Zw4W1TwzR7TkrgHvS9H9EV+zyRhJ5Jh0nhtn61Hr4dwWH
+            ZPlHwOhMxQ1aJsJu39WixfdUuazWn75tp9mDenDumEx55bwb2vKBZRQ6nBM9BnU0
+            l4sK8n7eh+UhuAZZlzHMCdCO/vAcIHeeTUqLbtmp3067KG/SdQXT7Yo8KWsvUOjp
+            vbbvBrF2Qz7qD+6rpY4QYbYc5QpMoWPyKNOSRrRkW7HqXTN2HqLSBg+WmsA+DjkC
+            0ValknL4VcPqUqYxl9Lx3BgrWhdvLbMLAtcRc9VzmDFgh8FubB8ZmwdgXJhDD4kY
+            NaPsHxxHF/ZstMoY+wOr90Cr8XJj66K+R7fyxzQN9rjwh0UjToIBnZKIYZitq1RZ
+            hW7P7azfRFuU3LManvnFyM/SXgFPYc4tXkZyiE2BxB+D4vm1TcxtGxOXv4STOzdq
+            MEVe1lSVYz1EE6YQMGklhQAuFyO0J4IOy2qGJ10IVfJLEDBiwZQVd37R2hOAKo85
+            5kNDoO6fLGw+/e5K0W/ZAKw=
+            =SILc
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: (pass|host|user)
+    version: 3.7.3

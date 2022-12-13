@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: qbit-manage
+spec:
+  schedule: '*/10 * * * *'
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+    spec:
+      template:
+        metadata:
+        spec:
+          restartPolicy: Never
+          containers:
+          - image: bobokun/qbit_manage:v3.4.1
+            env:
+              - name: QBT_RUN
+                value: "true"
+            name: qbit-manage
+            resources:
+              requests:
+                cpu: 15m
+                memory: 100Mi
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+            volumeMounts:
+            - mountPath: /config/config.yml
+              subPath: config.yml
+              name: config
+            - name: torrents-v2
+              mountPath: /torrents
+          volumes:
+            - name: config
+              configMap:
+                name: qbit-manage-config
+            - name: torrents-v2
+              persistentVolumeClaim:
+                claimName: torrents-v2
