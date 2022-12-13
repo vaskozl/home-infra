@@ -4,7 +4,7 @@ namespace: media
 resources:
 - cron.yaml
 
-configMapGenerator:
+secretGenerator:
 - name: qbit-manage-config
   files:
   - config.yml=config/config.enc.yml

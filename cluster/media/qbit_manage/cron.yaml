@@ -35,8 +35,8 @@ spec:
               mountPath: /torrents
           volumes:
             - name: config
-              configMap:
-                name: qbit-manage-config
+              secret:
+                secretName: qbit-manage-config
             - name: torrents-v2
               persistentVolumeClaim:
                 claimName: torrents-v2
