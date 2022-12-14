@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autobrr
+spec:
+  selector:
+    matchLabels:
+      app: autobrr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: autobrr
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - image: ghcr.io/autobrr/autobrr:v1.11.0
+          name: autobrr
+          resources:
+            requests:
+              cpu: 15m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - containerPort: 7474
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: autobrr-config
