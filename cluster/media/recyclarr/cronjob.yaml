@@ -1,0 +1,48 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: recyclarr
+  namespace: media
+  labels:
+    app: recyclarr
+spec:
+  schedule: '@daily'
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          automountServiceAccountToken: false
+          restartPolicy: Never
+          containers:
+            - name: recyclarr-sonarr
+              image: ghcr.io/recyclarr/recyclarr:4.0.0@sha256:b26b38d1ce07a53adbba2adacd01188c35ca3ce1978d83655e98966b429b6ecd
+              imagePullPolicy: IfNotPresent
+              command:
+                - /app/recyclarr/recyclarr
+              args:
+                - sonarr
+              volumeMounts:
+                - name: config
+                  mountPath: /config/recyclarr.yml
+                  subPath: recyclarr.yml
+                  readOnly: true
+            - name: recyclarr-radarr
+              image: ghcr.io/recyclarr/recyclarr:4.0.0@sha256:b26b38d1ce07a53adbba2adacd01188c35ca3ce1978d83655e98966b429b6ecd
+              imagePullPolicy: IfNotPresent
+              command:
+                - /app/recyclarr/recyclarr
+              args:
+                - radarr
+              volumeMounts:
+                - name: config
+                  mountPath: /config/recyclarr.yml
+                  subPath: recyclarr.yml
+                  readOnly: true
+          volumes:
+            - name: config
+              secret:
+                secretName: recyclarr-config
