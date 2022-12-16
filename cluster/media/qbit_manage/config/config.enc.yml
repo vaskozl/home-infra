@@ -70,14 +70,14 @@ nohardlinks:
     # Mandatory to fill out directory parameter above to use this function (root_dir/remote_dir)
     # This variable should be set to your category name of your completed movies/completed series in qbit. Acceptable variable can be any category you would like to tag if there are no hardlinks found
     radarr:
-        cleanup: false
+        cleanup: true
         exclude_tags: null
     tv-sonarr:
-        cleanup: false
+        cleanup: true
         exclude_tags: null
 recyclebin:
     enabled: true
-    empty_after_x_days: 30
+    empty_after_x_days: 14
     save_torrents: false
     split_by_category: false
 webhooks:
@@ -103,8 +103,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-12-13T10:01:32Z"
-    mac: ENC[AES256_GCM,data:F0rIo2j4pJ4tokFKcbigIB5U8/wb7mniiR6m0f2lIWhvFRshA31qIuExFUpqOB9DK54gLJMFeVXgBgr7UwaNuwDfYv+IvkPmTzeoXyUSwXQuE24o+lcLJkzUu1jGajEAiCrFX0qWexvFXK/uZ1tCOzFfIo1SLdC9mg9vSMIPUoA=,iv:EXb2dPDfpIHlw1UR9NRCwaie9MdQsKQen9WnndHPg0A=,tag:oKCA+A59d224mzh8lFd24w==,type:str]
+    lastmodified: "2022-12-16T17:22:04Z"
+    mac: ENC[AES256_GCM,data:ZpTlaY2mbxhNclOzHcCHvCZuPnLGkOwlJDBZ1KnzH111GllwtMPAQPgBxocSUQjr9eFIcp0w9GCOpVDJskRrOluOu4y8zfZvUGAvHs+PKmXCmL9GmfhRuI20ByQW3ZTBh0tKUNg0ZBsk+dsL8ZSd5vSE2oRvoVqz8wCJnOe7hK8=,iv:hhcCgwGGiWde0E1FRYnIzi4uRe+GMvbCBnl8yO4lx78=,tag:dD6q+1yE4/YF4Fk2B9JhxA==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
