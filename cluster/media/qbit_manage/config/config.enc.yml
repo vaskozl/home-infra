@@ -71,9 +71,13 @@ nohardlinks:
     # This variable should be set to your category name of your completed movies/completed series in qbit. Acceptable variable can be any category you would like to tag if there are no hardlinks found
     radarr:
         cleanup: true
+        # 7days
+        min_seeding_time: 604800
         exclude_tags: null
     tv-sonarr:
         cleanup: true
+        # 7days
+        min_seeding_time: 604800
         exclude_tags: null
 recyclebin:
     enabled: true
@@ -103,8 +107,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-12-16T17:22:04Z"
-    mac: ENC[AES256_GCM,data:ZpTlaY2mbxhNclOzHcCHvCZuPnLGkOwlJDBZ1KnzH111GllwtMPAQPgBxocSUQjr9eFIcp0w9GCOpVDJskRrOluOu4y8zfZvUGAvHs+PKmXCmL9GmfhRuI20ByQW3ZTBh0tKUNg0ZBsk+dsL8ZSd5vSE2oRvoVqz8wCJnOe7hK8=,iv:hhcCgwGGiWde0E1FRYnIzi4uRe+GMvbCBnl8yO4lx78=,tag:dD6q+1yE4/YF4Fk2B9JhxA==,type:str]
+    lastmodified: "2022-12-16T17:52:47Z"
+    mac: ENC[AES256_GCM,data:cf4Yg3X4zWz1lcR24MDpNOP6YKQp6Ryrq3JOu7WbDIlitZJN+myYa5xkDDMbc8yQW4vo5kgSOCWUq7Mnwy0gfqwDZJUGXghGTiXwr4omRNc70eKYuRbzdIYBa99DSgZ3+9S64zPI96aYerxajx17OOYFJGqlIXiuSIYkheKobTk=,iv:gROb30CE2X3hhydtF3h6GI0+Pq2HFI7zIXZqT1Y5XlI=,tag:12jgMA8nBIdlWdUwhXpOGg==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
