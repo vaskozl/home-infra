@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: qbit-manage
 spec:
-  schedule: '@daily'
+  schedule: '@hourly'
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 1
   successfulJobsHistoryLimit: 3
