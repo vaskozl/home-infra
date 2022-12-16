@@ -3,8 +3,10 @@ kind: Kustomization
 resources:
 - calico/bgppeer.yaml
 - calico/calico.yaml
+- calico/ippool.yaml
 - calico/k8s-api.yaml
 - coredns.cm.yaml
 - ext-dns.yaml
+- metrics-server/hr.yaml
 - nodelocaldns.yaml
 - repos/stable.yaml
