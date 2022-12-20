@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: overseerr
+spec:
+  selector:
+    matchLabels:
+      app: overseerr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: overseerr
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - image: ghcr.io/sct/overseerr:1.31.0
+          name: overseerr
+          resources:
+            requests:
+              cpu: 15m
+              memory: 100Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          ports:
+            - containerPort: 5055
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: overseerr-config
