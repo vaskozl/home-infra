@@ -5,8 +5,6 @@ metadata:
   name: overseerr
   annotations:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-    nginx.ingress.kubernetes.io/limit-connections: '15'
-    nginx.ingress.kubernetes.io/limit-rpm: '300'
 spec:
   ingressClassName: external
   rules:
