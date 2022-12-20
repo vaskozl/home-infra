@@ -3,6 +3,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: overseerr
+  annotations:
+    kubernetes.io/ingress.class: external
+    nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+    nginx.ingress.kubernetes.io/limit-connections: '5'
+    nginx.ingress.kubernetes.io/limit-rpm: '80'
 spec:
   rules:
     - host: requests.sko.ai
