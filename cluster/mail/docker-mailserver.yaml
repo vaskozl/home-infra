@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
         - name: mailserver
-          image: mailserver/docker-mailserver:11.3.0
+          image: mailserver/docker-mailserver:11.3.1
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
