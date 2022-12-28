@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "semanticCommits": "enabled",
+  "semanticCommits": "disabled",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
@@ -42,40 +42,37 @@
     {
       "matchDatasources": ["docker"],
       "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
       "matchUpdateTypes": ["major", "minor", "patch"]
     },
     // add labels according to package and update types
     {
-      "matchDatasources": ["docker"],
       "matchUpdateTypes": ["major"],
-      "labels": ["renovate/image", "dep/major"]
+      "labels": ["dep/major"]
+    },
+    {
+      "matchUpdateTypes": ["minor"],
+      "labels": ["dep/minor"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "labels": ["dep/patch"]
+    },
+    {
+      "matchUpdateTypes": ["digest"],
+      "labels": ["dep/digest"]
     },
     {
       "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/image", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/image", "dep/patch"]
+      "addLabels": ["renovate/container"]
     },
     {
       "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/helm", "dep/major"]
+      "addLabels": ["renovate/helm"]
     },
-   {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/helm", "dep/minor"]
-    },
+    // enable automerge on < minor
     {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/helm", "dep/patch"]
+      "matchUpdateTypes": ["patch", "digest"],
+      "automerge": true
     }
   ]
 }
