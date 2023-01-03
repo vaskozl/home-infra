@@ -114,8 +114,8 @@ spec:
               service_memory_limit = "1Gi"
               helper_cpu_request = "5m"
               helper_cpu_limit = "500m"
-              helper_memory_request = "200Mi"
-              helper_memory_limit = "100Mi"
+              helper_memory_request = "100Mi"
+              helper_memory_limit = "200Mi"
   postRenderers:
     - kustomize:
         patches:
