@@ -101,6 +101,21 @@ spec:
       runners:
         nodeSelector:
           beta.kubernetes.io/arch: amd64
+        config: |
+          concurrent = 20
+          [[runners]]
+            [runners.kubernetes]
+              cpu_request = "500m"
+              cpu_limit = "1"
+              memory_request = "200Mi"
+              memory_limit = "1Gi"
+              service_cpu_request = "100m"
+              service_cpu_limit = "1"
+              service_memory_limit = "1Gi"
+              helper_cpu_request = "5m"
+              helper_cpu_limit = "500m"
+              helper_memory_request = "200Mi"
+              helper_memory_limit = "100Mi"
   postRenderers:
     - kustomize:
         patches:
