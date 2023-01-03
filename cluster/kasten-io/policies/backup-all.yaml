@@ -17,7 +17,10 @@ spec:
           includeResources:
             - resource: persistentvolumeclaims
               matchExpressions: []
-          excludeResources: []
+          excludeResources: 
+            - name: torrents-pv-media-v2
+              resource: persistentvolumeclaims
+              matchExpressions: []
     - action: export
       exportParameters:
         frequency: "@daily"
@@ -50,4 +53,5 @@ spec:
           - vaultwarden
           - default
           - harbor
-
+          - gitlab
+          - media
