@@ -18,7 +18,7 @@ spec:
             - resource: persistentvolumeclaims
               matchExpressions: []
           excludeResources: 
-            - name: torrents-pv-media-v2
+            - name: torrents-v2
               resource: persistentvolumeclaims
               matchExpressions: []
     - action: export
