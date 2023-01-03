@@ -37,11 +37,11 @@ spec:
           exporterStorageClassName: ssd-raid5-reclaim
       retention: {}
   retention:
-    daily: 7
-    weekly: 4
-    monthly: 3
-    yearly: 1
-    hourly: 24
+    hourly: 8
+    daily: 3
+    weekly: 2
+    monthly: 1
+    yearly: 0
   selector:
     matchExpressions:
       - key: k10.kasten.io/appNamespace
