@@ -4,19 +4,19 @@ metadata:
   name: backblaze-b2
   namespace: kasten-io
 spec:
-  type: Location
   locationSpec:
     credential:
       secret:
         apiVersion: v1
         kind: secret
-        name: k10secret-jcxhc
+        name: k10secret-gcz6g
         namespace: kasten-io
       secretType: AwsAccessKey
     objectStore:
       endpoint: s3.us-west-000.backblazeb2.com
       name: k10-dou
       objectStoreType: S3
-      path: k10/114635a1-a9ba-4fa3-a5de-0787c52e1881/migration
+      path: k10/ce6268bf-95c1-4c12-b905-99c466f1fdd0/migration
       pathType: Directory
     type: ObjectStore
+  type: Location
