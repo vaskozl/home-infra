@@ -9,7 +9,6 @@ spec:
   interval: 1h
   chart:
     spec:
-      # renovate: registryUrl=https://charts.kasten.io/
       chart: k10
       version: 5.5.2
       sourceRef:
@@ -34,9 +33,6 @@ spec:
     auth:
       tokenAuth:
         enabled: false
-    clusterName: k8s
-    cluster:
-      domainName: "k8s.sko.ai"
     metering:
       mode: airgap
     grafana:
