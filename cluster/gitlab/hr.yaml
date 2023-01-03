@@ -111,10 +111,11 @@ spec:
               memory_limit = "1Gi"
               service_cpu_request = "100m"
               service_cpu_limit = "1"
+              service_memory_request = "50Mi"
               service_memory_limit = "1Gi"
               helper_cpu_request = "5m"
               helper_cpu_limit = "500m"
-              helper_memory_request = "100Mi"
+              helper_memory_request = "50Mi"
               helper_memory_limit = "200Mi"
   postRenderers:
     - kustomize:
