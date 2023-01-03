@@ -19,7 +19,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - image: ghcr.io/autobrr/autobrr:v1.12.1
+        - image: ghcr.io/autobrr/autobrr:v1.13.0
           name: autobrr
           resources:
             requests:
