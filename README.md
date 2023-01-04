@@ -9,7 +9,7 @@
 
 <br />
 
-Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Worker 8GB running at 2.3Ghz:
+Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11th Gen Intel Nuc:
 
 * Apps:
   * [authelia](https://github.com/authelia/authelia) - SSO server
