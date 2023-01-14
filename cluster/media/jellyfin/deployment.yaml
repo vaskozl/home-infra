@@ -46,7 +46,7 @@ spec:
         - image: zimme/rar2fs@sha256:f306c8829f5a5044d8a2129ce1d2c7ea3d59e472d25f334007b13e93748f5148
           name: rar2fs-v2
           command: [rar2fs]
-          args: [ "-f", "-o", "allow_other", "-o", "auto_unmount", "--seek-length=1", "/torrents-v2/torrents", "/rar2fs" ]
+          args: [ "-f", "-o", "allow_other", "-o", "auto_unmount", "--seek-length=1", "/torrents-v2/torrents", "/rarfs" ]
           securityContext:
             privileged: true
           volumeMounts:
