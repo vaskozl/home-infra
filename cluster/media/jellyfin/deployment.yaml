@@ -43,7 +43,7 @@ spec:
             - name: rarfs
               mountPath: /media/torrents-v2/rarfs
               mountPropagation: HostToContainer
-        - image: zimme/rar2fs@sha256:f306c8829f5a5044d8a2129ce1d2c7ea3d59e472d25f334007b13e93748f5148
+        - image: zimme/rar2fs@sha256:a50800ff2719aed3442faf6ee92f7347b2400ba670de78c895a22b4925ab2def
           name: rar2fs-v2
           command: [rar2fs]
           args: [ "-f", "-o", "allow_other", "-o", "auto_unmount", "--seek-length=1", "/torrents-v2/torrents", "/rarfs" ]
