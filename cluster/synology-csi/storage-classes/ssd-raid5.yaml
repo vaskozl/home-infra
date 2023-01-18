@@ -3,7 +3,7 @@ kind: StorageClass
 metadata:
   name: ssd-raid5
   annotations:
-    storageclass.kubernetes.io/is-default-class: "false"
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: csi.san.synology.com
 # if all params are empty, synology CSI will choose an available location to create volume
 parameters:
