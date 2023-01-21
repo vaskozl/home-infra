@@ -19,7 +19,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
       containers:
-        - image: ghcr.io/onedr0p/sonarr-develop:4.0.0.356@sha256:c7d3cd0d6b87673b5cf92e4bce71df22608a314a1c4f14fbd6bd14c74ad7af4a
+        - image: ghcr.io/onedr0p/sonarr-develop:4.0.0.358@sha256:62b7c914973825254804e85522665faf1c2a6f3c7859986afc05cf5ccc1b16ee
           name: sonarr
           resources:
             requests:
