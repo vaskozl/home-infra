@@ -19,8 +19,6 @@ spec:
       containers:
         - image: jellyfin/jellyfin:10.8.8
           name: jellyfin
-          securityContext:
-            privileged: true
           resources:
             requests:
               cpu: 500m
@@ -38,23 +36,10 @@ spec:
               mountPath: /dev/dri
             - name: cache
               mountPath: /cache
+            - name: transcodes
+              mountPath: /config/transcodes
             - name: torrents-v2
               mountPath: /media/torrents-v2
-            - name: rarfs
-              mountPath: /media/torrents-v2/rarfs
-              mountPropagation: HostToContainer
-        - image: zimme/rar2fs@sha256:a50800ff2719aed3442faf6ee92f7347b2400ba670de78c895a22b4925ab2def
-          name: rar2fs-v2
-          command: [rar2fs]
-          args: [ "-f", "-o", "allow_other", "-o", "auto_unmount", "--seek-length=1", "/torrents-v2/torrents", "/rarfs" ]
-          securityContext:
-            privileged: true
-          volumeMounts:
-            - name: torrents-v2
-              mountPath: /torrents-v2
-            - name: rarfs
-              mountPath: /rarfs
-              mountPropagation: Bidirectional
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -64,8 +49,8 @@ spec:
             path: /dev/dri
         - name: cache
           emptyDir: {}
+        - name: transcodes
+          emptyDir: {}
         - name: torrents-v2
           persistentVolumeClaim:
             claimName: torrents-v2
-        - name: rarfs
-          emptyDir: {}
