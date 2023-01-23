@@ -19,6 +19,8 @@ spec:
       containers:
         - image: jellyfin/jellyfin:10.8.8
           name: jellyfin
+          securityContext:
+            privileged: true
           resources:
             requests:
               cpu: 500m
