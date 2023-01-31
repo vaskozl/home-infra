@@ -87,7 +87,7 @@ spec:
           securityContext:
             privileged: true
           imagePullPolicy: IfNotPresent
-          image: ghcr.io/zebernst/synology-csi:v1.1.0
+          image: vaskozl/synology-csi-talos:v1.1.0
           args:
             - --nodeid=$(KUBE_NODE_NAME)
             - --endpoint=$(CSI_ENDPOINT)
