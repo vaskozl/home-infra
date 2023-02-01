@@ -65,7 +65,7 @@ spec:
         app: speedtest
     spec:
       containers:
-        - image: openspeedtest/latest@sha256:c3148b8213ca2fdf84304e21dd90c5cb2be286da8277a14b196e01165ca2d069
+        - image: openspeedtest/latest@sha256:056a7cb42fa2f422a7b66fb23c30e3bb464346c57cd42072fbf32f04069d3322
           name: speedtest
           env:
           ports:
