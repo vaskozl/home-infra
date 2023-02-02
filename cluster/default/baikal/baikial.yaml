@@ -58,29 +58,19 @@ spec:
       labels:
         app: baikal
     spec:
+      nodeSelector:
+        kubernetes.io/arch: arm64
       containers:
-        - image: ckulka/baikal:0.9.3-nginx
+        - image: ckulka/baikal:experimental-nginx@sha256:ea235c8de2af002ca44a9842fb55f6c25e676266cd358c2af38a1ab28672e74b
           name: baikal
-          command:
-            - sh
-            - -c 
-            # sendmail hangs for a minute if it's missing FQDN
-            # Dance around replacing /etc/hosts a little
-            # Remap sendmail
-            - >
-              mv /usr/sbin/sendmail /usr/sbin/sendmail-og && 
-              echo '#!/bin/sh' > /usr/sbin/sendmail && chmod +x /usr/sbin/sendmail &&  
-              echo '/usr/sbin/sendmail-og -f baikal@sko.ai $@' >> /usr/sbin/sendmail &&
-              echo 'nginx' >> /etc/mail/trusted-users &&
-              echo "define(\`SMART_HOST', \`mail.sko.ai')dnl" >> /etc/mail/sendmail.mc &&
-              cp /etc/hosts /etc/hosts.new && 
-              sed -i "s/$HOSTNAME/$HOSTNAME baikal.default.svc.k8s.sko.ai/" /etc/hosts.new && 
-              cp /etc/hosts.new /etc/hosts && 
-              service sendmail start && 
-              /etc/init.d/php8.1-fpm start && 
-              chown -R nginx:nginx /var/www/baikal/Specific && 
-              nginx -g "daemon off;"
           env:
+            - name: MSMTPRC
+              value: |
+                defaults
+                account        default
+                from           baikal@sko.ai
+                host           mail.sko.ai
+                port           25
           ports:
             - containerPort: 80
               name: baikal
