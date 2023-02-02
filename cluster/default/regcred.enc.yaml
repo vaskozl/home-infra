@@ -1,19 +1,18 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    creationTimestamp: null
     name: regcred
 type: kubernetes.io/dockerconfigjson
 data:
-    .dockerconfigjson: ENC[AES256_GCM,data:CT3nNfTOdKMh7Wqs7+JzNpjTAI8DtwKrAEsATKI7EXbE9aIjQPIipzKZU8Ps/d4NceZa7KvwskzoU8LYOW5hbiHJAXAIOctD4IAUUMEttQO8HQuQxXVqenpUlGKh04ByJjDzXidYOehBePERrnytUAHHwfD5UFQK+NL0RU0+yrItlhPfwmEDXULte4U=,iv:iOrcT9sEmUdOzXhtWl9Y1IHVWF42jJ3owyiSxhHXo70=,tag:t6839TT29f5loXS+33UHaw==,type:str]
+    config.json: ENC[AES256_GCM,data:3a22A4oj5u93bQcQpHKuNMacLnIm5phQsWKtOhy8yvKjlBWDaK7/RPGhtTLGUSXLggrAMZirJEJRUJ9KwTzb+x47pcTknCulwFUVi32TK0f7afjKTfcWei6eZpBH+w0CF8DhFN/6wyFdu5Iqz++cXSlvZhYlLqoohYCkiFe6SpZiMdbhN1DkGdbysdE=,iv:LQM8pJo/RaI5766fLIP/3w842Th6xUFTow/6iP0upvg=,tag:9xQbGdlsqmWtbOk4UsiB+w==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-10-03T09:31:03Z"
-    mac: ENC[AES256_GCM,data:+jRmJRWOAHaDP7TegSUj3uEeP+wNUvLc1f6SVWdGXHki5xF0EJ6qCTd1UedMe3dfKB0+scCblMAPPdVwpe7PMe2jAiWYIqW+bajnVJSuc4mxNjUiIKRcTe/x1L4Wi8ZqeQP1geBToolGAlPxPsGRVMinEWfg58fr/0tCawdeVfs=,iv:fXnYtAhhvudUKElyp9/QJEZB9nZihRLt+UniXs9qhUE=,tag:mwjrF68k/j2wubVDHggXHA==,type:str]
+    lastmodified: "2023-02-02T18:39:35Z"
+    mac: ENC[AES256_GCM,data:kygfark0CIOeq6c72HY6QRIchE5Xzne1b2XfA4PkZfdAC/tMgZAgufQWK5Mg2Hiu6a93+hxaAQ+6RKF2ut8AoWoay597/qFmCwLJvvr7fXlKdB0lrmYAf9u5uDFbhSQajvc1sgzkegKmInSr42216jKhOQw1K99cu3JQvYBOjNM=,iv:KAQTGygbqT+WRYcgX6KmEMmusmc6UOnCUaSemjayEVI=,tag:dHSvhP8gv5rKhPo6XnSHkg==,type:str]
     pgp:
         - created_at: "2022-10-03T09:31:03Z"
           enc: |
