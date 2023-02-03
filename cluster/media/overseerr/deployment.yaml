@@ -19,7 +19,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - image: ghcr.io/sct/overseerr:1.32.4
+        - image: ghcr.io/sct/overseerr:1.32.5
           name: overseerr
           resources:
             requests:
