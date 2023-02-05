@@ -49,7 +49,7 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-        - image: roundcube/roundcubemail:1.6.0-apache
+        - image: roundcube/roundcubemail:1.6.1-apache
           name: roundcube
           env:
             - name: ROUNDCUBEMAIL_DEFAULT_HOST
