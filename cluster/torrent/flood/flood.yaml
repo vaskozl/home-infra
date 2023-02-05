@@ -18,7 +18,7 @@ spec:
     image:
       pullPolicy: Always
       repository: jesec/flood
-      tag: 4.7.0
+      tag: master
     env:
       FLOOD_OPTION_AUTH: none
       FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
