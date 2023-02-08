@@ -11,6 +11,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx-charts
+        namespace: flux-system
       version: 4.4.3
   interval: 1h
   values:
