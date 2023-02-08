@@ -7,48 +7,53 @@ metadata:
 spec:
   chart:
     spec:
-      chart: qbittorrent
+      chart: app-template
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
-        namespace: default
-      version: 7.3.0
+        name: bjw-s
+        namespace: flux-system
+      version: 1.3.1
   interval: 1h
   values:
     image:
       repository: ghcr.io/onedr0p/qbittorrent
       tag: v4.4.3.1
+    env:
+      QBITTORRENT__PORT: &port 80
+      QBITTORRENT__BT_PORT: &port-bt 6881
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
     service:
-      additionalServices:
-        - enabled: true
-          nameSuffix: bittorrent
-          type: LoadBalancer
-          externalTrafficPolicy: Local
-          externalIPs:
-            - 192.168.99.19
-          port:
-            port: 6881
+      main:
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+          - 192.168.99.19
+        ports:
+          bittorrent:
+            port: *port-bt
             name: bittorrent
             protocol: TCP
-            targetPort: 6881
+            targetPort: *port-bt
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: internal
-        nginx.ingress.kubernetes.io/auth-url: https://gate.sko.ai/api/verify
-        nginx.ingress.kubernetes.io/auth-signin: https://gate.sko.ai/
-      hosts:
-        - host: qb.sko.ai
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-            - qb.sko.ai
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: internal
+          nginx.ingress.kubernetes.io/auth-url: https://gate.sko.ai/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: https://gate.sko.ai/
+        hosts:
+          - host: qb.sko.ai
+            paths:
+              - path: /
+                pathType: Prefix
     persistence:
       config:
         enabled: true
