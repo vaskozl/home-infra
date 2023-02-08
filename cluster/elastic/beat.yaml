@@ -3,6 +3,8 @@ kind: Beat
 metadata:
   name: main
   namespace: elastic
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   type: filebeat
   version: 8.6.1
