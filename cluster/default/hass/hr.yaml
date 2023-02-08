@@ -1,0 +1,69 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hass
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 1.3.1
+  interval: 1h
+  values:
+    image:
+      repository: homeassistant/home-assistant
+      tag: 2023.1.7
+    env:
+      TZ: Europe/London
+    persistence:
+      config:
+        enabled: true
+        existingClaim: hass-pvc-v3
+    service:
+      main:
+        ports:
+          http:
+            port: 8123
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+          nginx.ingress.kubernetes.io/auth-url: https://ha.sko.ai/404page
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            if ($request_uri ~ ^/api/) {
+              return 200;
+            }
+            if ($request_uri ~ ^/auth/) {
+              return 200;
+            }
+            if ($remote_addr ~ ^(192\.168\.|10\.)) {
+              return 200;
+            }
+            return 403;
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            location /local {
+              deny all;
+              return 403;
+            }
+        hosts:
+          - host: ha.sko.ai
+            paths:
+              - path: /
+                pathType: Prefix
+    hostNetwork: true
+    probes:
+      liveness:
+        enabled: true
+    resources:
+      limits:
+        memory: 500Mi
+      requests:
+        cpu: 35m
+        memory: 150Mi
