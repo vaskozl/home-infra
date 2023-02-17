@@ -15,7 +15,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - image: bobokun/qbit_manage:v3.4.2
+          - image: bobokun/qbit_manage:v3.4.3
             env:
               - name: QBT_RUN
                 value: "true"
