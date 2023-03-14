@@ -3,12 +3,13 @@ kind: Kustomization
 namespace: media
 resources:
 - _namespace.yaml
+- netpol.yaml
+- autobrr/
 - jellyfin
+- overseerr/
+- qbit_manage/
+- radarr/
+- recyclarr/
+- sonarr/
 - torrents-pv-v2.yaml
 - torrents-pvc-v2.yaml
-- sonarr/
-- radarr/
-- autobrr/
-- recyclarr/
-- qbit_manage/
-- overseerr/
