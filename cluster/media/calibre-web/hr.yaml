@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre-web
+  namespace: media
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controller:
+      strategy: Recreate
+    image:
+      repository: linuxserver/calibre-web
+      tag: 0.6.19
+    podSecurityContext:
+      runAsUser: 0
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+    enableServiceLinks: false
+    env:
+      PUID: 1000
+      PGID: 1000
+      CACHE_DIR: /cache
+    service:
+      main:
+        ports:
+          http:
+            port: 8083
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            auth_request_set $user $upstream_http_remote_user;
+            proxy_set_header Remote-User $user;
+        hosts:
+          - host: cw.sko.ai
+            paths:
+              - path: /
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-web-v1
+      media:
+        enabled: true
+        mountPath: /torrents
+        existingClaim: torrents-v2
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /cache
+    resources:
+      requests:
+        cpu: 15m
+        memory: 273M
+      limits:
+        cpu: 800m
+        memory: 328M
