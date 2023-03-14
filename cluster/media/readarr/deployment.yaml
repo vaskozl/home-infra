@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readarr
+spec:
+  selector:
+    matchLabels:
+      app: readarr
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: readarr
+    spec:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+      containers:
+        - image: ghcr.io/onedr0p/readarr-develop:0.1.4.1596@sha256:351335c64c38be192349ca77528ac559735b29d29c673705c64dd2d9ef660ef4
+          name: readarr
+          resources:
+            requests:
+              cpu: 15m
+              memory: 100Mi
+            limits:
+              cpu: 2000m
+              memory: 1Gi
+          ports:
+            - containerPort: 8787
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: torrents-v2
+              mountPath: /torrents
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: readarr-config
+        - name: torrents-v2
+          persistentVolumeClaim:
+            claimName: torrents-v2

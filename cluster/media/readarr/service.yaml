@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readarr
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8787
+  selector:
+    app: readarr
