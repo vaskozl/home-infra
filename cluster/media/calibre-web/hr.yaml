@@ -20,7 +20,7 @@ spec:
       strategy: Recreate
     image:
       repository: linuxserver/calibre-web
-      tag: 0.6.19
+      tag: 2021.12.16
     podSecurityContext:
       runAsUser: 0
       fsGroup: 1000
