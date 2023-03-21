@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
 - buildkit-client-certs.yaml
 - buildkit-daemon-certs.yaml
-- deployment+service.privileged.yaml
+- deployment-arm64.yaml
+- deployment-amd64.yaml
