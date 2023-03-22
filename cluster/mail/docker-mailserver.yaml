@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
         - name: mailserver
-          image: mailserver/docker-mailserver:11.3.1
+          image: ghcr.io/docker-mailserver/docker-mailserver:11.3.1@sha256:83fc46f7fff63a9c40d181050dcdbb823012a55ffe7273a1c5e941e477bb5511
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false

@@ -16,8 +16,8 @@ spec:
   interval: 1h
   values:
     image:
-      repository: homeassistant/home-assistant
-      tag: 2023.3.5
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2023.3.5@@sha256:7c514852eb9952a4b68dd71e728878efaee3d82435fc57a35be4ab9e1be690e3
     env:
       TZ: Europe/London
     persistence:

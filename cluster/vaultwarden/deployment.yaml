@@ -62,7 +62,7 @@ spec:
         app: vaultwarden
     spec:
       containers:
-        - image: vaultwarden/server:1.27.0
+        - image: vaultwarden/server:1.27.0@sha256:88cf019538a35c889426eb6bc44722fff72eca4178ffc3d71612e2dd2dfe41e4
           name: vaultwarden
           env:
             - name: WEBSOCKET_ENABLED

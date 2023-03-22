@@ -24,7 +24,7 @@ spec:
                 values:
                 - zigbee-controller
       containers:
-        - image: koenkk/zigbee2mqtt:1.30.2
+        - image: ghcr.io/koenkk/zigbee2mqtt:1.30.2@sha256:522b546d0c8a3eb4ff92c84c968625ce639fcca262af5366c9ef6c601a30264b
           name: zigbee2mqtt
           volumeMounts:
           - mountPath: /dev/ttyUSB0
