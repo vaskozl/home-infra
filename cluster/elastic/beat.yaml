@@ -18,6 +18,8 @@ spec:
         providers:
         - type: kubernetes
           node: ${NODE_NAME}
+          resource: pod
+          scope: node
           hints:
             enabled: true
             default_config:
