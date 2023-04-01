@@ -14,7 +14,7 @@ spec:
         type: primary
     spec:
       containers:
-        - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:c043073ba24de67a1728a4e0755ebd8ef68ae9dd60d0d9886b15c955df5558b0
+        - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:0e0886befecf2bf77e2e613f926f6ee0b77b93f76e49847471177143a8b3863c
           name: mosquitto
           ports:
             - containerPort: 1883
