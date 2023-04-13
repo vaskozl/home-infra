@@ -1,4 +1,4 @@
-<img src="https://camo.githubusercontent.com/bd0df216af51c1525f14e62155608e448562cb4033554e001a0ac2009e545aec/68747470733a2f2f726173706265726e657465732e6769746875622e696f2f696d672f6c6f676f2e737667" align="left" width="144px" height="144px"/>
+<img src="https://avatars.githubusercontent.com/u/61287648" align="left" width="144px" height="144px"/>
 
 #### home-infra - Home Cloud via Flux v2 | GitOps Toolkit
 > GitOps state for my cluster using flux v2
