@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: logrotate
+spec:
+  successfulJobsHistoryLimit: 3
+  suspend: false
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  schedule: '@midnight'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: logrotate
+              image: ghcr.io/vaskozl/logrotate:92bf4411
+              command:
+                - logrotate
+              args:
+                - -v 
+                - /config/logrotate.conf
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 10Mi
+                limits:
+                  cpu: 600m
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+              - name: logging-pvc
+                mountPath: /k8s-logs
+              - name: config
+                mountPath: /config
+          restartPolicy: Never
+          volumes:
+          - name: config
+            configMap:
+              name: logrotate-config
+          - name: logging-pvc
+            persistentVolumeClaim:
+              claimName: logging-pvc

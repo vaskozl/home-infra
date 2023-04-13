@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: logging-pv
+  namespace: logging
+spec:
+  storageClassName: logging
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: syno
+    path: /volume3/k8s-logs
+  mountOptions:
+    - nfsvers=4.1
+    - hard
+    - noatime
+    - noacl
+    - nocto
+    - nodiratime
+    - rsize=32768
+    - wsize=32768
+    - async
+    - retrans=3
+    - timeo=600
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logging-pvc
+  namespace: logging
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: logging
+  resources:
+    requests:
+      storage: 1Mi

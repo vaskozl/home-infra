@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: logging
+  labels:
+    k8s-app: fluent-bit-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+spec:
+  selector:
+    matchLabels:
+      k8s-app: fluent-bit-logging
+  template:
+    metadata:
+      labels:
+        k8s-app: fluent-bit-logging
+    spec:
+      containers:
+      - name: fluent-bit
+        image: ghcr.io/fluent/fluent-bit:2.0.10@sha256:407aef256a32083ca047853e022aba967bcaa2686b841fd27210fcf62ad30bf8
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+          readOnly: true
+        - name: fluent-bit-config
+          mountPath: /fluent-bit/etc/
+        - name: logging-pvc
+          mountPath: /k8s-logs
+      terminationGracePeriodSeconds: 10
+      tolerations:
+      - operator: Exists
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+      - name: fluent-bit-config
+        configMap:
+          name: fluent-bit-config
+      - name: logging-pvc
+        persistentVolumeClaim:
+          claimName: logging-pvc
+      serviceAccountName: fluent-bit
