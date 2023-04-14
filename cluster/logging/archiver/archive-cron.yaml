@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: logrotate
+  name: archiver
 spec:
   successfulJobsHistoryLimit: 3
   suspend: false
@@ -12,35 +12,34 @@ spec:
     spec:
       template:
         spec:
+          nodeSelector:
+            intent: management
           containers:
             - name: logrotate
-              image: ghcr.io/vaskozl/logrotate:92bf4411
+              image: public.ecr.aws/docker/library/busybox:1.36.0@sha256:b5d6fe0712636ceb7430189de28819e195e8966372edfc2d9409d79402a0dc16
               command:
-                - logrotate
+                - find
               args:
-                - -v 
-                - /config/logrotate.conf
+                - /var/logs/k8s
+                - -type
+                - f
+                - -mtime
+                - '+30'
+                - -delete
+                - -print
               resources:
                 requests:
                   cpu: 10m
                   memory: 10Mi
-                limits:
-                  cpu: 600m
-                  memory: 2Gi
               securityContext:
                 allowPrivilegeEscalation: false
                 capabilities:
                   drop: ["ALL"]
               volumeMounts:
               - name: logging-pvc
-                mountPath: /k8s-logs
-              - name: config
-                mountPath: /config
+                mountPath: /var/logs/k8s
           restartPolicy: Never
           volumes:
-          - name: config
-            configMap:
-              name: logrotate-config
           - name: logging-pvc
             persistentVolumeClaim:
               claimName: logging-pvc

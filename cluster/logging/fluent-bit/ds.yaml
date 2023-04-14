@@ -26,8 +26,6 @@ spec:
           readOnly: true
         - name: fluent-bit-config
           mountPath: /fluent-bit/etc/
-        - name: logging-pvc
-          mountPath: /k8s-logs
       terminationGracePeriodSeconds: 10
       tolerations:
       - operator: Exists
@@ -38,7 +36,4 @@ spec:
       - name: fluent-bit-config
         configMap:
           name: fluent-bit-config
-      - name: logging-pvc
-        persistentVolumeClaim:
-          claimName: logging-pvc
       serviceAccountName: fluent-bit
