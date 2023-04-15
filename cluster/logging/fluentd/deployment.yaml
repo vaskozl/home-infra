@@ -18,7 +18,7 @@ spec:
       securityContext:
         runAsUser: 2000
       containers:
-      - image: ghcr.io/fluent/fluentd-aggregator-docker-image:1.2.0@sha256:5f0af917da731efd5cd787423574d82268432ac674e0adcd4c7d4c39075a674f
+      - image: public.ecr.aws/docker/library/fluentd:v1.16.0-debian-1.0@sha256:9319feff0682717c9e29d59fb381b808a5c21cb0799f1738df5500790f19f091
         name: fluentd
         resources:
           requests:
