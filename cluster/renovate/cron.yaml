@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: renovate
 spec:
-  schedule: '15 3 * * *'
+  schedule: '15 3,4 * * *'
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
