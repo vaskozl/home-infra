@@ -1,0 +1,12 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: buildkit-amd64-pvc-v0
+spec:
+  storageClassName: ssd-raid5-reclaim
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
