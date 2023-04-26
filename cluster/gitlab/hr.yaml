@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gitlab
-      version: 6.10.4
+      version: 6.11.0
       sourceRef:
         kind: HelmRepository
         name: gitlab
@@ -69,13 +69,13 @@ spec:
         minReplicas: 1
         maxReplicas: 1
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
-        workerProcesses: 1
+        workerProcesses: 2
         resources:
           limits:
-            memory: 1.5Gi # roughly, 1.5GB/worker
+            memory: 3.0Gi # roughly, 1.5GB/worker
           requests:
-            cpu: "0.9" # requests.cpu <= workerProcesses
-            memory: 1.25Gi # roughly, 1.25GB/worker
+            cpu: "1.1" # requests.cpu <= workerProcesses
+            memory: 2.50Gi # roughly, 1.25GB/worker
       sidekiq:
         minReplicas: 1
         maxReplicas: 1
