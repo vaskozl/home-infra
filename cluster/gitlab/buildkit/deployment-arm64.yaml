@@ -21,7 +21,7 @@ spec:
         kubernetes.io/arch: arm64
       containers:
         - name: buildkitd
-          image: moby/buildkit:v0.11.5
+          image: moby/buildkit:v0.11.6
           args:
             - --addr
             - unix:///run/buildkit/buildkitd.sock
