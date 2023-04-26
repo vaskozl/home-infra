@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: ghcr.io/fluent/fluent-bit:2.0.11@sha256:1844515fd2486194be116e62fa3a644ebcccd9e8bd8933ecf06b8abee8b366d9
+        image: ghcr.io/fluent/fluent-bit:2.1.1@sha256:ac61d23c828bae45d38113ec795591bbcc7cb4bd69507ff6b5ae003db7a36d14
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: varlog
