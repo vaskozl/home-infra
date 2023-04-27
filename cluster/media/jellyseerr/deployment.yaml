@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: overseerr
+  name: jellyseerr
 spec:
   selector:
     matchLabels:
-      app: overseerr
+      app: jellyseerr
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: overseerr
+        app: jellyseerr
     spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - image: ghcr.io/sct/overseerr:1.32.5
-          name: overseerr
+        - image: fallenbagel/jellyseerr:1.5.0@sha256:eacfbd18c13036b5fea87fc8c44ea165c6339d75fe15d3f0c83bbf3e39a1560e
+          name: jellyseerr
           resources:
             requests:
               cpu: 15m
@@ -37,4 +37,4 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: overseerr-config
+            claimName: jellyseerr-config

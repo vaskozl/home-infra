@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: overseerr
+  name: jellyseerr
   annotations:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
@@ -13,7 +13,7 @@ spec:
         paths:
           - backend:
               service:
-                name: overseerr
+                name: jellyseerr
                 port: 
                   number: 80
             path: /

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: overseerr-config
+  name: jellyseerr-config
 spec:
   storageClassName: ssd-raid5
   accessModes:
