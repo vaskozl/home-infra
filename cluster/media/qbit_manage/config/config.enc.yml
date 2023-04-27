@@ -24,6 +24,7 @@ settings:
     force_auto_tmm: false
     # Will set the tag of any torrents that do not have a working tracker.
     tracker_error_tag: issue
+    nohardlinks_tag: noHL
     # When running tag-update function, it will update torrent tags for a given torrent even if the torrent has one or more of the tags defined here.
     ignoreTags_OnUpdate:
         - noHL
@@ -107,8 +108,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-12-16T17:52:47Z"
-    mac: ENC[AES256_GCM,data:cf4Yg3X4zWz1lcR24MDpNOP6YKQp6Ryrq3JOu7WbDIlitZJN+myYa5xkDDMbc8yQW4vo5kgSOCWUq7Mnwy0gfqwDZJUGXghGTiXwr4omRNc70eKYuRbzdIYBa99DSgZ3+9S64zPI96aYerxajx17OOYFJGqlIXiuSIYkheKobTk=,iv:gROb30CE2X3hhydtF3h6GI0+Pq2HFI7zIXZqT1Y5XlI=,tag:12jgMA8nBIdlWdUwhXpOGg==,type:str]
+    lastmodified: "2023-04-27T18:38:52Z"
+    mac: ENC[AES256_GCM,data:rH/x9BzDHzhG2GVBB9CUBF0WEWTDYtSn495+PKmVmsXPspbLXemQ2zUSHVoIkbEiwSpv627OZYmYyOSjccXfU/wW1+IoQHEGjuNsw+TOKIHhWwpD+TmaE5XPNHzbELxCGsbpDvdTulBRbPKiJA1TCFJbVx2JtObnUZYhcosu8Jc=,iv:JIPi9o0H+Ep0J74fxIjDz4E+925/rFWPj+KTSfOA5J4=,tag:B97FoM0HBf1QJ4jm4dAvFg==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
