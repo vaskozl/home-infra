@@ -7,6 +7,8 @@
   "rebaseWhen": "conflicted",
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
   "pre-commit": {
     "enabled": true
   },
@@ -38,13 +40,15 @@
     {
       "matchDatasources": ["helm"],
       "separateMinorPatch": true,
-      "ignoreDeprecated": true
+      "ignoreDeprecated": true,
+      "commitMessageTopic": "chart {{depName}}"
     },
     // global docker datasource settings
     {
       "matchDatasources": ["docker"],
       "enabled": true,
-      "matchUpdateTypes": ["major", "minor", "patch"]
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "commitMessageTopic": "image {{depName}}"
     },
     // add labels according to package and update types
     {
