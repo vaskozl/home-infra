@@ -6,7 +6,7 @@ metadata:
   namespace: victoria-metrics
 spec:
   groups:
-  - name: OOMRules
+  - name: oom-rules
     rules:
       - alert: KubernetesContainerOomKiller
         expr: '(kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1'
