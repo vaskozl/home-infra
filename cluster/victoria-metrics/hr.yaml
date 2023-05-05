@@ -24,6 +24,14 @@ spec:
       name: vm-secrets
   values:
     fullnameOverride: stack
+    vmsingle:
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 2Gi
+        requests:
+          cpu: 430m
+          memory: 800Mi
     grafana:
       ingress:
         enabled: true
