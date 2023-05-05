@@ -30,6 +30,7 @@ spec:
         dashboards:
           enabled: true
           label: grafana_dashboard
+          searchNamespace: ALL
       grafana.ini:
         auth.anonymous:
           enabled: true
