@@ -56,9 +56,15 @@ spec:
       config:
         route:
           routes:
-            - matchers:
-                - severity=~"warning|critical"
-              receiver: slack-monitoring
+          - match:
+              alertname: 'Watchdog'
+            receiver: 'null'
+          - match:
+              alertname: 'InfoInhibitor'
+            receiver: 'null'
+          - matchers:
+              - severity=~"warning|critical"
+            receiver: slack-monitoring
     vmalert:
       ingress:
         enabled: true
