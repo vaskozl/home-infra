@@ -15,6 +15,7 @@ spec:
         name: bjw-s
         namespace: flux-system
   interval: 30m
+  timeout: 30m
   values:
     controller:
       strategy: Recreate
