@@ -9,3 +9,5 @@ secretGenerator:
   - name: vm-secrets
     files:
       - values.yaml=values.enc.yaml
+configurations:
+  - kustomizeconfig.yaml
