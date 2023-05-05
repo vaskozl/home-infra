@@ -26,6 +26,10 @@ spec:
         enabled: true
         hosts:
           - gf.sko.ai
+      sidecar:
+        dashboards:
+          enabled: true
+          label: grafana_dashboard
     alertmanager:
       ingress:
         enabled: true
