@@ -24,6 +24,7 @@ spec:
       name: vm-secrets
   values:
     fullnameOverride: stack
+    experimentalDashboardsEnabled: false
     vmsingle:
       resources:
         limits:
