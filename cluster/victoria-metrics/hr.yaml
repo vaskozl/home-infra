@@ -19,6 +19,9 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
+  valuesFrom:
+    - kind: Secret
+      name: vm-secrets
   values:
     fullnameOverride: stack
     grafana:
@@ -40,6 +43,12 @@ spec:
         enabled: true
         hosts:
           - am.sko.ai
+      spec:
+        externalURL: "https://am.sko.ai"
+      receivers:
+        - name: "slack-monitoring"
+          slack_configs:
+            - channel: "#alerts"
     vmalert:
       ingress:
         enabled: true
