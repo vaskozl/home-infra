@@ -2,7 +2,7 @@
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMRule
 metadata:
-  name: OOMRules
+  name: oom
   namespace: victoria-metrics
 spec:
   groups:
