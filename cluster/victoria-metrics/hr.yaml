@@ -59,10 +59,10 @@ spec:
           routes:
           - match:
               alertname: 'Watchdog'
-            receiver: 'null'
+            receiver: null
           - match:
               alertname: 'InfoInhibitor'
-            receiver: 'null'
+            receiver: null
           - matchers:
               - severity=~"warning|critical"
             receiver: slack-monitoring
