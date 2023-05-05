@@ -53,6 +53,10 @@ spec:
           - am.sko.ai
       spec:
         externalURL: "https://am.sko.ai"
+      routes:
+        - matchers:
+            - severity=~"warning|critical"
+          receiver: slack-monitoring
       receivers:
         - name: "slack-monitoring"
           slack_configs:
