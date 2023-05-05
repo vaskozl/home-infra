@@ -46,6 +46,8 @@ spec:
                       values:
                         - controller
                 topologyKey: kubernetes.io/hostname
+      metrics:
+        enabled: true
       config:
         proxy-body-size: '0'
         ssl-protocols: TLSv1.3 TLSv1.2
