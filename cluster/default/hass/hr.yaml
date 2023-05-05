@@ -14,6 +14,7 @@ spec:
         namespace: flux-system
       version: 1.4.0
   interval: 1h
+  timeout: 15m
   values:
     image:
       repository: ghcr.io/home-assistant/home-assistant
