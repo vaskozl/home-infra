@@ -4,6 +4,7 @@ namespace: victoria-metrics
 resources:
 - _namespace.yaml
 - hr.yaml
+- rules
 
 secretGenerator:
   - name: vm-secrets
