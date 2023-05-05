@@ -30,6 +30,11 @@ spec:
         dashboards:
           enabled: true
           label: grafana_dashboard
+      grafana.ini:
+        auth.anonymous:
+          enabled: true
+          org_name: Home
+          org_role: Viewer
     alertmanager:
       ingress:
         enabled: true
