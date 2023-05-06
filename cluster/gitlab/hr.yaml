@@ -67,7 +67,7 @@ spec:
             cpu: 1800m
       webservice:
         minReplicas: 1
-        maxReplicas: 1
+        maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 2
         resources:
@@ -78,10 +78,10 @@ spec:
             memory: 2.50Gi # roughly, 1.25GB/worker
       sidekiq:
         minReplicas: 1
-        maxReplicas: 1
+        maxReplicas: 2
       gitlab-shell:
         minReplicas: 1
-        maxReplicas: 1
+        maxReplicas: 2
       gitlab-pages:
         # The default requests are massive for a static server
         resources:
