@@ -25,14 +25,6 @@ spec:
   values:
     fullnameOverride: stack
     experimentalDashboardsEnabled: false
-    vmsingle:
-      resources:
-        limits:
-          cpu: 2000m
-          memory: 2Gi
-        requests:
-          cpu: 430m
-          memory: 800Mi
     grafana:
       ingress:
         enabled: true
@@ -76,6 +68,18 @@ spec:
                 icon_emoji: '{{ template "slack.monzo.icon_emoji" . }}'
                 color: '{{ template "slack.monzo.color" . }}'
                 text: '{{ template "slack.monzo.text" . }}'
+    vmsingle:
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 2Gi
+        requests:
+          cpu: 430m
+          memory: 800Mi
+      ingress:
+        enabled: true
+        hosts:
+          - vms.sko.ai
     vmalert:
       ingress:
         enabled: true
@@ -86,11 +90,6 @@ spec:
         enabled: true
         hosts:
           - vm.sko.ai
-    vmsingle:
-      ingress:
-        enabled: true
-        hosts:
-          - vms.sko.ai
     # Remove useless high cardinality shm mounts
     prometheus-node-exporter:
       vmServiceScrape:
