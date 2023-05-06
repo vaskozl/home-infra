@@ -86,6 +86,11 @@ spec:
         enabled: true
         hosts:
           - vm.sko.ai
+    vmsingle:
+      ingress:
+        enabled: true
+        hosts:
+          - vms.sko.ai
     # Remove useless high cardinality shm mounts
     prometheus-node-exporter:
       vmServiceScrape:
