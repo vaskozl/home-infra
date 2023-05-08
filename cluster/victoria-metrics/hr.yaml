@@ -71,10 +71,10 @@ spec:
     vmsingle:
       resources:
         limits:
-          cpu: 2000m
+          cpu: 1500m
           memory: 2Gi
         requests:
-          cpu: 430m
+          cpu: 530m
           memory: 800Mi
       ingress:
         enabled: true
