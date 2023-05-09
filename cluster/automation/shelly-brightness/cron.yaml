@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: shelly-brightness
+spec:
+  schedule: '0 */1 * * *'
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+    spec:
+      template:
+        metadata:
+        spec:
+          containers:
+          - command: [perl, /script/shelly-brightness.pl]
+            image: ghcr.io/vaskozl/lwp-simple:bea4d988
+            name: shelly-brightness
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 100m
+                memory: 256Mi
+            volumeMounts:
+            - mountPath: /script
+              name: script
+          restartPolicy: Never
+          volumes:
+          - configMap:
+              defaultMode: 420
+              name: script
+            name: script
