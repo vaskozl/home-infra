@@ -69,13 +69,14 @@ spec:
                 color: '{{ template "slack.monzo.color" . }}'
                 text: '{{ template "slack.monzo.text" . }}'
     vmsingle:
-      resources:
-        limits:
-          cpu: 1500m
-          memory: 2Gi
-        requests:
-          cpu: 530m
-          memory: 800Mi
+      spec:
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 2Gi
+          requests:
+            cpu: 480m
+            memory: 960Mi
       ingress:
         enabled: true
         hosts:
