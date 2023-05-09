@@ -23,3 +23,7 @@ spec:
           - image-reflector-controller
   podMetricsEndpoints:
     - port: http-prom
+      metricRelabelConfigs:
+        - action: drop
+          source_labels: [__name__]
+          regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
