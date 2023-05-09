@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-        - image: ghcr.io/linuxserver/jellyfin:10.8.10-1-ls211
+        - image: jellyfin/jellyfin:10.8.10
           name: jellyfin
           securityContext:
             privileged: true
