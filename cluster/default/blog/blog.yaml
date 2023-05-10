@@ -60,7 +60,7 @@ spec:
       - name: regcred
       containers:
         - name: blog
-          image: registry.sko.ai/vasko/blog:head@sha256:c0afe38fd9c48079a4ce1fd70b3146ccf9df6527dc1407769f0f5949d08637bc
+          image: registry.sko.ai/vasko/blog:head@sha256:b35ffafae28b994d548b3888083ec854802007d925199c28d17c876cb01f5de4
           ports:
             - name: blog
               containerPort: 8080
