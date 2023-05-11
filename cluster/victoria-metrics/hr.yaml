@@ -70,6 +70,7 @@ spec:
                 text: '{{ template "slack.monzo.text" . }}'
     vmsingle:
       spec:
+        retentionPeriod: "14"
         resources:
           limits:
             cpu: 1500m
@@ -94,7 +95,11 @@ spec:
         hosts:
           - vm.sko.ai
 
-    # Not used by our graphs or often useful
+    kubelet:
+      spec:
+        interval: 60s
+
+    # Not by most graphs or often useful
     kubeEtcd:
       enabled: false
     kubeControllerManager:
