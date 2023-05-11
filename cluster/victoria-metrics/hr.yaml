@@ -93,7 +93,20 @@ spec:
         enabled: true
         hosts:
           - vm.sko.ai
+
+    # Not used by our graphs or often useful
+    kubeEtcd:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+
     # Remove useless high cardinality shm mounts
+    nodeExporter:
+      enabled: false
     prometheus-node-exporter:
       vmServiceScrape:
         spec:
@@ -103,3 +116,21 @@ spec:
                 - action: drop
                   source_labels: [mountpoint]
                   regex: "/run/containerd/.+"
+
+    # Remove high cardinality apiserver metrics
+    kubeApiServer:
+      spec:
+        endpoints:
+          - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+            port: https
+            scheme: https
+            tlsConfig:
+              caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              serverName: kubernetes
+            metricRelabelConfigs:
+              - sourceLabels: ["__name__"]
+                regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+                action: drop
+              - sourceLabels: ["__name__"]
+                regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+                action: drop
