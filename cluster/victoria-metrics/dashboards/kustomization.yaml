@@ -15,10 +15,6 @@ configMapGenerator:
     files: 
       - k8s-views-namespaces.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
   
-  - name: dashboards-k8s-views-nodes
-    files: 
-      - k8s-views-nodes.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-  
   - name: dashboards-k8s-views-pods
     files: 
       - k8s-views-pods.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
@@ -35,9 +31,6 @@ configMapGenerator:
     files: 
       - k8s-system-coredns.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
 
-  - name: etcd-dashboard
-    files:
-      - etcd.json=https://etcd.io/docs/v3.4/op-guide/grafana.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
