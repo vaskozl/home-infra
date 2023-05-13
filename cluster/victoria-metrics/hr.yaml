@@ -118,7 +118,7 @@ spec:
                 # Remove high cardinality calico devices
                 - action: drop
                   source_labels: [device]
-                  regex: "cali.+"
+                  regex: "(cali.+|tun.+|bond.+|dummy.+|sit.+|ip6.+|teql.+)"
                 # Remove high cardinality tmpfs mounts
                 - action: drop
                   source_labels: [fstype]
