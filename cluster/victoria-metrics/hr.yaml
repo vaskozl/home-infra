@@ -109,19 +109,20 @@ spec:
     kubeScheduler:
       enabled: false
 
-    # Remove useless high cardinality shm mounts
-    nodeExporter:
-      enabled: false
     prometheus-node-exporter:
-      enabled: false
       vmServiceScrape:
         spec:
           endpoints:
             - port: metrics
               metricRelabelConfigs:
+                # Remove high cardinality calico devices
                 - action: drop
-                  source_labels: [mountpoint]
-                  regex: "/run/containerd/.+"
+                  source_labels: [device]
+                  regex: "cali.+"
+                # Remove high cardinality tmpfs mounts
+                - action: drop
+                  source_labels: [fstype]
+                  regex: "tmpfs"
 
     # Remove high cardinality apiserver metrics
     kubeApiServer:

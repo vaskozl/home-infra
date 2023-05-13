@@ -14,6 +14,10 @@ configMapGenerator:
   - name: dashboards-k8s-views-namespaces
     files: 
       - k8s-views-namespaces.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+
+  - name: dashboards-k8s-views-nodes
+    files: 
+      - k8s-views-nodes.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
   
   - name: dashboards-k8s-views-pods
     files: 
