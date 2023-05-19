@@ -17,7 +17,7 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-        - image: jellyfin/jellyfin:20230517.3-unstable
+        - image: jellyfin/jellyfin:20230517.37-unstable
           name: jellyfin
           securityContext:
             privileged: true
