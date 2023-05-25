@@ -100,7 +100,7 @@ webhooks:
         tag_nohardlinks: null
         cleanup_dirs: null
 orphaned:
-    empty_after_x_days: null
+    empty_after_x_days: 30
     exclude_patterns: null
 sops:
     kms: []
@@ -108,8 +108,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-04-27T18:38:52Z"
-    mac: ENC[AES256_GCM,data:rH/x9BzDHzhG2GVBB9CUBF0WEWTDYtSn495+PKmVmsXPspbLXemQ2zUSHVoIkbEiwSpv627OZYmYyOSjccXfU/wW1+IoQHEGjuNsw+TOKIHhWwpD+TmaE5XPNHzbELxCGsbpDvdTulBRbPKiJA1TCFJbVx2JtObnUZYhcosu8Jc=,iv:JIPi9o0H+Ep0J74fxIjDz4E+925/rFWPj+KTSfOA5J4=,tag:B97FoM0HBf1QJ4jm4dAvFg==,type:str]
+    lastmodified: "2023-05-25T13:51:55Z"
+    mac: ENC[AES256_GCM,data:2Urg55FTK4c24bxarBBX9fF2h6DdG/mD6lqBidRK6hQMqH4pM2J4lZfbtfYZZaj+X29g6gq/cswx77MRFj2wtyaVpPVFhqkkYiGXHoqqaJ3Zv8IczSTzJ1kj3w7Ft79bxvapvzaR4zEEBKh5Nrn3esBZy0PsBABmdis1v60HiJU=,iv:FdMwH01ZhSs14YeETmHLI/jhDE052pWqqKgXOO5Yfek=,tag:z/px+55HSfyy1DnpT7zQuQ==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
