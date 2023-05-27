@@ -21,7 +21,7 @@ spec:
       strategy: Recreate
     image:
       repository: ghcr.io/linuxserver/calibre
-      tag: 6.17.0@sha256:0be062a7a903d0916277023ec43f3a214803a7461e570a62853d0a64e7366adf
+      tag: 6.18.1@sha256:de348e01d35c346e7ffc6f0efbcc6fff5075587cded26510e65321fd666b2644
     podSecurityContext:
       runAsUser: 0
       fsGroup: 1000
