@@ -19,7 +19,7 @@ spec:
         runAsGroup: 568
         fsGroup: 568
       containers:
-        - image: ghcr.io/onedr0p/prowlarr-nightly:1.5.1.3415@sha256:e834d1ba61664c63bf9f1921d8ccfb4fca5c7ddd1901584850821fb3ec1378a4
+        - image: ghcr.io/onedr0p/prowlarr-nightly:1.5.2.3437@sha256:b66a2ad9ff70be7814c991c8f7eba01d43e36e7ff2f789a54817cf6d12eac90d
           name: prowlarr
           resources:
             requests:
