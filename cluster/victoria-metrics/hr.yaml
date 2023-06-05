@@ -70,7 +70,11 @@ spec:
                 text: '{{ template "slack.monzo.text" . }}'
     vmsingle:
       spec:
-        retentionPeriod: "14"
+        retentionPeriod: "30"
+        storage:
+          resources:
+            requests:
+              storage: 22Gi
         resources:
           limits:
             cpu: 1500m
