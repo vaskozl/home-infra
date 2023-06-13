@@ -1,9 +1,4 @@
-# This is an example configuration file that documents all the options.
-# It will need to be modified for your specific use case.
-# Please refer to the link below for more details on how to set up the configuration file
-# https://github.com/StuffAnThings/qbit_manage/wiki/Config-Setup
 commands:
-    # The commands defined below will IGNORE any commands used in command line and docker env variables.
     dry_run: false
     cross_seed: false
     recheck: false
@@ -15,17 +10,13 @@ commands:
     tag_nohardlinks: true
     skip_cleanup: false
 qbt:
-    # qBittorrent parameters
     host: ENC[AES256_GCM,data:+dWOx/0hsWgkWGB1h51P2JI=,iv:bq9/6jjyXOtMh+FC6OwvdEyZHf/ZM3sJGLomTnEk/5o=,tag:BrgCecYwMdTZ4axsDgtHog==,type:str]
     user: ENC[AES256_GCM,data:Lxwn,iv:D+dO5T/IoeJ8q1rd0PxV/RjSR3cLBliFA3kq6iZkGug=,tag:18JULRHlaWHGV0Tj94fT6w==,type:str]
     pass: ENC[AES256_GCM,data:vo3vvZeGGiqZsUeYg0WMFg==,iv:OGVH2Tj8nQ8/wE5GhE9y2hZsElfOb6YvGpngkiOhEV4=,tag:pZ/SMDU8pD3a+tVuF09TZg==,type:str]
 settings:
-    # Will force qBittorrent to enable Automatic Torrent Management for each torrent.
     force_auto_tmm: false
-    # Will set the tag of any torrents that do not have a working tracker.
     tracker_error_tag: issue
     nohardlinks_tag: noHL
-    # When running tag-update function, it will update torrent tags for a given torrent even if the torrent has one or more of the tags defined here.
     ignoreTags_OnUpdate:
         - noHL
         - issue
@@ -42,19 +33,6 @@ cat:
     tv-sonarr: /torrents
     legacy: /torrents
 tracker:
-    # Tag Parameters
-    # <Tracker URL Keyword>:    # <MANDATORY> This is the keyword in the tracker url
-    # <MANDATORY> Set tag name. Can be a list of tags or a single tag
-    #   tag: <Tag Name>
-    # <OPTIONAL> Will set the torrent Maximum share ratio until torrent is stopped from seeding/uploading. -2 means the global limit should be used, -1 means no limit.
-    #   max_ratio: 5.0
-    # <OPTIONAL> Will set the torrent Maximum seeding time (min) until torrent is stopped from seeding. -2 means the global limit should be used, -1 means no limit.
-    #   max_seeding_time: 129600
-    # <OPTIONAL> Will ensure that noHL torrents from this tracker are not deleted by cleanup variable if torrent has not yet met the minimum seeding time (min).
-    #   min_seeding_time: 2000
-    # <OPTIONAL> Will limit the upload speed KiB/s (KiloBytes/second) (-1 means no limit)
-    #   limit_upload_speed: 150
-    # <OPTIONAL> Set this to the notifiarr react name. This is used to add indexer reactions to the notifications sent by Notifiarr
     passthepopcorn:
         tag: ENC[AES256_GCM,data:wPbWCwJQnwr4u+arNwI=,iv:eof8zlE3DWM5S7fXRmDyr21ZguKXGnnoXP3DU1uK2OQ=,tag:XFQKG8LgPDis012sq3wBdg==,type:str]
         notifiarr: ENC[AES256_GCM,data:zOmCMMQayzI2Uutr8F0=,iv:5yqPIWNkJ2d4PWbfCblD3VKSAyau+XT0Um2XmbQ40n4=,tag:A5Y62n0woi1YEanLbFtk0A==,type:str]
@@ -67,19 +45,18 @@ tracker:
     other:
         tag: other
 nohardlinks:
-    # Tag Movies/Series that are not hard linked
-    # Mandatory to fill out directory parameter above to use this function (root_dir/remote_dir)
-    # This variable should be set to your category name of your completed movies/completed series in qbit. Acceptable variable can be any category you would like to tag if there are no hardlinks found
-    radarr:
-        cleanup: true
-        # 7days
-        min_seeding_time: 604800
-        exclude_tags: null
-    tv-sonarr:
-        cleanup: true
-        # 7days
-        min_seeding_time: 604800
-        exclude_tags: null
+  - radarr
+  - tv-sonarr
+share_limits:
+  noHL:
+    priority: 1
+    include_all_tags:
+    - noHL
+    categories:
+    - radarr
+    - tv-sonarr
+    min_seeding_time: 10080
+    cleanup: true
 recyclebin:
     enabled: true
     empty_after_x_days: 14
