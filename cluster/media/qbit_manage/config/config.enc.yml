@@ -8,7 +8,9 @@ commands:
     tag_tracker_error: false
     rem_orphaned: true
     tag_nohardlinks: true
+    share_limits: true
     skip_cleanup: false
+    skip_qb_version_check: False
 qbt:
     host: ENC[AES256_GCM,data:+dWOx/0hsWgkWGB1h51P2JI=,iv:bq9/6jjyXOtMh+FC6OwvdEyZHf/ZM3sJGLomTnEk/5o=,tag:BrgCecYwMdTZ4axsDgtHog==,type:str]
     user: ENC[AES256_GCM,data:Lxwn,iv:D+dO5T/IoeJ8q1rd0PxV/RjSR3cLBliFA3kq6iZkGug=,tag:18JULRHlaWHGV0Tj94fT6w==,type:str]
@@ -17,6 +19,7 @@ settings:
     force_auto_tmm: false
     tracker_error_tag: issue
     nohardlinks_tag: noHL
+    share_limits_suffix_tag: share_limit
     ignoreTags_OnUpdate:
         - noHL
         - issue
