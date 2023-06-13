@@ -17,9 +17,11 @@ spec:
           containers:
           - image: bobokun/qbit_manage:v4.0.0
             command: [sh, -c]
+            # sed fixes https://github.com/StuffAnThings/qbit_manage/issues/333
             args:
             - >
               cp /config/config.static.yml /config/config.yml &&
+              sed -i'' 's/util.get_root_files, self.remote_dir, self.root_dir/util.get_root_files, self.root_dir, self.remote_dir/' /app/modules/core/remove_orphaned.py &&
               python3 /app/qbit_manage.py --run
             name: qbit-manage
             resources:
