@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   name: buildkit-arm64-pvc-v0
 spec:
-  storageClassName: ssd-raid5-reclaim
+  storageClassName: ssd-raid5-v2
   accessModes:
     - ReadWriteOnce
   resources:
