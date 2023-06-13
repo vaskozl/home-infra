@@ -20,7 +20,7 @@ spec:
             args:
             - >
               cp /config/config.static.yml /config/config.yml &&
-              python3 /app/qbit_manage.py
+              python3 /app/qbit_manage.py --run
             name: qbit-manage
             resources:
               requests:
