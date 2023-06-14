@@ -58,8 +58,8 @@ share_limits:
     categories:
     - radarr
     - tv-sonarr
-    min_seeding_time: 10080
-    max_seeding_time: 10080
+    min_seeding_time: 12080
+    max_seeding_time: 12960
     cleanup: true
 recyclebin:
     enabled: true
@@ -81,7 +81,7 @@ webhooks:
         tag_nohardlinks: null
         cleanup_dirs: null
 orphaned:
-    empty_after_x_days: 30
+    empty_after_x_days: 2
     exclude_patterns: null
 sops:
     kms: []
