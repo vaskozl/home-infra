@@ -41,7 +41,7 @@ spec:
             - name: transcodes
               mountPath: /config/transcodes
             - name: torrents-v2
-              mountPath: /media/torrents-v2
+              mountPath: /torrents
       volumes:
         - name: config
           persistentVolumeClaim:
