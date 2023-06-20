@@ -27,10 +27,10 @@ spec:
       FLOOD_OPTION_RUNDIR: /data
     resources:
       limits:
-        memory: 1500Mi
+        memory: 100Mi
       requests:
         cpu: 50m
-        memory: 250Mi
+        memory: 60Mi
     service:
       main:
         ports:
