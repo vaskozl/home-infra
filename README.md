@@ -35,7 +35,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
-  * [kube-prometheus](https://github.com/prometheus-operator/kube-prometheus/tree/main/manifests) - Prometheus and friends
+  * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [synology-csi](https://github.com/SynologyOpenSource/synology-csi) - Synology official CSI driver
   * [k10-kasten](https://www.kasten.io/)
