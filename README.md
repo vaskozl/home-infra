@@ -19,6 +19,7 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
+  * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
