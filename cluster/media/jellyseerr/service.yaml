@@ -5,8 +5,8 @@ metadata:
   name: jellyseerr
 spec:
   ports:
-    - name: http
-      port: 80
-      targetPort: 5055
+  - name: http
+    port: 80
+    targetPort: 5055
   selector:
     app: jellyseerr

@@ -35,25 +35,25 @@ spec:
         ports:
           http:
             port: 8081
-          x11: 
+          x11:
             port: 8080
     ingress:
       main:
         enabled: true
         hosts:
-          - host: cb.sko.ai
-            paths:
-              - path: /
-                service: 
-                  port: 8080
+        - host: cb.sko.ai
+          paths:
+          - path: /
+            service:
+              port: 8080
       builtin-web:
         enabled: true
         hosts:
-          - host: cb-web.sko.ai
-            paths:
-              - path: /
-                service:
-                  port: 8081
+        - host: cb-web.sko.ai
+          paths:
+          - path: /
+            service:
+              port: 8081
     persistence:
       config:
         enabled: true

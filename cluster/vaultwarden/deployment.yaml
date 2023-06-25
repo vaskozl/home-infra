@@ -9,23 +9,23 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: bw.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: vaultwarden
-                port:
-                  name: http
-            path: /
-            pathType: Prefix
-          - backend:
-              service:
-                name: vaultwarden
-                port:
-                  name: websocket
-            path: /notifications/hub
-            pathType: Prefix
+  - host: bw.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: vaultwarden
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+      - backend:
+          service:
+            name: vaultwarden
+            port:
+              name: websocket
+        path: /notifications/hub
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -34,14 +34,14 @@ metadata:
   namespace: vaultwarden
 spec:
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-      name: http
-    - protocol: TCP
-      port: 3012
-      targetPort: 3012
-      name: websocket
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+  - protocol: TCP
+    port: 3012
+    targetPort: 3012
+    name: websocket
   selector:
     app: vaultwarden
 ---
@@ -62,26 +62,26 @@ spec:
         app: vaultwarden
     spec:
       containers:
-        - image: vaultwarden/server:1.28.1@sha256:c56cba7d646584e73a17604f4d4e5aba95ee4198bbed6c919c9514d2ada97d04
-          name: vaultwarden
-          env:
-            - name: WEBSOCKET_ENABLED
-              value: 'true'
-          resources:
-            requests:
-              cpu: 100m
-              memory: 0.2Gi
-            limits:
-              memory: 1.0Gi
-          ports:
-            - containerPort: 80
-              name: http
-            - containerPort: 3012
-              name: websocket
-          volumeMounts:
-            - name: pv-vaultwarden-data
-              mountPath: /data
-      volumes:
+      - image: vaultwarden/server:1.28.1@sha256:c56cba7d646584e73a17604f4d4e5aba95ee4198bbed6c919c9514d2ada97d04
+        name: vaultwarden
+        env:
+        - name: WEBSOCKET_ENABLED
+          value: 'true'
+        resources:
+          requests:
+            cpu: 100m
+            memory: 0.2Gi
+          limits:
+            memory: 1.0Gi
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 3012
+          name: websocket
+        volumeMounts:
         - name: pv-vaultwarden-data
-          persistentVolumeClaim:
-            claimName: vaultwarden-data-v3
+          mountPath: /data
+      volumes:
+      - name: pv-vaultwarden-data
+        persistentVolumeClaim:
+          claimName: vaultwarden-data-v3

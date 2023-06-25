@@ -15,16 +15,16 @@ metadata:
       add_header X-XSS-Protection "1; mode=block";
 spec:
   rules:
-    - host: gate.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: authelia
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: gate.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: authelia
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -33,9 +33,9 @@ metadata:
   namespace: authelia
 spec:
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
   selector:
     app: authelia
   type: ClusterIP
@@ -61,60 +61,60 @@ spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - authelia
-              topologyKey: kubernetes.io/hostname
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - authelia
+            topologyKey: kubernetes.io/hostname
       securityContext:
         runAsUser: 4000
         runAsGroup: 4000
         fsGroup: 4000
       containers:
-        - image: ghcr.io/authelia/authelia:4.37.5
-          name: authelia
-          env:
-            - name: AUTHELIA_SERVER_DISABLE_HEALTHCHECK
-              value: "true"
-          startupProbe:
-            failureThreshold: 6
-            httpGet:
-              path: /api/health
-              port: http
-              scheme: HTTP
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          livenessProbe:
-            failureThreshold: 5
-            httpGet:
-              path: /api/health
-              port: http
-              scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            failureThreshold: 5
-            httpGet:
-              path: /api/health
-              port: http
-              scheme: HTTP
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          ports:
-            - containerPort: 8080
-              name: http
-          volumeMounts:
-            - name: config
-              mountPath: /config
-      volumes:
+      - image: ghcr.io/authelia/authelia:4.37.5
+        name: authelia
+        env:
+        - name: AUTHELIA_SERVER_DISABLE_HEALTHCHECK
+          value: "true"
+        startupProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /api/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /api/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          failureThreshold: 5
+          httpGet:
+            path: /api/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
         - name: config
-          configMap:
-            name: authelia-config
+          mountPath: /config
+      volumes:
+      - name: config
+        configMap:
+          name: authelia-config

@@ -20,55 +20,55 @@ spec:
       nodeSelector:
         kubernetes.io/arch: arm64
       containers:
-        - name: buildkitd
-          image: moby/buildkit:v0.11.6
-          args:
-            - --addr
-            - unix:///run/buildkit/buildkitd.sock
-            - --addr
-            - tcp://0.0.0.0:1234
-            - --tlscacert
-            - /certs/ca.pem
-            - --tlscert
-            - /certs/cert.pem
-            - --tlskey
-            - /certs/key.pem
-          # the probe below will only work after Release v0.6.3
-          readinessProbe:
-            exec:
-              command:
-                - buildctl
-                - debug
-                - workers
-            initialDelaySeconds: 5
-            periodSeconds: 30
-          # the probe below will only work after Release v0.6.3
-          livenessProbe:
-            exec:
-              command:
-                - buildctl
-                - debug
-                - workers
-            initialDelaySeconds: 5
-            periodSeconds: 30
-          securityContext:
-            privileged: true
-          ports:
-            - containerPort: 1234
-          volumeMounts:
-            - name: certs
-              readOnly: true
-              mountPath: /certs
-            - name: buildkit
-              mountPath: /var/lib/buildkit
-      volumes:
-        # buildkit-daemon-certs must contain ca.pem, cert.pem, and key.pem
+      - name: buildkitd
+        image: moby/buildkit:v0.11.6
+        args:
+        - --addr
+        - unix:///run/buildkit/buildkitd.sock
+        - --addr
+        - tcp://0.0.0.0:1234
+        - --tlscacert
+        - /certs/ca.pem
+        - --tlscert
+        - /certs/cert.pem
+        - --tlskey
+        - /certs/key.pem
+        # the probe below will only work after Release v0.6.3
+        readinessProbe:
+          exec:
+            command:
+            - buildctl
+            - debug
+            - workers
+          initialDelaySeconds: 5
+          periodSeconds: 30
+        # the probe below will only work after Release v0.6.3
+        livenessProbe:
+          exec:
+            command:
+            - buildctl
+            - debug
+            - workers
+          initialDelaySeconds: 5
+          periodSeconds: 30
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 1234
+        volumeMounts:
         - name: certs
-          secret:
-            secretName: buildkit-daemon-certs
+          readOnly: true
+          mountPath: /certs
         - name: buildkit
-          persistentVolumeClaim:
-            claimName: buildkit-arm64-pvc-v0
+          mountPath: /var/lib/buildkit
+      volumes:
+      # buildkit-daemon-certs must contain ca.pem, cert.pem, and key.pem
+      - name: certs
+        secret:
+          secretName: buildkit-daemon-certs
+      - name: buildkit
+        persistentVolumeClaim:
+          claimName: buildkit-arm64-pvc-v0
 ---
 apiVersion: v1
 kind: Service
@@ -78,8 +78,8 @@ metadata:
   name: buildkitd-arm64
 spec:
   ports:
-    - port: 1234
-      protocol: TCP
+  - port: 1234
+    protocol: TCP
   type: LoadBalancer
   selector:
     app: buildkitd-arm64

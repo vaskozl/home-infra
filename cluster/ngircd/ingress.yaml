@@ -10,17 +10,17 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-    - host: netpub.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: http-echo
-                port:
-                  number: 80
-            path: /ngircd
-            pathType: Prefix
+  - host: netpub.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: http-echo
+            port:
+              number: 80
+        path: /ngircd
+        pathType: Prefix
   tls:
-    - hosts:
-        - netpub.sko.ai
-      secretName: netpub-cert
+  - hosts:
+    - netpub.sko.ai
+    secretName: netpub-cert

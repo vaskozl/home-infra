@@ -7,20 +7,20 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: external
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-    nginx.ingress.kubernetes.io/configuration-snippet : |
+    nginx.ingress.kubernetes.io/configuration-snippet: |
       add_header Cache-Control "public";
 spec:
   rules:
-    - host: sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: blog
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
+  - host: sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: blog
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -29,9 +29,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
   selector:
     app: blog
   type: ClusterIP
@@ -59,23 +59,23 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
+      - name: blog
+        image: registry.sko.ai/vasko/blog:head@sha256:761992837828d3c03831ba7c01cc7036a3b82607550e2082526d87ad30b9d109
+        ports:
         - name: blog
-          image: registry.sko.ai/vasko/blog:head@sha256:761992837828d3c03831ba7c01cc7036a3b82607550e2082526d87ad30b9d109
-          ports:
-            - name: blog
-              containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /blog
-              port: 8080
-          livenessProbe:
-            httpGet:
-              path: /blog
-              port: 8080
-          resources:
-            limits:
-              cpu: 100m
-              memory: 100Mi
-            requests:
-              cpu: 20m
-              memory: 20Mi
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /blog
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /blog
+            port: 8080
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 20m
+            memory: 20Mi

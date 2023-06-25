@@ -22,16 +22,16 @@ metadata:
       open_file_cache_errors on;
 spec:
   rules:
-    - host: st.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: speedtest
-                port:
-                  number: 3000
-            path: /
-            pathType: Prefix
+  - host: st.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: speedtest
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -41,9 +41,9 @@ metadata:
 spec:
   externalTrafficPolicy: Local
   ports:
-    - protocol: TCP
-      port: 3000
-      targetPort: 3000
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
   selector:
     app: speedtest
   type: LoadBalancer
@@ -65,9 +65,9 @@ spec:
         app: speedtest
     spec:
       containers:
-        - image: openspeedtest/latest@sha256:f6c5a0f1202e2b7b3455cb93ea637e0cf374ffe1ec38ee47a79d9c0cd2e53889
+      - image: openspeedtest/latest@sha256:f6c5a0f1202e2b7b3455cb93ea637e0cf374ffe1ec38ee47a79d9c0cd2e53889
+        name: speedtest
+        env:
+        ports:
+        - containerPort: 8080
           name: speedtest
-          env:
-          ports:
-            - containerPort: 8080
-              name: speedtest

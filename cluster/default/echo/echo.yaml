@@ -15,16 +15,16 @@ metadata:
       proxy_set_header Remote-Groups $groups;
 spec:
   rules:
-    - host: echo.sko.ai
-      http:
-        paths:
-          - backend:
-              service: 
-                name: echo
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
+  - host: echo.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: echo
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -42,19 +42,19 @@ spec:
         app: echo
     spec:
       containers:
-        - name: echo
-          image: openresty/openresty:1.19.9.1-12-alpine
-          ports:
-            - containerPort: 8080
-          volumeMounts:
-            - mountPath: /usr/local/openresty/nginx/conf/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
-              name: echo-conf
+      - name: echo
+        image: openresty/openresty:1.19.9.1-12-alpine
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
+          name: echo-conf
       volumes:
-        - name: echo-conf
-          configMap:
-            name: echo-conf
+      - name: echo-conf
+        configMap:
+          name: echo-conf
 ---
 apiVersion: v1
 kind: Service
@@ -64,7 +64,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
-      targetPort: 8080
+  - port: 8080
+    targetPort: 8080
   selector:
     app: echo

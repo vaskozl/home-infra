@@ -6,9 +6,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 443
-      targetPort: 443
+  - protocol: TCP
+    port: 443
+    targetPort: 443
   selector:
     app: omada
 ---
@@ -30,24 +30,24 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - image: mbentley/omada-controller:5.9
+      - image: mbentley/omada-controller:5.9
+        name: omada
+        resources:
+          requests:
+            cpu: 100m
+            memory: 400Mi
+          limits:
+            memory: 1.0Gi
+        env:
+        - name: MANAGE_HTTPS_PORT
+          value: "443"
+        ports:
+        - containerPort: 443
           name: omada
-          resources:
-            requests:
-              cpu: 100m
-              memory: 400Mi
-            limits:
-              memory: 1.0Gi
-          env:
-            - name: MANAGE_HTTPS_PORT
-              value: "443"
-          ports:
-            - containerPort: 443
-              name: omada
-          volumeMounts:
-            - name: pv-omada
-              mountPath: /opt/tplink/EAPController/data
-      volumes:
+        volumeMounts:
         - name: pv-omada
-          persistentVolumeClaim:
-            claimName: omada-pvc-v3
+          mountPath: /opt/tplink/EAPController/data
+      volumes:
+      - name: pv-omada
+        persistentVolumeClaim:
+          claimName: omada-pvc-v3

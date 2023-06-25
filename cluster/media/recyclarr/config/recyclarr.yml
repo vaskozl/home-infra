@@ -1,272 +1,273 @@
+---
 # For more details on the configuration, see the Configuration Reference on the wiki here:
 # https://github.com/rcdailey/trash-updater/wiki/Configuration-Reference
 sonarr:
-    standard:
-        base_url: http://sonarr
-        api_key: ENC[AES256_GCM,data:cUP60OE8/YY4//KNDq8P2KDnRSCDLm4adODSF7PSejI=,iv:CRLFAeqwioqd4AnXraLDldSfVjT/Rs6LtqdhoaG09GY=,tag:tlNmXgIhuz0oM4APEJ7jTw==,type:str]
-        delete_old_custom_formats: true
-        quality_definition:
-            type: series
-        custom_formats:
-            - trash_ids:
-                # Streaming Services
-                # AMZN
-                - d660701077794679fd59e8bdf4ce3a29
-                # ATVP
-                - f67c9ca88f463a48346062e8ad07713f
-                # DCU
-                - 36b72f59f4ea20aad9316f475f2d9fbb
-                # DSNP
-                - 89358767a60cc28783cdc3d0be9388a4
-                # HBO
-                - 7a235133c87f7da4c8cccceca7e3c7a6
-                # HMAX
-                - a880d6abc21e7c16884f3ae393f84179
-                # HULU
-                - f6cce30f1733d5c8194222a7507909bb
-                # iT
-                - 0ac24a2a68a9700bcb7eeca8e5cd644c
-                # NF
-                - d34870697c9db575f17700212167be23
-                # PCOK
-                - 1656adc6d7bb2c8cca6acfb6592db421
-                # PMTP
-                - c67a75ae4a1715f2bb4d492755ba4195
-                # QIBI
-                - 3ac5d84fce98bab1b531393e9c82f467
-                # RED
-                - c30d2958827d1867c73318a5a2957eb1
-                # SHO
-                - ae58039e1319178e6be73caab5c42166
-                # Allowed Scene groups and tiered P2P groups
-                # WEB Scene (allowed Scene groups)
-                - d0c516558625b04b363fa6c5c2c7cfd4
-                # WEB Tier 01
-                - e6258996055b9fbab7e9cb2f75819294
-                # WEB Tier 02
-                - 58790d4e2fdcd9733aa7ae68ba2bb503
-                # WEB Tier 03
-                - d84935abd3f8556dcd51d4f27e22d0a6
-                # Repacks / Propers
-                # Repack/Proper
-                - ec8fa7296b64e8cd390a1600981f3923
-                # Repack v2
-                - eb3d5cc0a2be0db205fb823640db6a3c
-                # Repack v3
-                - 44e7c4de10ae50265753082e5dc76047
-                # HDR Metadata
-                # DV HDR10
-                - 7878c33f1963fefb3d6c8657d46c2f0a
-                # DV HLG
-                - 1f733af03141f068a540eec352589a89
-                # DV SDR
-                - 27954b0a80aab882522a88a4d9eae1cd
-                # DV
-                - 6d0d8de7b57e35518ac0308b0ddf404e
-                # HDR (undefined)
-                - bb019e1cd00f304f80971c965de064dc
-                # HDR
-                - 3e2c4e748b64a1a1118e0ea3f4cf6875
-                # HDR10
-                - 3497799d29a085e2ac2df9d468413c94
-                # HDR10+
-                - a3d82cbef5039f8d295478d28a887159
-                # HLG
-                - 17e889ce13117940092308f48b48b45b
-                # PQ
-                - 2a7e3be05d3861d6df7171ec74cad727
-                # Unwanted
-                # Bad Dual Groups
-                - 32b367365729d530ca1c124a0b180c64
-                # BR-DISK
-                - 85c61753df5da1fb2aab6f2a47426b09
-                # Dubs Only
-                - 9c14d194486c4014d422adc64092d794
-                # LQ
-                - 9c11cd3f07101cdba90a2d81cf0e56b4
-                # No-RlsGroup
-                - 82d40da2bc6923f41e14394075dd4b03
-                # Obfuscated
-                - e1a997ddb54e3ecbfe06341ad323c458
-                # Retags
-                - 06d66ab109d4d2eddb2794d21526d140
-                # x265 (HD)
-                - 47435ece6b99a0b477caf360e79ba0bb
-              quality_profiles:
-                - name: Any
-                  reset_unmatched_scores: true
-                - name: HD
-                  reset_unmatched_scores: true
-                - name: SD
-                  reset_unmatched_scores: true
+  standard:
+    base_url: http://sonarr
+    api_key: ENC[AES256_GCM,data:cUP60OE8/YY4//KNDq8P2KDnRSCDLm4adODSF7PSejI=,iv:CRLFAeqwioqd4AnXraLDldSfVjT/Rs6LtqdhoaG09GY=,tag:tlNmXgIhuz0oM4APEJ7jTw==,type:str]
+    delete_old_custom_formats: true
+    quality_definition:
+      type: series
+    custom_formats:
+    - trash_ids:
+      # Streaming Services
+      # AMZN
+      - d660701077794679fd59e8bdf4ce3a29
+      # ATVP
+      - f67c9ca88f463a48346062e8ad07713f
+      # DCU
+      - 36b72f59f4ea20aad9316f475f2d9fbb
+      # DSNP
+      - 89358767a60cc28783cdc3d0be9388a4
+      # HBO
+      - 7a235133c87f7da4c8cccceca7e3c7a6
+      # HMAX
+      - a880d6abc21e7c16884f3ae393f84179
+      # HULU
+      - f6cce30f1733d5c8194222a7507909bb
+      # iT
+      - 0ac24a2a68a9700bcb7eeca8e5cd644c
+      # NF
+      - d34870697c9db575f17700212167be23
+      # PCOK
+      - 1656adc6d7bb2c8cca6acfb6592db421
+      # PMTP
+      - c67a75ae4a1715f2bb4d492755ba4195
+      # QIBI
+      - 3ac5d84fce98bab1b531393e9c82f467
+      # RED
+      - c30d2958827d1867c73318a5a2957eb1
+      # SHO
+      - ae58039e1319178e6be73caab5c42166
+      # Allowed Scene groups and tiered P2P groups
+      # WEB Scene (allowed Scene groups)
+      - d0c516558625b04b363fa6c5c2c7cfd4
+      # WEB Tier 01
+      - e6258996055b9fbab7e9cb2f75819294
+      # WEB Tier 02
+      - 58790d4e2fdcd9733aa7ae68ba2bb503
+      # WEB Tier 03
+      - d84935abd3f8556dcd51d4f27e22d0a6
+      # Repacks / Propers
+      # Repack/Proper
+      - ec8fa7296b64e8cd390a1600981f3923
+      # Repack v2
+      - eb3d5cc0a2be0db205fb823640db6a3c
+      # Repack v3
+      - 44e7c4de10ae50265753082e5dc76047
+      # HDR Metadata
+      # DV HDR10
+      - 7878c33f1963fefb3d6c8657d46c2f0a
+      # DV HLG
+      - 1f733af03141f068a540eec352589a89
+      # DV SDR
+      - 27954b0a80aab882522a88a4d9eae1cd
+      # DV
+      - 6d0d8de7b57e35518ac0308b0ddf404e
+      # HDR (undefined)
+      - bb019e1cd00f304f80971c965de064dc
+      # HDR
+      - 3e2c4e748b64a1a1118e0ea3f4cf6875
+      # HDR10
+      - 3497799d29a085e2ac2df9d468413c94
+      # HDR10+
+      - a3d82cbef5039f8d295478d28a887159
+      # HLG
+      - 17e889ce13117940092308f48b48b45b
+      # PQ
+      - 2a7e3be05d3861d6df7171ec74cad727
+      # Unwanted
+      # Bad Dual Groups
+      - 32b367365729d530ca1c124a0b180c64
+      # BR-DISK
+      - 85c61753df5da1fb2aab6f2a47426b09
+      # Dubs Only
+      - 9c14d194486c4014d422adc64092d794
+      # LQ
+      - 9c11cd3f07101cdba90a2d81cf0e56b4
+      # No-RlsGroup
+      - 82d40da2bc6923f41e14394075dd4b03
+      # Obfuscated
+      - e1a997ddb54e3ecbfe06341ad323c458
+      # Retags
+      - 06d66ab109d4d2eddb2794d21526d140
+      # x265 (HD)
+      - 47435ece6b99a0b477caf360e79ba0bb
+      quality_profiles:
+      - name: Any
+        reset_unmatched_scores: true
+      - name: HD
+        reset_unmatched_scores: true
+      - name: SD
+        reset_unmatched_scores: true
 radarr:
-    standard:
-        base_url: http://radarr
-        api_key: ENC[AES256_GCM,data:/E/MnY5qAuxZmUyrxzEHMdWP8+QdhOyeA3yQJUFb2b0=,iv:uJO/t2Al4oO1cutHdv3E9edBrbraEGDcef1ICrlAW1E=,tag:VGo809xKoRIN0b/N3IGvxQ==,type:str]
-        delete_old_custom_formats: true
-        quality_definition:
-            type: movie
-        custom_formats:
-            - trash_ids:
-                # UHD FraMeSToR (set to 0, 1 or 3200)
-                - ff5bc9e8ce91d46c997ca3ac6994d6f8
-              quality_profiles:
-                - name: HD
-                  score: 1
-                - name: SD
-                  score: 1
-            - trash_ids:
-                # TrueHD Atmos
-                - 496f355514737f7d83bf7aa4d24f8169
-                # DTS X
-                - 2f22d89048b01681dde8afe203bf2e95
-                # ATMOS (undefined)
-                - 417804f7f2c4308c1f4c5d380d4c4475
-                # DD+ Atmos
-                - 1af239278386be2919e1bcee0bde047e
-                # TrueHD
-                - 3cafb66171b47f226146a0770576870f
-                # DTS-HD MA
-                - dcf3ec6938fa32445f590a4da84256cd
-                # FLAC
-                - a570d4a0e56a2874b64e5bfa55202a1b
-                # PCM
-                - e7c2fcae07cbada050a0af3357491d7b
-                # DTS-HD HRA
-                - 8e109e50e0a0b83a5098b056e13bf6db
-                # DD+
-                - 185f1dd7264c4562b9022d963ac37424
-                # DTS-ES
-                - f9f847ac70a0af62ea4a08280b859636
-                # DTS
-                - 1c1a4c5e823891c75bc50380a6866f73
-                # ACC
-                - 240770601cc226190c367ef59aba7463
-                # DD
-                - c2998bd0d90ed5621d8df281e839436e
-                # DV HDR10  HDR/DV Custom Formats
-                - e23edd2482476e595fb990b12e7c609c
-                # DV
-                - 58d6a88f13e2db7f5059c41047876f00
-                # DV HLG  HDR/DV Custom Formats
-                - 55d53828b9d81cbe20b02efd00aa0efd
-                # DV SDR  HDR/DV Custom Formats
-                - a3e19f8f627608af0211acd02bf89735
-                # HDR10Plus
-                - b974a6cd08c1066250f1f177d7aa1225
-                # HDR10
-                - dfb86d5941bc9075d6af23b09c2aeecd
-                # HDR
-                - e61e28db95d22bedcadf030b8f156d96
-                # HDR (Undefined)
-                - 2a4d9069cc1fe3242ff9bdaebed239bb
-                # PQ several HDR/DV Custom Formats
-                - 08d6d8834ad9ec87b1dc7ec8148e7a1f
-                # HLG
-                - 9364dd386c9b4a1100dde8264690add7
-                # Hybrid
-                - 0f12c086e289cf966fa5948eac571f44
-                # Remaster
-                - 570bc9ebecd92723d2d21500f4be314c
-                # 4K Remaster
-                - eca37840c13c6ef2dd0262b141a5482f
-                # Criterion Collection
-                - e0c07d59beb37348e975a930d5e50319
-                # Special Edition
-                - 957d0f44b592285f26449575e8b1167e
-                # IMAX
-                - eecf3a857724171f968a66cb5719e152
-                # IMAX Enhanced
-                - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
-                # HQ-Remux
-                - 403f3f6266b90439cacc1e07cae4dc2d
-                # HQ-Webdl
-                - 26fa26253af4001701fedb56cec376dc
-                # UHD CtrlHD
-                - 66aaa8c2c03c0191a95f0d655b75ab10
-                # UHD LEGi0N
-                - 4da96773192a51cf96178212642ca3bb
-                # UHD HQMUX
-                - 96848626e1570c122aba8642fe2714a2
-                # UHD W4NK3R
-                - ffebc267e9c98d3d383f37b238550079
-                # UHD WEBDV
-                - ac49fdbf6a662d380556f40ff4856f29
-                # UHD DON
-                - afeb99e5db09290546f742503ce1cdb6
-                # Repack
-                - e7718d7a3ce595f289bfee26adc178f5
-                # BR-DISK -10000
-                - ed38b889b31be83fda192888e2286d83
-                # EVO (no WEBDL) -1000
-                - 90cedc1fea7ea5d11298bebd3d1d3223
-                # LQ -10000
-                - 90a6f9a284dff5103f6346090e6280c8
-                # 3D -10000
-                - b8cd450cbfa689c0259a01d9e29ba3d6
-                # Obfuscated
-                - 7357cf5161efbf8c4d5d0c30b4815ee2
-                # No-RlsGroup removed do avoid multiple downloads
-                - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
-                # x265 (720/1080p)
-                - dc98083864ea246d05a42df0d05f81cc
-              quality_profiles:
-                - name: HD
-                  reset_unmatched_scores: true
-                - name: SD
-                  reset_unmatched_scores: true
-            - trash_ids:
-                # HQ
-                - 1c7d7b04b15cc53ea61204bebbcc1ee2
-              quality_profiles:
-                - name: HD
-                  score: 0
-                - name: SD
-                  score: 0
-            - trash_ids:
-                # Optional: Multi
-                - 4b900e171accbfb172729b63323ea8ca
-                # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
-                - 923b6abef9b17f937fab56cfcf89e1f1
-              quality_profiles:
-                - name: HD
-                  score: 0
-                - name: SD
-                  score: 0
+  standard:
+    base_url: http://radarr
+    api_key: ENC[AES256_GCM,data:/E/MnY5qAuxZmUyrxzEHMdWP8+QdhOyeA3yQJUFb2b0=,iv:uJO/t2Al4oO1cutHdv3E9edBrbraEGDcef1ICrlAW1E=,tag:VGo809xKoRIN0b/N3IGvxQ==,type:str]
+    delete_old_custom_formats: true
+    quality_definition:
+      type: movie
+    custom_formats:
+    - trash_ids:
+      # UHD FraMeSToR (set to 0, 1 or 3200)
+      - ff5bc9e8ce91d46c997ca3ac6994d6f8
+      quality_profiles:
+      - name: HD
+        score: 1
+      - name: SD
+        score: 1
+    - trash_ids:
+      # TrueHD Atmos
+      - 496f355514737f7d83bf7aa4d24f8169
+      # DTS X
+      - 2f22d89048b01681dde8afe203bf2e95
+      # ATMOS (undefined)
+      - 417804f7f2c4308c1f4c5d380d4c4475
+      # DD+ Atmos
+      - 1af239278386be2919e1bcee0bde047e
+      # TrueHD
+      - 3cafb66171b47f226146a0770576870f
+      # DTS-HD MA
+      - dcf3ec6938fa32445f590a4da84256cd
+      # FLAC
+      - a570d4a0e56a2874b64e5bfa55202a1b
+      # PCM
+      - e7c2fcae07cbada050a0af3357491d7b
+      # DTS-HD HRA
+      - 8e109e50e0a0b83a5098b056e13bf6db
+      # DD+
+      - 185f1dd7264c4562b9022d963ac37424
+      # DTS-ES
+      - f9f847ac70a0af62ea4a08280b859636
+      # DTS
+      - 1c1a4c5e823891c75bc50380a6866f73
+      # ACC
+      - 240770601cc226190c367ef59aba7463
+      # DD
+      - c2998bd0d90ed5621d8df281e839436e
+      # DV HDR10  HDR/DV Custom Formats
+      - e23edd2482476e595fb990b12e7c609c
+      # DV
+      - 58d6a88f13e2db7f5059c41047876f00
+      # DV HLG  HDR/DV Custom Formats
+      - 55d53828b9d81cbe20b02efd00aa0efd
+      # DV SDR  HDR/DV Custom Formats
+      - a3e19f8f627608af0211acd02bf89735
+      # HDR10Plus
+      - b974a6cd08c1066250f1f177d7aa1225
+      # HDR10
+      - dfb86d5941bc9075d6af23b09c2aeecd
+      # HDR
+      - e61e28db95d22bedcadf030b8f156d96
+      # HDR (Undefined)
+      - 2a4d9069cc1fe3242ff9bdaebed239bb
+      # PQ several HDR/DV Custom Formats
+      - 08d6d8834ad9ec87b1dc7ec8148e7a1f
+      # HLG
+      - 9364dd386c9b4a1100dde8264690add7
+      # Hybrid
+      - 0f12c086e289cf966fa5948eac571f44
+      # Remaster
+      - 570bc9ebecd92723d2d21500f4be314c
+      # 4K Remaster
+      - eca37840c13c6ef2dd0262b141a5482f
+      # Criterion Collection
+      - e0c07d59beb37348e975a930d5e50319
+      # Special Edition
+      - 957d0f44b592285f26449575e8b1167e
+      # IMAX
+      - eecf3a857724171f968a66cb5719e152
+      # IMAX Enhanced
+      - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
+      # HQ-Remux
+      - 403f3f6266b90439cacc1e07cae4dc2d
+      # HQ-Webdl
+      - 26fa26253af4001701fedb56cec376dc
+      # UHD CtrlHD
+      - 66aaa8c2c03c0191a95f0d655b75ab10
+      # UHD LEGi0N
+      - 4da96773192a51cf96178212642ca3bb
+      # UHD HQMUX
+      - 96848626e1570c122aba8642fe2714a2
+      # UHD W4NK3R
+      - ffebc267e9c98d3d383f37b238550079
+      # UHD WEBDV
+      - ac49fdbf6a662d380556f40ff4856f29
+      # UHD DON
+      - afeb99e5db09290546f742503ce1cdb6
+      # Repack
+      - e7718d7a3ce595f289bfee26adc178f5
+      # BR-DISK -10000
+      - ed38b889b31be83fda192888e2286d83
+      # EVO (no WEBDL) -1000
+      - 90cedc1fea7ea5d11298bebd3d1d3223
+      # LQ -10000
+      - 90a6f9a284dff5103f6346090e6280c8
+      # 3D -10000
+      - b8cd450cbfa689c0259a01d9e29ba3d6
+      # Obfuscated
+      - 7357cf5161efbf8c4d5d0c30b4815ee2
+      # No-RlsGroup removed do avoid multiple downloads
+      - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
+      # x265 (720/1080p)
+      - dc98083864ea246d05a42df0d05f81cc
+      quality_profiles:
+      - name: HD
+        reset_unmatched_scores: true
+      - name: SD
+        reset_unmatched_scores: true
+    - trash_ids:
+      # HQ
+      - 1c7d7b04b15cc53ea61204bebbcc1ee2
+      quality_profiles:
+      - name: HD
+        score: 0
+      - name: SD
+        score: 0
+    - trash_ids:
+      # Optional: Multi
+      - 4b900e171accbfb172729b63323ea8ca
+      # Optional: DV (WEBDL) without fallback to HDR, set to manual score 0 or -10000
+      - 923b6abef9b17f937fab56cfcf89e1f1
+      quality_profiles:
+      - name: HD
+        score: 0
+      - name: SD
+        score: 0
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2022-12-14T14:08:04Z"
-    mac: ENC[AES256_GCM,data:BNRJo7kx3HpMTCdlDV7iLnm5TKG9g2ZMG0tk7Dk3qsiLW2CwhVkBUhCX9AIud0VZrPlgW+pRyY8TuhmxtP7PoHCo684z6LRQFThAYyxTfmwpB34lJVfJP2SjYYlPj6cHC3QAGIYSwARDu4GJRKuXoxHDSZqdkWgiJBsglEY3dA0=,iv:2HNiu57VhqDJxADuNTrQ72dFC+XtTemDHqQmIDicyW4=,tag:s72EYydGavSGvaA7nfwuPw==,type:str]
-    pgp:
-        - created_at: "2022-12-14T14:08:04Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2022-12-14T14:08:04Z"
+  mac: ENC[AES256_GCM,data:BNRJo7kx3HpMTCdlDV7iLnm5TKG9g2ZMG0tk7Dk3qsiLW2CwhVkBUhCX9AIud0VZrPlgW+pRyY8TuhmxtP7PoHCo684z6LRQFThAYyxTfmwpB34lJVfJP2SjYYlPj6cHC3QAGIYSwARDu4GJRKuXoxHDSZqdkWgiJBsglEY3dA0=,iv:2HNiu57VhqDJxADuNTrQ72dFC+XtTemDHqQmIDicyW4=,tag:s72EYydGavSGvaA7nfwuPw==,type:str]
+  pgp:
+  - created_at: "2022-12-14T14:08:04Z"
+    enc: |
+      -----BEGIN PGP MESSAGE-----
 
-            hQMOA4x50yY5upzjEAwAzcgCnydSccn5uzjCHVfhcnp8Vf27ztfzGxTvtiaSqCPo
-            lfaUcLbgvRdPX8SOMCPHrhPW2CwI5Ru6yhqIuU4ikxGEgstUMOZqFW965WpAUx9c
-            3WqVMVCnCocNsnZ0BGGdMk6gaFt901ItyM76pVX54VT4xAuAmNr1s4T1gY+eG5e7
-            EtTxYa6LBzIGNz7f+0hPgpPTZjQc05n7cGMGKHFbXoDRJ0K07XFDCybhQzckPEre
-            GBVkv5uFKPLBXHeyzXUUOy2+eZuoT0wnF+Xrn9xh1Xwp7OR0weRXAclz+mDnBWau
-            p2tcxy/WOQETa7og+dicy3nOWr/trIp1tmu2r0gRNco8XQR1jPsXFEl53CCgr8ag
-            tH9vPSL9DKoD3ROqE4XDl1TYNnvuwwr6mwethOxrO0OCRGhLeAsNCLkSD2Ekz1Gr
-            wllOWXAE+3VJU7uTFFV/I4c4aeGcsinzvDSGyPismNBCk/VV96o2dhuudLc1bYR0
-            bBn1wc75DxaClwpiWtmsDAC+5sb3QcnX+bUASgp28z7b5kuQG85FU/pirTfbAy2v
-            fxRuEJ68kuC4LuVd9Or+gncd+Esv4Q8EASiUnBOvonpq2+3x6kWWFm+opMwu6k4F
-            lNM/xKPTMOh7f/oCU1neoXVjOYCKLc2xSkQXsy9BNIvBtroCl2huBsoNW/YZ900q
-            RC+SArUG87d9ILfPdNGixf4Vq89dnc76f/Qeg+zbl+mAnrSK2G3xGl8QGx52oRFt
-            h3+UEhHp+bBRnslsWAAYAZFjT7ZR24NmqimZeZRgPfFZyQd3PjXUoXICUGmwnkSW
-            k7pa/5Oaovq7Zvhl+r/EqfbKWs03Rw4Gizx1MLC8XRHhENyJ9D+Qodx0193fryl+
-            vwNTlPv4aaVD1KOdl28DdwILZ+ppJuT78FKGKKpblIl4j2CQpbpFniNgQJF188UO
-            R0jfJci16DFO0LCQUfsjZOVRN0X1eKU2uAP5eqA1gp7xPw+PMXByB6CwD+IVjSFB
-            zkZGlGoFuKouV0zMYzreiinSXgF8fvOo9Y0QnrA2Sc3F7nkx12v2mVLtWseHx4DF
-            VGawifBJiQrhhEFbPPsTS940RDSLaiIRO9Y8Fg+5ePhWx3MIJvRuYFukzeGdPBZn
-            xq4oCDp75f9h1BAjxrE8Y2c=
-            =bNe7
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: key
-    version: 3.7.3
+      hQMOA4x50yY5upzjEAwAzcgCnydSccn5uzjCHVfhcnp8Vf27ztfzGxTvtiaSqCPo
+      lfaUcLbgvRdPX8SOMCPHrhPW2CwI5Ru6yhqIuU4ikxGEgstUMOZqFW965WpAUx9c
+      3WqVMVCnCocNsnZ0BGGdMk6gaFt901ItyM76pVX54VT4xAuAmNr1s4T1gY+eG5e7
+      EtTxYa6LBzIGNz7f+0hPgpPTZjQc05n7cGMGKHFbXoDRJ0K07XFDCybhQzckPEre
+      GBVkv5uFKPLBXHeyzXUUOy2+eZuoT0wnF+Xrn9xh1Xwp7OR0weRXAclz+mDnBWau
+      p2tcxy/WOQETa7og+dicy3nOWr/trIp1tmu2r0gRNco8XQR1jPsXFEl53CCgr8ag
+      tH9vPSL9DKoD3ROqE4XDl1TYNnvuwwr6mwethOxrO0OCRGhLeAsNCLkSD2Ekz1Gr
+      wllOWXAE+3VJU7uTFFV/I4c4aeGcsinzvDSGyPismNBCk/VV96o2dhuudLc1bYR0
+      bBn1wc75DxaClwpiWtmsDAC+5sb3QcnX+bUASgp28z7b5kuQG85FU/pirTfbAy2v
+      fxRuEJ68kuC4LuVd9Or+gncd+Esv4Q8EASiUnBOvonpq2+3x6kWWFm+opMwu6k4F
+      lNM/xKPTMOh7f/oCU1neoXVjOYCKLc2xSkQXsy9BNIvBtroCl2huBsoNW/YZ900q
+      RC+SArUG87d9ILfPdNGixf4Vq89dnc76f/Qeg+zbl+mAnrSK2G3xGl8QGx52oRFt
+      h3+UEhHp+bBRnslsWAAYAZFjT7ZR24NmqimZeZRgPfFZyQd3PjXUoXICUGmwnkSW
+      k7pa/5Oaovq7Zvhl+r/EqfbKWs03Rw4Gizx1MLC8XRHhENyJ9D+Qodx0193fryl+
+      vwNTlPv4aaVD1KOdl28DdwILZ+ppJuT78FKGKKpblIl4j2CQpbpFniNgQJF188UO
+      R0jfJci16DFO0LCQUfsjZOVRN0X1eKU2uAP5eqA1gp7xPw+PMXByB6CwD+IVjSFB
+      zkZGlGoFuKouV0zMYzreiinSXgF8fvOo9Y0QnrA2Sc3F7nkx12v2mVLtWseHx4DF
+      VGawifBJiQrhhEFbPPsTS940RDSLaiIRO9Y8Fg+5ePhWx3MIJvRuYFukzeGdPBZn
+      xq4oCDp75f9h1BAjxrE8Y2c=
+      =bNe7
+      -----END PGP MESSAGE-----
+    fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: key
+  version: 3.7.3

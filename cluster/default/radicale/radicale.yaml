@@ -9,16 +9,16 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: rc.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: radicale
-                port:
-                  number: 5232
-            path: /
-            pathType: Prefix
+  - host: rc.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: radicale
+            port:
+              number: 5232
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -27,9 +27,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 5232
-      targetPort: 5232
+  - protocol: TCP
+    port: 5232
+    targetPort: 5232
   selector:
     app: radicale
   type: ClusterIP
@@ -51,32 +51,32 @@ spec:
         app: radicale
     spec:
       containers:
-        - image: tomsquest/docker-radicale:3.1.8.2
+      - image: tomsquest/docker-radicale:3.1.8.2
+        name: radicale
+        env:
+        ports:
+        - containerPort: 5232
           name: radicale
-          env:
-          ports:
-            - containerPort: 5232
-              name: radicale
-          volumeMounts:
-            - name: pv-radicale
-              mountPath: /data
-            - name: config
-              mountPath: /config
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5232
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 5232
-      volumes:
+        volumeMounts:
         - name: pv-radicale
-          persistentVolumeClaim:
-            claimName: radicale-v3
+          mountPath: /data
         - name: config
-          configMap:
-            name: radicale-config
+          mountPath: /config
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5232
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5232
+      volumes:
+      - name: pv-radicale
+        persistentVolumeClaim:
+          claimName: radicale-v3
+      - name: config
+        configMap:
+          name: radicale-config
 ---
 apiVersion: v1
 kind: ConfigMap

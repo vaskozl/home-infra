@@ -45,31 +45,26 @@ spec:
       serviceAccounts:
         server:
           create: false
-            #ingress:
-            #  create: true
-            #  host: "k10.sko.ai"
-            #  urlPath: k10
-            #  hosts:
-            #  - "k10.sko.ai"
+          #ingress:
+          #  create: true
+          #  host: "k10.sko.ai"
+          #  urlPath: k10
+          #  hosts:
+          #  - "k10.sko.ai"
   postRenderers:
-    # Instruct helm-controller to use built-in "kustomize" post renderer.
-    - kustomize:
-        patches:
-          - target:
-              version: v1
-              kind: Deployment
-            patch: |-
-              - op: add
-                path: /spec/template/spec/nodeSelector
-                value: { "kubernetes.io/arch": "amd64" }
-          - target:
-              version: v1
-              kind: NetworkPolicy
-              name: allow-external
-            patch: |-
-              - op: add
-                path: /spec/ingress/0/from
-                value: 
-                  - namespaceSelector:
-                      matchLabels:
-                        kubernetes.io/metadata.name: "ingress-nginx"
+  # Instruct helm-controller to use built-in "kustomize" post renderer.
+  - kustomize:
+      patches:
+      - target:
+          version: v1
+          kind: Deployment
+        patch: |-
+          - op: add
+            path: /spec/template/spec/nodeSelector
+            value: { "kubernetes.io/arch": "amd64" }
+      - target:
+          version: v1
+          kind: NetworkPolicy
+          name: allow-external
+        patch: "- op: add\n  path: /spec/ingress/0/from\n  value: \n    - namespaceSelector:\n
+          \       matchLabels:\n          kubernetes.io/metadata.name: \"ingress-nginx\""

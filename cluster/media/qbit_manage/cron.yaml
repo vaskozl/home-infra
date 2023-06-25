@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -20,9 +21,11 @@ spec:
             # sed fixes https://github.com/StuffAnThings/qbit_manage/issues/333
             args:
             - >
-              cp /config/config.static.yml /config/config.yml &&
-              sed -i'' 's/util.get_root_files, self.remote_dir, self.root_dir/util.get_root_files, self.root_dir, self.remote_dir/' /app/modules/core/remove_orphaned.py &&
-              python3 /app/qbit_manage.py --run
+              cp /config/config.static.yml /config/config.yml && sed -i'' 's/util.get_root_files,
+              self.remote_dir, self.root_dir/util.get_root_files, self.root_dir, self.remote_dir/'
+              /app/modules/core/remove_orphaned.py && python3 /app/qbit_manage.py
+              --run
+
             name: qbit-manage
             resources:
               requests:
@@ -38,9 +41,9 @@ spec:
             - name: torrents-v2
               mountPath: /data
           volumes:
-            - name: config
-              secret:
-                secretName: qbit-manage-config
-            - name: torrents-v2
-              persistentVolumeClaim:
-                claimName: torrents-v2
+          - name: config
+            secret:
+              secretName: qbit-manage-config
+          - name: torrents-v2
+            persistentVolumeClaim:
+              claimName: torrents-v2

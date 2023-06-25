@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,8 +28,8 @@ spec:
           limits:
             memory: 710Mi
         env:
-          - name: FLUENTD_CONF
-            value: fluent.conf
+        - name: FLUENTD_CONF
+          value: fluent.conf
         ports:
         - containerPort: 24224
         volumeMounts:

@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -12,24 +13,24 @@ spec:
           nodeSelector:
             kubernetes.io/arch: amd64
           containers:
-            - name: renovate
-              image: renovate/renovate:35.140.2
-              # Environment Variables
-              env:
-                - name: LOG_LEVEL
-                  value: debug
-                - name: BINARY_SOURCE
-                  value: install
-              envFrom:
-                - secretRef:
-                    name: renovate-env
-              resources:
-                requests:
-                  cpu: 500m
-                  memory: 2Gi
-                limits:
-                  cpu: 600m
-                  memory: 2Gi
-              securityContext:
-                allowPrivilegeEscalation: false
+          - name: renovate
+            image: renovate/renovate:35.140.2
+            # Environment Variables
+            env:
+            - name: LOG_LEVEL
+              value: debug
+            - name: BINARY_SOURCE
+              value: install
+            envFrom:
+            - secretRef:
+                name: renovate-env
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                cpu: 600m
+                memory: 2Gi
+            securityContext:
+              allowPrivilegeEscalation: false
           restartPolicy: Never

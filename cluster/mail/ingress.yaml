@@ -10,17 +10,17 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
-    - host: mail.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: roundcube
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: mail.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: roundcube
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
   tls:
-    - hosts:
-        - mail.sko.ai
-      secretName: mail-cert
+  - hosts:
+    - mail.sko.ai
+    secretName: mail-cert

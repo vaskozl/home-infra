@@ -54,8 +54,8 @@ spec:
           allowBypassTwoFactor: [openid_connect]
           syncProfileAttributes: [email]
           blockAutoCreatedUsers: false
-          providers: 
-            - secret: authelia-oauth2
+          providers:
+          - secret: authelia-oauth2
     # Reduce memory usage
     gitlab:
       gitaly:
@@ -118,29 +118,29 @@ spec:
               helper_memory_request = "50Mi"
               helper_memory_limit = "200Mi"
   postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: dummy-app
+  - kustomize:
+      patches:
+      - patch: |-
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: dummy-app
+          spec:
+            template:
               spec:
-                template:
-                  spec:
-                    nodeSelector:
-                      beta.kubernetes.io/arch: amd64
-            target:
-              kind: Deployment
-          - patch: |-
-              apiVersion: apps/v1
-              kind: StatefulSet
-              metadata:
-                name: dummy-app
+                nodeSelector:
+                  beta.kubernetes.io/arch: amd64
+        target:
+          kind: Deployment
+      - patch: |-
+          apiVersion: apps/v1
+          kind: StatefulSet
+          metadata:
+            name: dummy-app
+          spec:
+            template:
               spec:
-                template:
-                  spec:
-                    nodeSelector:
-                      beta.kubernetes.io/arch: amd64
-            target:
-              kind: StatefulSet
+                nodeSelector:
+                  beta.kubernetes.io/arch: amd64
+        target:
+          kind: StatefulSet

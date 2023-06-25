@@ -14,9 +14,9 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
-      - dns01:
-          cloudflare:
-            email: v@sko.ai
-            apiTokenSecretRef:
-              name: cloudflare-api-token-secret
-              key: api-token
+    - dns01:
+        cloudflare:
+          email: v@sko.ai
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token

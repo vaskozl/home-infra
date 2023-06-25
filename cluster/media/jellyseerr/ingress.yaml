@@ -8,13 +8,13 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: requests.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: jellyseerr
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: requests.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: jellyseerr
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

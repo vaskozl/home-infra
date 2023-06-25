@@ -1,148 +1,149 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-    name: mailserver.env.config
-    namespace: mailserver
-    labels:
-        app: mailserver
-data:
-    OVERRIDE_HOSTNAME: mail.sko.ai
-    ENABLE_FETCHMAIL: "0"
-    FETCHMAIL_POLL: "120"
-    ENABLE_CLAMAV: "0"
-    ENABLE_FAIL2BAN: "0"
-    ENABLE_SPAMASSASSIN: "1"
-    SPAMASSASSIN_SPAM_TO_INBOX: "1"
-    SA_TAG: "-100000.0"
-    SA_TAG2: "3.75"
-    SA_KILL: "100000.0"
-    POSTFIX_MESSAGE_SIZE_LIMIT: "31457280"
-    ENABLE_POSTGREY: "0"
-    ONE_DIR: "1"
-    DMS_DEBUG: "0"
-    SSL_TYPE: manual
-    SSL_CERT_PATH: /etc/ssl/mailserver/tls.crt
-    SSL_KEY_PATH: /etc/ssl/mailserver/tls.key
-    POSTFIX_INET_PROTOCOLS: ipv4
-    RELAY_HOST: smtp.eu.mailgun.org
-    RELAY_PORT: "587"
-    RELAY_USER: postmaster@sko.ai
-    RELAY_PASSWORD: ENC[AES256_GCM,data:93ZRM4RHwMN8VYPBCRqMFkV29gDYN59SrxFIC0M6Z6Pnb5AZweJxVeirNqsArfpVpUc=,iv:sN7yX7JMHWqhKWSDBnMbVtl+3iYDDDuVpYvuV8Qgc18=,tag:UM+LeFFY65SR6P4Syd3vUg==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2023-01-06T16:23:17Z"
-    mac: ENC[AES256_GCM,data:CNYfOaV+RdEMxcPHqXsB9kta45opE+SsQ1gZOnP1Ycr82+GVA1QUaHC6KcqUYgEn3y954T+eSfcUmshiRY7H2dGd1S4x8jb1xwPqCqK+vTa++NPHfdESVCCKFn6QzbkirbWUPjInCeg/iV1i1JoVzckFIlMmv5dtH9sbtHcfJ8s=,iv:5Ep/IY93nQLRFhBngz38L0kwHPdFHxj92ITCN2B3Lxg=,tag:FAME+zsB2KPaBfh3sUdAZA==,type:str]
-    pgp:
-        - created_at: "2021-03-11T18:22:34Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
-
-            hQMOA4x50yY5upzjEAv/QDoj2gDqa2byo65k6HFzU4NOadVhtOAPQstajnMyxogN
-            ZFgYXl0n30CNlZuanK2v8XxsmR2XHaukN9ykluMwDiwVzP9fBpnfD1h4c4H2u6aH
-            +OsRy6l65RWpl4Qqjlo5cnudGRXhNBiznrtmhsjoN68b5nVcxBiedc6b3bD0ESDw
-            Ky+7oNLk6dpFQ12LbKMZrYq+4irZGN6EbXsSt6934DelQZ0XZ5nIHRGSz0fYJqNy
-            TXcYr+EDk11iZb+ecXhasMus5BE5YBd/AXZlY4pQUCS7ZeVh61bpTktTbrmwqiEK
-            yC2tgBp/9jGA7c861AGswjqNnJg5GHBapQyHlh//+Ae/4Tjl3/5cAlu3dZ0EUquU
-            9fmy6Wd1vuis16M+xhCi56tXwUgek13ZoTqQliTiW9gp1o9icLuHyRLphHd+fGTr
-            aswzspxmxyH+LTYFKm+FrCk0vQ92qqobvVURyq2rKNxcYihgR56mIw6to71PS498
-            XVJ4mWCAybrJ6MGvgnp7C/9dLW3ybACogE/rfzu69tDuN6HFYsWgfGPOWH+yI1p3
-            8gdtAf9oSBfmmPC/2D4dlHJ20ONHcI07PO1SztRGt6uxSWZhwb8Lut9SVQ+7N7lQ
-            f4WVT/RzNBxRK6S98t5pdmVHmnwH6O2cXV68+zt/Q2E0yfl6WvRTcrv4Iq7EEnWS
-            wnDzZGwIb9Pq0UsplwuqdOL2TtKEkxGRDSr4rvjI/YOKb8iuiLycpZ/vf+Y+WHZG
-            1W2bqXzvkyOS2i6tvIbIqbyPKvUM6Wh7/cQGMg+rHoLcjk2Qx7hdWBG/83yUZvZG
-            INE/+I+QTq5k8auvr9QCRPsKINpjnZV7VjFIfXAWJ5430++KoBlODmUHo7IN0nkH
-            mnmUbTr1vmUaB0qgqsOmpM+Hi9SZuyH5PIU3EygLZM8caaG/vV28iNv2U8uDUO0V
-            hkFKSfmeX34eBvSf6VfP0sylLHJsAg2W/Ncdni1O7d+YbNpi8McsZCPw9pbTasZl
-            rQCkljpWCa5A0BzwVNubXDDSXAGqwqHz0zAySJyseEHgM0hlKZOybQwIOt/9b3lj
-            Jjax8FeyfrrGLuqQbVPMGV3Ou7Q7o2DSbK78jcbeF9yfAQjbZp9EnxdfgrRYUCZm
-            I2+UuZDQWbToU2eyFyKK
-            =cmli
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: (?i)(postfix-accounts|password)
-    version: 3.7.3
 ---
 kind: ConfigMap
 apiVersion: v1
 metadata:
-    name: mailserver.config
-    namespace: mailserver
-    labels:
-        app: mailserver
+  name: mailserver.env.config
+  namespace: mailserver
+  labels:
+    app: mailserver
 data:
-    postfix-main.cf: |
-        mynetworks = 192.168.1.0/24, 10.0.0.0/8
-        postscreen_dnsbl_action = ignore
-        postscreen_dnsbl_sites =
-        smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, check_policy_service unix:private/policyd-spf, reject_unauth_pipelining, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_unknown_recipient_domain
-    postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
-    postfix-virtual.cf: |
-        jszvy@sko.ai devnull
-        fos@sko.ai devnull
-        @sko.ai v@sko.ai
-        @skozl.com v@sko.ai
-    postfix-aliases.cf: |
-        devnull: /dev/null
-    # dovecot.cf: |
-    #  service stats {
-    #    unix_listener stats-reader {
-    #      group = docker
-    #      mode = 0666
-    #    }
-    #    unix_listener stats-writer {
-    #      group = docker
-    #      mode = 0666
-    #    }
-    #  }
-    SigningTable: |
-        *@sko.ai mail._domainkey.sko.ai
-    KeyTable: |
-        mail._domainkey.sko.ai sko.ai:mail:/etc/opendkim/keys/sko.ai-mail.key
-    TrustedHosts: |
-        127.0.0.1
-        localhost
-        .baikal.default.svc.k8s.sko.ai
-    # user-patches.sh: |
-    #  #!/bin/bash
-    # fetchmail.cf: |
+  OVERRIDE_HOSTNAME: mail.sko.ai
+  ENABLE_FETCHMAIL: "0"
+  FETCHMAIL_POLL: "120"
+  ENABLE_CLAMAV: "0"
+  ENABLE_FAIL2BAN: "0"
+  ENABLE_SPAMASSASSIN: "1"
+  SPAMASSASSIN_SPAM_TO_INBOX: "1"
+  SA_TAG: "-100000.0"
+  SA_TAG2: "3.75"
+  SA_KILL: "100000.0"
+  POSTFIX_MESSAGE_SIZE_LIMIT: "31457280"
+  ENABLE_POSTGREY: "0"
+  ONE_DIR: "1"
+  DMS_DEBUG: "0"
+  SSL_TYPE: manual
+  SSL_CERT_PATH: /etc/ssl/mailserver/tls.crt
+  SSL_KEY_PATH: /etc/ssl/mailserver/tls.key
+  POSTFIX_INET_PROTOCOLS: ipv4
+  RELAY_HOST: smtp.eu.mailgun.org
+  RELAY_PORT: "587"
+  RELAY_USER: postmaster@sko.ai
+  RELAY_PASSWORD: ENC[AES256_GCM,data:93ZRM4RHwMN8VYPBCRqMFkV29gDYN59SrxFIC0M6Z6Pnb5AZweJxVeirNqsArfpVpUc=,iv:sN7yX7JMHWqhKWSDBnMbVtl+3iYDDDuVpYvuV8Qgc18=,tag:UM+LeFFY65SR6P4Syd3vUg==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2023-01-06T16:23:17Z"
-    mac: ENC[AES256_GCM,data:CNYfOaV+RdEMxcPHqXsB9kta45opE+SsQ1gZOnP1Ycr82+GVA1QUaHC6KcqUYgEn3y954T+eSfcUmshiRY7H2dGd1S4x8jb1xwPqCqK+vTa++NPHfdESVCCKFn6QzbkirbWUPjInCeg/iV1i1JoVzckFIlMmv5dtH9sbtHcfJ8s=,iv:5Ep/IY93nQLRFhBngz38L0kwHPdFHxj92ITCN2B3Lxg=,tag:FAME+zsB2KPaBfh3sUdAZA==,type:str]
-    pgp:
-        - created_at: "2021-03-11T18:22:34Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2023-01-06T16:23:17Z"
+  mac: ENC[AES256_GCM,data:CNYfOaV+RdEMxcPHqXsB9kta45opE+SsQ1gZOnP1Ycr82+GVA1QUaHC6KcqUYgEn3y954T+eSfcUmshiRY7H2dGd1S4x8jb1xwPqCqK+vTa++NPHfdESVCCKFn6QzbkirbWUPjInCeg/iV1i1JoVzckFIlMmv5dtH9sbtHcfJ8s=,iv:5Ep/IY93nQLRFhBngz38L0kwHPdFHxj92ITCN2B3Lxg=,tag:FAME+zsB2KPaBfh3sUdAZA==,type:str]
+  pgp:
+  - created_at: "2021-03-11T18:22:34Z"
+    enc: |
+      -----BEGIN PGP MESSAGE-----
 
-            hQMOA4x50yY5upzjEAv/QDoj2gDqa2byo65k6HFzU4NOadVhtOAPQstajnMyxogN
-            ZFgYXl0n30CNlZuanK2v8XxsmR2XHaukN9ykluMwDiwVzP9fBpnfD1h4c4H2u6aH
-            +OsRy6l65RWpl4Qqjlo5cnudGRXhNBiznrtmhsjoN68b5nVcxBiedc6b3bD0ESDw
-            Ky+7oNLk6dpFQ12LbKMZrYq+4irZGN6EbXsSt6934DelQZ0XZ5nIHRGSz0fYJqNy
-            TXcYr+EDk11iZb+ecXhasMus5BE5YBd/AXZlY4pQUCS7ZeVh61bpTktTbrmwqiEK
-            yC2tgBp/9jGA7c861AGswjqNnJg5GHBapQyHlh//+Ae/4Tjl3/5cAlu3dZ0EUquU
-            9fmy6Wd1vuis16M+xhCi56tXwUgek13ZoTqQliTiW9gp1o9icLuHyRLphHd+fGTr
-            aswzspxmxyH+LTYFKm+FrCk0vQ92qqobvVURyq2rKNxcYihgR56mIw6to71PS498
-            XVJ4mWCAybrJ6MGvgnp7C/9dLW3ybACogE/rfzu69tDuN6HFYsWgfGPOWH+yI1p3
-            8gdtAf9oSBfmmPC/2D4dlHJ20ONHcI07PO1SztRGt6uxSWZhwb8Lut9SVQ+7N7lQ
-            f4WVT/RzNBxRK6S98t5pdmVHmnwH6O2cXV68+zt/Q2E0yfl6WvRTcrv4Iq7EEnWS
-            wnDzZGwIb9Pq0UsplwuqdOL2TtKEkxGRDSr4rvjI/YOKb8iuiLycpZ/vf+Y+WHZG
-            1W2bqXzvkyOS2i6tvIbIqbyPKvUM6Wh7/cQGMg+rHoLcjk2Qx7hdWBG/83yUZvZG
-            INE/+I+QTq5k8auvr9QCRPsKINpjnZV7VjFIfXAWJ5430++KoBlODmUHo7IN0nkH
-            mnmUbTr1vmUaB0qgqsOmpM+Hi9SZuyH5PIU3EygLZM8caaG/vV28iNv2U8uDUO0V
-            hkFKSfmeX34eBvSf6VfP0sylLHJsAg2W/Ncdni1O7d+YbNpi8McsZCPw9pbTasZl
-            rQCkljpWCa5A0BzwVNubXDDSXAGqwqHz0zAySJyseEHgM0hlKZOybQwIOt/9b3lj
-            Jjax8FeyfrrGLuqQbVPMGV3Ou7Q7o2DSbK78jcbeF9yfAQjbZp9EnxdfgrRYUCZm
-            I2+UuZDQWbToU2eyFyKK
-            =cmli
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: (?i)(postfix-accounts|password)
-    version: 3.7.3
+      hQMOA4x50yY5upzjEAv/QDoj2gDqa2byo65k6HFzU4NOadVhtOAPQstajnMyxogN
+      ZFgYXl0n30CNlZuanK2v8XxsmR2XHaukN9ykluMwDiwVzP9fBpnfD1h4c4H2u6aH
+      +OsRy6l65RWpl4Qqjlo5cnudGRXhNBiznrtmhsjoN68b5nVcxBiedc6b3bD0ESDw
+      Ky+7oNLk6dpFQ12LbKMZrYq+4irZGN6EbXsSt6934DelQZ0XZ5nIHRGSz0fYJqNy
+      TXcYr+EDk11iZb+ecXhasMus5BE5YBd/AXZlY4pQUCS7ZeVh61bpTktTbrmwqiEK
+      yC2tgBp/9jGA7c861AGswjqNnJg5GHBapQyHlh//+Ae/4Tjl3/5cAlu3dZ0EUquU
+      9fmy6Wd1vuis16M+xhCi56tXwUgek13ZoTqQliTiW9gp1o9icLuHyRLphHd+fGTr
+      aswzspxmxyH+LTYFKm+FrCk0vQ92qqobvVURyq2rKNxcYihgR56mIw6to71PS498
+      XVJ4mWCAybrJ6MGvgnp7C/9dLW3ybACogE/rfzu69tDuN6HFYsWgfGPOWH+yI1p3
+      8gdtAf9oSBfmmPC/2D4dlHJ20ONHcI07PO1SztRGt6uxSWZhwb8Lut9SVQ+7N7lQ
+      f4WVT/RzNBxRK6S98t5pdmVHmnwH6O2cXV68+zt/Q2E0yfl6WvRTcrv4Iq7EEnWS
+      wnDzZGwIb9Pq0UsplwuqdOL2TtKEkxGRDSr4rvjI/YOKb8iuiLycpZ/vf+Y+WHZG
+      1W2bqXzvkyOS2i6tvIbIqbyPKvUM6Wh7/cQGMg+rHoLcjk2Qx7hdWBG/83yUZvZG
+      INE/+I+QTq5k8auvr9QCRPsKINpjnZV7VjFIfXAWJ5430++KoBlODmUHo7IN0nkH
+      mnmUbTr1vmUaB0qgqsOmpM+Hi9SZuyH5PIU3EygLZM8caaG/vV28iNv2U8uDUO0V
+      hkFKSfmeX34eBvSf6VfP0sylLHJsAg2W/Ncdni1O7d+YbNpi8McsZCPw9pbTasZl
+      rQCkljpWCa5A0BzwVNubXDDSXAGqwqHz0zAySJyseEHgM0hlKZOybQwIOt/9b3lj
+      Jjax8FeyfrrGLuqQbVPMGV3Ou7Q7o2DSbK78jcbeF9yfAQjbZp9EnxdfgrRYUCZm
+      I2+UuZDQWbToU2eyFyKK
+      =cmli
+      -----END PGP MESSAGE-----
+    fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: (?i)(postfix-accounts|password)
+  version: 3.7.3
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mailserver.config
+  namespace: mailserver
+  labels:
+    app: mailserver
+data:
+  postfix-main.cf: |
+    mynetworks = 192.168.1.0/24, 10.0.0.0/8
+    postscreen_dnsbl_action = ignore
+    postscreen_dnsbl_sites =
+    smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination, check_policy_service unix:private/policyd-spf, reject_unauth_pipelining, reject_invalid_helo_hostname, reject_non_fqdn_helo_hostname, reject_unknown_recipient_domain
+  postfix-accounts.cf: ENC[AES256_GCM,data:jLemFOb0JeaUwABGDabz01NyKmfOReFDPNesBgYLM7U/xyHHqUtFq0IfdzLEXbKmp/b7gqHUX+PZIcyL2wKrWXEdH4vvweg5/dzRf/Xogy45mmksFLR0xIE5FuInfrGrvilNU1lLixK1QbMhMgxQqBG2hzcan5eX7CGVm2d+0D+UZg==,iv:yNfPEzhhCTt5K5dTS/r1khl/nQMn7FZeIa8KMsvrJ6E=,tag:cmGlbAeE94kIEfkU1BQQYw==,type:str]
+  postfix-virtual.cf: |
+    jszvy@sko.ai devnull
+    fos@sko.ai devnull
+    @sko.ai v@sko.ai
+    @skozl.com v@sko.ai
+  postfix-aliases.cf: |
+    devnull: /dev/null
+  # dovecot.cf: |
+  #  service stats {
+  #    unix_listener stats-reader {
+  #      group = docker
+  #      mode = 0666
+  #    }
+  #    unix_listener stats-writer {
+  #      group = docker
+  #      mode = 0666
+  #    }
+  #  }
+  SigningTable: |
+    *@sko.ai mail._domainkey.sko.ai
+  KeyTable: |
+    mail._domainkey.sko.ai sko.ai:mail:/etc/opendkim/keys/sko.ai-mail.key
+  TrustedHosts: |
+    127.0.0.1
+    localhost
+    .baikal.default.svc.k8s.sko.ai
+  # user-patches.sh: |
+  #  #!/bin/bash
+  # fetchmail.cf: |
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2023-01-06T16:23:17Z"
+  mac: ENC[AES256_GCM,data:CNYfOaV+RdEMxcPHqXsB9kta45opE+SsQ1gZOnP1Ycr82+GVA1QUaHC6KcqUYgEn3y954T+eSfcUmshiRY7H2dGd1S4x8jb1xwPqCqK+vTa++NPHfdESVCCKFn6QzbkirbWUPjInCeg/iV1i1JoVzckFIlMmv5dtH9sbtHcfJ8s=,iv:5Ep/IY93nQLRFhBngz38L0kwHPdFHxj92ITCN2B3Lxg=,tag:FAME+zsB2KPaBfh3sUdAZA==,type:str]
+  pgp:
+  - created_at: "2021-03-11T18:22:34Z"
+    enc: |
+      -----BEGIN PGP MESSAGE-----
+
+      hQMOA4x50yY5upzjEAv/QDoj2gDqa2byo65k6HFzU4NOadVhtOAPQstajnMyxogN
+      ZFgYXl0n30CNlZuanK2v8XxsmR2XHaukN9ykluMwDiwVzP9fBpnfD1h4c4H2u6aH
+      +OsRy6l65RWpl4Qqjlo5cnudGRXhNBiznrtmhsjoN68b5nVcxBiedc6b3bD0ESDw
+      Ky+7oNLk6dpFQ12LbKMZrYq+4irZGN6EbXsSt6934DelQZ0XZ5nIHRGSz0fYJqNy
+      TXcYr+EDk11iZb+ecXhasMus5BE5YBd/AXZlY4pQUCS7ZeVh61bpTktTbrmwqiEK
+      yC2tgBp/9jGA7c861AGswjqNnJg5GHBapQyHlh//+Ae/4Tjl3/5cAlu3dZ0EUquU
+      9fmy6Wd1vuis16M+xhCi56tXwUgek13ZoTqQliTiW9gp1o9icLuHyRLphHd+fGTr
+      aswzspxmxyH+LTYFKm+FrCk0vQ92qqobvVURyq2rKNxcYihgR56mIw6to71PS498
+      XVJ4mWCAybrJ6MGvgnp7C/9dLW3ybACogE/rfzu69tDuN6HFYsWgfGPOWH+yI1p3
+      8gdtAf9oSBfmmPC/2D4dlHJ20ONHcI07PO1SztRGt6uxSWZhwb8Lut9SVQ+7N7lQ
+      f4WVT/RzNBxRK6S98t5pdmVHmnwH6O2cXV68+zt/Q2E0yfl6WvRTcrv4Iq7EEnWS
+      wnDzZGwIb9Pq0UsplwuqdOL2TtKEkxGRDSr4rvjI/YOKb8iuiLycpZ/vf+Y+WHZG
+      1W2bqXzvkyOS2i6tvIbIqbyPKvUM6Wh7/cQGMg+rHoLcjk2Qx7hdWBG/83yUZvZG
+      INE/+I+QTq5k8auvr9QCRPsKINpjnZV7VjFIfXAWJ5430++KoBlODmUHo7IN0nkH
+      mnmUbTr1vmUaB0qgqsOmpM+Hi9SZuyH5PIU3EygLZM8caaG/vV28iNv2U8uDUO0V
+      hkFKSfmeX34eBvSf6VfP0sylLHJsAg2W/Ncdni1O7d+YbNpi8McsZCPw9pbTasZl
+      rQCkljpWCa5A0BzwVNubXDDSXAGqwqHz0zAySJyseEHgM0hlKZOybQwIOt/9b3lj
+      Jjax8FeyfrrGLuqQbVPMGV3Ou7Q7o2DSbK78jcbeF9yfAQjbZp9EnxdfgrRYUCZm
+      I2+UuZDQWbToU2eyFyKK
+      =cmli
+      -----END PGP MESSAGE-----
+    fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: (?i)(postfix-accounts|password)
+  version: 3.7.3

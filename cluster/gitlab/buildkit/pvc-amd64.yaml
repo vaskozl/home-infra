@@ -6,7 +6,7 @@ metadata:
 spec:
   storageClassName: ssd-raid5-v2
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 15Gi

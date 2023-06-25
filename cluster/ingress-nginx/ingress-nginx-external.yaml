@@ -23,7 +23,7 @@ spec:
       service:
         type: NodePort
         externalIPs:
-          - ${EI_INGRESS_EX}
+        - ${EI_INGRESS_EX}
         externalTrafficPolicy: Local
       ingressClass: external
       ingressClassResource:
@@ -34,19 +34,19 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - ingress-nginx-external
-                    - key: app.kubernetes.io/component
-                      operator: In
-                      values:
-                        - controller
-                topologyKey: kubernetes.io/hostname
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - ingress-nginx-external
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - controller
+              topologyKey: kubernetes.io/hostname
       metrics:
         enabled: true
       config:
@@ -62,25 +62,13 @@ spec:
           add_header X-Content-Type-Options nosniff always;
           add_header X-XSS-Protection "1; mode=block" always;
         log-format-escape-json: "true"
-        log-format-upstream: '{ 
-          "time": "$time_iso8601", 
-          "remote_addr": "$remote_addr",
-          "x-forward-for": "$proxy_add_x_forwarded_for", 
-          "request_id": "$req_id", 
-          "remote_user": "$remote_user", 
-          "bytes_sent": $bytes_sent, 
-          "request_time": $request_time, 
-          "status": $status, 
-          "vhost": "$host", 
-          "request_proto": "$server_protocol", 
-          "path": "$uri", 
-          "request_query": "$args", 
-          "request_length": $request_length, 
-          "duration": $request_time,
-          "method": "$request_method", 
-          "http_referrer": "$http_referer", 
-          "http_user_agent": "$http_user_agent" 
-        }'
+        log-format-upstream: '{ "time": "$time_iso8601", "remote_addr": "$remote_addr",
+          "x-forward-for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
+          "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time":
+          $request_time, "status": $status, "vhost": "$host", "request_proto": "$server_protocol",
+          "path": "$uri", "request_query": "$args", "request_length": $request_length,
+          "duration": $request_time, "method": "$request_method", "http_referrer":
+          "$http_referer", "http_user_agent": "$http_user_agent" }'
       extraArgs:
         http-port: 9080
         https-port: 9443

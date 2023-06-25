@@ -6,8 +6,8 @@ metadata:
   namespace: default
 spec:
   limits:
-    - default:
-        cpu: 800m
-      defaultRequest:
-        cpu: 100m
-      type: Container
+  - default:
+      cpu: 800m
+    defaultRequest:
+      cpu: 100m
+    type: Container

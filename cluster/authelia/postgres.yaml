@@ -22,7 +22,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 5432
+  - port: 5432
   selector:
     app: postgres
 ---
@@ -46,31 +46,33 @@ spec:
         app: postgres
     spec:
       containers:
-        - name: postgres
-          image: postgres:11 # no-up
-          envFrom:
-            - configMapRef:
-                name: postgres-config
-          ports:
-            - containerPort: 5432
-              name: postgresdb
-          volumeMounts:
-            - name: pv-data
-              mountPath: /var/lib/postgresql/data
-          readinessProbe:
-            exec:
-              command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
-            initialDelaySeconds: 15
-            timeoutSeconds: 2
-          livenessProbe:
-            exec:
-              command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT 1"]
-            initialDelaySeconds: 45
-            timeoutSeconds: 2
-      volumes:
+      - name: postgres
+        image: postgres:11 # no-up
+        envFrom:
+        - configMapRef:
+            name: postgres-config
+        ports:
+        - containerPort: 5432
+          name: postgresdb
+        volumeMounts:
         - name: pv-data
-          persistentVolumeClaim:
-            claimName: postgres-v3
+          mountPath: /var/lib/postgresql/data
+        readinessProbe:
+          exec:
+            command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT
+                1"]
+          initialDelaySeconds: 15
+          timeoutSeconds: 2
+        livenessProbe:
+          exec:
+            command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT
+                1"]
+          initialDelaySeconds: 45
+          timeoutSeconds: 2
+      volumes:
+      - name: pv-data
+        persistentVolumeClaim:
+          claimName: postgres-v3
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -82,7 +84,7 @@ metadata:
 spec:
   storageClassName: ssd-raid5
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi

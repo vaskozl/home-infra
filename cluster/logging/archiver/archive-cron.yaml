@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -13,29 +14,29 @@ spec:
       template:
         spec:
           containers:
-            - name: logrotate
-              image: public.ecr.aws/docker/library/busybox:1.36.1@sha256:6e494387c901caf429c1bf77bd92fb82b33a68c0e19f6d1aa6a3ac8d27a7049d
-              command:
-                - find
-              args:
-                - /var/logs/k8s
-                - -type
-                - f
-                - -mtime
-                - '+30'
-                - -delete
-                - -print
-              resources:
-                requests:
-                  cpu: 10m
-                  memory: 10Mi
-              securityContext:
-                allowPrivilegeEscalation: false
-                capabilities:
-                  drop: ["ALL"]
-              volumeMounts:
-              - name: logging-pvc
-                mountPath: /var/logs/k8s
+          - name: logrotate
+            image: public.ecr.aws/docker/library/busybox:1.36.1@sha256:6e494387c901caf429c1bf77bd92fb82b33a68c0e19f6d1aa6a3ac8d27a7049d
+            command:
+            - find
+            args:
+            - /var/logs/k8s
+            - -type
+            - f
+            - -mtime
+            - '+30'
+            - -delete
+            - -print
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            volumeMounts:
+            - name: logging-pvc
+              mountPath: /var/logs/k8s
           restartPolicy: Never
           volumes:
           - name: logging-pvc

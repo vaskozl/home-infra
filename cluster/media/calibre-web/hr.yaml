@@ -47,9 +47,9 @@ spec:
             proxy_set_header Remote-User $user;
             proxy_busy_buffers_size 256k;
         hosts:
-          - host: cw.sko.ai
-            paths:
-              - path: /
+        - host: cw.sko.ai
+          paths:
+          - path: /
     persistence:
       config:
         enabled: true

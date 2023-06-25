@@ -6,9 +6,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
   selector:
     app: doods
   type: LoadBalancer
@@ -30,15 +30,15 @@ spec:
         app: doods
     spec:
       containers:
-        - image: snowzach/doods:latest
+      - image: snowzach/doods:latest
+        name: doods
+        env:
+        ports:
+        - containerPort: 8080
           name: doods
-          env:
-          ports:
-            - containerPort: 8080
-              name: doods
-          resources:
-            requests:
-              cpu: 300m
-              memory: 600Mi
-            limits:
-              memory: 1.1Gi
+        resources:
+          requests:
+            cpu: 300m
+            memory: 600Mi
+          limits:
+            memory: 1.1Gi

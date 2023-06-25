@@ -9,23 +9,23 @@ spec:
   capacity:
     storage: 1Mi
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: syno
     path: /volume3/k8s-logs
   mountOptions:
-    - nfsvers=4.1
-    - hard
-    - noatime
-    - noacl
-    - nocto
-    - nodiratime
-    - rsize=32768
-    - wsize=32768
-    - async
-    - retrans=3
-    - timeo=600
+  - nfsvers=4.1
+  - hard
+  - noatime
+  - noacl
+  - nocto
+  - nodiratime
+  - rsize=32768
+  - wsize=32768
+  - async
+  - retrans=3
+  - timeo=600
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -34,7 +34,7 @@ metadata:
   namespace: logging
 spec:
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   storageClassName: logging
   resources:
     requests:

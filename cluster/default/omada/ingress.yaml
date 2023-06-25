@@ -10,16 +10,16 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
 spec:
   rules:
-    - host: omada.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: omada
-                port: 
-                  number: 443
-            path: /
-            pathType: Prefix
+  - host: omada.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: omada
+            port:
+              number: 443
+        path: /
+        pathType: Prefix
   tls:
-    - hosts:
-        - omada.sko.ai
+  - hosts:
+    - omada.sko.ai

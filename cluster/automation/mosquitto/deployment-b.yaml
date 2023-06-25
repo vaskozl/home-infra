@@ -14,19 +14,19 @@ spec:
         type: bridge
     spec:
       containers:
-        - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
-          name: mosquitto
-          ports:
-            - containerPort: 1883
-            - containerPort: 9001
-          volumeMounts:
-          - mountPath: /mosquitto/config
-            name: config
-          command:
-            - mosquitto 
-          args:
-            - -c 
-            - /mosquitto/config/mosquitto.conf
+      - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
+        name: mosquitto
+        ports:
+        - containerPort: 1883
+        - containerPort: 9001
+        volumeMounts:
+        - mountPath: /mosquitto/config
+          name: config
+        command:
+        - mosquitto
+        args:
+        - -c
+        - /mosquitto/config/mosquitto.conf
       volumes:
       - name: config
         configMap:

@@ -5,8 +5,8 @@ metadata:
   name: readarr
 spec:
   ports:
-    - name: http
-      port: 80
-      targetPort: 8787
+  - name: http
+    port: 80
+    targetPort: 8787
   selector:
     app: readarr

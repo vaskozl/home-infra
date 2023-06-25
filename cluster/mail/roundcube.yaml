@@ -6,16 +6,16 @@ metadata:
   namespace: mailserver
 spec:
   rules:
-    - host: wm.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: roundcube
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: wm.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: roundcube
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -24,9 +24,9 @@ metadata:
   namespace: mailserver
 spec:
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    port: 80
+    targetPort: 80
   selector:
     app: roundcube
   type: ClusterIP
@@ -49,10 +49,10 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-        - image: roundcube/roundcubemail:1.6.1-apache
-          name: roundcube
-          env:
-            - name: ROUNDCUBEMAIL_DEFAULT_HOST
-              value: tls://mail.sko.ai
-            - name: ROUNDCUBEMAIL_SMTP_SERVER
-              value: tls://mail.sko.ai
+      - image: roundcube/roundcubemail:1.6.1-apache
+        name: roundcube
+        env:
+        - name: ROUNDCUBEMAIL_DEFAULT_HOST
+          value: tls://mail.sko.ai
+        - name: ROUNDCUBEMAIL_SMTP_SERVER
+          value: tls://mail.sko.ai

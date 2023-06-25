@@ -7,14 +7,13 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: radarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: radarr
-                port: 
-                  number: 80
-            path: /api
-            pathType: Prefix
-
+  - host: radarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: radarr
+            port:
+              number: 80
+        path: /api
+        pathType: Prefix

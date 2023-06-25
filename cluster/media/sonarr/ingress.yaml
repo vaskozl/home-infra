@@ -5,13 +5,13 @@ metadata:
   name: sonarr
 spec:
   rules:
-    - host: sonarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: sonarr
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: sonarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: sonarr
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

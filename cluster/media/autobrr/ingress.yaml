@@ -5,13 +5,13 @@ metadata:
   name: autobrr
 spec:
   rules:
-    - host: autobrr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: autobrr
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: autobrr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: autobrr
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

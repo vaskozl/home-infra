@@ -8,13 +8,13 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: prowlarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: prowlarr
-                port: 
-                  number: 80
-            path: /\d+/(api|download)
-            pathType: Prefix
+  - host: prowlarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: prowlarr
+            port:
+              number: 80
+        path: /\d+/(api|download)
+        pathType: Prefix

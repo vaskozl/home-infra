@@ -7,23 +7,23 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: sonarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: sonarr
-                port: 
-                  number: 80
-            path: /feed/v3/calendar
-            pathType: Prefix
-    - host: sonarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: sonarr
-                port: 
-                  number: 80
-            path: /api
-            pathType: Prefix
+  - host: sonarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: sonarr
+            port:
+              number: 80
+        path: /feed/v3/calendar
+        pathType: Prefix
+  - host: sonarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: sonarr
+            port:
+              number: 80
+        path: /api
+        pathType: Prefix

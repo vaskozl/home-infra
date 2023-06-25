@@ -17,42 +17,42 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
-        - image: jellyfin/jellyfin:10.8.10
-          name: jellyfin
-          securityContext:
-            privileged: true
-          resources:
-            requests:
-              cpu: 500m
-              memory: 4.0Gi
-            limits:
-              cpu: 5000m
-              memory: 8.0Gi
-          ports:
-            - containerPort: 8096
-              name: http
-          volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: dev-dri
-              mountPath: /dev/dri
-            - name: cache
-              mountPath: /cache
-            - name: transcodes
-              mountPath: /config/transcodes
-            - name: torrents-v2
-              mountPath: /torrents
-      volumes:
+      - image: jellyfin/jellyfin:10.8.10
+        name: jellyfin
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 4.0Gi
+          limits:
+            cpu: 5000m
+            memory: 8.0Gi
+        ports:
+        - containerPort: 8096
+          name: http
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: jellyfin-data-v0
+          mountPath: /config
         - name: dev-dri
-          hostPath:
-            path: /dev/dri
+          mountPath: /dev/dri
         - name: cache
-          emptyDir: {}
+          mountPath: /cache
         - name: transcodes
-          emptyDir: {}
+          mountPath: /config/transcodes
         - name: torrents-v2
-          persistentVolumeClaim:
-            claimName: torrents-v2
+          mountPath: /torrents
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: jellyfin-data-v0
+      - name: dev-dri
+        hostPath:
+          path: /dev/dri
+      - name: cache
+        emptyDir: {}
+      - name: transcodes
+        emptyDir: {}
+      - name: torrents-v2
+        persistentVolumeClaim:
+          claimName: torrents-v2

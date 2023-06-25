@@ -10,11 +10,11 @@ spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs:
-    - ${EI_EXT_DNS}
+  - ${EI_EXT_DNS}
   ports:
-    - port: 53
-      targetPort: 53
-      protocol: UDP
+  - port: 53
+    targetPort: 53
+    protocol: UDP
   selector:
     k8s-app: kube-dns
 ---
@@ -28,10 +28,10 @@ metadata:
 spec:
   type: LoadBalancer
   externalIPs:
-    - ${EI_EXT_DNS}
+  - ${EI_EXT_DNS}
   ports:
-    - port: 53
-      targetPort: 53
-      protocol: TCP
+  - port: 53
+    targetPort: 53
+    protocol: TCP
   selector:
     k8s-app: kube-dns

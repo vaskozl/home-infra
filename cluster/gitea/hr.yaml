@@ -19,10 +19,10 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - host: git.sko.ai
-          paths:
-            - path: /
-              pathType: Prefix
+      - host: git.sko.ai
+        paths:
+        - path: /
+          pathType: Prefix
       annotations:
         nginx.ingress.kubernetes.io/configuration-snippet: |
           auth_request_set $user $upstream_http_remote_user;
@@ -34,7 +34,7 @@ spec:
           proxy_set_header Remote-Email $email;
           proxy_set_header Remote-Groups $groups;
     service:
-      ssh: 
+      ssh:
         externalTrafficPolicy: Local
         type: LoadBalancer
         externalIPs:
@@ -43,8 +43,8 @@ spec:
       enabled: true
       existingClaim: gitea-pvc-v0
     gitea:
-      config: 
-        server: 
+      config:
+        server:
           ROOT_URL: https://git.sko.ai
         service:
           ENABLE_REVERSE_PROXY_AUTHENTICATION: "true"
@@ -52,7 +52,7 @@ spec:
         repository:
           ENABLE_PUSH_CREATE_USER: "true"
           ENABLE_PUSH_CREATE_ORG: "true"
-        security: 
+        security:
           REVERSE_PROXY_AUTHENTICATION_USER: Remote-User
           REVERSE_PROXY_AUTHENTICATION_EMAIL: Remote-Email
           REVERSE_PROXY_AUTHENTICATION_FULL_NAME: Remote-Name
@@ -65,7 +65,7 @@ spec:
       image:
         registry: ghcr.io
         repository: zcube/bitnami-compat/postgresql
-        tag: 11.18.0 
+        tag: 11.18.0
         pullPolicy: IfNotPresent
       volumePermissions:
         image:

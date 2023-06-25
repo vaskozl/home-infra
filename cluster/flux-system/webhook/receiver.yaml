@@ -7,10 +7,10 @@ metadata:
 spec:
   type: generic
   events:
-    - ping
-    - push
+  - ping
+  - push
   secretRef:
     name: webhook-token
   resources:
-    - kind: GitRepository
-      name: flux-system
+  - kind: GitRepository
+    name: flux-system

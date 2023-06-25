@@ -6,18 +6,18 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-   # The ACME server URL
+    # The ACME server URL
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-   # Email address used for ACME registration
+    # Email address used for ACME registration
     email: v@sko.ai
-   # Name of a secret used to store the ACME account private key
+    # Name of a secret used to store the ACME account private key
     privateKeySecretRef:
       name: letsencrypt-staging
-   # Enable the HTTP-01 challenge provider
+      # Enable the HTTP-01 challenge provider
     solvers:
-      - dns01:
-          cloudflare:
-            email: v@sko.ai
-            apiTokenSecretRef:
-              name: cloudflare-api-token-secret
-              key: api-token
+    - dns01:
+        cloudflare:
+          email: v@sko.ai
+          apiTokenSecretRef:
+            name: cloudflare-api-token-secret
+            key: api-token

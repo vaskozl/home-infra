@@ -24,17 +24,17 @@ spec:
                 values:
                 - zigbee-controller
       containers:
-        - image: ghcr.io/koenkk/zigbee2mqtt:1.31.2@sha256:3bc1b09a6bf40b591f8492793c90e821e37bb033cf836adc86ede3cbf9848fb7
-          name: zigbee2mqtt
-          volumeMounts:
-          - mountPath: /dev/ttyUSB0
-            name: zzh
-          - mountPath: /app/data
-            name: data
-          securityContext:
-            privileged: true
-          ports:
-            - containerPort: 8989
+      - image: ghcr.io/koenkk/zigbee2mqtt:1.31.2@sha256:3bc1b09a6bf40b591f8492793c90e821e37bb033cf836adc86ede3cbf9848fb7
+        name: zigbee2mqtt
+        volumeMounts:
+        - mountPath: /dev/ttyUSB0
+          name: zzh
+        - mountPath: /app/data
+          name: data
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 8989
       volumes:
       - name: zzh
         hostPath:

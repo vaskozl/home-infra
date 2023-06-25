@@ -19,27 +19,27 @@ spec:
         runAsGroup: 568
         fsGroup: 568
       containers:
-        - image: ghcr.io/onedr0p/radarr-develop:4.6.2.7490@sha256:689342f7dfe06d7403d59097cab2f688639108de2e555cf532f7255fe84d51b5
-          name: radarr
-          resources:
-            requests:
-              cpu: 1000m
-              memory: 200Mi
-            limits:
-              cpu: 2000m
-              memory: 1Gi
-          ports:
-            - containerPort: 7878
-              name: http
-          volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: torrents-v2
-              mountPath: /torrents
-      volumes:
+      - image: ghcr.io/onedr0p/radarr-develop:4.6.2.7490@sha256:689342f7dfe06d7403d59097cab2f688639108de2e555cf532f7255fe84d51b5
+        name: radarr
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 200Mi
+          limits:
+            cpu: 2000m
+            memory: 1Gi
+        ports:
+        - containerPort: 7878
+          name: http
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: radarr-config
+          mountPath: /config
         - name: torrents-v2
-          persistentVolumeClaim:
-            claimName: torrents-v2
+          mountPath: /torrents
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: radarr-config
+      - name: torrents-v2
+        persistentVolumeClaim:
+          claimName: torrents-v2

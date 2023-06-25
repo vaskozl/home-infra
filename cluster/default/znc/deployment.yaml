@@ -6,9 +6,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 6677
-      targetPort: 6677
+  - protocol: TCP
+    port: 6677
+    targetPort: 6677
   selector:
     app: znc
   type: LoadBalancer

@@ -5,9 +5,9 @@ metadata:
   name: mosquitto-p
 spec:
   ports:
-    - name: mqtt
-      port: 1883
-      targetPort: 1883
+  - name: mqtt
+    port: 1883
+    targetPort: 1883
   selector:
     app: mosquitto
     type: primary

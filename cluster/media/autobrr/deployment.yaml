@@ -19,22 +19,22 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - image: ghcr.io/autobrr/autobrr:v1.27.1
-          name: autobrr
-          resources:
-            requests:
-              cpu: 15m
-              memory: 45Mi
-            limits:
-              cpu: 1000m
-              memory: 200Mi
-          ports:
-            - containerPort: 7474
-              name: http
-          volumeMounts:
-            - name: config
-              mountPath: /config
-      volumes:
+      - image: ghcr.io/autobrr/autobrr:v1.27.1
+        name: autobrr
+        resources:
+          requests:
+            cpu: 15m
+            memory: 45Mi
+          limits:
+            cpu: 1000m
+            memory: 200Mi
+        ports:
+        - containerPort: 7474
+          name: http
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: autobrr-config
+          mountPath: /config
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: autobrr-config

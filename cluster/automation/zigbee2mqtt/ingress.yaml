@@ -5,13 +5,13 @@ metadata:
   name: zigbee2mqtt
 spec:
   rules:
-    - host: zm.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: zigbee2mqtt
-                port:
-                  name: http
-            path: /
-            pathType: Prefix
+  - host: zm.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: zigbee2mqtt
+            port:
+              name: http
+        path: /
+        pathType: Prefix

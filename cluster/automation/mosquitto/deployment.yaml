@@ -14,16 +14,16 @@ spec:
         type: primary
     spec:
       containers:
-        - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
-          name: mosquitto
-          ports:
-            - containerPort: 1883
-            - containerPort: 9001
-          command:
-            - mosquitto
-          args:
-            - -c 
-            - /mosquitto-no-auth.conf
+      - image: public.ecr.aws/docker/library/eclipse-mosquitto:2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
+        name: mosquitto
+        ports:
+        - containerPort: 1883
+        - containerPort: 9001
+        command:
+        - mosquitto
+        args:
+        - -c
+        - /mosquitto-no-auth.conf
       securityContext:
         runAsUser: 1883
         runAsGroup: 1883

@@ -19,27 +19,27 @@ spec:
         runAsGroup: 568
         fsGroup: 568
       containers:
-        - image: ghcr.io/onedr0p/readarr-develop:0.1.9.1905@sha256:fb2de658fbebc5bc5e9b357f02dcbffef9b4467e5404343bed26acd3d44f4931
-          name: readarr
-          resources:
-            requests:
-              cpu: 15m
-              memory: 150Mi
-            limits:
-              cpu: 2000m
-              memory: 1Gi
-          ports:
-            - containerPort: 8787
-              name: http
-          volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: torrents-v2
-              mountPath: /torrents
-      volumes:
+      - image: ghcr.io/onedr0p/readarr-develop:0.1.9.1905@sha256:fb2de658fbebc5bc5e9b357f02dcbffef9b4467e5404343bed26acd3d44f4931
+        name: readarr
+        resources:
+          requests:
+            cpu: 15m
+            memory: 150Mi
+          limits:
+            cpu: 2000m
+            memory: 1Gi
+        ports:
+        - containerPort: 8787
+          name: http
+        volumeMounts:
         - name: config
-          persistentVolumeClaim:
-            claimName: readarr-config
+          mountPath: /config
         - name: torrents-v2
-          persistentVolumeClaim:
-            claimName: torrents-v2
+          mountPath: /torrents
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: readarr-config
+      - name: torrents-v2
+        persistentVolumeClaim:
+          claimName: torrents-v2

@@ -8,13 +8,13 @@ metadata:
     kubernetes.io/ingress.class: internal
 spec:
   rules:
-    - host: k10.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: gateway
-                port:
-                  name: http
-            path: /
-            pathType: Prefix
+  - host: k10.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: gateway
+            port:
+              name: http
+        path: /
+        pathType: Prefix

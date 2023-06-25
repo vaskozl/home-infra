@@ -7,23 +7,23 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: readarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: readarr
-                port: 
-                  number: 80
-            path: /feed/v3/calendar
-            pathType: Prefix
-    - host: readarr.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: readarr
-                port: 
-                  number: 80
-            path: /api
-            pathType: Prefix
+  - host: readarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: readarr
+            port:
+              number: 80
+        path: /feed/v3/calendar
+        pathType: Prefix
+  - host: readarr.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: readarr
+            port:
+              number: 80
+        path: /api
+        pathType: Prefix

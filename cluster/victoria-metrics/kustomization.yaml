@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: victoria-metrics
@@ -6,10 +7,9 @@ resources:
 - hr.yaml
 - rules
 - dashboards
-
 secretGenerator:
-  - name: vm-secrets
-    files:
-      - values.yaml=values.enc.yaml
+- name: vm-secrets
+  files:
+  - values.yaml=values.enc.yaml
 configurations:
-  - kustomizeconfig.yaml
+- kustomizeconfig.yaml

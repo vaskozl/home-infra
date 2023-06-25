@@ -9,19 +9,19 @@ metadata:
     nginx.ingress.kubernetes.io/enable-global-auth: 'false'
 spec:
   rules:
-    - host: bk.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: baikal
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: bk.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: baikal
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
   tls:
-    - hosts:
-        - bk.sko.ai
+  - hosts:
+    - bk.sko.ai
 ---
 apiVersion: v1
 kind: Service
@@ -30,14 +30,14 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      name: smtp
-      port: 25
-      targetPort: 25
-    - protocol: TCP
-      name: http
-      port: 80
-      targetPort: 80
+  - protocol: TCP
+    name: smtp
+    port: 25
+    targetPort: 25
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 80
   selector:
     app: baikal
   type: ClusterIP
@@ -61,33 +61,33 @@ spec:
       nodeSelector:
         kubernetes.io/arch: arm64
       containers:
-        - image: ckulka/baikal:experimental-nginx@sha256:ea235c8de2af002ca44a9842fb55f6c25e676266cd358c2af38a1ab28672e74b
+      - image: ckulka/baikal:experimental-nginx@sha256:ea235c8de2af002ca44a9842fb55f6c25e676266cd358c2af38a1ab28672e74b
+        name: baikal
+        env:
+        - name: MSMTPRC
+          value: |
+            defaults
+            account        default
+            from           baikal@sko.ai
+            host           mail.sko.ai
+            port           25
+        ports:
+        - containerPort: 80
           name: baikal
-          env:
-            - name: MSMTPRC
-              value: |
-                defaults
-                account        default
-                from           baikal@sko.ai
-                host           mail.sko.ai
-                port           25
-          ports:
-            - containerPort: 80
-              name: baikal
-          volumeMounts:
-            - name: pv-baikal
-              mountPath: /var/www/baikal/Specific
-            - name: pv-baikal
-              mountPath: /var/www/baikal/config
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-      volumes:
+        volumeMounts:
         - name: pv-baikal
-          persistentVolumeClaim:
-            claimName: baikal-v2
+          mountPath: /var/www/baikal/Specific
+        - name: pv-baikal
+          mountPath: /var/www/baikal/config
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+      volumes:
+      - name: pv-baikal
+        persistentVolumeClaim:
+          claimName: baikal-v2

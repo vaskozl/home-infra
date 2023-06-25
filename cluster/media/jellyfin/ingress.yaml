@@ -9,13 +9,13 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: jf.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: jellyfin
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: jf.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: jellyfin
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

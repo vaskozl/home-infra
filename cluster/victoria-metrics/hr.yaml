@@ -20,8 +20,8 @@ spec:
   upgrade:
     crds: CreateReplace
   valuesFrom:
-    - kind: Secret
-      name: vm-secrets
+  - kind: Secret
+    name: vm-secrets
   values:
     fullnameOverride: stack
     experimentalDashboardsEnabled: false
@@ -29,7 +29,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - gf.sko.ai
+        - gf.sko.ai
       sidecar:
         dashboards:
           enabled: true
@@ -43,7 +43,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - am.sko.ai
+        - am.sko.ai
       spec:
         externalURL: "https://am.sko.ai"
       config:
@@ -56,18 +56,18 @@ spec:
               alertname: 'InfoInhibitor'
             receiver: 'devnull'
           - matchers:
-              - severity=~"warning|critical"
+            - severity=~"warning|critical"
             receiver: slack-monitoring
         receivers:
-          - name: 'devnull'
-          - name: "slack-monitoring"
-            slack_configs:
-              - channel: "#alerts"
-                send_resolved: true
-                title: '{{ template "slack.monzo.title" . }}'
-                icon_emoji: '{{ template "slack.monzo.icon_emoji" . }}'
-                color: '{{ template "slack.monzo.color" . }}'
-                text: '{{ template "slack.monzo.text" . }}'
+        - name: 'devnull'
+        - name: "slack-monitoring"
+          slack_configs:
+          - channel: "#alerts"
+            send_resolved: true
+            title: '{{ template "slack.monzo.title" . }}'
+            icon_emoji: '{{ template "slack.monzo.icon_emoji" . }}'
+            color: '{{ template "slack.monzo.color" . }}'
+            text: '{{ template "slack.monzo.text" . }}'
     vmsingle:
       spec:
         retentionPeriod: "30"
@@ -85,24 +85,22 @@ spec:
       ingress:
         enabled: true
         hosts:
-          - vms.sko.ai
+        - vms.sko.ai
     vmalert:
       ingress:
         enabled: true
         hosts:
-          - va.sko.ai
+        - va.sko.ai
     vmagent:
       spec:
         scrapeInterval: 60s
       ingress:
         enabled: true
         hosts:
-          - vm.sko.ai
-
+        - vm.sko.ai
     kubelet:
       spec:
         interval: 60s
-
     # Not by most graphs or often useful
     kubeEtcd:
       enabled: false
@@ -112,36 +110,34 @@ spec:
       enabled: false
     kubeScheduler:
       enabled: false
-
     prometheus-node-exporter:
       vmServiceScrape:
         spec:
           endpoints:
-            - port: metrics
-              metricRelabelConfigs:
-                # Remove high cardinality calico devices
-                - action: drop
-                  source_labels: [device]
-                  regex: "(cali.+|tun.+|bond.+|dummy.+|sit.+|ip6.+|teql.+)"
-                # Remove high cardinality tmpfs mounts
-                - action: drop
-                  source_labels: [fstype]
-                  regex: "tmpfs"
-
+          - port: metrics
+            metricRelabelConfigs:
+            # Remove high cardinality calico devices
+            - action: drop
+              source_labels: [device]
+              regex: "(cali.+|tun.+|bond.+|dummy.+|sit.+|ip6.+|teql.+)"
+            # Remove high cardinality tmpfs mounts
+            - action: drop
+              source_labels: [fstype]
+              regex: "tmpfs"
     # Remove high cardinality apiserver metrics
     kubeApiServer:
       spec:
         endpoints:
-          - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-            port: https
-            scheme: https
-            tlsConfig:
-              caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-              serverName: kubernetes
-            metricRelabelConfigs:
-              - sourceLabels: ["__name__"]
-                regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-                action: drop
-              - sourceLabels: ["__name__"]
-                regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-                action: drop
+        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+          port: https
+          scheme: https
+          tlsConfig:
+            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+            serverName: kubernetes
+          metricRelabelConfigs:
+          - sourceLabels: ["__name__"]
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            action: drop
+          - sourceLabels: ["__name__"]
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+            action: drop

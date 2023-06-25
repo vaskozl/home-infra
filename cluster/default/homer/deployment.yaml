@@ -6,16 +6,16 @@ metadata:
   namespace: default
 spec:
   rules:
-    - host: home.sko.ai
-      http:
-        paths:
-          - backend:
-              service:
-                name: homer
-                port: 
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: home.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: homer
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
 ---
 apiVersion: v1
 kind: Service
@@ -24,9 +24,9 @@ metadata:
   namespace: default
 spec:
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
   selector:
     app: homer
   type: ClusterIP
@@ -53,13 +53,13 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - image: b4bz/homer:v23.05.1
-          name: homer
-          volumeMounts:
-            - name: config
-              mountPath: /www/assets/config.yml
-              subPath: config.yml
-      volumes:
+      - image: b4bz/homer:v23.05.1
+        name: homer
+        volumeMounts:
         - name: config
-          configMap:
-            name: homer-config
+          mountPath: /www/assets/config.yml
+          subPath: config.yml
+      volumes:
+      - name: config
+        configMap:
+          name: homer-config

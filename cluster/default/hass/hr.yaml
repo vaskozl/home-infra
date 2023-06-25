@@ -57,10 +57,10 @@ spec:
               return 403;
             }
         hosts:
-          - host: ha.sko.ai
-            paths:
-              - path: /
-                pathType: Prefix
+        - host: ha.sko.ai
+          paths:
+          - path: /
+            pathType: Prefix
     hostNetwork: true
     probes:
       liveness:
