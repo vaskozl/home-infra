@@ -19,6 +19,12 @@ spec:
       containers:
       - name: fluent-bit
         image: ghcr.io/fluent/fluent-bit:2.1.5@sha256:37eab2f80e4d1ae58b77b9be1662c1a0fc4b771b7006180e30b4581c3418b4f8
+        resources:
+          requests:
+            memory: "10Mi"
+            cpu: "10m"
+          limits:
+            memory: "512Mi"
         imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: varlog

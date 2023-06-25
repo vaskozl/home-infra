@@ -23,7 +23,9 @@ spec:
         resources:
           requests:
             cpu: "50m"
-            memory: 0.3Gi
+            memory: 200Mi
+          limits:
+            memory: 710Mi
         env:
           - name: FLUENTD_CONF
             value: fluent.conf
