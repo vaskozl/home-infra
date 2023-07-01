@@ -19,7 +19,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-      - image: fallenbagel/jellyseerr:1.5.0@sha256:eacfbd18c13036b5fea87fc8c44ea165c6339d75fe15d3f0c83bbf3e39a1560e
+      - image: ghcr.io/vaskozl/jellyseerr:1.5.0
         name: jellyseerr
         resources:
           requests:

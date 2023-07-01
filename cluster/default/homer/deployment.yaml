@@ -53,7 +53,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-      - image: b4bz/homer:v23.05.1
+      - image: ghcr.io/vaskozl/homer:v23.05.1
         name: homer
         volumeMounts:
         - name: config
