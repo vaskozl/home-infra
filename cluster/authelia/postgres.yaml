@@ -47,7 +47,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: postgres:11 # no-up
+        image: postgres:15.3
         envFrom:
         - configMapRef:
             name: postgres-config
