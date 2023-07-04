@@ -70,7 +70,7 @@ spec:
             text: '{{ template "slack.monzo.text" . }}'
     vmsingle:
       spec:
-        retentionPeriod: "30"
+        retentionPeriod: "30d"
         storage:
           resources:
             requests:
