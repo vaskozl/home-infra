@@ -137,22 +137,10 @@ spec:
     kubeScheduler:
       enabled: false
     prometheus-node-exporter:
-      vmServiceScrape:
-        spec:
-          endpoints:
-          - port: metrics
-            metricRelabelConfigs:
-            # Remove high cardinality calico devices
-            - action: drop
-              source_labels: [device]
-              regex: "(cali.+|tun.+|bond.+|dummy.+|sit.+|ip6.+|teql.+)"
-            # Remove high cardinality tmpfs mounts
-            - action: drop
-              source_labels: [fstype]
-              regex: "tmpfs"
-            - sourceLabels: ["__name__"]
-              regex: (node_filesystem_device_error|node_network_info)
-              action: drop
+      extraArgs:
+      - --collector.disable-defaults
+      - --collector.cpu 
+      - --collector.meminfo
     # Remove high cardinality apiserver metrics
     kubeApiServer:
       spec:
