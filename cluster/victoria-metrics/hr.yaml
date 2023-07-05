@@ -101,6 +101,32 @@ spec:
     kubelet:
       spec:
         interval: 60s
+        # drop high cardinality label and useless metrics for cadvisor and kubelet
+        metricRelabelConfigs:
+          - action: labeldrop
+            regex: (uid|pod_uid)
+          - action: labeldrop
+            regex: (id|name)
+          - action: drop
+            source_labels: [__name__]
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+          # Random calico interfaces
+          - action: labeldrop
+            regex: (interface)
+          # Not used by any rules/graphs but very high cardinality for our setups
+          - action: drop
+            source_labels: [__name__]
+            regex: (container_tasks_state|container_memory_failures_total)
+          - action: drop
+            source_labels: [__name__]
+            regex: (container_blkio_device_usage_total)
+        relabelConfigs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+          - sourceLabels: [__metrics_path__]
+            targetLabel: metrics_path
+          - targetLabel: "job"
+            replacement: "kubelet"
     # Not by most graphs or often useful
     kubeEtcd:
       enabled: false
@@ -124,6 +150,9 @@ spec:
             - action: drop
               source_labels: [fstype]
               regex: "tmpfs"
+            - sourceLabels: ["__name__"]
+              regex: (node_filesystem_device_error|node_network_info)
+              action: drop
     # Remove high cardinality apiserver metrics
     kubeApiServer:
       spec:
