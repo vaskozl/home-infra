@@ -51,9 +51,6 @@ spec:
           paths:
           - path: /
     hostNetwork: true
-    probes:
-      liveness:
-        enabled: true
     resources:
       limits:
         memory: 600Mi
