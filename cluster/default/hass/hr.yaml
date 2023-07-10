@@ -4,23 +4,13 @@ kind: HelmRelease
 metadata:
   name: hass
   namespace: default
+  labels:
+    patch: app-template
 spec:
-  chart:
-    spec:
-      chart: app-template
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-      version: 1.5.1
-  interval: 1h
-  timeout: 15m
   values:
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2023.7.1@sha256:59b654dbc3fd9506a8399043babd0e4cf8f60934a67981ac30a76f7cff23e5da
-    env:
-      TZ: Europe/London
     persistence:
       config:
         enabled: true
