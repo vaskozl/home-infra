@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: echoserver
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: openresty/openresty
+      tag: 1.19.9.1-12-alpine
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: echo-conf
+        mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+        subPath: nginx.conf
+        readOnly: true
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: echo.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 50Mi
+      requests:
+        cpu: 10m
+        memory: 20Mi
