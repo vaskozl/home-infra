@@ -1,0 +1,45 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: baikal
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ckulka/baikal
+      tag: experimental-nginx@sha256:184d49461f9b136a88e0e0b5f611f061a312ae49973b26d548ea82209e419759
+    env:
+      MSMTPRC: |
+        defaults
+        account        default
+        from           baikal@sko.ai
+        host           mail.sko.ai
+        port           25
+    persistence:
+      config:
+        enabled: true
+        mountPath: /var/www/baikal/config
+        existingClaim: baikal-v2
+    additionalVolumeMounts:
+    - name: config
+      mountPath: /var/www/baikal/Specific
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: bk.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 10m
+        memory: 130Mi
