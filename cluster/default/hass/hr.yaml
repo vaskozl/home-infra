@@ -3,6 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: hass
+  namespace: default
   labels:
     patch: app-template
 spec:
@@ -47,10 +48,16 @@ spec:
             }
         hosts:
         - host: ha.sko.ai
+          paths:
+          - path: /
+            pathType: Prefix
     hostNetwork: true
+    probes:
+      liveness:
+        enabled: true
     resources:
       limits:
-        memory: 800Mi
+        memory: 500Mi
       requests:
         cpu: 35m
-        memory: 360Mi
+        memory: 150Mi
