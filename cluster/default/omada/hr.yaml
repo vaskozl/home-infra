@@ -38,3 +38,8 @@ spec:
       requests:
         cpu: 100m
         memory: 400Mi
+    probes:
+      startup:
+        initialDelaySeconds: 60
+        failureThreshold: 120
+
