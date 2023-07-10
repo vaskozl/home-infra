@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prowlarr
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ghcr.io/onedr0p/prowlarr-nightly
+      tag: '1.7.2'
+    persistence:
+      config:
+        enabled: true
+        existingClaim: prowlarr-config
+    service:
+      main:
+        ports:
+          http:
+            port: 9696
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: &host prowlarr.sko.ai
+          paths:
+          - path: /
+      api:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: *host
+          paths:
+          - path: /\d+/(api|download)
+    resources:
+      limits:
+        cpu: 800m
+        memory: 1Gi
+      requests:
+        cpu: 15m
+        memory: 250Mi
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
