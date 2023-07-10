@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: autobrr
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ghcr.io/autobrr/autobrr
+      tag: v1.27.1
+    persistence:
+      config:
+        enabled: true
+        existingClaim: autobrr-config
+    service:
+      main:
+        ports:
+          http:
+            port: 7474
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: autobrr.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        cpu: 800m
+        memory: 200Mi
+      requests:
+        cpu: 15m
+        memory: 45Mi
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
