@@ -24,6 +24,8 @@ spec:
         enabled: true
         hosts:
         - host: irc.sko.ai
+          paths:
+          - path: /
     resources:
       limits:
         memory: 1Gi
