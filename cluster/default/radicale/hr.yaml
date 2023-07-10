@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: radicale
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: tomsquest/docker-radicale
+      tag: 3.1.8.2
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: radicale-config
+      data:
+        enabled: true
+        existingClaim: radicale-v3
+    service:
+      main:
+        ports:
+          http:
+            port: 5232
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: rc.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 10m
+        memory: 550Mi
