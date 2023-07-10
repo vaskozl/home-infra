@@ -22,9 +22,9 @@ spec:
         enabled: true
         existingClaim: baikal-v2
         subPath:
-        - path: /
+        - path: .
           mountPath: /var/www/baikal/config
-        - path: /
+        - path: .
           mountPath: /var/www/baikal/Specific
     service:
       main:
