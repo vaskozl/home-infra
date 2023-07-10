@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: omada
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: mbentley/omada-controller
+      tag: '5.9'
+    env:
+      MANAGE_HTTPS_PORT: '443'
+    persistence:
+      data:
+        enabled: true
+        mountPath: /opt/tplink/EAPController/data
+        existingClaim: omada-pvc-v3
+    service:
+      main:
+        ports:
+          http:
+            port: 443
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+          nginx.ingress.kubernetes.io/proxy-ssl-verify: 'off'
+        hosts:
+        - host: omada.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 400Mi
