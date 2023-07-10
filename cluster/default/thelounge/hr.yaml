@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: thelounge
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ghcr.io/linuxserver/thelounge
+      tag: version-4.3.1
+    persistence:
+      config:
+        enabled: true
+        existingClaim: theounge-v3
+    service:
+      main:
+        ports:
+          http:
+            port: 9000
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: irc.sko.ai
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 10m
+        memory: 550Mi
