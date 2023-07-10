@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: znc
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: vaskozl/znc-push
+      tag: 7786cc74
+    persistence:
+      znc-data:
+        enabled: true
+        existingClaim: znc-v0
+    service:
+      main:
+        ports:
+          http:
+            port: 6677
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: znc.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 100Mi
+      requests:
+        cpu: 2m
+        memory: 5Mi
