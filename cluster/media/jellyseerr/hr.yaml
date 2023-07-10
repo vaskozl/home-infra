@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jellyseer
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ghcr.io/vaskozl/jellyseer
+      tag: 1.5.0
+    persistence:
+      config:
+        enabled: true
+        mountPath: /app/config
+        existingClaim: jellyseer-config
+    service:
+      main:
+        ports:
+          http:
+            port: 5055
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: requests.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 10m
+        memory: 180Mi
