@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: radicale-v3
-  namespace: default
 spec:
   storageClassName: ssd-raid5
   accessModes:
