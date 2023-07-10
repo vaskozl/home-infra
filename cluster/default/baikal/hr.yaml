@@ -9,7 +9,7 @@ spec:
   values:
     image:
       repository: ckulka/baikal
-      tag: experimental-nginx@sha256:184d49461f9b136a88e0e0b5f611f061a312ae49973b26d548ea82209e419759
+      tag: experimental-nginx@sha256:fa6d9b67d2190bec275c78c9f4d3c2cffce2321b8a9b9c975c0792362cb18cc4
     env:
       MSMTPRC: |
         defaults
@@ -20,11 +20,12 @@ spec:
     persistence:
       config:
         enabled: true
-        mountPath: /var/www/baikal/config
         existingClaim: baikal-v2
-    additionalVolumeMounts:
-    - name: config
-      mountPath: /var/www/baikal/Specific
+        subPath:
+        - path: /
+          mountPath: /var/www/baikal/config
+        - path: /
+          mountPath: /var/www/baikal/Specific
     service:
       main:
         ports:
