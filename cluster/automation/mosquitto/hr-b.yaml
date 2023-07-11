@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mosquitto-b
+  labels:
+    patch: app-template
+spec:
+  values:
+    global:
+      fullnameOverride: mosquitto
+    image:
+      repository: public.ecr.aws/docker/library/eclipse-mosquitto
+      tag: 2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
+    command: [mosquitto]
+    args: [-c, /config/mosquitto.conf]
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: bridge-conf
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+          mqtt:
+            enabled: true
+            port: 1883
+    resources:
+      limits:
+        memory: 200Mi
+      requests:
+        cpu: 2m
+        memory: 8Mi
+    podSecurityContext:
+      runAsUser: 1883
+      runAsGroup: 1883
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values: [mosquitto]
+          topologyKey: kubernetes.io/hostname
