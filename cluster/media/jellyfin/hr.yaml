@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  labels:
+    patch: app-template
+spec:
+  values:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    image:
+      repository: ghcr.io/vaskozl/jellyfin
+      tag: 10.8.10
+    persistence:
+      config:
+        enabled: true
+        existingClaim: jellyfin-data-v0
+      torrents:
+        enabled: true
+        existingClaim: torrents-v2
+      transcodes:
+        enabled: true
+        type: emptyDir
+        mountPath: /config/transcodes
+      dri:
+        enabled: true
+        type: hostPath
+        hostPath: /dev/dri
+    service:
+      main:
+        ports:
+          http:
+            port: 8096
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: jf.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        cpu: 5000m
+        memory: 8Gi
+      requests:
+        cpu: 500m
+        memory: 4Gi
