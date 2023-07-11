@@ -4,18 +4,19 @@ kind: Kustomization
 namespace: media
 resources:
 - _namespace.yaml
-- autobrr/
-- calibre-web/
-- calibre/
-- flood/
-- jellyfin/
-- jellyseerr/
+- autobrr
+- calibre
+- calibre-web
+- flood
+- jellyfin
+- jellyseerr
 - netpol.yaml
-- qbit_manage/
-- radarr/
-- readarr/
-- recyclarr/
-- sonarr/
+- prowlarr
+- qbit_manage
+- radarr
+- readarr
+- recyclarr
+- sonarr
 - torrents-pv-v2.yaml
 - torrents-pvc-v2.yaml
 
