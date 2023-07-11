@@ -3,5 +3,10 @@ kind: Kustomization
 resources:
 - hr-a.yaml
 - hr-b.yaml
+- service.yaml
+configMapGenerator:
+- name: bridge-conf
+  files:
+  - config/mosquitto.conf
 configurations:
 - kustomizeconfig.yaml
