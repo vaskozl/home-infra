@@ -31,6 +31,7 @@ spec:
         ports:
           http:
             port: 8096
+    ingressClassName: external
     ingress:
       main:
         enabled: true
