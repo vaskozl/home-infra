@@ -31,10 +31,10 @@ spec:
         ports:
           http:
             port: 8096
-    ingressClassName: external
     ingress:
       main:
         enabled: true
+        ingressClassName: external
         hosts:
         - host: jf.sko.ai
           paths:
