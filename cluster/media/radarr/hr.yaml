@@ -1,0 +1,50 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: radarr
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: ghcr.io/onedr0p/radarr-develop
+      tag: 4.6.4.7568@sha256:7dd197028efcc9e4e4bc52cd383efbaa1b6631c8932b3f831a3a1b1687fa8954
+    persistence:
+      config:
+        enabled: true
+        existingClaim: radarr-config
+      torrents:
+        enabled: true
+        existingClaim: torrents-v2
+    service:
+      main:
+        ports:
+          http:
+            port: 7878
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: &host radarr.sko.ai
+          paths:
+          - path: /
+      api:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: *host
+          paths:
+          - path: /api
+    resources:
+      limits:
+        cpu: 800m
+        memory: 1Gi
+      requests:
+        cpu: 15m
+        memory: 150Mi
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
