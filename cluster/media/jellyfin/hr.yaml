@@ -35,6 +35,8 @@ spec:
       main:
         enabled: true
         ingressClassName: external
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         hosts:
         - host: jf.sko.ai
           paths:
