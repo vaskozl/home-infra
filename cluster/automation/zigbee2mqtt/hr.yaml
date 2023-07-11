@@ -19,7 +19,7 @@ spec:
       zzh:
         enabled: true
         type: hostPath
-        mountPath: /dev/ttyUSB0
+        hostPath: /dev/ttyUSB0
     service:
       main:
         ports:
