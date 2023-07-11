@@ -1,0 +1,45 @@
+kind: HelmRelease
+metadata:
+  name: vaultwarden
+  labels:
+    patch: app-template
+spec:
+  values:
+    image:
+      repository: vaultwarden/server
+      tag: 1.28.1@sha256:c56cba7d646584e73a17604f4d4e5aba95ee4198bbed6c919c9514d2ada97d04
+    persistence:
+      data:
+        enabled: true
+        existingClaim: vaultwarden-data-v3
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+          websocket:
+            enabled: true
+            port: 3012
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: bw.sko.ai
+          paths:
+          - path: /
+            service:
+              port: http
+          - path: /notifications/hub/negotiate
+            service:
+              port: http
+          - path: /notifications/hub
+            service:
+              port: websocket
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 200Mi
