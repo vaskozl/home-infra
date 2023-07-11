@@ -8,4 +8,6 @@ resources:
 - docker-mailserver.yaml
 - ingress.yaml
 - pvc.yaml
-- roundcube.yaml
+- roundcube
+components:
+- ../common
