@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: zigbee2mqtt
+  labels:
+    patch: app-template
+spec:
+  values:
+    nodeSelector:
+      app: zigbee-controller
+    image:
+      repository: ghcr.io/koenkk/zigbee2mqtt
+      tag: 1.32.1@sha256:a152fa019f05d9712cce1da20c82b1c96557277954ad60d644114376623c9912
+    persistence:
+      data:
+        enabled: true
+        mountPath: /app/data
+        existingClaim: zigbee2mqtt-v2
+      zzh:
+        enabled: true
+        type: hostPath
+        mountPath: /dev/ttyUSB0
+    service:
+      main:
+        ports:
+          http:
+            port: 5055
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: zm.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 400Mi
+      requests:
+        cpu: 10m
+        memory: 85Mi
