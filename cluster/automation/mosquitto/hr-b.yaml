@@ -6,12 +6,11 @@ metadata:
     patch: app-template
 spec:
   values:
-    global:
-      labels:
-        sko.ai/name: mosquitto
     image:
       repository: public.ecr.aws/docker/library/eclipse-mosquitto
       tag: 2.0.15@sha256:efc3fd76a152985decdbd3768f79e4635d2e47febaeb1349d8f421a48fb0564b
+    podLabels:
+      sko.ai/name: mosquitto
     command: [mosquitto]
     args: [-c, /config/mosquitto.conf]
     persistence:
