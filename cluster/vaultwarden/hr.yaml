@@ -34,7 +34,7 @@ spec:
               port: *port
           - path: /notifications/hub/negotiate
             service:
-              port: http
+              port: *port
           - path: /notifications/hub
             service:
               port: *websocket-port
