@@ -89,10 +89,13 @@ spec:
         volumeMounts:
         - name: files
           mountPath: /tmp/docker-mailserver
+          readOnly: true
         - name: dkim
           mountPath: /tmp/docker-mailserver/opendkim
+          readOnly: true
         - name: opendkim-keys
           mountPath: /tmp/docker-mailserver/opendkim/keys
+          readOnly: true
 
         - name: data
           mountPath: /var/mail
@@ -106,6 +109,7 @@ spec:
 
         - name: tls
           mountPath: /etc/ssl/mailserver
+          readOnly: true
 
         livenessProbe:
           tcpSocket:
