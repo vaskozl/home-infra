@@ -25,6 +25,9 @@ spec:
   - name: imap-secure
     port: 993
     targetPort: imap-secure
+  - name: sieve
+    port: 4190
+    targetPort: sieve
   type: LoadBalancer
   externalTrafficPolicy: Local
   externalIPs:
@@ -130,6 +133,9 @@ spec:
           protocol: TCP
         - name: imap-secure
           containerPort: 993
+          protocol: TCP
+        - name: sieve
+          containerPort: 4190
           protocol: TCP
         envFrom:
         - secretRef:
