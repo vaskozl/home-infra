@@ -134,10 +134,10 @@ spec:
       volumes:
       - name: files
         secret:
-          name: mailserver.files
+          secretName: mailserver.files
       - name: dkim
         secret:
-          name: mailserver.dkim
+          secretName: mailserver.dkim
       - name: opendkim-keys
         secret:
           secretName: mailserver.opendkim.keys
