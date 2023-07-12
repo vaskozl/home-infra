@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: mailserver
 resources:
 - _namespace.yaml
-- config.yaml
 - dkim-key.enc.yaml
 - docker-mailserver.yaml
 - ingress.yaml
@@ -12,3 +11,19 @@ resources:
 - roundcube
 components:
 - ../common
+
+secretGenerator:
+- name: mailserver.files
+  files:
+  - config/postfix-accounts.cf	
+  - config/postfix-aliases.cf	
+  - config/postfix-main.cf		
+  - config/postfix-virtual.cf
+- name: mailserver.dkim
+  files:
+  - config/opendkim/KeyTable
+  - config/opendkim/TrustedHosts
+  - config/opendkim/SigningTable
+- name: mailserver.env
+  envs:
+  - config.env
