@@ -17,10 +17,7 @@ spec:
       main:
         ports:
           http:
-            port: &port 80
-          websocket:
-            enabled: true
-            port: &websocket-port 3012
+            port: 80
     ingress:
       main:
         enabled: true
@@ -30,14 +27,6 @@ spec:
         - host: bw.sko.ai
           paths:
           - path: /
-            service:
-              port: *port
-          - path: /notifications/hub/negotiate
-            service:
-              port: *port
-          - path: /notifications/hub
-            service:
-              port: *websocket-port
     resources:
       limits:
         memory: 1Gi
