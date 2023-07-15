@@ -12,7 +12,7 @@ spec:
       retries: 1
   upgrade:
     cleanupOnFail: true
-    timeouts: *timeout
+    timeout: *timeout
     remediation:
       retries: 1
   uninstall:
