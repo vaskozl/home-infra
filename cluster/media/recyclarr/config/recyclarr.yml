@@ -2,7 +2,7 @@
 # https://github.com/rcdailey/trash-updater/wiki/Configuration-Reference
 sonarr:
   standard:
-    base_url: http://sonarr
+    base_url: http://sonarr:8989
     api_key: ENC[AES256_GCM,data:cUP60OE8/YY4//KNDq8P2KDnRSCDLm4adODSF7PSejI=,iv:CRLFAeqwioqd4AnXraLDldSfVjT/Rs6LtqdhoaG09GY=,tag:tlNmXgIhuz0oM4APEJ7jTw==,type:str]
     delete_old_custom_formats: true
     quality_definition:
@@ -101,7 +101,7 @@ sonarr:
         reset_unmatched_scores: true
 radarr:
   standard:
-    base_url: http://radarr
+    base_url: http://radarr:7878
     api_key: ENC[AES256_GCM,data:/E/MnY5qAuxZmUyrxzEHMdWP8+QdhOyeA3yQJUFb2b0=,iv:uJO/t2Al4oO1cutHdv3E9edBrbraEGDcef1ICrlAW1E=,tag:VGo809xKoRIN0b/N3IGvxQ==,type:str]
     delete_old_custom_formats: true
     quality_definition:
