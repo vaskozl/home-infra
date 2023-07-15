@@ -23,7 +23,6 @@ spec:
       transcodes:
         enabled: true
         type: emptyDir
-        mountPath: /config/transcodes
       dri:
         enabled: true
         type: hostPath
