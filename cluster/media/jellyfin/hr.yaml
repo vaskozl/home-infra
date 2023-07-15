@@ -11,6 +11,8 @@ spec:
     image:
       repository: ghcr.io/vaskozl/jellyfin
       tag: 10.8.10
+    securityContext:
+      privileged: true
     persistence:
       config:
         enabled: true
