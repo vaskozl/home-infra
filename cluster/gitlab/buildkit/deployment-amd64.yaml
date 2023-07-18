@@ -21,7 +21,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
       - name: buildkitd
-        image: ghcr.io/vaskozl/buildkit:v0.11.6
+        image: ghcr.io/vaskozl/buildkit:v0.12.0
         args:
         - --addr
         - unix:///run/buildkit/buildkitd.sock
