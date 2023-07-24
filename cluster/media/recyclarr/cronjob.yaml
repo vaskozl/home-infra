@@ -23,6 +23,7 @@ spec:
             command:
             - /app/recyclarr/recyclarr
             args:
+            - sync
             - sonarr
             volumeMounts:
             - name: config
@@ -35,6 +36,7 @@ spec:
             command:
             - /app/recyclarr/recyclarr
             args:
+            - sync
             - radarr
             volumeMounts:
             - name: config
