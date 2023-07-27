@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: ghcr.io/fluent/fluent-bit:2.1.7@sha256:78be51c47514817393ed85b37f41960ae74d5b6b84f01298bd87e0b6bda692a1
+        image: ghcr.io/fluent/fluent-bit:2.1.8@sha256:1c8bdb90eb65902a65b7cd32126a621690dc36128fef78951775afbe37dfa01f
         resources:
           requests:
             memory: "10Mi"
