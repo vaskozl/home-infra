@@ -5,7 +5,6 @@ sonarr:
     standard:
         base_url: http://sonarr:8989
         api_key: ENC[AES256_GCM,data:cUP60OE8/YY4//KNDq8P2KDnRSCDLm4adODSF7PSejI=,iv:CRLFAeqwioqd4AnXraLDldSfVjT/Rs6LtqdhoaG09GY=,tag:tlNmXgIhuz0oM4APEJ7jTw==,type:str]
-        delete_old_custom_formats: true
         quality_definition:
             type: series
         quality_profiles:
@@ -18,8 +17,8 @@ sonarr:
             - name: Remux-1080p - Anime
               reset_unmatched_scores: true
               # Custom Format Configuration
-        delete_old_custom_formats: false
-        replace_existing_custom_formats: false
+        delete_old_custom_formats: true
+        replace_existing_custom_formats: true
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
@@ -271,7 +270,6 @@ radarr:
     standard:
         base_url: http://radarr:7878
         api_key: ENC[AES256_GCM,data:/E/MnY5qAuxZmUyrxzEHMdWP8+QdhOyeA3yQJUFb2b0=,iv:uJO/t2Al4oO1cutHdv3E9edBrbraEGDcef1ICrlAW1E=,tag:VGo809xKoRIN0b/N3IGvxQ==,type:str]
-        delete_old_custom_formats: true
         quality_definition:
             type: movie
         quality_profiles:
@@ -283,8 +281,8 @@ radarr:
               reset_unmatched_scores: true
             - name: WEB-720p
               reset_unmatched_scores: true
-        delete_old_custom_formats: false
-        replace_existing_custom_formats: false
+        delete_old_custom_formats: true
+        replace_existing_custom_formats: true
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
@@ -561,8 +559,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-08-05T14:14:04Z"
-    mac: ENC[AES256_GCM,data:QgYXwClm8nLIfEK7rSppu6/nzPur3QwjmZ97LgiPsK1ie7hkq4ekanWyl6jCzaqF3Pmk/fU8LcmWcXOSczy1vq41H1Mjgo1vzl8Sh5hEifLV4D99pMlxp36t6fP50bwH5/qVrL9kWOec4ARzC4RXTORR+2nQ25rAJJS2rxWHokE=,iv:BrQFD3c7AF6LXA1FOLjMatUSaRpNY6GfbKoUlika1x8=,tag:FO+e6Zin0CvFVCWUEOHNXQ==,type:str]
+    lastmodified: "2023-08-05T14:18:51Z"
+    mac: ENC[AES256_GCM,data:4+l7Qxxs2nqvSq4KfC/DlZSi7+e++zmjJ8kd84tk39L7g/ixOzV4AlHaQVngoex1GrcM8mxSM8BdGWpSauH2jDfY6bFg6vefzxnEOJS/X17EOO14yj+hdNdVbPO8t2uA5gowuFGYFvXdV/V/t7zEc3/Boy6OtfjqXOlyoh/6i6o=,iv:W8baFybGlp/018FxKYz73J1dWxok20kem/CAdAjJ9wk=,tag:HWrpV/uikGVLaFO5ICUj8w==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
