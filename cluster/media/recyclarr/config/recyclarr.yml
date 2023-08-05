@@ -20,6 +20,15 @@ sonarr:
                       # Custom Format Configuration
         delete_old_custom_formats: false
         replace_existing_custom_formats: false
+        release_profiles:
+            - trash_ids:
+                - EBC725268D687D588A20CBC5F97E538B # Low Quality Groups
+                - 1B018E0C53EC825085DD911102E2CA36 # Release Sources (Streaming Service)
+                - 71899E6C303A07AF0E4746EFF9873532 # P2P Groups + Repack/Proper
+            - trash_ids: [76e060895c5b8a765c310933da0a5357] # Optionals
+                filter:
+                include:
+                    - 436f5a7d08fbf02ba25cb5e5dfe98e55 # Ignore Dolby Vision without HDR10 fallback
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
