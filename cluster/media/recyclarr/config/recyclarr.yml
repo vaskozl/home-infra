@@ -17,6 +17,9 @@ sonarr:
               reset_unmatched_scores: true
             - name: Remux-1080p - Anime
               reset_unmatched_scores: true
+                      # Custom Format Configuration
+        delete_old_custom_formats: false
+        replace_existing_custom_formats: false
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
@@ -280,6 +283,8 @@ radarr:
               reset_unmatched_scores: true
             - name: WEB-720p
               reset_unmatched_scores: true
+        delete_old_custom_formats: false
+        replace_existing_custom_formats: false
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
