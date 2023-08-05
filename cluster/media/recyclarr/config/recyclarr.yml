@@ -17,18 +17,27 @@ sonarr:
               reset_unmatched_scores: true
             - name: Remux-1080p - Anime
               reset_unmatched_scores: true
-                      # Custom Format Configuration
+              # Custom Format Configuration
         delete_old_custom_formats: false
         replace_existing_custom_formats: false
         release_profiles:
             - trash_ids:
-                - EBC725268D687D588A20CBC5F97E538B # Low Quality Groups
-                - 1B018E0C53EC825085DD911102E2CA36 # Release Sources (Streaming Service)
-                - 71899E6C303A07AF0E4746EFF9873532 # P2P Groups + Repack/Proper
-            - trash_ids: [76e060895c5b8a765c310933da0a5357] # Optionals
-                filter:
+                # Low Quality Groups
+                - EBC725268D687D588A20CBC5F97E538B
+                # Release Sources (Streaming Service)
+                - 1B018E0C53EC825085DD911102E2CA36
+                # P2P Groups + Repack/Proper
+                - 71899E6C303A07AF0E4746EFF9873532
+              strict_negative_scores: false
+            - trash_ids:
+                # Optionals
+                - 76e060895c5b8a765c310933da0a5357
+              filter:
                 include:
-                    - 436f5a7d08fbf02ba25cb5e5dfe98e55 # Ignore Dolby Vision without HDR10 fallback
+                    # Ignore Dolby Vision without HDR10 fallback
+                    - 436f5a7d08fbf02ba25cb5e5dfe98e55
+                    # Ignore The Group -SCENE
+                    - f3f0f3691c6a1988d4a02963e69d11f2
         custom_formats:
             # Audio Advanced #1
             - trash_ids:
@@ -570,8 +579,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-07-15T16:23:44Z"
-    mac: ENC[AES256_GCM,data:aHzbhGDb8wlSyRNHmjKEvF1x6Ozl54UMVWaejLL3UQn6oFEzLN7gxM3esO1e+hyPSKpVAdz/zd6Fo723fqkKse4P+yA9V9tAOlwYSvpoO0CLEhIHbaA6PvC9PwCsjxiBE9Gh/bamjvzczyN21tztuOcDHtKDVYr4JuMMeHHSK5k=,iv:9xP6L7SwTC6vBdh9ErNRXqboFMMrjuaoMgl0+Yqrbfw=,tag:TPhdwHfrAg956er/uo72yg==,type:str]
+    lastmodified: "2023-08-05T14:08:52Z"
+    mac: ENC[AES256_GCM,data:bVmKFEsh8eqlNGwC1R1DkX0pjbT25y1p1Juq1kvoeK18u+pIY1X+4PxW6aqwp3RHZzzrYM1TQfkRRf5AteAjzeoIw9a6qEbRor8zi0y69ZvBqaOcu7Er7GGk22I62R3mMjnGbUJfTm0MMJX0yIrYzErWUFfimUABZxj7T0RR9ws=,iv:JVKUwI/pDkgmiE3dvxdvFJOeqTymWJtLNJskXztH7HM=,tag:OVlf/VpTrtnghNKvow1Sow==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
