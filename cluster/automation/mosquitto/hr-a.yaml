@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: public.ecr.aws/docker/library/eclipse-mosquitto
-      tag: 2.0.15@sha256:fa3a90bbbbb7f6a0d270c146146ed250cc748ae780d177fbcdf4cb633dbc65d9
+      tag: 2.0.15@sha256:bbac73a740f479b16a5f1a311ebf0c530664ce9290f2cfacb3f4711e7a104007
     podLabels:
       sko.ai/name: mosquitto
     command: [mosquitto]
