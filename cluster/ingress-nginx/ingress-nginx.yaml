@@ -21,7 +21,7 @@ spec:
         http: 9080
         https: 9443
       service:
-        type: NodePort
+        type: LoadBalancer
         externalIPs:
         - ${EI_INGRESS_IN}
         externalTrafficPolicy: Local
