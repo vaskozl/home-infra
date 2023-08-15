@@ -15,7 +15,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - image: ghcr.io/vaskozl/qbit_manage:v4.0.2
+          - image: ghcr.io/vaskozl/qbit_manage:v4.0.3
             command: [sh, -c]
             # sed fixes https://github.com/StuffAnThings/qbit_manage/issues/333
             args:
