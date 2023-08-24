@@ -32,6 +32,8 @@ spec:
             port: 80
     ingress:
       main:
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         enabled: true
         hosts:
         - host: bk.sko.ai
