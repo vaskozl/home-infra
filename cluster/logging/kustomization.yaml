@@ -5,8 +5,7 @@ namespace: logging
 resources:
 - _namespace.yaml
 - archiver
-- fluent-bit
-- fluentd
+- vector
 - logging-pvc.yaml
 components:
 - ../common
