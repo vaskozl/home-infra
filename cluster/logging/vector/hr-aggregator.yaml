@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: vector-aggregator
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: vector
+      version: 0.24.1
+      sourceRef:
+        kind: HelmRepository
+        name: vector-charts
+        namespace: flux-system
+      interval: 1h
+  values:
+    role: Aggregator
+    customConfig:
+      data_dir: /vector-data-dir
+      sources:
+        vector:
+          address: 0.0.0.0:6000
+          type: vector
+          version: "2"
+      transforms:
+        sort:
+          type: remap
+          inputs: [vector]
+          source: |-
+            if exists(.kubernetes.pod_labels."app.kubernetes.io/instance") {
+              .filename = .kubernetes.pod_labels."app.kubernetes.io/instance"
+            } else if exists(.kubernetes.pod_labels.app) {
+              .filename = .kubernetes.pod_labels.app
+            } else if exists(.kubernetes.container_name) {
+              .filename = .kubernetes.container_name
+            } else {
+              .filename = "unlabeled"
+            }
+
+            if exists(.kubernetes.pod_namespace) {
+              .folder = .kubernetes.pod_namespace
+            } else {
+              .folder = "unlabeled"
+            }
+
+            .pod = .kubernetes.pod_name
+      sinks:
+        files:
+          type: file
+          inputs: [sort]
+          encoding:
+            codec: json
+            only_fields:
+              - timestamp
+              - message
+              - stream
+              - pod
+          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}.log
+    extraVolumes:
+      - name: logging-pvc
+        persistentVolumeClaim:
+          claimName: logging-pvc
+    extraVolumeMounts:
+      - name: logging-pvc
+        mountPath: /var/log/k8s
