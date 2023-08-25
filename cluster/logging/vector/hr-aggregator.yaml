@@ -55,7 +55,8 @@ spec:
               - message
               - stream
               - pod
-          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}.log
+          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log.gz
+          compression: gzip
     extraVolumes:
       - name: logging-pvc
         persistentVolumeClaim:
