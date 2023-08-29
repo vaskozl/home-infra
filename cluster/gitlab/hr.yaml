@@ -117,6 +117,8 @@ spec:
               helper_cpu_limit = "500m"
               helper_memory_request = "50Mi"
               helper_memory_limit = "200Mi"
+              [runners.kubernetes.node_selector]
+                "kubernetes.io/arch" = "amd64"
   postRenderers:
   - kustomize:
       patches:
