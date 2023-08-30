@@ -31,3 +31,11 @@ spec:
       requests:
         cpu: 10m
         memory: 550Mi
+    sidecars:
+      logrotate:
+        image: ghcr.io/vaskozl/logrotate:3.18.3
+        env:
+          LOGROTATE_PATTERN: '/config/logs/*/*/*.log'
+        volumeMounts:
+        - mountPath: /config
+          name: config
