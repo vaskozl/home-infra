@@ -16,16 +16,18 @@ spec:
           containers:
           - name: logrotate
             image: public.ecr.aws/docker/library/busybox:1.36.1@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
-            command:
-            - find
+            command: [sh, -c]
+            # Delete all files older than 30 days
+            # Compress all files older than 1 day
+            # Symlink latest foo-$date.log to foo.log
             args:
-            - /var/logs/k8s
-            - -type
-            - f
-            - -mtime
-            - '+30'
-            - -delete
-            - -print
+            - >
+              find /var/logs/k8s -type f -mtime '+30' -delete -print &&
+              find /var/logs/k8s -type f -mtime '+1' -name '*.log' -exec gzip {} \; &&
+              find /var/logs/k8s -type f -name "*$(date +%Y%m%d).log" | while read latest; do
+                target="${latest%-*}.log";
+                echo ln -s -f $(basename "$latest") "$target";
+              done
             resources:
               requests:
                 cpu: 10m
