@@ -48,7 +48,6 @@ spec:
         files:
           type: file
           inputs: [sort]
-          compression: zstd
           encoding:
             codec: json
             only_fields:
@@ -56,7 +55,7 @@ spec:
               - message
               - stream
               - pod
-          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.zst
+          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}.log
     extraVolumes:
       - name: logging-pvc
         persistentVolumeClaim:
