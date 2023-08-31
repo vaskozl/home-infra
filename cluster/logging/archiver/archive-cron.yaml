@@ -8,7 +8,8 @@ spec:
   suspend: false
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 1
-  schedule: '@midnight'
+  # 5 minutes after midnight
+  schedule: '5 0 * * *'
   jobTemplate:
     spec:
       template:
@@ -25,8 +26,8 @@ spec:
               find /var/logs/k8s -type f -mtime '+30' -delete -print &&
               find /var/logs/k8s -type f -mtime '+1' -name '*.log' -exec gzip {} \; &&
               find /var/logs/k8s -type f -name "*$(date +%Y%m%d).log" | while read latest; do
-                target="${latest%-*}.log";
-                echo ln -s -f $(basename "$latest") "$target";
+                target="\${latest%-*}.log";
+                ln -s -f $(basename "$latest") "$target";
               done
             resources:
               requests:
