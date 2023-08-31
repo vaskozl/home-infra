@@ -12,6 +12,7 @@ spec:
   failedJobsHistoryLimit: 1
   # 5 minutes after midnight
   schedule: '5 0 * * *'
+  timeZone: "Etc/UTC"
   jobTemplate:
     spec:
       template:
