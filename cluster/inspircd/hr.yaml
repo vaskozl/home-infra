@@ -9,7 +9,7 @@ spec:
     nodeSelector:
       kubernetes.io/arch: amd64
     image:
-      repository: docker.io/inspircd/inspircd-docker
+      repository: ghcr.io/vaskozl/inspircd
       tag: 3.16.1
     persistence:
       config:
