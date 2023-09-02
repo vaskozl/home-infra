@@ -18,6 +18,7 @@ secretGenerator:
   - config/postfix-accounts.cf	
   - config/postfix-aliases.cf	
   - config/postfix-virtual.cf
+  - config/user-patches.sh
 - name: mailserver.dkim
   files:
   - config/opendkim/KeyTable
