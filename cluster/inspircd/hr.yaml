@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: inspircd
+  labels:
+    patch: app-template
+spec:
+  values:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    image:
+      repository: docker.io/inspircd/inspircd-docker
+      tag: 3.16.1
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: inspircd
+        mountPath: /inspircd/conf
+      tls:
+        enabled: true
+        type: secret
+        name: irk-sko-ai-tls
+        mountPath: /inspircd/ssl
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+          - ${EI_INSPIRCD}
+        ports:
+          http:
+            enabled: false
+          server:
+            enabled: true
+            port: 7001
+            protocol: TCP
+          client:
+            enabled: true
+            port: 6697
+            protocol: TCP
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+      limits:
+        cpu: 1
+        memory: 200Mi
