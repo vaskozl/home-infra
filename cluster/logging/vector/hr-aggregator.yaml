@@ -44,6 +44,7 @@ spec:
             }
 
             .pod = .kubernetes.pod_name
+            .container = .kubernetes.container_name
       sinks:
         files:
           type: file
@@ -55,6 +56,7 @@ spec:
               - message
               - stream
               - pod
+              - container
           path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
     extraVolumes:
       - name: logging-pvc
