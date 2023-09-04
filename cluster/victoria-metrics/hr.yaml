@@ -77,10 +77,9 @@ spec:
               storage: 22Gi
         resources:
           limits:
-            cpu: 1500m
             memory: 2Gi
           requests:
-            cpu: 480m
+            cpu: 1
             memory: 960Mi
       ingress:
         enabled: true
@@ -94,6 +93,12 @@ spec:
     vmagent:
       spec:
         scrapeInterval: 60s
+        resources:
+          limits:
+            memory: 500Mi
+          requests:
+            cpu: 500m
+            memory: 100Mi
       ingress:
         enabled: true
         hosts:
