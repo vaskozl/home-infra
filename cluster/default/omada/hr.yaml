@@ -33,8 +33,9 @@ spec:
           - path: /
     resources:
       limits:
+        cpu: 500m
         memory: 1Gi
       requests:
-        cpu: 100m
+        cpu: 200m
         memory: 400Mi
     hostNetwork: true
