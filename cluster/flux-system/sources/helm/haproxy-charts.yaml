@@ -1,6 +1,6 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: ingress-nginx-charts
+  name: haproxy-ingress-charts
 spec:
-  url: https://kubernetes.github.io/ingress-nginx
+  url: https://haproxy-ingress.github.io/charts

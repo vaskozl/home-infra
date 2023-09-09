@@ -1,11 +1,6 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  annotations:
   name: vm-charts
-  namespace: flux-system
 spec:
-  interval: 1h0m0s
-  timeout: 3m0s
   url: https://victoriametrics.github.io/helm-charts/
