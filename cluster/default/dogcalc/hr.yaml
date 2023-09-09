@@ -13,7 +13,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: registry.sko.ai/doudous/dogcalc
-      tag: head@sha256:e33e10828509dec433be218b7fd2b189b02b3fa2f6d914345bcf44230777a329
+      tag: head@sha256:a8f4ccd2ade44c11225a3bf86c6e4e550a5160be3bedf3eef5d07554bbee7f51
     imagePullSecrets:
     - name: regcred
     service:
