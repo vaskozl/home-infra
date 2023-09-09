@@ -4,8 +4,16 @@ kind: Kustomization
 namespace: ingress-nginx
 resources:
 - _namespace.yaml
-- ingress-nginx-external.yaml
-- ingress-nginx.yaml
+- internal.yaml
+- external.yaml
 - monitoring
-generatorOptions:
-  disableNameSuffixHash: true
+
+components:
+- ../common
+
+configMapGenerator:
+- name: common-values
+  files:
+  - values.yaml=common-values.yaml
+configurations:
+  - kustomizeconfig.yaml

@@ -1,0 +1,48 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+spec:
+  chart:
+    spec:
+      chart: ingress-nginx
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx-charts
+        namespace: flux-system
+      version: 4.7.1
+  interval: 1h
+  valuesFrom:
+  - kind: ConfigMap
+    name: common-values
+  values:
+    controller:
+      service:
+        externalIPs:
+        - ${EI_INGRESS_IN}
+      ingressClass: internal
+      ingressClassResource:
+        name: internal
+        enabled: true
+        default: true
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - ingress-nginx
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                  - controller
+              topologyKey: kubernetes.io/hostname
+    defaultBackend:
+      enabled: false
+    tcp:
+      '22': 'gitlab/gitlab-gitlab-shell:22'
