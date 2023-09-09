@@ -3,8 +3,8 @@ kind: HelmRelease
 metadata:
   name: hass
   namespace: default
-  labels:
-    patch: app-template
+  annotations:
+    patch.sko.ai/app-template: enabled
 spec:
   values:
     image:

@@ -4,7 +4,8 @@ kind: Kustomization
 resources:
 - _namespace.yaml
 - ingress.yaml
-- policies
 - proflies/b2-secret.enc.yaml
 - proflies/backblaze-b2.yaml
 - release.yaml
+# Creates lots of migration tokens
+#- policies
