@@ -33,7 +33,7 @@ spec:
           - path: /
     resources:
       limits:
-        cpu: 500m
+        cpu: 1
         memory: 1Gi
       requests:
         cpu: 200m
@@ -42,5 +42,5 @@ spec:
     probes:
       liveness:
         spec:
-          initialDelaySeconds: 60
-          failureThreshold: 60
+          initialDelaySeconds: 300
+          failureThreshold: 90
