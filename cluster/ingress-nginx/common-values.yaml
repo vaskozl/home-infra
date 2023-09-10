@@ -16,6 +16,7 @@ controller:
     force-ssl-redirect: true
     global-auth-url: https://gate.sko.ai/api/verify
     global-auth-signin: https://gate.sko.ai
+    global-auth-cache-key: $http_cookie
     hsts: false
     location-snippet: |
       add_header X-Frame-Options SAMEORIGIN always;
