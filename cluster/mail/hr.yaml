@@ -42,8 +42,6 @@ spec:
         externalTrafficPolicy: Local
         externalIPs:
         - ${EI_MAILSERVER}
-    env:
-      NUM_REPLICAS: *count
     envFrom:
     - secretRef:
         name: mailserver.env
