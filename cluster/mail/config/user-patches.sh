@@ -21,16 +21,8 @@ cat <<EOF > /etc/dovecot/conf.d/10-replication.conf
 service doveadm {
    inet_listener {
    	port = 4177
-   	ssl = yes
    }
 }
-ssl = required
-ssl_verify_client_cert = no
-auth_ssl_require_client_cert = no
-ssl_cert = <${SSL_CERT_PATH}
-ssl_key = <${SSL_KEY_PATH}
-ssl_client_ca_file = ${DOVECOT_TLS_CACERT_FILE}
-ssl_client_ca_dir = /etc/ssl/certs/
 doveadm_port = 4177
 doveadm_password = ${DOVECOT_ADM_PASS}
 service replicator {
@@ -62,7 +54,7 @@ if [ -n "${DOVECOT_REPLICA_SERVER}" ]; then
    # Remove a possible old value of mail_replica
    sed -i '/^mail_replica/d' /etc/dovecot/conf.d/90-plugin.conf
    # Insert the config and close it back
-   printf '\nmail_replica = tcps:%s\n}\n' "${DOVECOT_REPLICA_SERVER}" >> /etc/dovecot/conf.d/90-plugin.conf
+   printf '\nmail_replica = tcp:%s\n}\n' "${DOVECOT_REPLICA_SERVER}" >> /etc/dovecot/conf.d/90-plugin.conf
 fi
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>Finished applying patches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
