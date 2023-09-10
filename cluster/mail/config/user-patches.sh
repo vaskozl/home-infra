@@ -17,50 +17,45 @@ echo 'Enabling replication'
 # Add notify and replication to the mail plugins
 sed -i '/^mail_plugins =/ s/$/ notify replication/' /etc/dovecot/conf.d/10-mail.conf
 
-cat <<EOF > /etc/dovecot/conf.d/10-replication.conf
+if [ "$(hostname -s)" == 'mx-0' ];then
+  replica='mx-1.mx'
+else
+  replica='mx-0.mx'
+fi
+
+echo "Repliacating to $replica"
+
+cat <<EOF > /etc/dovecot/conf.d/30-dsync.conf
 service doveadm {
-   inet_listener {
-   	port = 4177
-   }
+  inet_listener {
+    port = 4177
+  }
 }
 doveadm_port = 4177
 doveadm_password = ${DOVECOT_ADM_PASS}
 service replicator {
-   process_min_avail = 1
-   unix_listener replicator-doveadm {
-   	user = dovecot
-       group = dovecot
-   	mode = 0666
-   }
+  process_min_avail = 1
+  unix_listener replicator-doveadm {
+    user = dovecot
+    group = dovecot
+    mode = 0666
+  }
 }
 service aggregator {
-   fifo_listener replication-notify-fifo {
-   	user = dovecot
-       group = dovecot
-       mode = 0666
-   }
-   unix_listener replication-notify {
-   	user = dovecot
-       group = dovecot
-       mode = 0666
-   }
+  fifo_listener replication-notify-fifo {
+    user = dovecot
+    group = dovecot
+    mode = 0666
+  }
+  unix_listener replication-notify {
+    user = dovecot
+    group = dovecot
+    mode = 0666
+  }
+}
+plugin {
+  mail_replica = tcp:${replica}
 }
 EOF
-
-# Check if configured
-if [ -n "${NUM_REPLICAS}" ]; then
-   # Open the config
-   sed -i '/^}/d' /etc/dovecot/conf.d/90-plugin.conf
-   # Remove a possible old value of mail_replica
-   sed -i '/^mail_replica/d' /etc/dovecot/conf.d/90-plugin.conf
-   for ((i = 0; i < NUM_REPLICAS; i++)); do
-      replica="mx-$i"
-      if [ "$(hostname -s)" != "$replica" ]; then
-         echo "Replicating to ${replica}"
-         printf '\nmail_replica = tcp:%s\n' "${replica}.mx" >> /etc/dovecot/conf.d/90-plugin.conf
-      fi
-   done
-   echo '}' >> /etc/dovecot/conf.d/90-plugin.conf
-fi
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>Finished applying patches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
