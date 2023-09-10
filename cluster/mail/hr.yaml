@@ -38,6 +38,8 @@ spec:
           doveadm:
             enabled: true
             port: 4177
+        type: LoadBalancer
+        externalIPs: [ ${EI_MAILSERVER} ]
     env:
       NUM_REPLICAS: *count
     envFrom:

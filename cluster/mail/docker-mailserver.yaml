@@ -30,8 +30,6 @@ spec:
     targetPort: sieve
   type: LoadBalancer
   externalTrafficPolicy: Local
-  externalIPs:
-  - ${EI_MAILSERVER}
 ---
 apiVersion: apps/v1
 kind: Deployment
