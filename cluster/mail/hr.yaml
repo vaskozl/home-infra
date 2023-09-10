@@ -38,24 +38,34 @@ spec:
     - secretRef:
         name: mailserver.env
     persistence:
-      files:
-        enabled: true
-        type: secret
-        name: mailserver.files
-        mountPath: /tmp/docker-mailserver
-        readOnly: true
+      accounts:
+        <<: &files
+          enabled: true
+          type: secret
+          name: mailserver.files
+        mountPath: /tmp/docker-mailserver/postfix-accounts.cf
+      aliases:
+        <<: *files
+        mountPath: /tmp/docker-mailserver/postfix-aliases.cf
+        subPath: postfix-aliases.cf
+      virtual:
+        <<: *files
+        mountPath: /tmp/docker-mailserver/postfix-virtual.cf
+        subPath: postfix-virtual.cf
+      patches:
+        <<: *files
+        mountPath: /tmp/docker-mailserver/user-patches.sh
+        subPath: user-patches.sh
       dkim:
         enabled: true
         type: secret
         name: mailserver.dkim
         mountPath: /tmp/docker-mailserver/opendkim
-        readOnly: true
       dkim-keys:
         enabled: true
         type: secret
         name: mailserver.opendkim.keys
         mountPath: /tmp/docker-mailserver/opendkim/keys
-        readOnly: true
     volumeClaimTemplates:
       - name: data
         mountPath: /var/mail
