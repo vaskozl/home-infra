@@ -39,6 +39,7 @@ spec:
             enabled: true
             port: 4177
         type: LoadBalancer
+        externalTrafficPolicy: Local
         externalIPs:
         - ${EI_MAILSERVER}
     env:
