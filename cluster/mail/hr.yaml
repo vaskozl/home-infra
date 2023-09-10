@@ -39,7 +39,8 @@ spec:
             enabled: true
             port: 4177
         type: LoadBalancer
-        externalIPs: [ ${EI_MAILSERVER} ]
+        externalIPs:
+        - ${EI_MAILSERVER}
     env:
       NUM_REPLICAS: *count
     envFrom:
@@ -81,11 +82,11 @@ spec:
         name: mail-cert
         mountPath: /etc/ssl/mailserver
     volumeClaimTemplates:
-      - name: data
-        mountPath: /var/mail
-        size: 10Gi
-        accessMode: ReadWriteOnce
-        storageClass: ssd-raid5-v2
+    - name: data
+      mountPath: /var/mail
+      size: 10Gi
+      accessMode: ReadWriteOnce
+      storageClass: ssd-raid5-v2
     resources:
       limits:
         memory: 2Gi
