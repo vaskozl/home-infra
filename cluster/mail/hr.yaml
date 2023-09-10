@@ -44,6 +44,7 @@ spec:
           type: secret
           name: mailserver.files
         mountPath: /tmp/docker-mailserver/postfix-accounts.cf
+        subPath: postfix-accounts.cf
       aliases:
         <<: *files
         mountPath: /tmp/docker-mailserver/postfix-aliases.cf
