@@ -39,12 +39,7 @@ spec:
             enabled: true
             port: 4177
     env:
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    - name: NUM_REPLICAS
-      value: *count
+      NUM_REPLICAS: *count
     envFrom:
     - secretRef:
         name: mailserver.env

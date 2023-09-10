@@ -55,7 +55,7 @@ if [ -n "${NUM_REPLICAS}" ]; then
    sed -i '/^mail_replica/d' /etc/dovecot/conf.d/90-plugin.conf
    for ((i = 0; i < NUM_REPLICAS; i++)); do
       replica="mx-$i"
-      if [ "$POD_NAME" != "$replica" ]; then
+      if [ "$(hostname -s)" != "$replica" ]; then
          echo "Replicating to ${replica}"
          printf '\nmail_replica = tcp:%s\n' "${replica}.mx" >> /etc/dovecot/conf.d/90-plugin.conf
       fi
