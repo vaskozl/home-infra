@@ -17,6 +17,13 @@ controller:
     global-auth-url: https://gate.sko.ai/api/verify
     global-auth-signin: https://gate.sko.ai
     global-auth-cache-key: $cookie_authelia_session
+    global-auth-snippet: |
+      if ($cookie_authelia_session !~ "^.{32}$") {
+        return 401;
+      }
+      # Drop Set-Cookie. It is not propagated anyway but stops the cache from working.
+      proxy_ignore_headers Set-Cookie;
+      proxy_hide_header Set-Cookie;
     hsts: false
     location-snippet: |
       add_header X-Frame-Options SAMEORIGIN always;
