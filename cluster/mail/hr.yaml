@@ -1,0 +1,105 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mx
+  annotations:
+    patch.sko.ai/app-template: enabled
+spec:
+  values:
+    controller:
+      type: statefulset
+    image:
+      repository: ghcr.io/docker-mailserver/docker-mailserver
+      tag: 12.1.0@sha256:53c3b3da9fb47f6062210febb112469344e5a9cb319b78238442706fb72a0aca
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+          smtp:
+            enabled: true
+            port: 25
+          smtp-secure:
+            enabled: true
+            port: 465
+          smtp-auth:
+            enabled: true
+            port: 587
+          imap:
+            enabled: true
+            port: 143
+          imap-secure:
+            enabled: true
+            port: 993
+          sieve:
+            enabled: true
+            port: 4190
+    envFrom:
+    - secretRef:
+        name: mailserver.env
+    persistence:
+      files:
+        enabled: true
+        type: secret
+        name: mailserver.files
+        mountPath: /tmp/docker-mailserver
+        readOnly: true
+      dkim:
+        enabled: true
+        type: secret
+        name: mailserver.dkim
+        mountPath: /tmp/docker-mailserver/opendkim
+        readOnly: true
+      dkim-keys:
+        enabled: true
+        type: secret
+        name: mailserver.opendkim.keys
+        mountPath: /tmp/docker-mailserver/opendkim/keys
+        readOnly: true
+    volumeClaimTemplates:
+      - name: data
+        mountPath: /var/mail
+        size: 10Gi
+        accessMode: ReadWriteOnce
+        storageClass: ssd-raid5-v2
+    resources:
+      limits:
+        memory: 2Gi
+        cpu: 1500m
+      requests:
+        memory: 250Mi
+        cpu: 150m
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      privileged: false
+      capabilities:
+        add:
+        - CHOWN
+        - FOWNER
+        - MKNOD
+        - SETGID
+        - SETUID
+        - DAC_OVERRIDE
+        - NET_ADMIN # needed for F2B
+        - NET_RAW # needed for F2B
+        - NET_BIND_SERVICE
+        - SYS_CHROOT
+        - SYS_PTRACE
+        - KILL
+        drop: [ALL]
+      seccompProfile:
+        type: RuntimeDefault
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          tcpSocket:
+            port: 25
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      readiness: *probes

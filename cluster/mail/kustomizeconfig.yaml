@@ -1,0 +1,12 @@
+nameReference:
+- kind: Secret
+  version: v1
+  fieldSpecs:
+  - path: spec/values/envFrom/secretRef/name
+    kind: HelmRelease
+  - path: spec/values/persistence/files/name
+    kind: HelmRelease
+  - path: spec/values/persistence/dkim/name
+    kind: HelmRelease
+  - path: spec/values/persistence/dkim-keys/name
+    kind: HelmRelease

@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: mailserver
 resources:
 - _namespace.yaml
+- hr.yaml
 - dkim-key.enc.yaml
 - docker-mailserver.yaml
 - ingress.yaml
@@ -27,3 +28,5 @@ secretGenerator:
 - name: mailserver.env
   envs:
   - mailserver.env
+configurations:
+  - kustomizeconfig.yaml
