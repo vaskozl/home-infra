@@ -21,9 +21,9 @@ controller:
       if ($cookie_authelia_session !~ "^.{32}$") {
         return 401;
       }
-      # Drop Set-Cookie. It is not propagated anyway but stops the cache from working.
-      proxy_ignore_headers Set-Cookie;
-      proxy_hide_header Set-Cookie;
+      # These headers stop the cache from working.
+      proxy_ignore_headers Set-Cookie Expires Cache-Control;
+      proxy_hide_header Set-Cookie Expires Cache-Control;
     hsts: false
     location-snippet: |
       add_header X-Frame-Options SAMEORIGIN always;
