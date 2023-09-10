@@ -34,6 +34,9 @@ spec:
           sieve:
             enabled: true
             port: 4190
+          doveadm:
+            enabled: true
+            port: 4177
     envFrom:
     - secretRef:
         name: mailserver.env
