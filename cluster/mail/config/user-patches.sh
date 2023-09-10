@@ -53,7 +53,8 @@ if [ -n "${NUM_REPLICAS}" ]; then
    sed -i '/^}/d' /etc/dovecot/conf.d/90-plugin.conf
    # Remove a possible old value of mail_replica
    sed -i '/^mail_replica/d' /etc/dovecot/conf.d/90-plugin.conf
-   for replica in mx-{0..$((NUM_REPLICAS))}; do
+   for ((i = 0; i < NUM_REPLICAS; i++)); do
+      replica="mx-$i"
       if [ "$HOSTNAME" == "$replica" ]; then
          continue
       fi
