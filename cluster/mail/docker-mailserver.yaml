@@ -137,9 +137,6 @@ spec:
         - name: sieve
           containerPort: 4190
           protocol: TCP
-        env:
-        - name: DOVECOT_REPLICA_SERVER
-          value: mx-0.mx
         envFrom:
         - secretRef:
             name: mailserver.env

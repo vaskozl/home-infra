@@ -48,13 +48,18 @@ service aggregator {
 EOF
 
 # Check if configured
-if [ -n "${DOVECOT_REPLICA_SERVER}" ]; then
+if [ -n "${NUM_REPLICAS}" ]; then
    # Open the config
    sed -i '/^}/d' /etc/dovecot/conf.d/90-plugin.conf
    # Remove a possible old value of mail_replica
    sed -i '/^mail_replica/d' /etc/dovecot/conf.d/90-plugin.conf
-   # Insert the config and close it back
-   printf '\nmail_replica = tcp:%s\n}\n' "${DOVECOT_REPLICA_SERVER}" >> /etc/dovecot/conf.d/90-plugin.conf
+   for replica in mx-{0..$((NUM_REPLICAS))}; do
+      if [ "$HOSTNAME" == "$replica" ]; then
+         continue
+      fi
+      echo "Replicating to ${replica}"
+      printf '\nmail_replica = tcp:%s\n}\n' "${replica}.mx" >> /etc/dovecot/conf.d/90-plugin.conf
+   done
 fi
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>Finished applying patches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"

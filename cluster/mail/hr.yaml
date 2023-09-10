@@ -7,6 +7,7 @@ metadata:
 spec:
   values:
     controller:
+      replicas: &count 2
       type: statefulset
     image:
       repository: ghcr.io/docker-mailserver/docker-mailserver
@@ -37,6 +38,8 @@ spec:
           doveadm:
             enabled: true
             port: 4177
+    env:
+      NUM_REPLICAS: *count
     envFrom:
     - secretRef:
         name: mailserver.env
