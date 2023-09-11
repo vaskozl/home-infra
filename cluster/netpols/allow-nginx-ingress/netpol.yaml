@@ -1,16 +1,13 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-ingress-from-ingresscontroller
+  name: allow-nginx-ingress
 spec:
   podSelector: {}
-  policyTypes:
-  - Ingress
   ingress:
+  # Allow traffic from ingress-nginx
   - from:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: "ingress-nginx"
-    - podSelector:
-        matchLabels:
-          app.kubernetes.io/name: "ingress-nginx"
