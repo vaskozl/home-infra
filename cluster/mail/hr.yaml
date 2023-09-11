@@ -78,7 +78,7 @@ spec:
       tls:
         enabled: true
         type: secret
-        name: mail-cert
+        name: mail-sko-ai-tls
         mountPath: /etc/ssl/mailserver
     volumeClaimTemplates:
     - name: data
