@@ -26,12 +26,15 @@ spec:
             # Symlink latest foo-$date.log to foo.log
             args:
             - >
-              find /var/logs/k8s -type f -mtime '+30' -delete -print &&
-              find /var/logs/k8s -type f -mtime '+0' -name '*.log' -exec gzip {} \; &&
-              find /var/logs/k8s -type f -name "*$(date +%Y%m%d).log" | while read latest; do
+              find /var/logs/k8s -type f -mtime '+30' -delete -print && find /var/logs/k8s
+              -type f -mtime '+0' -name '*.log' -exec gzip {} \; && find /var/logs/k8s
+              -type f -name "*$(date +%Y%m%d).log" | while read latest; do
+
+
                 target="${latest%-*}.log";
                 ln -s -f $(basename "$latest") "$target";
               done
+
             resources:
               requests:
                 cpu: 10m

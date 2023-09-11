@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -52,16 +53,17 @@ spec:
           encoding:
             codec: json
             only_fields:
-              - timestamp
-              - message
-              - stream
-              - pod
-              - container
-          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
+            - timestamp
+            - message
+            - stream
+            - pod
+            - container
+          path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{
+            "}}" }}-%Y%m%d.log
     extraVolumes:
-      - name: logging-pvc
-        persistentVolumeClaim:
-          claimName: logging-pvc
+    - name: logging-pvc
+      persistentVolumeClaim:
+        claimName: logging-pvc
     extraVolumeMounts:
-      - name: logging-pvc
-        mountPath: /var/log/k8s
+    - name: logging-pvc
+      mountPath: /var/log/k8s

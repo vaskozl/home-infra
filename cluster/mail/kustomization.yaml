@@ -9,14 +9,14 @@ resources:
 - pvc.yaml
 - cert.yaml
 - roundcube
+- ../netpols/allow-all-ingress
 components:
 - ../common
-
 secretGenerator:
 - name: mailserver.files
   files:
-  - config/postfix-accounts.cf	
-  - config/postfix-aliases.cf	
+  - config/postfix-accounts.cf
+  - config/postfix-aliases.cf
   - config/postfix-virtual.cf
   - config/user-patches.sh
 - name: mailserver.dkim
@@ -28,4 +28,4 @@ secretGenerator:
   envs:
   - mailserver.env
 configurations:
-  - kustomizeconfig.yaml
+- kustomizeconfig.yaml

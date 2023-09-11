@@ -1,3 +1,4 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -47,22 +48,22 @@ spec:
         name: mailserver.env
     persistence:
       accounts:
-        <<: &files
+        !!merge <<: &files
           enabled: true
           type: secret
           name: mailserver.files
         mountPath: /tmp/docker-mailserver/postfix-accounts.cf
         subPath: postfix-accounts.cf
       aliases:
-        <<: *files
+        !!merge <<: *files
         mountPath: /tmp/docker-mailserver/postfix-aliases.cf
         subPath: postfix-aliases.cf
       virtual:
-        <<: *files
+        !!merge <<: *files
         mountPath: /tmp/docker-mailserver/postfix-virtual.cf
         subPath: postfix-virtual.cf
       patches:
-        <<: *files
+        !!merge <<: *files
         mountPath: /tmp/docker-mailserver/user-patches.sh
         subPath: user-patches.sh
       dkim:
