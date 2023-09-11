@@ -126,8 +126,11 @@ spec:
         enabled: true
         custom: true
         spec:
-          tcpSocket:
-            port: 25
+          exec:
+            command:
+            - sh
+            - -c
+            - 'postfix status && doveadm service status health-check'
           initialDelaySeconds: 15
           periodSeconds: 20
       readiness: *probes
