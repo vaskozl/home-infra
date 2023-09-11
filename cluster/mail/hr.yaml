@@ -86,6 +86,10 @@ spec:
       size: 10Gi
       accessMode: ReadWriteOnce
       storageClass: ssd-raid5-v2
+    - name: mail-state
+      mountPath: /var/mail-state
+      size: 1Gi
+      accessMode: ReadWriteOnce
     resources:
       limits:
         memory: 2Gi
