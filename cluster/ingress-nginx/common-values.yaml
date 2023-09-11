@@ -17,6 +17,7 @@ controller:
     global-auth-url: https://gate.sko.ai/api/verify
     global-auth-signin: https://gate.sko.ai
     global-auth-cache-key: $cookie_authelia_session
+    global-auth-cache-duration: '200 202 10m, 401 1m'
     global-auth-snippet: |
       if ($cookie_authelia_session !~ "^.{32}$") {
         return 401;
@@ -25,9 +26,9 @@ controller:
       proxy_ignore_headers Set-Cookie Expires Cache-Control;
     hsts: false
     location-snippet: |
-      add_header X-Frame-Options SAMEORIGIN always;
-      add_header X-Content-Type-Options nosniff always;
-      add_header X-XSS-Protection "1; mode=block" always;
+      more_set_headers 'X-Frame-Options: SAMEORIGIN always';
+      more_set_headers 'X-Content-Type-Options: nosniff always';
+      more_set_headers 'X-XSS-Protection: "1; mode=block" always';
   extraArgs:
     http-port: 9080
     https-port: 9443
