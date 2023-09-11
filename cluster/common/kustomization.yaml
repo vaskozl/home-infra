@@ -9,11 +9,3 @@ patches:
   target:
     kind: HelmRelease
     annotationSelector: patch.sko.ai/app-template=enabled
-- path: hr-app-template-authelia.yaml
-  target:
-    kind: HelmRelease
-    annotationSelector: patch.sko.ai/auth=enabled
-- path: ingress-authelia.yaml
-  target:
-    kind: Ingress
-    annotationSelector: patch.sko.ai/auth=enabled

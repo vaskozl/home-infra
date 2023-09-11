@@ -1,9 +1,0 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    haproxy-ingress.github.io/auth-headers-succeed: Remote-User,Remote-Groups,Remote-Name,Remote-Email
-    haproxy-ingress.github.io/auth-signin: https://gate.sko.ai
-    haproxy-ingress.github.io/auth-url: https://gate.sko.ai/api/verify
-    haproxy-ingress.github.io/ssl-redirect: "false"
-  name: any
