@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mosquitto-allow-all-ingress
+spec:
+  podSelector:
+    matchLabels:
+      sko.ai/name: mosquitto
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
