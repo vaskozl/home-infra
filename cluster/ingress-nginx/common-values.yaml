@@ -18,7 +18,10 @@ controller:
     global-auth-signin: https://gate.sko.ai
     global-auth-cache-key: $cookie_authelia_session
     global-auth-cache-duration: '200 202 10m, 401 1m'
+    global-auth-method: GET
+    global-auth-response-headers: Remote-User,Remote-Name,Remote-Groups,Remote-Email
     global-auth-snippet: |
+      proxy_set_header X-Forwarded-Method $request_method;
       if ($cookie_authelia_session !~ "^.{32}$") {
         return 401;
       }
