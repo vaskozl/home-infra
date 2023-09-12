@@ -5,8 +5,9 @@ metadata:
   name: k10
   namespace: kasten-io
   annotations:
-    kubernetes.io/ingress.class: internal
+    nginx.ingress.kubernetes.io/app-root: /k10/
 spec:
+  ingressClassName: internal
   rules:
   - host: k10.sko.ai
     http:

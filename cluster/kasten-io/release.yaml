@@ -45,12 +45,6 @@ spec:
       serviceAccounts:
         server:
           create: false
-          #ingress:
-          #  create: true
-          #  host: "k10.sko.ai"
-          #  urlPath: k10
-          #  hosts:
-          #  - "k10.sko.ai"
   postRenderers:
   # Instruct helm-controller to use built-in "kustomize" post renderer.
   - kustomize:
