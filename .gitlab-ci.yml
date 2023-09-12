@@ -5,7 +5,7 @@ include:
 
 run:val:
   stage: test
-  image: ${CI_REGISTRY_IMAGE}/val:rolling
+  image: ${CI_REGISTRY_IMAGE}/val
   script:
     - validate
 
@@ -20,4 +20,4 @@ build:val:
     CONTEXT: validate
     CI_IMAGE_SUFFIX: /val
     PLATFORM: linux/amd64
-    TAG: rolling
+    TAG: latest
