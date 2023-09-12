@@ -1,0 +1,18 @@
+include:
+ - project: doudous/ci-templates
+   ref: main
+   file: build.yaml
+
+build_kubeval:
+  needs: []
+  extends: .build_container
+  stage: build
+  rules:
+    - changes:
+      - ${CONTEXT}/*
+      - .gitlab-ci.yaml
+  variables:
+    CONTEXT: validate
+    CI_IMAGE_SUFFIX: /val
+    PLATFORM: linux/amd64
+    TAG: rolling
