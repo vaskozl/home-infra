@@ -36,3 +36,16 @@ spec:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
+    probes:
+      # Use liveness until autobrr supports automatically pruning old release
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          http:
+            command:
+            - sh
+            - -c
+            - 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168"'
+          initialDelaySeconds: 15
+          periodSeconds: 60
