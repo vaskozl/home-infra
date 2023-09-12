@@ -5,6 +5,6 @@ RUN --mount=type=cache,target=/var/cache/pacman/\
         kubectl \
         kubeconform \
         kustomize \
-        yq
+        go-yq
 
 COPY validate /usr/local/bin/

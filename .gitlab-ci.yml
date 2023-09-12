@@ -3,10 +3,15 @@ include:
    ref: main
    file: build.yaml
 
-build_kubeval:
-  needs: []
-  extends: .build_container
+run:val:
+  stage: test
+  image: ${CI_REGISTRY_IMAGE}/val:rolling
+  script:
+    - validate
+
+build:val:
   stage: build
+  extends: .build_container
   rules:
     - changes:
       - ${CONTEXT}/*
