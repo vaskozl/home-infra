@@ -40,7 +40,9 @@ find . -type f -name '*.yaml' -print0 | while IFS= read -r -d $'\0' file;
     yq e 'true' "$file" > /dev/null
 done
 
-kubeconform_config=("-strict" "-ignore-missing-schemas" "-schema-location" "default" "-schema-location" "/tmp/flux-crd-schemas" "-verbose")
+CRD_CATALOG='https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
+
+kubeconform_config=("-strict" "-ignore-missing-schemas" "-schema-location" "default" "-schema-location" "$CRD_CATALOG" "-verbose")
 
 echo "INFO - Validating cluster"
 # mirror kustomize-controller build options
