@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: blocky
+  annotations:
+    patch.sko.ai/app-template: enabled
+spec:
+  values:
+    controller:
+      replicas: 3
+    image:
+      repository: ghcr.io/0xerr0r/blocky
+      tag: v0.22
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: config
+        mountPath: /app/config.yml
+        subPath: config.yml
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            enabled: true
+            port: 4000
+          dns-tcp:
+            enabled: true
+            port: 53
+            protocol: TCP
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: UDP
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+      limits:
+        cpu: 1
+        memory: 200Mi
