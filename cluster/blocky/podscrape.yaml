@@ -1,0 +1,17 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: blocky
+spec:
+  namespaceSelector:
+    matchNames:
+    - blocky
+  selector:
+    matchExpressions:
+    - key: app.kubernetes.io/name
+      operator: In
+      values:
+      - blocky
+  podMetricsEndpoints:
+  - port: http
