@@ -10,9 +10,8 @@ spec:
   suspend: false
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 1
-  # 5 minutes after midnight
-  schedule: '5 0 * * *'
-  timeZone: "Etc/UTC"
+  # Every 5 past
+  schedule: '5 * * * *'
   jobTemplate:
     spec:
       template:
