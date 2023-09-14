@@ -57,6 +57,9 @@ configMapGenerator:
 - name: dashboards-mixin-workload-total
   files:
   - kubernetes-mixin/workload-total.json
+- name: dashboards-misc-pvc
+  files:
+  - misc/k8s-pvc.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
