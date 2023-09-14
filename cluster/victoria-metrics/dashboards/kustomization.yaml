@@ -60,6 +60,9 @@ configMapGenerator:
 - name: dashboards-misc-pvc
   files:
   - misc/k8s-pvc.json
+- name: dashboards-misc-blocky
+  files:
+  - misc/blocky-grafana.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
