@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: recyclarr-sonarr
-            image: ghcr.io/recyclarr/recyclarr:5.4.1@sha256:d91e16a6eb6d1ba3f7a064a086be73626d1ff745e95edb543fc10a69b5c2f8b4
+            image: ghcr.io/recyclarr/recyclarr:5.4.2@sha256:a8348500d3e113eac448e42874b482eff46891b69e613e2d06fdb8fa922a4c1f
             imagePullPolicy: IfNotPresent
             command:
             - /app/recyclarr/recyclarr
@@ -31,7 +31,7 @@ spec:
               subPath: recyclarr.yml
               readOnly: true
           - name: recyclarr-radarr
-            image: ghcr.io/recyclarr/recyclarr:5.4.1@sha256:d91e16a6eb6d1ba3f7a064a086be73626d1ff745e95edb543fc10a69b5c2f8b4
+            image: ghcr.io/recyclarr/recyclarr:5.4.2@sha256:a8348500d3e113eac448e42874b482eff46891b69e613e2d06fdb8fa922a4c1f
             imagePullPolicy: IfNotPresent
             command:
             - /app/recyclarr/recyclarr
