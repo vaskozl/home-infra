@@ -12,7 +12,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: readarr-config
+        existingClaim: readarr-config-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2
