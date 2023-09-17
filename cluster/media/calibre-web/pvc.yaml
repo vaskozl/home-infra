@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: calibre-web-v1
+  name: calibre-web-v2
+  namespace: media
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Mi
