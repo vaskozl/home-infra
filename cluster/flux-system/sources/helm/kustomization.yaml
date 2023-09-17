@@ -3,14 +3,15 @@ kind: Kustomization
 namespace: flux-system
 resources:
 - bjw-s.yaml
+- csi-driver-nfs.yaml
 - gitlab-charts.yaml
+- haproxy-charts.yaml
 - kasten-charts.yaml
 - metallb.yaml
 - metrics-server.yaml
 - nginx-git.yaml
 - vector-charts.yaml
 - vm-charts.yaml
-- haproxy-charts.yaml
 patches:
 - path: common.yaml
   target:
