@@ -1,11 +1,12 @@
----
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: zigbee2mqtt-v2
+  name: zigbee2mqtt-v3
+  namespace: automation
 spec:
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Mi
