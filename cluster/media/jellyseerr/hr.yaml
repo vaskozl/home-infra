@@ -13,7 +13,7 @@ spec:
       config:
         enabled: true
         mountPath: /app/config
-        existingClaim: jellyseerr-config
+        existingClaim: jellyseerr-config-v1
     service:
       main:
         ports:
