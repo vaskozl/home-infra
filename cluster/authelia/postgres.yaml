@@ -72,19 +72,4 @@ spec:
       volumes:
       - name: pv-data
         persistentVolumeClaim:
-          claimName: postgres-v3
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: postgres-v3
-  namespace: authelia
-  labels:
-    app: postgres
-spec:
-  storageClassName: ssd-raid5
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+          claimName: postgres-v4
