@@ -12,7 +12,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: sonarr-config
+        existingClaim: sonarr-config-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2
