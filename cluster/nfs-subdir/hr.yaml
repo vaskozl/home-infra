@@ -22,14 +22,9 @@ spec:
       mountOptions:
         - nfsvers=4.1
         - hard
-        - noac
-        - nocto
-        - noacl
-        - rsize=8192
-        - wsize=8192
-        - async
-        - retrans=3
-        - timeo=600
+        - noatime
+        - rsize=131072
+        - wsize=131072
     storageClass:
       defaultClass: false
       provisionerName: k8s-sigs.io/nfs-subdir-external-provisioner
