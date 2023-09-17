@@ -1,11 +1,12 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-data-v0
+  name: jellyfin-data-v1
   namespace: media
 spec:
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 15Gi
+      storage: 1Mi
