@@ -1,13 +1,12 @@
----
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: vaultwarden-data-v3
+  name: vaultwarden-data-v4
   namespace: vaultwarden
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Mi
