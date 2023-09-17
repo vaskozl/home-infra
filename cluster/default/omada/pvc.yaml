@@ -1,11 +1,12 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: omada-pvc-v3
+  name: omada-pvc-v4
+  namespace: default
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Mi

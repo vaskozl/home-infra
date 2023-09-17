@@ -15,7 +15,7 @@ spec:
       data:
         enabled: true
         mountPath: /opt/tplink/EAPController/data
-        existingClaim: omada-pvc-v3
+        existingClaim: omada-pvc-v4
     service:
       main:
         ports:

@@ -19,7 +19,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: baikal-v2
+        existingClaim: baikal-v3
         subPath:
         - path: .
           mountPath: /var/www/baikal/config

@@ -1,12 +1,12 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: baikal-v2
+  name: baikal-v3
   namespace: default
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Mi

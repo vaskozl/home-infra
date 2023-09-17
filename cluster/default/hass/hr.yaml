@@ -13,7 +13,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: hass-pvc-v3
+        existingClaim: hass-pvc-v4
     service:
       main:
         ports:

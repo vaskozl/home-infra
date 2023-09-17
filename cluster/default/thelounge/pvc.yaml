@@ -1,11 +1,12 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: thelounge-v3
+  name: thelounge-v4
+  namespace: default
 spec:
-  storageClassName: ssd-raid5
+  storageClassName: nfs-client
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Mi
