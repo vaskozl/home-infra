@@ -38,7 +38,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: flood
+        existingClaim: flood-v1
     podSecurityContext:
       fsGroup: 1001
       runAsGroup: 1001
