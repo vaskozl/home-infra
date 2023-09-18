@@ -29,9 +29,9 @@ controller:
       proxy_ignore_headers Set-Cookie Expires Cache-Control;
     hsts: false
     location-snippet: |
-      more_set_headers 'X-Frame-Options: SAMEORIGIN always';
-      more_set_headers 'X-Content-Type-Options: nosniff always';
-      more_set_headers 'X-XSS-Protection: "1; mode=block" always';
+      more_set_headers 'X-Frame-Options: SAMEORIGIN';
+      more_set_headers 'X-Content-Type-Options: nosniff';
+      more_set_headers 'X-XSS-Protection: "1; mode=block"';
   extraArgs:
     http-port: 9080
     https-port: 9443
