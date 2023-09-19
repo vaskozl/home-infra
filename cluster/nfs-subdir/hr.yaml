@@ -26,5 +26,5 @@ spec:
         - rsize=131072
         - wsize=131072
     storageClass:
-      defaultClass: false
+      defaultClass: true
       provisionerName: k8s-sigs.io/nfs-subdir-external-provisioner
