@@ -1,0 +1,38 @@
+data: ENC[AES256_GCM,data:TXTcEOO3FlMkE/ReLcedU8p4utCLQ/r/RrHFuX5DEifLqN5UXya2H7tYgla7ZUVFVadHPnMC/R7Rcm7oEcuK8AB3oMgevxy6SW99t7Wm210bfkVc8RgiVAcjWVPCmcJf0lYRte/JR6wn1jpDn+MaixmAWxQqW27oiArvKu2xLm0t5bGp5v9M2B9+mSpBZ3zeuppptancwpBgoQym,iv:hN/MLUVvWqvE547vaB9JpkheUhW0vjYMcUWo1ygJQMU=,tag:f+7ziks5ATja/GZrxZ/uRw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2023-09-19T08:44:09Z"
+    mac: ENC[AES256_GCM,data:bnKakQmPeT+QBQO52CbaYuldNotZTnKPPB5nBcxvwVtqvCsy+Tic7/hv8V8zq2yHwrhsiUfyFyb+8ZjgGcps7BSVN78u2csTTpcXCOokvoS3biix4N9yOO98eNWuYe7eiRrLjoyu9Wg2qJJz2pKiMk6hX2FXjAT+nYTzYa1DgZw=,iv:LS82m667I2WX7eHewA5WPu3jLFk/4l+MmK/eRR4Tv4c=,tag:AELLVe/DKG0/dUrPCLNGqw==,type:str]
+    pgp:
+        - created_at: "2023-09-19T08:44:09Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv/ZiVADJlWGLuDaVz8McuJ92ntgJODzm3iH93ki889SYG5
+            uYq2AJsCLvGSwUlC9lsOZsZRbVeK5JVGSTjeZf6Va5IVxt+tu66t7cFfceFPUB+H
+            lNWMgOk8fTpECTbW00qUNq0LiZWWbXQhH7IlwOF9djkS+dIzoUsTu2M4YsKJlGX6
+            byIcMegn0kAQ03AGV14Ex6JuKCRcWqMIBOjXJnna15M0LfWYAVtNlRNVeIsrwP4w
+            SKkIVX+Q8XmdCR/Xodppx99swFRYxrGVAIMctu58YbyiPNjN8JHmDlDzlrTd7woK
+            mwWi+V1bGwWJjizVKeiGXn+7ycmxH62VngxI2HjrdLmzux3ukc7eceC5hnnhD20m
+            Yq0nOvUZ+Di/31W39M5Ds1kuUTGOG8EbmaT1uwEmBNrCpvD121yi73sLjKd/sm9y
+            SnX9npHG6RIfWqCQmhmDMSlajjb+hCv5fIaCriWTTJY7vT3UxVWuvH+ivUj58UUu
+            7KnCFA8eFrFVhLB6OKGJC/4pcFdIE/DVVw8xrjPnGNwFW35YVlyMzmsEAyIpzqTA
+            3f8fdk82406gGveugMMq/mbo9Cd2Cs1sTPSQSEhs06pqK+BzM0W8vI/azj3UQV8i
+            I4zQsfDYBMG+VOCsfYzw88P/EgMR77VXQUBJQWRVqj4mAnAXRo8IZjXQpVXwViM2
+            pSBHIoBPKYvCWveAHEF18KDVFn8gn66wyjzfYRf1rriD77byiE5xGaQQ3qvbZrF8
+            Pi/+XoeGqxy27IL2Lj4NjGj/DlkPwdqwgZ69ETuAxNrAMtVn88d5QJ7TyprVIkvX
+            Adr2r9tbdg6S1DREoUfVOXUMx75sDQQvajjEAhcRQJmelCmFhaCSwUYK4+LZ+TE/
+            BgghFeydOv4vratCMhcQNDYsRmYNdjCvra3UTIs5OJ6Cb8DqflN+unoCVVcILD7j
+            Z+F1ZeweM4XOO39bKbi6WO/ACMPn3vgM6TxX4kE0y2bk23iFUI6S2RCthxh8BZPn
+            FG6t94W9JJ8PV757VD8EHAnSXgH0crHS+OOMJf60ihIRTdGKWw0oQTRXf5g7YL1A
+            VTjWLx226W6KWxSiF8xxF9VSgXYk7pM1Xu3zK8YxqSsTeUrNTcXaI/AiO59zBRU8
+            u63tx8qWnEp1gPqk9Oxqga0=
+            =IMGS
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+    version: 3.7.3
