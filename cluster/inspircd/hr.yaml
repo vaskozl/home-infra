@@ -14,7 +14,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: configMap
+        type: secret
         name: inspircd
         mountPath: /inspircd/conf
       tls:

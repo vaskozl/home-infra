@@ -6,7 +6,7 @@ resources:
 - hr.yaml
 - cert.yaml
 - ../netpols/allow-all-ingress
-configMapGenerator:
+secretGenerator:
 - name: inspircd
   files:
   - config/inspircd.conf
