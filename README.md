@@ -25,7 +25,6 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
-  * [harbor](https://github.com/goharbor/harbor) - Docker Registry UI
   * [thelounge](https://thelounge.chat/) - IRC client
   * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
   * [znc](https://github.com/znc/znc) - IRC bouncer
@@ -37,8 +36,6 @@ Home infrastructure running on Liquid cooled: 3x Master Raspberry Pi 4GB + 3x Wo
   * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-  * [synology-csi](https://github.com/SynologyOpenSource/synology-csi) - Synology official CSI driver
-  * [k10-kasten](https://www.kasten.io/)
 
 ## Installation
 
