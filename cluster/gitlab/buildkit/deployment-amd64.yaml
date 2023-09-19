@@ -61,14 +61,22 @@ spec:
           mountPath: /certs
         - name: buildkit
           mountPath: /var/lib/buildkit
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "200m"
+            ephemeral-storage: "2Gi"
+          limits:
+            memory: "2Gi"
+            cpu: 2
+            ephemeral-storage: "10Gi"
       volumes:
       # buildkit-daemon-certs must contain ca.pem, cert.pem, and key.pem
       - name: certs
         secret:
           secretName: buildkit-daemon-certs
       - name: buildkit
-        persistentVolumeClaim:
-          claimName: buildkit-amd64-pvc-v0
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
