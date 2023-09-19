@@ -85,7 +85,7 @@ spec:
       mountPath: /var/mail
       size: 10Gi
       accessMode: ReadWriteOnce
-      storageClass: ssd-raid5-v2
+      storageClass: nfs-client
     - name: mail-state
       mountPath: /var/mail-state
       size: 1Gi
