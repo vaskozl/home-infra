@@ -14,7 +14,7 @@ build:val:
   extends: .build_container
   rules:
     - changes:
-      - ${CONTEXT}/*
+      - validate/
       - .gitlab-ci.yaml
   variables:
     CONTEXT: validate
