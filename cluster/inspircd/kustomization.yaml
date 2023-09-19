@@ -13,7 +13,7 @@ configMapGenerator:
   - config/motd.txt
   - config/opers.conf
   - config/server.conf
-  - config/links.conf
+  - links.conf=config/links.conf.enc
 components:
 - ../common
 generatorOptions:
