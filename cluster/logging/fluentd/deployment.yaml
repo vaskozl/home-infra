@@ -19,7 +19,7 @@ spec:
       securityContext:
         runAsUser: 2000
       containers:
-      - image: public.ecr.aws/docker/library/fluentd:v1.16.0-debian-1.0@sha256:187c11e993b6bba59aa31adb591661325a67a5c5226b9b3d91811a0841c41539
+      - image: public.ecr.aws/docker/library/fluentd:v1.16.0-debian-1.0@sha256:e8e38c8b9dcd2664b832abc98ec94619d7bad8c3fa2658d0c41a2e06ac8b9b67
         name: fluentd
         resources:
           requests:
