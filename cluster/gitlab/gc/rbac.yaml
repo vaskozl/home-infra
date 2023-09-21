@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gitlab-registry-serviceaccount
+  namespace: gitlab
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gitlab-registry-role
+  namespace: gitlab
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gitlab-registry-rolebinding
+  namespace: gitlab
+subjects:
+- kind: ServiceAccount
+  name: gitlab-registry-serviceaccount
+  namespace: gitlab
+roleRef:
+  kind: Role
+  name: gitlab-registry-role
+  apiGroup: rbac.authorization.k8s.io

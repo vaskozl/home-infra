@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gitlab-registry-garbage-collect
+  namespace: gitlab
+spec:
+  schedule: "0 4 * * *" # Run at 4:00 AM every day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: gitlab-registry-serviceaccount
+          containers:
+          - name: kubectl-exec
+            image: ghcr.io/vaskozl/kubectl:20230917
+            command:
+            - "kubectl"
+            - "exec"
+            - "deploy/gitlab-registry"
+            - "--namespace=gitlab"
+            - "--"
+            - "registry"
+            - "garbage-collect"
+            - "--delete-untagged"
+            - "/etc/docker/registry/config.yml"
+          restartPolicy: OnFailure
