@@ -5,19 +5,6 @@ include:
 
 run:val:
   stage: test
-  image: ${CI_REGISTRY_IMAGE}/val
+  image: ghcr.io/vaskozl/kubectl:20230917
   script:
     - validate
-
-build:val:
-  stage: build
-  extends: .build_container
-  rules:
-    - changes:
-      - validate/
-      - .gitlab-ci.yaml
-  variables:
-    CONTEXT: validate
-    CI_IMAGE_SUFFIX: /val
-    PLATFORM: linux/amd64
-    TAG: latest
