@@ -2,5 +2,6 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: vm-charts
+  namespace: flux-system
 spec:
   url: https://victoriametrics.github.io/helm-charts/
