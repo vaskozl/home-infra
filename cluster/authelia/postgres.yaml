@@ -67,7 +67,7 @@ spec:
           exec:
             command: ["psql", "-w", "-U", "authelia", "-d", "authelia", "-c", "SELECT
                 1"]
-          initialDelaySeconds: 45
+          initialDelaySeconds: 300
           timeoutSeconds: 2
       volumes:
       - name: pv-data
