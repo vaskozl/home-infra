@@ -18,7 +18,7 @@ spec:
   values:
     global:
       nodeSelector:
-        beta.kubernetes.io/arch: amd64
+        kubernetes.io/arch: amd64
       edition: ee
       hosts:
         domain: sko.ai
@@ -100,7 +100,7 @@ spec:
     gitlab-runner:
       runners:
         nodeSelector:
-          beta.kubernetes.io/arch: amd64
+          kubernetes.io/arch: amd64
         config: |
           concurrent = 20
           [[runners]]
@@ -131,7 +131,7 @@ spec:
             template:
               spec:
                 nodeSelector:
-                  beta.kubernetes.io/arch: amd64
+                  kubernetes.io/arch: amd64
         target:
           kind: Deployment
       - patch: |-
@@ -143,6 +143,6 @@ spec:
             template:
               spec:
                 nodeSelector:
-                  beta.kubernetes.io/arch: amd64
+                  kubernetes.io/arch: amd64
         target:
           kind: StatefulSet
