@@ -14,6 +14,8 @@ spec:
       tag: 12.1.0@sha256:53c3b3da9fb47f6062210febb112469344e5a9cb319b78238442706fb72a0aca
     service:
       main:
+        annotations:
+          coredns.io/hostname: mail
         ports:
           http:
             enabled: false

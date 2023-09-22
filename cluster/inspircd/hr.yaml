@@ -24,6 +24,8 @@ spec:
         mountPath: /inspircd/ssl
     service:
       main:
+        annotations:
+          coredns.io/hostname: irk
         enabled: true
         type: LoadBalancer
         externalTrafficPolicy: Local
