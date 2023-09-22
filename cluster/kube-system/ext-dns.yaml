@@ -5,7 +5,7 @@ metadata:
   name: ext-dns-udp
   namespace: kube-system
   annotations:
-    metallb.universe.tf/allow-shared-ip: DNS
+    coredns.io/hostname: external-dns
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -23,8 +23,6 @@ kind: Service
 metadata:
   name: ext-dns-tcp
   namespace: kube-system
-  annotations:
-    metallb.universe.tf/allow-shared-ip: DNS
 spec:
   type: LoadBalancer
   externalIPs:

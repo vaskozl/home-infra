@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: ngircd
   namespace: default
+  annotations:
+    coredns.io/hostname: netpub
 spec:
   ports:
   - name: irc
