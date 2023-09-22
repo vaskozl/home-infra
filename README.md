@@ -14,28 +14,28 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
 
 * Apps:
   * [authelia](https://github.com/authelia/authelia) - SSO server
-  * [radicale](https://github.com/tomsquest/docker-radicale) - {Cal,Card}Dav server
-  * [gitea](https://gitea.io) - Internal git server (useful for passwords/secrets)
+  * [baikal](https://sabre.io/baikal/) - {Cal,Card}Dav server
+  * [blocky](https://github.com/0xERR0R/blocky) - DNS proxy and ad-blocker
+  * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
+  * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
+  * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
-  * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
-  * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
-  * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
-  * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
-  * [doods](https://github.com/snowzach/doods) - Visual human and object recognition
-  * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
-  * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
-  * [thelounge](https://thelounge.chat/) - IRC client
-  * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
-  * [znc](https://github.com/znc/znc) - IRC bouncer
   * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
+  * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
+  * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
+  * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
+  * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
+  * [thelounge](https://thelounge.chat/) - IRC client
+  * [znc](https://github.com/znc/znc) - IRC bouncer
 * System:
+  * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
+  * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
+  * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller
-  * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
-  * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
+  * [vector](https://vector.dev) - Log collection and aggregation
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
-  * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
 
 ## Installation
 
