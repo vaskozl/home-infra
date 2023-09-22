@@ -4,5 +4,6 @@ namespace: k8s-gateway
 resources:
 - _namespace.yaml
 - hr.yaml
+- ../netpols/allow-all-ingress
 components:
 - ../common
