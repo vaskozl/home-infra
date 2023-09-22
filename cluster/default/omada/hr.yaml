@@ -34,10 +34,10 @@ spec:
     resources:
       limits:
         cpu: 1
-        memory: 1Gi
+        memory: 1.4Gi
       requests:
         cpu: 200m
-        memory: 400Mi
+        memory: 800Mi
     hostNetwork: true
     probes:
       liveness:
