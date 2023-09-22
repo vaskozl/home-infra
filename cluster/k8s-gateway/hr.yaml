@@ -12,8 +12,15 @@ spec:
         name: k8s-gateway
         namespace: flux-system
   values:
+    replicaCount: 3
     domain: "sko.ai"
     service:
       externalTrafficPolicy: Local
       externalIPs:
       - ${EI_K8S_GATEWAY}
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 10m
+        memory: 15Mi
