@@ -5,6 +5,6 @@ include:
 
 run:val:
   stage: test
-  image: ghcr.io/vaskozl/kubectl:20230917
+  image: ghcr.io/vaskozl/kubectl:20230922
   script:
     - validate
