@@ -17,6 +17,8 @@ spec:
       interval: 1h
   values:
     global:
+      extraEnv:
+        GITLAB_LOG_LEVEL: 'error'
       nodeSelector:
         kubernetes.io/arch: amd64
       edition: ee
