@@ -65,11 +65,10 @@ spec:
           requests:
             memory: "1Gi"
             cpu: "200m"
-            ephemeral-storage: "2Gi"
+            ephemeral-storage: "10Gi"
           limits:
             memory: "2Gi"
             cpu: 2
-            ephemeral-storage: "10Gi"
       volumes:
       # buildkit-daemon-certs must contain ca.pem, cert.pem, and key.pem
       - name: certs
