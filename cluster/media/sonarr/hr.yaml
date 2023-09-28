@@ -7,8 +7,9 @@ metadata:
 spec:
   values:
     image:
-      repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.686@sha256:8faffe81ec2ae2339c9c379bd4381815e047c5a14845380c03b97f523bde4507
+      repository: ghcr.io/vaskozl/sonarr-develop
+      tag: 4.0.0.686-1
+      command: [/usr/lib/sonarr/bin/Sonarr, -nobrowser, -data=/config]
     persistence:
       config:
         enabled: true

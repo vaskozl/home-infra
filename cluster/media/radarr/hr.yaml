@@ -7,8 +7,9 @@ metadata:
 spec:
   values:
     image:
-      repository: ghcr.io/onedr0p/radarr-develop
-      tag: 5.0.2.8103@sha256:45d478025148777fd370e28c7915b5412295ab0794005aa5e283d5510d5cab7d
+      repository: ghcr.io/vaskozl/radarr-develop
+      tag: 5.0.2.8103-1
+    command: [/usr/lib/radarr/bin/Radarr, -nobrowser, -data=/config]
     persistence:
       config:
         enabled: true
