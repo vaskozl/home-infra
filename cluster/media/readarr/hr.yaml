@@ -7,8 +7,9 @@ metadata:
 spec:
   values:
     image:
-      repository: ghcr.io/onedr0p/readarr-develop
-      tag: 0.3.6.2232@sha256:29f7b8a7accfa1b8f3392f29e411b61a1f8cbd0a569deedcd03df8b672b2bb3a
+      repository: ghcr.io/vaskozl/readarr-develop
+      tag: 0.3.6.2232-1
+    command: [/usr/lib/readarr/bin/Readarr, -nobrowser, -data=/config]
     persistence:
       config:
         enabled: true
