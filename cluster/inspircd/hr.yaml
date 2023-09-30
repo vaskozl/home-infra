@@ -14,7 +14,7 @@ spec:
     command:
       - inspircd
       - --nofork
-      - --config="/inspircd/conf/inspircd.conf"
+      - --config=/inspircd/conf/inspircd.conf
     persistence:
       config:
         enabled: true
@@ -53,3 +53,7 @@ spec:
       limits:
         cpu: 1
         memory: 200Mi
+    podSecurityContext:
+      fsGroup: 568
+      runAsGroup: 568
+      runAsUser: 568
