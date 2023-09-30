@@ -7,4 +7,4 @@ run:val:
   stage: test
   image: ghcr.io/vaskozl/kubeconform:0.6.3-1
   script:
-    - validate
+    - scripts/validate.sh
