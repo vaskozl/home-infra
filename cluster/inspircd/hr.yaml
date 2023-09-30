@@ -10,7 +10,11 @@ spec:
       kubernetes.io/arch: amd64
     image:
       repository: ghcr.io/vaskozl/inspircd
-      tag: 3.16.1
+      tag: 3.16.1-2
+    command:
+      - inspircd
+      - --nofork
+      - --config="/inspircd/conf/inspircd.conf"
     persistence:
       config:
         enabled: true
