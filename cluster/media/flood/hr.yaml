@@ -7,15 +7,16 @@ metadata:
 spec:
   values:
     image:
-      pullPolicy: Always
-      repository: jesec/flood
-      tag: master
+      repository: ghcr.io/vaskozl/flood-git
+      tag: 4.7.0.r55.gce4b523d-1
+    command: [/usr/bin/flood]
     env:
       FLOOD_OPTION_AUTH: none
       FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
       FLOOD_OPTION_QBURL: http://syno:55555
       FLOOD_OPTION_QBUSER: vsz
       FLOOD_OPTION_RUNDIR: /data
+      FLOOD_OPTION_HOST: 0.0.0.0
     resources:
       limits:
         memory: 100Mi
