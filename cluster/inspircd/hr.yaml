@@ -15,6 +15,7 @@ spec:
       - inspircd
       - --nofork
       - --config=/inspircd/conf/inspircd.conf
+      - --runasroot
     persistence:
       config:
         enabled: true
