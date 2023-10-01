@@ -8,8 +8,8 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/flood-git
-      tag: 4.7.0.r55.gce4b523d-1
-    command: [/usr/bin/flood]
+      tag: 4.7.0.r55.gce4b523d-1@sha256:783740ff3a4ad0190e1c24c25257901d393268e25220ef9088683d00d3640d9c
+    args: [/usr/bin/flood]
     env:
       FLOOD_OPTION_AUTH: none
       FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
