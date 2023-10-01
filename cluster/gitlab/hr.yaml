@@ -104,7 +104,7 @@ spec:
         nodeSelector:
           kubernetes.io/arch: amd64
         config: |
-          concurrent = 20
+          concurrent = 2
           [[runners]]
             [runners.kubernetes]
               cpu_request = "500m"
