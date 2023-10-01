@@ -5,15 +5,14 @@ metadata:
   name: stub
 spec:
   interval: 30m
+  timeout: 15m0s
   maxHistory: 2
   install:
     createNamespace: true
-    timeout: &timeout 15m0s
     remediation:
       retries: 1
   upgrade:
     cleanupOnFail: true
-    timeout: *timeout
     remediation:
       retries: 1
   uninstall:
