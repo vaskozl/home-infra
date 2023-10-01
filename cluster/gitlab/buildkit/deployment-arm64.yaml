@@ -19,6 +19,9 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/arch: arm64
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
       containers:
       - name: buildkitd
         image: ghcr.io/vaskozl/buildkit:v0.12.1
