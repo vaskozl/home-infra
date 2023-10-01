@@ -9,13 +9,17 @@ sonarr:
             type: series
         quality_profiles:
             - name: Web-2160p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: Web-1080p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: Web-720p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: Remux-1080p - Anime
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
               # Custom Format Configuration
         delete_old_custom_formats: true
         replace_existing_custom_formats: true
@@ -274,13 +278,17 @@ radarr:
             type: movie
         quality_profiles:
             - name: Remux-2160p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: Remux-1080p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: Remux-1080p - Anime
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
             - name: WEB-720p
-              reset_unmatched_scores: true
+              reset_unmatched_scores:
+                  enabled: true
         delete_old_custom_formats: true
         replace_existing_custom_formats: true
         custom_formats:
