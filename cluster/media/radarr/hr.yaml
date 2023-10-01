@@ -8,8 +8,8 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/radarr-develop
-      tag: 5.0.2.8103-1
-    command: [/usr/lib/radarr/bin/Radarr, -nobrowser, -data=/config]
+      tag: 5.0.2.8103-1@sha256:6eb3ca7600b67f8696294a9c27b11c20afe66a2a9f8353b656e11b66aa855550
+    args: [/usr/lib/radarr/bin/Radarr, -nobrowser, -data=/config]
     persistence:
       config:
         enabled: true
