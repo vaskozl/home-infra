@@ -7,14 +7,15 @@ metadata:
 spec:
   values:
     image:
-      repository: ghcr.io/vaskozl/homer
-      tag: v23.09.1
+      repository: ghcr.io/vaskozl/homer-web
+      tag: 23.09.1-1@sha256:cd53843b88fb78773f9ca8f2820e83a1ed0ade66e2b5de7ecef53fba704c95c2
+    args: [miniserve, --index, index.html, /usr/share/webapps/homer/]
     persistence:
       config:
         enabled: true
         type: configMap
         name: homer-config
-        mountPath: /www/assets/config.yml
+        mountPath: /usr/share/webapps/homer/assets/config.yml
         subPath: config.yml
     service:
       main:
