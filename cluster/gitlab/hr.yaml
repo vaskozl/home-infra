@@ -100,11 +100,11 @@ spec:
     grafana:
       enabled: false
     gitlab-runner:
+      concurrent: 2
       runners:
         nodeSelector:
           kubernetes.io/arch: amd64
         config: |
-          concurrent = 2
           [[runners]]
             [runners.kubernetes]
               cpu_request = "500m"
