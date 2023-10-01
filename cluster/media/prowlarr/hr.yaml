@@ -8,8 +8,8 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/prowlarr-develop
-      tag: 1.9.1.3981-1
-    command: [/usr/lib/prowlarr/bin/Prowlarr, -nobrowser, -data=/config]
+      tag: 1.9.1.3981-1@376534d929e84e977539bf3ae108ecbd5f0ea6b3a4e3f252dcb11b57bb9bd829
+    args: [/usr/lib/prowlarr/bin/Prowlarr, -nobrowser, -data=/config]
     persistence:
       config:
         enabled: true
