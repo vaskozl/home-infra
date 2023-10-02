@@ -7,8 +7,11 @@ metadata:
 spec:
   values:
     image:
-      repository: ghcr.io/linuxserver/thelounge
-      tag: version-4.3.1
+      repository: ghcr.io/vaskozl/thelounge
+      tag: 4.4.1-1@sha256:5892c45758c054925c95cd9704b23048305f720f3a672b838eda2b429bdb574e
+    args: [thelounge, start]
+    env:
+      THELOUNGE_HOME: /config
     persistence:
       config:
         enabled: true
@@ -41,3 +44,7 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
