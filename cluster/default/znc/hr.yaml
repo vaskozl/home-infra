@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/znc
-      tag: 1.8.2-18@sha256:f257fb6bfc295755057007792f6908b29fc6b845a5f4e0a26bb13f4ea6d843c9
+      tag: 1.8.2-18@sha256:934b2eb0ba60f45d3ee0835a581ba2202bb25e5886d0ffa43f45bdbcff5770c5
     args: [znc, --foreground, --datadir=/znc-data]
     persistence:
       znc-data:
