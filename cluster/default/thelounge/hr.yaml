@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/thelounge
-      tag: 4.4.1-1@sha256:5892c45758c054925c95cd9704b23048305f720f3a672b838eda2b429bdb574e
+      tag: 4.4.1-1@sha256:fa35c09cdd9548e660a37af2d6cf1cab8a2adc9e28c87750174cf9c02042f88f
     args: [thelounge, start]
     env:
       THELOUNGE_HOME: /config
