@@ -46,9 +46,13 @@
     // global docker datasource settings
     {
       "matchDatasources": ["docker"],
-      "enabled": true,
       "matchUpdateTypes": ["major", "minor", "patch"],
       "commitMessageTopic": "image {{depName}}"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["digest"],
+      "commitMessageTopic": "{{{depName}}}{{#if currentValue}}:{{{currentValue}}}{{/if}} digest"
     },
     // add labels according to package and update types
     {
