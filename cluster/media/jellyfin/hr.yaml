@@ -9,8 +9,16 @@ spec:
     nodeSelector:
       kubernetes.io/arch: amd64
     image:
-      repository: ghcr.io/vaskozl/jellyfin
-      tag: 10.8.11
+      repository: ghcr.io/vaskozl/jellyfin-server
+      tag: 10.8.11-2
+    args: [jellyfin]
+    env:
+      JELLYFIN_DATA_DIR: /config
+      JELLYFIN_CONFIG_DIR: /config/config
+      JELLYFIN_LOG_DIR: /config/log
+      JELLYFIN_CACHE_DIR: /cache
+      JELLYFIN_WEB_DIR: /usr/share/jellyfin-web
+      JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
     securityContext:
       privileged: true
     persistence:
@@ -20,7 +28,7 @@ spec:
       torrents:
         enabled: true
         existingClaim: torrents-v2
-      transcodes:
+      cache:
         enabled: true
         type: emptyDir
       dri:
