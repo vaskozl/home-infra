@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/prowlarr-develop
-      tag: 1.9.1.3981-1@sha256:90442b0f28b2b7a8f8b49e282e40656708bdc1824684da4768734d3c64da797d
+      tag: 1.9.1.3981-1@sha256:8521d85c369afd1ff57a9d976e17ce715d78f65c39b6b506d5e1c60c7ec56b78
     args: [/usr/lib/prowlarr/bin/Prowlarr, -nobrowser, -data=/config]
     persistence:
       config:
