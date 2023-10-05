@@ -4951,7 +4951,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
       - name: calico-kube-controllers
-        image: quay.io/calico/kube-controllers:v3.26.1
+        image: quay.io/calico/kube-controllers:v3.26.2
         imagePullPolicy: IfNotPresent
         env:
         # Choose which controllers to run.
