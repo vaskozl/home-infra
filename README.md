@@ -27,7 +27,6 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [openspeedtest](https://hub.docker.com/r/openspeedtest/latest/tags?page=1&ordering=last_updated) - Speed Test testing max local and external speeds
   * [thelounge](https://thelounge.chat/) - IRC client
-  * [znc](https://github.com/znc/znc) - IRC bouncer
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
