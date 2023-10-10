@@ -25,7 +25,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: buildkitd
-        image: ghcr.io/vaskozl/buildkit:v0.12.1
+        image: ghcr.io/vaskozl/buildkit:v0.12.2
         args:
         - --addr
         - unix:///run/buildkit/buildkitd.sock
