@@ -8,11 +8,14 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/jellyseerr
-      tag: 1.7.0
+      tag: 1.7.0-1@sha256:43d52fad25d4b5421b17d4eeb76c1981ffa7daf07493ffbcc38292937b321259
+    env:
+      NODE_ENV: production
+    args: [/usr/bin/node, /usr/lib/jellyseerr/dist/index.js]
     persistence:
       config:
         enabled: true
-        mountPath: /app/config
+        mountPath: /usr/lib/jellyseerr/config
         existingClaim: jellyseerr-config-v1
     service:
       main:
