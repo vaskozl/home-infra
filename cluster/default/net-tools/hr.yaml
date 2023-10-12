@@ -10,6 +10,9 @@ spec:
       repository: ghcr.io/vaskozl/net-tools
       tag: 2.10-2
     args: [sleep, inf]
+    service:
+      main:
+        enabled: false
     resources:
       requests:
         cpu: 10m
