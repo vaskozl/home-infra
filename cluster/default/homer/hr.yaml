@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/homer-web
-      tag: 23.09.1-1@sha256:b458e2f3bb242beb0d711d1e79f41512e7814dfe509f40836c77b88309eaadea
+      tag: 23.09.1-1@sha256:41d9e7bdec675a68ba12a14fed0243e758ca7de8e1935a6cfb58151404cbb18e
     args: [miniserve, --index, index.html, /usr/share/webapps/homer/]
     persistence:
       config:
