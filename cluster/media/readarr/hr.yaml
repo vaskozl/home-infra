@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/readarr-develop
-      tag: 0.3.7.2260-1@sha256:0e08b1413aa716730490b281782ed0a90c8c15038d619f12d8ebb8c012341ff8
+      tag: 0.3.8.2267-1@sha256:8bcfd20e29b2ff063a326406cf911f3e0bfefee7bf071fe8c814cdf65bb00b0f
     args: [/usr/lib/readarr/bin/Readarr, -nobrowser, -data=/config]
     persistence:
       config:
