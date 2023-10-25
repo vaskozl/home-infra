@@ -13,11 +13,7 @@ spec:
       config:
         enabled: true
         existingClaim: baikal-v3
-        subPath:
-        - path: .
-          mountPath: /usr/share/webapps/baikal/config
-        - path: .
-          mountPath: /usr/share/webapps/baikal/Specific
+        mountPath: /var/lib/baikal
       msmtprc:
         enabled: true
         type: configMap
