@@ -3,3 +3,10 @@ kind: Kustomization
 resources:
 - hr.yaml
 - pvc.yaml
+
+configMapGenerator:
+- name: msmtprc
+  files:
+  - msmtprc
+configurations:
+- kustomizeconfig.yaml

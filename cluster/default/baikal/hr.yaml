@@ -7,24 +7,23 @@ metadata:
 spec:
   values:
     image:
-      repository: ckulka/baikal
-      tag: experimental-nginx@sha256:fa6d9b67d2190bec275c78c9f4d3c2cffce2321b8a9b9c975c0792362cb18cc4
-    env:
-      MSMTPRC: |
-        defaults
-        account        default
-        from           baikal@sko.ai
-        host           mail.sko.ai
-        port           25
+      repository: ghcr.io/vaskozl/baikal
+      tag: 0.9.3-2
     persistence:
       config:
         enabled: true
         existingClaim: baikal-v3
         subPath:
         - path: .
-          mountPath: /var/www/baikal/config
+          mountPath: /usr/share/webapps/baikal/config
         - path: .
-          mountPath: /var/www/baikal/Specific
+          mountPath: /usr/share/webapps/baikal/Specific
+      msmtprc:
+        enabled: true
+        type: configMap
+        name: msmtprc
+        mountPath: /etc/msmtprc
+        subPath: msmtprc
     service:
       main:
         ports:
