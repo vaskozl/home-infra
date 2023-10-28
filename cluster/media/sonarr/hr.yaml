@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/sonarr-develop
-      tag: 4.0.0.700-1@sha256:3b76aa0a5b7ab279e6229e46a220d238e8dc047c3f2d3f2e8f2f94ed1e3de873
+      tag: 4.0.0.703-1@sha256:9d6c55aacde5698d2d2a9421c862d3b6ee159c7ee7663de76358e7eda359c89d
     args: [/usr/lib/sonarr/bin/Sonarr, -nobrowser, -data=/config]
     persistence:
       config:
