@@ -18,7 +18,7 @@ spec:
         spec:
           containers:
           - name: logrotate
-            image: public.ecr.aws/docker/library/busybox:1.36.1@sha256:3fbc632167424a6d997e74f52b878d7cc478225cffac6bc977eedfe51c7f4e79
+            image: ghcr.io/vaskozl/archlinux:rolling
             command: [sh, -c]
             # Delete all files older than 30 days
             # Compress all files older than 1 day
