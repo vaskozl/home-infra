@@ -5,7 +5,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      sko.ai/name: mosquitto
+      app.kubernetes.io/name: mosquitto
   ingress:
   - from:
     - ipBlock:
