@@ -8,12 +8,12 @@ my $MAX = 80;
 my $POW = 2;
 
 my @SHELLIES = qw(
-shellydimmer2-3C6105E44BF8
-shellydimmer2-3C6105E42925
-shellydimmer2-3C6105E34976
-shellydimmer2-84CCA8AD776A
-shellydimmer2-F4CFA2ECDC0B
-shellydimmer2-F4CFA2ECAE73
+  shellydimmer2-3C6105E44BF8
+  shellydimmer2-3C6105E42925
+  shellydimmer2-3C6105E34976
+  shellydimmer2-84CCA8AD776A
+  shellydimmer2-F4CFA2ECDC0B
+  shellydimmer2-F4CFA2ECAE73
 );
 
 sub default_brightness {
@@ -28,7 +28,6 @@ sub default_brightness {
 
 my $brightness = $ARGV[0] || default_brightness;
 
-#say "Setting brightness to $brightness";
 for my $shelly (@SHELLIES){
   get("http://$shelly.sko.ai/light/0?brightness=$brightness");
 }
