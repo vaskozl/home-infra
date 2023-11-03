@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/net-tools
-      tag: 2.10-2
+      tag: 2.10-2@sha256:5dee4b94bede0ebf5b7b87e1916f6e6098a12475614aca6bf85adf75961a3e16
     args: [sleep, inf]
     service:
       main:
