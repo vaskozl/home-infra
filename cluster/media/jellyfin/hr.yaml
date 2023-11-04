@@ -10,7 +10,7 @@ spec:
       kubernetes.io/arch: amd64
     image:
       repository: ghcr.io/vaskozl/jellyfin-server
-      tag: 10.8.11-2@sha256:5f76c9302d50820dda7bf6e010f0e74753a5c16e75a764ac6f82b652da94d85f
+      tag: 10.8.11-3@sha256:ad41bd0ef83708ed4498d1d9aa0b41b6c2b0c54d5c86b5b26a2f4dacab30ae42
     args: [jellyfin]
     env:
       JELLYFIN_DATA_DIR: /config
