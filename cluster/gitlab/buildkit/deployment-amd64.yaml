@@ -51,6 +51,7 @@ spec:
             - workers
           initialDelaySeconds: 5
           periodSeconds: 30
+          timeoutSeconds: 5
         securityContext:
           privileged: true
         ports:
