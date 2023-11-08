@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: omada
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
@@ -11,11 +11,11 @@ spec:
       tag: '5.12'
     env:
       MANAGE_HTTPS_PORT: '443'
-    persistence:
-      data:
-        enabled: true
-        mountPath: /opt/tplink/EAPController/data
-        existingClaim: omada-pvc-v4
+    volumeClaimTemplates:
+    - name: data
+      mountPath: /opt/tplink/EAPController/data
+      accessMode: ReadWriteOnce
+      size: 1Mi
     service:
       main:
         ports:
