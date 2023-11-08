@@ -12,7 +12,11 @@ nameReference:
     kind: HelmRelease
   - path: spec/values/persistence/patches/name
     kind: HelmRelease
-  - path: spec/values/persistence/dkim/name
+  - path: spec/values/persistence/dkim-key-table/name
+    kind: HelmRelease
+  - path: spec/values/persistence/dkim-signing-table/name
+    kind: HelmRelease
+  - path: spec/values/persistence/dkim-trusted-hosts/name
     kind: HelmRelease
   - path: spec/values/persistence/dkim-keys/name
     kind: HelmRelease

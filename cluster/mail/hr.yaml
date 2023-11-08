@@ -67,11 +67,21 @@ spec:
         <<: *files
         mountPath: /tmp/docker-mailserver/user-patches.sh
         subPath: user-patches.sh
-      dkim:
-        enabled: true
-        type: secret
-        name: mailserver.dkim
-        mountPath: /tmp/docker-mailserver/opendkim
+      dkim-key-table:
+        <<: &dkim
+          enabled: true
+          type: secret
+          name: mailserver.dkim
+        mountPath: /tmp/docker-mailserver/opendkim/KeyTable
+        subPath: KeyTable
+      dkim-signing-table:
+        <<: *dkim
+        mountPath: /tmp/docker-mailserver/opendkim/SigningTable
+        subPath: SigningTable
+      dkim-trusted-hosts:
+        <<: *dkim
+        mountPath: /tmp/docker-mailserver/opendkim/TrustedHosts
+        subPath: TrustedHosts
       dkim-keys:
         enabled: true
         type: secret
