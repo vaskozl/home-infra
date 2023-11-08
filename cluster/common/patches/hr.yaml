@@ -14,6 +14,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: uninstall
       retries: 1
   uninstall:
     keepHistory: false
