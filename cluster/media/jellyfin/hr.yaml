@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: jellyfin
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     nodeSelector:
@@ -21,10 +21,12 @@ spec:
       JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
     securityContext:
       privileged: true
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: jellyfin-data-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2
