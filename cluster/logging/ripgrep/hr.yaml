@@ -6,6 +6,8 @@ metadata:
     patch.sko.ai/app-template: enabled
 spec:
   values:
+    controller:
+      type: statefulset
     image:
       repository: ghcr.io/vaskozl/ripgrep
       tag: 13.0.0@sha256:abbeaf5fc67e8bb41266c7d277a6f26b36b49092d5b28120aa836342e1d47e87
