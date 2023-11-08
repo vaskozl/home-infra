@@ -3,11 +3,9 @@ kind: HelmRelease
 metadata:
   name: calibre
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
-    controller:
-      strategy: Recreate
     image:
       repository: ghcr.io/linuxserver/calibre
       tag: 6.29.0@sha256:9cbf2db5b746e1ebb6b65a6cadb5bc22e6b786634731c112c1a9c0025b213383
@@ -43,10 +41,12 @@ spec:
           - path: /
             service:
               port: 8081
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: calibre-v2
       media:
         enabled: true
         mountPath: /torrents

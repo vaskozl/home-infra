@@ -3,11 +3,9 @@ kind: HelmRelease
 metadata:
   name: calibre-web
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
-    controller:
-      strategy: Recreate
     image:
       repository: ghcr.io/linuxserver/calibre-web
       tag: 0.6.21@sha256:e7470c127d86178c2de121b1382cff697f233195b58e31a423ef0a235048cf63
@@ -40,10 +38,12 @@ spec:
         - host: cw.sko.ai
           paths:
           - path: /
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: calibre-web-v2
       media:
         enabled: true
         mountPath: /torrents
