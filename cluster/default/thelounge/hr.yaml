@@ -41,7 +41,7 @@ spec:
         memory: 550Mi
     sidecars:
       logrotate:
-        image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:4d12b7077e3efc559a04aae8ef503045cc200ec97ababe5ab3747ec636aa6900
+        image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:eef32650e99a43d7bb9943244019085f2fefd7bfba6f18815af8d04d1ed318ab
         env:
           LOGROTATE_PATTERN: '/config/logs/*/*/*.log'
         volumeMounts:
