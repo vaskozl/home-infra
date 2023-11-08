@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: zigbee2mqtt
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     nodeSelector:
@@ -13,11 +13,12 @@ spec:
       tag: 1.33.2@sha256:44a431c18fffea0a56cf5fcd1c3c5ad554d1b207bd0525e75ee154928c58cb05
     securityContext:
       privileged: true
+    volumeClaimTemplates:
+    - name: data
+      mountPath: /app/data
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      data:
-        enabled: true
-        mountPath: /app/data
-        existingClaim: zigbee2mqtt-v3
       zzh:
         enabled: true
         type: hostPath
