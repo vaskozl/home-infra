@@ -11,7 +11,7 @@ spec:
       type: statefulset
     image:
       repository: ghcr.io/vaskozl/mosquitto
-      tag: 2.0.18@sha256:4f03d59c313e00bc2dae04cb8777be6a3fe307dd356605e4caabb9ab857804a2
+      tag: 2.0.18@sha256:c98acc9aa336069a4dfa0d7c3da367264344945c0d5dfa41671ca6a6879c274a
     args: [sh, -c, 'exec mosquitto -c "/config/$(hostname).conf"']
     service:
       main:
