@@ -71,12 +71,12 @@ spec:
         enabled: true
         type: secret
         name: mailserver.dkim
-        mountPath: /etc/opendkim
+        mountPath: /tmp/docker-mailserver/opendkim
       dkim-keys:
         enabled: true
         type: secret
         name: mailserver.opendkim.keys
-        mountPath: /etc/opendkim/keys
+        mountPath: /tmp/docker-mailserver/opendkim/keys
       tls:
         enabled: true
         type: secret
