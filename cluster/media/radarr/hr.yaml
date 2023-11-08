@@ -3,17 +3,19 @@ kind: HelmRelease
 metadata:
   name: radarr
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
       repository: ghcr.io/vaskozl/radarr
       tag: 5.0.3.8127@sha256:ffc8ef2ff60b7da78e7cd69f514304a9137d97e522da9f6dd05e0fcd759cbf60
     args: [/usr/lib/radarr/bin/Radarr, -nobrowser, -data=/config]
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: radarr-config-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2

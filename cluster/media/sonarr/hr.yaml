@@ -3,17 +3,19 @@ kind: HelmRelease
 metadata:
   name: sonarr
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
       repository: ghcr.io/vaskozl/sonarr-develop
       tag: 4.0.0.710@sha256:acd4568745ccce09badaaa157e164def1ed4853b8943c3e307ef511f71316e14
     args: [/usr/lib/sonarr/bin/Sonarr, -nobrowser, -data=/config]
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: sonarr-config-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2

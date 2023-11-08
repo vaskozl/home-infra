@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: jellyseerr
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
@@ -12,11 +12,11 @@ spec:
     env:
       NODE_ENV: production
     args: [sh, -c, 'cd /usr/lib/jellyseerr && exec /usr/bin/node dist/index.js']
-    persistence:
-      config:
-        enabled: true
-        mountPath: /usr/lib/jellyseerr/config
-        existingClaim: jellyseerr-config-v1
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /usr/lib/jellyseerr/config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     service:
       main:
         ports:
