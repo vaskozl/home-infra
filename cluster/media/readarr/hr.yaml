@@ -3,17 +3,19 @@ kind: HelmRelease
 metadata:
   name: readarr
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
       repository: ghcr.io/vaskozl/readarr-develop
       tag: 0.3.8.2267@sha256:25861a6b8b87dd3ee1190e06537ddf697734dbc706c44012693192d135858c00
     args: [/usr/lib/readarr/bin/Readarr, -nobrowser, -data=/config]
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: readarr-config-v1
       torrents:
         enabled: true
         existingClaim: torrents-v2
