@@ -6,14 +6,17 @@ metadata:
     patch.sko.ai/app-template: enabled
 spec:
   values:
+    controller:
+      type: statefulset
     image:
       repository: ghcr.io/vaskozl/baikal
       tag: 0.9.3@sha256:7b2408029c57708f11c0b32bca4c2234b6f330354bdda66cd864e88c13755cf8
+    volumeClaimTemplates:
+    - name: data
+      mountPath: /var/lib/baikal
+      accessMode: ReadWriteOnce
+      size: 1Mi
     persistence:
-      config:
-        enabled: true
-        existingClaim: baikal-v3
-        mountPath: /var/lib/baikal
       msmtprc:
         enabled: true
         type: configMap
