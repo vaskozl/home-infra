@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia
+  annotations:
+    patch.sko.ai/app-template: statefulset
+spec:
+  values:
+    image:
+      repository: ghcr.io/authelia/authelia
+      tag: 4.37.5@sha256:25fc5423238b6f3a1fc967fda3f6a9212846aeb4a720327ef61c8ccff52dbbe2
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: authelia-config
+        mountPath: /config/configuration.yaml
+        subPath: configuration.yaml
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ports:
+          http:
+            enabled: true
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
+        hosts:
+        - host: gate.sko.ai
+          paths:
+          - path: /
+    resources:
+      requests:
+        cpu: 15m
+        memory: 20Mi
+      limits:
+        cpu: 1
+        memory: 200Mi
+    securityContext:
+      runAsUser: &uid 4000
+      runAsGroup: *uid
+      fsGroup: *uid
+

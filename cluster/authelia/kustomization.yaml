@@ -4,6 +4,5 @@ kind: Kustomization
 namespace: authelia
 resources:
 - _namespace.yaml
-- authelia.yaml
+- hr.yaml
 - config.yaml
-- pvc.yaml
