@@ -14,8 +14,7 @@ spec:
         enabled: true
         type: configMap
         name: authelia-config
-        mountPath: /config/configuration.yaml
-        subPath: configuration.yaml
+        mountPath: /config
     service:
       main:
         enabled: true
