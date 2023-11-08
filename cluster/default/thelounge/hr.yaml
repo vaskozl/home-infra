@@ -6,16 +6,19 @@ metadata:
     patch.sko.ai/app-template: enabled
 spec:
   values:
+    controller:
+      type: statefulset
     image:
       repository: ghcr.io/vaskozl/thelounge
       tag: 4.4.1@sha256:9016602b1a928b6dd89168b4e0d18ce491b9b88bbd1ebb9f49aea1d488c23788
     args: [thelounge, start]
     env:
       THELOUNGE_HOME: /config
-    persistence:
-      config:
-        enabled: true
-        existingClaim: thelounge-v4
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     service:
       main:
         ports:
