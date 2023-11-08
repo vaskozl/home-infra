@@ -86,7 +86,8 @@ spec:
         enabled: true
         type: secret
         name: mailserver.opendkim.keys
-        mountPath: /tmp/docker-mailserver/opendkim/keys
+        mountPath: /tmp/docker-mailserver/opendkim/keys/sko.ai-mail.key
+        subPath: sko.ai-mail.key
       tls:
         enabled: true
         type: secret
