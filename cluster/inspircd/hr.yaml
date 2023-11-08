@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: inspircd
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     nodeSelector:
