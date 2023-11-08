@@ -3,16 +3,17 @@ kind: HelmRelease
 metadata:
   name: autobrr
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     image:
       repository: ghcr.io/autobrr/autobrr
       tag: v1.33.0
-    persistence:
-      config:
-        enabled: true
-        existingClaim: autobrr-config-v1
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     service:
       main:
         ports:
