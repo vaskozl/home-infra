@@ -7,13 +7,16 @@ metadata:
     patch.sko.ai/app-template: enabled
 spec:
   values:
+    controller:
+      type: statefulset
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2023.11.1
-    persistence:
-      config:
-        enabled: true
-        existingClaim: hass-pvc-v4
+    volumeClaimTemplates:
+    - name: config
+      mountPath: /config
+      accessMode: ReadWriteOnce
+      size: 1Mi
     service:
       main:
         ports:
