@@ -4,11 +4,9 @@ metadata:
   name: hass
   namespace: default
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
-    controller:
-      type: statefulset
     image:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2023.11.1

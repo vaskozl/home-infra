@@ -3,11 +3,9 @@ kind: HelmRelease
 metadata:
   name: thelounge
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
-    controller:
-      type: statefulset
     image:
       repository: ghcr.io/vaskozl/thelounge
       tag: 4.4.1@sha256:9016602b1a928b6dd89168b4e0d18ce491b9b88bbd1ebb9f49aea1d488c23788

@@ -3,11 +3,9 @@ kind: HelmRelease
 metadata:
   name: baikal
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
-    controller:
-      type: statefulset
     image:
       repository: ghcr.io/vaskozl/baikal
       tag: 0.9.3@sha256:7b2408029c57708f11c0b32bca4c2234b6f330354bdda66cd864e88c13755cf8

@@ -3,12 +3,11 @@ kind: HelmRelease
 metadata:
   name: mosquitto
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     controller:
       replicas: 2
-      type: statefulset
     image:
       repository: ghcr.io/vaskozl/mosquitto
       tag: 2.0.18@sha256:c98acc9aa336069a4dfa0d7c3da367264344945c0d5dfa41671ca6a6879c274a
