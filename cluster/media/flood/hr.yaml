@@ -39,7 +39,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: flood-v1
+        type: emptyDir
     podSecurityContext:
       fsGroup: 1001
       runAsGroup: 1001
