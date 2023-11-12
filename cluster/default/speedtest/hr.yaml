@@ -6,9 +6,11 @@ metadata:
     patch.sko.ai/app-template: enabled
 spec:
   values:
+    controller:
+      replicas: 2
     image:
       repository: openspeedtest/latest
-      tag: v2.0.4
+      tag: v2.0.4@sha256:cb5a3aded1648bf6dcb38746c283da8ef02a0105ed6499bcfae577bca88c0823
     service:
       main:
         ports:
@@ -40,5 +42,5 @@ spec:
       limits:
         memory: 50Mi
       requests:
-        cpu: 10m
-        memory: 20Mi
+        cpu: 1m
+        memory: 35Mi
