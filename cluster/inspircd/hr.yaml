@@ -14,6 +14,7 @@ spec:
       tag: 3.16.1@sha256:93621e5c76b0309360448b27662ff00ff721b14920bff214ee53b45174383773
     args:
       - --nofork
+      - --runasroot # needed for gid=0
       - --config=/inspircd/conf/inspircd.conf
     persistence:
       config:
