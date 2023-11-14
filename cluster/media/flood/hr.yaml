@@ -4,6 +4,7 @@ metadata:
   name: flood
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -40,7 +41,3 @@ spec:
       data:
         enabled: true
         type: emptyDir
-    podSecurityContext:
-      fsGroup: 1001
-      runAsGroup: 1001
-      runAsUser: 1001
