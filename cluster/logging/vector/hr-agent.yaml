@@ -17,9 +17,11 @@ spec:
     role: Agent
     customConfig:
       data_dir: /vector-data-dir
+      expire_metrics_secs: 60
       sources:
         kubernetes_logs:
           type: kubernetes_logs
+          ignore_older_secs: 600
       sinks:
         vector:
           type: vector

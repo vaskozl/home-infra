@@ -17,6 +17,7 @@ spec:
     role: Aggregator
     customConfig:
       data_dir: /vector-data-dir
+      expire_metrics_secs: 60
       sources:
         vector:
           address: 0.0.0.0:6000
