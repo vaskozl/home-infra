@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: buildkit-amd64
+  annotations:
+    patch.sko.ai/app-template: statefulset
+spec:
+  values:
+    image:
+      repository: ghcr.io/vaskozl/buildkit:0.12.2
+      tag: 0.12.2@sha256:97ff256fed05affec3609e3d9ee9c60239f02a53ca7b133012ab18025a1e4717
+    args:
+    - --addr
+    - unix:///run/buildkit/buildkitd.sock
+    - --addr
+    - tcp://0.0.0.0:1234
+    - --tlscacert
+    - /certs/ca.pem
+    - --tlscert
+    - /certs/cert.pem
+    - --tlskey
+    - /certs/key.pem
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    service:
+      main:
+        ports:
+          mtls:
+            port: 1234
+    persistence:
+      certs:
+        enabled: true
+        type: secret
+        name: buildkit-daemon-certs
+        mountPath: /certs
+      cache:
+        enabled: true
+        type: emptyDir
+        mountPath: /var/lib/buildkit
+    resources:
+      limits:
+        cpu: 2
+        memory: 2Gi
+      requests:
+        cpu: 200m
+        memory: 2Gi
+        ephemeral-storage: 10Gi
+    securityContext:
+      capabilities:
+        add:
+          - SYS_PTRACE
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
