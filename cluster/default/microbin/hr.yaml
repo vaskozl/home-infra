@@ -4,6 +4,7 @@ metadata:
   name: microbin
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -41,7 +42,3 @@ spec:
       requests:
         cpu: 10m
         memory: 10Mi
-    securityContext:
-      runAsUser: 711
-      runAsGroup: 711
-      fsGroup: 711

@@ -31,3 +31,11 @@ patches:
   target:
     kind: HelmRelease
     annotationSelector: patch.sko.ai/app-template=statefulset
+# -----------------------------------------------------------
+# All HRs annotated with patch.sko.ai/app-security=statefulset
+# -----------------------------------------------------------
+- path: patches/hr-app-template-restricted.yaml
+  target:
+    kind: HelmRelease
+    annotationSelector: patch.sko.ai/app-security=restricted
+
