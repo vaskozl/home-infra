@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/prowlarr
-      tag: 1.9.4.4039@sha256:993a55db66302e0d220921b4b7602739c4c33db6e095bb5825fb27e9a3a2532e
+      tag: 1.9.4.4039@sha256:885574d519d0f70eb44498bdb5b58106f82e90278a2c9f4514587b0ab4b70f41
     args: [/usr/lib/prowlarr/bin/Prowlarr, -nobrowser, -data=/config]
     volumeClaimTemplates:
     - name: config
