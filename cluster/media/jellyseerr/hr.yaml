@@ -4,6 +4,7 @@ metadata:
   name: jellyseerr
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -38,7 +39,3 @@ spec:
       requests:
         cpu: 10m
         memory: 180Mi
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
