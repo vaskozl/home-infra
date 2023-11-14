@@ -29,7 +29,10 @@ spec:
     service:
       main:
         ports:
+          http:
+            enabled: false
           mtls:
+            enabled: true
             port: 1234
     persistence:
       certs:
