@@ -4,6 +4,7 @@ metadata:
   name: thelounge
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -44,7 +45,3 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: config
-    securityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568

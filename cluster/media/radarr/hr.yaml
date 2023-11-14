@@ -4,6 +4,7 @@ metadata:
   name: radarr
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -46,7 +47,3 @@ spec:
       requests:
         cpu: 85m
         memory: 350Mi
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568

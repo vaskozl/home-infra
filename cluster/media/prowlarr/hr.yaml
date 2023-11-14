@@ -4,6 +4,7 @@ metadata:
   name: prowlarr
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -42,7 +43,3 @@ spec:
       requests:
         cpu: 15m
         memory: 250Mi
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568

@@ -4,6 +4,7 @@ metadata:
   name: inspircd
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     nodeSelector:
@@ -52,7 +53,3 @@ spec:
       limits:
         cpu: 1
         memory: 200Mi
-    podSecurityContext:
-      fsGroup: 568
-      runAsGroup: 568
-      runAsUser: 568
