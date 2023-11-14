@@ -9,7 +9,6 @@ spec:
     image:
       repository: ghcr.io/vaskozl/thelounge
       tag: 4.4.1@sha256:d8ac068ed36babcf109bbee76f67dfaccaabeca13ca853b9a2e9eb66a914b2af
-    args: [thelounge, start]
     env:
       THELOUNGE_HOME: /config
     volumeClaimTemplates:

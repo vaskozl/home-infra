@@ -12,7 +12,6 @@ spec:
       repository: ghcr.io/vaskozl/inspircd
       tag: 3.16.1@sha256:93621e5c76b0309360448b27662ff00ff721b14920bff214ee53b45174383773
     args:
-      - inspircd
       - --nofork
       - --config=/inspircd/conf/inspircd.conf
     persistence:

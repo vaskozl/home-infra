@@ -9,7 +9,6 @@ spec:
     image:
       repository: ghcr.io/vaskozl/readarr-develop
       tag: 0.3.10.2287@sha256:737c848739623e9241bb84d2b27fa780666c13874587600bdf915609c9042750
-    args: [/usr/lib/readarr/bin/Readarr, -nobrowser, -data=/config]
     volumeClaimTemplates:
     - name: config
       mountPath: /config
