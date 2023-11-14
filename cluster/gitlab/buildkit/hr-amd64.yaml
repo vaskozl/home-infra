@@ -49,9 +49,4 @@ spec:
         memory: 2Gi
         ephemeral-storage: 10Gi
     securityContext:
-      capabilities:
-        add:
-          - SYS_PTRACE
       runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
