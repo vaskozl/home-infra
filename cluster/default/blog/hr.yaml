@@ -4,6 +4,7 @@ metadata:
   name: blog
   annotations:
     patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     controller:
