@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: buildkit-arm64
+  name: buildkitd-arm64
   annotations:
     patch.sko.ai/app-template: statefulset
 spec:
@@ -53,7 +53,6 @@ spec:
         memory: 2Gi
         ephemeral-storage: 10Gi
     securityContext:
-      runAsUser: 0
       privileged: true
     probes:
       liveness: &probes
