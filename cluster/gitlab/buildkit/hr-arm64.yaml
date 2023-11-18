@@ -54,3 +54,18 @@ spec:
         ephemeral-storage: 10Gi
     securityContext:
       runAsUser: 0
+      privileged: true
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+            - buildctl
+            - debug
+            - workers
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 5
+      readiness: *probes
