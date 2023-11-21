@@ -3,12 +3,11 @@ kind: HelmRelease
 metadata:
   name: mx
   annotations:
-    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-template: statefulset
 spec:
   values:
     controller:
       replicas: &count 2
-      type: statefulset
     image:
       repository: ghcr.io/docker-mailserver/docker-mailserver
       tag: 12.1.0@sha256:53c3b3da9fb47f6062210febb112469344e5a9cb319b78238442706fb72a0aca
