@@ -8,7 +8,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/baikal
-      tag: 0.9.3@sha256:9a6903d866719bf3ee238837f2870a2c87288141f3a6bd0c1e40b9f18a1d4b1c
+      tag: 0.9.4@sha256:4c76c513b87ff3bc922c9ab80da28c7cb667d996cbb77c9113d58d2e90ef0ac3
     volumeClaimTemplates:
     - name: data
       mountPath: /var/lib/baikal
