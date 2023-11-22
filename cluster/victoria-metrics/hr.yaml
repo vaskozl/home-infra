@@ -92,6 +92,10 @@ spec:
         - va.sko.ai
     vmagent:
       spec:
+        inlineScrapeConfig: |
+        - job_name: "external"
+          static_configs:
+          - targets: ["syno.sko.ai:9100"]
         scrapeInterval: 60s
         resources:
           limits:
