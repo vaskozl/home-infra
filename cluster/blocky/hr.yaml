@@ -21,6 +21,8 @@ spec:
     service:
       main:
         enabled: true
+        annotations:
+          coredns.io/hostname: blocky
         type: LoadBalancer
         externalTrafficPolicy: Local
         externalIPs:
