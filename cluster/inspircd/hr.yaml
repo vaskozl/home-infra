@@ -11,7 +11,7 @@ spec:
       kubernetes.io/arch: amd64
     image:
       repository: ghcr.io/vaskozl/inspircd
-      tag: 3.16.1@sha256:93621e5c76b0309360448b27662ff00ff721b14920bff214ee53b45174383773
+      tag: 3.16.1@sha256:f70036e8f423c33d2fca36a63bbb5c9d8585153d625e0c5236c0d7d79022c790
     args:
       - --nofork
       - --runasroot # needed for gid=0
