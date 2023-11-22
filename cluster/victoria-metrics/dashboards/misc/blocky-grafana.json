@@ -1911,24 +1911,31 @@
   "templating": {
     "list": [
       {
+        "current": {
+            "text": "default",
+            "value": "default"
+        },
+        "hide": 0,
+        "label": "Data Source",
+        "name": "datasource",
+        "options": [ ],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
         "hide": 2,
         "label": "blocky API URL",
         "name": "blocky_url",
         "query": "${VAR_BLOCKY_URL}",
         "skipUrlSync": false,
         "type": "constant",
+        "options": [ ],
         "current": {
-          "value": "${VAR_BLOCKY_URL}",
-          "text": "${VAR_BLOCKY_URL}",
-          "selected": false
-        },
-        "options": [
-          {
-            "value": "${VAR_BLOCKY_URL}",
-            "text": "${VAR_BLOCKY_URL}",
-            "selected": false
-          }
-        ]
+          "value": "http://blocky:4000",
+          "text": "http://blocky:4000"
+        }
       }
     ]
   },
