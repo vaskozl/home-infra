@@ -39,6 +39,9 @@ spec:
         auth.anonymous:
           enabled: true
           org_role: Editor
+        # blocky
+        panels:
+          disable_sanitize_html: true
     alertmanager:
       ingress:
         enabled: true
