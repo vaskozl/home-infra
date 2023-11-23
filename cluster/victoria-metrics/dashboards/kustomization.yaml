@@ -60,6 +60,9 @@ configMapGenerator:
 - name: dashboards-misc-blocky
   files:
   - misc/blocky-grafana.json
+- name: dashboards-nfs-full
+  files:
+  - misc/nfs-full.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
