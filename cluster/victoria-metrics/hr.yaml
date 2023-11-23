@@ -154,7 +154,6 @@ spec:
       - --collector.cpu 
       - --collector.meminfo
       - --collector.nfs
-      - --collector.thermal_zone
     # Remove high cardinality apiserver metrics
     kubeApiServer:
       spec:
