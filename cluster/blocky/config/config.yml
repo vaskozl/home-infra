@@ -1,7 +1,14 @@
+httpPort: 4000
+port: 53
+
 upstream:
   default:
   - https://dns.google/dns-query
   - https://dns.cloudflare.com/dns-query
+bootstrapDns:
+  - tcp+udp:1.1.1.1
+  - tcp+udp:8.8.8.1
+
 blocking:
   blackLists:
     ads:
@@ -10,7 +17,12 @@ blocking:
   clientGroupsBlock:
     default:
     - ads
-port: 53
-httpPort: 4000
+
 prometheus:
   enable: true
+
+caching:
+  maxItemsCount: 10_000
+  prefetching: true
+  prefetchMaxItemsCount: 1_000
+  cacheTimeNegaive: 5m
