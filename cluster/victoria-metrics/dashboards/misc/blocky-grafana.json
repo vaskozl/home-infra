@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 32,
+  "id": 6,
   "links": [
     {
       "icon": "external link",
@@ -205,42 +205,68 @@
       "datasource": {
         "uid": "P4169E866C3094E38"
       },
-      "description": "Enable Ad disable blocking",
+      "description": "Number of entries in the cache. Shows the last value",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 5,
-        "w": 12,
+        "h": 3,
+        "w": 6,
         "x": 12,
         "y": 0
       },
-      "id": 42,
+      "id": 45,
       "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
         },
-        "content": "<style>\n\n.blocky_btn {\n    border: none;\n  cursor: pointer; \n    padding: 12px;\n  font-size: 16px;\n  min-width: 100px\n}\n\n.blocky_greenbtn { \n  background-color: #4CAF50;\n  color: white;\n}\n\n.blocky_redbtn { \n  background-color: #AF504C;\n  color: white;\n}\n\n\n.blocky_alert {\n  font-size: 14px\n}\n</style>\n<div class=\"blocky_alert blocky_alert-warning fade in\">\n  <a href=\"#\" class=\"close\" data-dismiss=\"blocky_alert\" aria-label=\"close\" style=\"text-decoration:none\">&times;</a>Done!\n</div>\n<div>\n   <button class=\"blocky_btn blocky_greenbtn\" onclick=\"blocky_status_enable()\">On</button>\n   <button class=\"blocky_btn blocky_redbtn\" onclick=\"blocky_status_disable5m()\">Off 5m</button>\n   <button class=\"blocky_btn blocky_redbtn\" onclick=\"blocky_status_disable30m()\">Off 30m</button>\n<div>\n\n\n<script type=\"text/javascript\">\n\nfunction blocky_status_disable() {\n  blocky_status_switch(false, 0)\n}\n\nfunction blocky_status_disable5m() {\n  blocky_status_switch(false, 5*60)\n}\n\nfunction blocky_status_disable30m() {\n  blocky_status_switch(false, 30*60)\n}\n\nfunction blocky_status_enable() {\n  blocky_status_switch(true, 0)\n}\n\nfunction blocky_status_switch(enable, duration) {\n  var url = '$blocky_url';\n  op = enable ? 'enable' : 'disable?duration='+duration+\"s\"\n  $.get(url + '/api/blocking/'+op, function(data) {\n    showAlert()\n  })\n   .fail(function() {\n    alert( \"error\" );\n  })\n}\n\nvar showAlert = function() {\n\t// first show the alert\n  $('.blocky_alert').show().fadeTo(500, 1);\n  \n  // Now set a timeout to hide it\n  window.setTimeout(function() {\n    $(\".blocky_alert\").fadeTo(500, 0).slideUp(500, function() {\n      $(this).hide();\n    });\n  }, 3000);\n}\n\n// start with the alert hidden\n$('.blocky_alert').hide();\n\n</script>",
-        "mode": "html"
+        "textMode": "auto"
       },
       "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
+            "type": "prometheus",
             "uid": "P4169E866C3094E38"
           },
+          "exemplar": true,
+          "expr": "sum(blocky_cache_entry_count)/ sum(up{job=\"blocky\"})",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Blocking status",
+      "title": "Cache entries count",
       "transparent": true,
-      "type": "text"
+      "type": "stat"
     },
     {
       "datasource": {
-        "type": "prometheus",
         "uid": "P4169E866C3094E38"
       },
-      "description": "Blocky [version](https://github.com/0xERR0R/blocky) number",
+      "description": "Amount of prefetch queries per minute",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -263,26 +289,88 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 0,
-        "y": 3
+        "x": 18,
+        "y": 0
       },
-      "id": 55,
+      "id": 51,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "justifyMode": "center",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^version$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
       "pluginVersion": "10.1.2",
-      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(blocky_prefetch_count[5m])) * 60",
+          "format": "table",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Prefetch rate per min",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "description": "Time since last list refresh",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -290,7 +378,7 @@
             "uid": "P4169E866C3094E38"
           },
           "exemplar": false,
-          "expr": "blocky_build_info ",
+          "expr": "sum(time() -blocky_last_list_group_refresh)/ sum(up{job=\"blocky\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -298,17 +386,7 @@
           "refId": "A"
         }
       ],
-      "title": "Version",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {}
-        },
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
+      "title": "Last list refresh",
       "transparent": true,
       "type": "stat"
     },
@@ -394,20 +472,10 @@
       "datasource": {
         "uid": "P4169E866C3094E38"
       },
-      "description": "Number of blacklist entries",
+      "description": "Amount of performed DNS queries to prefetch cached queries",
       "fieldConfig": {
         "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -416,8 +484,7 @@
                 "value": null
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": []
       },
@@ -425,16 +492,14 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 5
+        "y": 3
       },
-      "id": 30,
-      "links": [],
-      "maxDataPoints": 100,
+      "id": 53,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "horizontal",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -452,15 +517,14 @@
             "uid": "P4169E866C3094E38"
           },
           "exemplar": true,
-          "expr": "sum(blocky_blacklist_cache) / sum(up{job=\"blocky\"})",
+          "expr": "ceil(sum(increase(blocky_prefetch_count[$__range])))",
           "format": "table",
-          "instant": false,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Blacklist entries total",
+      "title": "Prefetch count",
       "transparent": true,
       "type": "stat"
     },
@@ -499,7 +563,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 5
+        "y": 3
       },
       "id": 28,
       "links": [],
@@ -542,10 +606,9 @@
       "datasource": {
         "uid": "P4169E866C3094E38"
       },
-      "description": "Percentage of blocked queries",
+      "description": "Number of blacklist entries",
       "fieldConfig": {
         "defaults": {
-          "decimals": 2,
           "mappings": [
             {
               "options": {
@@ -557,22 +620,16 @@
               "type": "special"
             }
           ],
-          "max": 1,
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -582,7 +639,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 34,
+      "id": 30,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -607,7 +664,7 @@
             "uid": "P4169E866C3094E38"
           },
           "exemplar": true,
-          "expr": "sum(increase(blocky_response_total{response_type=\"BLOCKED\"}[$__range])) / sum(increase(blocky_query_total[$__range])) ",
+          "expr": "sum(blocky_blacklist_cache) / sum(up{job=\"blocky\"})",
           "format": "table",
           "instant": false,
           "interval": "",
@@ -615,7 +672,7 @@
           "refId": "A"
         }
       ],
-      "title": "Queries blocked",
+      "title": "Blacklist entries total",
       "transparent": true,
       "type": "stat"
     },
@@ -698,7 +755,7 @@
       "datasource": {
         "uid": "P4169E866C3094E38"
       },
-      "description": "Number of entries in the cache. Shows the last value",
+      "description": "Amount of unique domains in the prefetched cache",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -718,9 +775,9 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 8
+        "y": 6
       },
-      "id": 45,
+      "id": 49,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -728,7 +785,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -743,15 +800,14 @@
             "uid": "P4169E866C3094E38"
           },
           "exemplar": true,
-          "expr": "sum(blocky_cache_entry_count)/ sum(up{job=\"blocky\"})",
+          "expr": "sum(blocky_prefetch_domain_name_cache_count)/ sum(up{job=\"blocky\"})",
           "format": "table",
-          "instant": false,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Cache entries count",
+      "title": "Prefetch domain count",
       "transparent": true,
       "type": "stat"
     },
@@ -785,7 +841,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 8
+        "y": 6
       },
       "id": 47,
       "options": {
@@ -819,6 +875,87 @@
         }
       ],
       "title": "Cache Hit/Miss ratio",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "uid": "P4169E866C3094E38"
+      },
+      "description": "Percentage of blocked queries",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 9
+      },
+      "id": 34,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": true,
+          "expr": "sum(increase(blocky_response_total{response_type=\"BLOCKED\"}[$__range])) / sum(increase(blocky_query_total[$__range])) ",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Queries blocked",
       "transparent": true,
       "type": "stat"
     },
@@ -864,7 +1001,7 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 0,
+        "x": 6,
         "y": 9
       },
       "id": 36,
@@ -908,130 +1045,6 @@
       "datasource": {
         "uid": "P4169E866C3094E38"
       },
-      "description": "Amount of performed DNS queries to prefetch cached queries",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 6,
-        "y": 9
-      },
-      "id": 53,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": true,
-          "expr": "ceil(sum(increase(blocky_prefetch_count[$__range])))",
-          "format": "table",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Prefetch count",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "uid": "P4169E866C3094E38"
-      },
-      "description": "Amount of prefetch queries per minute",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 12,
-        "y": 11
-      },
-      "id": 51,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": true,
-          "expr": "sum(rate(blocky_prefetch_count[5m])) * 60",
-          "format": "table",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Prefetch rate per min",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "uid": "P4169E866C3094E38"
-      },
       "description": "How many of cached entries were prefetched automatically",
       "fieldConfig": {
         "defaults": {
@@ -1057,8 +1070,8 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 18,
-        "y": 11
+        "x": 12,
+        "y": 9
       },
       "id": 58,
       "options": {
@@ -1100,70 +1113,7 @@
         "type": "prometheus",
         "uid": "P4169E866C3094E38"
       },
-      "description": "Time since last list refresh",
-      "fieldConfig": {
-        "defaults": {
-          "decimals": 0,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 0,
-        "y": 12
-      },
-      "id": 57,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.1.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": "sum(time() -blocky_last_list_group_refresh)/ sum(up{job=\"blocky\"})",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Last list refresh",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "uid": "P4169E866C3094E38"
-      },
-      "description": "Amount of unique domains in the prefetched cache",
+      "description": "Blocky [version](https://github.com/0xERR0R/blocky) number",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1173,6 +1123,10 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -1182,15 +1136,251 @@
       "gridPos": {
         "h": 3,
         "w": 6,
-        "x": 6,
-        "y": 12
+        "x": 18,
+        "y": 9
       },
-      "id": 49,
+      "id": 55,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^version$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.1.2",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": false,
+          "expr": "blocky_build_info ",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Version",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        },
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 12
+      },
+      "id": 2,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "6.6.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": false,
+          "expr": " sort_desc(sum by (type) (ceil(increase(blocky_query_total[$__range]))))",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{ type }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Query by type",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 6,
+        "y": 12
+      },
+      "id": 38,
+      "interval": "",
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": false,
+          "expr": " sort_desc(sum by (response_type) (ceil(increase(blocky_response_total[$__range]))))",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{response_type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Response Type",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 11,
+        "y": 12
+      },
+      "id": 14,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1198,26 +1388,104 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P4169E866C3094E38"
           },
-          "exemplar": true,
-          "expr": "sum(blocky_prefetch_domain_name_cache_count)/ sum(up{job=\"blocky\"})",
-          "format": "table",
+          "exemplar": false,
+          "expr": " sort_desc(sum by (reason) (ceil(increase(blocky_response_total[$__range]))))",
+          "format": "time_series",
+          "instant": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{reason}}",
           "refId": "A"
         }
       ],
-      "title": "Prefetch domain count",
+      "title": "Response Reasons",
       "transparent": true,
-      "type": "stat"
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 18,
+        "y": 12
+      },
+      "id": 12,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "exemplar": false,
+          "expr": " sort_desc(sum by (response_code) (ceil(increase(blocky_response_total[$__range]))))",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{response_code}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Response status",
+      "transparent": true,
+      "type": "piechart"
     },
     {
       "datasource": {
@@ -1283,7 +1551,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 20
       },
       "id": 10,
       "options": {
@@ -1315,105 +1583,6 @@
         }
       ],
       "title": "Request rate",
-      "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "avg requests / min",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 24,
-        "x": 0,
-        "y": 22
-      },
-      "id": 52,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": true,
-          "expr": "sum by (client) (rate(blocky_query_total[5m])) * 60",
-          "format": "time_series",
-          "instant": false,
-          "interval": "",
-          "legendFormat": " {{client}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Request rate per client",
       "transparent": true,
       "type": "timeseries"
     },
@@ -1450,7 +1619,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 27
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1541,441 +1710,93 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "avg requests / min",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
             }
           },
-          "decimals": 0,
+          "links": [],
           "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 38
+        "y": 36
       },
-      "id": 2,
-      "links": [],
-      "maxDataPoints": 3,
+      "id": 52,
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
-      "pluginVersion": "6.6.2",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P4169E866C3094E38"
           },
-          "exemplar": false,
-          "expr": " sort_desc(sum by (type) (ceil(increase(blocky_query_total[$__range]))))",
+          "exemplar": true,
+          "expr": "sum by (client) (rate(blocky_query_total[5m])) * 60",
           "format": "time_series",
-          "instant": true,
+          "instant": false,
           "interval": "",
-          "legendFormat": "{{ type }}",
+          "legendFormat": " {{client}}",
           "refId": "A"
         }
       ],
-      "title": "Query by type",
+      "title": "Request rate per client",
       "transparent": true,
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 38
-      },
-      "id": 8,
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "6.6.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": "sort_desc(sum by (client) (ceil(increase(blocky_query_total[$__range]))))",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{ client }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Query per Client",
-      "transparent": true,
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 46
-      },
-      "id": 32,
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "6.6.2",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": "topk(1, blocky_blacklist_cache) by (group)",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{ group }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Blacklist by group",
-      "transparent": true,
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 46
-      },
-      "id": 14,
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": " sort_desc(sum by (reason) (ceil(increase(blocky_response_total[$__range]))))",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{reason}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Response Reasons",
-      "transparent": true,
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 54
-      },
-      "id": 38,
-      "interval": "",
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": " sort_desc(sum by (response_type) (ceil(increase(blocky_response_total[$__range]))))",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{response_type}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Response Type",
-      "transparent": true,
-      "type": "piechart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P4169E866C3094E38"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 54
-      },
-      "id": 12,
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "values": [
-            "value",
-            "percent"
-          ]
-        },
-        "pieType": "donut",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P4169E866C3094E38"
-          },
-          "exemplar": false,
-          "expr": " sort_desc(sum by (response_code) (ceil(increase(blocky_response_total[$__range]))))",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{response_code}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Response status",
-      "transparent": true,
-      "type": "piechart"
+      "type": "timeseries"
     }
   ],
   "refresh": "",
@@ -2033,6 +1854,6 @@
   "timezone": "",
   "title": "Blocky",
   "uid": "JvOqE4gRk",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
