@@ -134,7 +134,7 @@ spec:
       seccompProfile:
         type: RuntimeDefault
     probes:
-      liveness: &probes
+      liveness:
         enabled: true
         custom: true
         spec:
@@ -146,4 +146,8 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 60
           timeoutSeconds: 5
-      readiness: *probes
+      readiness: &ready
+        tcpSocket:
+          port: 25
+      startupProbe: *ready
+
