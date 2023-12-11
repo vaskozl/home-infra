@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scanner
+spec:
+  schedule: "0 7 * * 2,6"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: scanner-sa
+          containers:
+          - name: scanner-container
+            image: ghcr.io/vaskozl/perl-mojolicious:9.35@sha256:f109f0fac261f40fa45f2aa88b5a99f770e2c32ede3b5fd11f8f0c9baafe0114
+            args: [scan-containers.pl, -u, -m, 'security-reports@sko.ai']
