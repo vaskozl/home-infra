@@ -9,7 +9,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/microbin-bin
-      tag: 2.0.4@sha256:d0368ea08a91f3a92aff4e1c582ec89cf5d062f1d9152496e0470f924360454e
+      tag: 2.0.4@sha256:9539dd964c69e566390b7ae0bf25ba58639fa655ac3ceea89d8a39ddc76e0b44
     env:
       MICROBIN_PORT: &port 8080
       MICROBIN_DATA_DIR: &data /var/lib/microbin
