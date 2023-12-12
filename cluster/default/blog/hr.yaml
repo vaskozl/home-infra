@@ -12,7 +12,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: registry.sko.ai/vasko/blog
-      tag: head@sha256:b4b8a6cbea2103833ed1a0439b58d9e17fe172bedb5644c31476adaa91edcd93
+      tag: head@sha256:7685ea7911895fce938d00b7ac194f7be749ae34818a7f6e35553bae47f4f5d2
     imagePullSecrets:
     - name: regcred
     service:
