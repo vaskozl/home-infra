@@ -121,6 +121,14 @@ spec:
               helper_memory_limit = "200Mi"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
+    registry:
+      database:
+        enabled: false
+        password:
+          secret: gitlab-postgresql-password
+          key: postgresql-registry-password
+        name: registry
+        sslmode: disable
   postRenderers:
   - kustomize:
       patches:
