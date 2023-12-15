@@ -8,10 +8,10 @@ resources:
 configMapGenerator:
 - name: flux-cluster-dashboard
   files:
-  - flux-cluster-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+  - flux-cluster-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
 - name: flux-control-plane-dashboard
   files:
-  - flux-control-plane-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+  - flux-control-plane-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
