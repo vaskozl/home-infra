@@ -11,3 +11,7 @@ spec:
     - namespaceSelector:
         matchLabels:
           kubernetes.io/metadata.name: "ingress-nginx"
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "haproxy"
