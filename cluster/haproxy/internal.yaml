@@ -23,6 +23,7 @@ spec:
         externalTrafficPolicy: Local
         externalIPs:
           - 192.168.99.27
+      config:
         load-balance: leastconn
         ssl-redirect: 'true'
         syslog-server: "address:stdout, format: raw, facility:daemon"
