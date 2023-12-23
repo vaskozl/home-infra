@@ -26,6 +26,7 @@ spec:
         load-balance: leastconn
         ssl-redirect: 'true'
         syslog-server: "address:stdout, format: raw, facility:daemon"
+        scale-server-slots: 2
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
       resources:
