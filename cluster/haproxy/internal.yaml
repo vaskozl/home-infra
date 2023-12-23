@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: internal
+spec:
+  chart:
+    spec:
+      chart: kubernetes-ingress
+      sourceRef:
+        kind: HelmRepository
+        name: haproxytech
+        namespace: flux-system
+      version: 1.35.5
+  interval: 1h
+  values:
+    controller:
+      replicaCount: 1
+      ingressClass: haproxy-internal
+      service:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        externalIPs:
+          - 192.168.99.27
+        load-balance: leastconn
+        ssl-redirect: 'true'
+        syslog-server: "address:stdout, format: raw, facility:daemon"
+      extraArgs:
+        - --default-ssl-certificate=cert-manager/sko-ai-tls
+      resources:
+        requests:
+          memory: 250Mi
+          cpu: 25m
+        limits:
+          memory: 500Mi
