@@ -19,6 +19,7 @@ spec:
     service:
       main:
         enabled: true
+        ingressClassName: haproxy-internal
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
@@ -28,8 +29,6 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
         hosts:
         - host: gate.sko.ai
           paths:

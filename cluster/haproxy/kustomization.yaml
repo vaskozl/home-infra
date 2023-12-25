@@ -5,3 +5,12 @@ namespace: haproxy
 resources:
 - _namespace.yaml
 - internal.yaml
+
+configMapGenerator:
+- name: lua
+  files:
+  - haproxy-lua-http.lua=https://raw.githubusercontent.com/haproxytech/haproxy-lua-http/670d0d278182902f252faffc17eeb51a7ecb4b9d/http.lua
+  - auth-request.lua=https://raw.githubusercontent.com/TimWolla/haproxy-auth-request/f91c81eccc1d2a45ea170a2f6f2474054962a256/auth-request.lua
+  - json.lua=https://raw.githubusercontent.com/rxi/json.lua/11077824d7cfcd28a4b2f152518036b295e7e4ce/json.lua
+generatorOptions:
+  disableNameSuffixHash: true

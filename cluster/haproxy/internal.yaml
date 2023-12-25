@@ -27,9 +27,25 @@ spec:
         load-balance: leastconn
         ssl-redirect: 'true'
         syslog-server: "address:stdout, format: raw, facility:daemon"
-        scale-server-slots: 2
+        scale-server-slots: '2'
+        global-config-snippet: |
+          lua-prepend-path /usr/local/share/lua/?.lua
+          lua-load /usr/local/share/lua/auth-request.lua
+        frontend-config-snippet: |
+          acl public-frontends hdr(host) -m reg -i ^(?i)(gate)\.sko\.ai$
+          http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+          #                               Backend name            Path         Method  Request  Success  Failure
+          http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    *        remote-*        -
+          http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool }
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
+      extraVolumes:
+      - name: lua
+        configMap:
+          name: lua
+      extraVolumeMounts:
+      - name: lua
+        mountPath: /usr/local/share/lua
       resources:
         requests:
           memory: 250Mi
