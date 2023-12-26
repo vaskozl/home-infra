@@ -15,7 +15,7 @@ spec:
   interval: 1h
   values:
     controller:
-      replicaCount: 1
+      replicaCount: 3
       ingressClassResource:
         name: haproxy-internal
       service:
