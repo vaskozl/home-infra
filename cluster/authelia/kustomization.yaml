@@ -10,9 +10,12 @@ components:
 - ../common
 
 secretGenerator:
-- name: config
+- name: authelia-config
   files:
   - config/configuration.yml
   - config/users_database.yml
+- name: varnish-config
+  files:
+  - config/varnish.vcl
 configurations:
 - kustomizeconfig.yaml

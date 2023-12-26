@@ -14,7 +14,7 @@ spec:
       config:
         enabled: true
         type: secret
-        name: config
+        name: authelia-config
         mountPath: /config
     service:
       main:
