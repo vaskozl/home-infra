@@ -34,11 +34,19 @@ spec:
         frontend-config-snippet: |
           # Disable auth for specific backends
           acl public-frontends hdr(host) -m reg -i ^(?i)(gate)\.sko\.ai$
-          # Authelia needs this header
+
+          # Authelia needs these headers to work correctly
+          http-request set-header X-Real-IP %[src]
+          http-request set-header X-Forwarded-Method %[var(req.method)]
+          http-request set-header X-Forwarded-Proto %[var(req.scheme)]
           http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+          http-request set-header X-Forwarded-Uri %[path]%[var(req.questionmark)]%[query]
+
           # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
           http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    *        remote-*        -
           http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool }
+
+          # Security/Privacy Headers
           http-response set-header X-XSS-Protection "1; mode=block"
           http-response set-header X-Content-Type-Options "nosniff"
           http-response set-header X-Frame-Options "deny"
