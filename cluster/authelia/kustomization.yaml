@@ -8,7 +8,7 @@ resources:
 components:
 - ../common
 
-configMapGenerator:
+secretGenerator:
 - name: config
   files:
   - config/configuration.yml

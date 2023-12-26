@@ -13,7 +13,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: configMap
+        type: secret
         name: config
         mountPath: /config
     service:
