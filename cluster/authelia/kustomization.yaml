@@ -5,6 +5,13 @@ namespace: authelia
 resources:
 - _namespace.yaml
 - hr.yaml
-- config.yaml
 components:
 - ../common
+
+configMapGenerator:
+- name: config
+  files:
+  - config/configuration.yml
+  - config/users_database.yml
+configurations:
+- kustomizeconfig.yaml
