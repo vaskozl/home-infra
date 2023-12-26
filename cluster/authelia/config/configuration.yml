@@ -23,6 +23,8 @@ authentication_backend:
 access_control:
     default_policy: ENC[AES256_GCM,data:V/WGQYSXwSx85w==,iv:kskBrOcyh63DgIO3wktmJgdM033OARi4GdrZT0eagZw=,tag:zuAaU1zDGxLtix3h1g2XSQ==,type:str]
     rules:
+        - domain: ENC[AES256_GCM,data:hsYPL54melfhkIg=,iv:82HPZDHbssOMVtA/DeQDQef2gKORUiTSUokTvgSEp8Q=,tag:flOE09cpjEzE9PlTygrRCw==,type:str]
+          policy: ENC[AES256_GCM,data:EThumWhe,iv:w27M4ve9L//tTj0js3ai4Mh4I4gJ8QpIjC7rYvv4HBw=,tag:3RhWGXH1APsmPpbyYV39YQ==,type:str]
         - domain:
             - ENC[AES256_GCM,data:2VmwNpM0GMic2Gz6vg==,iv:LXKTj3kBQBnG6yOgm9X765n3E9mt1ZQO2Nz6B+AnCmg=,tag:CYLY/N3THk1QJBF2HSXRFg==,type:str]
             - ENC[AES256_GCM,data:qsUOPkktdaYDH/KLmw==,iv:PQDPCEO9qjYGc82g4ac5N3f+V3jlQAAzUFc+LWuhADU=,tag:5k2kyYo4om73cnKEXDc+5Q==,type:str]
@@ -81,8 +83,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-12-26T10:32:27Z"
-    mac: ENC[AES256_GCM,data:j0GSHV8mxAw5bVJQaO4QY6opqcbnKE4+GoeKFgGiV+6AwV2IxRgJJ5GM1/9bTyhfshRLeoLmm57jJg05jzfLg0n9e7rS0VrCPpex+4GeuCeiwEHPA9e4eY81rMu+omnO7BF+NG36yqZlEi+/rYp1c9g+I0sVHC32TeTr+vIPM/g=,iv:qqEELLGAuzSfqCZv7nTv009R/IM7XwoKXhjyCCAPtgA=,tag:vqCWKv9iOUDo0NcwB2eJSw==,type:str]
+    lastmodified: "2023-12-26T10:47:54Z"
+    mac: ENC[AES256_GCM,data:Gna6wqCnU3aA1nIKR2PqVmE34KRRCl1Ujlt7RAzK9hcIAg9qmhk/1LgM8gZ7ycepBP3YdJxaqn02SMNO1/BNJlgubTwYMc5cK/bwTLyh64OAloiCT2jWVJlfWcEkDZmuAtayl/8r0bKEBfsMQ/Nl5EH9r8DPQ+AIoADlZgOkNGA=,iv:s6vDFwY8dPwIN0hRDM6Qc5rSZPGLSNDl9aaeww+TwfE=,tag:GFGHuwySrOmrnkkQr9c+HA==,type:str]
     pgp:
         - created_at: "2023-12-26T09:44:04Z"
           enc: |-
