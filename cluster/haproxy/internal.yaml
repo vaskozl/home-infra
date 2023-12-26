@@ -49,15 +49,9 @@ spec:
       - name: lua
         secret:
           secretName: lua
-      - name: haproxy-aux-cfg
-        configMap:
-          name: haproxy-aux-cfg
       extraVolumeMounts:
       - name: lua
         mountPath: /usr/local/share/lua
-      - name: haproxy-aux-cfg
-        mountPath: /etc/haproxy/haproxy-aux.cfg
-        subPath: haproxy-aux.cfg
       resources:
         requests:
           memory: 250Mi

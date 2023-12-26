@@ -12,10 +12,5 @@ secretGenerator:
   - lua/haproxy-lua-http.lua
   - lua/auth-request.lua
   - lua/json.lua
-
-configMapGenerator:
-- name: haproxy-aux-cfg
-  files:
-  - haproxy-aux.cfg
 generatorOptions:
   disableNameSuffixHash: true

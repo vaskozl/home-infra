@@ -27,10 +27,6 @@ spec:
       main:
         enabled: true
         ingressClassName: haproxy-internal
-        annotations:
-          haproxy.org/backend-config-snippet: |
-            http-request cache-use mycache
-            http-response cache-store mycache
         hosts:
         - host: gate.sko.ai
           paths:
