@@ -19,8 +19,6 @@ spec:
     service:
       main:
         enabled: true
-        type: LoadBalancer
-        externalTrafficPolicy: Local
         ports:
           http:
             enabled: true
