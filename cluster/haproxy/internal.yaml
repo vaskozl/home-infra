@@ -41,8 +41,8 @@ spec:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
       extraVolumes:
       - name: lua
-        configMap:
-          name: lua
+        secret:
+          secretName: lua
       extraVolumeMounts:
       - name: lua
         mountPath: /usr/local/share/lua

@@ -6,7 +6,7 @@ resources:
 - _namespace.yaml
 - internal.yaml
 
-configMapGenerator:
+secretGenerator:
 - name: lua
   files:
   - haproxy-lua-http.lua=https://raw.githubusercontent.com/haproxytech/haproxy-lua-http/670d0d278182902f252faffc17eeb51a7ecb4b9d/http.lua
