@@ -5,6 +5,10 @@ namespace: haproxy
 resources:
 - _namespace.yaml
 - internal.yaml
+- ../netpols/allow-all-ingress
+
+components:
+- ../common
 
 secretGenerator:
 - name: lua
