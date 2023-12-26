@@ -27,15 +27,6 @@ spec:
         - host: &host prowlarr.sko.ai
           paths:
           - path: /
-      api:
-        enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-          nginx.ingress.kubernetes.io/use-regex: "true"
-        hosts:
-        - host: *host
-          paths:
-          - path: /\d+/(api|download)
     resources:
       limits:
         cpu: 800m

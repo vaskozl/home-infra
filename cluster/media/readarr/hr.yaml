@@ -31,14 +31,6 @@ spec:
         - host: &host readarr.sko.ai
           paths:
           - path: /
-      api:
-        enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-        hosts:
-        - host: *host
-          paths:
-          - path: /api
     resources:
       limits:
         cpu: 800m

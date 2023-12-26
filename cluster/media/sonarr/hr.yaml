@@ -31,15 +31,6 @@ spec:
         - host: &host sonarr.sko.ai
           paths:
           - path: /
-      api:
-        enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-        hosts:
-        - host: *host
-          paths:
-          - path: /api
-          - path: /feed/v3/calendar
     resources:
       limits:
         cpu: 1200m
