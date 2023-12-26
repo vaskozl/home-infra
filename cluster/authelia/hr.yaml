@@ -19,7 +19,6 @@ spec:
     service:
       main:
         enabled: true
-        ingressClassName: haproxy-internal
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
@@ -29,6 +28,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: haproxy-internal
         hosts:
         - host: gate.sko.ai
           paths:
