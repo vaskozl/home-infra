@@ -39,10 +39,10 @@ spec:
           # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
           http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    *        remote-*        -
           http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool }
-          http-response set-header X-XSS-Protection "1; mode=block"
+          http-response set-header Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; form-action 'self'; style-src 'self' 'unsafe-inline';"
           http-response set-header X-Content-Type-Options "nosniff"
           http-response set-header X-Frame-Options "deny"
-          http-response set-header Referrer-Policy "no-referrer-when-downgrade"
+          http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
       extraVolumes:
