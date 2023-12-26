@@ -1,4 +1,4 @@
-# Default backend definition. Set this to point to your content server.
+vcl 4.1;
 backend default {
     .host = "authelia";
     .port = "8080";
