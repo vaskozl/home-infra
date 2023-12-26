@@ -31,6 +31,9 @@ spec:
           lua-prepend-path /usr/local/share/lua/?.lua
           lua-load /usr/local/share/lua/auth-request.lua
         frontend-config-snippet: |
+          # Disable auth for specific backends
+          acl public-frontends hdr(host) -m reg -i ^(?i)(gate)\.sko\.ai$
+
           # Authelia needs these headers to work correctly
           http-request set-var(req.scheme) str(https) if { ssl_fc }
           http-request set-var(req.scheme) str(http) if !{ ssl_fc }
@@ -42,7 +45,7 @@ spec:
 
           # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
           http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    *        remote-*        -
-          http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool }
+          http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool }
 
           # Security Headers
           http-response set-header X-XSS-Protection "1; mode=block"
