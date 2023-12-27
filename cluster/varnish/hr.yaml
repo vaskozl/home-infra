@@ -34,6 +34,7 @@ spec:
         annotations:
           # Better cache utilisation
           haproxy.org/load-balance: uri
+          haproxy.org/send-proxy-protocol: proxy-v2
         ingressClassName: haproxy-internal
         hosts:
         - host: gate.sko.ai
