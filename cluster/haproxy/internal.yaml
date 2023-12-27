@@ -25,7 +25,7 @@ spec:
         tcpPorts:
           - name: ssh
             port: 22
-            targetPort: ssh
+            targetPort: 22
       config:
         load-balance: leastconn
         #ssl-redirect: 'true'
