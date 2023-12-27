@@ -5,7 +5,6 @@ namespace: authelia
 resources:
 - _namespace.yaml
 - hr.yaml
-- hr-varnish.yaml
 components:
 - ../common
 
@@ -14,8 +13,5 @@ secretGenerator:
   files:
   - config/configuration.yml
   - config/users_database.yml
-- name: varnish-config
-  files:
-  - config/varnish.vcl
 configurations:
 - kustomizeconfig.yaml
