@@ -31,12 +31,20 @@ spec:
           lua-prepend-path /usr/local/share/lua/?.lua
           lua-load /usr/local/share/lua/auth-request.lua
         frontend-config-snippet: |
-          # Pass everything through varnish first (unless it comes back from varnish)
-          acl global_varnish_up nbsrv(varnish_varnish_http) ge 1
+          # Pass static files through varnish first (unless it comes back from varnish)
+          acl varnish_available nbsrv(varnish_varnish_http) ge 1
           acl already_varnished req.hdr(X-Varnished) -m found
+          acl static_content_dir path_beg /static/
+          acl static_content_ext path_end -i \
+              .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg \
+              .woff .woff2 .ttf .eot .html .htm .xml .json
+          acl static_content any(static_content_dir static_content_ext)
 
+          # Redirect everything but varnish to https
           http-request redirect scheme https if !{ ssl_fc } !already_varnished
-          use_backend varnish_varnish_http if global_varnish_up !already_varnished
+
+          # Use varnish if the content looks static and is not a miss from varnish
+          use_backend varnish_varnish_http if static_content varnish_available !already_varnished
 
           # Disable auth for specific backends
           acl public-frontends hdr(host) -m reg -i ^(?i)(gate)\.sko\.ai$
