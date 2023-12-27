@@ -33,7 +33,7 @@ spec:
         enabled: true
         ingressClassName: haproxy-internal
         hosts:
-        - host: gate.sko.ai
+        - host: gate-varnished.sko.ai
           paths:
           - path: /
     resources:
