@@ -30,6 +30,8 @@ spec:
         global-config-snippet: |
           lua-prepend-path /usr/local/share/lua/?.lua
           lua-load /usr/local/share/lua/auth-request.lua
+        # Allow proxy protocol from varnish
+        proxy-protocol: '10.0.0.0/8'
         frontend-config-snippet: |
           # Pass static files through varnish first (unless it comes back from varnish)
           acl varnish_available nbsrv(varnish_varnish_http) ge 1

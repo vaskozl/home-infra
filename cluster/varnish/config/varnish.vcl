@@ -2,6 +2,7 @@ vcl 4.1;
 backend default {
     .host = "internal-kubernetes-ingress.haproxy.svc.cluster.local.";
     .port = "80";
+    .proxy_header = 1;
 }
 
 /* Include cookie in cache hash */
