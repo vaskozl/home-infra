@@ -5,6 +5,7 @@ namespace: haproxy
 resources:
 - _namespace.yaml
 - internal.yaml
+- tcp-services.yaml
 - ../netpols/allow-all-ingress
 
 components:

@@ -22,6 +22,11 @@ spec:
         externalTrafficPolicy: Local
         externalIPs:
           - 192.168.99.27
+      service:
+        tcpPorts:
+          - name: ssh
+            port: 22
+            targetPort: ssh
       config:
         load-balance: leastconn
         #ssl-redirect: 'true'
@@ -67,6 +72,7 @@ spec:
           http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
+        - --configmap-tcp-services=haproxy/tcp-services
       extraVolumes:
       - name: lua
         secret:
