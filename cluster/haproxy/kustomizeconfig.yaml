@@ -4,3 +4,8 @@ nameReference:
   fieldSpecs:
   - path: spec/values/controller/extraVolumes/secret/secretName
     kind: HelmRelease
+- kind: ConfigMap
+  version: v1
+  fieldSpecs:
+  - path: spec/values/controller/extraVolumes/configMap/name
+    kind: HelmRelease
