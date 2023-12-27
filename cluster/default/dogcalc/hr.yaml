@@ -27,8 +27,7 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-          nginx.ingress.kubernetes.io/app-root: /static/index.html
+          haproxy.org/path-rewrite: ^/$ /static/index.html
         hosts:
         - host: dogcalc.sko.ai
           paths:
