@@ -11,20 +11,17 @@ resources:
 components:
 - ../common
 
+
 secretGenerator:
 - name: lua
   files:
   - lua/haproxy-lua-http.lua
   - lua/auth-request.lua
   - lua/json.lua
-
 configMapGenerator:
-- name: config
+- name: txt-config
   files:
   - public_hosts.txt
-- name: haproxy-aux-cfg
-  files:
-  - haproxy-aux.cfg
 
 configurations:
 - kustomizeconfig.yaml
