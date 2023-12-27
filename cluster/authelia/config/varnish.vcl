@@ -11,12 +11,8 @@ sub vcl_hash {
   }
 }
 
-/* Default VCL code with Cookie removed and grace drop */
+/* Default VCL code with Cookie removed */
 sub vcl_recv {
-    if (std.healthy(req.backend_hint)) {
-        // change the behavior for healthy backends: Cap grace to 10s
-        set req.grace = 10s;
-    }
     if (req.method == "PRI") {
         /* This will never happen in properly formed traffic (see: RFC7540) */
         return (synth(405));
@@ -51,8 +47,12 @@ sub vcl_recv {
 }
 
 sub vcl_backend_response {
-    set beresp.grace = 24h;
-    if (beresp.status >= 500 && bereq.is_bgfetch) {
-      return (abandon);
+    set beresp.ttl = 10m;
+    set beresp.grace = 60m;
+    if (beresp.status >= 500) {
+      if (bereq.is_bgfetch) {
+        return (abandon);
+      }
+      set beresp.uncacheable = true;
     }
 }
