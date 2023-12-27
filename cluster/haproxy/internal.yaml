@@ -34,9 +34,9 @@ spec:
           # Pass static files through varnish first (unless it comes back from varnish)
           acl varnish_available nbsrv(varnish_varnish_http) ge 1
           acl already_varnished req.hdr(X-Varnished) -m found
-          acl static_content_dir path_beg /static/
-          acl static_content_ext path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg .woff .woff2 .ttf .eot .html .htm .xml .json
-          acl static_content any(static_content_dir static_content_ext)
+          acl static_content path_beg /static/
+          acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg
+          acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
 
           # Redirect everything but varnish to https
           http-request redirect scheme https if !{ ssl_fc } !already_varnished
