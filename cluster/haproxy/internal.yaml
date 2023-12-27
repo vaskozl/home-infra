@@ -49,7 +49,7 @@ spec:
           use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb !already_varnished
 
           # Disable auth for specific backends
-          acl public-frontends hdr(host) -m reg -i ^(?i)(gate)\.sko\.ai$
+          acl public-frontends hdr(host) -f /config/public_hosts.txt
 
           # Authelia needs these headers to work correctly
           http-request set-header X-Forwarded-Proto https
@@ -71,9 +71,14 @@ spec:
       - name: lua
         secret:
           secretName: lua
+      - name: config
+        secret:
+          secretName: config
       extraVolumeMounts:
       - name: lua
         mountPath: /usr/local/share/lua
+      - name: config
+        mountPath: /config
       resources:
         requests:
           memory: 250Mi

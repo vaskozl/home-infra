@@ -16,5 +16,9 @@ secretGenerator:
   - lua/haproxy-lua-http.lua
   - lua/auth-request.lua
   - lua/json.lua
-generatorOptions:
-  disableNameSuffixHash: true
+- name: config
+  files:
+  - public_hosts.txt
+
+configurations:
+- kustomizeconfig.yaml
