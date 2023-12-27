@@ -42,6 +42,7 @@ spec:
           acl varnish_http_verb method GET HEAD PURGE
 
           # Redirect everything but varnish to https
+          http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
           http-request redirect scheme https if !{ ssl_fc } !already_varnished
 
           # Use varnish if the content looks static and is not a miss from varnish
