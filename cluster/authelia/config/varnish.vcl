@@ -47,6 +47,12 @@ sub vcl_recv {
 }
 
 sub vcl_backend_response {
+    # Remove Set-Cookie header
+    if (bereq.url ~ "^/api/verify") {
+        unset beresp.http.set-cookie;
+    }
+
+    # Keep serving from cache on 500s
     set beresp.ttl = 10m;
     set beresp.grace = 60m;
     if (beresp.status >= 500) {
