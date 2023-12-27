@@ -37,20 +37,23 @@ spec:
         # Allow proxy protocol from varnish
         proxy-protocol: '10.0.0.0/8'
         frontend-config-snippet: |
-          # Pass static files through varnish first (unless it comes back from varnish)
-          acl varnish_available nbsrv(varnish_varnish_http) ge 1
+          # Set already_varnished if the request came back after varnish didn't return from cache
+          acl from_internal src 10.0.0.0/8
           acl already_varnished req.hdr(X-Varnished) -m found
+          http-request deny deny_status 401 if !from_internal already_varnished
+
+          # Redirect everything but varnish to https
+          http-request redirect scheme https if !{ ssl_fc } !already_varnished
+
+          # Add UUID
+          http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
+
+          # Static Rules
           acl static_content path_beg /static/
           acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg
           acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
           acl varnish_http_verb method GET HEAD
-
-          # Redirect everything but varnish to https
-          http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
-          http-request redirect scheme https if !{ ssl_fc } !already_varnished
-
-          # Use varnish if the content looks static and is not a miss from varnish
-          use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb !already_varnished
+          acl varnish_available nbsrv(varnish_varnish_http) ge 1
 
           # Disable auth for specific backends
           acl public-frontends hdr(host) -f /config/public_hosts.txt
@@ -60,15 +63,20 @@ spec:
           http-request set-header X-Forwarded-Host %[req.hdr(Host)]
           http-request set-header X-Forwarded-Uri %[path]
 
+          acl skip_authelia { public-frontends || already_varnished }
+
           # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
-          http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -
-          http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool }
+          http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -                          if !public-frontends !already_varnished
+          http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool } if !public-frontends !already_varnished
 
           # Security Headers
           http-response set-header X-XSS-Protection "1; mode=block"
           http-response set-header X-Content-Type-Options "nosniff"
           http-response set-header X-Frame-Options "deny"
           http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
+
+          # Use varnish if the content looks static and is not a miss from varnish
+          use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb !already_varnished
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-services
@@ -82,7 +90,7 @@ spec:
       extraVolumeMounts:
       - name: lua
         mountPath: /usr/local/share/lua
-      - name: config
+      - name: txt-config
         mountPath: /config
       resources:
         requests:
