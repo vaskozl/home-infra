@@ -31,10 +31,10 @@ spec:
         #ssl-redirect: 'true'
         syslog-server: "address:stdout, format: raw, facility:daemon"
         scale-server-slots: '2'
+        log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
         global-config-snippet: |
           lua-prepend-path /usr/local/share/lua/?.lua
           lua-load /usr/local/share/lua/auth-request.lua
-        # Allow proxy protocol from varnish
         frontend-config-snippet: |
           # Check if the request really came back from varnish
           acl from_internal fc_src 10.0.0.0/8
@@ -74,7 +74,8 @@ spec:
           acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
           acl varnish_http_verb method GET HEAD
           acl varnish_available nbsrv(varnish_varnish_http) ge 1
-          acl varnish_cacheable !req.hdr(Cookie) -m found
+
+          acl varnish_cacheable req.hdr(Cookie) -m len 0
           acl varnish_cacheable req.hdr(Remote-User) -m found
 
           # Use varnish if the content looks static and is not a miss from varnish
