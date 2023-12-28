@@ -25,7 +25,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: haproxy-internal
         annotations:
           haproxy.org/path-rewrite: ^/$ /static/index.html
         hosts:
