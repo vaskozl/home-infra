@@ -35,7 +35,6 @@ spec:
           lua-prepend-path /usr/local/share/lua/?.lua
           lua-load /usr/local/share/lua/auth-request.lua
         # Allow proxy protocol from varnish
-        proxy-protocol: '10.0.0.0/8'
         frontend-config-snippet: |
           # Check if the request really came back from varnish
           acl from_internal fc_src 10.0.0.0/8
