@@ -4,6 +4,8 @@ backend default {
     .port = "80";
 }
 
+include "/config/hit-miss.vcl";
+
 /* Include cookie in cache hash */
 sub vcl_hash {
   # Include the Remote-User header in the hash if present
@@ -71,4 +73,8 @@ sub vcl_backend_response {
       }
       set beresp.uncacheable = true;
     }
+}
+
+sub vcl_deliver {
+  set resp.http.x-unique-id = req.http.x-unique-id;
 }

@@ -11,6 +11,7 @@ components:
 secretGenerator:
 - name: varnish-config
   files:
-  - config/varnish.vcl
+  - config/main.vcl
+  - config/hit-miss.vcl
 configurations:
 - kustomizeconfig.yaml
