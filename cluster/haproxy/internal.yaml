@@ -40,7 +40,7 @@ spec:
           # Set already_varnished if the request came back after varnish didn't return from cache
           acl from_internal fc_src 10.0.0.0/8
           acl already_varnished req.hdr(X-Varnished) -m found
-          http-request deny deny_status 401 if !from_internal already_varnished
+          http-request deny deny_status 403 if !from_internal already_varnished
 
           # Redirect everything but varnish to https
           http-request redirect scheme https if !{ ssl_fc } !already_varnished
