@@ -39,7 +39,7 @@ spec:
         frontend-config-snippet: |
           # Check if the request really came back from varnish
           acl from_internal fc_src 10.0.0.0/8
-          acl already_varnished req.hdr(X-Varnished) -m found
+          acl already_varnished req.hdr(X-Varnish) -m found
           http-request deny deny_status 403 if !from_internal already_varnished
           # As the request is passing through this frontend for a second
           # time skip all http-request rules

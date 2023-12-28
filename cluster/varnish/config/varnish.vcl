@@ -66,9 +66,3 @@ sub vcl_backend_response {
       set beresp.uncacheable = true;
     }
 }
-
-# Tells haproxy to send the request stsraight to the backend next time
-sub vcl_backend_fetch {
-    # Let haproxy know
-    set bereq.http.X-Varnished = "true";
-}
