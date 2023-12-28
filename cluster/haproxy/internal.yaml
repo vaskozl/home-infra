@@ -74,10 +74,11 @@ spec:
           acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
           acl varnish_http_verb method GET HEAD
           acl varnish_available nbsrv(varnish_varnish_http) ge 1
-          acl varnich_cachable !req.hdr(Cookie) -m found || req.hdr(Remote-User) -m found
+          acl varnish_cacheable !req.hdr(Cookie) -m found
+          acl varnish_cacheable req.hdr(Remote-User) -m found
 
           # Use varnish if the content looks static and is not a miss from varnish
-          use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb !already_varnished
+          use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb varnish_cacheable !already_varnished
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-services
