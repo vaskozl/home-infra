@@ -7,8 +7,9 @@ backend default {
 
 /* Include cookie in cache hash */
 sub vcl_hash {
-  if (req.http.Cookie) {
-    hash_data(req.http.Cookie);
+  # Include the Remote-User header in the hash if present
+  if (req.http.Remote-User) {
+    hash_data(req.http.Remote-User);
   }
 }
 
@@ -44,6 +45,12 @@ sub vcl_recv {
         /* Not cacheable by default */
         return (pass);
     }
+
+    // We include Remote-User in the hash so we can cache
+    if (req.http.Cookie && !req.http.Remote-User) {
+        return (pass);
+    }
+
     return (hash);
 }
 

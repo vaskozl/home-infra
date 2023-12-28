@@ -51,13 +51,6 @@ spec:
           # Add UUID
           http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
 
-          # Static Rules
-          acl static_content path_beg /static/
-          acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg
-          acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
-          acl varnish_http_verb method GET HEAD
-          acl varnish_available nbsrv(varnish_varnish_http) ge 1
-
           # Disable auth for specific backends
           acl public_hosts hdr(host) -f /config/public_hosts.txt
 
@@ -75,6 +68,14 @@ spec:
           http-response set-header X-Content-Type-Options "nosniff"
           http-response set-header X-Frame-Options "deny"
           http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
+
+          # Static Rules
+          acl static_content path_beg /static/
+          acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg
+          acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
+          acl varnish_http_verb method GET HEAD
+          acl varnish_available nbsrv(varnish_varnish_http) ge 1
+          acl varnich_cachable !req.hdr(Cookie) -m found || req.hdr(Remote-User) -m found
 
           # Use varnish if the content looks static and is not a miss from varnish
           use_backend varnish_varnish_http if static_content varnish_available varnish_http_verb !already_varnished
