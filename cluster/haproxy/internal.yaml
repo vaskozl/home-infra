@@ -59,7 +59,7 @@ spec:
           acl varnish_available nbsrv(varnish_varnish_http) ge 1
 
           # Disable auth for specific backends
-          acl public-frontends hdr(host) -f /config/public_hosts.txt
+          acl public_hosts hdr(host) -f /config/public_hosts.txt
 
           # Authelia needs these headers to work correctly
           http-request set-header X-Forwarded-Proto https
