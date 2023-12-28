@@ -38,7 +38,7 @@ spec:
         proxy-protocol: '10.0.0.0/8'
         frontend-config-snippet: |
           # Set already_varnished if the request came back after varnish didn't return from cache
-          acl from_internal src 10.0.0.0/8
+          acl from_internal fc_src 10.0.0.0/8
           acl already_varnished req.hdr(X-Varnished) -m found
           http-request deny deny_status 401 if !from_internal already_varnished
 
@@ -63,11 +63,9 @@ spec:
           http-request set-header X-Forwarded-Host %[req.hdr(Host)]
           http-request set-header X-Forwarded-Uri %[path]
 
-          acl skip_authelia { public-frontends || already_varnished }
-
           # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
-          http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -                          if !public-frontends !already_varnished
-          http-request redirect location https://gate.sko.ai/?rd=%[url] if !public-frontends !{ var(txn.auth_response_successful) -m bool } if !public-frontends !already_varnished
+          http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -     if !public-frontends !already_varnished
+          http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public-frontends !already_varnished
 
           # Security Headers
           http-response set-header X-XSS-Protection "1; mode=block"
