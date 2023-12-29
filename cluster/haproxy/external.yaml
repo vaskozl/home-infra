@@ -23,3 +23,10 @@ spec:
       service:
         externalIPs:
           - 192.168.99.28
+      extraVolumes:
+      - name: lua
+        secret:
+          secretName: lua
+      - name: txt-config
+        configMap:
+          name: txt-config

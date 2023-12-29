@@ -57,13 +57,6 @@ controller:
       use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !already_varnished
   extraArgs:
     - --default-ssl-certificate=cert-manager/sko-ai-tls
-  extraVolumes:
-  - name: lua
-    secret:
-      secretName: lua
-  - name: txt-config
-    configMap:
-      name: txt-config
   extraVolumeMounts:
   - name: lua
     mountPath: /usr/local/share/lua
