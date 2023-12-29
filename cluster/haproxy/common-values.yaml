@@ -28,6 +28,10 @@ controller:
 
       # Disable auth for specific backends
       acl public_hosts hdr(host) -f /config/public_hosts.txt
+      # Drop the authelia cookie if it's not needed to allow caching
+      acl one_cookie req.cook_cnt() eq 1
+      acl auth_sess req.cook_cnt(authelia_session) eq 1
+      http-request del-header Cookie if public_hosts one_cookie auth_sess
 
       # Authelia needs these headers to work correctly
       http-request set-header X-Forwarded-Proto https
