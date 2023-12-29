@@ -1,0 +1,77 @@
+controller:
+  replicaCount: 2
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+  config:
+    load-balance: leastconn
+    syslog-server: "address:stdout, format: raw, facility:daemon"
+    scale-server-slots: '2'
+    log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
+    global-config-snippet: |
+      lua-prepend-path /usr/local/share/lua/?.lua
+      lua-load /usr/local/share/lua/auth-request.lua
+    frontend-config-snippet: |
+      # Check if the request really came back from varnish
+      acl from_internal fc_src 10.0.0.0/8
+      acl already_varnished req.hdr(X-Varnish) -m found
+      http-request deny deny_status 403 if !from_internal already_varnished
+      # As the request is passing through this frontend for a second
+      # time skip all http-request rules
+      http-request allow if already_varnished
+
+      # Redirect everything but varnish to https
+      http-request redirect scheme https if !{ ssl_fc }
+
+      # Add UUID
+      http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
+
+      # Disable auth for specific backends
+      acl public_hosts hdr(host) -f /config/public_hosts.txt
+
+      # Authelia needs these headers to work correctly
+      http-request set-header X-Forwarded-Proto https
+      http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+      http-request set-header X-Forwarded-Uri %[path]
+
+      # Drop any user supplied Remote-* headers
+      http-response del-header remote- -m beg
+      # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
+      http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -     if !public_hosts
+      http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
+
+      # Security Headers
+      http-response set-header X-XSS-Protection "1; mode=block"
+      http-response set-header X-Content-Type-Options "nosniff"
+      http-response set-header X-Frame-Options "deny"
+      http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
+
+      # Static Rules
+      acl varnish_http_verb method GET HEAD
+      acl varnish_available nbsrv(varnish_varnish_http) ge 1
+
+      acl varnish_cacheable req.hdr(Cookie) -m len 0
+      acl varnish_cacheable req.hdr(Remote-User) -m found
+
+      # Use varnish if the content looks static and is not a miss from varnish
+      use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !already_varnished
+  extraArgs:
+    - --default-ssl-certificate=cert-manager/sko-ai-tls
+  extraVolumes:
+  - name: lua
+    secret:
+      secretName: lua
+  - name: txt-config
+    configMap:
+      name: txt-config
+  extraVolumeMounts:
+  - name: lua
+    mountPath: /usr/local/share/lua
+  - name: txt-config
+    mountPath: /config
+  resources:
+    requests:
+      memory: 250Mi
+      cpu: 25m
+    limits:
+      memory: 500Mi

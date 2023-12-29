@@ -5,12 +5,20 @@ namespace: haproxy
 resources:
 - _namespace.yaml
 - internal.yaml
+- external.yaml
 - tcp-services.yaml
 - ../netpols/allow-all-ingress
 
 components:
 - ../common
 
+configMapGenerator:
+- name: common-values
+  files:
+  - values.yaml=common-values.yaml
+- name: txt-config
+  files:
+  - public_hosts.txt
 
 secretGenerator:
 - name: lua
@@ -18,10 +26,6 @@ secretGenerator:
   - lua/haproxy-lua-http.lua
   - lua/auth-request.lua
   - lua/json.lua
-configMapGenerator:
-- name: txt-config
-  files:
-  - public_hosts.txt
 
 configurations:
 - kustomizeconfig.yaml

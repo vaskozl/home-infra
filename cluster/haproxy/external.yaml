@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: internal
+  name: external
 spec:
   chart:
     spec:
@@ -18,15 +18,8 @@ spec:
   values:
     controller:
       ingressClassResource:
-        name: haproxy-internal
-        default: true
+        name: haproxy-external
+        default: false
       service:
         externalIPs:
-          - 192.168.99.27
-        tcpPorts:
-          - name: ssh
-            port: 22
-            targetPort: 2022
-      extraArgs:
-        - --default-ssl-certificate=cert-manager/sko-ai-tls
-        - --configmap-tcp-services=haproxy/tcp-services
+          - 192.168.99.28
