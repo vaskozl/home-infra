@@ -17,6 +17,7 @@ spec:
       replicaCount: 2
       ingressClassResource:
         name: haproxy-internal
+        default: true
       service:
         type: LoadBalancer
         externalTrafficPolicy: Local

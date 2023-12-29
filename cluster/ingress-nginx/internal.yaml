@@ -24,7 +24,7 @@ spec:
       ingressClassResource:
         name: internal
         enabled: true
-        default: true
+        default: false
       topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
