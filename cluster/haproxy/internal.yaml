@@ -69,9 +69,10 @@ spec:
           http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
 
           # Static Rules
+          acl static_content path /
           acl static_content path_beg /static/
-          acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg
-          acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json
+          acl static_content path_end -i .jpg .jpeg .png .gif .css .js .ico .pdf .txt .svg .webp .webm
+          acl static_content path_end -i .woff .woff2 .ttf .eot .html .htm .xml .json .yml .yaml .avif
           acl varnish_http_verb method GET HEAD
           acl varnish_available nbsrv(varnish_varnish_http) ge 1
 
