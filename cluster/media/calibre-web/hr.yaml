@@ -26,14 +26,6 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          # Increase buffers for the kobo integration
-          nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
-          nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            auth_request_set $user $upstream_http_remote_user;
-            proxy_set_header Remote-User $user;
-            proxy_busy_buffers_size 256k;
         hosts:
         - host: cw.sko.ai
           paths:
