@@ -24,6 +24,8 @@ spec:
       service:
         externalIPs:
           - 192.168.99.28
+      config:
+        request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:
       - name: lua
         secret:

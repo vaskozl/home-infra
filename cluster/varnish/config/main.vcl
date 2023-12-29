@@ -1,6 +1,12 @@
 vcl 4.1;
+
 backend default {
     .host = "internal-kubernetes-ingress.haproxy.svc.cluster.local.";
+    .port = "80";
+}
+
+backend external {
+    .host = "external-kubernetes-ingress.haproxy.svc.cluster.local.";
     .port = "80";
 }
 
@@ -16,6 +22,10 @@ sub vcl_hash {
 
 /* Default VCL code with Cookie removed */
 sub vcl_recv {
+    if (req.http.X-Ingress-Class == "haproxy-external") {
+        set req.backend_hint = external;
+    }
+
     if (req.method == "PRI") {
         /* This will never happen in properly formed traffic (see: RFC7540) */
         return (synth(405));

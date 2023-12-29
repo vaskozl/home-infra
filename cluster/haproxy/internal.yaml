@@ -28,6 +28,8 @@ spec:
           - name: ssh
             port: 22
             targetPort: 2022
+      config:
+        request-set-header: X-Ingress-Class "haproxy-internal"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-services
