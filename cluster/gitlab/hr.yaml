@@ -25,7 +25,7 @@ spec:
       hosts:
         domain: sko.ai
       ingress:
-        class: internal
+        class: haproxy-internal
         # Wildcard is configured by default
         configureCertmanager: false
         # TLS is enabled by default
