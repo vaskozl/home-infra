@@ -56,22 +56,10 @@ sub vcl_recv {
 }
 
 sub vcl_backend_response {
-    set beresp.grace = 24h;
-    # Set TTL base don response
-    if (beresp.status == 200 || beresp.status == 206 || beresp.status == 301) {
-        set beresp.ttl = 120m;
-    } elsif (beresp.status == 302 || beresp.status == 303) {
-        set beresp.ttl = 20m;
-    } elsif (beresp.status == 404 || beresp.status == 410) {
-        set beresp.ttl = 3m;
-    }
-
+    set beresp.grace = 30m;
     # Keep serving from cache on 500s
-    if (beresp.status >= 500) {
-      if (bereq.is_bgfetch) {
-        return (abandon);
-      }
-      set beresp.uncacheable = true;
+    if (beresp.status >= 500 && bereq.is_bgfetch) {
+          return (abandon);
     }
 }
 
