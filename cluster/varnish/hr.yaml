@@ -36,7 +36,7 @@ spec:
           haproxy.org/load-balance: uri
         ingressClassName: haproxy-internal
         hosts:
-        - host: gate.sko.ai
+        - host: varnish.sko.ai
           paths:
           - path: /
     resources:
