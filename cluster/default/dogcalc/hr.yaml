@@ -27,7 +27,8 @@ spec:
         enabled: true
         ingressClassName: haproxy-internal
         annotations:
-          haproxy.org/path-rewrite: ^/$ /static/index.html
+          haproxy.org/backend-config-snippet: |
+            http-request redirect location /static/index.html if { path / }
         hosts:
         - host: dogcalc.sko.ai
           paths:
