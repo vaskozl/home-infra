@@ -66,7 +66,7 @@ controller:
 
 
       # Use varnish if the content looks static and is not a miss from varnish
-      use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !is_websocket !already_varnished
+      use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !is_websocket !uncachable_paths !already_varnished
   extraArgs:
     - --default-ssl-certificate=cert-manager/sko-ai-tls
   extraVolumeMounts:
