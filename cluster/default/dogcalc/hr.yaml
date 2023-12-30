@@ -14,7 +14,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: registry.sko.ai/doudous/dogcalc
-      tag: head@sha256:0bb029be2274b13f775190dc468d151d0ef56a8b97325d8cdea7e56a2c9bfc6d
+      tag: head@sha256:545f39c6f093d112b29ff16b7bdbf0f739ab52271aa5b2e0420d364e8910d5c6
     imagePullSecrets:
     - name: regcred
     service:
@@ -25,7 +25,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: haproxy-internal
+        ingressClassName: haproxy-external
         annotations:
           haproxy.org/backend-config-snippet: |
             http-request redirect location /static/index.html if { path / }
