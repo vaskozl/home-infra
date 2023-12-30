@@ -32,7 +32,8 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
-  * [ingress-nginx](https://github.com/kubernetes/ingress-nginx) - Ingress controller
+  * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
+  * [varnish](https://www.haproxy.com/blog/haproxy-varnish-and-the-single-hostname-website) - Caching reverse proxy
   * [vector](https://vector.dev) - Log collection and aggregation
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
 
