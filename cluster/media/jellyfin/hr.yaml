@@ -45,6 +45,9 @@ spec:
       main:
         enabled: true
         ingressClassName: haproxy-external
+        annotations:
+          haproxy.org/backend-config-snippet: |
+            http-response set-header Cache-Control no-cache if { path_beg /videos/ }
         hosts:
         - host: jf.sko.ai
           paths:
