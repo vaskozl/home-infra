@@ -18,7 +18,8 @@ configMapGenerator:
   - values.yaml=common-values.yaml
 - name: txt-config
   files:
-  - public_hosts.txt
+  - config/public_hosts.txt
+  - config/uncachable_paths.txt
 
 secretGenerator:
 - name: lua

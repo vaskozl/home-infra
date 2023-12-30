@@ -42,7 +42,7 @@ controller:
       http-request set-header X-Forwarded-Uri %[path]
 
       # Drop any user supplied Remote-* headers
-      http-response del-header remote- -m beg
+      http-request del-header -i -m beg remote-
       # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
       http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -     if !public_hosts
       http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
@@ -56,6 +56,8 @@ controller:
       # Static Rules
       acl varnish_http_verb method GET HEAD
       acl varnish_available nbsrv(varnish_varnish_http) ge 1
+
+      acl uncachable_paths path -i -m beg -f /config/uncachable_paths.txt
 
       acl varnish_cacheable req.cook_cnt() eq 0
       acl varnish_cacheable req.hdr(Remote-User) -m found
