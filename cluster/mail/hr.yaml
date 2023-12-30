@@ -10,7 +10,7 @@ spec:
       replicas: &count 2
     image:
       repository: ghcr.io/docker-mailserver/docker-mailserver
-      tag: 13.0.1@sha256:b7ca099b2a527e03b0c2c71a6b6f3bc090ea9e1d378c5e1c4506bf9b6341e6d2
+      tag: 13.1.0@sha256:917428d860bb5de0f831be47449591e73814dea4b3e4c8ac81443b8927414d87
     service:
       main:
         annotations:
