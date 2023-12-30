@@ -28,7 +28,6 @@ controller:
       unique-id-format %[uuid()]
       unique-id-header X-Unique-ID
       http-response set-header X-Unique-ID %[unique-id]
-      http-request set-header X-Forwarded-For %[fc_src]
 
       # Disable auth for specific backends
       acl public_hosts hdr(host) -f /config/public_hosts.txt
@@ -60,9 +59,12 @@ controller:
 
       acl varnish_cacheable req.cook_cnt() eq 0
       acl varnish_cacheable req.hdr(Remote-User) -m found
+      acl is_websocket hdr(Upgrade) -i websocket
+      http-request set-header X-Forwarded-For %[fc_src]
+
 
       # Use varnish if the content looks static and is not a miss from varnish
-      use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !already_varnished
+      use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !is_websocket !already_varnished
   extraArgs:
     - --default-ssl-certificate=cert-manager/sko-ai-tls
   extraVolumeMounts:
