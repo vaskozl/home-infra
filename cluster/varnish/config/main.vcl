@@ -72,7 +72,3 @@ sub vcl_backend_response {
           return (abandon);
     }
 }
-
-sub vcl_deliver {
-  set resp.http.x-unique-id = req.http.x-unique-id;
-}

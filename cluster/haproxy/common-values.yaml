@@ -24,7 +24,9 @@ controller:
       http-request redirect scheme https if !{ ssl_fc }
 
       # Add UUID
-      http-request set-header X-Unique-ID %[uuid()] unless { hdr(X-Unique-ID) -m found }
+      unique-id-format %[uuid()]
+      unique-id-header X-Unique-ID
+      http-response set-header X-Unique-ID %[unique-id]
 
       # Disable auth for specific backends
       acl public_hosts hdr(host) -f /config/public_hosts.txt
@@ -54,7 +56,7 @@ controller:
       acl varnish_http_verb method GET HEAD
       acl varnish_available nbsrv(varnish_varnish_http) ge 1
 
-      acl varnish_cacheable req.hdr(Cookie) -m len 0
+      acl varnish_cacheable req.cook_cnt() eq 0
       acl varnish_cacheable req.hdr(Remote-User) -m found
 
       # Use varnish if the content looks static and is not a miss from varnish
