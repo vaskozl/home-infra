@@ -6,8 +6,9 @@ controller:
   config:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
-    scale-server-slots: '2'
+    scale-server-slots: "2"
     log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
+    forwarded-for: "false"
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
       lua-load /usr/local/share/lua/auth-request.lua
@@ -27,6 +28,7 @@ controller:
       unique-id-format %[uuid()]
       unique-id-header X-Unique-ID
       http-response set-header X-Unique-ID %[unique-id]
+      http-request set-header X-Forwarded-For %[fc_src]
 
       # Disable auth for specific backends
       acl public_hosts hdr(host) -f /config/public_hosts.txt
