@@ -23,29 +23,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
-        annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-          nginx.ingress.kubernetes.io/auth-url: https://ha.sko.ai/404page
-          nginx.ingress.kubernetes.io/auth-snippet: |
-            if ($request_uri ~ ^/redirect/oauth) {
-              return 200;
-            }
-            if ($request_uri ~ ^/api/) {
-              return 200;
-            }
-            if ($request_uri ~ ^/auth/) {
-              return 200;
-            }
-            if ($remote_addr ~ ^(192\.168\.|10\.)) {
-              return 200;
-            }
-            return 403;
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            location /local {
-              deny all;
-              return 403;
-            }
+        ingressClassName: haproxy-external
         hosts:
         - host: ha.sko.ai
           paths:

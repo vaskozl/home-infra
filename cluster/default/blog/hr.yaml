@@ -23,11 +23,9 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        ingressClassName: haproxy-external
         annotations:
-          nginx.ingress.kubernetes.io/enable-global-auth: 'false'
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            add_header Cache-Control "public";
+          haproxy.org/response-set-header: Cache-Control "public"
         hosts:
         - host: sko.ai
           paths:

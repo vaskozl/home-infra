@@ -4,7 +4,7 @@ metadata:
   name: webhook-receiver
   namespace: flux-system
 spec:
-  ingressClassName: external
+  ingressClassName: haproxy-external
   rules:
   - host: flux-webhook.sko.ai
     http:

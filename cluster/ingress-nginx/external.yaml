@@ -18,7 +18,7 @@ spec:
     controller:
       service:
         externalIPs:
-        - ${EI_INGRESS_EX}
+        - 192.168.99.29
       ingressClass: external
       ingressClassResource:
         name: external

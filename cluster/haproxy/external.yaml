@@ -23,7 +23,7 @@ spec:
         default: false
       service:
         externalIPs:
-          - 192.168.99.28
+        - ${EI_INGRESS_EX}
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:
