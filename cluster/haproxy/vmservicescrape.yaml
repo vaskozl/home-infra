@@ -1,0 +1,14 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: haproxy
+spec:
+  endpoints:
+  - port: stat
+  namespaceSelector:
+    matchNames:
+    - haproxy
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubernetes-ingress

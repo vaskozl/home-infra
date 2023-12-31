@@ -4,9 +4,10 @@ kind: Kustomization
 namespace: haproxy
 resources:
 - _namespace.yaml
-- internal.yaml
 - external.yaml
+- internal.yaml
 - tcp-services.yaml
+- vmservicescrape.yaml
 - ../netpols/allow-all-ingress
 
 components:
