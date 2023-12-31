@@ -63,6 +63,9 @@ configMapGenerator:
 - name: dashboards-nfs-full
   files:
   - misc/nfs-full.json
+- name: haproxy-full
+  files:
+  - misc/haproxy-full.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
