@@ -31,21 +31,22 @@ controller:
 
       # Disable auth for specific backends
       acl public_hosts hdr(host) -f /config/public_hosts.txt
-      # Drop the authelia cookie if it's not needed to allow caching
-      acl one_cookie req.cook_cnt() eq 1
-      acl auth_sess req.cook_cnt(authelia_session) eq 1
-      http-request del-header Cookie if public_hosts one_cookie auth_sess
-
       # Authelia needs these headers to work correctly
       http-request set-header X-Forwarded-Proto https
       http-request set-header X-Forwarded-Host %[req.hdr(Host)]
       http-request set-header X-Forwarded-Uri %[path]
+      http-request set-header X-Forwarded-For %[fc_src]
 
       # Drop any user supplied Remote-* headers
       http-request del-header remote- -m beg
       # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
       http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -     if !public_hosts
       http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
+
+      # Drop the authelia cookie if it's not needed to allow caching
+      acl one_cookie req.cook_cnt() eq 1
+      acl auth_sess req.cook_cnt(authelia_session) eq 1
+      http-request del-header Cookie if public_hosts one_cookie auth_sess
 
       # Security Headers
       http-response set-header X-XSS-Protection "1; mode=block"
@@ -62,8 +63,6 @@ controller:
       acl varnish_cacheable req.cook_cnt() eq 0
       acl varnish_cacheable req.hdr(Remote-User) -m found
       acl is_websocket hdr(Upgrade) -i websocket
-      http-request set-header X-Forwarded-For %[fc_src]
-
 
       # Use varnish if the content looks static and is not a miss from varnish
       use_backend varnish_varnish_http if varnish_available varnish_http_verb varnish_cacheable !is_websocket !uncachable_paths !already_varnished
