@@ -10,7 +10,7 @@ spec:
       app: zigbee-controller
     image:
       repository: ghcr.io/koenkk/zigbee2mqtt
-      tag: 1.34.0@sha256:7f6fca6f19a0bed1a33cecbdd841a91e28e1a1842e268b1abb544e120aaf88e6
+      tag: 1.35.0@sha256:2b5cea0c2b10c47efa6c98816c8702787bff01fa29690ac5ddcf61a27ae6b8d8
     securityContext:
       privileged: true
     volumeClaimTemplates:
