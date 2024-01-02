@@ -14,8 +14,8 @@ controller:
       lua-load /usr/local/share/lua/auth-request.lua
     frontend-config-snippet: |
       # set true source if cloudflare
-      acl is_cloudflare src -f /etc/cloudflare/cf-ips-v4.txt
-      acl is_cloudflare src -f /etc/cloudflare/cf-ips-v6.txt
+      acl is_cloudflare src -f /config/cf-ips-v4.txt
+      acl is_cloudflare src -f /config/cf-ips-v6.txt
       http-request set-src hdr(cf-connecting-ip) if is_cloudflare
 
       # Add UUID
