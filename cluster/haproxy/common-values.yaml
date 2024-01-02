@@ -8,7 +8,6 @@ controller:
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
     log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
-    ssl-redirect: "true"
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
       lua-load /usr/local/share/lua/auth-request.lua
@@ -17,6 +16,9 @@ controller:
       acl is_cloudflare src -f /config/cf-ips-v4.txt
       acl is_cloudflare src -f /config/cf-ips-v6.txt
       http-request set-src hdr(cf-connecting-ip) if is_cloudflare
+
+      # https redirect
+      http-request redirect scheme https if !{ ssl_fc }
 
       # Add UUID
       unique-id-format %[uuid()]
