@@ -8,31 +8,25 @@ controller:
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
     log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
-    forwarded-for: "false"
+    ssl-redirect: "true"
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
       lua-load /usr/local/share/lua/auth-request.lua
     frontend-config-snippet: |
-      # time skip all http-request rules
-
-      # Redirect everything but https
-      http-request redirect scheme https if !{ ssl_fc }
-
       # Add UUID
       unique-id-format %[uuid()]
       unique-id-header X-Unique-ID
       http-response set-header X-Unique-ID %[unique-id]
 
-      # Disable auth for specific backends
-      acl public_hosts hdr(host) -f /config/public_hosts.txt
       # Authelia needs these headers to work correctly
       http-request set-header X-Forwarded-Proto https
       http-request set-header X-Forwarded-Host %[req.hdr(Host)]
       http-request set-header X-Forwarded-Uri %[path]
-      http-request set-header X-Forwarded-For %[fc_src]
 
       # Drop any user supplied Remote-* headers
       http-request del-header remote- -m beg
+      # Disable auth for specific backends
+      acl public_hosts hdr(host) -f /config/public_hosts.txt
       # Authelia  Config:             Backend name            Path         Method  Request  Success  Failure
       http-request lua.auth-intercept authelia_authelia_http   /api/verify  HEAD    *        remote-*        -     if !public_hosts
       http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
