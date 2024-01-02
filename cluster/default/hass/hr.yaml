@@ -24,6 +24,14 @@ spec:
       main:
         enabled: true
         ingressClassName: haproxy-external
+        annotations:
+          haproxy.org/backend-config-snippet: |
+            acl allowed src 192.168.1.0/24
+            acl allowed src 10.0.0.0/8
+            acl allowed path_beg /api
+            acl allowed path_beg /auth
+            acl allowed path_beg /redirect/oauth
+            http-request deny unless allowed
         hosts:
         - host: ha.sko.ai
           paths:
