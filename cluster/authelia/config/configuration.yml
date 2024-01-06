@@ -1,6 +1,9 @@
 server:
     host: ENC[AES256_GCM,data:TThqRzC+pA==,iv:DUgYx90b3tH3KqLzbLMasLmOvpOQvV6hbMgqIVupZVc=,tag:irRG7mMzKl4HQs/++y/cBg==,type:str]
     port: ENC[AES256_GCM,data:/X6NYg==,iv:1l07E33xCc2gj05rTxvoOS/H9NMjGc53ii1iw7Pk4ZY=,tag:+eOqRXaKhyrwnh/f5KOMvQ==,type:int]
+    buffers:
+        read: ENC[AES256_GCM,data:gPgwhn5cOJQ=,iv:uN1XX9OcOqPxelichBYgIIyz20yd038wYw4OuaGhR54=,tag:5XS+gxMDY/9Ca3Di8KBkHg==,type:int]
+        write: ENC[AES256_GCM,data:a8HA5Hfvsdg=,iv:G+2YU68f29Z4vElPaGaKlf+oqxk4Cg8tOXW/qfeTcmU=,tag:g0DaFyULWXcvc/3yWHxBvg==,type:int]
 log:
     level: ENC[AES256_GCM,data:gHJYVX8=,iv:bAYYYKd2GFwVLVjZcaJRJvBFy8tWNXsUHz/gZVpOgUk=,tag:312/yGVRKgUQKIk1BPV/Bg==,type:str]
     file_path: ""
@@ -81,8 +84,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-12-28T22:56:41Z"
-    mac: ENC[AES256_GCM,data:aJE/tU+ScDdU/M13cTnImlyQJ/P4mrCTUj3hB/p2PSt89LGofwRW2waGifECjPd/6ROQtio48msQkzjD/LHRkeSjYrOZ39JHVA10qZJnk2dw/GAdGGqlGHh5xkFixBJleLU4DzvNdAew064JmYCXK4/nCJ47DAy3xGMZYHFBLGg=,iv:T6wueUOwTvwsUAdmLnRZHTAG0hqleGYf0Rfjn2FaLdo=,tag:7yySOS4Wnmv03VujtPNjMw==,type:str]
+    lastmodified: "2024-01-06T13:46:18Z"
+    mac: ENC[AES256_GCM,data:xuC/ZKgMsZyMt/RCc7JK/nA2hSdGKMIPQSTjYMoQ3Dqe/wBOYv8/1DjNaAzyt4gZiNa2bYO4KnzWvGDIIvyiX6ghxf75zlH+McGYrxw87EhCI7DU9QUOBhZnJipHFnYOvTm88uiMZVsZM6bb8UJhrCshByyNO9NCpnQH+VJcwM4=,iv:Dt1hMxGBQNTAOnhMdM4EWRe5tthUZFX6F28uCp1Bgn0=,tag:frZQGCzN604T5EZ/Fa8sow==,type:str]
     pgp:
         - created_at: "2023-12-26T09:44:04Z"
           enc: |-
