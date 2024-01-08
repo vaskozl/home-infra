@@ -1,22 +1,31 @@
-httpPort: 4000
-port: 53
+ports:
+  dns: 53
+  http: 4000
 
-upstream:
-  default:
-  - https://dns.google/dns-query
-  - https://dns.cloudflare.com/dns-query
+upstreams:
+  init:
+    strategy: failOnError
+  groups:
+    default:
+    - https://dns.google/dns-query
+    - https://dns.cloudflare.com/dns-query
+
 bootstrapDns:
   - tcp+udp:1.1.1.1
   - tcp+udp:8.8.8.1
 
 blocking:
   blackLists:
-    ads:
+    hagezi:
     - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
-    - https://gist.githubusercontent.com/hkamran80/779019103fcd306979411d44c8d38459/raw/3c168e68f067f00df825c73042255e6d3fd541c4/SmartTV2.txt
   clientGroupsBlock:
     default:
-    - ads
+    - hagezi
+  loading:
+    refreshPeriod: 24h
+    downloads:
+      timeout: 10m
+      cooldown: 10s
 
 prometheus:
   enable: true

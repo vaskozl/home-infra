@@ -46,3 +46,14 @@ spec:
       limits:
         cpu: 1
         memory: 200Mi
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+            - /app/blocky
+            - healthcheck
+          initialDelaySeconds: 15
+          periodSeconds: 60
