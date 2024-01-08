@@ -28,9 +28,6 @@ spec:
         externalIPs:
           - ${EI_BLOCKY}
         ports:
-          http:
-            enabled: true
-            port: 4000
           dns-tcp:
             enabled: true
             port: 53
@@ -39,6 +36,9 @@ spec:
             enabled: true
             port: 53
             protocol: UDP
+          http:
+            enabled: true
+            port: 4000
     resources:
       requests:
         cpu: 15m
