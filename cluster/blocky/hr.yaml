@@ -47,7 +47,7 @@ spec:
         cpu: 1
         memory: 200Mi
     probes:
-      liveness:
+      liveness: &probe
         enabled: true
         custom: true
         spec:
@@ -55,5 +55,5 @@ spec:
             command:
             - /app/blocky
             - healthcheck
-          initialDelaySeconds: 15
-          periodSeconds: 60
+      startupProbe: *probe
+      readiness: *probe
