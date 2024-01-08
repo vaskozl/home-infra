@@ -4,6 +4,7 @@ metadata:
   name: mosquitto
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     controller:
@@ -37,6 +38,3 @@ spec:
       requests:
         cpu: 2m
         memory: 8Mi
-    podSecurityContext:
-      runAsUser: 1883
-      runAsGroup: 1883
