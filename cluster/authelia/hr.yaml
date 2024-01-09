@@ -4,6 +4,7 @@ metadata:
   name: authelia
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
@@ -38,8 +39,3 @@ spec:
       limits:
         cpu: 1
         memory: 200Mi
-    podSecurityContext:
-      runAsUser: &uid 4000
-      runAsGroup: *uid
-      fsGroup: *uid
-
