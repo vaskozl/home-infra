@@ -4,6 +4,7 @@ metadata:
   name: autobrr
   annotations:
     patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
