@@ -41,6 +41,6 @@ spec:
     probes:
       liveness:
         spec:
-          initialDelaySeconds: 600
+          initialDelaySeconds: 1800
           failureThreshold: 20
           periodSeconds: 30
