@@ -42,7 +42,7 @@ controller:
       # Security Headers
       http-response set-header X-XSS-Protection "1; mode=block"
       http-response set-header X-Content-Type-Options "nosniff"
-      http-response set-header X-Frame-Options "deny"
+      http-response set-header X-Frame-Options "sameorigin"
       http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
   extraArgs:
     - --default-ssl-certificate=cert-manager/sko-ai-tls
