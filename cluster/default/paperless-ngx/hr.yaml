@@ -4,14 +4,13 @@ metadata:
   name: paperless-ngx
   annotations:
     patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   values:
     image:
       repository: ghcr.io/paperless-ngx/paperless-ngx
       tag: 2.3.3@sha256:cd46a1c76309c2e4dd996fad662c1cc3a840a5fe333f86d0cc6c896a925192a3
     env:
-      PAPERLESS_REDIS: redis://localhsot:6379
+      PAPERLESS_REDIS: redis://localhost:6379
     service:
       main:
         ports:
@@ -26,10 +25,11 @@ spec:
           - path: /
     resources:
       limits:
-        memory: 50Mi
+        cpu: 1000m
+        memory: 550Mi
       requests:
-        cpu: 5m
-        memory: 5Mi
+        cpu: 50m
+        memory: 350Mi
     volumeClaimTemplates:
     - name: data
       mountPath: /usr/src/paperless/data
