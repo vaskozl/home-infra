@@ -48,6 +48,6 @@ spec:
             command:
             - sh
             - -c
-            - 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168"'
+            - 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"'
           initialDelaySeconds: 15
           periodSeconds: 60
