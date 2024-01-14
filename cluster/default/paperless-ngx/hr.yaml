@@ -32,7 +32,6 @@ spec:
           - path: /
     resources:
       limits:
-        cpu: 1000m
         memory: 850Mi
       requests:
         cpu: 100m
@@ -50,20 +49,26 @@ spec:
       redis:
         image: redis:7.2.4@sha256:b5ddcd52d425a8e354696c022f392fe45fca928f68d6289e6bb4a709c3a74668
         resources:
+          limits:
+            memory: 850Mi
           requests:
             cpu: 10m
             memory: 15Mi
       tika:
         image: ghcr.io/paperless-ngx/tika:2.9.0-minimal@sha256:e85662605324bd157731480928fd7cffae041320f64198a62b0afbeac62fe90d
         resources:
+          limits:
+            memory: 850Mi
           requests:
             cpu: 10m
-            memory: 80Mi
+            memory: 185Mi
       gotenburg:
         image: gotenberg/gotenberg:8.0.1@sha256:cf0b9a7ca3cfd5d24458b9ae4c40977a5583e6641013748571778e33d60e198f
         env:
           - { name: DISABLE_GOOGLE_CHROME, value: "1" }
         resources:
+          limits:
+            memory: 850Mi
           requests:
             cpu: 10m
-            memory: 80Mi
+            memory: 300Mi
