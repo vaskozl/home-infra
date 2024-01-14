@@ -12,6 +12,7 @@ spec:
     env:
       PAPERLESS_REDIS: redis://localhost:6379
       PAPERLESS_URL: https://paperless.sko.ai
+      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
     service:
       main:
         ports:
