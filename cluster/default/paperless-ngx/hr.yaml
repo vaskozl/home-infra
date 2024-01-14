@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: paperless-ngx
+  annotations:
+    patch.sko.ai/app-template: statefulset
+    patch.sko.ai/app-security: restricted
+spec:
+  values:
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: 2.3.3@sha256:cd46a1c76309c2e4dd996fad662c1cc3a840a5fe333f86d0cc6c896a925192a3
+    env:
+      PAPERLESS_REDIS: redis://localhsot:6379
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: paperless.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        memory: 50Mi
+      requests:
+        cpu: 5m
+        memory: 5Mi
+    volumeClaimTemplates:
+    - name: data
+      mountPath: /usr/src/paperless/data
+      accessMode: ReadWriteOnce
+      size: 1Mi
+    - name: media
+      mountPath: /usr/src/paperless/media
+      accessMode: ReadWriteOnce
+      size: 1Mi
+    sidecars:
+      redis:
+        image: redis:7.2.4@sha256:b5ddcd52d425a8e354696c022f392fe45fca928f68d6289e6bb4a709c3a74668
