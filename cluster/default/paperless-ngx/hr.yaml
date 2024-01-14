@@ -11,6 +11,7 @@ spec:
       tag: 2.3.3@sha256:cd46a1c76309c2e4dd996fad662c1cc3a840a5fe333f86d0cc6c896a925192a3
     env:
       PAPERLESS_REDIS: redis://localhost:6379
+      PAPERLESS_URL: https://paperless.sko.ai
     service:
       main:
         ports:
@@ -26,10 +27,10 @@ spec:
     resources:
       limits:
         cpu: 1000m
-        memory: 550Mi
+        memory: 650Mi
       requests:
-        cpu: 50m
-        memory: 350Mi
+        cpu: 100m
+        memory: 450Mi
     volumeClaimTemplates:
     - name: data
       mountPath: /usr/src/paperless/data
