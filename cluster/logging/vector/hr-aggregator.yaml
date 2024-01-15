@@ -45,19 +45,22 @@ spec:
             }
 
             .pod = .kubernetes.pod_name
-            .container = .kubernetes.container_name
+            .ctr = .kubernetes.container_name
+            .ts  = .timestamp
+            .msg = .message
+            .str = .stream
       sinks:
         files:
           type: file
           inputs: [sort]
           encoding:
-            codec: json
+            codec: logfmt
             only_fields:
-              - timestamp
-              - message
-              - stream
+              - ts
+              - msg
+              - str
               - pod
-              - container
+              - ctr
           path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
     extraVolumes:
       - name: logging-pvc
