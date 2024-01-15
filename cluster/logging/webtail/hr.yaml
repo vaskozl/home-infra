@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: webtail
+  annotations:
+    patch.sko.ai/app-template: statefulset
+spec:
+  values:
+    image:
+      repository: ghcr.io/lekovr/webtail
+      tag: v0.47.2@sha256:38c1f879160dd79dbcb5167ccf8c8f80ce8d74a70fd10dcfcb671c9da1bf4d77
+    args: [--root=/logs]
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: wl.sko.ai
+          paths:
+          - path: /
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+    persistence:
+      logs:
+        enabled: true
+        existingClaim: logging-pvc
