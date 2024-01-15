@@ -9,7 +9,9 @@ spec:
     image:
       repository: ghcr.io/lekovr/webtail
       tag: v0.47.2@sha256:38c1f879160dd79dbcb5167ccf8c8f80ce8d74a70fd10dcfcb671c9da1bf4d77
-    args: [--root=/logs]
+    args:
+      - --root=/logs
+      - --poll
     service:
       main:
         ports:
