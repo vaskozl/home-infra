@@ -8,10 +8,6 @@ set -e
 ##
 echo ">>>>>>>>>>>>>>>>>>>>>>>Applying patches<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 
-echo 'Populating header checks'
-echo '/To: v <v/ REJECT Please address the email to my real name!' >> /etc/postfix/maps/header_checks.pcre
-
-
 echo 'Enabling replication'
 
 # Add notify and replication to the mail plugins
