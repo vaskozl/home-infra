@@ -4,7 +4,7 @@
 > GitOps state for my cluster using flux v2
 
 [![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square)](https://discord.gg/DNCynrJ)
-[![k8s](https://img.shields.io/badge/k8s-v1.29.0-orange?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fmetric%3Dgit_version&query=%24%5B0%5D.metric.git_version&style=flat-square&label=k8s)](https://k8s.io/)
 [![talos](https://img.shields.io/badge/talos-v1.6.1-yellow?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/vaskozl/home-infra?style=flat-square)](https://github.com/vaskozl/home-infra/commits/master)
 
