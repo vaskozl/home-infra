@@ -5,9 +5,10 @@
 
 [![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square)](https://discord.gg/DNCynrJ)
 [![k8s](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fmetric%3Dgit_version&query=%24%5B0%5D.metric.git_version&style=flat-square&label=k8s)](https://k8s.io/)
-[![talos](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fmetric%3Dos_version&query=%24%5B0%5D.metric.osVersion&style=flat-square&label=os&color=purple)](https://k8s.io/)
+[![talos](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fmetric%3Dos_version&query=%24%5B0%5D.metric.osVersion&style=flat-square&label=os&color=purple)](https://talos.dev/)
+[![nodes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_node_count&style=flat-square&label=nodes)](https://github.com/kashalls/kromgo)
+[![pods](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.sko.ai%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_pods_running&style=flat-square&label=pods)](https://github.com/kashalls/kromgo)
 [![GitHub last commit](https://img.shields.io/github/last-commit/vaskozl/home-infra?style=flat-square)](https://github.com/vaskozl/home-infra/commits/master)
-
 <br />
 
 Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11th Gen Intel Nuc:
