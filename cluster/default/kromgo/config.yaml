@@ -2,7 +2,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
 metrics:
   - name: git_version
-    query: topk(1, kubernetes_build_info) by (git_version)
+    query: topk(1,(sum by (git_version) (kubernetes_build_info)))
+
+  - name: os_version
+    query: topk(1,(sum by (osVersion) (cadvisor_version_info)))
 
   - name: cluster_node_count
     query: count(count by (node) (kube_node_info))
