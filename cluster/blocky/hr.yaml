@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   values:
     controller:
-      replicas: 3
+      replicas: 2
     image:
       repository: ghcr.io/0xerr0r/blocky
       tag: v0.23
@@ -51,10 +51,10 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 80Mi
+        memory: 120Mi
       limits:
         cpu: 1
-        memory: 200Mi
+        memory: 220Mi
     probes:
       liveness: &probe
         enabled: true
