@@ -132,6 +132,9 @@ spec:
           - action: drop
             source_labels: [__name__]
             regex: (container_blkio_device_usage_total)
+          - action: drop
+            source_labels: [__name__]
+            regex: (prober_probe_duration_seconds_bucket)
         relabelConfigs:
           - action: labelmap
             regex: __meta_kubernetes_node_label_(.+)
