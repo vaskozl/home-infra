@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kromgo
+  annotations:
+    patch.sko.ai/app-template: enabled
+    patch.sko.ai/app-security: restricted
+spec:
+  values:
+    image:
+      repository: ghcr.io/kashalls/kromgo
+      tag: 0.2.4@sha256:2c1076986904babdcfed38ffcf848e7609f3e108ee350a46ce8ed201407a8b81
+    env:
+      PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429/
+    persistence:
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: kromgo-config
+        mountPath: /kromgo/config.yaml
+        subPath: config.yaml
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        hosts:
+        - host: kromgo.sko.ai
+          paths:
+          - path: /
+    resources:
+      limits:
+        cpu: 50m
+        memory: 50Mi
+      requests:
+        cpu: 5m
+        memory: 20Mi
