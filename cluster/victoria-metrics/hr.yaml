@@ -116,9 +116,9 @@ spec:
         # drop high cardinality label and useless metrics for cadvisor and kubelet
         metricRelabelConfigs:
           - action: labeldrop
-            regex: (uid|pod_uid)
+            regex: (uid|pod_uid|id)
           - action: labeldrop
-            regex: (id|name)
+            regex: (name)
           - action: drop
             source_labels: [__name__]
             regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
@@ -151,26 +151,11 @@ spec:
       enabled: false
     kubeScheduler:
       enabled: false
+    kubeApiServer:
+      enabled: false
     prometheus-node-exporter:
       extraArgs:
       - --collector.disable-defaults
       - --collector.cpu 
       - --collector.meminfo
       - --collector.nfs
-    # Remove high cardinality apiserver metrics
-    kubeApiServer:
-      spec:
-        endpoints:
-        - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          port: https
-          scheme: https
-          tlsConfig:
-            caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-            serverName: kubernetes
-          metricRelabelConfigs:
-          - sourceLabels: ["__name__"]
-            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-            action: drop
-          - sourceLabels: ["__name__"]
-            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-            action: drop
