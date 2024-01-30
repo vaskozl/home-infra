@@ -23,8 +23,9 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
+  * [inspircd](https://github.com/ngircd/ngircd) - IRC Server
+  * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
-  * [ngircd](https://github.com/ngircd/ngircd) - IRC Server
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
