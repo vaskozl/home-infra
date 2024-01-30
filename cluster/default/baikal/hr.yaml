@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/baikal
-      tag: 0.9.4@sha256:f403b105ebeb62630f5c4cea4d9abc8d3a0090807fd68e712708759d0331cbe5
+      tag: 0.9.4@sha256:ac5242308b2096a654aa4d6ab7977659affb2cb47fa3badf3b94c56a2c384e15
     volumeClaimTemplates:
     - name: data
       mountPath: /var/lib/baikal
