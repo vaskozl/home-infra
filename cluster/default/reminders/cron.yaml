@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: monthly-reminders
+spec:
+  schedule: "30 17 4 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: msmtp
+            image: ghcr.io/vaskozl/baikal:0.9.4@sha256:ac5242308b2096a654aa4d6ab7977659affb2cb47fa3badf3b94c56a2c384e15
+            command: [sh, -c]
+            args:
+              - |
+                for i in /reminders/*.txt; do
+                  cat "$i" | msmtp reminders@sko.ai
+                done
+            volumeMounts:
+            - mountPath: /etc/msmtprc
+              name: msmtprc
+              subPath: msmtprc
+            - mountPath: /reminders
+              name: reminders
+          volumes:
+          - name: msmtprc
+            configMap:
+              name: msmtprc
+          - name: reminders
+            configMap:
+              name: reminders
