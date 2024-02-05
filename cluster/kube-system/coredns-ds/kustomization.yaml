@@ -6,6 +6,8 @@ resources:
 - svc.yaml
 - cm.yaml
 
-commonLabels:
-  k8s-app: kube-dns
-  app.kubernetes.io/instance: kube-dns-ds
+labels:
+- pairs:
+    k8s-app: kube-dns
+    app.kubernetes.io/instance: kube-dns-ds
+  includeSelectors: true

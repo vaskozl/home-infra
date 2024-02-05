@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
 - cron.yaml
 - rbac.yaml
-commonLabels:
-  app: arch-scanner
+labels:
+- pairs:
+    app: arch-scanner
