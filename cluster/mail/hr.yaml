@@ -74,6 +74,10 @@ spec:
         <<: *files
         mountPath: /tmp/docker-mailserver/user-patches.sh
         subPath: user-patches.sh
+      postgrey-whitelist:
+        <<: *files
+        mountPath: /tmp/docker-mailserver/whitelist_clients.local
+        subPath: whitelist_clients.local
       dkim-key-table:
         <<: &dkim
           enabled: true
