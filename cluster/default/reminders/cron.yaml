@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: monthly-reminders
+  name: bimonthly-reminders
 spec:
-  schedule: "30 17 4 * *"
+  schedule: "30 17 5 */2 *"
   jobTemplate:
     spec:
       template:
