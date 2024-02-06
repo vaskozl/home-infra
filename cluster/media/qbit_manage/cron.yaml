@@ -15,14 +15,13 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - image: ghcr.io/vaskozl/qbit_manage:v4.0.4
+          - image: docker.io/bobokun/qbit_manage:v4.0.8@sha256:0084861cc7c2c91d312ccd1b70ac2924004b79ac9d5c78de796456cac889551c
             command: [sh, -c]
             # sed fixes https://github.com/StuffAnThings/qbit_manage/issues/333
             args:
             - >
               cp /config/config.static.yml /config/config.yml &&  python3 /app/qbit_manage.py
               --run
-
             name: qbit-manage
             resources:
               requests:
