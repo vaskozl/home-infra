@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/readarr-develop
-      tag: 0.3.17.2409@sha256:fccb9814d6fa4beac22c403fdae4206d2bde965b8a2c9d32433a7ef5ccab07ba
+      tag: 0.3.18.2411@sha256:da9c05cf2419fb45292aa6130feabcdcbc7ec01f6f6c831e47dd7685ffa8d7c8
     volumeClaimTemplates:
     - name: config
       mountPath: /config
