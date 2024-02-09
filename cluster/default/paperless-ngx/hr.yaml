@@ -72,7 +72,7 @@ spec:
             cpu: 10m
             memory: 185Mi
       gotenburg:
-        image: gotenberg/gotenberg:8.0.2@sha256:50ddab5dd5fbd152b55497ee7978efc34f7e00e4326b70140401859155cf1f8f
+        image: gotenberg/gotenberg:8.0.3@sha256:88f5b04a500c17729fcd127d19eb4e96b805e0c3976570d908f3fdf8a1da7e09
         env:
           - { name: DISABLE_GOOGLE_CHROME, value: "1" }
         resources:
