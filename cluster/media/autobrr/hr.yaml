@@ -58,4 +58,5 @@ spec:
             - -c
             - 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"'
           initialDelaySeconds: 15
-          periodSeconds: 60
+          periodSeconds: 600
+          timeoutSeconds: 10
