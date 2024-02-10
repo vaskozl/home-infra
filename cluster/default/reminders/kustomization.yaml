@@ -4,7 +4,7 @@ resources:
 - cron.yaml
 
 configMapGenerator:
-- name: msmtprc
+- name: reminders-msmtprc
   files:
   - msmtprc
 - name: reminders
