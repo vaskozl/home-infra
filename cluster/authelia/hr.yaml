@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/authelia-bin
-      tag: 4.37.5@sha256:a35adce9679b24df590934c549047fd9dcac9346845f2f480de3c0ccd4c58ead
+      tag: 4.37.5@sha256:fcd9e6ff4d3d6209aa0ad6ad1a1b396e414a07bb231c44dde63d2631c6c2d819
     args: ['--config', '/config/configuration.yml']
     persistence:
       config:
