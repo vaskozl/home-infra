@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/buildkit
-      tag: 0.12.2@sha256:e983bfc028079a0064442907bb6b115f805c69100989bdc55180f38207d65d19
+      tag: 0.12.2@sha256:a8af285f0ce5882f36e8d822bbd646b949dc2338836e342005add979279b43a8
     args:
     - --addr
     - unix:///run/buildkit/buildkitd.sock
