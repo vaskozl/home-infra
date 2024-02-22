@@ -18,6 +18,8 @@ spec:
       repository: ghcr.io/vaskozl/buildkit
       tag: 0.12.2@sha256:6b6541781b1480d7b86ea925b699a52e519dc6159fc3964659509ebf92a3ee93
     args:
+    - --root
+    - /cache
     - --addr
     - unix:///run/buildkit/buildkitd.sock
     - --addr
@@ -51,7 +53,6 @@ spec:
       cache:
         enabled: true
         type: emptyDir
-        mountPath: /var/lib/buildkit
     resources:
       limits:
         cpu: 2
