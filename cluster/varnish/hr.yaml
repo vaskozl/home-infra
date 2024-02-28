@@ -18,7 +18,7 @@ spec:
       replicas: 2
     image:
       repository: ghcr.io/vaskozl/varnish
-      tag: 7.4.2@sha256:d1e4ed644c04d7991da61b110d3e4e70fa6eff43e7806a07c143f00bcdb075fc
+      tag: 7.4.2@sha256:184d944a3678a2830b7f88d94b97441a3eb26c8da312a08b618ed524d4cc720a
     args: ['-f', '/config/main.vcl', '-F', '-a', ':6081', '-s', 'malloc,384M', '-t', '7200']
     persistence:
       config:
