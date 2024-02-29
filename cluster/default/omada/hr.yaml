@@ -40,10 +40,10 @@ spec:
           - path: /
     resources:
       limits:
-        cpu: 1
+        cpu: 2
         memory: 1400Mi
       requests:
-        cpu: 200m
+        cpu: 800m
         memory: 800Mi
     hostNetwork: true
     probes:
