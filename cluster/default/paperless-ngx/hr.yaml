@@ -64,7 +64,7 @@ spec:
             cpu: 10m
             memory: 15Mi
       tika:
-        image: ghcr.io/paperless-ngx/tika:2.9.1-minimal@sha256:8765f135f5c9d58d8a8fe56fdacc589aebaa812301d184c53e1aeb6e5a054145
+        image: ghcr.io/paperless-ngx/tika:2.9.1-minimal@sha256:f1e8c85422a5d677005859db8c2fcab46c37328491982b52a79d068896575023
         resources:
           limits:
             memory: 850Mi
