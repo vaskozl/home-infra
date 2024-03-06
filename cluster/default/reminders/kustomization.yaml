@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - cron.yaml
 
-configMapGenerator:
+secretGenerator:
 - name: reminders-msmtprc
   files:
   - msmtprc

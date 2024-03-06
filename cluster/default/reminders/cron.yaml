@@ -26,8 +26,8 @@ spec:
               name: reminders
           volumes:
           - name: msmtprc
-            configMap:
-              name: reminders-msmtprc
+            secret:
+              secretName: reminders-msmtprc
           - name: reminders
-            configMap:
-              name: reminders
+            secret:
+              secretName: reminders
