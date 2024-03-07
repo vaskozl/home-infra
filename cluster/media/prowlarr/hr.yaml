@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/prowlarr
-      tag: 1.13.3.4273@sha256:91d214c1f16e019ecff728f4a17540a3520253a68918f8c3a8f2fe0a713f8069
+      tag: 1.13.3.4273@sha256:e1cccc81525f2b918a8da0fa222c4bca9913673c3c5f9652b97450cf4eab97dd
     volumeClaimTemplates:
     - name: config
       mountPath: /config
