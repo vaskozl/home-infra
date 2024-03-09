@@ -17,7 +17,6 @@ spec:
           containers:
           - image: docker.io/bobokun/qbit_manage:v4.0.9@sha256:1d9d359fd03cc73a6cb87632a4aa10f52c4674721f96d905af4be5d8d7159038
             command: [sh, -c]
-            # sed fixes https://github.com/StuffAnThings/qbit_manage/issues/333
             args:
             - >
               cp /config/config.static.yml /config/config.yml &&  python3 /app/qbit_manage.py
