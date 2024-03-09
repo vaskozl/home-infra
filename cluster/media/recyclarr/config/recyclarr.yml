@@ -13,6 +13,17 @@ sonarr:
             - template: sonarr-v4-custom-formats-anime
             - template: sonarr-v4-quality-profile-web-2160p
             - template: sonarr-v4-custom-formats-web-2160p
+        quality_profiles:
+            - name: WEB-2160p
+              qualities:
+                - name: WEB 2160p
+                  qualities:
+                    - WEBDL-2160p
+                    - WEBRip-2160p
+                - name: WEB 1080p
+                  qualities:
+                    - WEBDL-1080p
+                    - WEBRip-1080p
         custom_formats:
             # =================================
             # Remux-1080p - Anime
@@ -75,7 +86,7 @@ radarr:
                     - WEBDL-720p
                     - WEBRip-720p
                     - HDTV-720p
-                - name: Bluray|576p
+                - name: Bluray-576p
                 - name: Bluray|WEB 480p
                   qualities:
                     - Bluray-480p
@@ -107,8 +118,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-03-09T16:49:39Z"
-    mac: ENC[AES256_GCM,data:k5VmVmWpfotB37MdO7uf99URCbJeHLlREMMdeI7OA7piciVlJjOzkuQpfelfEH4a/FCLfttMdMmjpsiv8cIkg7sFADQO9ea+GHb38cq9q5sgxQiuxwGQ3OvuCjc8k6zdyoJpJptqkCQ1lu7Mc617xoB6zEu73KBDTtTfsJmjRwc=,iv:w1xY52mutyeZ/AX/kSt0SgjHg35114cKwdScFl+WuX8=,tag:cLXbfnKK9x7x63pe/zlDKA==,type:str]
+    lastmodified: "2024-03-09T17:30:30Z"
+    mac: ENC[AES256_GCM,data:qIQkL4s2EMlNKpWcUXktUMsqpZlSQue/AEEScMXAmvO3fClnHIQgmTsQyoFb+0FgPn1UmL1SkHMavay70p7ghr4uyPr7GBzX/LMkV0tPRcqDn+6ggJUhGbG3bCvjPOV+gKuaIjgUkkxjzK7OsOMb32iCueUNEc1fYyHVoF8lNLU=,iv:ILpWvZFpg6DF//LoPRIluoaSyg1L5pLzPxb7na+pMX0=,tag:JWuA8dr+eOnp+mz8clvoiw==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
