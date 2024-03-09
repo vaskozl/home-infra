@@ -15,17 +15,12 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: ghcr.io/linuxserver/calibre-web
-      tag: 0.6.21@sha256:e45aa21cbfcc0506657c0f44fdf64a96f62edc94284f5e56c6ad5d83b84441a6
-    podSecurityContext:
-      runAsUser: 0
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+      repository: ghcr.io/vaskozl/calibre-web
+      tag: 0.6.21@sha256:fc0860bf1f75df7fe7c07b946217059c78c2cb063c063adeae6ceaa809ee1802
     enableServiceLinks: false
     env:
-      PUID: 1000
-      PGID: 1000
       CACHE_DIR: /cache
+      CALIBRE_DBPATH: /config
     service:
       main:
         ports:
@@ -38,6 +33,19 @@ spec:
         - host: cw.sko.ai
           paths:
           - path: /
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: ["ALL"]
+        add: ["NET_BIND_SERVICE"]
     volumeClaimTemplates:
     - name: config
       mountPath: /config
