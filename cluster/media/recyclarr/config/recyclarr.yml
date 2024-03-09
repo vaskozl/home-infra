@@ -44,15 +44,11 @@ sonarr:
             # Optional
             - trash_ids:
                 # Bad Dual Groups
-                - b6832f586342ef70d9c128d40c07b872
+                - 32b367365729d530ca1c124a0b180c64
                 # DV (WEBDL)
-                - 923b6abef9b17f937fab56cfcf89e1f1
-                # EVO (no WEBDL)
-                - 90cedc1fea7ea5d11298bebd3d1d3223
+                - 9b27ab6498ec0f31a3353992e19434ca
                 # No-RlsGroup
-                - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
-                # DV (Disk)
-                - f700d29429c023a5734505e77daeaea7
+                - 82d40da2bc6923f41e14394075dd4b03
               quality_profiles:
                 - name: WEB-2160p
 radarr:
@@ -118,8 +114,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-03-09T17:30:30Z"
-    mac: ENC[AES256_GCM,data:qIQkL4s2EMlNKpWcUXktUMsqpZlSQue/AEEScMXAmvO3fClnHIQgmTsQyoFb+0FgPn1UmL1SkHMavay70p7ghr4uyPr7GBzX/LMkV0tPRcqDn+6ggJUhGbG3bCvjPOV+gKuaIjgUkkxjzK7OsOMb32iCueUNEc1fYyHVoF8lNLU=,iv:ILpWvZFpg6DF//LoPRIluoaSyg1L5pLzPxb7na+pMX0=,tag:JWuA8dr+eOnp+mz8clvoiw==,type:str]
+    lastmodified: "2024-03-09T17:52:00Z"
+    mac: ENC[AES256_GCM,data:o83kf2fYdr2MWA0eG+UZcamvOMUr4eiqoyBKCq94nUyubYlC+D5kXHQB7gLo4N/QSrSSh16yDMifucg6xiM3JYWEJ21N6vy8nSQgpvqTUEAlaQGbL+osaGotYQMqV6stCXqSBB7g9TRKmuDu+jbxaD9x1IMGvMFgICYIq0xKIkw=,iv:BPOHaEVJO5zKfTgcIWOGOLljWfTBirBtAG97h41mCas=,tag:uLgoS7C9q+RKm9WXZeDLSA==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
