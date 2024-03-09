@@ -113,6 +113,32 @@ radarr:
             - template: radarr-quality-profile-sqp-5
             - template: radarr-custom-formats-sqp-5
         quality_profiles:
+            - name: SQP-5
+              qualities:
+                - name: WEB|Bluray|2160p
+                  qualities:
+                    - WEBDL-2160p
+                    - WEBRip-2160p
+                    - Bluray-2160p
+                - name: WEB|Bluray|1080p
+                  qualities:
+                    - Bluray-1080p
+                    - WEBDL-1080p
+                    - WEBRip-1080p
+                - name: WEB|Bluray|720p
+                  qualities:
+                    - Bluray-720p
+                    - WEBDL-720p
+                    - WEBRip-720p
+                    - HDTV-720p
+                - name: Bluray|576p
+                - name: Bluray|WEB 480p
+                  qualities:
+                    - Bluray-480p
+                    - WEBDL-480p
+                    - WEBRip-480p
+                - name: DVD
+                - name: SDTV
             - name: Any
               reset_unmatched_scores:
                 enabled: true
@@ -331,8 +357,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-03-09T14:01:24Z"
-    mac: ENC[AES256_GCM,data:qJcFUXABgFSkFT5+5bfNMhDQSGDjpGiGtFu18/qZhdUhEaZXAM1xorCegVx2G1kABBkkXjWXHjPYHc8V96Xf4RzQ8eJP7tVVim4lxSmaM/a9AfrG1yfL+W2MlHzQ3OV4SJtIKl976WNnC+wgqJpWoXE1H8blbOj/1Tqcq09oSE0=,iv:i/LDV1UCISq11UOXSqFV/PnjOpTKtygGzKHDnWruZFg=,tag:/GSQcHH+k0nTOiZ3rsz2uw==,type:str]
+    lastmodified: "2024-03-09T16:39:57Z"
+    mac: ENC[AES256_GCM,data:lpDpCM1haUqTqLY7xVOQLDpd+R9vA+mDg3k7ic2/VvgKSgO3TI9A0VQumHUT+eDeEcAR+jmfkEYEKq2VRP5B+P980pwP/3ONMNj60IAmEZyFkRaRfZVSptC7LyfX5hLCgE75k5T31iJS0bwMDgktM1/eNqnrjiLe170KlSZHp7Q=,iv:5IYia+mAGY47fLzPynRFW2wEjsK0MlMEQGREA/pozD4=,tag:qkzPumLgJYioWo1mvUr4fA==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
