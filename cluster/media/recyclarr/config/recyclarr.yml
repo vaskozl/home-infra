@@ -112,6 +112,42 @@ radarr:
             - template: radarr-quality-definition-sqp-uhd
             - template: radarr-quality-profile-sqp-5
             - template: radarr-custom-formats-sqp-5
+        quality_profiles:
+            - name: Any
+              reset_unmatched_scores:
+                enabled: true
+              upgrade:
+                allowed: true
+                until_quality: Bluray|WEB-2160p
+                until_score: 10000
+              min_format_score: 550
+              score_set: default
+              quality_sort: top
+              qualities:
+                - name: Bluray|WEB-2160p
+                  qualities:
+                    - WEBDL-2160p
+                    - WEBRip-2160p
+                    - Bluray-2160p
+                - name: Bluray|WEB-1080p
+                  qualities:
+                    - Bluray-1080p
+                    - WEBDL-1080p
+                    - WEBRip-1080p
+                - name: Bluray|WEB 720p
+                  qualities:
+                    - Bluray-720p
+                    - WEBDL-720p
+                    - WEBRip-720p
+                    - HDTV-720p
+                - name: Bluray-576p
+                - name: Bluray|WEB 480p
+                  qualities:
+                    - Bluray-480p
+                    - WEBDL-480p
+                    - WEBRip-480p
+                - name: DVD
+                - name: SDTV
         custom_formats:
             # =================================
             # SQP-5
@@ -122,14 +158,7 @@ radarr:
                 - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
               quality_profiles:
                 - name: SQP-5
-            # Misc
-            - trash_ids:
-                # x264
-                - 2899d84dc9372de3408e6d8cc18e9666
-              quality_profiles:
-                - name: SQP-5
-                  # Uncomment this line to enable x264 releases
-                  score: 0
+                - name: Any
             # Optional
             - trash_ids:
                 # Bad Dual Groups
@@ -144,19 +173,15 @@ radarr:
                 - f700d29429c023a5734505e77daeaea7
               quality_profiles:
                 - name: SQP-5
-            - trash_ids:
-                # SDR
-                - 9c38ebb7384dada637be8899efa68e6f
-              quality_profiles:
-                - name: SQP-5
+                - name: Any
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-03-09T03:23:10Z"
-    mac: ENC[AES256_GCM,data:c1BVIaVqeznmLXDTAISie/mkKrvDzJT0+46d88XTrQCkdokmRfqrRQ667soQGO4GG8mTRgJ7LTPo9d6Gg8HU4wEK1KvwPmiHjZcuotlNW3q/32uulTl6zT1IYhOrBEqt8z/xF+4LLR3ceFM8+4GA8tThkE3yuN5PKuCG4ALigWs=,iv:G4ausUXOG6rSbero9NMdWtST2g/WJ14yugxu6UVEvRU=,tag:44Ee292zxs/12ZT38t1V0Q==,type:str]
+    lastmodified: "2024-03-09T13:26:03Z"
+    mac: ENC[AES256_GCM,data:d+rPE3IHFzCvErygNbZIHarkAN1OKxEHtmCYk4TCaEHzI23obnyiEXEbpE7tVSjnU7NUh/rXIqXgcG6PzCwVc9WH4Lft8XtduFr4+EXnmjIMMnrd6/zmCinTWCg+eRhgKwxNVobEeYRGuM1uei/RJIifuhDd05mUB74xhy7yc5Q=,iv:r+bdUOaa3uwXVaR+CE683HlHFvNHHKPDctJjRE82IPY=,tag:fdSWNwtHbHIDc3kOkKCJMw==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
