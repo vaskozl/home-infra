@@ -15,36 +15,36 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: ghcr.io/linuxserver/calibre
-      tag: 7.5.1@sha256:7c98c0a2c7ba1aba16d2f3f4aa9fd2a67798567d42db24a27f255df22356ea2b
-    podSecurityContext:
-      runAsUser: 0
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    enableServiceLinks: false
+      repository: ghcr.io/vaskozl/calibre
+      tag: 7.6.0@sha256:c90c97df1265243abd40a97a5d77d570935df69d764a4dd0e8dd1fde94434806
     env:
-      PUID: 1000
-      PGID: 1000
+      HOME: /config
+    args:
+      - --port=8081
+      - /torrents/calibe-library
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: ["ALL"]
+    enableServiceLinks: false
     service:
       main:
         ports:
           http:
             port: 8081
-          x11:
-            port: 8080
     ingress:
       main:
         enabled: true
         hosts:
         - host: cb.sko.ai
-          paths:
-          - path: /
-            service:
-              port: 8080
-      builtin-web:
-        enabled: true
-        hosts:
-        - host: cb-web.sko.ai
           paths:
           - path: /
             service:
@@ -62,7 +62,7 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 400M
+        memory: 40M
       limits:
         cpu: 800m
         memory: 800M
