@@ -51,15 +51,15 @@ spec:
           routes:
           - match:
               alertname: 'Watchdog'
-            receiver: 'devnull'
+            receiver: 'blackhole'
           - match:
               alertname: 'InfoInhibitor'
-            receiver: 'devnull'
+            receiver: 'blackhole'
           - matchers:
             - severity=~"warning|critical"
             receiver: slack-monitoring
         receivers:
-        - name: 'devnull'
+        - name: 'blackhole'
         - name: "slack-monitoring"
           slack_configs:
           - channel: "#alerts"
