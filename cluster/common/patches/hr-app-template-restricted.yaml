@@ -18,9 +18,3 @@ spec:
       fsGroup: 568
       seccompProfile:
         type: RuntimeDefault
-    persistence:
-      tmp:
-        enabled: true
-        mountPath: /tmp
-        type: emptyDir
-        medium: Memory
