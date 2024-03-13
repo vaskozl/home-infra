@@ -56,7 +56,7 @@ spec:
       size: 1Mi
     sidecars:
       redis:
-        image: redis:7.2.4@sha256:e647cfe134bf5e8e74e620f66346f93418acfc240b71dd85640325cb7cd01402
+        image: redis:7.2.4@sha256:7dd707032d90c6eaafd566f62a00f5b0116ae08fd7d6cbbb0f311b82b47171a2
         resources:
           limits:
             memory: 850Mi
