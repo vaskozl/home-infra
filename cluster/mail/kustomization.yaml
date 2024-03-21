@@ -17,7 +17,6 @@ secretGenerator:
   - config/postfix-accounts.cf	
   - config/postfix-aliases.cf	
   - config/postfix-virtual.cf
-  - config/user-patches.sh
   - config/whitelist_clients.local
 - name: mailserver.dkim
   files:

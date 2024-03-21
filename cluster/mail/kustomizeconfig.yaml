@@ -10,8 +10,6 @@ nameReference:
     kind: HelmRelease
   - path: spec/values/persistence/virtual/name
     kind: HelmRelease
-  - path: spec/values/persistence/patches/name
-    kind: HelmRelease
   - path: spec/values/persistence/postgrey-whitelist/name
     kind: HelmRelease
   - path: spec/values/persistence/dkim-key-table/name
