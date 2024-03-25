@@ -7,7 +7,7 @@ controller:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
-    log-format: '%ci %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
+    log-format: '%ci [%tr] %TR/%Tw/%Tc/%Tr/%Ta %ST %B %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs "%HM %[var(txn.base)] %HV"'
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
       lua-load /usr/local/share/lua/auth-request.lua
