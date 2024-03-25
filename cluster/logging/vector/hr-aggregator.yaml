@@ -44,23 +44,18 @@ spec:
               .folder = "unlabeled"
             }
 
-            .pod = .kubernetes.pod_name
-            .ctr = .kubernetes.container_name
-            .ts  = .timestamp
-            .msg = .message
-            .str = .stream
+            .pod = string!(.kubernetes.pod_name)
+            .ctr = string!(.kubernetes.container_name)
+            .str = string!(.stream)
+            .msg = string!(.message)
+
+            .message = .msg + " pod=" + .pod + " ctr=" + .ctr + " str=" + .str
       sinks:
         files:
           type: file
           inputs: [sort]
           encoding:
-            codec: logfmt
-            only_fields:
-              - ts
-              - msg
-              - str
-              - pod
-              - ctr
+            codec: raw_message
           path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
     extraVolumes:
       - name: logging-pvc
