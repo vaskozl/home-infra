@@ -41,23 +41,23 @@ spec:
           org_role: Editor
         plugins:
           allow_loading_unsigned_plugins: "victorialogs-datasource"
-        extraInitContainers:
-          - name: 02-load-vm-ds-plugin
-            image: "ghcr.io/vaskozl/archlinux"
-            command: ["/bin/sh"]
-            workingDir: "/var/lib/grafana"
-            args:
-              - "-c"
-              - |
-                set -ex
-                mkdir -p /var/lib/grafana/plugins/
-                ver=$(curl -s https://api.github.com/repos/VictoriaMetrics/victorialogs-datasource/releases/latest | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-                curl -L https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/$ver/victorialogs-datasource-$ver.tar.gz -o /var/lib/grafana/plugins/plugin.tar.gz
-                tar -xf /var/lib/grafana/plugins/plugin.tar.gz -C /var/lib/grafana/plugins/
-                rm /var/lib/grafana/plugins/plugin.tar.gz
-            volumeMounts:
-              - name: storage
-                mountPath: /var/lib/grafana
+      extraInitContainers:
+        - name: load-vm-ds-plugin
+          image: "ghcr.io/vaskozl/archlinux"
+          command: ["/bin/sh"]
+          workingDir: "/var/lib/grafana"
+          args:
+            - "-c"
+            - |
+              set -ex
+              mkdir -p /var/lib/grafana/plugins/
+              ver=$(curl -s https://api.github.com/repos/VictoriaMetrics/victorialogs-datasource/releases/latest | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+              curl -L https://github.com/VictoriaMetrics/victorialogs-datasource/releases/download/$ver/victorialogs-datasource-$ver.tar.gz -o /var/lib/grafana/plugins/plugin.tar.gz
+              tar -xf /var/lib/grafana/plugins/plugin.tar.gz -C /var/lib/grafana/plugins/
+              rm /var/lib/grafana/plugins/plugin.tar.gz
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/grafana
     alertmanager:
       ingress:
         enabled: true
