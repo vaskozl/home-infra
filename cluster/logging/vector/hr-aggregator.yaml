@@ -24,7 +24,7 @@ spec:
           type: vector
           version: "2"
       transforms:
-        vmlogs-labels:
+        vmlogs-remap:
           type: remap
           inputs: [vector]
           source: |-
