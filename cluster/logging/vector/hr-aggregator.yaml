@@ -24,25 +24,27 @@ spec:
           type: vector
           version: "2"
       transforms:
+        vmlogs-labels:
+          type: remap
+          inputs: [vector]
+          source: |-
+            .labels = .kubernetes.pod_labels
+            .app = .labels."app.kubernetes.io/instance" || .labels.app || .labels."k8s-app" || "unkown"
+            .namespace = .kubernetes.pod_namespace
+            .node = .kubernetes.pod_node_name
+            .container = .kubernetes.container_name
+
+            .del(.kubernetes)
+            .del(.labels)
         sort:
           type: remap
           inputs: [vector]
           source: |-
-            if exists(.kubernetes.pod_labels."app.kubernetes.io/instance") {
-              .filename = .kubernetes.pod_labels."app.kubernetes.io/instance"
-            } else if exists(.kubernetes.pod_labels.app) {
-              .filename = .kubernetes.pod_labels.app
-            } else if exists(.kubernetes.container_name) {
-              .filename = .kubernetes.container_name
-            } else {
-              .filename = "unlabeled"
-            }
+            .labels = .kubernetes.pod_labels
+            .app = .labels."app.kubernetes.io/instance" || .labels.app || .labels."k8s-app" || "unkown"
+            .filename = .app || .kubernetes.container_name || "unlabeled";
 
-            if exists(.kubernetes.pod_namespace) {
-              .folder = .kubernetes.pod_namespace
-            } else {
-              .folder = "unlabeled"
-            }
+            .folder = .kubernetes.pod_namespace || "unlabeled"
 
             .pod = string!(.kubernetes.pod_name)
             .ctr = string!(.kubernetes.container_name)
@@ -57,6 +59,19 @@ spec:
           encoding:
             codec: raw_message
           path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
+        vmlogs:
+          inputs: ["vmlogs-remap"]
+          type: elasticsearch
+          endpoints:
+            - http://victoria-metrics-vm-logs-victoria-logs-single-server.victoria-metrics.svc:9428/insert/elasticsearch/
+          mode: "bulk"
+          compression: gzip
+          api_version: "v8"
+          healthcheck:
+            enabled: false
+          query:
+            _msg_field: "message"
+            _stream_fields: "node,container,app,namespace"
     extraVolumes:
       - name: logging-pvc
         persistentVolumeClaim:
