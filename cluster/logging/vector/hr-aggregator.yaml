@@ -34,8 +34,8 @@ spec:
             .node = .kubernetes.pod_node_name
             .container = .kubernetes.container_name
 
-            .del(.kubernetes)
-            .del(.labels)
+            del(.kubernetes)
+            del(.labels)
         sort:
           type: remap
           inputs: [vector]
