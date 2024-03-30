@@ -33,6 +33,7 @@ spec:
             .namespace = .kubernetes.pod_namespace
             .node = .kubernetes.pod_node_name
             .container = .kubernetes.container_name
+            .pod = .kubernetes.pod_name
 
             del(.kubernetes)
             del(.labels)
