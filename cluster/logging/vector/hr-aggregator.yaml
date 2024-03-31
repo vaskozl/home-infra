@@ -37,6 +37,9 @@ spec:
 
             del(.kubernetes)
             del(.labels)
+
+            # Parse key/value (logfmt) logs
+            .parsed = parse_key_value!(.message)
         sort:
           type: remap
           inputs: [vector]
