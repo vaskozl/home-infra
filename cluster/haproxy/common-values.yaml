@@ -7,7 +7,7 @@ controller:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
-    log-format: "client_ip=%ci client_port=%cp date_time=%tr frontend_name=%f backend_name=%b server_name=%s performance_metrics=%TR/%Tw/%Tc/%Tr/%Ta status_code=%ST bytes_read=%B termination_state=%tsc haproxy_metrics=%ac/%fc/%bc/%sc/%rc srv_queue=%sq  backend_queue=%bq user_agent=%{+Q}[capture.req.hdr(0)] http_hostname=%{+Q}[capture.req.hdr(1)] http_version=%HV http_method=%HM http_request_uri=%HU http_request=%{+Q}r"
+    log-format: "client_ip=%ci date_time=%tr backend_name=%b performance_metrics=%TR/%Tw/%Tc/%Tr/%Ta status_code=%ST bytes_read=%B termination_state=%tsc haproxy_metrics=%ac/%fc/%bc/%sc/%rc srv_queue=%sq  backend_queue=%bq user_agent=%{+Q}[capture.req.hdr(0)] http_host=%{+Q}[capture.req.hdr(1)] http_version=%HV http_method=%HM http_request_uri=%HU"
 
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
@@ -18,6 +18,10 @@ controller:
       acl is_cloudflare src -f /config/cf-ips-v6.txt
       http-request set-src hdr(cf-connecting-ip) if is_cloudflare
       http-request del-header x-forwarded-for
+
+      # Capture headers for logging
+      capture request header User-Agent len 64
+      capture request header Host len 64
 
       # https redirect
       http-request redirect scheme https if !{ ssl_fc }
