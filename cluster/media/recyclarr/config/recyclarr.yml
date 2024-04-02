@@ -67,8 +67,9 @@ radarr:
             # =================================
             # SQP-1
             # =================================
-            # Optional
             - trash_ids:
+                # IMAX Enhanced
+                - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
                 # Bad Dual Groups
                 - b6832f586342ef70d9c128d40c07b872
                 # EVO (no WEBDL)
@@ -83,8 +84,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-04-02T18:32:38Z"
-    mac: ENC[AES256_GCM,data:qFWtvwDFYTj7QGvxvlxG3/hOXP+COQ0xwIJTLViXrTv/bJoS3bFi3cjWPzBu8cloEHxG5tEanxR1Dg/BEDx6pPm8lvNTRLFyUZ7hv496IhCoXO76j7rewabVac4s0Aafz+bq12UiXsGoL7rlvRce+MxnBp+1rx+TSdEB1D2iKY8=,iv:jEJ77VRhXs85xYu3Z5GLLbx7Em58avTbbRkCkbosh20=,tag:jMpLKbww1lECZCS87USpCw==,type:str]
+    lastmodified: "2024-04-02T23:30:49Z"
+    mac: ENC[AES256_GCM,data:/gUcARBc6RfUUoqhC5PyT1gsNgBcoKusDaQML93tNiSlWr4Xz26mdPlyfnoP5Gj5YkuZCINVgofDzrGVKQTMHNac75noOXlMT0L3lygJBXksZc9juYZGIL9ZTcRvGiGYATu5FqRlGhLA+VJjduAbO3DS4lMNobvU4BAEmfp0kBU=,iv:sFdowgR+fzErTH7TFLBf78OpR1JTzrijReCZzjdKUlg=,tag:CK6z5XuFaVP/W4GHgoWN+A==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
