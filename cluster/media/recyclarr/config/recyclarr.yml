@@ -60,62 +60,31 @@ radarr:
         quality_definition:
             type: movie
         include:
-            - template: radarr-quality-definition-sqp-uhd
-            - template: radarr-quality-profile-sqp-5
-            - template: radarr-custom-formats-sqp-5
-        quality_profiles:
-            - name: SQP-5
-              qualities:
-                - name: WEB|Bluray|2160p
-                  qualities:
-                    - WEBDL-2160p
-                    - WEBRip-2160p
-                    - Bluray-2160p
-                - name: WEB|Bluray|1080p
-                  qualities:
-                    - Bluray-1080p
-                    - WEBDL-1080p
-                    - WEBRip-1080p
-                - name: WEB|Bluray|720p
-                  qualities:
-                    - Bluray-720p
-                    - WEBDL-720p
-                    - WEBRip-720p
-                    - HDTV-720p
-                - name: Bluray-576p
-                - name: Bluray|WEB 480p
-                  qualities:
-                    - Bluray-480p
-                    - WEBDL-480p
-                    - WEBRip-480p
-                - name: DVD
-                - name: SDTV
+            - template: radarr-quality-definition-sqp-streaming
+            - template: radarr-quality-profile-sqp-1-2160p-imax-e
+            - template: radarr-custom-formats-sqp-1-2160p
         custom_formats:
             # =================================
-            # SQP-5
+            # SQP-1
             # =================================
             # Optional
             - trash_ids:
                 # Bad Dual Groups
                 - b6832f586342ef70d9c128d40c07b872
-                # DV (WEBDL)
-                - 923b6abef9b17f937fab56cfcf89e1f1
                 # EVO (no WEBDL)
                 - 90cedc1fea7ea5d11298bebd3d1d3223
                 # No-RlsGroup
                 - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
-                # DV (Disk)
-                - f700d29429c023a5734505e77daeaea7
               quality_profiles:
-                - name: SQP-5
+                - name: SQP-1 (2160p)
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-03-09T17:52:00Z"
-    mac: ENC[AES256_GCM,data:o83kf2fYdr2MWA0eG+UZcamvOMUr4eiqoyBKCq94nUyubYlC+D5kXHQB7gLo4N/QSrSSh16yDMifucg6xiM3JYWEJ21N6vy8nSQgpvqTUEAlaQGbL+osaGotYQMqV6stCXqSBB7g9TRKmuDu+jbxaD9x1IMGvMFgICYIq0xKIkw=,iv:BPOHaEVJO5zKfTgcIWOGOLljWfTBirBtAG97h41mCas=,tag:uLgoS7C9q+RKm9WXZeDLSA==,type:str]
+    lastmodified: "2024-04-02T18:32:38Z"
+    mac: ENC[AES256_GCM,data:qFWtvwDFYTj7QGvxvlxG3/hOXP+COQ0xwIJTLViXrTv/bJoS3bFi3cjWPzBu8cloEHxG5tEanxR1Dg/BEDx6pPm8lvNTRLFyUZ7hv496IhCoXO76j7rewabVac4s0Aafz+bq12UiXsGoL7rlvRce+MxnBp+1rx+TSdEB1D2iKY8=,iv:jEJ77VRhXs85xYu3Z5GLLbx7Em58avTbbRkCkbosh20=,tag:jMpLKbww1lECZCS87USpCw==,type:str]
     pgp:
         - created_at: "2022-12-14T14:08:04Z"
           enc: |
