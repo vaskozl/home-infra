@@ -1,38 +1,59 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: cyberchef
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/cyberchef-web
-      tag: 10.8.2@sha256:e0dc01a2cfa6b62d273ca3dbe77082aa658231a37a79576d94ee939a2d86d567
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
+    controllers:
+      cyberchef:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/cyberchef-web
+              tag: 10.8.2@sha256:e0dc01a2cfa6b62d273ca3dbe77082aa658231a37a79576d94ee939a2d86d567
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                - NET_BIND_SERVICE
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: cyberchef.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
     resources:
       limits:
         memory: 50Mi
       requests:
         cpu: 5m
         memory: 5Mi
+    service:
+      app:
+        controller: cyberchef
+        ports:
+          http:
+            port: 8080
