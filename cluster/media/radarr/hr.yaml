@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/radarr
-      tag: 5.3.6.8612@sha256:ed205a4b7660fcf12def65710155e3f0b19e07ece170a5a679c904ef071e6432
+      tag: 5.3.6.8612@sha256:7f8872adb2c4410adabe9aa57f2de6be426773ddd6b786489fcdada4432b58d8
     args: [/usr/lib/radarr/bin/Radarr, -nobrowser, -data=/config]
     volumeClaimTemplates:
     - name: config
