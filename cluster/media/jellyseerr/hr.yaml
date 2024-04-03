@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/jellyseerr
-      tag: 1.7.0@sha256:ad18b9a34895c039cf0fed51eb2994745ee3fe781e36e66cc69ba8460bf8e65b
+      tag: 1.7.0@sha256:c859e44d998347ec2ba249386ac6019c761cfe5df304386b257aad3d9650783a
     env:
       NODE_ENV: production
     args: [sh, -c, 'cd /usr/lib/jellyseerr && exec /usr/bin/node dist/index.js']
