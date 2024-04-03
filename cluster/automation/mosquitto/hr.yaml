@@ -19,7 +19,7 @@ spec:
       replicas: 2
     image:
       repository: ghcr.io/vaskozl/mosquitto
-      tag: 2.0.18@sha256:fa1dfdc827522caf8f79fa2ca61f89dc8434d6c76a31cef6cb1c8c40d13c3dca
+      tag: 2.0.18@sha256:2ec265e1c6261593f1582a6ab54a30f8773de704da3c7c1bc6b05aa9d1a894c0
     args: [sh, -c, 'exec mosquitto -c "/config/$(hostname).conf"']
     service:
       main:
