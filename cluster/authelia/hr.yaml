@@ -1,49 +1,75 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: authelia
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/authelia-bin
-      tag: 4.37.5@sha256:d6cc6ff9b0d79d7359ec0476250dd2ce24863ba6008a391ffceeeb1a1be71394
-    args: ['--config', '/config/configuration.yml']
+    controllers:
+      authelia:
+        containers:
+          app:
+            args:
+            - --config
+            - /config/configuration.yml
+            image:
+              repository: ghcr.io/vaskozl/authelia-bin
+              tag: 4.37.5@sha256:d6cc6ff9b0d79d7359ec0476250dd2ce24863ba6008a391ffceeeb1a1be71394
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app:
+        className: haproxy-internal
+        hosts:
+        - host: gate.sko.ai
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
     persistence:
       config:
-        enabled: true
-        type: secret
+        globalMounts:
+        - path: /config
         name: authelia-config
-        mountPath: /config
+        type: secret
+    resources:
+      limits:
+        cpu: 1
+        memory: 200Mi
+      requests:
+        cpu: 15m
+        memory: 40Mi
     service:
-      main:
+      app:
+        controller: authelia
         enabled: true
         ports:
           http:
             enabled: true
             port: 8080
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: haproxy-internal
-        hosts:
-        - host: gate.sko.ai
-          paths:
-          - path: /
-    resources:
-      requests:
-        cpu: 15m
-        memory: 40Mi
-      limits:
-        cpu: 1
-        memory: 200Mi
