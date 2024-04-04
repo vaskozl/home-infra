@@ -40,6 +40,8 @@ spec:
                 - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
+      imagePullSecrets:
+      - name: regcred
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -47,8 +49,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    imagePullSecrets:
-    - name: regcred
     ingress:
       app:
         annotations:
