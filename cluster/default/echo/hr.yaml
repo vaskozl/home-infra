@@ -30,6 +30,7 @@ spec:
               capabilities:
                 drop:
                 - ALL
+              readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -54,6 +55,8 @@ spec:
           subPath: nginx.conf
         name: echo-conf
         type: configMap
+      tmp:
+        type: emptyDir
     resources:
       limits:
         memory: 50Mi

@@ -60,6 +60,7 @@ spec:
     persistence:
       torrents:
         existingClaim: torrents-v2
+      type: emptyDir
     resources:
       limits:
         cpu: 1200m

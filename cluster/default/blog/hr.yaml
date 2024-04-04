@@ -31,6 +31,7 @@ spec:
               capabilities:
                 drop:
                 - ALL
+              readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -53,6 +54,9 @@ spec:
               identifier: app
               port: http
         className: haproxy-external
+    persistence:
+      tmp:
+        type: emptyDir
     resources:
       limits:
         cpu: 100m
