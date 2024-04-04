@@ -63,6 +63,8 @@ spec:
         - path: /inspircd/ssl
         name: irk-sko-ai-tls
         type: secret
+      tmp:
+        type: emptyDir
     service:
       app:
         annotations:
