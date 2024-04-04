@@ -13,10 +13,9 @@ spec:
         namespace: flux-system
       version: 3.0.4
   values:
-    controller:
-      replicas: 2
     controllers:
       blocky:
+        replicas: 2
         containers:
           app:
             image:
