@@ -1,43 +1,58 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: blog
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    controller:
-      replicas: 2
-      strategy: RollingUpdate
-    image:
-      repository: registry.sko.ai/vasko/blog
-      tag: head@sha256:afc3f923519bcaac00bc41bb02fbba61e21f0a5d9efb618f546b9d3b18415c49
+    controllers:
+      blog:
+        replicas: 2
+        containers:
+          app:
+            image:
+              repository: registry.sko.ai/vasko/blog
+              tag: head@sha256:afc3f923519bcaac00bc41bb02fbba61e21f0a5d9efb618f546b9d3b18415c49
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     imagePullSecrets:
     - name: regcred
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
     ingress:
-      main:
-        enabled: true
-        ingressClassName: haproxy-external
+      app:
         annotations:
           haproxy.org/response-set-header: Cache-Control "public"
         hosts:
         - host: sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+        className: haproxy-external
     resources:
       limits:
         cpu: 100m
@@ -45,3 +60,9 @@ spec:
       requests:
         cpu: 2m
         memory: 10Mi
+    service:
+      app:
+        controller: blog
+        ports:
+          http:
+            port: 8080
