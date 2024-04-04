@@ -52,8 +52,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app: {}
     persistence:
       config:
         globalMounts:

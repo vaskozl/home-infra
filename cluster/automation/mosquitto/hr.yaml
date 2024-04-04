@@ -63,8 +63,6 @@ spec:
         - ${EI_MQTT}
         externalTrafficPolicy: Local
         ports:
-          http:
-            enabled: false
           mqtt:
             enabled: true
             port: 1883
