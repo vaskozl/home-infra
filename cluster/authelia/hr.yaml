@@ -28,6 +28,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 200Mi
+              requests:
+                cpu: 15m
+                memory: 40Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -60,13 +67,6 @@ spec:
         type: secret
       tmp:
         type: emptyDir
-    resources:
-      limits:
-        cpu: 1
-        memory: 200Mi
-      requests:
-        cpu: 15m
-        memory: 40Mi
     service:
       app:
         controller: authelia

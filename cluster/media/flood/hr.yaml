@@ -34,6 +34,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 50m
+                memory: 60Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -61,12 +67,6 @@ spec:
     persistence:
       data:
         type: emptyDir
-    resources:
-      limits:
-        memory: 100Mi
-      requests:
-        cpu: 50m
-        memory: 60Mi
     service:
       app:
         controller: flood

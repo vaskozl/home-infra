@@ -38,6 +38,14 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 2
+                memory: 2Gi
+              requests:
+                cpu: 200m
+                ephemeral-storage: 10Gi
+                memory: 2Gi
             securityContext:
               privileged: true
     defaultPodOptions:
@@ -55,14 +63,6 @@ spec:
         - path: /certs
         name: buildkit-daemon-certs
         type: secret
-    resources:
-      limits:
-        cpu: 2
-        memory: 2Gi
-      requests:
-        cpu: 200m
-        ephemeral-storage: 10Gi
-        memory: 2Gi
     service:
       app:
         controller: buildkitd-arm64
@@ -70,4 +70,3 @@ spec:
           mtls:
             enabled: true
             port: 1234
-

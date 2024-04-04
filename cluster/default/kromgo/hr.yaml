@@ -30,6 +30,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 50m
+                memory: 50Mi
+              requests:
+                cpu: 5m
+                memory: 20Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -61,13 +68,6 @@ spec:
           subPath: config.yaml
         name: kromgo-config
         type: configMap
-    resources:
-      limits:
-        cpu: 50m
-        memory: 50Mi
-      requests:
-        cpu: 5m
-        memory: 20Mi
     service:
       app:
         controller: kromgo

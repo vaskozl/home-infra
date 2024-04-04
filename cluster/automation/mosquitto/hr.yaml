@@ -15,7 +15,6 @@ spec:
   values:
     controllers:
       mosquitto:
-        replicas: 2
         containers:
           app:
             args:
@@ -30,12 +29,19 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 200Mi
+              requests:
+                cpu: 2m
+                memory: 8Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
                 - ALL
               readOnlyRootFilesystem: true
+        replicas: 2
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -50,12 +56,6 @@ spec:
       config:
         name: mosquitto-config
         type: configMap
-    resources:
-      limits:
-        memory: 200Mi
-      requests:
-        cpu: 2m
-        memory: 8Mi
     service:
       app:
         annotations:

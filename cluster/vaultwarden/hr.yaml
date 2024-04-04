@@ -25,6 +25,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 200Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -43,12 +49,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 1Gi
-      requests:
-        cpu: 100m
-        memory: 200Mi
     service:
       app:
         controller: vaultwarden

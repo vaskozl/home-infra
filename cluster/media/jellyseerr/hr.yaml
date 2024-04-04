@@ -31,6 +31,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 10m
+                memory: 180Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -64,12 +70,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 1Gi
-      requests:
-        cpu: 10m
-        memory: 180Mi
     service:
       app:
         controller: jellyseerr

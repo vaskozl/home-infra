@@ -25,6 +25,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 800m
+                memory: 1Gi
+              requests:
+                cpu: 15m
+                memory: 250Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -60,13 +67,6 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-    resources:
-      limits:
-        cpu: 800m
-        memory: 1Gi
-      requests:
-        cpu: 15m
-        memory: 250Mi
     service:
       app:
         controller: prowlarr

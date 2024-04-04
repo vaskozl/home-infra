@@ -13,9 +13,6 @@ spec:
         namespace: flux-system
       version: 3.0.4
   values:
-    defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: amd64
     controllers:
       jellyfin:
         containers:
@@ -35,6 +32,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 5000m
+                memory: 8Gi
+              requests:
+                cpu: 500m
+                memory: 4Gi
             securityContext:
               privileged: true
         statefulset:
@@ -46,6 +50,9 @@ spec:
             name: config
             size: 1Mi
         type: statefulset
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
     ingress:
       app:
         className: haproxy-external
@@ -64,13 +71,6 @@ spec:
         type: hostPath
       torrents:
         existingClaim: torrents-v2
-    resources:
-      limits:
-        cpu: 5000m
-        memory: 8Gi
-      requests:
-        cpu: 500m
-        memory: 4Gi
     service:
       app:
         controller: jellyfin

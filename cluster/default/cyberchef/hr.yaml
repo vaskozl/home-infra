@@ -20,6 +20,12 @@ spec:
             image:
               repository: ghcr.io/vaskozl/cyberchef-web
               tag: 10.15.0@sha256:d87efec8f32668e9715be5858621bb51e95adcca5c186af82a29281d8f7bb095
+            resources:
+              limits:
+                memory: 50Mi
+              requests:
+                cpu: 5m
+                memory: 5Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -43,12 +49,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 50Mi
-      requests:
-        cpu: 5m
-        memory: 5Mi
     service:
       app:
         controller: cyberchef

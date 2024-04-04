@@ -39,10 +39,28 @@ spec:
                 type: HTTP
               startup:
                 enabled: true
-                type: HTTP
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+                type: HTTP
+            resources:
+              limits:
+                memory: 1350Mi
+              requests:
+                cpu: 100m
+                memory: 820Mi
+          gotenburg:
+            env:
+              DISABLE_GOOGLE_CHROME: '1'
+            image:
+              repository: gotenberg/gotenberg
+              tag: 8.3.0@sha256:9019977da0b3d7359e2b5e41f8c783e31812d37b9db1b759468c26fc683689df
+            resources:
+              limits:
+                memory: 850Mi
+              requests:
+                cpu: 10m
+                memory: 300Mi
           redis:
             image:
               repository: redis
@@ -63,18 +81,6 @@ spec:
               requests:
                 cpu: 10m
                 memory: 185Mi
-          gotenburg:
-            image:
-              repository: gotenberg/gotenberg
-              tag: 8.3.0@sha256:9019977da0b3d7359e2b5e41f8c783e31812d37b9db1b759468c26fc683689df
-            env:
-              DISABLE_GOOGLE_CHROME: "1"
-            resources:
-              limits:
-                memory: 850Mi
-              requests:
-                cpu: 10m
-                memory: 300Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -98,12 +104,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 1350Mi
-      requests:
-        cpu: 100m
-        memory: 820Mi
     service:
       app:
         controller: paperless-ngx

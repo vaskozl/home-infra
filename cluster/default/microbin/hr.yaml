@@ -28,6 +28,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 80Mi
+              requests:
+                cpu: 10m
+                memory: 10Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -64,12 +70,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 80Mi
-      requests:
-        cpu: 10m
-        memory: 10Mi
     service:
       app:
         controller: microbin

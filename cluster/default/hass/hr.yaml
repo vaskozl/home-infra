@@ -26,6 +26,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 600Mi
+              requests:
+                cpu: 35m
+                memory: 360Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -55,12 +61,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 600Mi
-      requests:
-        cpu: 35m
-        memory: 360Mi
     service:
       app:
         controller: hass
