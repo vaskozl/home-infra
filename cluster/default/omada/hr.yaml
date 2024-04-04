@@ -25,16 +25,13 @@ spec:
             probes:
               liveness:
                 enabled: true
-                type: HTTP
               readiness:
                 enabled: true
-                type: HTTP
               startup:
                 enabled: true
                 spec:
                   failureThreshold: 120
                   periodSeconds: 30
-                type: HTTP
             resources:
               limits:
                 cpu: 2

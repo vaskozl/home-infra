@@ -14,8 +14,8 @@ spec:
       version: 3.0.4
   values:
     controllers:
-      type: statefulset
       mosquitto:
+        type: statefulset
         replicas: 2
         containers:
           app:
