@@ -1,64 +1,88 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: inspircd
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    nodeSelector:
-      kubernetes.io/arch: amd64
-    image:
-      repository: ghcr.io/vaskozl/inspircd
-      tag: 3.17.0@sha256:9d1223770c867d95205c5db2c487e06cfd4f72fb6f9a889fdf7f1486acf5897b
-    args:
-      - --nofork
-      - --runasroot # needed for gid=0
-      - --config=/inspircd/conf/inspircd.conf
+    controllers:
+      inspircd:
+        containers:
+          app:
+            args:
+            - --nofork
+            - --runasroot
+            - --config=/inspircd/conf/inspircd.conf
+            image:
+              repository: ghcr.io/vaskozl/inspircd
+              tag: 3.17.0@sha256:9d1223770c867d95205c5db2c487e06cfd4f72fb6f9a889fdf7f1486acf5897b
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 200Mi
+              requests:
+                cpu: 10m
+                memory: 10Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app: {}
     persistence:
       config:
-        enabled: true
-        type: secret
+        globalMounts:
+        - path: /inspircd/conf
         name: inspircd
-        mountPath: /inspircd/conf
-      tls:
-        enabled: true
         type: secret
+      tls:
+        globalMounts:
+        - path: /inspircd/ssl
         name: irk-sko-ai-tls
-        mountPath: /inspircd/ssl
+        type: secret
     service:
-      main:
+      app:
         annotations:
           coredns.io/hostname: irk
+        controller: inspircd
         enabled: true
-        type: LoadBalancer
-        externalTrafficPolicy: Local
         externalIPs:
-          - ${EI_INSPIRCD}
+        - ${EI_INSPIRCD}
+        externalTrafficPolicy: Local
         ports:
+          client:
+            enabled: true
+            port: 6697
+            protocol: TCP
           http:
             enabled: false
           server:
             enabled: true
             port: 7001
             protocol: TCP
-          client:
-            enabled: true
-            port: 6697
-            protocol: TCP
-    resources:
-      requests:
-        cpu: 10m
-        memory: 10Mi
-      limits:
-        cpu: 1
-        memory: 200Mi
+        type: LoadBalancer
