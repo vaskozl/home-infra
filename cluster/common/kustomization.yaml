@@ -13,29 +13,3 @@ patches:
 - path: patches/hr.yaml
   target:
     kind: HelmRelease
-# -----------------------------------------------------------
-# All HRs annotated with patch.sko.ai/app-template=enabled
-# -----------------------------------------------------------
-- path: patches/hr-app-template.yaml
-  target:
-    kind: HelmRelease
-    annotationSelector: patch.sko.ai/app-template=enabled
-# -----------------------------------------------------------
-# All HRs annotated with patch.sko.ai/app-template=statefulset
-# -----------------------------------------------------------
-- path: patches/hr-app-template.yaml
-  target:
-    kind: HelmRelease
-    annotationSelector: patch.sko.ai/app-template=statefulset
-- path: patches/hr-app-template-sts.yaml
-  target:
-    kind: HelmRelease
-    annotationSelector: patch.sko.ai/app-template=statefulset
-# -----------------------------------------------------------
-# All HRs annotated with patch.sko.ai/app-security=statefulset
-# -----------------------------------------------------------
-- path: patches/hr-app-template-restricted.yaml
-  target:
-    kind: HelmRelease
-    annotationSelector: patch.sko.ai/app-security=restricted
-
