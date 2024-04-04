@@ -27,6 +27,11 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 120
+                  periodSeconds: 30
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
