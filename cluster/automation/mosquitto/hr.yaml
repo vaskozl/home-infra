@@ -15,6 +15,7 @@ spec:
   values:
     controllers:
       mosquitto:
+        replicas: 2
         containers:
           app:
             args:
@@ -41,7 +42,6 @@ spec:
                 drop:
                 - ALL
               readOnlyRootFilesystem: true
-        replicas: 2
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -50,8 +50,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app: {}
     persistence:
       config:
         name: mosquitto-config
