@@ -70,7 +70,8 @@ spec:
             size: 10Gi
             storageClass: nfs-client
           - accessMode: ReadWriteOnce
-            mountPath: /var/mail-state
+            globalMounts:
+            - path: /var/mail-state
             name: mail-state
             size: 1Gi
         type: statefulset
