@@ -74,13 +74,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           client:
-            enabled: true
             port: 6697
-            protocol: TCP
-          http:
-            enabled: false
           server:
-            enabled: true
             port: 7001
-            protocol: TCP
         type: LoadBalancer
