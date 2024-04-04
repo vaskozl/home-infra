@@ -1,30 +1,69 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: mosquitto
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    controller:
-      replicas: 2
-    image:
-      repository: ghcr.io/vaskozl/mosquitto
-      tag: 2.0.18@sha256:2ec265e1c6261593f1582a6ab54a30f8773de704da3c7c1bc6b05aa9d1a894c0
-    args: [sh, -c, 'exec mosquitto -c "/config/$(hostname).conf"']
+    controllers:
+      mosquitto:
+        replicas: 2
+        containers:
+          app:
+            args:
+            - sh
+            - -c
+            - exec mosquitto -c "/config/$(hostname).conf"
+            image:
+              repository: ghcr.io/vaskozl/mosquitto
+              tag: 2.0.18@sha256:2ec265e1c6261593f1582a6ab54a30f8773de704da3c7c1bc6b05aa9d1a894c0
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app: {}
+    persistence:
+      config:
+        name: mosquitto-config
+        type: configMap
+    resources:
+      limits:
+        memory: 200Mi
+      requests:
+        cpu: 2m
+        memory: 8Mi
     service:
-      main:
+      app:
         annotations:
           coredns.io/hostname: mqtt
+        controller: mosquitto
+        externalIPs:
+        - ${EI_MQTT}
+        externalTrafficPolicy: Local
         ports:
           http:
             enabled: false
@@ -32,17 +71,3 @@ spec:
             enabled: true
             port: 1883
         type: LoadBalancer
-        externalTrafficPolicy: Local
-        externalIPs:
-        - ${EI_MQTT}
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: mosquitto-config
-    resources:
-      limits:
-        memory: 200Mi
-      requests:
-        cpu: 2m
-        memory: 8Mi
