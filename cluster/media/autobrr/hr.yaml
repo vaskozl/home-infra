@@ -25,6 +25,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 800m
+                memory: 200Mi
+              requests:
+                cpu: 15m
+                memory: 45Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -57,13 +64,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        cpu: 800m
-        memory: 200Mi
-      requests:
-        cpu: 15m
-        memory: 45Mi
     service:
       app:
         controller: autobrr

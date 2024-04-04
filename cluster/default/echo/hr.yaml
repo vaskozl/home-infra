@@ -25,6 +25,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 50Mi
+              requests:
+                cpu: 10m
+                memory: 20Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -57,12 +63,6 @@ spec:
         type: configMap
       tmp:
         type: emptyDir
-    resources:
-      limits:
-        memory: 50Mi
-      requests:
-        cpu: 10m
-        memory: 20Mi
     service:
       app:
         controller: echoserver

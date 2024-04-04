@@ -28,6 +28,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 800m
+                memory: 350M
+              requests:
+                cpu: 15m
+                memory: 130M
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -72,13 +79,6 @@ spec:
         existingClaim: torrents-v2
         globalMounts:
         - path: /torrents
-    resources:
-      limits:
-        cpu: 800m
-        memory: 350M
-      requests:
-        cpu: 15m
-        memory: 130M
     service:
       app:
         controller: calibre-web

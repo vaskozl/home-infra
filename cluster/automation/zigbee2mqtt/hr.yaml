@@ -25,6 +25,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 400Mi
+              requests:
+                cpu: 10m
+                memory: 85Mi
             securityContext:
               privileged: true
         statefulset:
@@ -51,12 +57,6 @@ spec:
       zzh:
         hostPath: /dev/ttyUSB0
         type: hostPath
-    resources:
-      limits:
-        memory: 400Mi
-      requests:
-        cpu: 10m
-        memory: 85Mi
     service:
       app:
         controller: zigbee2mqtt

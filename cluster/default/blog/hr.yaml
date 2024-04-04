@@ -26,6 +26,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 100m
+                memory: 50Mi
+              requests:
+                cpu: 2m
+                memory: 10Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -46,6 +53,7 @@ spec:
       app:
         annotations:
           haproxy.org/response-set-header: Cache-Control "public"
+        className: haproxy-external
         hosts:
         - host: sko.ai
           paths:
@@ -53,17 +61,9 @@ spec:
             service:
               identifier: app
               port: http
-        className: haproxy-external
     persistence:
       tmp:
         type: emptyDir
-    resources:
-      limits:
-        cpu: 100m
-        memory: 50Mi
-      requests:
-        cpu: 2m
-        memory: 10Mi
     service:
       app:
         controller: blog

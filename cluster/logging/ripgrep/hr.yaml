@@ -28,10 +28,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
     persistence:
       logs:
         existingClaim: logging-pvc
-    resources:
-      requests:
-        cpu: 10m
-        memory: 10Mi

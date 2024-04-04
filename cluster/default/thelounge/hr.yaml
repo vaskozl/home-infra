@@ -27,6 +27,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 10m
+                memory: 550Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -59,12 +65,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        memory: 1Gi
-      requests:
-        cpu: 10m
-        memory: 550Mi
     service:
       app:
         controller: thelounge

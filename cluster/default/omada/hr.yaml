@@ -31,10 +31,17 @@ spec:
                 type: HTTP
               startup:
                 enabled: true
-                type: HTTP
                 spec:
                   failureThreshold: 120
                   periodSeconds: 30
+                type: HTTP
+            resources:
+              limits:
+                cpu: 2
+                memory: 1400Mi
+              requests:
+                cpu: 800m
+                memory: 800Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -57,13 +64,6 @@ spec:
             service:
               identifier: app
               port: http
-    resources:
-      limits:
-        cpu: 2
-        memory: 1400Mi
-      requests:
-        cpu: 800m
-        memory: 800Mi
     service:
       app:
         controller: omada

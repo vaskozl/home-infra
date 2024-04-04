@@ -15,7 +15,6 @@ spec:
   values:
     controllers:
       blocky:
-        replicas: 2
         containers:
           app:
             image:
@@ -26,6 +25,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 220Mi
+              requests:
+                cpu: 15m
+                memory: 120Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -34,6 +40,7 @@ spec:
                 drop:
                 - ALL
               readOnlyRootFilesystem: true
+        replicas: 2
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -49,13 +56,6 @@ spec:
           subPath: config.yml
         name: config
         type: configMap
-    resources:
-      limits:
-        cpu: 1
-        memory: 220Mi
-      requests:
-        cpu: 15m
-        memory: 120Mi
     service:
       app:
         annotations:
@@ -72,6 +72,6 @@ spec:
             port: 53
             protocol: UDP
           http:
-            primary: true
             port: 4000
+            primary: true
         type: LoadBalancer

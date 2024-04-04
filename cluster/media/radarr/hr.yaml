@@ -29,6 +29,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 1200m
+                memory: 1Gi
+              requests:
+                cpu: 85m
+                memory: 350Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -62,17 +69,10 @@ spec:
               identifier: app
               port: http
     persistence:
-      torrents:
-        existingClaim: torrents-v2
       tmp:
         type: emptyDir
-    resources:
-      limits:
-        cpu: 1200m
-        memory: 1Gi
-      requests:
-        cpu: 85m
-        memory: 350Mi
+      torrents:
+        existingClaim: torrents-v2
     service:
       app:
         controller: radarr

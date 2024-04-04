@@ -28,6 +28,13 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                cpu: 2000m
+                memory: 500Mi
+              requests:
+                cpu: 20m
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -59,13 +66,6 @@ spec:
               port: http
     nodeSelector:
       kubernetes.io/arch: amd64
-    resources:
-      limits:
-        cpu: 2000m
-        memory: 500Mi
-      requests:
-        cpu: 20m
-        memory: 100Mi
     service:
       app:
         controller: dogcalc
