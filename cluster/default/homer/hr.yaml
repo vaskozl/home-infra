@@ -1,45 +1,71 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: homer
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/homer-web
-      tag: 24.02.1@sha256:70f006e630348f0484e5b5b4bf8a7523912f0beb388a7a144d9011e12f596c65
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: homer-config
-        mountPath: /usr/share/webapps/homer/assets/config.yml
-        subPath: config.yml
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
+    controllers:
+      homer:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/homer-web
+              tag: 24.02.1@sha256:70f006e630348f0484e5b5b4bf8a7523912f0beb388a7a144d9011e12f596c65
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                - NET_BIND_SERVICE
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: home.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      config:
+        globalMounts:
+        - path: /usr/share/webapps/homer/assets/config.yml
+          subPath: config.yml
+        name: homer-config
+        type: configMap
     resources:
       limits:
         memory: 50Mi
       requests:
         cpu: 10m
         memory: 20Mi
+    service:
+      app:
+        controller: homer
+        ports:
+          http:
+            port: 8080
