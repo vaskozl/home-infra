@@ -1,46 +1,68 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: echoserver
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: openresty/openresty
-      tag: 1.19.9.1-12-alpine
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: echo-conf
-        mountPath: /usr/local/openresty/nginx/conf/nginx.conf
-        subPath: nginx.conf
-        readOnly: true
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
+    controllers:
+      echoserver:
+        containers:
+          app:
+            image:
+              repository: openresty/openresty
+              tag: 1.19.9.1-12-alpine
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: echo.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      config:
+        globalMounts:
+        - path: /usr/local/openresty/nginx/conf/nginx.conf
+          subPath: nginx.conf
+        name: echo-conf
+        type: configMap
     resources:
       limits:
         memory: 50Mi
       requests:
         cpu: 10m
         memory: 20Mi
+    service:
+      app:
+        controller: echoserver
+        ports:
+          http:
+            port: 8080

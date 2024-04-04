@@ -1,37 +1,44 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: hass
   namespace: default
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/home-assistant/home-assistant
-      tag: 2024.3.3
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    service:
-      main:
-        ports:
-          http:
-            port: 8123
+    controllers:
+      hass:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-assistant/home-assistant
+              tag: 2024.3.3
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      hostNetwork: true
     ingress:
-      main:
-        enabled: true
-        ingressClassName: haproxy-external
+      app:
         annotations:
           haproxy.org/backend-config-snippet: |
             acl allowed src 192.168.1.0/24
@@ -40,14 +47,23 @@ spec:
             acl allowed path_beg /auth
             acl allowed path_beg /redirect/oauth
             http-request deny unless allowed
+        className: haproxy-external
         hosts:
         - host: ha.sko.ai
           paths:
           - path: /
-    hostNetwork: true
+            service:
+              identifier: app
+              port: http
     resources:
       limits:
         memory: 600Mi
       requests:
         cpu: 35m
         memory: 360Mi
+    service:
+      app:
+        controller: hass
+        ports:
+          http:
+            port: 8123

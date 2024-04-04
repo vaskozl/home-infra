@@ -1,26 +1,28 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: net-tools
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/net-tools
-      tag: 2.10@sha256:b331e527f52d0ee1e8c2d134e1bb3fb37135c31af7de5f35aa99d3c563e0ccba
-    args: [sleep, inf]
-    service:
-      main:
-        enabled: false
+    controllers:
+      net-tools:
+        containers:
+          app:
+            args:
+            - sleep
+            - inf
+            image:
+              repository: ghcr.io/vaskozl/net-tools
+              tag: 2.10@sha256:b331e527f52d0ee1e8c2d134e1bb3fb37135c31af7de5f35aa99d3c563e0ccba
     resources:
       requests:
         cpu: 10m

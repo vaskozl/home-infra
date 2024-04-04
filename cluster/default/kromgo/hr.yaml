@@ -1,49 +1,66 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: kromgo
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
     controller:
       replicas: 2
       strategy: RollingUpdate
-    image:
-      repository: ghcr.io/kashalls/kromgo
-      tag: 0.3.1@sha256:5ba40b2fda00ab7adb039c0be955161b84febfe9e9e7816d5f1f87d9ab41f173
-    env:
-      PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429/
-    persistence:
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: kromgo-config
-        mountPath: /kromgo/config.yaml
-        subPath: config.yaml
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
+    controllers:
+      kromgo:
+        containers:
+          app:
+            env:
+              PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429/
+            image:
+              repository: ghcr.io/kashalls/kromgo
+              tag: 0.3.1@sha256:5ba40b2fda00ab7adb039c0be955161b84febfe9e9e7816d5f1f87d9ab41f173
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        ingressClassName: haproxy-external
-        enabled: true
+      app:
+        className: haproxy-external
         hosts:
         - host: kromgo.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      config:
+        globalMounts:
+        - path: /kromgo/config.yaml
+          subPath: config.yaml
+        name: kromgo-config
+        type: configMap
     resources:
       limits:
         cpu: 50m
@@ -51,3 +68,9 @@ spec:
       requests:
         cpu: 5m
         memory: 20Mi
+    service:
+      app:
+        controller: kromgo
+        ports:
+          http:
+            port: 8080
