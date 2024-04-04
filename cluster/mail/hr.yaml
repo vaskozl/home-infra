@@ -1,158 +1,129 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: mx
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    controller:
-      replicas: 1
-    image:
-      repository: ghcr.io/docker-mailserver/docker-mailserver
-      tag: 13.3.1@sha256:33d1dcef8a4e1d9d30f715b82b88c9e99ca16a8c6380c5e40c39b2b7fd710485
+    controllers:
+      mx:
+        containers:
+          app:
+            envFrom:
+            - secretRef:
+                name: mailserver.env
+            image:
+              repository: ghcr.io/docker-mailserver/docker-mailserver
+              tag: 13.3.1@sha256:33d1dcef8a4e1d9d30f715b82b88c9e99ca16a8c6380c5e40c39b2b7fd710485
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 1500m
+                memory: 2Gi
+              requests:
+                cpu: 150m
+                memory: 250Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                - CHOWN
+                - FOWNER
+                - MKNOD
+                - SETGID
+                - SETUID
+                - DAC_OVERRIDE
+                - NET_ADMIN
+                - NET_RAW
+                - NET_BIND_SERVICE
+                - SYS_CHROOT
+                - SYS_PTRACE
+                - KILL
+                drop:
+                - ALL
+              privileged: false
+              readOnlyRootFilesystem: false
+              runAsGroup: 0
+              runAsNonRoot: false
+              runAsUser: 0
+              seccompProfile:
+                type: RuntimeDefault
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /var/mail
+            name: data
+            size: 10Gi
+            storageClass: nfs-client
+          - accessMode: ReadWriteOnce
+            mountPath: /var/mail-state
+            name: mail-state
+            size: 1Gi
+        type: statefulset
+    persistence:
+      files:
+        name: mailserver.files
+        type: secret
+        globalMounts:
+        - path: /tmp/docker-mailserver/postfix-accounts.cf
+          subPath: postfix-accounts.cf
+        - path: /tmp/docker-mailserver/postfix-aliases.cf
+          subPath: postfix-aliases.cf
+        - path: /tmp/docker-mailserver/whitelist_clients.local
+          subPath: whitelist_clients.local
+        - path: /tmp/docker-mailserver/postfix-virtual.cf
+          subPath: postfix-virtual.cf
+      dkim:
+        name: mailserver.dkim
+        type: secret
+        globalMounts:
+        - path: /tmp/docker-mailserver/opendkim/KeyTable
+          subPath: KeyTable
+        - path: /tmp/docker-mailserver/opendkim/keys/sko.ai-mail.key
+          subPath: sko.ai-mail.key
+        - path: /tmp/docker-mailserver/opendkim/SigningTable
+          subPath: SigningTable
+        - path: /tmp/docker-mailserver/opendkim/TrustedHosts
+          subPath: TrustedHosts
+      tls:
+        name: mail-sko-ai-tls
+        type: secret
+        globalMounts:
+        - path: /etc/ssl/mailserver
     service:
-      main:
+      app:
         annotations:
           coredns.io/hostname: mail
-        ports:
-          http:
-            enabled: false
-          smtp:
-            enabled: true
-            port: 25
-          smtp-secure:
-            enabled: true
-            port: 465
-          smtp-auth:
-            enabled: true
-            port: 587
-          imap:
-            enabled: true
-            port: 143
-          imap-secure:
-            enabled: true
-            port: 993
-          sieve:
-            enabled: true
-            port: 4190
-        type: LoadBalancer
-        externalTrafficPolicy: Local
+        controller: mx
         externalIPs:
         - ${EI_MAILSERVER}
-    envFrom:
-    - secretRef:
-        name: mailserver.env
-    persistence:
-      accounts:
-        <<: &files
-          enabled: true
-          type: secret
-          name: mailserver.files
-        mountPath: /tmp/docker-mailserver/postfix-accounts.cf
-        subPath: postfix-accounts.cf
-      aliases:
-        <<: *files
-        mountPath: /tmp/docker-mailserver/postfix-aliases.cf
-        subPath: postfix-aliases.cf
-      virtual:
-        <<: *files
-        mountPath: /tmp/docker-mailserver/postfix-virtual.cf
-        subPath: postfix-virtual.cf
-      postgrey-whitelist:
-        <<: *files
-        mountPath: /tmp/docker-mailserver/whitelist_clients.local
-        subPath: whitelist_clients.local
-      dkim-key-table:
-        <<: &dkim
-          enabled: true
-          type: secret
-          name: mailserver.dkim
-        mountPath: /tmp/docker-mailserver/opendkim/KeyTable
-        subPath: KeyTable
-      dkim-signing-table:
-        <<: *dkim
-        mountPath: /tmp/docker-mailserver/opendkim/SigningTable
-        subPath: SigningTable
-      dkim-trusted-hosts:
-        <<: *dkim
-        mountPath: /tmp/docker-mailserver/opendkim/TrustedHosts
-        subPath: TrustedHosts
-      dkim-keys:
-        enabled: true
-        type: secret
-        name: mailserver.opendkim.keys
-        mountPath: /tmp/docker-mailserver/opendkim/keys/sko.ai-mail.key
-        subPath: sko.ai-mail.key
-      tls:
-        enabled: true
-        type: secret
-        name: mail-sko-ai-tls
-        mountPath: /etc/ssl/mailserver
-    volumeClaimTemplates:
-    - name: data
-      mountPath: /var/mail
-      size: 10Gi
-      accessMode: ReadWriteOnce
-      storageClass: nfs-client
-    - name: mail-state
-      mountPath: /var/mail-state
-      size: 1Gi
-      accessMode: ReadWriteOnce
-    resources:
-      limits:
-        memory: 2Gi
-        cpu: 1500m
-      requests:
-        memory: 250Mi
-        cpu: 150m
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: false
-      runAsUser: 0
-      runAsGroup: 0
-      runAsNonRoot: false
-      privileged: false
-      capabilities:
-        add:
-        - CHOWN
-        - FOWNER
-        - MKNOD
-        - SETGID
-        - SETUID
-        - DAC_OVERRIDE
-        - NET_ADMIN # needed for F2B
-        - NET_RAW # needed for F2B
-        - NET_BIND_SERVICE
-        - SYS_CHROOT
-        - SYS_PTRACE
-        - KILL
-        drop: [ALL]
-      seccompProfile:
-        type: RuntimeDefault
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:
-            - sh
-            - -c
-            - '! supervisorctl status | grep -vP "RUNNING|STOPPED"'
-          initialDelaySeconds: 15
-          periodSeconds: 60
-          timeoutSeconds: 5
-      readiness: &ready
-        tcpSocket:
-          port: 25
-      startupProbe: *ready
-
+        externalTrafficPolicy: Local
+        ports:
+          smtp:
+            primary: true
+            port: 25
+          imap:
+            port: 143
+          smtp-secure:
+            port: 465
+          smtp-auth:
+            port: 587
+          imap-secure:
+            port: 993
+          sieve:
+            port: 4190
+        type: LoadBalancer

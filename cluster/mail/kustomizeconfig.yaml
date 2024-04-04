@@ -2,21 +2,9 @@ nameReference:
 - kind: Secret
   version: v1
   fieldSpecs:
-  - path: spec/values/envFrom/secretRef/name
+  - path: spec/values/controllers/mx/containers/app/envFrom/secretRef/name
     kind: HelmRelease
-  - path: spec/values/persistence/accounts/name
+  - path: spec/values/persistence/files/name
     kind: HelmRelease
-  - path: spec/values/persistence/aliases/name
-    kind: HelmRelease
-  - path: spec/values/persistence/virtual/name
-    kind: HelmRelease
-  - path: spec/values/persistence/postgrey-whitelist/name
-    kind: HelmRelease
-  - path: spec/values/persistence/dkim-key-table/name
-    kind: HelmRelease
-  - path: spec/values/persistence/dkim-signing-table/name
-    kind: HelmRelease
-  - path: spec/values/persistence/dkim-trusted-hosts/name
-    kind: HelmRelease
-  - path: spec/values/persistence/dkim-keys/name
+  - path: spec/values/persistence/dkim/name
     kind: HelmRelease
