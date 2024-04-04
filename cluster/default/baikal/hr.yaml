@@ -1,49 +1,64 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: baikal
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/baikal
-      tag: 0.9.4@sha256:cb2b1a75b59193d76f761c57992a64a2c796ae30498e27173855713b74846267
-    volumeClaimTemplates:
-    - name: data
-      mountPath: /var/lib/baikal
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    persistence:
-      msmtprc:
-        enabled: true
-        type: configMap
-        name: msmtprc
-        mountPath: /etc/msmtprc
-        subPath: msmtprc
-    service:
-      main:
-        ports:
-          http:
-            port: 80
+    controllers:
+      baikal:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/baikal
+              tag: 0.9.4@sha256:cb2b1a75b59193d76f761c57992a64a2c796ae30498e27173855713b74846267
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /var/lib/baikal
+            name: data
+            size: 1Mi
+        type: statefulset
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: bk.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      msmtprc:
+        globalMounts:
+        - path: /etc/msmtprc
+          subPath: msmtprc
+        name: msmtprc
+        type: configMap
     resources:
       limits:
         memory: 1Gi
       requests:
         cpu: 10m
         memory: 130Mi
+    service:
+      app:
+        controller: baikal
+        ports:
+          http:
+            port: 80
