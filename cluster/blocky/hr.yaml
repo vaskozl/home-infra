@@ -41,8 +41,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app: {}
     persistence:
       config:
         globalMounts:
@@ -62,20 +60,17 @@ spec:
         annotations:
           coredns.io/hostname: blocky
         controller: blocky
-        enabled: true
         externalIPs:
         - ${EI_BLOCKY}
         externalTrafficPolicy: Local
         ports:
           dns-tcp:
-            enabled: true
             port: 53
             protocol: TCP
           dns-udp:
-            enabled: true
             port: 53
             protocol: UDP
           http:
-            enabled: true
+            primary: true
             port: 4000
         type: LoadBalancer

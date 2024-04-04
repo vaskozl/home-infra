@@ -28,8 +28,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-    ingress:
-      app: {}
     persistence:
       logs:
         existingClaim: logging-pvc
@@ -37,7 +35,3 @@ spec:
       requests:
         cpu: 10m
         memory: 10Mi
-    service:
-      app:
-        controller: ripgrep
-        enabled: false
