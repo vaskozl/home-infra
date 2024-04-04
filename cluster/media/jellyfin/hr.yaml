@@ -13,6 +13,9 @@ spec:
         namespace: flux-system
       version: 3.0.4
   values:
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
     controllers:
       jellyfin:
         containers:
@@ -53,8 +56,6 @@ spec:
             service:
               identifier: app
               port: http
-    nodeSelector:
-      kubernetes.io/arch: amd64
     persistence:
       cache:
         type: emptyDir
