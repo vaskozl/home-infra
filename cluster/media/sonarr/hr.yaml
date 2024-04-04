@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/sonarr-develop
-      tag: 4.0.2.1312@sha256:627e341a8affb9e0972c74632743070cf0bd061e3d63f54d9b44f3e0f40b3b63
+      tag: 4.0.2.1408@sha256:077b6333366d2110d93c8e0200cff13587148bc1b5b306dcdbcc905babfcd6f7
     volumeClaimTemplates:
     - name: config
       mountPath: /config
