@@ -1,31 +1,66 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: flood
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/flood-git
-      tag: 4.7.0.r55.gce4b523d@sha256:68df4bb18afb305cf68a94973e3702e7f130427bd359fd345b3834eebe4341f7
-    args: [/usr/bin/flood]
-    env:
-      FLOOD_OPTION_AUTH: none
-      FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
-      FLOOD_OPTION_QBURL: http://syno:55555
-      FLOOD_OPTION_QBUSER: vsz
-      FLOOD_OPTION_RUNDIR: /data
-      FLOOD_OPTION_HOST: 0.0.0.0
+    controllers:
+      flood:
+        containers:
+          app:
+            args:
+            - /usr/bin/flood
+            env:
+              FLOOD_OPTION_AUTH: none
+              FLOOD_OPTION_HOST: 0.0.0.0
+              FLOOD_OPTION_QBPASS: ${FLOOD_OPTION_QBPASS}
+              FLOOD_OPTION_QBURL: http://syno:55555
+              FLOOD_OPTION_QBUSER: vsz
+              FLOOD_OPTION_RUNDIR: /data
+            image:
+              repository: ghcr.io/vaskozl/flood-git
+              tag: 4.7.0.r55.gce4b523d@sha256:68df4bb18afb305cf68a94973e3702e7f130427bd359fd345b3834eebe4341f7
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app:
+        hosts:
+        - host: fl.sko.ai
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              identifier: app
+              port: http
+    persistence:
+      data:
+        type: emptyDir
     resources:
       limits:
         memory: 100Mi
@@ -33,19 +68,8 @@ spec:
         cpu: 50m
         memory: 60Mi
     service:
-      main:
+      app:
+        controller: flood
         ports:
           http:
             port: 3000
-    ingress:
-      main:
-        enabled: true
-        hosts:
-        - host: fl.sko.ai
-          paths:
-          - path: /
-            pathType: Prefix
-    persistence:
-      data:
-        enabled: true
-        type: emptyDir

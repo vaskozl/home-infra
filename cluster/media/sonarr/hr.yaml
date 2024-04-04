@@ -1,44 +1,65 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: sonarr
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/sonarr-develop
-      tag: 4.0.2.1408@sha256:077b6333366d2110d93c8e0200cff13587148bc1b5b306dcdbcc905babfcd6f7
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    persistence:
-      torrents:
-        enabled: true
-        existingClaim: torrents-v2
-    service:
-      main:
-        ports:
-          http:
-            port: 8989
+    controllers:
+      sonarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/sonarr-develop
+              tag: 4.0.2.1408@sha256:077b6333366d2110d93c8e0200cff13587148bc1b5b306dcdbcc905babfcd6f7
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
-        - host: &host sonarr.sko.ai
+        - host: sonarr.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      torrents:
+        existingClaim: torrents-v2
     resources:
       limits:
         cpu: 1200m
@@ -46,3 +67,9 @@ spec:
       requests:
         cpu: 85m
         memory: 350Mi
+    service:
+      app:
+        controller: sonarr
+        ports:
+          http:
+            port: 8989

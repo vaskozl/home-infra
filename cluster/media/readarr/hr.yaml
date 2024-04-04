@@ -1,44 +1,65 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: readarr
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/readarr-develop
-      tag: 0.3.21.2475@sha256:e4ac9749aab4b90df9cb77fdb0a452a9d222eca6df58902b452b0eb20d9faf17
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    persistence:
-      torrents:
-        enabled: true
-        existingClaim: torrents-v2
-    service:
-      main:
-        ports:
-          http:
-            port: 8787
+    controllers:
+      readarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/readarr-develop
+              tag: 0.3.21.2475@sha256:e4ac9749aab4b90df9cb77fdb0a452a9d222eca6df58902b452b0eb20d9faf17
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
-        - host: &host readarr.sko.ai
+        - host: readarr.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      torrents:
+        existingClaim: torrents-v2
     resources:
       limits:
         cpu: 800m
@@ -46,3 +67,9 @@ spec:
       requests:
         cpu: 15m
         memory: 150Mi
+    service:
+      app:
+        controller: readarr
+        ports:
+          http:
+            port: 8787

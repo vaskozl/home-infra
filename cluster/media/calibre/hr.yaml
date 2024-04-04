@@ -1,68 +1,83 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: calibre
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/calibre
-      tag: 7.6.0@sha256:c90c97df1265243abd40a97a5d77d570935df69d764a4dd0e8dd1fde94434806
-    env:
-      HOME: /config
-    args:
-      - --port=8081
-      - /torrents/calibe-library
-    podSecurityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      seccompProfile:
-        type: RuntimeDefault
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      capabilities:
-        drop: ["ALL"]
+    controllers:
+      calibre:
+        containers:
+          app:
+            args:
+            - --port=8081
+            - /torrents/calibe-library
+            env:
+              HOME: /config
+            image:
+              repository: ghcr.io/vaskozl/calibre
+              tag: 7.6.0@sha256:c90c97df1265243abd40a97a5d77d570935df69d764a4dd0e8dd1fde94434806
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
     enableServiceLinks: false
-    service:
-      main:
-        ports:
-          http:
-            port: 8081
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: cb.sko.ai
           paths:
           - path: /
             service:
-              port: 8081
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
+              identifier: app
+              port: http
     persistence:
       media:
-        enabled: true
-        mountPath: /torrents
         existingClaim: torrents-v2
+        globalMounts:
+        - path: /torrents
     resources:
-      requests:
-        cpu: 15m
-        memory: 220M
       limits:
         cpu: 800m
         memory: 800M
+      requests:
+        cpu: 15m
+        memory: 220M
+    service:
+      app:
+        controller: calibre
+        ports:
+          http:
+            port: 8081

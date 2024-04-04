@@ -1,46 +1,64 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: dogcalc
-  annotations:
-    patch.sko.ai/app-template: enabled
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    nodeSelector:
-      kubernetes.io/arch: amd64
     controller:
       replicas: 1
       strategy: RollingUpdate
-    image:
-      repository: registry.sko.ai/doudous/dogcalc
-      tag: head@sha256:784720c832a9e041f23bf2e08a75e09260ed64e3eff3b59b6c5c0f602bfb2528
+    controllers:
+      dogcalc:
+        containers:
+          app:
+            image:
+              repository: registry.sko.ai/doudous/dogcalc
+              tag: head@sha256:784720c832a9e041f23bf2e08a75e09260ed64e3eff3b59b6c5c0f602bfb2528
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     imagePullSecrets:
     - name: regcred
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
     ingress:
-      main:
-        enabled: true
-        ingressClassName: haproxy-external
+      app:
         annotations:
           haproxy.org/backend-config-snippet: |
             http-request redirect location /static/index.html if { path / }
+        className: haproxy-external
         hosts:
         - host: dogcalc.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    nodeSelector:
+      kubernetes.io/arch: amd64
     resources:
       limits:
         cpu: 2000m
@@ -48,3 +66,9 @@ spec:
       requests:
         cpu: 20m
         memory: 100Mi
+    service:
+      app:
+        controller: dogcalc
+        ports:
+          http:
+            port: 8080

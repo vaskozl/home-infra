@@ -1,40 +1,62 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: autobrr
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/autobrr/autobrr
-      tag: v1.40.1@sha256:56b9b9d921233c5b32e441e99263af7cb8b056df077e66be2dc2d7c6d341294a
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    service:
-      main:
-        ports:
-          http:
-            port: 7474
+    controllers:
+      autobrr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/autobrr/autobrr
+              tag: v1.40.1@sha256:56b9b9d921233c5b32e441e99263af7cb8b056df077e66be2dc2d7c6d341294a
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
         - host: autobrr.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
     resources:
       limits:
         cpu: 800m
@@ -42,21 +64,9 @@ spec:
       requests:
         cpu: 15m
         memory: 45Mi
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-    probes:
-      # Use liveness until autobrr supports automatically pruning old release
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:
-            - sh
-            - -c
-            - 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"'
-          initialDelaySeconds: 15
-          periodSeconds: 600
-          timeoutSeconds: 10
+    service:
+      app:
+        controller: autobrr
+        ports:
+          http:
+            port: 7474

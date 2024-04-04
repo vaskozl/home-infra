@@ -1,40 +1,62 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: prowlarr
-  annotations:
-    patch.sko.ai/app-template: statefulset
-    patch.sko.ai/app-security: restricted
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    image:
-      repository: ghcr.io/vaskozl/prowlarr
-      tag: 1.13.3.4273@sha256:e1cccc81525f2b918a8da0fa222c4bca9913673c3c5f9652b97450cf4eab97dd
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    service:
-      main:
-        ports:
-          http:
-            port: 9696
+    controllers:
+      prowlarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/prowlarr
+              tag: 1.13.3.4273@sha256:e1cccc81525f2b918a8da0fa222c4bca9913673c3c5f9652b97450cf4eab97dd
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     ingress:
-      main:
-        enabled: true
+      app:
         hosts:
-        - host: &host prowlarr.sko.ai
+        - host: prowlarr.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
     resources:
       limits:
         cpu: 800m
@@ -42,3 +64,9 @@ spec:
       requests:
         cpu: 15m
         memory: 250Mi
+    service:
+      app:
+        controller: prowlarr
+        ports:
+          http:
+            port: 9696

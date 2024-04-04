@@ -1,62 +1,68 @@
+---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: jellyfin
-  annotations:
-    patch.sko.ai/app-template: statefulset
 spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+      version: 3.0.4
   values:
-    nodeSelector:
-      kubernetes.io/arch: amd64
-    image:
-      repository: ghcr.io/vaskozl/jellyfin-server
-      tag: 10.8.13@sha256:b6691fc5102b202b76b482b685918da530d4878359e51167209d824ff88cd251
-    env:
-      JELLYFIN_DATA_DIR: /config
-      JELLYFIN_CONFIG_DIR: /config/config
-      JELLYFIN_LOG_DIR: /config/log
-      JELLYFIN_CACHE_DIR: /cache
-      JELLYFIN_WEB_DIR: /usr/share/jellyfin-web
-      JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
-    securityContext:
-      privileged: true
-    volumeClaimTemplates:
-    - name: config
-      mountPath: /config
-      accessMode: ReadWriteOnce
-      size: 1Mi
-    persistence:
-      torrents:
-        enabled: true
-        existingClaim: torrents-v2
-      cache:
-        enabled: true
-        type: emptyDir
-      dri:
-        enabled: true
-        type: hostPath
-        hostPath: /dev/dri
-    service:
-      main:
-        ports:
-          http:
-            port: 8096
+    controllers:
+      jellyfin:
+        containers:
+          app:
+            env:
+              JELLYFIN_CACHE_DIR: /cache
+              JELLYFIN_CONFIG_DIR: /config/config
+              JELLYFIN_DATA_DIR: /config
+              JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
+              JELLYFIN_LOG_DIR: /config/log
+              JELLYFIN_WEB_DIR: /usr/share/jellyfin-web
+            image:
+              repository: ghcr.io/vaskozl/jellyfin-server
+              tag: 10.8.13@sha256:b6691fc5102b202b76b482b685918da530d4878359e51167209d824ff88cd251
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              privileged: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
     ingress:
-      main:
-        enabled: true
-        ingressClassName: haproxy-external
+      app:
+        className: haproxy-external
         hosts:
         - host: jf.sko.ai
           paths:
           - path: /
+            service:
+              identifier: app
+              port: http
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    persistence:
+      cache:
+        type: emptyDir
+      dri:
+        hostPath: /dev/dri
+        type: hostPath
+      torrents:
+        existingClaim: torrents-v2
     resources:
       limits:
         cpu: 5000m
@@ -64,3 +70,9 @@ spec:
       requests:
         cpu: 500m
         memory: 4Gi
+    service:
+      app:
+        controller: jellyfin
+        ports:
+          http:
+            port: 8096
