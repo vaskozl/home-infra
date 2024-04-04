@@ -53,6 +53,9 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+    persistence:
+      tmp:
+        type: emptyDir
     ingress:
       app:
         annotations:
