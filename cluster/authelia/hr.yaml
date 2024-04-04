@@ -58,6 +58,8 @@ spec:
         - path: /config
         name: authelia-config
         type: secret
+      tmp:
+        type: emptyDir
     resources:
       limits:
         cpu: 1
