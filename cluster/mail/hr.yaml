@@ -94,12 +94,16 @@ spec:
         globalMounts:
         - path: /tmp/docker-mailserver/opendkim/KeyTable
           subPath: KeyTable
-        - path: /tmp/docker-mailserver/opendkim/keys/sko.ai-mail.key
-          subPath: sko.ai-mail.key
         - path: /tmp/docker-mailserver/opendkim/SigningTable
           subPath: SigningTable
         - path: /tmp/docker-mailserver/opendkim/TrustedHosts
           subPath: TrustedHosts
+      dkim-keys:
+        name: mailserver.opendkim.keys
+        type: secret
+        globalMounts:
+        - path: /tmp/docker-mailserver/opendkim/keys/sko.ai-mail.key
+          subPath: sko.ai-mail.key
       tls:
         name: mail-sko-ai-tls
         type: secret
