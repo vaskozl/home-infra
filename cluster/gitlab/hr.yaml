@@ -48,7 +48,7 @@ spec:
       appConfig:
         omniauth:
           enabled: true
-          autoSignInWithProvider: []
+          autoSignInWithProvider: [openid_connect]
           syncProfileFromProvider: [openid_connect]
           allowSingleSignOn: [openid_connect]
           allowBypassTwoFactor: [openid_connect]
