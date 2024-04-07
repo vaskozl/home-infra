@@ -134,6 +134,7 @@ spec:
         scrapeInterval: 60s
         resources:
           limits:
+            cpu: 1
             memory: 500Mi
           requests:
             cpu: 500m
