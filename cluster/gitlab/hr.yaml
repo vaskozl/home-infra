@@ -25,7 +25,8 @@ spec:
       hosts:
         domain: sko.ai
       ingress:
-        class: haproxy-internal
+        class: &class haproxy-internal
+        provider: *class
         # Wildcard is configured by default
         configureCertmanager: false
         # TLS is enabled by default
@@ -56,6 +57,10 @@ spec:
           blockAutoCreatedUsers: false
           providers:
           - secret: authelia-oauth2
+      minio:
+        ingress:
+          annotations: &registry-annotations
+            haproxy.org/timeout-server: 600s
     # Reduce memory usage
     gitlab:
       gitaly:
@@ -88,6 +93,9 @@ spec:
           requests:
             cpu: 10m
             memory: 10Mi
+    registry:
+      ingress:
+        annotations: *registry-annotations
     # Disable things we handle by ourselves
     certmanager:
       install: false

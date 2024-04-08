@@ -30,7 +30,6 @@ spec:
             targetPort: 2022
       config:
         request-set-header: X-Ingress-Class "haproxy-internal"
-        timeout-http-request: 50s
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-services
