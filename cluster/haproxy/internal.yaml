@@ -40,11 +40,3 @@ spec:
       - name: txt-config
         configMap:
           name: txt-config
-      topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/instance: internal
-            app.kubernetes.io/component: kubernetes-ingress
