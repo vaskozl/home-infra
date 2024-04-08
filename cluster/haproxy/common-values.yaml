@@ -1,5 +1,14 @@
 controller:
   replicaCount: 2
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: kubernetes-ingress
+      matchLabelKeys:
+        - pod-template-hash
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
