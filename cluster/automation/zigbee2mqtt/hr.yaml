@@ -13,6 +13,9 @@ spec:
         namespace: flux-system
       version: 3.1.0
   values:
+    defaultPodOptions:
+      nodeSelector:
+        app: zigbee-controller
     controllers:
       zigbee2mqtt:
         containers:
@@ -51,8 +54,6 @@ spec:
             service:
               identifier: app
               port: http
-    nodeSelector:
-      app: zigbee-controller
     persistence:
       zzh:
         hostPath: /dev/ttyUSB0
