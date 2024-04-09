@@ -91,12 +91,12 @@ spec:
             memory: 10Mi
     registry:
       ingress:
-        annotations: &registry-annotations
+        annotations:
           haproxy.org/timeout-server: 600s
     minio:
       imageTag: RELEASE.2022-10-24T18-35-07Z
       ingress:
-        annotations: *registry-annotations
+        enabled: false
     # Disable things we handle by ourselves
     certmanager:
       install: false
