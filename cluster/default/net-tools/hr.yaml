@@ -15,6 +15,7 @@ spec:
   values:
     controllers:
       net-tools:
+        type: statefulset
         containers:
           app:
             args:
