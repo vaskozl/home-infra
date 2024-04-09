@@ -18,11 +18,12 @@ blocking:
   blackLists:
     hagezi:
     - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
+    - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.txt
   clientGroupsBlock:
     default:
     - hagezi
   loading:
-    refreshPeriod: 24h
+    refreshPeriod: 6h
     downloads:
       timeout: 10m
       cooldown: 10s
