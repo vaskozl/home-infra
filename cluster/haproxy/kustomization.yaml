@@ -20,7 +20,6 @@ configMapGenerator:
 - name: txt-config
   files:
   - config/public_hosts.txt
-  - config/uncachable_paths.txt
   - cf-ips-v4.txt=https://www.cloudflare.com/ips-v4
   - cf-ips-v6.txt=https://www.cloudflare.com/ips-v6
 

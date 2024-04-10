@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: syno
+spec:
+  ingressClassName: haproxy-external
+  rules:
+  - host: syno.sko.ai
+    http:
+      paths:
+      - backend:
+          service:
+            name: syno
+            port:
+              number: 5000
+        path: /.well-known/acme-challenge/
+        pathType: Prefix
