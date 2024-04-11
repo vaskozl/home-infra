@@ -8,10 +8,13 @@ spec:
   - host: syno.sko.ai
     http:
       paths:
-      - backend:
+      - path: /.well-known/acme-challenge/
+        pathType: Prefix
+        backend: &backend
           service:
             name: syno
             port:
               number: 80
-        path: /.well-known/acme-challenge/
+      - path: /photos/mo/sharing
         pathType: Prefix
+        backend: *backend
