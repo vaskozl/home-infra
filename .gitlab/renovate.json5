@@ -83,6 +83,17 @@
     {
       "matchUpdateTypes": ["patch", "digest"],
       "automerge": true
+    },
+    // Including minor for specific dependencies
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": [
+        "ghcr.io/renovatebot/renovate",
+        "ghcr.io/vaskozl/cyberchef-web",
+        "ghcr.io/vaskozl/kubeconform"
+      ],
+      "matchUpdateTypes": ["minor"],
+      "automerge": true
     }
   ]
 }
