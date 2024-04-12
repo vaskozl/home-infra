@@ -78,7 +78,7 @@ spec:
           app:
             image:
               repository: registry.hub.docker.com/library/redis
-              tag: 6.2-alpine@sha256:3fcb624d83a9c478357f16dc173c58ded325ccc5fd2a4375f3916c04cc579f70
+              tag: 7.2-alpine@sha256:7635b0bfdd7dd8552b4b31d6541fef07b734614045b45a52fd5cc27c9dada9e2
             securityContext:
               readOnlyRootFilesystem: true
             resources:
