@@ -1,6 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.1.0/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
-# TODO depends
-# TODO photos mount
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -151,13 +149,6 @@ spec:
           machine-learning:
             app:
               - path: /cache
-#      dri:
-#        type: hostPath
-#        hostPath: /dev/dri
-#        advancedMounts:
-#          microservices:
-#            app:
-#              - path: /dev/dri
       tmp:
         type: emptyDir
 
