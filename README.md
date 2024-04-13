@@ -23,6 +23,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
+  * [immich](https://immich.app/) - Self-hosted photo and video management with state-of-the-art ML
   * [inspircd](https://github.com/ngircd/ngircd) - IRC Server
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
