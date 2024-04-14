@@ -41,6 +41,9 @@ spec:
                 drop:
                 - ALL
               readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
     defaultPodOptions:
       securityContext:
         fsGroup: 568
