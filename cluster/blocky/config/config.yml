@@ -24,6 +24,7 @@ blocking:
     - hagezi
   loading:
     refreshPeriod: 6h
+    concurrency: 1
     downloads:
       timeout: 10m
       cooldown: 10s
