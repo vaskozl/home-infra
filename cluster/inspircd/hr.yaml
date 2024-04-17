@@ -23,7 +23,7 @@ spec:
             - --config=/inspircd/conf/inspircd.conf
             image:
               repository: ghcr.io/vaskozl/inspircd
-              tag: 3.17.0@sha256:9d1223770c867d95205c5db2c487e06cfd4f72fb6f9a889fdf7f1486acf5897b
+              tag: 3.17.0@sha256:5998f83fa537cf7307807be138b8e49d82aee37453861db140307c3c4d1e2581
             probes:
               liveness:
                 enabled: true
