@@ -15,17 +15,14 @@ spec:
     server: syno
     path: /volume3/k8s-logs
   mountOptions:
-  - nfsvers=4.1
+  - nfsvers=3
   - hard
-  - noatime
-  - noacl
+  - nolock
   - nocto
+  - noatime
   - nodiratime
-  - rsize=32768
-  - wsize=32768
-  - async
-  - retrans=3
-  - timeo=600
+  - rsize=131072
+  - wsize=131072
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
