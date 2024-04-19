@@ -20,10 +20,12 @@ spec:
       server: syno.sko.ai
       path: /volume3/k8s-volumes
       mountOptions:
-        - nfsvers=4.1
+        - nfsvers=3
         - hard
-        - noatime
+        - nolock
         - nocto
+        - noatime
+        - nodiratime
         - rsize=131072
         - wsize=131072
     storageClass:
