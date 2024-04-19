@@ -125,9 +125,6 @@ spec:
     vmagent:
       spec:
         inlineScrapeConfig: |
-          - job_name: "router"
-            static_configs:
-            - targets: ["192.168.1.1:9100"]
           - job_name: "syno"
             static_configs:
             - targets: ["syno:9100"]
