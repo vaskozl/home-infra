@@ -76,7 +76,7 @@ spec:
         externalTrafficPolicy: Local
         ports:
           client:
-            port: 6697
+            port: 16697
           server:
             port: 7001
         type: LoadBalancer
