@@ -17,10 +17,6 @@ spec:
       radarr:
         containers:
           app:
-            args:
-            - /usr/lib/radarr/bin/Radarr
-            - -nobrowser
-            - -data=/config
             image:
               repository: ghcr.io/vaskozl/radarr
               tag: 5.4.6.8723@sha256:6965389b2e3d1dc8bb03b674a7dade67dda9607f8d48b0ff309eff8256489356
