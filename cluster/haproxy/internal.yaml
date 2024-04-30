@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: haproxytech
         namespace: flux-system
-      version: 1.39.1
+      version: 1.39.2
   valuesFrom:
   - kind: ConfigMap
     name: common-values
