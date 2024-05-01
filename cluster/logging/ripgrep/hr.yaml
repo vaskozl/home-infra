@@ -32,6 +32,12 @@ spec:
               requests:
                 cpu: 10m
                 memory: 10Mi
+              limits:
+                cpu: 1
+                memory: 128Mi
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
     persistence:
       logs:
         existingClaim: logging-pvc
