@@ -39,38 +39,6 @@ spec:
         auth.anonymous:
           enabled: true
           org_role: Editor
-        plugins:
-          allow_loading_unsigned_plugins: "victorialogs-datasource"
-      extraInitContainers:
-        - name: load-vm-ds-plugin
-          image: "ghcr.io/vaskozl/perl-mojolicious:9.36"
-          args:
-            - perl
-            - -Mojo
-            - -E
-            - |
-              my $rel_url = 'https://api.github.com/repos/VictoriaMetrics/victorialogs-datasource/releases/latest';
-              my ($gzip_url) = grep { /tar\.gz$/ }
-                              map { $_->{browser_download_url} }
-                              @{g("$rel_url")->json->{assets}};
-
-              say "Downloading and extracting $gzip_url";
-
-              my $plugins_dir = "/var/lib/grafana/plugins";
-              mkdir($plugins_dir);
-
-              my $tarfile = "$plugins_dir/plugin.tar.gz";
-              system('curl', '-L', $gzip_url, '-o', $tarfile);
-              system('tar', '-xf', $tarfile, '-C', "$plugins_dir/");
-              unlink($tarfile);
-          volumeMounts:
-            - name: storage
-              mountPath: /var/lib/grafana
-      additionalDataSources:
-        - name: VictoriaLogs
-          type: victorialogs-datasource
-          access: proxy
-          url: http://victoria-metrics-vm-logs-victoria-logs-single-server.victoria-metrics.svc:9428
     alertmanager:
       ingress:
         enabled: true
