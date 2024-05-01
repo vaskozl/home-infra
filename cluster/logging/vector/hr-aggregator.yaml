@@ -24,22 +24,6 @@ spec:
           type: vector
           version: "2"
       transforms:
-        vmlogs-remap:
-          type: remap
-          inputs: [vector]
-          source: |-
-            .labels = .kubernetes.pod_labels
-            .app = .labels."app.kubernetes.io/instance" || .labels.app || .labels."k8s-app" || "unkown"
-            .namespace = .kubernetes.pod_namespace
-            .node = .kubernetes.pod_node_name
-            .container = .kubernetes.container_name
-            .pod = .kubernetes.pod_name
-
-            del(.kubernetes)
-            del(.labels)
-
-            # Parse key/value (logfmt) logs
-            .parsed = parse_key_value!(.message)
         sort:
           type: remap
           inputs: [vector]
@@ -63,19 +47,6 @@ spec:
           encoding:
             codec: raw_message
           path: /var/log/k8s/{{ "{{" }} .folder {{ "}}" }}/{{ "{{" }} .filename {{ "}}" }}-%Y%m%d.log
-        vmlogs:
-          inputs: ["vmlogs-remap"]
-          type: elasticsearch
-          endpoints:
-            - http://victoria-metrics-vm-logs-victoria-logs-single-server.victoria-metrics.svc:9428/insert/elasticsearch/
-          mode: "bulk"
-          compression: gzip
-          api_version: "v8"
-          healthcheck:
-            enabled: false
-          query:
-            _msg_field: "message"
-            _stream_fields: "node,container,app,namespace"
     extraVolumes:
       - name: logging-pvc
         persistentVolumeClaim:
