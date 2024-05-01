@@ -29,8 +29,8 @@ spec:
           inputs: [vector]
           source: |-
             .labels = .kubernetes.pod_labels
-            .app = .labels."app.kubernetes.io/instance" || .labels.app || .labels."k8s-app" || "unkown"
-            .filename = .app || .kubernetes.container_name || "unlabeled";
+            .app = .labels."app.kubernetes.io/instance" || .labels.app || .labels."k8s-app"
+            .filename = .app || .kubernetes.container_name || "unlabeled"
 
             .folder = .kubernetes.pod_namespace || "unlabeled"
 
