@@ -4,59 +4,37 @@ kind: Kustomization
 namespace: victoria-metrics
 configMapGenerator:
 #################################################
-# Kubernetes-Mixin dashboards
+# Views Dashboards
 #################################################
-- name: dashboards-mixin-apiserver
+
+- name: dashboards-k8s-views-global
   files:
-  - kubernetes-mixin/apiserver.json
-- name: dashboards-mixin-cluster-total
+    - k8s-views-global.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+
+- name: dashboards-k8s-views-namespaces
   files:
-  - kubernetes-mixin/cluster-total.json
-- name: dashboards-mixin-controller-manager
+    - k8s-views-namespaces.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+
+- name: dashboards-k8s-views-nodes
   files:
-  - kubernetes-mixin/controller-manager.json
-- name: dashboards-mixin-k8s-resources-cluster
+    - k8s-views-nodes.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+
+- name: dashboards-k8s-views-pods
   files:
-  - kubernetes-mixin/k8s-resources-cluster.json
-- name: dashboards-mixin-k8s-resources-namespace
+    - k8s-views-pods.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+
+#################################################
+# System / Addons Dashboards
+#################################################
+
+- name: dashboards-k8s-system-api-server
   files:
-  - kubernetes-mixin/k8s-resources-namespace.json
-- name: dashboards-mixin-k8s-resources-node
+    - k8s-system-api-server.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+
+- name: dashboards-k8s-system-coredns
   files:
-  - kubernetes-mixin/k8s-resources-node.json
-- name: dashboards-mixin-k8s-resources-pod
-  files:
-  - kubernetes-mixin/k8s-resources-pod.json
-- name: dashboards-mixin-k8s-resources-workload
-  files:
-  - kubernetes-mixin/k8s-resources-workload.json
-- name: dashboards-mixin-k8s-resources-workloads-namespace
-  files:
-  - kubernetes-mixin/k8s-resources-workloads-namespace.json
-- name: dashboards-mixin-kubelet
-  files:
-  - kubernetes-mixin/kubelet.json
-- name: dashboards-mixin-namespace-by-pod
-  files:
-  - kubernetes-mixin/namespace-by-pod.json
-- name: dashboards-mixin-namespace-by-workload
-  files:
-  - kubernetes-mixin/namespace-by-workload.json
-- name: dashboards-mixin-persistentvolumesusage
-  files:
-  - kubernetes-mixin/persistentvolumesusage.json
-- name: dashboards-mixin-pod-total
-  files:
-  - kubernetes-mixin/pod-total.json
-- name: dashboards-mixin-proxy
-  files:
-  - kubernetes-mixin/proxy.json
-- name: dashboards-mixin-scheduler
-  files:
-  - kubernetes-mixin/scheduler.json
-- name: dashboards-mixin-workload-total
-  files:
-  - kubernetes-mixin/workload-total.json
+    - k8s-system-coredns.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+
 - name: dashboards-misc-blocky
   files:
   - misc/blocky-grafana.json
@@ -66,6 +44,7 @@ configMapGenerator:
 - name: haproxy-full
   files:
   - misc/haproxy-full.json
+
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
