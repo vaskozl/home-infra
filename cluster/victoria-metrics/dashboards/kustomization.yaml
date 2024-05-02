@@ -28,7 +28,7 @@ configMapGenerator:
   - misc/blocky-grafana.json
 - name: dashboards-nfs-full
   files:
-  - nfs-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/nfs-full.json
+  - nfs-full.json=misc/nfs-full.json
 - name: haproxy-full
   files:
   - haproxy-2-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/haproxy-2-full.json
