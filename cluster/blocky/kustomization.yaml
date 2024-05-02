@@ -4,7 +4,7 @@ namespace: blocky
 resources:
 - _namespace.yaml
 - hr.yaml
-- podscrape.yaml
+- servicescrape.yaml
 - ../netpols/allow-all-ingress
 configMapGenerator:
 - name: config

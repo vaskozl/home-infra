@@ -1,6 +1,6 @@
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
-kind: VMPodScrape
+kind: VMServiceScrape
 metadata:
   name: blocky
 spec:
@@ -14,5 +14,5 @@ spec:
       operator: In
       values:
       - blocky
-  podMetricsEndpoints:
+  endpoints:
   - port: http
