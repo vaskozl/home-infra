@@ -1,4 +1,3 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: victoria-metrics
@@ -6,35 +5,24 @@ configMapGenerator:
 #################################################
 # Views Dashboards
 #################################################
-
 - name: dashboards-k8s-views-global
   files:
-    - k8s-views-global.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
-
+  - k8s-views-global.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
 - name: dashboards-k8s-views-namespaces
   files:
-    - k8s-views-namespaces.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
-
+  - k8s-views-namespaces.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
 - name: dashboards-k8s-views-nodes
   files:
-    - k8s-views-nodes.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-
+  - k8s-views-nodes.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
 - name: dashboards-k8s-views-pods
   files:
-    - k8s-views-pods.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
-
-#################################################
-# System / Addons Dashboards
-#################################################
-
-- name: dashboards-k8s-system-api-server
-  files:
-    - k8s-system-api-server.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
-
+  - k8s-views-pods.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
 - name: dashboards-k8s-system-coredns
   files:
-    - k8s-system-coredns.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-
+  - k8s-system-coredns.json=https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+#################################################
+# Misc Dashboard
+#################################################
 - name: dashboards-misc-blocky
   files:
   - misc/blocky-grafana.json
@@ -44,7 +32,6 @@ configMapGenerator:
 - name: haproxy-full
   files:
   - misc/haproxy-full.json
-
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
