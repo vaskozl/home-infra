@@ -156,6 +156,7 @@ spec:
     prometheus-node-exporter:
       extraArgs:
       - --collector.disable-defaults
+      - --collector.uname
       - --collector.cpu 
       - --collector.meminfo
       - --collector.nfs
