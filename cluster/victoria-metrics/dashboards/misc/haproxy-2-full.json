@@ -412,7 +412,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_bytes_in_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])*8) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_bytes_in_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])*8)",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "IN Front",
@@ -425,7 +425,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_bytes_out_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])*8) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_bytes_out_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])*8)",
           "interval": "$interval",
           "intervalFactor": 2,
           "legendFormat": "OUT Front",
@@ -437,7 +437,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_bytes_in_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])*8) by (instance)",
+          "expr": "sum(rate(haproxy_backend_bytes_in_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])*8)",
           "intervalFactor": 2,
           "legendFormat": "IN Back",
           "refId": "C",
@@ -448,7 +448,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_bytes_out_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])*8) by (instance)",
+          "expr": "sum(rate(haproxy_backend_bytes_out_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])*8)",
           "intervalFactor": 2,
           "legendFormat": "OUT Back",
           "refId": "D",
@@ -571,7 +571,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_connections_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_connections_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Front",
@@ -584,7 +584,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_connection_errors_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_backend_connection_errors_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval]))",
           "hide": false,
           "interval": "$interval",
           "intervalFactor": 1,
@@ -733,7 +733,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_http_requests_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_http_requests_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Front requests",
@@ -746,7 +746,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_request_errors_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_request_errors_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Front requests errors",
@@ -759,7 +759,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_frontend_requests_denied_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_frontend_requests_denied_total{proxy=~\"$frontend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 2,
           "legendFormat": "Front request denied",
@@ -771,7 +771,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_redispatch_warnings_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_backend_redispatch_warnings_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 2,
           "legendFormat": "Back redispatch warnings",
@@ -783,7 +783,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_retry_warnings_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_backend_retry_warnings_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 2,
           "legendFormat": "Back retry warnings",
@@ -795,7 +795,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_response_errors_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_backend_response_errors_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Back response errors",
@@ -808,7 +808,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(haproxy_backend_current_queue{proxy=~\"$backend\",instance=~\"$host\"}) by (instance)",
+          "expr": "sum(haproxy_backend_current_queue{proxy=~\"$backend\",instance=~\"$host\"})",
           "interval": "$interval",
           "intervalFactor": 2,
           "legendFormat": "Back queued requests",
@@ -820,7 +820,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(rate(haproxy_backend_http_requests_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(haproxy_backend_http_requests_total{proxy=~\"$backend\",instance=~\"$host\"}[$__rate_interval]))",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Back requests",
@@ -938,7 +938,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(haproxy_frontend_current_sessions{proxy=~\"$frontend\",instance=~\"$host\"}) by (instance)",
+          "expr": "sum(haproxy_frontend_current_sessions{proxy=~\"$frontend\",instance=~\"$host\"})",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Front",
@@ -951,7 +951,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "expr": "sum(haproxy_backend_current_sessions{proxy=~\"$frontend\",instance=~\"$host\"}) by (instance)",
+          "expr": "sum(haproxy_backend_current_sessions{proxy=~\"$frontend\",instance=~\"$host\"})",
           "interval": "$interval",
           "intervalFactor": 1,
           "legendFormat": "Back",
