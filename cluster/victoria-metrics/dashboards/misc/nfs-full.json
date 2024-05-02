@@ -1,0 +1,5086 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": 1860,
+  "graphTooltip": 0,
+  "id": 21,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 260,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFS",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Connections",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 243,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_connections_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "Number of NFS TCP connections",
+          "refId": "C",
+          "step": 240
+        }
+      ],
+      "title": "NFS Connections",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Connections",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 246,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_connections_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "Number of NFSd TCP connections",
+          "refId": "C",
+          "step": 240
+        }
+      ],
+      "title": "NFSd Connections",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Packets",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 244,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_packets_total{protocol=\"tcp\",instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "TCP - NFS network packets (sent+received)",
+          "refId": "O",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_packets_total{protocol=\"udp\",instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "UDP - NFS network packets (sent+received)",
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "NFS Packets",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Packets",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 247,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_packets_total{proto=\"tcp\",instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "TCP - NFSd network packets (sent+received)",
+          "refId": "O",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_packets_total{proto=\"udp\",instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "UDP - NFSd network packets (sent+received)",
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "NFSd Packets",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 23
+      },
+      "id": 249,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_rpc_authentication_refreshes_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "Number of RPC authentication refreshes performed",
+          "refId": "C",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_rpc_retransmissions_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "Number of RPC transmissions performed",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfs_rpcs_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "Total number of RPCs performed",
+          "refId": "B",
+          "step": 240
+        }
+      ],
+      "title": "NFS RPC",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter errors (-) / success (+)",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*errors.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 23
+      },
+      "id": 257,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_rpc_errors_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "{{ error }} - NFSd RPC errors",
+          "refId": "C",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_server_rpcs_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd RPCs",
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "NFSd RPC",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Bytes read (-) / write (+)",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 40,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "receive_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_eth0"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7EB26D",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "transmit_packets_lo"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*read.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "id": 248,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_disk_bytes_read_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NFSd bytes read",
+          "refId": "O",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_disk_bytes_written_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "NFSd bytes written",
+          "refId": "A",
+          "step": 240
+        }
+      ],
+      "title": "NFSd Disk Read / Write",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "id": 245,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_file_handles_stale_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd stale file handles",
+          "refId": "C",
+          "step": 240
+        }
+      ],
+      "title": "NFS File Handles",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 45
+      },
+      "id": 250,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_read_ahead_cache_not_found_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd read ahead cache not found",
+          "refId": "C",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_reply_cache_hits_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd Reply Cache hits (client lost server response)",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_reply_cache_misses_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd Reply Cache an operation that requires caching (idempotent)",
+          "refId": "B",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_reply_cache_nocache_total{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd Reply Cache non-idempotent operations (rename/delete/…)",
+          "refId": "D",
+          "step": 240
+        }
+      ],
+      "title": "NFS Cache",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 45
+      },
+      "id": 258,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_server_threads{instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 1,
+          "legendFormat": "NFSd kernel threads that are running",
+          "refId": "C",
+          "step": 240
+        }
+      ],
+      "title": "NFSd Server Threads",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "id": 261,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 2
+          },
+          "id": 241,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Create',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsStat',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetAttr',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Link',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lookup',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='MkDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Null',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Read',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            }
+          ],
+          "title": "NFS v2 NFS Procedures Invoked 1",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 12
+          },
+          "id": 242,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadLink',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Remove',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "K",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Rename',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='RmDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Root',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SetAttr',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "O",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SymLink',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='WrCache',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Write',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "R",
+              "step": 240
+            }
+          ],
+          "title": "NFS v2 NFS Procedures Invoked 2",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFS v2 Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 57
+      },
+      "id": 262,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 3
+          },
+          "id": 256,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Create',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='FsStat',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='GetAttr',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Link',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Lookup',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='MkDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Read',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='ReadDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            }
+          ],
+          "title": "NFSd v2 NFSd Requests by Method 1",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 259,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='ReadLink',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Remove',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Rename',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "K",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='RmDir',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Root',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='SetAttr',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='SymLink',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "O",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Write',proto='2',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            }
+          ],
+          "title": "NFSd v2 NFSd Requests by Method 1",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFSd v2 Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "id": 263,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 59
+          },
+          "id": 233,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Access',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Commit',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Create',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsInfo',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsStat',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetAttr',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Link',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lookup',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='MkDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='MkNod',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Null',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "K",
+              "step": 240
+            }
+          ],
+          "title": "NFS v3 NFS Procedures Invoked 1",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 69
+          },
+          "id": 234,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='PathConf',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Read',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadDirPlus',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "O",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadLink',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Rename',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='RmDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "R",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SetAttr',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SymLink',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Write',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Remove',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            }
+          ],
+          "title": "NFS v3 NFS Procedures Invoked 2",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFS v3 Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "id": 264,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFSd v3 Detail",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "id": 251,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Access',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "A",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Commit',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "B",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Create',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "C",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='FsInfo',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "D",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='FsStat',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "E",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='GetAttr',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "F",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Link',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "G",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Lookup',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "H",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='MkDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "I",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='MkNod',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "J",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='PathConf',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "K",
+          "step": 240
+        }
+      ],
+      "title": "NFSd v3 NFSd Requests by Method 1",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P4169E866C3094E38"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Counter",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "id": 252,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Read',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "L",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='ReadDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "M",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='ReadDirPlus',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "N",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='ReadLink',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "O",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Remove',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "P",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Rename',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "Q",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='RmDir',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "R",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='SetAttr',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "S",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='SymLink',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "T",
+          "step": 240
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "expr": "rate(node_nfsd_requests_total{method='Write',proto='3',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "U",
+          "step": 240
+        }
+      ],
+      "title": "NFSd v3 NFSd Requests by Method 2",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 80
+      },
+      "id": 265,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 6
+          },
+          "id": 235,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Access',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Commit',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Create',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsInfo',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetAttr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Link',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lookup',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Null',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "K",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Allocate',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='BindConnToSession',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Clone',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 1",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 16
+          },
+          "id": 236,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='PathConf',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Read',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadDir',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReadLink',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Rename',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Setattr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SymLink',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Write',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Close',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='CreateSession',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Read',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 2",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 26
+          },
+          "id": 237,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='DeAllocate',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='DelegReturn',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='DestroyClientID',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='DestroySession',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ExchangeID',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FreeStateID',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsLocations',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='FsidPresent',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetACL',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetDeviceInfo',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 3",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 36
+          },
+          "id": 238,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetDeviceList',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='GetLeaseTime',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='LayoutCommit',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='LayoutGet',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='LayoutReturn',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='LayoutStats',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lock',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lockt',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Locku',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Lookup',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 4",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 46
+          },
+          "id": 239,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='LookupRoot',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Open',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='OpenConfirmt',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='OpenDowngrade',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='OpenNoattr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReclaimComplete',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ReleaseLockowner',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Renew',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Secinfo',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SecinfoNoName',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 5",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 56
+          },
+          "id": 240,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Seek',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='Sequence',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='ServerCaps',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "N",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SetACL',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SetClientID',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='SetClientIDConfirm',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='StatFs',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "T",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfs_requests_total{method='TestStateID',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            }
+          ],
+          "title": "NFS v4 NFS Procedures Invoked 6",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFS v4 Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 81
+      },
+      "id": 266,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 7
+          },
+          "id": 253,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Access',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Commit',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Create',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='GetAttr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Link',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Lookup',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Close',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='DelegPurge',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='DelegReturn',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='GetFH',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            }
+          ],
+          "title": "NFSd v4 NFSd Requests by Method 1",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 254,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Read',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='ReadDir',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='ReadLink',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "O",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Remove',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "P",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Rename',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "Q",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='SetAttr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "S",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Write',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "U",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Lock',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Lockt',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Locku',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            }
+          ],
+          "title": "NFSd v4 NFSd Requests by Method 2",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P4169E866C3094E38"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Counter",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 20,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
+          "id": 255,
+          "links": [],
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull",
+                "max",
+                "min"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.4.3",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='LookupRoot',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "L",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Nverify',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Open',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='OpenAttr',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='OpenConfirm',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "D",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='OpenDgrd',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "E",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='PutFH',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "F",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='RelLockOwner',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "G",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Renew',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "H",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='RestoreFH',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "I",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='SaveFH',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "J",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='SecInfo',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "K",
+              "step": 240
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "P4169E866C3094E38"
+              },
+              "expr": "rate(node_nfsd_requests_total{method='Verify',proto='4',instance=~\"$node:$port\",job=~\"$job\"}[$__rate_interval])",
+              "intervalFactor": 1,
+              "legendFormat": "{{ method }}",
+              "refId": "M",
+              "step": 240
+            }
+          ],
+          "title": "NFSd v4 NFSd Requests by Method 3",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "NFSd v4 Detail",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "syno",
+          "value": "syno"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "P4169E866C3094E38"
+        },
+        "definition": "label_values(node_uname_info,job)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Job",
+        "multi": false,
+        "name": "job",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(node_uname_info,job)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "syno",
+          "value": "syno"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "P4169E866C3094E38"
+        },
+        "definition": "label_values(node_uname_info{job=~\"$job\"},instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host:",
+        "multi": false,
+        "name": "node",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(node_uname_info{job=~\"$job\"},instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/([^:]+):.*/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "9100",
+          "value": "9100"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "P4169E866C3094E38"
+        },
+        "definition": "label_values(node_uname_info{instance=~\"$node:(.*)\"},instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Port",
+        "multi": false,
+        "name": "port",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(node_uname_info{instance=~\"$node:(.*)\"},instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/[^:]+:(.*)/",
+        "skipUrlSync": false,
+        "sort": 3,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "NFS Full",
+  "uid": "vzsuyqfSk",
+  "version": 2,
+  "weekStart": ""
+}

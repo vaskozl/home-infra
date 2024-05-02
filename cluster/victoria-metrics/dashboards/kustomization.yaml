@@ -31,7 +31,7 @@ configMapGenerator:
   - nfs-full.json=misc/nfs-full.json
 - name: haproxy-full
   files:
-  - haproxy-2-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/haproxy-2-full.json
+  - haproxy-2-full.json=misc/haproxy-2-full.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
