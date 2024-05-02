@@ -75,6 +75,8 @@ spec:
           resources:
             requests:
               storage: 22Gi
+        extraArgs:
+          dedup.minScrapeInterval: 60s
         resources:
           limits:
             memory: 2Gi
@@ -84,7 +86,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - vms.sko.ai
+        - vm.sko.ai
     vmalert:
       ingress:
         enabled: true
@@ -107,7 +109,7 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - vm.sko.ai
+        - vma.sko.ai
     kubelet:
       spec:
         interval: 60s
