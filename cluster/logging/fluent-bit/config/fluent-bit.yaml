@@ -1,0 +1,55 @@
+pipeline:
+  inputs:
+    - name: tail # https://docs.fluentbit.io/manual/pipeline/inputs/tail
+      path: /var/log/containers/*.log
+      exclude_path: /var/log/*fluent*
+      multiline.parser: cri
+      tag: kube.*
+  filters:
+    - name: kubernetes # https://docs.fluentbit.io/manual/pipeline/filters/kubernetes
+      match: kube.*
+
+    # Lift out the kubernetes labels so we can rename them
+    - name: nest
+      match: kube.*
+      operation: lift
+      nested_under: kubernetes
+      add_prefix: k_
+    - name: nest
+      match: kube.*
+      operation: lift
+      nested_under: k_labels
+      add_prefix: k_labels_
+
+    # Extra out the app and drop uneccesary labels
+    - name: modify
+      match: kube.*
+      # Best-effort extraction of the app name
+      rename: 'k_labels_app.kubernetes.io/instance app'
+      rename: 'k_labels_app.kubernetes.io/name     app'
+      rename: 'k_labels_app                        app'
+      rename: 'k_labels_k8s-app                    app'
+      rename: 'k_container_name                    app'
+      # And the namespace
+      rename: 'k_namespace_name ns'
+      rename: 'k_pod_name       pod'
+      rename: 'k_container_name ctr'
+
+      # Keep our log lines short and more likely to fit on the screen
+      remove: '_p'
+      remove_wildcard: 'k_'
+      rename: 'log msg'
+      rename: 'time ts'
+      rename: 'stream str'
+
+    # Rewrite the tag into a filepath
+    - name: rewrite_tag
+      match: kube.*
+      rule: '$ns ^(.+)$ $0/$app.log false'
+      # Some pods are deleted by the time we grab their logs
+      rule: '$msg ^. unlabeled/$TAG[4].log false'
+
+  outputs:
+    - name: forward
+      match: '*'
+      host: fluent-aggregator

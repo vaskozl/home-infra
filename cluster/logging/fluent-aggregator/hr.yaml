@@ -1,0 +1,87 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: fluent-aggregator
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      interval: 1h
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.1.0
+  values:
+    controllers:
+      fluent-aggregator:
+        replicas: 1
+        containers:
+          fluent-bit:
+            image:
+              repository: ghcr.io/fluent/fluent-bit
+              tag: 3.0.3@sha256:fbf43ef695ee4a3fd312f0d59feee4e71837f72938a6ba6a60cdee36a34a0e5e
+            args: [-c, "/config/fluent-bit.yaml"]
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 320Mi
+              requests:
+                cpu: 15m
+                memory: 10Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+          logrotate:
+            image:
+              repository: ghcr.io/vaskozl/logrotate
+              tag: 3.21.0@sha256:35620a93ee9f4a1c525502e9fca39e88213de1b9c1221d944536290f04ec3174
+            env:
+              LOGROTATE_PATTERN: '/var/log/k8s/*/*.log'
+              LOGROTATE_ROTATE: '31'
+            resources:
+              limits:
+                cpu: 200m
+                memory: 120Mi
+              requests:
+                cpu: 15m
+                memory: 5Mi
+            securityContext:
+              runAsUser: 0
+              capabilities:
+                drop:
+                - ALL
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 2000
+        runAsGroup: 2000
+        runAsUser: 2000
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      config:
+        name: aggregator-config
+        type: configMap
+      logs:
+        existingClaim: logging-pvc
+        globalMounts:
+        - path: /var/log/k8s
+    service:
+      fluent-bit:
+        controller: fluent-aggregator
+        ports:
+          forward:
+            port: 24224

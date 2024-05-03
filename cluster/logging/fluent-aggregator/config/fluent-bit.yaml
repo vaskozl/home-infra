@@ -1,0 +1,10 @@
+pipeline:
+  inputs:
+    - name: forward
+  outputs:
+    - name: file
+      match: '*'
+      path: '/var/log/k8s'
+      format: plain
+      mkdir: true
+

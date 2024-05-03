@@ -4,8 +4,10 @@ kind: Kustomization
 namespace: logging
 resources:
 - _namespace.yaml
-- archiver
-- vector
+- fluent-bit
+- fluent-aggregator
+#- archiver
+#- vector
 - ripgrep
 - logging-pvc.yaml
 components:
