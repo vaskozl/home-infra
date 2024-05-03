@@ -106,15 +106,6 @@ spec:
         description: "Some HAProxy requests are pending on {{ $labels.proxy }} - {{
           $value | printf \"%.2f\"}}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels
           }}"
-    - alert: HaproxyHttpSlowingDown
-      expr: 'avg by (instance, proxy) (haproxy_backend_max_total_time_seconds) > 1'
-      for: 1m
-      labels:
-        severity: warning
-      annotations:
-        summary: HAProxy HTTP slowing down (instance {{ $labels.instance }})
-        description: "Average request time is increasing - {{ $value | printf \"%.2f\"}}\n
-          \ VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
     - alert: HaproxyRetryHigh
       expr: 'sum by (proxy) (rate(haproxy_backend_retry_warnings_total[1m])) > 10'
       for: 2m
