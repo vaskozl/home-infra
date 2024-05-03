@@ -19,7 +19,7 @@ spec:
       fluent-aggregator:
         replicas: 1
         containers:
-          fluent-bit:
+          app:
             image:
               repository: ghcr.io/fluent/fluent-bit
               tag: 3.0.3@sha256:fbf43ef695ee4a3fd312f0d59feee4e71837f72938a6ba6a60cdee36a34a0e5e
@@ -42,25 +42,6 @@ spec:
                 drop:
                 - ALL
               readOnlyRootFilesystem: true
-          logrotate:
-            image:
-              repository: ghcr.io/vaskozl/logrotate
-              tag: 3.21.0@sha256:35620a93ee9f4a1c525502e9fca39e88213de1b9c1221d944536290f04ec3174
-            env:
-              LOGROTATE_PATTERN: '/var/log/k8s/*/*.log'
-              LOGROTATE_ROTATE: '31'
-            resources:
-              limits:
-                cpu: 200m
-                memory: 120Mi
-              requests:
-                cpu: 15m
-                memory: 5Mi
-            securityContext:
-              runAsUser: 0
-              capabilities:
-                drop:
-                - ALL
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
@@ -80,7 +61,7 @@ spec:
         globalMounts:
         - path: /var/log/k8s
     service:
-      fluent-bit:
+      app:
         controller: fluent-aggregator
         ports:
           forward:

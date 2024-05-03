@@ -1,0 +1,46 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: logrotate
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  successfulJobsHistoryLimit: 3
+  suspend: false
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  schedule: '1 0 * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: logrotate
+            image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:35620a93ee9f4a1c525502e9fca39e88213de1b9c1221d944536290f04ec3174
+            command: ['/usr/bin/catatonit', '--', 'logrotate']
+            args: ['-v', '/config/logrotate.conf']
+            resources:
+              requests:
+                cpu: 10m
+                memory: 10Mi
+              limits:
+                cpu: 100m
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            volumeMounts:
+            - name: logging-pvc
+              mountPath: /var/log/k8s
+            - name: config
+              mountPath: /config
+          restartPolicy: Never
+          volumes:
+          - name: logging-pvc
+            persistentVolumeClaim:
+              claimName: logging-pvc
+          - name: config
+            configMap:
+              name: logrotate-config
