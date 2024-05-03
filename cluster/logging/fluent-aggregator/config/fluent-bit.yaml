@@ -5,6 +5,7 @@ pipeline:
     - name: file
       match: '*'
       path: '/var/log/k8s'
-      format: plain
+      format: template
+      template: '{msg} pod={pod} ctr={ctr} ts={ts}'
       mkdir: true
 
