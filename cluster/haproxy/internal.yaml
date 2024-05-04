@@ -22,7 +22,7 @@ spec:
         name: haproxy-internal
         default: true
       service:
-        loadBalancerIP: 192.168.99.27
+        loadBalancerIP: ${EI_INGRESS_IN}
         tcpPorts:
           - name: ssh
             port: 22
