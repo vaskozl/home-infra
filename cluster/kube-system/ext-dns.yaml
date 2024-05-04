@@ -6,11 +6,11 @@ metadata:
   namespace: kube-system
   annotations:
     coredns.io/hostname: external-dns
+    metallb.universe.tf/allow-shared-ip: "external-dns"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  externalIPs:
-  - ${EI_EXT_DNS}
+  loadBalancerIP: ${EI_EXT_DNS}
   ports:
   - port: 53
     targetPort: 53
@@ -23,10 +23,11 @@ kind: Service
 metadata:
   name: ext-dns-tcp
   namespace: kube-system
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "external-dns"
 spec:
   type: LoadBalancer
-  externalIPs:
-  - ${EI_EXT_DNS}
+  loadBalancerIP: ${EI_EXT_DNS}
   ports:
   - port: 53
     targetPort: 53

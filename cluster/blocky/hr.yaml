@@ -63,9 +63,9 @@ spec:
       app:
         annotations:
           coredns.io/hostname: blocky
+          metallb.universe.tf/allow-shared-ip: "blocky"
         controller: blocky
-        externalIPs:
-        - ${EI_BLOCKY}
+        loadBalancerIP: ${EI_BLOCKY}
         externalTrafficPolicy: Local
         ports:
           dns-tcp:

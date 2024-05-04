@@ -26,6 +26,5 @@ spec:
     domain: sko.ai
     replicaCount: 3
     service:
-      externalIPs:
-      - ${EI_K8S_GATEWAY}
+      loadBalancerIP: ${EI_K8S_GATEWAY}
       externalTrafficPolicy: Local

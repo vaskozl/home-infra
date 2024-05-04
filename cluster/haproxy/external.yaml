@@ -22,8 +22,7 @@ spec:
         name: haproxy-external
         default: false
       service:
-        externalIPs:
-        - ${EI_INGRESS_EX}
+        loadBalancerIP: ${EI_INGRESS_EX}
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:

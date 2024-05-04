@@ -114,8 +114,7 @@ spec:
         annotations:
           coredns.io/hostname: mail
         controller: mx
-        externalIPs:
-        - ${EI_MAILSERVER}
+        loadBalancerIP: ${EI_MAILSERVER}
         externalTrafficPolicy: Local
         ports:
           smtp:

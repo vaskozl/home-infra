@@ -60,8 +60,7 @@ spec:
         annotations:
           coredns.io/hostname: mqtt
         controller: mosquitto
-        externalIPs:
-        - ${EI_MQTT}
+        loadBalancerIP: ${EI_MQTT}
         externalTrafficPolicy: Local
         ports:
           mqtt:

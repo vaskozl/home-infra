@@ -71,8 +71,7 @@ spec:
           coredns.io/hostname: irk
         controller: inspircd
         enabled: true
-        externalIPs:
-        - ${EI_INSPIRCD}
+        loadBalancerIP: ${EI_INSPIRCD}
         externalTrafficPolicy: Local
         ports:
           client:
