@@ -2,17 +2,17 @@
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: pre-dhcp
+  name: bgp-pool
   namespace: metallb
 spec:
   addresses:
-  - 192.168.1.50-192.168.1.99
+  - 192.168.99.128-192.168.99.254
 ---
 apiVersion: metallb.io/v1beta1
-kind: L2Advertisement
+kind: BGPAdvertisement
 metadata:
-  name: pre-dhcp
+  name: bgp-pool
   namespace: metallb
 spec:
   ipAddressPools:
-  - pre-dhcp
+  - bgp-pool

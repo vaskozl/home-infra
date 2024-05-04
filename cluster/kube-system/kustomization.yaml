@@ -3,10 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - coredns-ds
-- calico/bgppeer.yaml
-- calico/calico.yaml
-- calico/ippool.yaml
-- calico/k8s-api.yaml
 - ext-dns.yaml
 - metrics-server/hr.yaml
 - repos/stable.yaml

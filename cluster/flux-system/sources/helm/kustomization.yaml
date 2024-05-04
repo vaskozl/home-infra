@@ -11,6 +11,7 @@ resources:
 - nginx-git.yaml
 - vector-charts.yaml
 - vm-charts.yaml
+- metallb.yaml
 patches:
 - path: common.yaml
   target:
