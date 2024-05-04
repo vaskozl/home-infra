@@ -31,7 +31,8 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-  * [calico](https://docs.projectcalico.org/networking/bgp) - My CNI of choice which supports BGP peering
+  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel + metallb is the lightest CNI
+  * [metallb](https://metallb.universe.tf/) - Load Balancing
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
