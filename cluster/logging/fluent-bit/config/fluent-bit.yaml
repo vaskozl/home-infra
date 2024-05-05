@@ -47,7 +47,7 @@ pipeline:
       match: kube.*
       rule: '$ns ^(.+)$ $0/$app.log false'
       # Some pods are deleted by the time we grab their logs
-      rule: '$msg ^. unlabeled/$TAG[4].log false'
+      rule: '$ts ^. unlabeled/$TAG[4].log false'
 
   outputs:
     - name: forward
