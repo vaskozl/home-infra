@@ -26,11 +26,10 @@ spec:
                 name: renovate-env
             resources:
               requests:
-                cpu: 500m
-                memory: 2Gi
+                cpu: 740m
+                memory: 1.3Gi
               limits:
-                cpu: 600m
-                memory: 1.4Gi
+                memory: 1.3Gi
             securityContext:
               allowPrivilegeEscalation: false
           restartPolicy: Never

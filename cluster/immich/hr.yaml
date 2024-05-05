@@ -50,11 +50,10 @@ spec:
               readOnlyRootFilesystem: true
             resources:
               limits:
-                cpu: 2
-                memory: 2Gi
+                memory: 765Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 50m
+                memory: 765Mi
       machine-learning:
         containers:
           app:
@@ -66,11 +65,10 @@ spec:
               readOnlyRootFilesystem: true
             resources:
               limits:
-                cpu: 2
-                memory: 2Gi
+                memory: 1860Mi
               requests:
-                cpu: 100m
-                memory: 250Mi
+                cpu: 70m
+                memory: 1860Mi
       redis:
         containers:
           app:
@@ -81,11 +79,10 @@ spec:
               readOnlyRootFilesystem: true
             resources:
               limits:
-                cpu: 2
-                memory: 2Gi
+                memory: 30Mi
               requests:
                 cpu: 10m
-                memory: 250Mi
+                memory: 30Mi
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
@@ -102,11 +99,10 @@ spec:
               tag: pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
             resources:
               limits:
-                cpu: 2
-                memory: 2Gi
+                memory: 380Mi
               requests:
-                cpu: 50m
-                memory: 250Mi
+                cpu: 10m
+                memory: 380Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:

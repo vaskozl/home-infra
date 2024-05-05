@@ -79,10 +79,10 @@ spec:
           dedup.minScrapeInterval: 60s
         resources:
           limits:
-            memory: 2Gi
+            memory: 1.2Gi
           requests:
-            cpu: 1
-            memory: 960Mi
+            cpu: 530m
+            memory: 1.2Gi
       ingress:
         enabled: true
         hosts:
