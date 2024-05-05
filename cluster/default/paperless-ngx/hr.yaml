@@ -45,10 +45,10 @@ spec:
                 type: HTTP
             resources:
               limits:
-                memory: 1Gi
+                memory: 1.2Gi
               requests:
                 cpu: 40m
-                memory: 1Gi
+                memory: 1.2Gi
           gotenburg:
             env:
               DISABLE_GOOGLE_CHROME: '1'
