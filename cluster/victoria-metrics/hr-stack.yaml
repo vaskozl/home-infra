@@ -68,6 +68,16 @@ spec:
             icon_emoji: '{{ template "slack.monzo.icon_emoji" . }}'
             color: '{{ template "slack.monzo.color" . }}'
             text: '{{ template "slack.monzo.text" . }}'
+          email_configs:
+          - to: alertmanager@sko.ai
+            from: alertmanager@sko.ai
+            hello: am.sko.ai
+            smarthost: 'mx.mailserver:25'
+            text: '{{ template "slack.monzo.text" . }}'
+            headers:
+              Subject: '{{ template "slack.monzo.title" . }}'
+            tls_config:
+              insecure_skip_verify: true
     vmsingle:
       spec:
         retentionPeriod: "30d"
