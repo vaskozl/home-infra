@@ -8,6 +8,8 @@ pipeline:
   filters:
     - name: kubernetes # https://docs.fluentbit.io/manual/pipeline/filters/kubernetes
       match: kube.*
+      use_kubelet: true
+      kubelet_port: 10250
 
     # Lift out the kubernetes labels so we can rename them
     - name: nest

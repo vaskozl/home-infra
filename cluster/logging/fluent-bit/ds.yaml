@@ -26,6 +26,8 @@ spec:
       terminationGracePeriodSeconds: 10
       tolerations:
       - operator: Exists
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       volumes:
       - name: varlog
         hostPath:
