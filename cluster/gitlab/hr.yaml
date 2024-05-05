@@ -70,13 +70,13 @@ spec:
         minReplicas: 1
         maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
-        workerProcesses: 2
+        workerProcesses: 1
         resources:
           limits:
-            memory: 3.0Gi # roughly, 1.5GB/worker
+            memory: 1.6Gi
           requests:
-            cpu: 100m # requests.cpu <= workerProcesses
-            memory: 3.20Gi # roughly, 1.6GB/worker
+            cpu: 100m
+            memory: 1.6Gi
       sidekiq:
         minReplicas: 1
         maxReplicas: 2
