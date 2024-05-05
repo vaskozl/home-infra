@@ -63,9 +63,9 @@ spec:
         resources:
           requests:
             cpu: 80m
-            memory: 340M
+            memory: 660M
           limits:
-            cpu: 1800m
+            memory: 660M
       webservice:
         minReplicas: 1
         maxReplicas: 2
