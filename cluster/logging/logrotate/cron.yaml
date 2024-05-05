@@ -19,7 +19,7 @@ spec:
           - name: logrotate
             image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:35620a93ee9f4a1c525502e9fca39e88213de1b9c1221d944536290f04ec3174
             command: ['/usr/bin/catatonit', '--', 'logrotate']
-            args: ['-v', '/config/logrotate.conf']
+            args: ['-v', '/config/logrotate.conf', '-s', '/var/log/k8s/logrotate.status']
             resources:
               requests:
                 cpu: 10m
