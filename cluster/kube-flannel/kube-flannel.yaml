@@ -134,25 +134,14 @@ spec:
       initContainers:
       - command:
         - /install-cni.sh
-        image: ghcr.io/siderolabs/install-cni:v1.7.0
-        name: install-cni-bridge
+        image: ghcr.io/siderolabs/install-cni:v1.7.0@sha256:f9fc66197058a8f4f73c982e3d84e12313d392d4d120838bca2b7eb37e87f942
+        name: install-cni-plugins
         resources: {}
         volumeMounts:
         - mountPath: /host/opt/cni/bin/
           name: cni-plugin
-      - name: install-cni-plugin
-        image: docker.io/flannel/flannel-cni-plugin:v1.4.1-flannel1
-        command:
-        - cp
-        args:
-        - -f
-        - /flannel
-        - /opt/cni/bin/flannel
-        volumeMounts:
-        - name: cni-plugin
-          mountPath: /opt/cni/bin
-      - name: install-cni
-        image: docker.io/flannel/flannel:v0.25.1
+      - name: install-config
+        image: ghcr.io/siderolabs/flannel:v0.25.1@sha256:0483b9a62c8190ac36d9aa4f7f9b0d5f914353f7ef3b56727d1947b209e49e39
         command:
         - cp
         args:
@@ -166,7 +155,7 @@ spec:
           mountPath: /etc/kube-flannel/
       containers:
       - name: kube-flannel
-        image: docker.io/flannel/flannel:v0.25.1
+        image: ghcr.io/siderolabs/flannel:v0.25.1@sha256:0483b9a62c8190ac36d9aa4f7f9b0d5f914353f7ef3b56727d1947b209e49e39
         command:
         - /opt/bin/flanneld
         args:
@@ -174,7 +163,7 @@ spec:
         - --kube-subnet-mgr
         resources:
           requests:
-            cpu: "100m"
+            cpu: "10m"
             memory: "50Mi"
         securityContext:
           privileged: false
@@ -191,6 +180,11 @@ spec:
               fieldPath: metadata.namespace
         - name: EVENT_QUEUE_DEPTH
           value: "5000"
+        # KubePrism
+        - name: KUBERNETES_SERVICE_HOST
+          value: 127.0.0.1
+        - name: KUBERNETES_SERVICE_PORT
+          value: "7445"
         volumeMounts:
         - name: run
           mountPath: /run/flannel
