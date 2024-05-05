@@ -81,15 +81,6 @@ spec:
         summary: HAProxy retry high (instance {{ $labels.instance }})
         description: "High rate of retry on {{ $labels.proxy }} - {{ $value | printf
           \"%.2f\"}}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-    - alert: HaproxyHasNoAliveBackends
-      expr: 'haproxy_backend_active_servers + haproxy_backend_backup_servers == 0'
-      for: 0m
-      labels:
-        severity: critical
-      annotations:
-        summary: HAproxy has no alive backends (instance {{ $labels.instance }})
-        description: "HAProxy has no alive active or backup backends for {{ $labels.proxy
-          }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
     - alert: HaproxyFrontendSecurityBlockedRequests
       expr: 'sum by (proxy) (rate(haproxy_frontend_denied_connections_total[2m])) >
         10'
