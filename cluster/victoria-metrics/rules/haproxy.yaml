@@ -92,12 +92,3 @@ spec:
           }})
         description: "HAProxy is blocking requests for security reason\n  VALUE = {{
           $value }}\n  LABELS = {{ $labels }}"
-    - alert: HaproxyServerHealthcheckFailure
-      expr: 'increase(haproxy_server_check_failures_total[1m]) > 0'
-      for: 1m
-      labels:
-        severity: warning
-      annotations:
-        summary: HAProxy server healthcheck failure (instance {{ $labels.instance }})
-        description: "Some server healthcheck are failing on {{ $labels.server }}\n
-          \ VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
