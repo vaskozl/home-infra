@@ -5,9 +5,6 @@ configMapGenerator:
 #################################################
 # Kubernetes-Mixin dashboards
 #################################################
-- name: dashboards-mixin-apiserver
-  files:
-  - kubernetes-mixin/apiserver.json
 - name: dashboards-mixin-cluster-total
   files:
   - kubernetes-mixin/cluster-total.json
@@ -47,12 +44,6 @@ configMapGenerator:
 - name: dashboards-mixin-pod-total
   files:
   - kubernetes-mixin/pod-total.json
-- name: dashboards-mixin-proxy
-  files:
-  - kubernetes-mixin/proxy.json
-- name: dashboards-mixin-scheduler
-  files:
-  - kubernetes-mixin/scheduler.json
 - name: dashboards-mixin-workload-total
   files:
   - kubernetes-mixin/workload-total.json
