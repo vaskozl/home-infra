@@ -75,8 +75,8 @@ spec:
           limits:
             memory: 3.0Gi # roughly, 1.5GB/worker
           requests:
-            cpu: "1.1" # requests.cpu <= workerProcesses
-            memory: 2.50Gi # roughly, 1.25GB/worker
+            cpu: 100m # requests.cpu <= workerProcesses
+            memory: 3.20Gi # roughly, 1.6GB/worker
       sidekiq:
         minReplicas: 1
         maxReplicas: 2
