@@ -31,6 +31,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 10m
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
