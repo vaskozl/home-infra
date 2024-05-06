@@ -7,17 +7,6 @@ spec:
   groups:
   - name: EmbeddedExporterV2
     rules:
-    - alert: HaproxyHighHttp4xxErrorRateBackend
-      expr: '((sum by (proxy) (rate(haproxy_server_http_responses_total{code="4xx"}[1m]))
-        / sum by (proxy) (rate(haproxy_server_http_responses_total[1m]))) * 100) > 50'
-      for: 1m
-      labels:
-        severity: critical
-      annotations:
-        summary: HAProxy high HTTP 4xx error rate backend (instance {{ $labels.instance
-          }})
-        description: "Too many HTTP requests with status 4xx (> 50%) on backend {{ $labels.fqdn
-          }}/{{ $labels.backend }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
     - alert: HaproxyHighHttp5xxErrorRateBackend
       expr: '((sum by (proxy) (rate(haproxy_server_http_responses_total{code="5xx"}[1m]))
         / sum by (proxy) (rate(haproxy_server_http_responses_total[1m]))) * 100) > 5'
