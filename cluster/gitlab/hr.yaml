@@ -73,10 +73,10 @@ spec:
         workerProcesses: 1
         resources:
           limits:
-            memory: 1.8Gi
+            memory: 2Gi
           requests:
             cpu: 100m
-            memory: 1.8Gi
+            memory: 2Gi
       sidekiq:
         minReplicas: 1
         maxReplicas: 2
