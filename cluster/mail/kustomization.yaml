@@ -4,28 +4,5 @@ kind: Kustomization
 namespace: mailserver
 resources:
 - _namespace.yaml
-- hr.yaml
-- dkim-key.enc.yaml
 - cert.yaml
 - maddy
-- ../netpols/allow-all-ingress
-components:
-- ../common
-
-secretGenerator:
-- name: mailserver.files
-  files:
-  - config/postfix-accounts.cf	
-  - config/postfix-aliases.cf	
-  - config/postfix-virtual.cf
-  - config/whitelist_clients.local
-- name: mailserver.dkim
-  files:
-  - config/opendkim/KeyTable
-  - config/opendkim/TrustedHosts
-  - config/opendkim/SigningTable
-- name: mailserver.env
-  envs:
-  - mailserver.env
-configurations:
-  - kustomizeconfig.yaml
