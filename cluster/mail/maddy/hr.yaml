@@ -66,6 +66,8 @@ spec:
         globalMounts:
         - path: /data/maddy.conf
           subPath: maddy.conf
+        - path: /data/sieve.sh
+          subPath: maddy.conf
       tls:
         name: mail-sko-ai-tls
         type: secret

@@ -9,6 +9,7 @@ configMapGenerator:
 - name: maddy-config
   files:
   - maddy.conf
+  - sieve.sh
 secretGenerator:
 - name: maddy-secrets
   envs:
