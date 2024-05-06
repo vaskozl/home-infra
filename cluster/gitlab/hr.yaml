@@ -42,8 +42,8 @@ spec:
         reply_to: 'noreply@sko.ai'
       smtp:
         enabled: true
-        address: 'mx.mailserver'
-        port: 25
+        address: 'maddy.mailserver'
+        port: 2225
         tls: false
         authentication: ''
       appConfig:

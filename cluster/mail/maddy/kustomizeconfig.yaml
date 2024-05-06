@@ -1,0 +1,11 @@
+nameReference:
+- kind: ConfigMap
+  version: v1
+  fieldSpecs:
+  - path: spec/values/persistence/config/name
+    kind: HelmRelease
+- kind: Secret
+  version: v1
+  fieldSpecs:
+  - path: spec/values/controllers/maddy/containers/app/envFrom/secretRef/name
+    kind: HelmRelease
