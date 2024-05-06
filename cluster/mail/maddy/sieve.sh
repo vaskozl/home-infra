@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check if an argument is provided
 if [ $# -eq 0 ]; then
@@ -7,10 +7,10 @@ if [ $# -eq 0 ]; then
 fi
 
 # Get the email address from the positional argument
-sender="$1"
+sender="${1//@/#}"
 subject="$2"
-rcpt_to="$3"
+rcpt_to="${3//@/#}"
 
-[ "$sender" = "gitlab@sko.ai" ]             && echo "Gitlab" && exit
-[ "$sender" = "notifications@github.com" ]  && echo "Github" && exit
-[ "$sender" = "alertmanager@sko.ai" ]       && echo "Alerts" && exit
+[ "$sender" = "gitlab#sko.ai" ]             && echo "Gitlab" && exit
+[ "$sender" = "notifications#github.com" ]  && echo "Github" && exit
+[ "$sender" = "alertmanager#sko.ai" ]       && echo "Alerts" && exit
