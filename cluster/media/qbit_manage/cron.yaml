@@ -15,7 +15,7 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - image: docker.io/bobokun/qbit_manage:v4.1.2@sha256:67e123bdbc6459d112523eeb4ffb0866942eeb0dbf34d2fe566a8a3c52b62baa
+          - image: docker.io/bobokun/qbit_manage:v4.1.3@sha256:797cebb5f2301da4ea4493fd8c6f133306e05e52ae9dbfb42e501961b89683ab
             command: [sh, -c]
             args:
             - >
