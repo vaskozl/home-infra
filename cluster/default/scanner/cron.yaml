@@ -12,5 +12,5 @@ spec:
           serviceAccountName: scanner-sa
           containers:
           - name: scanner-container
-            image: ghcr.io/vaskozl/perl-mojolicious:9.36@sha256:09b419fe75183351e26d915763d622bcfe708f68e05d5d6de9b64101ed1c4aae
+            image: ghcr.io/vaskozl/perl-mojolicious:9.36@sha256:d7ca4c43499ffe8cabba8e9dd15f2a6859edc4601ea530fc3961b23fb3170061
             args: [scan-containers.pl, -u, -m, 'security-reports@sko.ai']
