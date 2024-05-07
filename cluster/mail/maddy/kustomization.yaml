@@ -8,8 +8,12 @@ resources:
 configMapGenerator:
 - name: maddy-config
   files:
-  - maddy.conf
-  - sieve.sh
+  - config/maddy.conf
+  - config/sieve.sh
+- name: rspamd-config
+  files:
+  - config/logging.inc
+  - config/worker-normal.inc
 secretGenerator:
 - name: maddy-secrets
   envs:

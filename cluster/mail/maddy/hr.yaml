@@ -58,9 +58,38 @@ spec:
             size: 1Mi
             storageClass: nfs-client
         type: statefulset
+      rspamd:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/rspamd
+              tag: 3.8.4
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 10m
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: [ALL]
+              runAsUser: 568
+              runAsGroup: 568
+              seccompProfile:
+                type: RuntimeDefault
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
 
     persistence:
-      config:
+      maddy-config:
         name: maddy-config
         type: configMap
         globalMounts:
@@ -68,6 +97,11 @@ spec:
           subPath: maddy.conf
         - path: /data/sieve.sh
           subPath: maddy.conf
+      rspamd-config:
+        name: rspamd-config
+        type: configMap
+        globalMounts:
+        - path: /etc/rspamd/local.d
       tls:
         name: mail-sko-ai-tls
         type: secret
@@ -75,8 +109,13 @@ spec:
         - path: /etc/ssl/mailserver
       tmp:
         type: emptyDir
+      # TODO: Remove when rspamd logs to stdout
+      var-log-rspamd:
+        type: emptyDir
+        globalMounts:
+        - path: /var/log/rspamd
     service:
-      app:
+      maddy:
         annotations:
           coredns.io/hostname: mail
         controller: maddy
@@ -97,3 +136,8 @@ spec:
             port: 2225
         type: LoadBalancer
         loadBalancerIP: ${EI_MAILSERVER}
+      rspamd:
+        controller: rspamd
+        ports:
+          http:
+            port: 11333
