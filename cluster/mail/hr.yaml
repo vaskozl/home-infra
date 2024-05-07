@@ -67,8 +67,10 @@ spec:
             probes:
               liveness:
                 enabled: true
+                type: HTTP
               readiness:
                 enabled: true
+                type: HTTP
             resources:
               limits:
                 memory: 100Mi
@@ -86,6 +88,13 @@ spec:
                 type: RuntimeDefault
         statefulset:
           podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /var/lib/rspamd
+            name: rspamd-data
+            size: 1Mi
+            storageClass: nfs-client
         type: statefulset
 
     persistence:
