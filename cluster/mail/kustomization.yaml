@@ -5,4 +5,21 @@ namespace: mailserver
 resources:
 - _namespace.yaml
 - cert.yaml
-- maddy
+- hr.yaml
+
+configMapGenerator:
+- name: maddy-config
+  files:
+  - config/maddy.conf
+  - config/sieve.sh
+- name: rspamd-config
+  files:
+  - config/logging.inc
+  - config/worker-normal.inc
+secretGenerator:
+- name: maddy-secrets
+  envs:
+  - secrets.env
+
+configurations:
+  - kustomizeconfig.yaml
