@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: maddy
+  name: mx
   namespace: mailserver
 spec:
   interval: 1h
