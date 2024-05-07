@@ -6,6 +6,8 @@ resources:
 - _namespace.yaml
 - cert.yaml
 - hr.yaml
+components:
+- ../common
 
 configMapGenerator:
 - name: maddy-config

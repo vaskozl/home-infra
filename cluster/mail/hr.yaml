@@ -33,10 +33,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 100Mi
+                memory: 40Mi
               requests:
                 cpu: 10m
-                memory: 100Mi
+                memory: 40Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -68,15 +68,17 @@ spec:
               liveness:
                 enabled: true
                 type: HTTP
+                path: /checkv2
               readiness:
                 enabled: true
                 type: HTTP
+                path: /checkv2
             resources:
               limits:
-                memory: 100Mi
+                memory: 90Mi
               requests:
                 cpu: 10m
-                memory: 100Mi
+                memory: 90Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
