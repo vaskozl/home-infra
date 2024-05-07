@@ -107,7 +107,7 @@ spec:
         - path: /data/maddy.conf
           subPath: maddy.conf
         - path: /data/sieve.sh
-          subPath: maddy.conf
+          subPath: sieve.sh
       rspamd-config:
         name: rspamd-config
         type: configMap
