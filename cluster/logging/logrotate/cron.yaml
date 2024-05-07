@@ -17,7 +17,7 @@ spec:
         spec:
           containers:
           - name: logrotate
-            image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:35620a93ee9f4a1c525502e9fca39e88213de1b9c1221d944536290f04ec3174
+            image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:bdd232a63a9b2476d70319a645aebf2164c1887751d96235293233ab260f5c7b
             command: ['/usr/bin/catatonit', '--', 'logrotate']
             args: ['-v', '/config/logrotate.conf', '-s', '/var/log/k8s/logrotate.status']
             resources:
