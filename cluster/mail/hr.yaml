@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/foxcpp/maddy
-              tag: 0.7.1
+              repository: ghcr.io/vaskozl/maddy
+              tag: 0.7.1@sha256:2f1aa93ca7d3b791198b4978cf535d30ff0283139170c1def9357be88786d5b7
             envFrom:
             - secretRef:
                 name: maddy-secrets
@@ -53,7 +53,7 @@ spec:
           volumeClaimTemplates:
           - accessMode: ReadWriteOnce
             globalMounts:
-            - path: /data
+            - path: /var/lib/maddy
             name: maddy-data
             size: 1Mi
             storageClass: nfs-client
@@ -104,10 +104,7 @@ spec:
         name: maddy-config
         type: configMap
         globalMounts:
-        - path: /data/maddy.conf
-          subPath: maddy.conf
-        - path: /data/sieve.sh
-          subPath: sieve.sh
+        - path: /etc/maddy
       rspamd-config:
         name: rspamd-config
         type: configMap
@@ -117,7 +114,7 @@ spec:
         name: mail-sko-ai-tls
         type: secret
         globalMounts:
-        - path: /etc/ssl/mailserver
+        - path: /etc/maddy/certs/mail.sko.ai
       tmp:
         type: emptyDir
       # TODO: Remove when rspamd logs to stdout
