@@ -118,13 +118,10 @@ spec:
         type: secret
         globalMounts:
         - path: /etc/maddy/certs/mail.sko.ai
-      tmp:
-        type: emptyDir
-      # TODO: Remove when rspamd logs to stdout
-      var-log-rspamd:
+      run-maddy:
         type: emptyDir
         globalMounts:
-        - path: /var/log/rspamd
+        - path: /run/maddy
     service:
       maddy:
         annotations:
