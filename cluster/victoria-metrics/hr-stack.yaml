@@ -70,7 +70,7 @@ spec:
               insecure_skip_verify: true
     vmsingle:
       spec:
-        retentionPeriod: "30d"
+        retentionPeriod: "3"
         storage:
           resources:
             requests:
@@ -99,6 +99,8 @@ spec:
             static_configs:
             - targets: ["syno:9100"]
         scrapeInterval: 60s
+        externalLabels:
+          cluster: pi-cluster
         resources:
           limits:
             cpu: 1
