@@ -65,7 +65,7 @@ spec:
           - to: alertmanager@sko.ai
             from: alertmanager@sko.ai
             hello: am.sko.ai
-            smarthost: 'mx.mailserver:25'
+            smarthost: 'mail.sko.ai:2225'
             tls_config:
               insecure_skip_verify: true
     vmsingle:
