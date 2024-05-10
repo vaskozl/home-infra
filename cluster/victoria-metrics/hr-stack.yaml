@@ -157,13 +157,6 @@ spec:
           - action: drop
             sourceLabels: [__name__]
             regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
-        relabelConfigs:
-          - action: labelmap
-            regex: __meta_kubernetes_node_label_(.+)
-          - sourceLabels: [__metrics_path__]
-            targetLabel: metrics_path
-          - targetLabel: "job"
-            replacement: "kubelet"
     # Not by most graphs or often useful
     kubeEtcd:
       enabled: false
