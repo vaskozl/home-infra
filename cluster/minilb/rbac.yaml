@@ -1,0 +1,49 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: minilb
+rules:
+- apiGroups: [""]
+  resources:
+  - endpoints
+  - services
+  - namespaces
+  verbs: [get, list, watch]
+- apiGroups: [""]
+  resources: [services/status]
+  verbs: [update]
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - '*'
+  verbs:
+  - watch
+  - list
+- apiGroups:
+  - k8s.nginx.org
+  resources:
+  - '*'
+  verbs:
+  - watch
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: minilb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: minilb
+subjects:
+- kind: ServiceAccount
+  name: minilb
+  namespace: minilb

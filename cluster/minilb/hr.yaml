@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: minilb
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.1.0
+  values:
+    controllers:
+      minilb:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/minilb
+              tag: latest
+            probes:
+            resources:
+              limits:
+                memory: 10Mi
+              requests:
+                cpu: 5m
+                memory: 10Mi
+    serviceAccount:
+      name: "minilb"
+    service:
+      app:
+        controller: minilb
+        type: NodePort
+        ports:
+          http:
+            port: 53
+            nodePort: 30053
+            protocol: UDP

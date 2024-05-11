@@ -26,5 +26,5 @@ spec:
     domain: sko.ai
     replicaCount: 3
     service:
-      loadBalancerIP: ${EI_K8S_GATEWAY}
-      externalTrafficPolicy: Local
+      type: NodePort
+      nodePort: 30054
