@@ -12,6 +12,11 @@ controller:
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
+  allowPrivilegeEscalation: true
+  containerPort:
+    http: 80
+    https: 443
+    stat: 1024
   config:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
