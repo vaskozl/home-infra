@@ -39,3 +39,15 @@ spec:
       - name: txt-config
         configMap:
           name: txt-config
+  postRenderers:
+  - kustomize:
+      patches:
+      - patch: |
+          - op: add
+            path: /spec/template/spec/securityContext/sysctls
+            value:
+            - name: net.ipv4.ip_unprivileged_port_start
+              value: '0'
+        target:
+          kind: Deployment
+          version: v1

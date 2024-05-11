@@ -12,7 +12,6 @@ controller:
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
-  allowPrivilegeEscalation: true
   containerPort:
     http: 80
     https: 443
