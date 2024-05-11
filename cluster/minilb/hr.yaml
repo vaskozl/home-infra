@@ -20,6 +20,8 @@ spec:
             image:
               repository: ghcr.io/vaskozl/minilb
               tag: latest
+            args:
+            - -level=debug
             probes:
             resources:
               limits:
