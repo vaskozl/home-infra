@@ -23,6 +23,9 @@ spec:
         default: false
       service:
         loadBalancerIP: ${EI_INGRESS_EX}
+        nodePorts:
+          http: 31080
+          https: 31443
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:

@@ -127,11 +127,11 @@ spec:
         annotations:
           coredns.io/hostname: mail
         controller: maddy
-        externalTrafficPolicy: Local
         ports:
           smtp:
             primary: true
             port: 25
+            nodePort: 31025
           imap:
             port: 143
           smtp-secure:
