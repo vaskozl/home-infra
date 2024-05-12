@@ -66,7 +66,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/rspamd
-              tag: 3.8.4
+              tag: 3.8.4@sha256:d8ec2953143df183e700f0641969e108619186387639a31bbea5afc95a7e695f
             probes:
               liveness:
                 enabled: true
