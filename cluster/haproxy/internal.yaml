@@ -49,5 +49,5 @@ spec:
             - name: net.ipv4.ip_unprivileged_port_start
               value: '0'
         target:
-          kind: Deployment
+          kind: DaemonSet
           version: v1
