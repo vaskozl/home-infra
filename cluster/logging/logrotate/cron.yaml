@@ -17,8 +17,7 @@ spec:
         spec:
           containers:
           - name: logrotate
-            image: ghcr.io/vaskozl/logrotate:3.21.0@sha256:bdd232a63a9b2476d70319a645aebf2164c1887751d96235293233ab260f5c7b
-            command: ['/usr/bin/catatonit', '--', 'logrotate']
+            image: &image ghcr.io/vaskozl/logrotate:3.21.0@sha256:bdd232a63a9b2476d70319a645aebf2164c1887751d96235293233ab260f5c7b
             args: ['-v', '/config/logrotate.conf', '-s', '/var/log/k8s/logrotate.status']
             resources:
               requests:
@@ -27,15 +26,27 @@ spec:
               limits:
                 cpu: 100m
                 memory: 100Mi
-            securityContext:
+            securityContext: &security
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
-            volumeMounts:
+            volumeMounts: &mounts
             - name: logging-pvc
               mountPath: /var/log/k8s
             - name: config
               mountPath: /config
+          initContainers:
+          - image: *image
+            name: fix-permissions
+            args: [sh, -c, 'chmod 700 /var/log/k8s/*']
+            resources:
+              limits:
+                memory: 5Mi
+              requests:
+                cpu: 10m
+                memory: 5Mi
+            securityContext: *security
+            volumeMounts: *mounts
           restartPolicy: Never
           volumes:
           - name: logging-pvc
