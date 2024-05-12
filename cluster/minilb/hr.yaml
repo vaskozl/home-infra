@@ -15,7 +15,6 @@ spec:
   values:
     controllers:
       minilb:
-        replicas: 2
         strategy: RollingUpdate
         containers:
           app:
