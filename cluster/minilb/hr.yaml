@@ -15,6 +15,7 @@ spec:
   values:
     controllers:
       minilb:
+        strategy: RollingUpdate
         containers:
           app:
             image:
