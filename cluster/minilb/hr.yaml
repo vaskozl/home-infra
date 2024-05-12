@@ -17,14 +17,13 @@ spec:
       controller:
         containers:
           app:
-            image:
+            image: &image
               repository: ghcr.io/vaskozl/minilb
-              tag: latest
+              tag: 0.0.1@sha256:df07c9fc33e3aed7606eff470649cf394f6ed038d1ec442704e12e5d484eb3c4
             args:
             - -log-level=debug
             - -controller=true
-            probes:
-            resources:
+            resources: &resources
               limits:
                 memory: 10Mi
               requests:
@@ -35,20 +34,10 @@ spec:
         replicas: 2
         containers:
           app:
-            image:
-              repository: ghcr.io/vaskozl/minilb
-              tag: latest
+            image: *image
             args:
             - -log-level=debug
-            - -controller=false
-            probes:
-            resources:
-              limits:
-                memory: 10Mi
-              requests:
-                cpu: 5m
-                memory: 10Mi
-
+            resources: *resources
     serviceAccount:
       name: "minilb"
     service:
