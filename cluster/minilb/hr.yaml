@@ -14,8 +14,7 @@ spec:
       version: 3.1.0
   values:
     controllers:
-      minilb:
-        strategy: RollingUpdate
+      controller:
         containers:
           app:
             image:
@@ -23,6 +22,7 @@ spec:
               tag: latest
             args:
             - -log-level=debug
+            - -controller=true
             probes:
             resources:
               limits:
@@ -30,11 +30,30 @@ spec:
               requests:
                 cpu: 5m
                 memory: 10Mi
+      dns:
+        strategy: RollingUpdate
+        replicas: 2
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/minilb
+              tag: latest
+            args:
+            - -log-level=debug
+            - -controller=false
+            probes:
+            resources:
+              limits:
+                memory: 10Mi
+              requests:
+                cpu: 5m
+                memory: 10Mi
+
     serviceAccount:
       name: "minilb"
     service:
       app:
-        controller: minilb
+        controller: dns
         type: NodePort
         ports:
           http:
