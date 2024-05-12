@@ -21,7 +21,7 @@ spec:
               repository: ghcr.io/vaskozl/minilb
               tag: latest
             args:
-            - -level=debug
+            - -log-level=debug
             probes:
             resources:
               limits:
