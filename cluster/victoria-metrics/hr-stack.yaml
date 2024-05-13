@@ -62,12 +62,11 @@ spec:
         - name: 'blackhole'
         - name: "mail-monitoring"
           email_configs:
-          - to: alertmanager@sko.ai
+          - to: alerts@ntfy.sko.ai
             from: alertmanager@sko.ai
             hello: am.sko.ai
-            smarthost: 'mail.sko.ai:2225'
-            tls_config:
-              insecure_skip_verify: true
+            smarthost: 'ntfy.automation:2225'
+            require_tls: false
     vmsingle:
       spec:
         retentionPeriod: "3"
