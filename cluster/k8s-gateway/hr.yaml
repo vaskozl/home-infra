@@ -25,6 +25,7 @@ spec:
                 memory: 15Mi
     domain: sko.ai
     replicaCount: 3
+    ttl: 5
     service:
       type: NodePort
       nodePort: 30054
