@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: ntfy-credentials
+data:
+    ntfy: ENC[AES256_GCM,data:o33++V43pMSzMhJ6lFOAiuWTFaWJIp22jKpv5eyW8SsLvL01g5r3R5LZ2KjkqCuN,iv:TJmKy+RrCt6AJUi4Wi4Xu7SE6RBh5WS1VFdD2XH8hFc=,tag:nRH/slgP9UlA4MiFXFT1Yw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2024-05-13T21:02:34Z"
+    mac: ENC[AES256_GCM,data:u/K4uEJdfluWSoqL1Qsk6wlbkGnM5i5SycK2HiJ1NMwbNi5JYtH5e8mCBx9hoHIuKZJwAMi4/55Seq+Z066W0XCmrx2QvYMgVBSGKWrJN5Ju/SVHA10EVXWe+9igyk91pauc6hOQF2w0Lyj8yPn4T5lnbrjSXIcDDgBiXVdq0ac=,iv:u90VbbDFEWajPeD5fTzvyQOIyiVN58o3QAwL9VkmGuE=,tag:+UIPytxJgCgHQys+cbUSPA==,type:str]
+    pgp:
+        - created_at: "2024-05-13T21:01:35Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv/WJ3jwW9YzAZiCFWAJj78MGGMywpq7XxqCKruJIQuWO7c
+            aRbd60Z6mEf1pYXDg0JWGqyvDCX+hrnir7dKkU853N0ilPb0NBoZBabnPzRmiZ7T
+            93aQXWh9VxISvGPRvduJOSbzxxJwsHaD/1KqbOexjnad4OY80/7f4YlHifUhnDaR
+            LfuzF9jl9P2N99Y+ZTc286c2ua8V67hMs0yhCjhezR54eOCVGdJCD6g3NwdGnsi/
+            ceHXbOen1NFi2ZgRzrWn6cGKsk3K4A88b9ZJVa26IylfM9fq7dZ/9SRdd+NGAPC3
+            q6CasVerVN+rqPfjaN35bCzmTrXVHUSzB2trX+ZUXMiV3rShzJn4OlxBA0gXqRvG
+            wHOo7hJ2t3K7mQ4krVR3LJU1mmrZ79hbo3m2RZfVXMJcC28Xbo0kIixpgHnEwMkl
+            33S2yybLYBwlXb9KD+HlKAONXS+Srdu0noTz2dFeXP6pJpMlCp7MGx0++YOdiZmZ
+            OBzebz8lRBmNZOMBGzMJC/4qr/ZCNZx1AWMOORWOtDwYUv0bwJ5wA3ub0tY3Jy2r
+            aDAs9ScGmsFr/aboosKz7P890cxnkqvBMfPGnoTZyT7UOdfnAa/GrOKzVR517sH3
+            +hPoSHhF6zTAB4+0T8E8Ut63mM0vJ9BhGNLG+HUlKHkjtCmD0mJnNaT2wL0ZyRVa
+            jGhOC0iianslTim8ruL3WfB7lR3LbsuY0LYd9D6MghwO2WVvNpvQmxo3QFPz9jXb
+            TInSQBkqEJ0IpDr9W4b4mSFkknAp60jU7yDosXA4f6FoYbhGSfWzSW7klJsq8wdC
+            2rZz94QFfUWj9qSrtjs8Ngvxtc/SXodibBdHSw4W3WT2tDhxyWNhOrZZ8vzTkP/a
+            lGU4Gj1zBs1b+9XdpWQhO1EC153YXe+NrwRDbJCVOd9khx5elWsCEitQlm5wb/y+
+            OztbSkC1mo8eCk+ZGTG37uV132S9gT7qqZdSPtGBeMlkJyQDbVbniQ8jFHBY+Wwi
+            BTERhoB0PgwLfqXDw6aHYvPSXAFKNO4iKXDX33tlsY7HrSDLChuZYXx6CGZEceXG
+            oYEhcO2Wj9Qdkj/3L7TzjhEbjdoRA0N0ajiBYlMm+u7CBbs6gh0e02tPIIY2+G+D
+            z211yap8l61+7pTqgFQb
+            =ZrmJ
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+    version: 3.8.1

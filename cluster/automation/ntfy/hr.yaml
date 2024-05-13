@@ -51,6 +51,9 @@ spec:
             port: 8080
     ingress:
       app:
+        annotations:
+          haproxy.org/auth-type: basic-auth
+          haproxy.org/auth-secret: automation/ntfy-credentials
         hosts:
           - host: "ntfy.sko.ai"
             paths:
