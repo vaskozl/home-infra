@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ntfy
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: 3.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      ntfy:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/ntfysh-bin
+              tag: 2.10.0@sha256:a268974d6d3477f3b49a2d64c39931d2cf31ff10c85919cce572e01f89333207
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 25Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      app:
+        controller: ntfy
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        hosts:
+          - host: "ntfy.sko.ai"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        type: configMap
+        name: ntfy-config
+        globalMounts:
+        - path: /etc/ntfy
+      cache:
+        type: emptyDir
+        globalMounts:
+        - path: /var/cache/ntfy
