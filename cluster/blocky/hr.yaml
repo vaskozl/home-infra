@@ -65,16 +65,16 @@ spec:
           coredns.io/hostname: blocky
           metallb.universe.tf/allow-shared-ip: "blocky"
         controller: blocky
-        loadBalancerIP: ${EI_BLOCKY}
-        externalTrafficPolicy: Local
         ports:
           dns-tcp:
             port: 53
             protocol: TCP
+            nodePort: 30054
           dns-udp:
             port: 53
             protocol: UDP
+            nodePort: 30054
           http:
             port: 4000
             primary: true
-        type: LoadBalancer
+        type: NodePort
