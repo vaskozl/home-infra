@@ -1,5 +1,7 @@
 base-url: "http://ntfy.sko.ai"
-listen-http: ":8080"
 cache-file: "/var/cache/ntfy/cache.db"
 attachment-cache-dir: "/var/cache/ntfy/attachments"
 upstream-base-url: "https://ntfy.sh"
+listen-http: ":80"
+smtp-server-listen: ":25"
+smtp-server-domain: "ntfy.sko.ai"

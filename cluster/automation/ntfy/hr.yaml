@@ -43,12 +43,18 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+        sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: "0"
     service:
       app:
         controller: ntfy
+        type: LoadBalancer
         ports:
+          smtp:
+            port: 25
           http:
-            port: 8080
+            port: 80
     ingress:
       app:
         annotations:
