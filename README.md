@@ -18,7 +18,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [baikal](https://sabre.io/baikal/) - {Cal,Card}Dav server
   * [blocky](https://github.com/0xERR0R/blocky) - DNS proxy and ad-blocker
   * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
-  * [docker-mailserver](https://github.com/docker-mailserver/docker-mailserver) - Postfix + Dovecot + Friends for selfhosted email
+  * [maddy](https://maddy.email/) - Completel and modern mailserver
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
@@ -27,6 +27,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [inspircd](https://github.com/ngircd/ngircd) - IRC Server
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
+  * [nfty](https://ntfy.sh) - Push notifications made easy
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
