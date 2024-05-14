@@ -27,8 +27,8 @@ spec:
               FLOOD_OPTION_QBUSER: vsz
               FLOOD_OPTION_RUNDIR: /data
             image:
-              repository: ghcr.io/vaskozl/flood-git
-              tag: 4.7.0.r55.gce4b523d@sha256:68df4bb18afb305cf68a94973e3702e7f130427bd359fd345b3834eebe4341f7
+              repository: ghcr.io/vaskozl/nodejs-flood
+              tag: 4.8.2@sha256:c2a49b575767b5936968b89e5a33880d8bc83cc192840ef94b172b3af9d5d495
             probes:
               liveness:
                 enabled: true
