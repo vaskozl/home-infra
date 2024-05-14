@@ -59,7 +59,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.103.1@sha256:708ff677ab952dda9d7cb9343a6d650a6ac02a4e6c7447015f9df95c780cfc42
+              tag: v1.104.0@sha256:0dd0066f47c91fc69e4a9c4f3e70a7805d84d60e8eb5ffd7ec9c264e8d82cb70
             env: *env
             securityContext:
               readOnlyRootFilesystem: true
