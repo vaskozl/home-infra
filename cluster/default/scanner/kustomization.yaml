@@ -6,3 +6,7 @@ resources:
 labels:
 - pairs:
     app: arch-scanner
+configMapGenerator:
+- name: script
+  files:
+  - scan-containers.pl

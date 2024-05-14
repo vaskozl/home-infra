@@ -13,4 +13,16 @@ spec:
           containers:
           - name: scanner-container
             image: ghcr.io/vaskozl/perl-mojolicious:9.36@sha256:e80508a856bc55f49d4bdce095cf1b1cfc5d9f97c709721a17d3a6279abd5fa0
-            args: [scan-containers.pl, -u, -m, 'security-reports@sko.ai']
+            args:
+            - perl
+            - /script/scan-containers.pl
+            - -u
+            - -m=pixel@ntfy.sko.ai
+            - -s=ntfy.automation
+            volumeMounts:
+            - name: script
+              mountPath: /script
+          volumes:
+          - name: script
+            configMap:
+              name: script
