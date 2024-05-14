@@ -27,8 +27,8 @@ spec:
               FLOOD_OPTION_QBUSER: vsz
               FLOOD_OPTION_RUNDIR: /data
             image:
-              repository: ghcr.io/vaskozl/nodejs-flood
-              tag: 4.8.2@sha256:c2a49b575767b5936968b89e5a33880d8bc83cc192840ef94b172b3af9d5d495
+              repository: docker.io/jesec/flood
+              tag: 4.8.2@sha256:04329477fd4a8286e978d032a78d253e803801f0ba2e386d9b1a3ebd7080cd09
             probes:
               liveness:
                 enabled: true
@@ -36,10 +36,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 100Mi
+                memory: 160Mi
               requests:
                 cpu: 50m
-                memory: 60Mi
+                memory: 160Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
