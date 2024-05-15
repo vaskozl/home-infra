@@ -17,7 +17,7 @@ spec:
         - inf
         env:
         - name: SYSDIG_BPF_PROBE
-        image: sysdig/sysdig:0.37.0
+        image: sysdig/sysdig:0.37.1
         imagePullPolicy: Always
         name: sysdig-agent
         resources:
