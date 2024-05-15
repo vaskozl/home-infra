@@ -12,3 +12,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: kubernetes-ingress
+    metricRelabelConfigs:
+    - source_labels: [__name__]
+      regex: 'haproxy_(process_|frontend_).*'
+      action: keep
