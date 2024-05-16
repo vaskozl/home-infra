@@ -113,6 +113,8 @@ spec:
         type: configMap
         globalMounts:
         - path: /etc/rspamd/local.d
+        - path: /etc/rspamd/rspamd.local.lua
+          subPath: rspamd.local.lua
       tls:
         name: mail-sko-ai-tls
         type: secret

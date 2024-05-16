@@ -18,6 +18,7 @@ configMapGenerator:
   files:
   - config/logging.inc
   - config/worker-normal.inc
+  - config/rspamd.local.lua
 secretGenerator:
 - name: maddy-secrets
   envs:
