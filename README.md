@@ -27,7 +27,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [inspircd](https://github.com/ngircd/ngircd) - IRC Server
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
-  * [nfty](https://ntfy.sh) - Push notifications made easy
+  * [ntfy](https://ntfy.sh) - Push notifications made easy
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
