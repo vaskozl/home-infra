@@ -66,9 +66,9 @@ spec:
             hello: am.sko.ai
             smarthost: 'ntfy.automation:25'
             require_tls: false
+            send_resolved: true
             headers:
-              Tags: '{{ if eq .Status "resolved" }}+1{{ end }} {{ if eq .Status "firing" }}rotating_light{{ end }}'
-              Subject: '{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ index .CommonLabels.alertname }}'
+              Subject: '{{ if eq .Status "resolved" }}👌{{ end }}{{ if eq .Status "firing" }}🚨{{ end }} {{ index .CommonLabels.alertname }}'
             text: '{{ range .Alerts }} {{ index .Annotations.description }} {{- end }}'
             html: ''
     vmsingle:
@@ -148,9 +148,6 @@ spec:
         - sourceLabels: [id, pod]
           action: drop
           regex: '.+;'
-        # Drop high-cardinality labels.
-        - action: labeldrop
-          regex: (uid|id|name|pod_uid|interface)
         - action: drop
           sourceLabels: [__name__]
           regex: prober_probe_duration_seconds_bucket
