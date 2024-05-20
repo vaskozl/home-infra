@@ -65,7 +65,7 @@ spec:
           - to: alerts@ntfy.sko.ai
             from: alertmanager@sko.ai
             hello: am.sko.ai
-            smarthost: 'ntfy.automation:2225'
+            smarthost: 'ntfy.automation:25'
             require_tls: false
     vmsingle:
       spec:
