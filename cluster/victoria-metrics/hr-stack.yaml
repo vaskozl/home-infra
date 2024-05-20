@@ -68,8 +68,8 @@ spec:
             require_tls: false
             headers:
               Tags: '{{ if eq .Status "resolved" }}+1{{ end }} {{ if eq .Status "firing" }}rotating_light{{ end }}'
-              Subject: '{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ index .Annotations "summary" }}'
-            text: '{{ index .Annotations "description" }}'
+              Subject: '{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ index .CommonLabels.alertname }}'
+            text: '{{ range .Alerts }} {{ index .Annotations.description }} {{- end }}'
             html: ''
     vmsingle:
       spec:
