@@ -6,12 +6,13 @@ resources:
 - gitlab-charts.yaml
 - haproxytech.yaml
 - k8s-gateway.yaml
+- metallb.yaml
 - metrics-server.yaml
 - nfs-subdir.yaml
 - nginx-git.yaml
+- tailscale.yaml
 - vector-charts.yaml
 - vm-charts.yaml
-- metallb.yaml
 patches:
 - path: common.yaml
   target:

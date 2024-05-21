@@ -1,0 +1,7 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: flannel
+  namespace: flux-system
+spec:
+  url: https://flannel-io.github.io/flannel/
