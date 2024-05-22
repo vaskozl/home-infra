@@ -20,7 +20,8 @@ spec:
           app:
             image:
               repository: ghcr.io/juanfont/headscale
-              tag: 0.23.0-alpha11@sha256:eb9c7d574e50471fe347f224bd1e08b0762dc5ca56b11279dcabf88d07325f6e
+              tag: 0.22.3@sha256:aadf29a875bb2ffdf6579869e5759935f7a64b9fd19fcea9d5385c5d7220dc7b
+            command: [headscale]
             args: [serve]
             probes:
               startup:
@@ -137,6 +138,9 @@ spec:
               type: sqlite
               sqlite:
                 path: /var/lib/headscale/db.sqlite
+            # TODO: Remove after 0.23.0
+            db_type: sqlite3
+            db_path: /var/lib/headscale/db.sqlite
             dns_config:
               # Whether to prefer using Headscale provided DNS or use local.
               override_local_dns: true
