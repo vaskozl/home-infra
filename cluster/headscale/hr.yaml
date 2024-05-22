@@ -144,11 +144,9 @@ spec:
             dns_config:
               # Whether to prefer using Headscale provided DNS or use local.
               override_local_dns: true
-
               # List of DNS servers to expose to clients.
               nameservers:
-                - 1.1.1.1
-                - 1.0.0.1
+                - 192.168.1.1
               domains: []
               magic_dns: true
               base_domain: ts.sko.ai
