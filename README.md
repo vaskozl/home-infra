@@ -40,6 +40,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [varnish](https://www.haproxy.com/blog/haproxy-varnish-and-the-single-hostname-website) - Caching reverse proxy
   * [vector](https://vector.dev) - Log collection and aggregation
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
+  * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
 
 ## Secret management
 
