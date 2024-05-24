@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-network-policies
+spec:
+  template:
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      serviceAccountName: kube-network-policies
+      containers:
+      - name: kube-network-policies
+        image: ghcr.io/vaskozl/kube-network-policies:v0.2.0
+        args:
+        - /bin/netpol
+        - -v=1
+        volumeMounts:
+        - name: lib-modules
+          mountPath: /lib/modules
+          readOnly: true
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["NET_ADMIN"]
+      volumes:
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
