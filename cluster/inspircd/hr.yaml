@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: inspircd
 spec:
+  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -71,12 +72,11 @@ spec:
         annotations:
           coredns.io/hostname: irk
         controller: inspircd
-        enabled: true
-        loadBalancerIP: ${EI_INSPIRCD}
-        externalTrafficPolicy: Local
         ports:
           client:
             port: 16697
+            nodePort: 31697
           server:
             port: 7001
+            nodePort: 31007
         type: LoadBalancer
