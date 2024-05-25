@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - hr.yaml
 - basic-auth.enc.yaml
+- netpol.yaml
 configMapGenerator:
 - name: ntfy-config
   files:

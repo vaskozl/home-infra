@@ -1,0 +1,13 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ntfy-ingress
+spec:
+  podSelector:
+    matchlabels:
+      app.kubernetes.io/name: ntfy
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
