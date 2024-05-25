@@ -20,24 +20,21 @@ spec:
           app:
             image: &image
               repository: ghcr.io/vaskozl/minilb
-              tag: 0.0.2@sha256:5e0aef0c5118694684591595837f36d810328c6237b4a479c440c5c40d45f2a9
+              tag: 0.0.3@sha256:5e0608f7c5af4eebc15640892041f26c212f23c12d86d049a173c2d6ac6e13a5
             args:
-            - -log-level=debug
             - -controller=true
             resources: &resources
               limits:
-                memory: 10Mi
+                memory: 12Mi
               requests:
                 cpu: 5m
-                memory: 10Mi
+                memory: 12Mi
       dns:
         strategy: RollingUpdate
         replicas: 2
         containers:
           app:
             image: *image
-            args:
-            - -log-level=debug
             resources: *resources
     serviceAccount:
       name: "minilb"
