@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: thelounge
 spec:
+  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -30,10 +31,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 100Mi
+                memory: 130Mi
               requests:
                 cpu: 10m
-                memory: 100Mi
+                memory: 130Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
