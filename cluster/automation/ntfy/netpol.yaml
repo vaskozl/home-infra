@@ -5,7 +5,7 @@ metadata:
   name: allow-ntfy-ingress
 spec:
   podSelector:
-    matchlabels:
+    matchLabels:
       app.kubernetes.io/name: ntfy
   ingress:
   - from:
