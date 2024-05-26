@@ -19,7 +19,7 @@ controller:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
-    log-format: "client_ip=%ci date_time=%tr backend_name=%b performance_metrics=%TR/%Tw/%Tc/%Tr/%Ta status_code=%ST bytes_read=%B termination_state=%tsc haproxy_metrics=%ac/%fc/%bc/%sc/%rc srv_queue=%sq  backend_queue=%bq user_agent=%{+Q}[capture.req.hdr(0)] http_host=%{+Q}[capture.req.hdr(1)] http_version=%HV http_method=%HM http_request_uri=%HU"
+    log-format: "ip=%ci dt=%tr backend=%b perf=%TR/%Tw/%Tc/%Tr/%Ta code=%ST bytes_read=%B term=%tsc metrics=%ac/%fc/%bc/%sc/%rc srv_queue=%sq  backend_queue=%bq ua=%{+Q}[capture.req.hdr(0)] host=%{+Q}[capture.req.hdr(1)] ver=%HV method=%HM uri=%HU"
 
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
