@@ -21,7 +21,7 @@ spec:
           app:
             image: &image
               repository: ghcr.io/vaskozl/minilb
-              tag: 0.0.3@sha256:fdec6a830c43cd5bc45a93715d6094659f18378a2764724d621d0c0bed1714b5
+              tag: 0.0.3@sha256:b23a23b7387bacf199748e468a58bf4b98f01a55678597b78de81e0a94d9467d
             args:
             - -controller=true
             resources: &resources
