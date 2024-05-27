@@ -57,27 +57,27 @@
     // add labels according to package and update types
     {
       "matchUpdateTypes": ["major"],
-      "labels": ["dep/major"]
+      "labels": ["dep::major"]
     },
     {
       "matchUpdateTypes": ["minor"],
-      "labels": ["dep/minor"]
+      "labels": ["dep::minor"]
     },
     {
       "matchUpdateTypes": ["patch"],
-      "labels": ["dep/patch"]
+      "labels": ["dep::patch"]
     },
     {
       "matchUpdateTypes": ["digest"],
-      "labels": ["dep/digest"]
+      "labels": ["dep::digest"]
     },
     {
       "matchDatasources": ["docker"],
-      "addLabels": ["renovate/container"]
+      "addLabels": ["renovate::container"]
     },
     {
       "matchDatasources": ["helm"],
-      "addLabels": ["renovate/helm"]
+      "addLabels": ["renovate::helm"]
     },
     // enable automerge on < minor
     {
