@@ -101,6 +101,9 @@ spec:
           - job_name: "syno"
             static_configs:
             - targets: ["syno:9100"]
+          - job_name: "pinewall"
+            static_configs:
+            - targets: ["pinewall:9100"]
         scrapeInterval: 60s
         externalLabels:
           cluster: pi-cluster
