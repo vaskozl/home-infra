@@ -59,6 +59,9 @@ configMapGenerator:
 - name: haproxy-full
   files:
   - haproxy-2-full.json=misc/haproxy-2-full.json
+- name: node-exporter-full
+  files:
+  - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
