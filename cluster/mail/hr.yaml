@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/maddy
-              tag: 0.7.1@sha256:8de075b1fd0906c42456f94ba08990cacc50006be74550e8b68fec189b0434e8
+              tag: 0.7.1@sha256:49318d0c287b695f54f1942eb4bdd812e27bafd4caf4acdd658bfa95ba9ddeeb
             args:
               - '-config=/etc/maddy/maddy.conf'
               - 'run'
