@@ -6,6 +6,7 @@ spec:
   template:
     spec:
       hostNetwork: true
+      priorityClassName: system-node-critical
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
