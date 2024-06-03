@@ -15,9 +15,3 @@ spec:
             name: syno
             port:
               number: 80
-      - path: /photos/mo/sharing
-        pathType: Prefix
-        backend: *backend
-      - path: /photos/synofoto/api/v2/p/Thumbnail/get
-        pathType: Prefix
-        backend: *backend

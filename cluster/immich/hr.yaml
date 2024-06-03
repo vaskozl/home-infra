@@ -172,6 +172,7 @@ spec:
     ingress:
       immich:
         enabled: true
+        className: haproxy-external
         hosts:
           - host: immich.sko.ai
             paths:
