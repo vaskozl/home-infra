@@ -20,6 +20,11 @@ spec:
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
     controllers:
       server:
         containers:
@@ -35,8 +40,11 @@ spec:
               DB_USERNAME: immich
               DB_PASSWORD: immich
               MPLCONFIGDIR: /tmp/matplotlib
-            securityContext:
+            securityContext: &security
               readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
       microservices:
         containers:
           app:
@@ -45,8 +53,7 @@ spec:
               tag: v1.105.1@sha256:658b40420d7a39d6eb34c797cec8d36ff315f5adb168301aaf27dc4eafc8e228
             command: [./start-microservices.sh]
             env: *env
-            securityContext:
-              readOnlyRootFilesystem: true
+            securityContext: *security
             resources:
               limits:
                 memory: 850Mi
@@ -60,8 +67,7 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.105.1@sha256:2e2736ba2f2270485c0b6fa33eee66ea0b2279b70b92ea838a015c4d5289c9f0
             env: *env
-            securityContext:
-              readOnlyRootFilesystem: true
+            securityContext: *security
             resources:
               limits:
                 memory: 1860Mi
@@ -74,8 +80,7 @@ spec:
             image:
               repository: registry.hub.docker.com/library/redis
               tag: 7.2-alpine@sha256:0389bb8416d7c6ed065c25745179bf5d358e5d9472dd30a687ab36ffbb650262
-            securityContext:
-              readOnlyRootFilesystem: true
+            securityContext: *security
             resources:
               limits:
                 memory: 30Mi
