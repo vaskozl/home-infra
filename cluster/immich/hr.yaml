@@ -81,6 +81,7 @@ spec:
               repository: registry.hub.docker.com/library/redis
               tag: 7.2-alpine@sha256:0389bb8416d7c6ed065c25745179bf5d358e5d9472dd30a687ab36ffbb650262
             securityContext: *security
+            args: [--save, '', --appendonly, 'no']
             resources:
               limits:
                 memory: 30Mi
@@ -90,7 +91,6 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
-
       postgres:
         containers:
           app:
@@ -116,8 +116,6 @@ spec:
             name: pgdata
             size: 1Mi
         type: statefulset
-
-
     persistence:
       upload:
         type: nfs
@@ -126,10 +124,10 @@ spec:
         advancedMounts:
           server:
             app:
-              - path: /usr/src/app/upload
+            - path: /usr/src/app/upload
           microservices:
             app:
-              - path: /usr/src/app/upload
+            - path: /usr/src/app/upload
       photos:
         type: nfs
         server: syno.sko.ai
@@ -137,21 +135,20 @@ spec:
         advancedMounts:
           server:
             app:
-              - path: /mnt/syno-photos
-                readOnly: true
+            - path: /mnt/syno-photos
+              readOnly: true
           microservices:
             app:
-              - path: /mnt/syno-photos
-                readOnly: true
+            - path: /mnt/syno-photos
+              readOnly: true
       model-cache:
         type: emptyDir
         advancedMounts:
           machine-learning:
             app:
-              - path: /cache
+            - path: /cache
       tmp:
         type: emptyDir
-
     service:
       machine-learning:
         controller: machine-learning
@@ -173,15 +170,14 @@ spec:
         ports:
           http:
             port: 6379
-
     ingress:
       immich:
         enabled: true
         className: haproxy-external
         hosts:
-          - host: immich.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: server
-                  port: http
+        - host: immich.sko.ai
+          paths:
+          - path: /
+            service:
+              identifier: server
+              port: http
