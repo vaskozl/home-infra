@@ -172,7 +172,12 @@ spec:
             port: 6379
     ingress:
       immich:
-        enabled: true
+        annotations:
+          haproxy.org/backend-config-snippet: |
+            acl allowed src 192.168.0.0/16
+            acl allowed path_beg /share/
+            acl allowed path_beg req.hdr(Referer) -m beg https://immich.sko.ai/share/
+            http-request deny unless allowed
         className: haproxy-external
         hosts:
         - host: immich.sko.ai
