@@ -37,10 +37,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 70Mi
+                memory: 100Mi
               requests:
                 cpu: 10m
-                memory: 70Mi
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
