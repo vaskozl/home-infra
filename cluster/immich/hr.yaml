@@ -72,7 +72,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.106.2@sha256:3aecde307deb0c881a1b4cbaf51db965e5ba1c085b8b4abb1a88c0225812cb05
+              tag: v1.106.3@sha256:ea112b507c71c32815f1c02782e20a2f5e8dc42d3ea1177b4fed4f25fce4c9d5
             env:
               <<: *env-common
               MPLCONFIGDIR: /tmp/matplotlib
