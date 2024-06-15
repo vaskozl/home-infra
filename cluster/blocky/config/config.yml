@@ -3,8 +3,6 @@ ports:
   http: 4000
 
 upstreams:
-  init:
-    strategy: failOnError
   groups:
     default:
     - https://dns.google/dns-query
@@ -15,8 +13,7 @@ bootstrapDns:
   - tcp+udp:8.8.8.1
 
 blocking:
-  startStrategy: blocking
-  blackLists:
+  denylists:
     hagezi:
     - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
     - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
