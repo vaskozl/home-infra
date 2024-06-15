@@ -15,6 +15,7 @@ bootstrapDns:
   - tcp+udp:8.8.8.1
 
 blocking:
+  startStrategy: blocking
   blackLists:
     hagezi:
     - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
