@@ -63,10 +63,10 @@ spec:
             securityContext: *security
             resources:
               limits:
-                memory: 850Mi
+                memory: 950Mi
               requests:
                 cpu: 50m
-                memory: 850Mi
+                memory: 950Mi
       machine-learning:
         containers:
           app:
