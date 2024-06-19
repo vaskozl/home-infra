@@ -26,7 +26,7 @@ spec:
             - exec mosquitto -c "/config/$(hostname).conf"
             image:
               repository: ghcr.io/vaskozl/mosquitto
-              tag: 2.0.18@sha256:aeeda903a6291f77adbb96ca3cb2129b0cf82141ee9362d061a6904d4ad82921
+              tag: 2.0.18@sha256:e7d0913417a72a4c8d18a2f934cc054eb59c4d4523f6286df71b43cfff9f4f1d
             probes:
               liveness:
                 enabled: true
