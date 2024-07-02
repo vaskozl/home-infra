@@ -9,7 +9,9 @@
   "prConcurrentLimit": 0,
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
-  "ignoreTests": true,
+  "pre-commit": {
+    "enabled": true
+  },
   "ignoreDeps": [
     "docker.io/calico/cni",
     "docker.io/calico/kube-controllers",
