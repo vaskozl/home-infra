@@ -21,7 +21,7 @@ spec:
         GITLAB_LOG_LEVEL: 'error'
       nodeSelector:
         kubernetes.io/arch: amd64
-      edition: ee
+      edition: ce
       hosts:
         domain: sko.ai
       ingress:
