@@ -2,5 +2,5 @@ nameReference:
 - kind: Secret
   version: v1
   fieldSpecs:
-  - path: spec/values/envFrom/secretRef/name
+  - path: spec/values/controllers/microbin/containers/app/envFrom/secretRef/name
     kind: HelmRelease
