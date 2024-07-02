@@ -16,9 +16,10 @@ spec:
       serviceAccountName: kube-network-policies
       containers:
       - name: kube-network-policies
-        image: ghcr.io/vaskozl/kube-network-policies:v0.2.0
+        image: registry.k8s.io/networking/kube-network-policies:v0.4.0
         args:
         - /bin/netpol
+        - --hostname-override=$(MY_NODE_NAME)
         - -v=1
         volumeMounts:
         - name: lib-modules
@@ -32,6 +33,11 @@ spec:
           privileged: true
           capabilities:
             add: ["NET_ADMIN"]
+        env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
       volumes:
       - name: lib-modules
         hostPath:
