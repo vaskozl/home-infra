@@ -21,6 +21,9 @@ spec:
             env:
               MICROBIN_DATA_DIR: /var/lib/microbin
               MICROBIN_PORT: 8080
+            envFrom:
+            - secretRef:
+                name: microbin.env
             image:
               repository: ghcr.io/vaskozl/microbin-bin
               tag: 2.0.4@sha256:618ddb84dfab892979bcb5dc44a965b1ea8398375533029c29b63834cde272c4
@@ -58,9 +61,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    envFrom:
-    - secretRef:
-        name: microbin.env
     ingress:
       app:
         className: haproxy-external
