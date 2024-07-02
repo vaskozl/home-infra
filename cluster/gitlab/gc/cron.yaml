@@ -4,7 +4,7 @@ metadata:
   name: gitlab-registry-garbage-collect
   namespace: gitlab
 spec:
-  schedule: "0 4 * * *" # Run at 4:00 AM every day
+  schedule: "0 5 * * *" # Run at 5:00 AM every day
   jobTemplate:
     spec:
       template:
