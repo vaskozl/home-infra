@@ -13,10 +13,6 @@
     "enabled": true
   },
   "ignoreDeps": [
-    "docker.io/calico/cni",
-    "docker.io/calico/kube-controllers",
-    "docker.io/calico/pod2daemon-flexvol",
-    "docker.io/calico/node",
     "ghcr.io/fluxcd/helm-controller",
     "ghcr.io/fluxcd/image-automation-controller",
     "ghcr.io/fluxcd/image-reflector-controller",
@@ -95,6 +91,11 @@
       ],
       "matchUpdateTypes": ["minor"],
       "automerge": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["^ghcr\\.io/immich-app/"],
+      "groupName": "immich"
     }
   ]
 }
