@@ -42,17 +42,6 @@ spec:
                 memory: 4Gi
             securityContext:
               privileged: true
-          rar2fs:
-            image:
-              repository: ghcr.io/vaskozl/rar2fs
-              tag: 1.29.7@sha256:0f6f9d87cfe93d5e8d8dcd22612c3577365c56d5aca42f8daa3c2e2b45d98920
-            resources:
-              requests:
-                cpu: 50m
-                memory: 64Mi
-            securityContext:
-              privileged: true
-            args: [ "-f", "-o", "allow_other", "-o", "auto_unmount", "--seek-length=1", "/torrents/torrents", "/rar2fs" ]
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -83,16 +72,6 @@ spec:
         type: hostPath
       torrents:
         existingClaim: torrents-v2
-      rar2fs:
-        type: emptyDir
-        advancedMounts:
-          jellyfin:
-            app:
-            - path: /rar2fs
-              mountPropagation: HostToContainer
-            rar2fs:
-            - path: /rar2fs
-              mountPropagation: Bidirectional
     service:
       app:
         controller: jellyfin
