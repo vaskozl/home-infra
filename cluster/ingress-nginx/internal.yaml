@@ -10,7 +10,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx-charts
         namespace: flux-system
-      version: 4.10.1
+      version: 4.10.2
   interval: 1h
   valuesFrom:
   - kind: ConfigMap
