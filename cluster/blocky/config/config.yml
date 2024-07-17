@@ -10,7 +10,11 @@ upstreams:
 
 bootstrapDns:
   - tcp+udp:1.1.1.1
-  - tcp+udp:8.8.8.1
+  - tcp+udp:8.8.8.8
+
+filtering:
+  queryTypes:
+    - AAAA
 
 blocking:
   denylists:
