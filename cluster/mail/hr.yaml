@@ -79,10 +79,10 @@ spec:
                 path: /checkv2
             resources:
               limits:
-                memory: 140Mi
+                memory: 180Mi
               requests:
                 cpu: 10m
-                memory: 140Mi
+                memory: 180Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
