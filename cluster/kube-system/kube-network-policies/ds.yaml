@@ -16,7 +16,7 @@ spec:
       serviceAccountName: kube-network-policies
       containers:
       - name: kube-network-policies
-        image: registry.k8s.io/networking/kube-network-policies:v0.5.0
+        image: registry.k8s.io/networking/kube-network-policies:v0.4.0
         args:
         - /bin/netpol
         - --hostname-override=$(MY_NODE_NAME)
