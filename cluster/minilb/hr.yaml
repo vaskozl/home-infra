@@ -26,10 +26,10 @@ spec:
             - -controller=true
             resources: &resources
               limits:
-                memory: 12Mi
+                memory: 20Mi
               requests:
                 cpu: 5m
-                memory: 12Mi
+                memory: 20Mi
       dns:
         strategy: RollingUpdate
         replicas: 2
