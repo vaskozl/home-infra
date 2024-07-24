@@ -32,13 +32,13 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [thelounge](https://thelounge.chat/) - IRC client
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel + metallb is the lightest CNI
+  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
   * [minilb](https://github.com/vaskozl/minilb) - Ultralight DNS based load balancer
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
   * [varnish](https://www.haproxy.com/blog/haproxy-varnish-and-the-single-hostname-website) - Caching reverse proxy
-  * [vector](https://vector.dev) - Log collection and aggregation
+  * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
 
