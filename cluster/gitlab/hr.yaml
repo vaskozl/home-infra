@@ -19,6 +19,7 @@ spec:
     global:
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
+        GITLAB_LOGGER_TRUNCATE_LOGS: true
       nodeSelector:
         kubernetes.io/arch: amd64
       edition: ce
