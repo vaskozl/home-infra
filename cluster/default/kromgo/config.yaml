@@ -1,5 +1,8 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
+badge:
+  font: DejaVuSans.ttf
+  size: 12
 metrics:
   - name: git_version
     query: topk(1,(sum by (git_version) (kubernetes_build_info)))
