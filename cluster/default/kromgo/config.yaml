@@ -2,14 +2,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
 badge:
   font: DejaVuSans.ttf
-  size: 12
+  size: 13
 metrics:
-  - name: git_version
-    query: topk(1,(sum by (git_version) (kubernetes_build_info)))
-
-  - name: os_version
-    query: topk(1,(sum by (osVersion) (cadvisor_version_info)))
-
   - name: k8s
     query: topk(1,(sum by (git_version) (kubernetes_build_info)))
     label: git_version
@@ -31,11 +25,3 @@ metrics:
       - color: "yellow"
         min: 0
         max: 1024
-
-  - name: age
-    query: "round((time() - max(kube_node_created) ) / 86400)"
-    suffix: " days"
-
-  - name: uptime
-    query: round(avg((node_time_seconds - node_boot_time_seconds) / 3600 / 24), 0.1)
-    suffix: " days"
