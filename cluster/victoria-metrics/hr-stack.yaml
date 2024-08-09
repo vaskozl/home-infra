@@ -48,11 +48,8 @@ spec:
       config:
         route:
           routes:
-          - match:
-              alertname: 'Watchdog'
-            receiver: 'blackhole'
-          - match:
-              alertname: 'InfoInhibitor'
+          - matchers:
+            - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit"
             receiver: 'blackhole'
           - matchers:
             - severity=~"warning|critical"
@@ -68,8 +65,12 @@ spec:
             require_tls: false
             send_resolved: true
             headers:
-              Subject: '{{ if eq .Status "resolved" }}👌{{ end }}{{ if eq .Status "firing" }}🚨{{ end }} {{ index .CommonLabels.alertname }}'
-            text: '{{ range .Alerts }} {{ index .Annotations.description }} {{- end }}'
+              Subject: >
+                {{ if eq .Status "resolved" }}👌{{ end }}
+                {{ if eq .Status "firing" }}🚨{{ end }}
+                {{ index .CommonLabels.alertname }}
+            text: >
+              {{ range .Alerts }} {{ index .Annotations.description }} {{- end }}
             html: ''
     vmsingle:
       spec:
