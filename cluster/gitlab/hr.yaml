@@ -108,7 +108,7 @@ spec:
     grafana:
       enabled: false
     gitlab-runner:
-      concurrent: 2
+      concurrent: 1
       runners:
         nodeSelector:
           kubernetes.io/arch: amd64
