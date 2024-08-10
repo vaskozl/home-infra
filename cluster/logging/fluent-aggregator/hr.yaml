@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/fluent/fluent-bit
-              tag: 3.1.4@sha256:981b37a0faf56182e2e880cfdb87226dc71ed29a8a9eb4bbaba83ccfe0e00cbf
+              tag: 3.1.5@sha256:8bbfccec0bc5917fb449346b3f0c898eed0e90d448bcc48d7bf9a763168d39e3
             args: [-c, "/config/fluent-bit.yaml"]
             probes:
               liveness:
