@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - args: [perl, /script/shelly-brightness.pl]
-            image: ghcr.io/vaskozl/perl-libwww:6.77@sha256:084cf704a8c62734bab288c543b04d38d3c5fa07c6f10e9c1086c23a3d328eec
+            image: ghcr.io/vaskozl/perl-libwww:6.77@sha256:b0259f797347b5b7635cee4162f9b305cd6153042f092f1fc49f920a3c42b281
             name: shelly-brightness
             resources:
               requests:
