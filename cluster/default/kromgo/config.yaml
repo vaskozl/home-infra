@@ -7,10 +7,18 @@ metrics:
   - name: k8s
     query: topk(1,(sum by (git_version) (kubernetes_build_info)))
     label: git_version
+    colors:
+      - color: "blue"
+        min: 0
+        max: 1024
 
   - name: os
     query: topk(1,(sum by (osVersion) (cadvisor_version_info)))
     label: osVersion
+    colors:
+      - color: "green"
+        min: 0
+        max: 1024
 
   - name: nodes
     query: count(count by (node) (kube_node_info))
