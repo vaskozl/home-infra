@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: fluent-bit
-        image: ghcr.io/fluent/fluent-bit:3.1.5@sha256:8bbfccec0bc5917fb449346b3f0c898eed0e90d448bcc48d7bf9a763168d39e3
+        image: ghcr.io/fluent/fluent-bit:3.1.6@sha256:def31c22bfc23002354d0cc2beb177e4da1d87c68f49e8fee76c896e8c6fdd44
         args: [-c, "/config/fluent-bit.yaml"]
         resources:
           requests:
