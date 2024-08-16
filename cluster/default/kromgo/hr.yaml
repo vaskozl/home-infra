@@ -25,8 +25,8 @@ spec:
               PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429/
               SERVER_HOST: '0.0.0.0'
             image:
-              repository: ghcr.io/vaskozl/kromgo
-              tag: 0.3.2@sha256:404b14f1db74698ff0106b9d02c264a4f54ac7a00f9df5cab932f32362c91538
+              repository: ghcr.io/kashalls/kromgo
+              tag: 0.4.0@sha256:526c7b84d290bcfc484a981a02a23e39210a97bb60f048fa26e55e34fe2a0478
             probes:
               liveness:
                 enabled: true
