@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: v2ray
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.3.2
+  values:
+    controllers:
+      v2ray:
+        replicas: 2
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/v2ray
+              tag: 5.16.1@sha256:c8d2260793e543c03eb257e3f4d32395d99431a0d020661bf068db9536215861
+            args: ['v2ray', 'run', '-config', '/config/v2ray.json']
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 320Mi
+              requests:
+                cpu: 15m
+                memory: 180Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      config:
+        globalMounts:
+        - path: /config
+        name: config
+        type: secret
+    ingress:
+      app:
+        className: haproxy-external
+        hosts:
+        - host: sko.ai
+          paths:
+          - path: /ray
+            service:
+              identifier: app
+              port: http
+    service:
+      app:
+        controller: v2ray
+        ports:
+          http:
+            port: 8080
