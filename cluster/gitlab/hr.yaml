@@ -47,6 +47,8 @@ spec:
         port: 2225
         tls: false
         authentication: ''
+      minio:
+        enabled: false
       appConfig:
         omniauth:
           enabled: true
@@ -58,6 +60,17 @@ spec:
           blockAutoCreatedUsers: false
           providers:
           - secret: authelia-oauth2
+        lfs: &rails
+          connection:
+            secret: object-storage
+            key: rails.minio.yaml
+        artifacts: *rails
+        uploads: *rails
+        packages: *rails
+        externalDiffs: *rails
+        terraformState: *rails
+        dependencyProxy: *rails
+        ciSecureFiles: *rails
     # Reduce memory usage
     gitlab:
       gitaly:
@@ -90,14 +103,19 @@ spec:
           requests:
             cpu: 10m
             memory: 10Mi
+      toolbox:
+        backups:
+          objectStorage:
+            config:
+              secret: object-storage
+              key: toolbox.minio.toml
     registry:
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
-    minio:
-      imageTag: RELEASE.2022-10-24T18-35-07Z
-      ingress:
-        enabled: false
+      storage:
+        secret: object-storage
+        key: registry.minio.yaml
     # Disable things we handle by ourselves
     certmanager:
       install: false

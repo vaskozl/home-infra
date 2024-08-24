@@ -10,3 +10,11 @@ resources:
 - gc
 components:
 - ../common
+secretGenerator:
+- name: object-storage
+  files:
+  - config/rails.minio.yaml
+  - config/registry.minio.yaml
+  - config/toolbox.minio.toml
+generatorOptions:
+ disableNameSuffixHash: true
