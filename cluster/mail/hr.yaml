@@ -72,11 +72,11 @@ spec:
               liveness:
                 enabled: true
                 type: HTTP
-                path: /checkv2
+                path: /ping
               readiness:
                 enabled: true
                 type: HTTP
-                path: /checkv2
+                path: /ping
             resources:
               limits:
                 memory: 180Mi
