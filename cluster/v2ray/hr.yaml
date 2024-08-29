@@ -16,7 +16,7 @@ spec:
   values:
     controllers:
       v2ray:
-        replicas: 2
+        replicas: 1
         containers:
           app:
             image:
@@ -30,10 +30,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 80Mi
+                memory: 110Mi
               requests:
                 cpu: 30m
-                memory: 80Mi
+                memory: 110Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
