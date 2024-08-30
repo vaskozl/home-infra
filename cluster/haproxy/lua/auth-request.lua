@@ -24,6 +24,12 @@
 
 local http = require("haproxy-lua-http")
 
+-- Global cache table
+local auth_cache = {}
+local expiration_success = 15 * 60
+local expiration_fail    = 30
+local cleanup_frequency  = 1024
+
 core.register_action("auth-request", { "http-req" }, function(txn, be, path)
 	auth_request(txn, be, path, "HEAD", ".*", "-", "-")
 end, 2)
@@ -111,6 +117,39 @@ function send_response(txn, response, hdr_fail)
 	txn:done(reply)
 end
 
+
+-- Add or update an item in the cache
+local function set_auth_cache(key, value, ok)
+	auth_cache[key] = {value = value, ok = response_ok, timestamp = os.time()}
+end
+
+-- Retrieve an item from the cache
+local function get_auth_cache(key)
+	local item = auth_cache[key]
+	if item then
+		-- Check if the item has expired
+		local expiration = item.ok and expiration_success or expiration_fail
+		if os.time() - item.timestamp <= expiration then
+			return item.value
+		else
+			-- Remove expired item
+			auth_cache[key] = nil
+		end
+	end
+	return nil
+end
+
+-- Clean up expired cache items
+local function cleanup_auth_cache()
+	local now = os.time()
+	for key, item in pairs(auth_cache) do
+		local expiration = item.ok and expiration_success or expiration_fail
+		if os.time() - item.timestamp > expiration then
+			auth_cache[key] = nil
+		end
+	end
+end
+
 -- auth_request makes the request to the external authentication service
 -- and waits for the response. hdr_* params receive a comma-separated
 -- list of Lua Patterns used to identify the headers that should be
@@ -148,9 +187,15 @@ function auth_request(txn, be, path, method, hdr_req, hdr_succeed, hdr_fail)
 	-- Transform table of request headers from haproxy's to
 	-- socket.http's format.
 	local headers = {}
+	local cache_key = txn.sf:req_fhdr("host") .. "|" .. txn.sf:path()
 	for header, values in pairs(txn.http:req_get_headers()) do
-		if header_match(header, hdr_req) then
-			for i, v in pairs(values) do
+		for i, v in pairs(values) do
+			-- Use hdr_req headers for the cache key
+			if header_match(header, hdr_req) then
+				cache_key = cache_key .. header .. "=" .. v .. "|"
+			end
+			-- Send all other headers to the auth server
+			if header_match(header, ".*") then
 				if headers[header] == nil then
 					headers[header] = v
 				else
@@ -160,14 +205,27 @@ function auth_request(txn, be, path, method, hdr_req, hdr_succeed, hdr_fail)
 		end
 	end
 
-	-- Make request to backend.
-	if method == "*" then
-		method = txn.sf:method()
+	-- Check if the response is already cached
+	local response = get_auth_cache(cache_key)
+	local cached, err
+	if math.random(cleanup_frequency) == 1 then
+		cleanup_auth_cache()
+		cached = true
 	end
-	local response, err = http.send(method:upper(), {
-		url = "http://" .. addr .. path,
-		headers = headers,
-	})
+
+	-- Perform a subrequest if not
+	if response == nil then
+		-- Make request to backend.
+		if method == "*" then
+			method = txn.sf:method()
+		end
+
+		response, err = http.send(method:upper(), {
+			url = "http://" .. addr .. path,
+			headers = headers,
+		})
+
+	end
 
 	-- `terminate_on_failure == true` means that the Lua script should send the response
 	-- and terminate the transaction in the case of a failure. This will happen when
@@ -186,6 +244,9 @@ function auth_request(txn, be, path, method, hdr_req, hdr_succeed, hdr_fail)
 
 	set_var(txn, "txn.auth_response_code", response.status_code)
 	local response_ok = 200 <= response.status_code and response.status_code < 300
+	if cached == nil then
+		set_auth_cache(cache_key, response, response_ok)
+	end
 
 	for header, value in response:get_headers(true) do
 		set_var(txn, "req.auth_response_header." .. sanitize_header_for_variable(header), value)
