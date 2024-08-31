@@ -42,7 +42,6 @@ spec:
                 cpu: 10m
                 memory: 160Mi
             securityContext:
-              allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
                 add:
@@ -52,6 +51,25 @@ spec:
               runAsGroup: 0
               seccompProfile:
                 type: RuntimeDefault
+          f2b:
+            image:
+              repository: ghcr.io/vaskozl/fail2ban
+              tag: 1.1.0@sha256:49e01d9d82f1471bf6572c03f2febb4db5d99d01ea174b1d4d330d79c2ad682a
+            resources:
+              limits:
+                memory: 30Mi
+              requests:
+                cpu: 10m
+                memory: 30Mi
+            securityContext:
+              readOnlyRootFilesystem: true
+              capabilities:
+                add:
+                - NET_ADMIN
+                - NET_RAW
+                drop: [ALL]
+              runAsUser: 0
+              runAsGroup: 0
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -116,6 +134,22 @@ spec:
         - path: /etc/rspamd/local.d
         - path: /etc/rspamd/rspamd.local.lua
           subPath: rspamd.local.lua
+      f2b-config:
+        name: f2b-config
+        type: configMap
+        globalMounts:
+        - path: /etc/fail2ban/fail2ban.conf
+          subPath: fail2ban.conf
+      f2b-filter:
+        name: f2b-filter
+        type: configMap
+        globalMounts:
+        - path: /etc/fail2ban/filter.d
+      f2b-jail:
+        name: f2b-jail
+        type: configMap
+        globalMounts:
+        - path: /etc/fail2ban/jail.d
       tls:
         name: mail-sko-ai-tls
         type: secret
@@ -125,6 +159,15 @@ spec:
         type: emptyDir
         globalMounts:
         - path: /run/maddy
+      logs:
+        type: nfs
+        server: syno.sko.ai
+        path: /volume3/k8s-logs/mailserver
+        advancedMounts:
+          maddy:
+            f2b:
+              - path: /var/log/mailserver
+                readOnly: true
     service:
       maddy:
         annotations:
