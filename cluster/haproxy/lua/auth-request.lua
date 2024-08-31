@@ -187,7 +187,7 @@ function auth_request(txn, be, path, method, hdr_req, hdr_succeed, hdr_fail)
 	-- Transform table of request headers from haproxy's to
 	-- socket.http's format.
 	local headers = {}
-	local cache_key = txn.sf:req_fhdr("host") .. "|" .. txn.sf:path()
+	local cache_key = ""
 	for header, values in pairs(txn.http:req_get_headers()) do
 		for i, v in pairs(values) do
 			-- Use hdr_req headers for the cache key

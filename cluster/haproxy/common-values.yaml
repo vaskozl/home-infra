@@ -51,7 +51,7 @@ controller:
       # Drop any user supplied Remote-* headers
       http-request del-header remote- -m beg
       # Disable auth for specific backends
-      acl public_hosts hdr(host) -f /config/public_hosts.txt
+      acl public_hosts base -m reg -f /config/public_hosts.txt
       # Authelia  Config:             Backend name            Path         Method  Cache    Success    Failure
       http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    cookie   remote-*   -           if !public_hosts
       http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
