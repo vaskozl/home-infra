@@ -93,10 +93,10 @@ spec:
             args: [--save, '', --appendonly, 'no']
             resources:
               limits:
-                memory: 30Mi
+                memory: 40Mi
               requests:
                 cpu: 10m
-                memory: 30Mi
+                memory: 40Mi
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
