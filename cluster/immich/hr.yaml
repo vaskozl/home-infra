@@ -88,7 +88,7 @@ spec:
           app:
             image:
               repository: registry.hub.docker.com/library/redis
-              tag: 7.4-alpine@sha256:309ba197540c90f5ae5ec22eb10d4a01151510216bd9121616fde58dab8f0d28
+              tag: 7.4-alpine@sha256:dd6c86dc8f3be0526b2baa964473e2443b5a4412c4c2232781ca9820296d407b
             securityContext: *security
             args: [--save, '', --appendonly, 'no']
             resources:
