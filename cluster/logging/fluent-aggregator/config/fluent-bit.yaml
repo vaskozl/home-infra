@@ -1,6 +1,7 @@
 pipeline:
   inputs:
     - name: forward
+      mem_buf_limit: 10M
   outputs:
     - name: file
       match: '*'
