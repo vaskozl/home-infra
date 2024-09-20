@@ -47,10 +47,10 @@ spec:
                 drop: ["ALL"]
             resources:
               limits:
-                memory: 300Mi
+                memory: 360Mi
               requests:
                 cpu: 65m
-                memory: 300Mi
+                memory: 360Mi
       microservices:
         containers:
           app:
