@@ -141,7 +141,7 @@ spec:
         - mountPath: /host/opt/cni/bin/
           name: cni-plugin
       - name: install-config
-        image: ghcr.io/siderolabs/flannel:v0.25.6@sha256:ce2d6cb79949b33b4a9d527bce91f7da4b62a95a1bd4ea090bcdcde8840b6baf
+        image: ghcr.io/siderolabs/flannel:v0.25.7@sha256:28f6f8561b789d525a5245cab029483abbea5d4a9cf4cd63370b64347d46c03d
         command:
         - cp
         args:
@@ -155,7 +155,7 @@ spec:
           mountPath: /etc/kube-flannel/
       containers:
       - name: kube-flannel
-        image: ghcr.io/siderolabs/flannel:v0.25.6@sha256:ce2d6cb79949b33b4a9d527bce91f7da4b62a95a1bd4ea090bcdcde8840b6baf
+        image: ghcr.io/siderolabs/flannel:v0.25.7@sha256:28f6f8561b789d525a5245cab029483abbea5d4a9cf4cd63370b64347d46c03d
         command:
         - /opt/bin/flanneld
         args:
