@@ -17,21 +17,10 @@ configMapGenerator:
   - config/sieve.sh
 - name: rspamd-config
   files:
-  - config/logging.inc
-  - config/worker-normal.inc
   - config/rspamd.local.lua
 - name: f2b-config
   files:
-  - config/fail2ban/fail2ban.conf
-- name: f2b-filter
-  files:
-  - config/fail2ban/filter.d/maddy-auth.conf
-  - config/fail2ban/filter.d/maddy-dictonary-attack.conf
-- name: f2b-jail
-  files:
-  - config/fail2ban/jail.d/default.conf
-  - config/fail2ban/jail.d/maddy-auth.conf
-  - config/fail2ban/jail.d/maddy-dictonary-attack.conf
+  - config/fail2ban.conf
 
 secretGenerator:
 - name: maddy-secrets
