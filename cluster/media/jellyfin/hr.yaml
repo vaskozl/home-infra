@@ -27,7 +27,7 @@ spec:
               JELLYFIN_WEB_DIR: /usr/share/jellyfin/web
             image:
               repository: ghcr.io/vaskozl/jellyfin-server
-              tag: 10.9.11@sha256:6046b9ddfef4dcf1499f55f416e1b7d59022a99860f6e2372c6664a1979b6d6a
+              tag: 10.9.11@sha256:fdab57261495b034c0a4865a888d82f6a9b72aa75d17e924a0a076606761de39
             probes:
               liveness:
                 enabled: true
