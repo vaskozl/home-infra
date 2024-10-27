@@ -80,59 +80,12 @@ spec:
             size: 1Mi
             storageClass: nfs-client
         type: statefulset
-      rspamd:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/vaskozl/rspamd
-              tag: 3.10.0@sha256:500dd5c304dd28ad9604e33137366493fe281915a5de55ddbf29f7447a4af7b0
-            probes:
-              liveness:
-                enabled: true
-                type: HTTP
-                path: /ping
-              readiness:
-                enabled: true
-                type: HTTP
-                path: /ping
-            resources:
-              limits:
-                memory: 180Mi
-              requests:
-                cpu: 10m
-                memory: 180Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop: [ALL]
-              runAsUser: 568
-              runAsGroup: 568
-              seccompProfile:
-                type: RuntimeDefault
-        statefulset:
-          podManagementPolicy: Parallel
-          volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /var/lib/rspamd
-            name: rspamd-data
-            size: 1Mi
-            storageClass: nfs-client
-        type: statefulset
-
     persistence:
       maddy-config:
         name: maddy-config
         type: configMap
         globalMounts:
         - path: /etc/maddy
-      rspamd-config:
-        name: rspamd-config
-        type: configMap
-        globalMounts:
-        - path: /etc/rspamd/rspamd.local.lua
-          subPath: rspamd.local.lua
       f2b-config:
         name: f2b-config
         type: configMap
@@ -179,8 +132,3 @@ spec:
             port: 2225
         type: LoadBalancer
         loadBalancerIP: ${EI_MAILSERVER}
-      rspamd:
-        controller: rspamd
-        ports:
-          http:
-            port: 11333
