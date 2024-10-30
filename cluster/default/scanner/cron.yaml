@@ -12,7 +12,7 @@ spec:
           serviceAccountName: scanner-sa
           containers:
           - name: scanner-container
-            image: ghcr.io/vaskozl/perl-mojolicious:9.38@sha256:c979f49a56f27fe4535914a70c0ba05db1b9e6020fb41433c2de6a52defece75
+            image: ghcr.io/vaskozl/perl-mojolicious:9.38@sha256:0903b1df34da0ae19e23d08dd4e7d7b54a4493169d2b66869504ebbc919e9926
             args:
             - perl
             - /script/scan-containers.pl
