@@ -15,15 +15,15 @@ spec:
       version: 3.5.1
   values:
     controller:
-      replicas: 1
+      replicas: 2
       strategy: RollingUpdate
     controllers:
       dogcalc:
         containers:
           app:
             image:
-              repository: registry.sko.ai/doudous/dogcalc
-              tag: head@sha256:3eb28dd0b6854c09260fdbde7ec1a3745f78d889ad52bd7239489ac01c738032
+              repository: registry.sko.ai/doudous/rawfood
+              tag: head@sha256:20e2f5edf86b79358c0a95e76be0c99b10daad5f7e4a6dce7a968a38c77aba73
             probes:
               liveness:
                 enabled: true
@@ -44,7 +44,7 @@ spec:
               readOnlyRootFilesystem: true
     defaultPodOptions:
       nodeSelector:
-        kubernetes.io/arch: amd64
+        kubernetes.io/arch: arm64
       imagePullSecrets:
       - name: regcred
       securityContext:
@@ -59,9 +59,6 @@ spec:
         type: emptyDir
     ingress:
       app:
-        annotations:
-          haproxy.org/backend-config-snippet: |
-            http-request redirect location /static/index.html if { path / }
         className: haproxy-external
         hosts:
         - host: dogcalc.sko.ai
@@ -75,4 +72,4 @@ spec:
         controller: dogcalc
         ports:
           http:
-            port: 8080
+            port: 3000
