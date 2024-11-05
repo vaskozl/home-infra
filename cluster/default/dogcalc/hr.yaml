@@ -14,11 +14,9 @@ spec:
         namespace: flux-system
       version: 3.5.1
   values:
-    controller:
-      replicas: 2
-      strategy: RollingUpdate
     controllers:
       dogcalc:
+        replicas: 2
         containers:
           app:
             image:
