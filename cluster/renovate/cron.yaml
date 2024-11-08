@@ -14,7 +14,7 @@ spec:
             kubernetes.io/arch: amd64
           containers:
           - name: renovate
-            image: ghcr.io/renovatebot/renovate:38.142.7@sha256:8327ee1726142dcc504d349d84c0e7f41656867e598ea7669bb7cf23786610a2
+            image: ghcr.io/renovatebot/renovate:39.7.5@sha256:3de010f9d0adee856fd2d2a8085252f2643ffabea1d076ebf4a87038a393a1fc
             # Environment Variables
             env:
             - name: LOG_LEVEL
