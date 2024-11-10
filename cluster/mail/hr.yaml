@@ -37,10 +37,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 160Mi
+                memory: 180Mi
               requests:
                 cpu: 10m
-                memory: 160Mi
+                memory: 180Mi
             securityContext:
               readOnlyRootFilesystem: true
               capabilities:
