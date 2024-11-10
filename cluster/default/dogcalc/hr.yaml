@@ -16,6 +16,7 @@ spec:
   values:
     controllers:
       dogcalc:
+        strategy: RollingUpdate
         replicas: 2
         containers:
           app:
