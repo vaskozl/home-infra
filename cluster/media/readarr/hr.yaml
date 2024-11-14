@@ -19,8 +19,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/readarr-develop
-              tag: 0.4.0.2634@sha256:4320c05f51522657f94d32e0f100364cbab0fcf583cd116868a2f475dd2aa6fc
+              repository: ghcr.io/vaskozl/readarr-develop-bin
+              tag: 0.4.3.2665@sha256:85d16dac96866a772bbcabb8ca28d42dbc46b8e48f91089724a52e3389929ac1
             probes:
               liveness:
                 enabled: true
