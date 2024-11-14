@@ -19,8 +19,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/radarr
-              tag: 5.12.2.9335@sha256:a2776f183b2536be52e098119aa5a68643fee3ebf2d57499d6e1c7db0355e86d
+              repository: ghcr.io/vaskozl/radarr-bin
+              tag: 5.14.0.9383@sha256:fac143834e10025ab7a74620131189b187b3efa260774cc7cdbceda26cf050bc
             probes:
               liveness:
                 enabled: true
