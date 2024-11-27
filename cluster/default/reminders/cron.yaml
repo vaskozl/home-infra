@@ -11,7 +11,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: msmtp
-            image: ghcr.io/vaskozl/msmtp:1.8.27@sha256:b7cae859055d872e079d9007b6e1050418865f54f175f52af8e4ab93e461cf19
+            image: ghcr.io/vaskozl/msmtp:1.8.27@sha256:c53907967d197013b99e1576db2957b3d10752f1145989e4f310800d11a79cce
             command: [sh, -c]
             args:
               - |
