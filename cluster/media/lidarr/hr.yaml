@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lidarr
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.5.1
+  values:
+    controllers:
+      lidarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/lidarr-bin
+              tag: 2.7.1.4417@sha256:de80b1f924daa42d79c6737d343749b75d990a9475d476c94990d79d9ab3a342
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 150m
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+          - accessMode: ReadWriteOnce
+            globalMounts:
+            - path: /config
+            name: config
+            size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app:
+        hosts:
+        - host: lidarr.sko.ai
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      tmp:
+        type: emptyDir
+      torrents:
+        existingClaim: torrents-v2
+    service:
+      app:
+        controller: lidarr
+        ports:
+          http:
+            port: 8686
