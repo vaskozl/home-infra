@@ -34,6 +34,7 @@ directory:
 cat:
     radarr: /torrents
     tv-sonarr: /torrents
+    lidarr: /torrents
     legacy: /torrents
 tracker:
     passthepopcorn:
@@ -50,6 +51,7 @@ tracker:
 nohardlinks:
     - radarr
     - tv-sonarr
+    - lidarr
 share_limits:
     noHL:
         priority: 1
@@ -58,6 +60,7 @@ share_limits:
         categories:
             - radarr
             - tv-sonarr
+            - lidarr
         max_seeding_time: 20200
         cleanup: true
 recyclebin:
@@ -88,8 +91,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-07-22T18:59:09Z"
-    mac: ENC[AES256_GCM,data:VupK65lcVAJIp6uKhzuE6TU5mRk57ihXnbYdlOFP5gCtEXynsNPVWzshAHt8xFMrbJz84Er1CFB+2XVgxbsPbzx4Mgcj5HajFUJmGuzB/D2/N3+NPmLSC2o6YlVjxDZYkJk90ib3sO3voqrz73BlhpK7F3GmM65RtdOkL1mQjMo=,iv:BOegUVry7vb/I9gZP5xr98B4cq2qF22KybCrcXIUDV0=,tag:GWlqlpkQ4WDC2hadQbKp4Q==,type:str]
+    lastmodified: "2024-12-01T10:57:30Z"
+    mac: ENC[AES256_GCM,data:+xdfQSenuI2OxCVn6WvU0y+Q//P2tuSgqmUkfw2uAZXmW+Y1XgCijnVc4DtqwTAg6p9umUzH4xm2GR9lS4Q2Idcu3GA0l9ZGosyk87V6CiyhTp9GVVcepRpY48D1hpQEkA7HTSb/rk+OVw6Yzs2iMuXijvoutjJI51v7qrGfUPM=,iv:/pV0GybmRyEq8Y3oxF9SIO6ojEQli+wHZMSoR3x8pUU=,tag:1IDxzPlHfCUdmFzCMg1gpw==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
@@ -118,4 +121,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
     encrypted_regex: (pass|host|user)
-    version: 3.8.1
+    version: 3.9.1
