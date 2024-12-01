@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: jellyfin
 spec:
+  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -25,6 +26,7 @@ spec:
               JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
               JELLYFIN_LOG_DIR: /config/log
               JELLYFIN_WEB_DIR: /usr/share/jellyfin/web
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
             image:
               repository: ghcr.io/vaskozl/jellyfin-server
               tag: 10.10.3@sha256:82633fa71b7505f49de4002cda3bb625035af6edb9c621c86bb97bcd10f80bdf
