@@ -54,6 +54,8 @@ spec:
             size: 1Mi
         type: statefulset
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 568
         runAsGroup: 568
