@@ -18,15 +18,11 @@ spec:
       jellyseerr:
         containers:
           app:
-            args:
-            - sh
-            - -c
-            - cd /usr/lib/jellyseerr && exec /usr/bin/node dist/index.js
             env:
               NODE_ENV: production
             image:
-              repository: ghcr.io/vaskozl/jellyseerr
-              tag: 1.9.2@sha256:e714d1306c1f653d8701137e8c89d13efa6555b4dfadc7e8c16c5c8dbeb76907
+              repository: docker.io/fallenbagel/jellyseerr
+              tag: 2.1.0@sha256:af5563771964282e5bfb6a4f30b05c75c8d30661a920f0399086f575217d0573
             probes:
               liveness:
                 enabled: true
@@ -49,13 +45,11 @@ spec:
           volumeClaimTemplates:
           - accessMode: ReadWriteOnce
             globalMounts:
-            - path: /usr/lib/jellyseerr/config
+            - path: /app/config
             name: config
             size: 1Mi
         type: statefulset
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 568
         runAsGroup: 568
