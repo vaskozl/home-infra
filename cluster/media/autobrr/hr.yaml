@@ -24,6 +24,12 @@ spec:
             probes:
               liveness:
                 enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 300
+                  timeoutSeconds: 30
+                  exec:
+                    command: [sh, -c, 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"']
               readiness:
                 enabled: true
             resources:
