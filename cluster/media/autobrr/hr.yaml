@@ -44,7 +44,7 @@ spec:
               capabilities:
                 drop:
                 - ALL
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
