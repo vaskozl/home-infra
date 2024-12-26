@@ -61,11 +61,13 @@ spec:
         className: haproxy-external
         hosts:
         - host: dogcalc.sko.ai
-          paths:
+          paths: &paths
           - path: /
             service:
               identifier: app
               port: http
+        - host: pawlanced.sko.ai
+          paths: *paths
     service:
       app:
         controller: dogcalc
