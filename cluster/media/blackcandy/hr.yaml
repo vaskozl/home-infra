@@ -79,3 +79,5 @@ spec:
         existingClaim: torrents-v2
         globalMounts:
         - path: /torrents
+      tmp:
+        type: emptyDir
