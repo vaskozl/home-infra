@@ -81,3 +81,6 @@ spec:
         - path: /torrents
       tmp:
         type: emptyDir
+        globalMounts:
+        - path: /tmp
+        - path: /app/tmp
