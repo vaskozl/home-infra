@@ -53,10 +53,10 @@ spec:
         type: statefulset
     defaultPodOptions:
       securityContext:
-        fsGroup: 568
-        runAsGroup: 568
+        fsGroup: 1000
+        runAsGroup: 1000
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 1000
         seccompProfile:
           type: RuntimeDefault
     ingress:
