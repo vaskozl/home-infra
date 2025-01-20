@@ -85,14 +85,15 @@ webhooks:
 orphaned:
     empty_after_x_days: 2
     exclude_patterns: null
+    max_orphaned_files_to_delete: -1
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2024-12-01T10:57:30Z"
-    mac: ENC[AES256_GCM,data:+xdfQSenuI2OxCVn6WvU0y+Q//P2tuSgqmUkfw2uAZXmW+Y1XgCijnVc4DtqwTAg6p9umUzH4xm2GR9lS4Q2Idcu3GA0l9ZGosyk87V6CiyhTp9GVVcepRpY48D1hpQEkA7HTSb/rk+OVw6Yzs2iMuXijvoutjJI51v7qrGfUPM=,iv:/pV0GybmRyEq8Y3oxF9SIO6ojEQli+wHZMSoR3x8pUU=,tag:1IDxzPlHfCUdmFzCMg1gpw==,type:str]
+    lastmodified: "2025-01-20T22:09:13Z"
+    mac: ENC[AES256_GCM,data:nbIQsAG4qLFmag7S56FG7G6mr5XtjKrsgKvU87aoFj7QGKI8k8OsMb2LLICUelFOdnrb+3zVnFVtR2TiW6x0B4oc4GutalFRHZfM4v7e/BA2Ispcyq2RwA8b19/I/DC4T4o3dCFPJCJ5ahhQwBIP3fFkIKgNyHanYN6DxI1SH2I=,iv:j8/rgpTXV029Y43W6maXgj02MiKOL70GIREV1j/QcC0=,tag:Q5rJCIPV/bGoctSKKoO6pg==,type:str]
     pgp:
         - created_at: "2022-12-13T10:01:32Z"
           enc: |
