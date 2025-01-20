@@ -13,3 +13,5 @@ rcpt_to="${3//@/#}"
 
 [ "$sender" = "gitlab#sko.ai" ]             && echo "Gitlab" && exit
 [ "$sender" = "notifications#github.com" ]  && echo "Github" && exit
+
+echo
