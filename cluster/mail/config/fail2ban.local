@@ -1,5 +1,3 @@
-# Fail2Ban main configuration file
-
 [DEFAULT]
 loglevel = INFO
 logtarget = STDOUT
@@ -8,12 +6,3 @@ socket = /run/maddy/fail2ban.sock
 pidfile = /run/maddy/fail2ban.pid
 
 dbfile = :memory:
-
-[maddy-dictonary-attack]
-enabled = true
-
-[maddy-auth]
-enabled = true
-
-[Definition]
-[Thread]

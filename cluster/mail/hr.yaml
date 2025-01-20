@@ -90,8 +90,10 @@ spec:
         name: f2b-config
         type: configMap
         globalMounts:
-        - path: /etc/fail2ban/fail2ban.conf
-          subPath: fail2ban.conf
+        - path: /etc/fail2ban/fail2ban.local
+          subPath: fail2ban.local
+        - path: /etc/fail2ban/jail.local
+          subPath: jail.local
       tls:
         name: mail-sko-ai-tls
         type: secret

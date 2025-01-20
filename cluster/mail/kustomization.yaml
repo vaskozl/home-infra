@@ -17,7 +17,8 @@ configMapGenerator:
   - config/sieve.sh
 - name: f2b-config
   files:
-  - config/fail2ban.conf
+  - config/fail2ban.local
+  - config/jail.local
 
 secretGenerator:
 - name: maddy-secrets
