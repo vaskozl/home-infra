@@ -51,25 +51,6 @@ spec:
               runAsGroup: 0
               seccompProfile:
                 type: RuntimeDefault
-          f2b:
-            image:
-              repository: ghcr.io/vaskozl/fail2ban
-              tag: 1.1.0@sha256:fe63a5a37d0c180d533135c5850c18d0ab1dbbb4d394f7d410b5a8195ae7dacd
-            resources:
-              limits:
-                memory: 30Mi
-              requests:
-                cpu: 10m
-                memory: 30Mi
-            securityContext:
-              readOnlyRootFilesystem: true
-              capabilities:
-                add:
-                - NET_ADMIN
-                - NET_RAW
-                drop: [ALL]
-              runAsUser: 0
-              runAsGroup: 0
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -86,14 +67,6 @@ spec:
         type: configMap
         globalMounts:
         - path: /etc/maddy
-      f2b-config:
-        name: f2b-config
-        type: configMap
-        globalMounts:
-        - path: /etc/fail2ban/fail2ban.local
-          subPath: fail2ban.local
-        - path: /etc/fail2ban/jail.local
-          subPath: jail.local
       tls:
         name: mail-sko-ai-tls
         type: secret
@@ -103,15 +76,6 @@ spec:
         type: emptyDir
         globalMounts:
         - path: /run/maddy
-      logs:
-        type: nfs
-        server: syno.sko.ai
-        path: /volume3/k8s-logs/mailserver
-        advancedMounts:
-          maddy:
-            f2b:
-              - path: /var/log/mailserver
-                readOnly: true
     service:
       maddy:
         annotations:
