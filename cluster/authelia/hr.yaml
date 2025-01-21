@@ -23,7 +23,7 @@ spec:
             - /config/configuration.yml
             image:
               repository: ghcr.io/vaskozl/authelia-bin
-              tag: 4.38.18@sha256:1a0c971abb7c360c22c50057a762607c44c26932db72f502841a48350bd7f118
+              tag: 4.38.18@sha256:1ccc2b40ba4c0a368ecebe66062717d61c60e87fe7105785210672e14ef9ebe6
             probes:
               liveness:
                 enabled: true
