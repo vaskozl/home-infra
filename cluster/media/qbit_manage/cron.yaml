@@ -24,11 +24,10 @@ spec:
             name: qbit-manage
             resources:
               requests:
-                cpu: 15m
-                memory: 100Mi
+                cpu: 1200m
+                memory: 200Mi
               limits:
-                cpu: 1000m
-                memory: 1Gi
+                memory: 200Mi
             volumeMounts:
             - mountPath: /config/config.static.yml
               subPath: config.yml
