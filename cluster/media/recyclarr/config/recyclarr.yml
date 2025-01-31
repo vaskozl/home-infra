@@ -15,6 +15,7 @@ sonarr:
             - template: sonarr-v4-custom-formats-web-2160p
         quality_profiles:
             - name: WEB-2160p
+              min_format_score: 10
               qualities:
                 - name: WEB 2160p
                   qualities:
@@ -63,6 +64,9 @@ radarr:
             - template: radarr-quality-definition-sqp-streaming
             - template: radarr-quality-profile-sqp-1-2160p-imax-e
             - template: radarr-custom-formats-sqp-1-2160p
+        quality_profiles:
+          - name: SQP-1 (2160p)
+            min_format_score: 10
         custom_formats:
             # =================================
             # SQP-1
