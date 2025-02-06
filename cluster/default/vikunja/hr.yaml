@@ -42,13 +42,15 @@ spec:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
           - accessMode: ReadWriteOnce
+            name: db
+            size: 1Mi
             globalMounts:
             - path: /db
-              name: db
-              size: 1Mi
+          - accessMode: ReadWriteOnce
+            name: files
+            size: 1Mi
+            globalMounts:
             - path: /app/vikunja/files
-              name: files
-              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
