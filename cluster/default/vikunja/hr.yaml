@@ -62,7 +62,6 @@ spec:
           type: RuntimeDefault
     ingress:
       app:
-        className: haproxy-external
         hosts:
         - host: todo.sko.ai
           paths:
