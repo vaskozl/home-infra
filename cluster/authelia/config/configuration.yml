@@ -89,11 +89,10 @@ identity_providers:
               scopes:
                 - ENC[AES256_GCM,data:58Bcfcnx,iv:jEBK1tkOerxLViXwS8X9uU1qnv5SMuBhXslo5s/2Yd0=,tag:XhyDHUY1qD9kJ+JRbrm2jg==,type:str]
                 - ENC[AES256_GCM,data:Z+uk1/be7g==,iv:qKH9+w0kQl249NonNGJh8O0l/L/ZMzeiEAdraUfya7M=,tag:FIfmMSGqHHtO/myAlR/Q/A==,type:str]
-                - ENC[AES256_GCM,data:Zr9eo78W,iv:A8UflY2/fEqRSNpD3cZUGIk0fEPBTE+Ymlo4T0xwd6A=,tag:VjgRpiAJippIGG7s2hQsEg==,type:str]
                 - ENC[AES256_GCM,data:a8r6T4E=,iv:+fWXVPHEnXpzm+pFsIBY8MbiKXTm2kvDrcxz4cVRMPQ=,tag:FzGD+ApKn3bANoOfn4TYng==,type:str]
               consent_mode: ENC[AES256_GCM,data:OcTusbGfV2w=,iv:+l1Kcx8i/JukC0IzrGU6KeSKBh5dR3lfuD7z7ypuXuY=,tag:nGnYOMDAsfUqR1kcVuFxHA==,type:str]
               redirect_uris:
-                - ENC[AES256_GCM,data:uqjyE1lJpqaHWFx5RnGlPbkF86zFgFmtEX630J14,iv:jJPCY7aZnsed5BDV90w8CEqZXZ/lj1eVdPokyIVBn44=,tag:NUql6TLug6G6RzosqDcIPA==,type:str]
+                - ENC[AES256_GCM,data:qKwnDDSCXXsVcs3YBa4ZNyMwMvi4ZynlP2tdIL7GzDjLuI4oAAkutg==,iv:5NlSCiP28dKXtkFC9mYiYh8vtkVqX4phzKmX/SfZSlc=,tag:O4vMNY8psp/zDAXXbKTpKw==,type:str]
               userinfo_signed_response_alg: ENC[AES256_GCM,data:uoA6wA==,iv:+R8IeapwXZQY9Mx6hi6LjU5C0AbEq3AIwp4P4gJ62uc=,tag:bcM0PmUmcK8tbnZbRm9uWQ==,type:str]
 sops:
     kms: []
@@ -101,8 +100,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-07T19:50:36Z"
-    mac: ENC[AES256_GCM,data:FDZfQIx8w0tkigb0V2ZGGK8NjL3llUYRhb/jjFGrO9ywkeHA32yVxrg8aws3yY89ZCwt8YwFLTD1FYelK2XGl+HuNnnL24tB01EzxQHvs+pnyo6OZlqRJM/ianUlxQEseuCWpau2eB1POzdxd6zOG1WkLwyuqoR3A8FhJ/xgBRE=,iv:Ie5ejglDgE/EhipbBRp7LGTUFtTEIFUJGQ0VQg66HZY=,tag:A65C3yCFcE7/RosDQi2aXg==,type:str]
+    lastmodified: "2025-02-07T20:04:29Z"
+    mac: ENC[AES256_GCM,data:v5H7+ZsZEKfJCatPKRQ0NsoAgibJKS7rLY/FSmjWs07DJS/aCDyilj51s5+v2YQTtQhfhBTyGKA6UMyNwqDFrN9Bk4rcF12qiIXmvI9joOeRvO0dXktqMVXfF9zVRJNac3pdK6FmCscUKzNzWAyIVqy5ZqpCHYT6d/gY/2YgiHk=,iv:utzRvwwaB7x7RjonSg72cE++MJawvv6npRn2t+FyYE0=,tag:uYpjmhJ8soYm2tzn6djbPQ==,type:str]
     pgp:
         - created_at: "2023-12-26T09:44:04Z"
           enc: |-
