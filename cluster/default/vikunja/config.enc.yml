@@ -1,4 +1,6 @@
 auth:
+    local:
+      enabled: false
     openid:
         enabled: true
         redirecturl: https://vikunja.sko.ai/auth/openid/
