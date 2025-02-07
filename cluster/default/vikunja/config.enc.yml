@@ -1,0 +1,47 @@
+auth:
+    openid:
+        enabled: true
+        redirecturl: https://vikunja.sko.ai/auth/openid/
+        providers:
+            - name: authelia
+              authurl: https://gate.sko.ai
+              clientid: vikunja
+              clientsecret: ENC[AES256_GCM,data:ERlKsYEZnmNLWGGFGOomtA4xzWxEJryDZtaXYHibk4XXoZmUNbIP9h8wWSTbfQ2sOyOM81kp2I9IWUMTMB2G7sycHKhzrxLt,iv:xrN9eWpmRVNlhpHB2mVhuBCtX6tODxw7A0Xvp/Q7rNk=,tag:Hj1dZTGgl/N0OqSAxJ2Ocg==,type:str]
+              scope: openid profile email
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2025-02-07T19:54:36Z"
+    mac: ENC[AES256_GCM,data:4BMmhoGzW1M545Yi8bfAvJcpJryvC5pj/gv+LgQ9pFt20QpbOIG5FK/xsQ8u071VqgQjHuTPqBe8LfYQY4Mq5RfN0PT+viCYyBblbfPggE92pEYUV7qt5eaRg4kw2AI8DXOUg5/zwFiV0cFZ50KIEdVOuaJcdWsWBFcc6D0r/XM=,iv:0vK2jc6uRb40YbCzMhyP1EJSOCXhKVJJWwrpBucCCSY=,tag:KysPUTzM+gOIzCaV9ZDUQg==,type:str]
+    pgp:
+        - created_at: "2025-02-07T19:54:36Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAwAk3HiLenNe3nVhWmldXUI9v5He3Asx5iNNbIuVdOzCJUA
+            jsrCRWglOJDfx8Gw2/82KDHKT1k2FN6xwh75QRQlrPUmUQ1j2VMZYOV9f1UT1Sgw
+            HZ1P8AAqiRWhpGfMALoZn08HbFP/eOtTlA55kCnNMEpyfrrP67dFSpMHMyfU1YZt
+            qXwTkhH+BTtEcn9bSXM+WIZKQ3EgzHhaet8ll3vYCxhaxRFsPoFvSTP0AFEJMan7
+            UV7HuDGhpdHI8UnVOUL7TI+NIJERJTyPuQjorDGvdIjCjdMsUHW2nZAPKvYXbqQo
+            yPYVdPNvLbUAiy2WbznYmtxbhxcN/llZvyngkuehECPL0jF0D0eddSNyN3GatNsb
+            DYdlvpuTMD1aguEEINIzUJvVo7MlsuJbOGpaEMcSmYU4w42i7vP2Y8ZcebPw0G2r
+            J2Y0wWlc+SxW1jzwPWY7edlFdl7Ui8IemvKjJuZz1UbNwLpXTPguN6orWNyqdfsj
+            RQ5dFQHviS4MkknFeGTxC/9c0T8WTvfPU3mn+FM/oV2j0ObVrk5syzTPfABF+rxC
+            vHYbVVQ+KE4E7wYlEnlJDZpHbcgYZqyKWw1mZipZ4icvhN62Nj3WNOGHKdBcdIwQ
+            X5X8Weh5feHl+EIeHyWDXGOVM1WayUrXLjt8zlhuoc5b1eghrJTi6eJcs3cSSPFE
+            FToRSztjzexrUzI+YG0hO4QQDMUXKKtbcAy1IZMXR/CefDCACXnF4apU34uKf6PN
+            U6paMsaIXKVr4IlbpxOw2B6it9gnjce5prOgD0m2YFZsR1Y2M8SORR/B0+tv2ccf
+            gJAkAoKPRS92w2Z4j2ZPAxLN35Coob9KL1T6nvf0RqKfqSXS7s6f17iUr+bcj8Gm
+            4uHYXLiwwcVGJMrquJhMjVzOGeXK8lCGUrYmI4d6mzoo/1NbP4fgxPhy3DyowyIB
+            yW6YN8KCff3Drfrqi8wIlER+5lg3WRLauJQ7f8YjNzL5QE4Y1efkRi61GAmSV5TD
+            36B3jhmX9TyjwAZBoMk3Aq/SXgHYyOkW6Ijr0kaQCgAQk3qldZ06TXdpnUpkpEEa
+            KPrDBRTDpyCje/mFGArVnUWe/Y+T7qGUffrC+KRbEnDaSqTiTswLAfb4kruV7DSi
+            80rx3sb0NaWZPXQ7nDYygNw=
+            =j2uf
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+    version: 3.9.1

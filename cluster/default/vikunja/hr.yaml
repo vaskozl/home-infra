@@ -60,6 +60,13 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+    persistence:
+      config:
+        globalMounts:
+        - path: /etc/vikunja/config.yml
+          subPath: config.yml
+        name: vikunja-config
+        type: secret
     ingress:
       app:
         hosts:
