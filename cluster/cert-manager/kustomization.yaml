@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - _namespace.yaml
 - cert-manager.yaml
+- leane-dev-cert.yaml
 - prod_issuer.yaml
 - repos/jetstack.yaml
 - staging_issuer.yaml
