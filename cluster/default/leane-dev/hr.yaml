@@ -62,6 +62,10 @@ spec:
             service:
               identifier: app
               port: http
+        tls:
+          - hosts:
+            - leane.dev
+            secretName: leane-dev-tls
     persistence:
       tmp:
         type: emptyDir
