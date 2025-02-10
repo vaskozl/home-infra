@@ -15,13 +15,8 @@ spec:
   interval: 1h
   values:
     installCRDs: true
-    webhook:
-      enabled: true
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
-    ingresShim:
-      defaultIssureName: letsencrypt-prod
-      defaultIssureKind: ClusterIssuer
     cainjector:
       replicaCount: 1
     podDnsPolicy: None
