@@ -108,6 +108,7 @@ identity_providers:
               redirect_uris:
                 - ENC[AES256_GCM,data:kCO9EPkNMfLAk5ArEPIiUnrJyeDn,iv:/6dU24SlMWQFFP9IvE1+PZQz3D9lcdvN0unR5Bgxtto=,tag:cBFBJT7sph1Q3a5SHVDhRw==,type:str]
                 - ENC[AES256_GCM,data:TKgopnhlNh9L9YRd3vWEWH4AcAp/ng==,iv:DBKbbgvThoeCdvoeXBFMtW3LLK1CRnH5O/q+Wt9PAGU=,tag:xjVE0ucHyzSxKnyd90Mu8g==,type:str]
+                - ENC[AES256_GCM,data:kDvLzA5YXjbF3u9Yvoea0c0/ATtsbKhsFEpkvH5v74CHlWAkwA==,iv:Oeh8eeJLFCytqRIRraqIOpYrem1PRbm9Tusb9MSJvDc=,tag:j5+tM24aquarr5KGW49Bqg==,type:str]
               userinfo_signed_response_alg: ENC[AES256_GCM,data:uoA6wA==,iv:+R8IeapwXZQY9Mx6hi6LjU5C0AbEq3AIwp4P4gJ62uc=,tag:bcM0PmUmcK8tbnZbRm9uWQ==,type:str]
 sops:
     kms: []
@@ -115,8 +116,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-10T21:39:45Z"
-    mac: ENC[AES256_GCM,data:xpDXCM5qpnDJXGQ1faaV1kZTGLN9d814bWzzf9sg+z6ph02gSrCVDVLmWMFkPp6ayuy+Yj7oFWMglTbxgoKsN9ReXf7L2aBg/88GBoOG2DKsm4Ub64sAJDN6kisXrl3bJxY1mk1c1Um0fxVmlt5JwtuKG4uu5c8V+drFKZ2aVL4=,iv:cEiKj79aTe1I9RCXLVqfQU7nquC05WTwOUvME9fhcv0=,tag:Iyc2of1QRiqGP65rw9Dmsw==,type:str]
+    lastmodified: "2025-02-10T23:12:04Z"
+    mac: ENC[AES256_GCM,data:aDHOcfuY5pXmDOJL0lqydhDnPbM6td88FKG04imMPgKcJXg333nC1uujCoBBwZtzVX5nP+HhQjohMYl92V7SHEb3eNFZBKlGHpDf1QEEFHymM0Pwkprnr5NQte6hdPdAUJo7x4WkbuQqTce94jiuy22cp27cow/5LbG97uigjXU=,iv:9JfM9oNJBqhM941XCYjRaEIr4lvlZgqcpgvVAceXhpQ=,tag:/41yshgbVLjMkr5bPj4XGg==,type:str]
     pgp:
         - created_at: "2023-12-26T09:44:04Z"
           enc: |-
