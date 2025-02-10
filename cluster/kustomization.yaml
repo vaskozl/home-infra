@@ -13,14 +13,15 @@ resources:
 - k8s-gateway
 - kube-flannel
 - kube-system
+- logging
 - mail
 - media
 - minilb
 - nfs-subdir
+- rbac
 - v2ray
 - vaultwarden
 - victoria-metrics
 # Need amd64
 - renovate
 - gitlab
-- logging
