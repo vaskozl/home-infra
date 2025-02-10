@@ -15,6 +15,8 @@ spec:
         namespace: flux-system
   interval: 1h
   values:
+    nodeSelector:
+      kubernetes.io/arch: amd64
     config:
       pluginsDir: /build/plugins
       oidc:
