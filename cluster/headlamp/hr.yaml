@@ -16,12 +16,13 @@ spec:
   interval: 1h
   values:
     config:
-    oidc:
-      secret:
-        create: false
-      externalSecret:
-        enabled: true
-        name: oidc
+      pluginsDir: /build/plugins
+      oidc:
+        secret:
+          create: false
+        externalSecret:
+          enabled: true
+          name: oidc
     ingress:
       enabled: true
       hosts:
@@ -29,3 +30,20 @@ spec:
           paths:
             - path: /
               type: Prefix
+    initContainers:
+      - image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
+        command:
+          - /bin/sh
+          - -c
+          - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+        name: headlamp-plugins
+        volumeMounts:
+          - mountPath: /build/plugins
+            name: headlamp-plugins
+    volumeMounts:
+      - mountPath: /build/plugins
+        name: headlamp-plugins
+    volumes:
+      - name: headlamp-plugins
+        emptyDir:
+          sizeLimit: 500Mi
