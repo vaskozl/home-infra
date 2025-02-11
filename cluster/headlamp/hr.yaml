@@ -1,53 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 ---
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: headlamp
 spec:
+  interval: 1h
   chart:
     spec:
-      chart: headlamp
-      version: 0.28.1
+      chart: app-template
       sourceRef:
         kind: HelmRepository
-        name: headlamp
+        name: bjw-s
         namespace: flux-system
-  interval: 1h
+      version: 3.6.1
   values:
-    nodeSelector:
-      kubernetes.io/arch: amd64
-    clusterRoleBinding:
-      create: false
-    config:
-      pluginsDir: /build/plugins
-      oidc:
-        secret:
-          create: false
-        externalSecret:
-          enabled: true
-          name: oidc
+    controllers:
+      headlamp:
+        initContainers:
+          plugins:
+            image:
+              repository: ghcr.io/headlamp-k8s/headlamp-plugin-flux
+              tag: v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
+            command:
+              - /bin/sh
+              - -c
+              - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+        containers:
+          app:
+            image:
+              repository: ghcr.io/headlamp-k8s/headlamp
+              tag: v0.23.1@sha256:dd9e2ad6ae6d23761372bc9cc0dbcb47aacd6a31986827b43ac207cecb25c39f
+            args:
+              - "-in-cluster"
+              - "-plugins-dir=/headlamp/plugins"
+            envFrom:
+              - secretRef:
+                  name: oidc
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 30Mi
+              requests:
+                cpu: 15m
+                memory: 30Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                - NET_BIND_SERVICE
+                drop:
+                - ALL
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 101
+        runAsGroup: 101
+        runAsUser: 100
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      config:
+        globalMounts:
+        - path: /build/plugins
+        type: emptyDir
+    service:
+      app:
+        controller: headlamp
+        ports:
+          http:
+            port: 4466
+            primary: true
     ingress:
-      enabled: true
-      hosts:
+      app:
+        hosts:
         - host: headlamp.sko.ai
           paths:
-            - path: /
-              type: Prefix
-    initContainers:
-      - image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
-        command:
-          - /bin/sh
-          - -c
-          - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
-        name: headlamp-plugins
-        volumeMounts:
-          - mountPath: /build/plugins
-            name: headlamp-plugins
-    volumeMounts:
-      - mountPath: /build/plugins
-        name: headlamp-plugins
-    volumes:
-      - name: headlamp-plugins
-        emptyDir:
-          sizeLimit: 500Mi
+          - path: /
+            service:
+              identifier: app
+              port: http
