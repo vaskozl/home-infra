@@ -17,6 +17,8 @@ spec:
   values:
     nodeSelector:
       kubernetes.io/arch: amd64
+    clusterRoleBinding:
+      create: false
     config:
       pluginsDir: /build/plugins
       oidc:
