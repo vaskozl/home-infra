@@ -5,6 +5,7 @@ namespace: victoria-metrics
 resources:
 - _namespace.yaml
 - hr-stack.yaml
+- prom-adapter.yaml
 - rules
 - dashboards
 secretGenerator:
