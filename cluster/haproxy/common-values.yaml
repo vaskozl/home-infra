@@ -37,8 +37,6 @@ controller:
 
       # https redirect
       http-request redirect scheme https if !{ ssl_fc }
-      # quic discovery
-      http-after-response add-header alt-svc 'h3=":443"; ma=60'
 
       # Add UUID
       unique-id-format %[uuid()]
