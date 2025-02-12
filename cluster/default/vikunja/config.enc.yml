@@ -1,8 +1,8 @@
 auth:
     local:
-      enabled: false
-    openid:
         enabled: true
+    openid:
+        enabled: false
         redirecturl: https://vikunja.sko.ai/auth/openid/
         providers:
             - name: authelia
@@ -16,8 +16,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2025-02-07T19:54:36Z"
-    mac: ENC[AES256_GCM,data:4BMmhoGzW1M545Yi8bfAvJcpJryvC5pj/gv+LgQ9pFt20QpbOIG5FK/xsQ8u071VqgQjHuTPqBe8LfYQY4Mq5RfN0PT+viCYyBblbfPggE92pEYUV7qt5eaRg4kw2AI8DXOUg5/zwFiV0cFZ50KIEdVOuaJcdWsWBFcc6D0r/XM=,iv:0vK2jc6uRb40YbCzMhyP1EJSOCXhKVJJWwrpBucCCSY=,tag:KysPUTzM+gOIzCaV9ZDUQg==,type:str]
+    lastmodified: "2025-02-12T21:00:24Z"
+    mac: ENC[AES256_GCM,data:3lqXy+DcOuR/sOaPhSfY/BjZucZ6z0Uvl9peluHaXbjLAdjYJ2ipEONxhKMYC2SmdRX1E13nNjU3GqdLkGy+CTS1qPrahJaU7MLAw7YyJMOhDJHmWGdohj7wRjHDLOurpkUCElWpSuD/wTbcuhXLIOoDtMeVzn0hGHh6PfAzdzg=,iv:4n+gOplSPa7a1LwQtf8iysqPetdSr0QLjsUxjbbVXbY=,tag:PrCeXxZs0LZ9gPKxOpHdUw==,type:str]
     pgp:
         - created_at: "2025-02-07T19:54:36Z"
           enc: |-
