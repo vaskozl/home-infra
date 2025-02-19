@@ -1,10 +1,12 @@
+service:
+  publicurl: https://todo.sko.ai
 auth:
-    local:
-        enabled: true
-mailer:
+  local:
     enabled: true
-    host: mail.sko.ai
-    fromemail: vikunja@sko.ai
-    port: 2225
-    username: ''
-    password: ''
+mailer:
+  enabled: true
+  host: mail.sko.ai
+  fromemail: vikunja@sko.ai
+  port: 2225
+  username: ''
+  password: ''
