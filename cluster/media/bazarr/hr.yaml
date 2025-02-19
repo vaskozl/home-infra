@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/bazarr
-              tag: 1.5.1@sha256:5b4a3ae6d9c0a4033ae0cb60af880473cb17c999f3bc04bd325e07dee1099fae
+              tag: 1.5.1@sha256:64cdc7d76e2385c44222f25456cc35262898b03322eead5301a03da6cb3bc63d
             args: ['/usr/bin/python', '/opt/bazarr/bazarr.py', '--no-update', '--config', '/config']
             probes:
               liveness:
