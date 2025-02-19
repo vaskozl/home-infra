@@ -6,7 +6,7 @@ resources:
 secretGenerator:
 - name: vikunja-config
   files:
-  - config.yml=config.enc.yml
+  - config.yml
 
 configurations:
 - kustomizeconfig.yaml
