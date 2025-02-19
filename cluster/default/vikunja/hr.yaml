@@ -28,10 +28,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 180Mi
+                memory: 280Mi
               requests:
                 cpu: 10m
-                memory: 180Mi
+                memory: 280Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
