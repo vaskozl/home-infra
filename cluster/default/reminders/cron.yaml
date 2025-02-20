@@ -10,24 +10,24 @@ spec:
         spec:
           restartPolicy: Never
           containers:
-          - name: msmtp
-            image: ghcr.io/vaskozl/msmtp:1.8.28@sha256:671717d4802a853753febcd17012a878e3a0f9d88638598f06bf89418b024e9b
-            command: [sh, -c]
-            args:
-              - |
-                for i in /reminders/*.txt; do
-                  cat "$i" | msmtp reminders@sko.ai
-                done
-            volumeMounts:
-            - mountPath: /etc/msmtprc
-              name: msmtprc
-              subPath: msmtprc
-            - mountPath: /reminders
-              name: reminders
+            - name: msmtp
+              image: ghcr.io/vaskozl/msmtp:1.8.28@sha256:671717d4802a853753febcd17012a878e3a0f9d88638598f06bf89418b024e9b
+              command: [sh, -c]
+              args:
+                - |
+                  for i in /reminders/*.txt; do
+                    cat "$i" | msmtp reminders@sko.ai
+                  done
+              volumeMounts:
+                - mountPath: /etc/msmtprc
+                  name: msmtprc
+                  subPath: msmtprc
+                - mountPath: /reminders
+                  name: reminders
           volumes:
-          - name: msmtprc
-            secret:
-              secretName: reminders-msmtprc
-          - name: reminders
-            secret:
-              secretName: reminders
+            - name: msmtprc
+              secret:
+                secretName: reminders-msmtprc
+            - name: reminders
+              secret:
+                secretName: reminders

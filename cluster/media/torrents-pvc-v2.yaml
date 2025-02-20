@@ -4,7 +4,7 @@ metadata:
   name: torrents-v2
 spec:
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   storageClassName: torrents-pv-media-v2
   resources:
     requests:

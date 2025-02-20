@@ -9,13 +9,13 @@ metadata:
 spec:
   ingressClassName: haproxy-external
   rules:
-  - host: varnish-ext.sko.ai
-    http:
-      paths:
-      - backend:
-          service:
-            name: varnish
-            port:
-              number: 6081
-        path: /
-        pathType: Prefix
+    - host: varnish-ext.sko.ai
+      http:
+        paths:
+          - backend:
+              service:
+                name: varnish
+                port:
+                  number: 6081
+            path: /
+            pathType: Prefix

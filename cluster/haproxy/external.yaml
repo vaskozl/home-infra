@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -13,8 +12,8 @@ spec:
         namespace: flux-system
       version: 1.44.0
   valuesFrom:
-  - kind: ConfigMap
-    name: common-values
+    - kind: ConfigMap
+      name: common-values
   values:
     controller:
       ingressClass: haproxy-external
@@ -29,21 +28,21 @@ spec:
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:
-      - name: lua
-        secret:
-          secretName: lua
-      - name: txt-config
-        configMap:
-          name: txt-config
+        - name: lua
+          secret:
+            secretName: lua
+        - name: txt-config
+          configMap:
+            name: txt-config
   postRenderers:
-  - kustomize:
-      patches:
-      - patch: |
-          - op: add
-            path: /spec/template/spec/securityContext/sysctls
-            value:
-            - name: net.ipv4.ip_unprivileged_port_start
-              value: '0'
-        target:
-          kind: DaemonSet
-          version: v1
+    - kustomize:
+        patches:
+          - patch: |
+              - op: add
+                path: /spec/template/spec/securityContext/sysctls
+                value:
+                - name: net.ipv4.ip_unprivileged_port_start
+                  value: '0'
+            target:
+              kind: DaemonSet
+              version: v1

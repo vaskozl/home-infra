@@ -1,17 +1,16 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-- vmpodscrape.yaml
-- vmrule.yaml
+  - vmpodscrape.yaml
+  - vmrule.yaml
 configMapGenerator:
-- name: flux-cluster-dashboard
-  files:
-  - flux-cluster-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-- name: flux-control-plane-dashboard
-  files:
-  - flux-control-plane-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+  - name: flux-cluster-dashboard
+    files:
+      - flux-cluster-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+  - name: flux-control-plane-dashboard
+    files:
+      - flux-control-plane-dashboard.json=https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

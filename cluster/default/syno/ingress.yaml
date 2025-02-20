@@ -5,13 +5,13 @@ metadata:
 spec:
   ingressClassName: haproxy-external
   rules:
-  - host: syno.sko.ai
-    http:
-      paths:
-      - path: /.well-known/acme-challenge/
-        pathType: Prefix
-        backend: &backend
-          service:
-            name: syno
-            port:
-              number: 80
+    - host: syno.sko.ai
+      http:
+        paths:
+          - path: /.well-known/acme-challenge/
+            pathType: Prefix
+            backend: &backend
+              service:
+                name: syno
+                port:
+                  number: 80

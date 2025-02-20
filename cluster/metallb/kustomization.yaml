@@ -2,10 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: metallb
 resources:
-- _namespace.yaml
-- hr.yaml
-- ip-pool.yaml
-- bgppeer.yaml
-
+  - _namespace.yaml
+  - hr.yaml
+  - ip-pool.yaml
+  - bgppeer.yaml
 components:
-- ../common
+  - ../common

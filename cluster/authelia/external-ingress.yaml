@@ -6,13 +6,13 @@ metadata:
 spec:
   ingressClassName: haproxy-external
   rules:
-  - host: gate-ext.sko.ai
-    http:
-      paths:
-      - backend:
-          service:
-            name: authelia
-            port:
-              number: 8080
-        path: /
-        pathType: Prefix
+    - host: gate-ext.sko.ai
+      http:
+        paths:
+          - backend:
+              service:
+                name: authelia
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix

@@ -8,18 +8,18 @@ spec:
   capacity:
     storage: 1Mi
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: syno
     path: /volume1/torrents-v2
   mountOptions:
-  - nfsvers=3
-  - hard
-  - nolock
-  - nocto
-  - noatime
-  - nodiratime
-  - retrans=5
-  - rsize=131072
-  - wsize=131072
+    - nfsvers=3
+    - hard
+    - nolock
+    - nocto
+    - noatime
+    - nodiratime
+    - retrans=5
+    - rsize=131072
+    - wsize=131072

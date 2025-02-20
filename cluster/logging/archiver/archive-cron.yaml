@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -17,33 +16,34 @@ spec:
       template:
         spec:
           containers:
-          - name: logrotate
-            image: ghcr.io/vaskozl/archlinux:rolling@sha256:c41aad89fee0aa62a2389bf24972c9952477ec0411c85aa301c7f133ed9a300a
-            command: [sh, -c]
-            # Delete all files older than 30 days
-            # Compress all files older than 1 day
-            # Symlink latest foo-$date.log to foo.log
-            args:
-            - >
-              find /var/logs/k8s -type f -mtime '+30' -delete -print &&
-              find /var/logs/k8s -type f -mtime '+0' -name '*.log' -exec gzip {} \; &&
-              find /var/logs/k8s -type f -name "*$(date +%Y%m%d).log" | while read latest; do
-                target="${latest%-*}.log";
-                ln -s -f $(basename "$latest") "$target";
-              done
-            resources:
-              requests:
-                cpu: 10m
-                memory: 10Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
-            volumeMounts:
-            - name: logging-pvc
-              mountPath: /var/logs/k8s
+            - name: logrotate
+              image: ghcr.io/vaskozl/archlinux:rolling@sha256:c41aad89fee0aa62a2389bf24972c9952477ec0411c85aa301c7f133ed9a300a
+              command: [sh, -c]
+              # Delete all files older than 30 days
+              # Compress all files older than 1 day
+              # Symlink latest foo-$date.log to foo.log
+              args:
+                - >
+                  find /var/logs/k8s -type f -mtime '+30' -delete -print && find /var/logs/k8s -type f -mtime '+0' -name '*.log'
+                  -exec gzip {} \; && find /var/logs/k8s -type f -name "*$(date +%Y%m%d).log" | while read latest; do
+
+                    target="${latest%-*}.log";
+                    ln -s -f $(basename "$latest") "$target";
+                  done
+
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 10Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: logging-pvc
+                  mountPath: /var/logs/k8s
           restartPolicy: Never
           volumes:
-          - name: logging-pvc
-            persistentVolumeClaim:
-              claimName: logging-pvc
+            - name: logging-pvc
+              persistentVolumeClaim:
+                claimName: logging-pvc

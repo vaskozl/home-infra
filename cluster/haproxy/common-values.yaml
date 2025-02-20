@@ -9,8 +9,8 @@ controller:
   nodeSelector:
     node-role.kubernetes.io/control-plane: ""
   tolerations:
-  - effect: NoSchedule
-    operator: Exists
+    - effect: NoSchedule
+      operator: Exists
   containerPort:
     http: 80
     https: 443
@@ -19,8 +19,8 @@ controller:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"
     scale-server-slots: "2"
-    log-format: "ip=%ci dt=%tr backend=%b perf=%TR/%Tw/%Tc/%Tr/%Ta code=%ST bytes_read=%B term=%tsc metrics=%ac/%fc/%bc/%sc/%rc srv_queue=%sq  backend_queue=%bq ua=%{+Q}[capture.req.hdr(0)] host=%{+Q}[capture.req.hdr(1)] ver=%HV method=%HM uri=%HU"
-
+    log-format: "ip=%ci dt=%tr backend=%b perf=%TR/%Tw/%Tc/%Tr/%Ta code=%ST bytes_read=%B term=%tsc metrics=%ac/%fc/%bc/%sc/%rc
+      srv_queue=%sq  backend_queue=%bq ua=%{+Q}[capture.req.hdr(0)] host=%{+Q}[capture.req.hdr(1)] ver=%HV method=%HM uri=%HU"
     global-config-snippet: |
       lua-prepend-path /usr/local/share/lua/?.lua
       lua-load /usr/local/share/lua/auth-request.lua
@@ -64,10 +64,10 @@ controller:
   extraArgs:
     - --default-ssl-certificate=cert-manager/sko-ai-tls
   extraVolumeMounts:
-  - name: lua
-    mountPath: /usr/local/share/lua
-  - name: txt-config
-    mountPath: /config
+    - name: lua
+      mountPath: /usr/local/share/lua
+    - name: txt-config
+      mountPath: /config
   resources:
     requests:
       memory: 250Mi

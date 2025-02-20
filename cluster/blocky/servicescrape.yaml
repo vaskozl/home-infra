@@ -1,4 +1,3 @@
----
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMServiceScrape
 metadata:
@@ -6,13 +5,13 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-    - blocky
+      - blocky
   jobLabel: app.kubernetes.io/name
   selector:
     matchExpressions:
-    - key: app.kubernetes.io/name
-      operator: In
-      values:
-      - blocky
+      - key: app.kubernetes.io/name
+        operator: In
+        values:
+          - blocky
   endpoints:
-  - port: http
+    - port: http

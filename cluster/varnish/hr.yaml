@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -17,15 +16,15 @@ spec:
       version: 3.7.1
   values:
     args:
-    - -f
-    - /config/main.vcl
-    - -F
-    - -a
-    - :6081
-    - -s
-    - malloc,384M
-    - -t
-    - '7200'
+      - -f
+      - /config/main.vcl
+      - -F
+      - -a
+      - :6081
+      - -s
+      - malloc,384M
+      - -t
+      - '7200'
     controller:
       replicas: 2
     controllers:
@@ -48,9 +47,9 @@ spec:
           haproxy.org/load-balance: uri
         enabled: true
         hosts:
-        - host: varnish.sko.ai
-          paths:
-          - path: /
+          - host: varnish.sko.ai
+            paths:
+              - path: /
         ingressClassName: haproxy-internal
     persistence:
       config:

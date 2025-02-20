@@ -1,20 +1,17 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ingress-nginx
 resources:
-- _namespace.yaml
-- internal.yaml
-- external.yaml
-- monitoring
-- ../netpols/allow-all-ingress
-
+  - _namespace.yaml
+  - internal.yaml
+  - external.yaml
+  - monitoring
+  - ../netpols/allow-all-ingress
 components:
-- ../common
-
+  - ../common
 configMapGenerator:
-- name: common-values
-  files:
-  - values.yaml=common-values.yaml
+  - name: common-values
+    files:
+      - values.yaml=common-values.yaml
 configurations:
   - kustomizeconfig.yaml

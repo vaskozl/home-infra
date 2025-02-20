@@ -11,16 +11,16 @@ spec:
         spec:
           serviceAccountName: gitlab-registry-serviceaccount
           containers:
-          - name: kubectl-exec
-            image: ghcr.io/vaskozl/kubectl:1.32.1@sha256:98917fbeed1b72ce7d30ac2b598767e3c34247f88cfd1ed3eec192a109c49965
-            command:
-            - "kubectl"
-            - "exec"
-            - "deploy/gitlab-registry"
-            - "--namespace=gitlab"
-            - "--"
-            - "registry"
-            - "garbage-collect"
-            - "--delete-untagged"
-            - "/etc/docker/registry/config.yml"
+            - name: kubectl-exec
+              image: ghcr.io/vaskozl/kubectl:1.32.1@sha256:98917fbeed1b72ce7d30ac2b598767e3c34247f88cfd1ed3eec192a109c49965
+              command:
+                - "kubectl"
+                - "exec"
+                - "deploy/gitlab-registry"
+                - "--namespace=gitlab"
+                - "--"
+                - "registry"
+                - "garbage-collect"
+                - "--delete-untagged"
+                - "/etc/docker/registry/config.yml"
           restartPolicy: OnFailure

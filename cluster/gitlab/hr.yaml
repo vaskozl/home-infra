@@ -1,4 +1,3 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -59,7 +58,7 @@ spec:
           syncProfileAttributes: [email]
           blockAutoCreatedUsers: false
           providers:
-          - secret: authelia-oauth2
+            - secret: authelia-oauth2
         lfs: &rails
           connection:
             secret: object-storage
@@ -148,29 +147,29 @@ spec:
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
   postRenderers:
-  - kustomize:
-      patches:
-      - patch: |-
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: dummy-app
-          spec:
-            template:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: dummy-app
               spec:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
-        target:
-          kind: Deployment
-      - patch: |-
-          apiVersion: apps/v1
-          kind: StatefulSet
-          metadata:
-            name: dummy-app
-          spec:
-            template:
+                template:
+                  spec:
+                    nodeSelector:
+                      kubernetes.io/arch: amd64
+            target:
+              kind: Deployment
+          - patch: |-
+              apiVersion: apps/v1
+              kind: StatefulSet
+              metadata:
+                name: dummy-app
               spec:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
-        target:
-          kind: StatefulSet
+                template:
+                  spec:
+                    nodeSelector:
+                      kubernetes.io/arch: amd64
+            target:
+              kind: StatefulSet

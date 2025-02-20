@@ -1,124 +1,124 @@
 commands:
-    dry_run: false
-    cross_seed: false
-    recheck: false
-    cat_update: false
-    tag_update: false
-    rem_unregistered: true
-    tag_tracker_error: false
-    rem_orphaned: true
-    tag_nohardlinks: true
-    share_limits: true
-    skip_cleanup: false
-    skip_qb_version_check: false
+  dry_run: false
+  cross_seed: false
+  recheck: false
+  cat_update: false
+  tag_update: false
+  rem_unregistered: true
+  tag_tracker_error: false
+  rem_orphaned: true
+  tag_nohardlinks: true
+  share_limits: true
+  skip_cleanup: false
+  skip_qb_version_check: false
 qbt:
-    host: ENC[AES256_GCM,data:+dWOx/0hsWgkWGB1h51P2JI=,iv:bq9/6jjyXOtMh+FC6OwvdEyZHf/ZM3sJGLomTnEk/5o=,tag:BrgCecYwMdTZ4axsDgtHog==,type:str]
-    user: ENC[AES256_GCM,data:Lxwn,iv:D+dO5T/IoeJ8q1rd0PxV/RjSR3cLBliFA3kq6iZkGug=,tag:18JULRHlaWHGV0Tj94fT6w==,type:str]
-    pass: ENC[AES256_GCM,data:vo3vvZeGGiqZsUeYg0WMFg==,iv:OGVH2Tj8nQ8/wE5GhE9y2hZsElfOb6YvGpngkiOhEV4=,tag:pZ/SMDU8pD3a+tVuF09TZg==,type:str]
+  host: ENC[AES256_GCM,data:+dWOx/0hsWgkWGB1h51P2JI=,iv:bq9/6jjyXOtMh+FC6OwvdEyZHf/ZM3sJGLomTnEk/5o=,tag:BrgCecYwMdTZ4axsDgtHog==,type:str]
+  user: ENC[AES256_GCM,data:Lxwn,iv:D+dO5T/IoeJ8q1rd0PxV/RjSR3cLBliFA3kq6iZkGug=,tag:18JULRHlaWHGV0Tj94fT6w==,type:str]
+  pass: ENC[AES256_GCM,data:vo3vvZeGGiqZsUeYg0WMFg==,iv:OGVH2Tj8nQ8/wE5GhE9y2hZsElfOb6YvGpngkiOhEV4=,tag:pZ/SMDU8pD3a+tVuF09TZg==,type:str]
 settings:
-    force_auto_tmm: false
-    tracker_error_tag: issue
-    nohardlinks_tag: noHL
-    share_limits_suffix_tag: share_limit
-    ignoreTags_OnUpdate:
-        - noHL
-        - issue
-        - cross-seed
+  force_auto_tmm: false
+  tracker_error_tag: issue
+  nohardlinks_tag: noHL
+  share_limits_suffix_tag: share_limit
+  ignoreTags_OnUpdate:
+    - noHL
+    - issue
+    - cross-seed
 directory:
-    root_dir: /torrents/
-    remote_dir: /data/torrents/
-    orphaned_dir: /data/torrents/orphaned_data
-    recycle_bin: /data/torrents/.RecycleBin
-    cross_seed: null
-    torrents_dir: null
+  root_dir: /torrents/
+  remote_dir: /data/torrents/
+  orphaned_dir: /data/torrents/orphaned_data
+  recycle_bin: /data/torrents/.RecycleBin
+  cross_seed: null
+  torrents_dir: null
 cat:
-    radarr: /torrents
-    tv-sonarr: /torrents
-    lidarr: /torrents
-    legacy: /torrents
+  radarr: /torrents
+  tv-sonarr: /torrents
+  lidarr: /torrents
+  legacy: /torrents
 tracker:
-    passthepopcorn:
-        tag: ENC[AES256_GCM,data:wPbWCwJQnwr4u+arNwI=,iv:eof8zlE3DWM5S7fXRmDyr21ZguKXGnnoXP3DU1uK2OQ=,tag:XFQKG8LgPDis012sq3wBdg==,type:str]
-        notifiarr: ENC[AES256_GCM,data:zOmCMMQayzI2Uutr8F0=,iv:5yqPIWNkJ2d4PWbfCblD3VKSAyau+XT0Um2XmbQ40n4=,tag:A5Y62n0woi1YEanLbFtk0A==,type:str]
-    tleechreload:
-        tag: TorrentLeech
-        notifiarr: torrentleech
-    torrentleech:
-        tag: TorrentLeech
-        notifiarr: torrentleech
-    other:
-        tag: other
+  passthepopcorn:
+    tag: ENC[AES256_GCM,data:wPbWCwJQnwr4u+arNwI=,iv:eof8zlE3DWM5S7fXRmDyr21ZguKXGnnoXP3DU1uK2OQ=,tag:XFQKG8LgPDis012sq3wBdg==,type:str]
+    notifiarr: ENC[AES256_GCM,data:zOmCMMQayzI2Uutr8F0=,iv:5yqPIWNkJ2d4PWbfCblD3VKSAyau+XT0Um2XmbQ40n4=,tag:A5Y62n0woi1YEanLbFtk0A==,type:str]
+  tleechreload:
+    tag: TorrentLeech
+    notifiarr: torrentleech
+  torrentleech:
+    tag: TorrentLeech
+    notifiarr: torrentleech
+  other:
+    tag: other
 nohardlinks:
-    - radarr
-    - tv-sonarr
-    - lidarr
+  - radarr
+  - tv-sonarr
+  - lidarr
 share_limits:
-    noHL:
-        priority: 1
-        include_all_tags:
-            - noHL
-        categories:
-            - radarr
-            - tv-sonarr
-            - lidarr
-        max_seeding_time: 20200
-        cleanup: true
+  noHL:
+    priority: 1
+    include_all_tags:
+      - noHL
+    categories:
+      - radarr
+      - tv-sonarr
+      - lidarr
+    max_seeding_time: 20200
+    cleanup: true
 recyclebin:
-    enabled: true
-    empty_after_x_days: 14
-    save_torrents: false
-    split_by_category: false
+  enabled: true
+  empty_after_x_days: 14
+  save_torrents: false
+  split_by_category: false
 webhooks:
-    error: null
-    run_start: null
-    run_end: null
-    function:
-        cross_seed: null
-        recheck: null
-        cat_update: null
-        tag_update: null
-        rem_unregistered: null
-        tag_tracker_error: null
-        rem_orphaned: null
-        tag_nohardlinks: null
-        cleanup_dirs: null
+  error: null
+  run_start: null
+  run_end: null
+  function:
+    cross_seed: null
+    recheck: null
+    cat_update: null
+    tag_update: null
+    rem_unregistered: null
+    tag_tracker_error: null
+    rem_orphaned: null
+    tag_nohardlinks: null
+    cleanup_dirs: null
 orphaned:
-    empty_after_x_days: 2
-    exclude_patterns: null
+  empty_after_x_days: 2
+  exclude_patterns: null
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2024-12-01T10:57:30Z"
-    mac: ENC[AES256_GCM,data:+xdfQSenuI2OxCVn6WvU0y+Q//P2tuSgqmUkfw2uAZXmW+Y1XgCijnVc4DtqwTAg6p9umUzH4xm2GR9lS4Q2Idcu3GA0l9ZGosyk87V6CiyhTp9GVVcepRpY48D1hpQEkA7HTSb/rk+OVw6Yzs2iMuXijvoutjJI51v7qrGfUPM=,iv:/pV0GybmRyEq8Y3oxF9SIO6ojEQli+wHZMSoR3x8pUU=,tag:1IDxzPlHfCUdmFzCMg1gpw==,type:str]
-    pgp:
-        - created_at: "2022-12-13T10:01:32Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2024-12-01T10:57:30Z"
+  mac: ENC[AES256_GCM,data:+xdfQSenuI2OxCVn6WvU0y+Q//P2tuSgqmUkfw2uAZXmW+Y1XgCijnVc4DtqwTAg6p9umUzH4xm2GR9lS4Q2Idcu3GA0l9ZGosyk87V6CiyhTp9GVVcepRpY48D1hpQEkA7HTSb/rk+OVw6Yzs2iMuXijvoutjJI51v7qrGfUPM=,iv:/pV0GybmRyEq8Y3oxF9SIO6ojEQli+wHZMSoR3x8pUU=,tag:1IDxzPlHfCUdmFzCMg1gpw==,type:str]
+  pgp:
+    - created_at: "2022-12-13T10:01:32Z"
+      enc: |
+        -----BEGIN PGP MESSAGE-----
 
-            hQMOA4x50yY5upzjEAv/WZpe4EJIviNofDWjcILJQ7a6/qtjkN1YwnYLuypOcpgY
-            PcLTm9+LydBdUiAW0SovHP3Zu3Zx5U2/bJcdFbIaNH3zIRqRg+TbcfhIA9LSm5v3
-            fdYLq+nSCIcVPPboHQyaL8smyMhx0CXuTMmaBsjTZDWHzJ3rAziKFk7FtnAY0MYJ
-            Ii0VIpo/3Nny2nK0vyQ1zizDpfyxbU2/uI8oMFLB5+q5FE+c+l9EZdHlBILeapi5
-            6wrwLehJ8pEg8lFd7uuWYqxMRiiYUmjusf2A4FVU7+VJMjxaVeMIOglh6K1k776v
-            lpOC6Sv128jAxTp4vXdY+JjycCnSpT+FL/gk42XQxub3NnuaRmpEeSXca2knX4Eo
-            8FVfc3Iicd3ZBHBxDiszgrIHGguDjIkgnase1IkU6QvY2YJfLHeBfupEYIuTUChO
-            gKpuCW9l7FFS8ZpIFJE8iZmWYmcdaL5kowdTCTOk7Hi9ncPW2BB5eXgakx3mdqoc
-            8FYU1x+Cc2uUBp7rBIk9DADLErsMcxJ2UkcwKiTz0fEPB8UOQWEn8BsKOG8DR+nB
-            /4wlartUkQbITtgE9zpktl5r0NWjHPgp13wUxxEKyLG8jDgpGIEudcsY9feADWIH
-            oPUFzLIr+z782/TJS03Zw4W1TwzR7TkrgHvS9H9EV+zyRhJ5Jh0nhtn61Hr4dwWH
-            ZPlHwOhMxQ1aJsJu39WixfdUuazWn75tp9mDenDumEx55bwb2vKBZRQ6nBM9BnU0
-            l4sK8n7eh+UhuAZZlzHMCdCO/vAcIHeeTUqLbtmp3067KG/SdQXT7Yo8KWsvUOjp
-            vbbvBrF2Qz7qD+6rpY4QYbYc5QpMoWPyKNOSRrRkW7HqXTN2HqLSBg+WmsA+DjkC
-            0ValknL4VcPqUqYxl9Lx3BgrWhdvLbMLAtcRc9VzmDFgh8FubB8ZmwdgXJhDD4kY
-            NaPsHxxHF/ZstMoY+wOr90Cr8XJj66K+R7fyxzQN9rjwh0UjToIBnZKIYZitq1RZ
-            hW7P7azfRFuU3LManvnFyM/SXgFPYc4tXkZyiE2BxB+D4vm1TcxtGxOXv4STOzdq
-            MEVe1lSVYz1EE6YQMGklhQAuFyO0J4IOy2qGJ10IVfJLEDBiwZQVd37R2hOAKo85
-            5kNDoO6fLGw+/e5K0W/ZAKw=
-            =SILc
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: (pass|host|user)
-    version: 3.9.1
+        hQMOA4x50yY5upzjEAv/WZpe4EJIviNofDWjcILJQ7a6/qtjkN1YwnYLuypOcpgY
+        PcLTm9+LydBdUiAW0SovHP3Zu3Zx5U2/bJcdFbIaNH3zIRqRg+TbcfhIA9LSm5v3
+        fdYLq+nSCIcVPPboHQyaL8smyMhx0CXuTMmaBsjTZDWHzJ3rAziKFk7FtnAY0MYJ
+        Ii0VIpo/3Nny2nK0vyQ1zizDpfyxbU2/uI8oMFLB5+q5FE+c+l9EZdHlBILeapi5
+        6wrwLehJ8pEg8lFd7uuWYqxMRiiYUmjusf2A4FVU7+VJMjxaVeMIOglh6K1k776v
+        lpOC6Sv128jAxTp4vXdY+JjycCnSpT+FL/gk42XQxub3NnuaRmpEeSXca2knX4Eo
+        8FVfc3Iicd3ZBHBxDiszgrIHGguDjIkgnase1IkU6QvY2YJfLHeBfupEYIuTUChO
+        gKpuCW9l7FFS8ZpIFJE8iZmWYmcdaL5kowdTCTOk7Hi9ncPW2BB5eXgakx3mdqoc
+        8FYU1x+Cc2uUBp7rBIk9DADLErsMcxJ2UkcwKiTz0fEPB8UOQWEn8BsKOG8DR+nB
+        /4wlartUkQbITtgE9zpktl5r0NWjHPgp13wUxxEKyLG8jDgpGIEudcsY9feADWIH
+        oPUFzLIr+z782/TJS03Zw4W1TwzR7TkrgHvS9H9EV+zyRhJ5Jh0nhtn61Hr4dwWH
+        ZPlHwOhMxQ1aJsJu39WixfdUuazWn75tp9mDenDumEx55bwb2vKBZRQ6nBM9BnU0
+        l4sK8n7eh+UhuAZZlzHMCdCO/vAcIHeeTUqLbtmp3067KG/SdQXT7Yo8KWsvUOjp
+        vbbvBrF2Qz7qD+6rpY4QYbYc5QpMoWPyKNOSRrRkW7HqXTN2HqLSBg+WmsA+DjkC
+        0ValknL4VcPqUqYxl9Lx3BgrWhdvLbMLAtcRc9VzmDFgh8FubB8ZmwdgXJhDD4kY
+        NaPsHxxHF/ZstMoY+wOr90Cr8XJj66K+R7fyxzQN9rjwh0UjToIBnZKIYZitq1RZ
+        hW7P7azfRFuU3LManvnFyM/SXgFPYc4tXkZyiE2BxB+D4vm1TcxtGxOXv4STOzdq
+        MEVe1lSVYz1EE6YQMGklhQAuFyO0J4IOy2qGJ10IVfJLEDBiwZQVd37R2hOAKo85
+        5kNDoO6fLGw+/e5K0W/ZAKw=
+        =SILc
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: (pass|host|user)
+  version: 3.9.1

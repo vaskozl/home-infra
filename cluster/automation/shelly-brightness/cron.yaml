@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -15,22 +14,22 @@ spec:
         metadata:
         spec:
           containers:
-          - args: [perl, /script/shelly-brightness.pl]
-            image: ghcr.io/vaskozl/perl-libwww:6.77@sha256:365c60be8c24b7b273a1bd4deb0c743fd6ef44d6ffa25d8f466f6d295aab003c
-            name: shelly-brightness
-            resources:
-              requests:
-                cpu: 50m
-                memory: 128Mi
-              limits:
-                cpu: 100m
-                memory: 256Mi
-            volumeMounts:
-            - mountPath: /script
-              name: script
+            - args: [perl, /script/shelly-brightness.pl]
+              image: ghcr.io/vaskozl/perl-libwww:6.77@sha256:365c60be8c24b7b273a1bd4deb0c743fd6ef44d6ffa25d8f466f6d295aab003c
+              name: shelly-brightness
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  cpu: 100m
+                  memory: 256Mi
+              volumeMounts:
+                - mountPath: /script
+                  name: script
           restartPolicy: Never
           volumes:
-          - configMap:
-              defaultMode: 420
+            - configMap:
+                defaultMode: 420
+                name: script
               name: script
-            name: script

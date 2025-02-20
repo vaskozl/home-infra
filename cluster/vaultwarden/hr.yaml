@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -35,21 +34,21 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /data
-            name: data
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+              name: data
+              size: 1Mi
         type: statefulset
     ingress:
       app:
         hosts:
-        - host: bw.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: bw.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: vaultwarden

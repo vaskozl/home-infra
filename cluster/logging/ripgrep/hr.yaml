@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -19,8 +18,8 @@ spec:
         containers:
           app:
             args:
-            - sleep
-            - inf
+              - sleep
+              - inf
             image:
               repository: ghcr.io/vaskozl/ripgrep
               tag: 14.1.1@sha256:865f4cf64a614f7bc14ca35f1aa54b87c26c00d05dad8da8c23ab1a3e1329fcc

@@ -7,6 +7,6 @@ spec:
     matchLabels:
       app.kubernetes.io/name: mosquitto
   ingress:
-  - from:
-    - ipBlock:
-        cidr: 0.0.0.0/0
+    - from:
+        - ipBlock:
+            cidr: 0.0.0.0/0

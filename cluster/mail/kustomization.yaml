@@ -1,29 +1,24 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: mailserver
 resources:
-- _namespace.yaml
-- cert.yaml
-- hr.yaml
-- ../netpols/allow-all-ingress
+  - _namespace.yaml
+  - cert.yaml
+  - hr.yaml
+  - ../netpols/allow-all-ingress
 components:
-- ../common
-
+  - ../common
 configMapGenerator:
-- name: maddy-config
-  files:
-  - config/maddy.conf
-  - config/sieve.sh
-
+  - name: maddy-config
+    files:
+      - config/maddy.conf
+      - config/sieve.sh
 secretGenerator:
-- name: maddy-secrets
-  envs:
-  - secrets.env
-
+  - name: maddy-secrets
+    envs:
+      - secrets.env
 generatorOptions:
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-
 configurations:
   - kustomizeconfig.yaml

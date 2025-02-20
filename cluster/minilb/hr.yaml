@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -23,7 +22,7 @@ spec:
               repository: ghcr.io/vaskozl/minilb
               tag: 0.0.3@sha256:b23a23b7387bacf199748e468a58bf4b98f01a55678597b78de81e0a94d9467d
             args:
-            - -controller=true
+              - -controller=true
             resources: &resources
               limits:
                 memory: 20Mi

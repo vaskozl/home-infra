@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -35,26 +34,26 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /var/lib/baikal
-            name: data
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/baikal
+              name: data
+              size: 1Mi
         type: statefulset
     ingress:
       app:
         hosts:
-        - host: bk.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: bk.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       msmtprc:
         globalMounts:
-        - path: /etc/msmtprc
-          subPath: msmtprc
+          - path: /etc/msmtprc
+            subPath: msmtprc
         name: msmtprc
         type: configMap
     service:

@@ -3,16 +3,16 @@ kind: ClusterRole
 metadata:
   name: minilb
 rules:
-- apiGroups: [""]
-  resources:
-  - endpoints
-  - services
-  - namespaces
-  - nodes
-  verbs: [get, list, watch]
-- apiGroups: [""]
-  resources: [services/status]
-  verbs: [update]
+  - apiGroups: [""]
+    resources:
+      - endpoints
+      - services
+      - namespaces
+      - nodes
+    verbs: [get, list, watch]
+  - apiGroups: [""]
+    resources: [services/status]
+    verbs: [update]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -23,6 +23,6 @@ roleRef:
   kind: ClusterRole
   name: minilb
 subjects:
-- kind: ServiceAccount
-  name: minilb
-  namespace: minilb
+  - kind: ServiceAccount
+    name: minilb
+    namespace: minilb

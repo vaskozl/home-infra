@@ -11,18 +11,18 @@ spec:
           restartPolicy: Never
           serviceAccountName: scanner-sa
           containers:
-          - name: scanner-container
-            image: ghcr.io/vaskozl/perl-mojolicious:9.39@sha256:097b1017db983ab8f6ac5d4719e22a92d2126f1d226977fdc4416d9f42927ab1
-            args:
-            - perl
-            - /script/scan-containers.pl
-            - -u
-            - -m=pixel@ntfy.sko.ai
-            - -s=ntfy.automation
-            volumeMounts:
-            - name: script
-              mountPath: /script
+            - name: scanner-container
+              image: ghcr.io/vaskozl/perl-mojolicious:9.39@sha256:097b1017db983ab8f6ac5d4719e22a92d2126f1d226977fdc4416d9f42927ab1
+              args:
+                - perl
+                - /script/scan-containers.pl
+                - -u
+                - -m=pixel@ntfy.sko.ai
+                - -s=ntfy.automation
+              volumeMounts:
+                - name: script
+                  mountPath: /script
           volumes:
-          - name: script
-            configMap:
-              name: script
+            - name: script
+              configMap:
+                name: script

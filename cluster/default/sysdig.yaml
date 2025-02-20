@@ -12,44 +12,44 @@ spec:
         app: sysdig-agent
     spec:
       containers:
-      - args:
-        - sleep
-        - inf
-        env:
-        - name: SYSDIG_BPF_PROBE
-        image: sysdig/sysdig:0.38.1
-        imagePullPolicy: Always
-        name: sysdig-agent
-        resources:
-          limits:
-            cpu: "1"
-            memory: 1Gi
-          requests:
-            cpu: "0.01"
-            memory: 1Mi
-        securityContext:
-          privileged: true
-          runAsUser: 0
-        volumeMounts:
-        - mountPath: /host/etc
-          name: etc-vol
-          readOnly: true
-        - mountPath: /host/dev
-          name: dev-vol
-        - mountPath: /host/proc
-          name: proc-vol
-          readOnly: true
-        - mountPath: /host/run
-          name: run-vol
-        - mountPath: /host/var/run
-          name: varrun-vol
-        - mountPath: /dev/shm
-          name: dshm
-        - mountPath: /etc/podinfo
-          name: podinfo
-        - mountPath: /sys/kernel/debug
-          name: sys-tracing
-          readOnly: true
+        - args:
+            - sleep
+            - inf
+          env:
+            - name: SYSDIG_BPF_PROBE
+          image: sysdig/sysdig:0.38.1
+          imagePullPolicy: Always
+          name: sysdig-agent
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: "0.01"
+              memory: 1Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /host/etc
+              name: etc-vol
+              readOnly: true
+            - mountPath: /host/dev
+              name: dev-vol
+            - mountPath: /host/proc
+              name: proc-vol
+              readOnly: true
+            - mountPath: /host/run
+              name: run-vol
+            - mountPath: /host/var/run
+              name: varrun-vol
+            - mountPath: /dev/shm
+              name: dshm
+            - mountPath: /etc/podinfo
+              name: podinfo
+            - mountPath: /sys/kernel/debug
+              name: sys-tracing
+              readOnly: true
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
       hostPID: true
@@ -57,58 +57,58 @@ spec:
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 5
       tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/control-plane
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/controlplane
-        operator: Equal
-        value: "true"
-      - effect: NoExecute
-        key: node-role.kubernetes.io/etcd
-        operator: Equal
-        value: "true"
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/controlplane
+          operator: Equal
+          value: "true"
+        - effect: NoExecute
+          key: node-role.kubernetes.io/etcd
+          operator: Equal
+          value: "true"
       volumes:
-      - emptyDir:
-          medium: Memory
-        name: dshm
-      - hostPath:
-          path: /etc
-        name: etc-vol
-      - hostPath:
-          path: /dev
-        name: dev-vol
-      - hostPath:
-          path: /proc
-        name: proc-vol
-      - hostPath:
-          path: /boot
-        name: boot-vol
-      - hostPath:
-          path: /lib/modules
-        name: modules-vol
-      - hostPath:
-          path: /usr
-        name: usr-vol
-      - hostPath:
-          path: /run
-        name: run-vol
-      - hostPath:
-          path: /var/run
-        name: varrun-vol
-      - downwardAPI:
-          defaultMode: 420
-          items:
-          - fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-            path: namespace
-          - fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-            path: name
-        name: podinfo
-      - hostPath:
-          path: /sys/kernel/debug
-        name: sys-tracing
+        - emptyDir:
+            medium: Memory
+          name: dshm
+        - hostPath:
+            path: /etc
+          name: etc-vol
+        - hostPath:
+            path: /dev
+          name: dev-vol
+        - hostPath:
+            path: /proc
+          name: proc-vol
+        - hostPath:
+            path: /boot
+          name: boot-vol
+        - hostPath:
+            path: /lib/modules
+          name: modules-vol
+        - hostPath:
+            path: /usr
+          name: usr-vol
+        - hostPath:
+            path: /run
+          name: run-vol
+        - hostPath:
+            path: /var/run
+          name: varrun-vol
+        - downwardAPI:
+            defaultMode: 420
+            items:
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+                path: namespace
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+                path: name
+          name: podinfo
+        - hostPath:
+            path: /sys/kernel/debug
+          name: sys-tracing

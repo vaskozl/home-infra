@@ -1,121 +1,121 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 sonarr:
-    series:
-        base_url: http://sonarr:8989
-        api_key: ENC[AES256_GCM,data:pHTLv47BdVl3fbejccw9vgODJtKnc+Y97qIV0DFuP8Q=,iv:TXW4JJ1952hq4re86daU7yCZFlLldYgmmFchE6CzT/U=,tag:rYFgCqlM2yZLFTWECxUFIw==,type:str]
-        delete_old_custom_formats: true
-        replace_existing_custom_formats: true
-        quality_definition:
-            type: series
-        include:
-            - template: sonarr-quality-definition-series
-            - template: sonarr-v4-quality-profile-anime
-            - template: sonarr-v4-custom-formats-anime
-            - template: sonarr-v4-quality-profile-web-2160p
-            - template: sonarr-v4-custom-formats-web-2160p
-        quality_profiles:
-            - name: WEB-2160p
-              min_format_score: 10
-              qualities:
-                - name: WEB 2160p
-                  qualities:
-                    - WEBDL-2160p
-                    - WEBRip-2160p
-                - name: WEB 1080p
-                  qualities:
-                    - WEBDL-1080p
-                    - WEBRip-1080p
-        custom_formats:
-            # =================================
-            # Remux-1080p - Anime
-            # =================================
-            - trash_ids:
-                # Uncensored
-                - 026d5aadd1a6b4e550b134cb6c72b3ca
-                # 10bit
-                - b2550eb333d27b75833e25b8c2557b38
-                # Anime Dual Audio
-                - 418f50b10f1907201b6cfdf881f467b7
-              assign_scores_to:
-                - name: Remux-1080p - Anime
-                  score: 10
-            # =================================
-            # WEB-2160p
-            # =================================
-            # Optional
-            - trash_ids:
-                # Bad Dual Groups
-                - 32b367365729d530ca1c124a0b180c64
-                # DV (WEBDL)
-                - 9b27ab6498ec0f31a3353992e19434ca
-                # No-RlsGroup
-                - 82d40da2bc6923f41e14394075dd4b03
-              assign_scores_to:
-                - name: WEB-2160p
+  series:
+    base_url: http://sonarr:8989
+    api_key: ENC[AES256_GCM,data:pHTLv47BdVl3fbejccw9vgODJtKnc+Y97qIV0DFuP8Q=,iv:TXW4JJ1952hq4re86daU7yCZFlLldYgmmFchE6CzT/U=,tag:rYFgCqlM2yZLFTWECxUFIw==,type:str]
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+    quality_definition:
+      type: series
+    include:
+      - template: sonarr-quality-definition-series
+      - template: sonarr-v4-quality-profile-anime
+      - template: sonarr-v4-custom-formats-anime
+      - template: sonarr-v4-quality-profile-web-2160p
+      - template: sonarr-v4-custom-formats-web-2160p
+    quality_profiles:
+      - name: WEB-2160p
+        min_format_score: 10
+        qualities:
+          - name: WEB 2160p
+            qualities:
+              - WEBDL-2160p
+              - WEBRip-2160p
+          - name: WEB 1080p
+            qualities:
+              - WEBDL-1080p
+              - WEBRip-1080p
+    custom_formats:
+      # =================================
+      # Remux-1080p - Anime
+      # =================================
+      - trash_ids:
+          # Uncensored
+          - 026d5aadd1a6b4e550b134cb6c72b3ca
+          # 10bit
+          - b2550eb333d27b75833e25b8c2557b38
+          # Anime Dual Audio
+          - 418f50b10f1907201b6cfdf881f467b7
+        assign_scores_to:
+          - name: Remux-1080p - Anime
+            score: 10
+      # =================================
+      # WEB-2160p
+      # =================================
+      # Optional
+      - trash_ids:
+          # Bad Dual Groups
+          - 32b367365729d530ca1c124a0b180c64
+          # DV (WEBDL)
+          - 9b27ab6498ec0f31a3353992e19434ca
+          # No-RlsGroup
+          - 82d40da2bc6923f41e14394075dd4b03
+        assign_scores_to:
+          - name: WEB-2160p
 radarr:
-    movies:
-        base_url: http://radarr:7878
-        api_key: ENC[AES256_GCM,data:fg2j4P15czuEJ6L45YMrD7I4mIl0q0CpEL388hySHqk=,iv:RMt6Ggb9btPaG2Kg/strIVOf32XEwBDCLWatRY7HX5o=,tag:/oI5F03dx2OnBeyoLfjhnw==,type:str]
-        delete_old_custom_formats: true
-        replace_existing_custom_formats: true
-        quality_definition:
-            type: movie
-        include:
-            - template: radarr-quality-definition-sqp-streaming
-            - template: radarr-quality-profile-sqp-1-2160p-imax-e
-            - template: radarr-custom-formats-sqp-1-2160p
-        quality_profiles:
+  movies:
+    base_url: http://radarr:7878
+    api_key: ENC[AES256_GCM,data:fg2j4P15czuEJ6L45YMrD7I4mIl0q0CpEL388hySHqk=,iv:RMt6Ggb9btPaG2Kg/strIVOf32XEwBDCLWatRY7HX5o=,tag:/oI5F03dx2OnBeyoLfjhnw==,type:str]
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+    quality_definition:
+      type: movie
+    include:
+      - template: radarr-quality-definition-sqp-streaming
+      - template: radarr-quality-profile-sqp-1-2160p-imax-e
+      - template: radarr-custom-formats-sqp-1-2160p
+    quality_profiles:
+      - name: SQP-1 (2160p)
+        min_format_score: 10
+    custom_formats:
+      # =================================
+      # SQP-1
+      # =================================
+      - trash_ids:
+          # IMAX Enhanced
+          - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
+          # Bad Dual Groups
+          - b6832f586342ef70d9c128d40c07b872
+          # EVO (no WEBDL)
+          - 90cedc1fea7ea5d11298bebd3d1d3223
+          # No-RlsGroup
+          - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
+        assign_scores_to:
           - name: SQP-1 (2160p)
-            min_format_score: 10
-        custom_formats:
-            # =================================
-            # SQP-1
-            # =================================
-            - trash_ids:
-                # IMAX Enhanced
-                - 9f6cbff8cfe4ebbc1bde14c7b7bec0de
-                # Bad Dual Groups
-                - b6832f586342ef70d9c128d40c07b872
-                # EVO (no WEBDL)
-                - 90cedc1fea7ea5d11298bebd3d1d3223
-                # No-RlsGroup
-                - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5
-              assign_scores_to:
-                - name: SQP-1 (2160p)
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age: []
-    lastmodified: "2024-08-11T10:39:30Z"
-    mac: ENC[AES256_GCM,data:6XMx4eS3E8KAQlEpr67EDcXRyRZOcaecn/iSH09LimEWRDsdM3Dt/pnEsATdy4cssqTDWowYg8eoxUhWvpQybocrWwFuov9AmmHZ2SGlaNooN8s98P/JHrH/Fs7tol+KKFS9k9Fv37tV/h+lTwqrs46Cu6iHSQAdDPJWYe+PDyY=,iv:kCiIokJTBWIO3yu6Rl0QzTxqI+XQ9PpeMD1A8m6w8S4=,tag:od6feFXIk2vtThiXsuBpag==,type:str]
-    pgp:
-        - created_at: "2022-12-14T14:08:04Z"
-          enc: |
-            -----BEGIN PGP MESSAGE-----
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: "2024-08-11T10:39:30Z"
+  mac: ENC[AES256_GCM,data:6XMx4eS3E8KAQlEpr67EDcXRyRZOcaecn/iSH09LimEWRDsdM3Dt/pnEsATdy4cssqTDWowYg8eoxUhWvpQybocrWwFuov9AmmHZ2SGlaNooN8s98P/JHrH/Fs7tol+KKFS9k9Fv37tV/h+lTwqrs46Cu6iHSQAdDPJWYe+PDyY=,iv:kCiIokJTBWIO3yu6Rl0QzTxqI+XQ9PpeMD1A8m6w8S4=,tag:od6feFXIk2vtThiXsuBpag==,type:str]
+  pgp:
+    - created_at: "2022-12-14T14:08:04Z"
+      enc: |
+        -----BEGIN PGP MESSAGE-----
 
-            hQMOA4x50yY5upzjEAwAzcgCnydSccn5uzjCHVfhcnp8Vf27ztfzGxTvtiaSqCPo
-            lfaUcLbgvRdPX8SOMCPHrhPW2CwI5Ru6yhqIuU4ikxGEgstUMOZqFW965WpAUx9c
-            3WqVMVCnCocNsnZ0BGGdMk6gaFt901ItyM76pVX54VT4xAuAmNr1s4T1gY+eG5e7
-            EtTxYa6LBzIGNz7f+0hPgpPTZjQc05n7cGMGKHFbXoDRJ0K07XFDCybhQzckPEre
-            GBVkv5uFKPLBXHeyzXUUOy2+eZuoT0wnF+Xrn9xh1Xwp7OR0weRXAclz+mDnBWau
-            p2tcxy/WOQETa7og+dicy3nOWr/trIp1tmu2r0gRNco8XQR1jPsXFEl53CCgr8ag
-            tH9vPSL9DKoD3ROqE4XDl1TYNnvuwwr6mwethOxrO0OCRGhLeAsNCLkSD2Ekz1Gr
-            wllOWXAE+3VJU7uTFFV/I4c4aeGcsinzvDSGyPismNBCk/VV96o2dhuudLc1bYR0
-            bBn1wc75DxaClwpiWtmsDAC+5sb3QcnX+bUASgp28z7b5kuQG85FU/pirTfbAy2v
-            fxRuEJ68kuC4LuVd9Or+gncd+Esv4Q8EASiUnBOvonpq2+3x6kWWFm+opMwu6k4F
-            lNM/xKPTMOh7f/oCU1neoXVjOYCKLc2xSkQXsy9BNIvBtroCl2huBsoNW/YZ900q
-            RC+SArUG87d9ILfPdNGixf4Vq89dnc76f/Qeg+zbl+mAnrSK2G3xGl8QGx52oRFt
-            h3+UEhHp+bBRnslsWAAYAZFjT7ZR24NmqimZeZRgPfFZyQd3PjXUoXICUGmwnkSW
-            k7pa/5Oaovq7Zvhl+r/EqfbKWs03Rw4Gizx1MLC8XRHhENyJ9D+Qodx0193fryl+
-            vwNTlPv4aaVD1KOdl28DdwILZ+ppJuT78FKGKKpblIl4j2CQpbpFniNgQJF188UO
-            R0jfJci16DFO0LCQUfsjZOVRN0X1eKU2uAP5eqA1gp7xPw+PMXByB6CwD+IVjSFB
-            zkZGlGoFuKouV0zMYzreiinSXgF8fvOo9Y0QnrA2Sc3F7nkx12v2mVLtWseHx4DF
-            VGawifBJiQrhhEFbPPsTS940RDSLaiIRO9Y8Fg+5ePhWx3MIJvRuYFukzeGdPBZn
-            xq4oCDp75f9h1BAjxrE8Y2c=
-            =bNe7
-            -----END PGP MESSAGE-----
-          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-    encrypted_regex: key
-    version: 3.8.1
+        hQMOA4x50yY5upzjEAwAzcgCnydSccn5uzjCHVfhcnp8Vf27ztfzGxTvtiaSqCPo
+        lfaUcLbgvRdPX8SOMCPHrhPW2CwI5Ru6yhqIuU4ikxGEgstUMOZqFW965WpAUx9c
+        3WqVMVCnCocNsnZ0BGGdMk6gaFt901ItyM76pVX54VT4xAuAmNr1s4T1gY+eG5e7
+        EtTxYa6LBzIGNz7f+0hPgpPTZjQc05n7cGMGKHFbXoDRJ0K07XFDCybhQzckPEre
+        GBVkv5uFKPLBXHeyzXUUOy2+eZuoT0wnF+Xrn9xh1Xwp7OR0weRXAclz+mDnBWau
+        p2tcxy/WOQETa7og+dicy3nOWr/trIp1tmu2r0gRNco8XQR1jPsXFEl53CCgr8ag
+        tH9vPSL9DKoD3ROqE4XDl1TYNnvuwwr6mwethOxrO0OCRGhLeAsNCLkSD2Ekz1Gr
+        wllOWXAE+3VJU7uTFFV/I4c4aeGcsinzvDSGyPismNBCk/VV96o2dhuudLc1bYR0
+        bBn1wc75DxaClwpiWtmsDAC+5sb3QcnX+bUASgp28z7b5kuQG85FU/pirTfbAy2v
+        fxRuEJ68kuC4LuVd9Or+gncd+Esv4Q8EASiUnBOvonpq2+3x6kWWFm+opMwu6k4F
+        lNM/xKPTMOh7f/oCU1neoXVjOYCKLc2xSkQXsy9BNIvBtroCl2huBsoNW/YZ900q
+        RC+SArUG87d9ILfPdNGixf4Vq89dnc76f/Qeg+zbl+mAnrSK2G3xGl8QGx52oRFt
+        h3+UEhHp+bBRnslsWAAYAZFjT7ZR24NmqimZeZRgPfFZyQd3PjXUoXICUGmwnkSW
+        k7pa/5Oaovq7Zvhl+r/EqfbKWs03Rw4Gizx1MLC8XRHhENyJ9D+Qodx0193fryl+
+        vwNTlPv4aaVD1KOdl28DdwILZ+ppJuT78FKGKKpblIl4j2CQpbpFniNgQJF188UO
+        R0jfJci16DFO0LCQUfsjZOVRN0X1eKU2uAP5eqA1gp7xPw+PMXByB6CwD+IVjSFB
+        zkZGlGoFuKouV0zMYzreiinSXgF8fvOo9Y0QnrA2Sc3F7nkx12v2mVLtWseHx4DF
+        VGawifBJiQrhhEFbPPsTS940RDSLaiIRO9Y8Fg+5ePhWx3MIJvRuYFukzeGdPBZn
+        xq4oCDp75f9h1BAjxrE8Y2c=
+        =bNe7
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: key
+  version: 3.8.1

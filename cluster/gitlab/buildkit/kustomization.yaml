@@ -1,8 +1,7 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- buildkit-client-certs.yaml
-- buildkit-daemon-certs.yaml
-- hr-arm64.yaml
-- hr-amd64.yaml
+  - buildkit-client-certs.yaml
+  - buildkit-daemon-certs.yaml
+  - hr-arm64.yaml
+  - hr-amd64.yaml

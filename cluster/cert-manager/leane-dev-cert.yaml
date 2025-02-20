@@ -10,9 +10,9 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-http-key
     solvers:
-    - http01:
-       ingress:
-         class: haproxy-external
+      - http01:
+          ingress:
+            class: haproxy-external
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -26,4 +26,4 @@ spec:
     kind: ClusterIssuer
   commonName: leane.dev
   dnsNames:
-  - leane.dev
+    - leane.dev

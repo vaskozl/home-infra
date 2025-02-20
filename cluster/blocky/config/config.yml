@@ -1,40 +1,34 @@
 ports:
   dns: 53
   http: 4000
-
 upstreams:
   groups:
     default:
-    - https://dns.google/dns-query
-    - https://dns.cloudflare.com/dns-query
-
+      - https://dns.google/dns-query
+      - https://dns.cloudflare.com/dns-query
 bootstrapDns:
   - tcp+udp:1.1.1.1
   - tcp+udp:8.8.8.8
-
 filtering:
   queryTypes:
     - AAAA
-
 blocking:
   denylists:
     hagezi:
-    - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
-    - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
-    - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/doh.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/tif.medium.txt
+      - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/doh.txt
   clientGroupsBlock:
     default:
-    - hagezi
+      - hagezi
   loading:
     refreshPeriod: 6h
     concurrency: 1
     downloads:
       timeout: 10m
       cooldown: 10s
-
 prometheus:
   enable: true
-
 caching:
   maxItemsCount: 10_000
   prefetching: true

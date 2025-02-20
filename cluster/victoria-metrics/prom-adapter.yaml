@@ -8,10 +8,10 @@ metadata:
   namespace: victoria-metrics
 spec:
   ports:
-  - name: http
-    port: 8429
-    protocol: TCP
-    targetPort: 8429
+    - name: http
+      port: 8429
+      protocol: TCP
+      targetPort: 8429
   selector:
     app.kubernetes.io/component: monitoring
     app.kubernetes.io/name: vmsingle

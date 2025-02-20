@@ -1,4 +1,3 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
@@ -31,9 +30,9 @@ spec:
   postBuild:
     substitute: {}
     substituteFrom:
-    - kind: ConfigMap
-      name: cluster-ips
-    - kind: ConfigMap
-      name: cluster-settings
-    - kind: Secret
-      name: cluster-secrets
+      - kind: ConfigMap
+        name: cluster-ips
+      - kind: ConfigMap
+        name: cluster-settings
+      - kind: Secret
+        name: cluster-secrets

@@ -13,25 +13,25 @@ spec:
       version: 4.12.0
   interval: 1h
   valuesFrom:
-  - kind: ConfigMap
-    name: common-values
+    - kind: ConfigMap
+      name: common-values
   values:
     controller:
       service:
         externalIPs:
-        - ${EI_INGRESS_IN}
+          - ${EI_INGRESS_IN}
       ingressClass: internal
       ingressClassResource:
         name: internal
         enabled: true
         default: false
       topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/instance: ingress-nginx
-            app.kubernetes.io/component: controller
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/instance: ingress-nginx
+              app.kubernetes.io/component: controller
     tcp:
       '22': 'gitlab/gitlab-gitlab-shell:22'

@@ -2,13 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: v2ray
 resources:
-- _namespace.yaml
-- hr.yaml
+  - _namespace.yaml
+  - hr.yaml
 secretGenerator:
-- name: config
-  files:
-  - v2ray.json=config/v2ray.json.enc
+  - name: config
+    files:
+      - v2ray.json=config/v2ray.json.enc
 components:
-- ../common
+  - ../common
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

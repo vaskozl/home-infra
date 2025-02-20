@@ -6,13 +6,13 @@ metadata:
 spec:
   ingressClassName: haproxy-external
   rules:
-  - host: flux-webhook.sko.ai
-    http:
-      paths:
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: webhook-receiver
-            port:
-              number: 80
+    - host: flux-webhook.sko.ai
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: webhook-receiver
+                port:
+                  number: 80

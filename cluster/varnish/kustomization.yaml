@@ -1,18 +1,16 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: varnish
 resources:
-- _namespace.yaml
-- hr.yaml
-- external-ingress.yaml
+  - _namespace.yaml
+  - hr.yaml
+  - external-ingress.yaml
 components:
-- ../common
-
+  - ../common
 secretGenerator:
-- name: varnish-config
-  files:
-  - config/main.vcl
-  - config/hit-miss.vcl
+  - name: varnish-config
+    files:
+      - config/main.vcl
+      - config/hit-miss.vcl
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

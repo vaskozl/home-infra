@@ -1,12 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- cron.yaml
-
+  - cron.yaml
 secretGenerator:
-- name: reminders-msmtprc
-  files:
-  - msmtprc
-- name: reminders
-  files:
-    - reminders/trackers.txt
+  - name: reminders-msmtprc
+    files:
+      - msmtprc
+  - name: reminders
+    files:
+      - reminders/trackers.txt

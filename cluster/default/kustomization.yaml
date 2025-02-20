@@ -2,24 +2,24 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-- baikal
-- blog
-- cyberchef
-- dogcalc
-- echo
-- hass
-- homer
-- kromgo
-- leane-dev
-- microbin
-- net-tools
-- omada
-- paperless-ngx
-- reminders
-- scanner
-- syno
-- thelounge
-- vikunja
-- regcred.enc.yaml
+  - baikal
+  - blog
+  - cyberchef
+  - dogcalc
+  - echo
+  - hass
+  - homer
+  - kromgo
+  - leane-dev
+  - microbin
+  - net-tools
+  - omada
+  - paperless-ngx
+  - reminders
+  - scanner
+  - syno
+  - thelounge
+  - vikunja
+  - regcred.enc.yaml
 components:
-- ../common
+  - ../common

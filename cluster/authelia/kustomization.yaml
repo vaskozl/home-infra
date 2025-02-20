@@ -1,18 +1,16 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: authelia
 resources:
-- _namespace.yaml
-- hr.yaml
-- external-ingress.yaml
+  - _namespace.yaml
+  - hr.yaml
+  - external-ingress.yaml
 components:
-- ../common
-
+  - ../common
 secretGenerator:
-- name: authelia-config
-  files:
-  - config/configuration.yml
-  - config/users_database.yml
+  - name: authelia-config
+    files:
+      - config/configuration.yml
+      - config/users_database.yml
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

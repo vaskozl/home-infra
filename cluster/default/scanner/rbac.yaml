@@ -8,22 +8,21 @@ kind: ClusterRole
 metadata:
   name: scanner-role
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["list", "get"]
-- apiGroups: [""]
-  resources: ["pods/exec"]
-  verbs: ["create"]
-
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "get"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: scanner-binding
 subjects:
-- kind: ServiceAccount
-  name: scanner-sa
-  namespace: default
+  - kind: ServiceAccount
+    name: scanner-sa
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: scanner-role

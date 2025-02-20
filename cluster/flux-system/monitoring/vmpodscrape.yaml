@@ -1,4 +1,3 @@
----
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMPodScrape
 metadata:
@@ -10,21 +9,21 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-    - flux-system
+      - flux-system
   selector:
     matchExpressions:
-    - key: app
-      operator: In
-      values:
-      - helm-controller
-      - source-controller
-      - kustomize-controller
-      - notification-controller
-      - image-automation-controller
-      - image-reflector-controller
+      - key: app
+        operator: In
+        values:
+          - helm-controller
+          - source-controller
+          - kustomize-controller
+          - notification-controller
+          - image-automation-controller
+          - image-reflector-controller
   podMetricsEndpoints:
-  - port: http-prom
-    metricRelabelConfigs:
-    - action: drop
-      source_labels: [__name__]
-      regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+    - port: http-prom
+      metricRelabelConfigs:
+        - action: drop
+          source_labels: [__name__]
+          regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)

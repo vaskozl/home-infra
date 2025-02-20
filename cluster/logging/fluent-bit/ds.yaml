@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -7,30 +6,30 @@ spec:
   template:
     spec:
       containers:
-      - name: fluent-bit
-        image: ghcr.io/fluent/fluent-bit:3.2.6@sha256:991cb1153088891539769aaa1dc9dc0491e8d70caa916d273853bfce824b3822
-        args: [-c, "/config/fluent-bit.yaml"]
-        resources:
-          requests:
-            memory: "10Mi"
-            cpu: "10m"
-          limits:
-            memory: "512Mi"
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-          readOnly: true
-        - name: fluent-bit-config
-          mountPath: /config
+        - name: fluent-bit
+          image: ghcr.io/fluent/fluent-bit:3.2.6@sha256:991cb1153088891539769aaa1dc9dc0491e8d70caa916d273853bfce824b3822
+          args: [-c, "/config/fluent-bit.yaml"]
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "512Mi"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+              readOnly: true
+            - name: fluent-bit-config
+              mountPath: /config
       terminationGracePeriodSeconds: 10
       tolerations:
-      - operator: Exists
+        - operator: Exists
       volumes:
-      - name: varlog
-        hostPath:
-          path: /var/log
-      - name: fluent-bit-config
-        configMap:
-          name: fluent-bit-config
+        - name: varlog
+          hostPath:
+            path: /var/log
+        - name: fluent-bit-config
+          configMap:
+            name: fluent-bit-config
       serviceAccountName: fluent-bit

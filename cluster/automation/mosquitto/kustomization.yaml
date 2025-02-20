@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- hr.yaml
+  - hr.yaml
 configMapGenerator:
-- name: mosquitto-config
-  files:
-  - config/mosquitto-0.conf
-  - config/mosquitto-1.conf
+  - name: mosquitto-config
+    files:
+      - config/mosquitto-0.conf
+      - config/mosquitto-1.conf
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

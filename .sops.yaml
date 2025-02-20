@@ -2,3 +2,6 @@ creation_rules:
   - encrypted_regex: '((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))'
     pgp: >-
       E940DD1F01DE41AC266825F72E962083AFA12A4D
+stores:
+  yaml:
+    indent: 2

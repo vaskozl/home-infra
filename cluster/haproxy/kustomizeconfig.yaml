@@ -1,16 +1,16 @@
 nameReference:
-- kind: Secret
-  version: v1
-  fieldSpecs:
-  - path: spec/values/controller/extraVolumes/secret/secretName
-    kind: HelmRelease
-- kind: ConfigMap
-  version: v1
-  fieldSpecs:
-  - path: spec/values/controller/extraVolumes/configMap/name
-    kind: HelmRelease
-- kind: ConfigMap
-  version: v1
-  fieldSpecs:
-  - path: spec/valuesFrom/name
-    kind: HelmRelease
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - path: spec/values/controller/extraVolumes/secret/secretName
+        kind: HelmRelease
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - path: spec/values/controller/extraVolumes/configMap/name
+        kind: HelmRelease
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - path: spec/valuesFrom/name
+        kind: HelmRelease

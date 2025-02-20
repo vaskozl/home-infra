@@ -1,34 +1,29 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: haproxy
 resources:
-- _namespace.yaml
-- external.yaml
-- internal.yaml
-- tcp-services.yaml
-- vmservicescrape.yaml
-- ../netpols/allow-all-ingress
-
+  - _namespace.yaml
+  - external.yaml
+  - internal.yaml
+  - tcp-services.yaml
+  - vmservicescrape.yaml
+  - ../netpols/allow-all-ingress
 components:
-- ../common
-
+  - ../common
 configMapGenerator:
-- name: common-values
-  files:
-  - values.yaml=common-values.yaml
-- name: txt-config
-  files:
-  - config/public_hosts.txt
-  - cf-ips-v4.txt=https://www.cloudflare.com/ips-v4
-  - cf-ips-v6.txt=https://www.cloudflare.com/ips-v6
-
+  - name: common-values
+    files:
+      - values.yaml=common-values.yaml
+  - name: txt-config
+    files:
+      - config/public_hosts.txt
+      - cf-ips-v4.txt=https://www.cloudflare.com/ips-v4
+      - cf-ips-v6.txt=https://www.cloudflare.com/ips-v6
 secretGenerator:
-- name: lua
-  files:
-  - lua/haproxy-lua-http.lua
-  - lua/auth-request.lua
-  - lua/json.lua
-
+  - name: lua
+    files:
+      - lua/haproxy-lua-http.lua
+      - lua/auth-request.lua
+      - lua/json.lua
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

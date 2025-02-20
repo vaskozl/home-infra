@@ -1,4 +1,3 @@
----
 alertmanager:
   config:
     global:
@@ -12,31 +11,31 @@ sops:
   lastmodified: "2023-05-05T19:14:05Z"
   mac: ENC[AES256_GCM,data:NG0+HOwZaIHPciZj785uccsbf7Emea2f4jOPVr1w4UDNZjJPiFQTtaQGn78rH7GQi2L0qAlJG9JVfjE6H10HLq0K2meH/8dy5V/qAQX73enfr8QQKXONI45VAKwCFRXYGY6An9vuFMeuQQRDBxztd9NevVIPO2mJWapGeA0zRmU=,iv:0rPqgQy2KG3dCQ7G6QgximzztMf341tpxQpCPyMEG3s=,tag:ERCpWzCDqj8qp0I7XT94+g==,type:str]
   pgp:
-  - created_at: "2023-05-05T19:14:05Z"
-    enc: |
-      -----BEGIN PGP MESSAGE-----
+    - created_at: "2023-05-05T19:14:05Z"
+      enc: |
+        -----BEGIN PGP MESSAGE-----
 
-      hQMOA4x50yY5upzjEAv/Twp+TQp/rrF0OaGG2Pus/lyh2HKZeIC6SDA60xY6Ugkz
-      oi1ushwVIMgeMXuBP32t8qihpgWS2zRp3WRh2pdCy4s7Wij4J8TjMM7AkPegbB4w
-      fajNk02H2wlu8ZtcaVSfiCgLDS/mHX3VGCf65QeKjmXNDEfQ5teRhKFcUyIN8ya/
-      aU8kQ8nTC/6OyDU2ktft1nOmGajdF2f38V3NGJqa2PoZmLcUKxheL738CBlS2vlf
-      UgY/1NYc0+w6A4xqlouM/V7Tb5CrQhZg1ctb+oujv+fwOF5f4yJTemki6Nx9aqyp
-      sD3UxRyDIzAl9qla9ksJ24ZyjwTHZ4A5W7vvQ1vR5V2oYWrem/1SkK3R7wbeW6p5
-      TKv6mRopC9PKvDf9jy1NwM7gjqcg5pww4KFJP0NVSXd/dfWmnZ5nVGVFUrFn9AIt
-      Mxx5xkMx2hTQYD/EnTGN6AWz29mzF88lbbYFu+n1hdnmdkFp3xvOc5IbhCv6Cm6m
-      i49okgdD3DU63heHInwNC/9gSI4HKqduW555ffnS74+O6clJf9buR2uvqFibqULL
-      pzUNnc9UhFV7clxE3unE1LshGxUOMLWhvhEgdHCbP8soxw7d3HdBAuKMgzBZuyNY
-      9p4XOCVn6nwdfrC5/gYmpXca7853O4pge1Wk3zhmOzIkJCgPQrJxYCHWub5aRAsf
-      WTnuAnpfbLAljhIGel+wkg7GhAfNXXlXOATpYs/pbX6+yh8za5CLTngHyyQHyZ7/
-      /HwN2w7BFSLlxPhQNjlApEknKvLo1G/F1nN8wbDX0JvjpZtdJ4aFu3ypIlVGn8Hk
-      H+KIdPHkV7qcq2HvMes5XBBqSVYkZPeFvaN7w5haMokNQSEnz4KxMHBTjaMX1B1P
-      gneowTzFl65oOOOi9HdDoL95p0dSfNBhKvwMhx6sb3sHDE88uYlutc7r9KPMZhzx
-      JvToE8Mi3zWX1s6hSBszfuFYfowX3x99PfwwudeYkVCZrl2WBn7dUvmIOqMuPq4V
-      anztoOyELMYZMhm+hwWa9MXSXAHiODy+PRUXsAoi5jE08o4oEIWoctyu6gSEiHF9
-      xzsk2cnR8Tf1jHi9mKK1GbXY/dorVSQKP/bsZPGYbgl1V3Z/FKPy5rshHwuWFmqr
-      3WsppzkuKAb6xvgwfnhN
-      =4+le
-      -----END PGP MESSAGE-----
-    fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+        hQMOA4x50yY5upzjEAv/Twp+TQp/rrF0OaGG2Pus/lyh2HKZeIC6SDA60xY6Ugkz
+        oi1ushwVIMgeMXuBP32t8qihpgWS2zRp3WRh2pdCy4s7Wij4J8TjMM7AkPegbB4w
+        fajNk02H2wlu8ZtcaVSfiCgLDS/mHX3VGCf65QeKjmXNDEfQ5teRhKFcUyIN8ya/
+        aU8kQ8nTC/6OyDU2ktft1nOmGajdF2f38V3NGJqa2PoZmLcUKxheL738CBlS2vlf
+        UgY/1NYc0+w6A4xqlouM/V7Tb5CrQhZg1ctb+oujv+fwOF5f4yJTemki6Nx9aqyp
+        sD3UxRyDIzAl9qla9ksJ24ZyjwTHZ4A5W7vvQ1vR5V2oYWrem/1SkK3R7wbeW6p5
+        TKv6mRopC9PKvDf9jy1NwM7gjqcg5pww4KFJP0NVSXd/dfWmnZ5nVGVFUrFn9AIt
+        Mxx5xkMx2hTQYD/EnTGN6AWz29mzF88lbbYFu+n1hdnmdkFp3xvOc5IbhCv6Cm6m
+        i49okgdD3DU63heHInwNC/9gSI4HKqduW555ffnS74+O6clJf9buR2uvqFibqULL
+        pzUNnc9UhFV7clxE3unE1LshGxUOMLWhvhEgdHCbP8soxw7d3HdBAuKMgzBZuyNY
+        9p4XOCVn6nwdfrC5/gYmpXca7853O4pge1Wk3zhmOzIkJCgPQrJxYCHWub5aRAsf
+        WTnuAnpfbLAljhIGel+wkg7GhAfNXXlXOATpYs/pbX6+yh8za5CLTngHyyQHyZ7/
+        /HwN2w7BFSLlxPhQNjlApEknKvLo1G/F1nN8wbDX0JvjpZtdJ4aFu3ypIlVGn8Hk
+        H+KIdPHkV7qcq2HvMes5XBBqSVYkZPeFvaN7w5haMokNQSEnz4KxMHBTjaMX1B1P
+        gneowTzFl65oOOOi9HdDoL95p0dSfNBhKvwMhx6sb3sHDE88uYlutc7r9KPMZhzx
+        JvToE8Mi3zWX1s6hSBszfuFYfowX3x99PfwwudeYkVCZrl2WBn7dUvmIOqMuPq4V
+        anztoOyELMYZMhm+hwWa9MXSXAHiODy+PRUXsAoi5jE08o4oEIWoctyu6gSEiHF9
+        xzsk2cnR8Tf1jHi9mKK1GbXY/dorVSQKP/bsZPGYbgl1V3Z/FKPy5rshHwuWFmqr
+        3WsppzkuKAb6xvgwfnhN
+        =4+le
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
   encrypted_regex: slack
   version: 3.7.3

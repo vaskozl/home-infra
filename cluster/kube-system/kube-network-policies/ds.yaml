@@ -11,34 +11,34 @@ spec:
       nodeSelector:
         kubernetes.io/os: linux
       tolerations:
-      - operator: Exists
-        effect: NoSchedule
+        - operator: Exists
+          effect: NoSchedule
       serviceAccountName: kube-network-policies
       containers:
-      - name: kube-network-policies
-        image: ghcr.io/vaskozl/kube-network-policies:v0.5.1
-        args:
-        - /bin/netpol
-        - --hostname-override=$(MY_NODE_NAME)
-        - -v=1
-        volumeMounts:
-        - name: lib-modules
-          mountPath: /lib/modules
-          readOnly: true
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "50Mi"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["NET_ADMIN"]
-        env:
-        - name: MY_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
+        - name: kube-network-policies
+          image: ghcr.io/vaskozl/kube-network-policies:v0.5.1
+          args:
+            - /bin/netpol
+            - --hostname-override=$(MY_NODE_NAME)
+            - -v=1
+          volumeMounts:
+            - name: lib-modules
+              mountPath: /lib/modules
+              readOnly: true
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "50Mi"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["NET_ADMIN"]
+          env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
       volumes:
-      - name: lib-modules
-        hostPath:
-          path: /lib/modules
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules

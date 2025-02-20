@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -85,26 +84,26 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /usr/src/paperless/data
-            name: data
-            size: 1Mi
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /usr/src/paperless/media
-            name: media
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /usr/src/paperless/data
+              name: data
+              size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /usr/src/paperless/media
+              name: media
+              size: 1Mi
         type: statefulset
     ingress:
       app:
         hosts:
-        - host: paperless.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: paperless.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: paperless-ngx

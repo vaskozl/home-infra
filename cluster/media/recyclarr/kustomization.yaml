@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: media
 resources:
-- ./cronjob.yaml
+  - ./cronjob.yaml
 secretGenerator:
-- name: recyclarr-config
-  files:
-  - config/recyclarr.yml
+  - name: recyclarr-config
+    files:
+      - config/recyclarr.yml

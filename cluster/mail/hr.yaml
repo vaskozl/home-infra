@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -28,8 +27,8 @@ spec:
               - '-config=/etc/maddy/maddy.conf'
               - 'run'
             envFrom:
-            - secretRef:
-                name: maddy-secrets
+              - secretRef:
+                  name: maddy-secrets
             probes:
               liveness:
                 enabled: true
@@ -45,7 +44,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 add:
-                - NET_BIND_SERVICE
+                  - NET_BIND_SERVICE
                 drop: [ALL]
               runAsUser: 0
               runAsGroup: 0
@@ -54,28 +53,28 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /var/lib/maddy
-            name: maddy-data
-            size: 1Mi
-            storageClass: nfs-client
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/maddy
+              name: maddy-data
+              size: 1Mi
+              storageClass: nfs-client
         type: statefulset
     persistence:
       maddy-config:
         name: maddy-config
         type: configMap
         globalMounts:
-        - path: /etc/maddy
+          - path: /etc/maddy
       tls:
         name: mail-sko-ai-tls
         type: secret
         globalMounts:
-        - path: /etc/maddy/certs/mail.sko.ai
+          - path: /etc/maddy/certs/mail.sko.ai
       run-maddy:
         type: emptyDir
         globalMounts:
-        - path: /run/maddy
+          - path: /run/maddy
     service:
       maddy:
         annotations:

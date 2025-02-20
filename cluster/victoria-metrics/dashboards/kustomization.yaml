@@ -2,66 +2,66 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: victoria-metrics
 configMapGenerator:
-#################################################
-# Kubernetes-Mixin dashboards
-#################################################
-- name: dashboards-mixin-cluster-total
-  files:
-  - kubernetes-mixin/cluster-total.json
-- name: dashboards-mixin-controller-manager
-  files:
-  - kubernetes-mixin/controller-manager.json
-- name: dashboards-mixin-k8s-resources-cluster
-  files:
-  - kubernetes-mixin/k8s-resources-cluster.json
-- name: dashboards-mixin-k8s-resources-namespace
-  files:
-  - kubernetes-mixin/k8s-resources-namespace.json
-- name: dashboards-mixin-k8s-resources-node
-  files:
-  - kubernetes-mixin/k8s-resources-node.json
-- name: dashboards-mixin-k8s-resources-pod
-  files:
-  - kubernetes-mixin/k8s-resources-pod.json
-- name: dashboards-mixin-k8s-resources-workload
-  files:
-  - kubernetes-mixin/k8s-resources-workload.json
-- name: dashboards-mixin-k8s-resources-workloads-namespace
-  files:
-  - kubernetes-mixin/k8s-resources-workloads-namespace.json
-- name: dashboards-mixin-kubelet
-  files:
-  - kubernetes-mixin/kubelet.json
-- name: dashboards-mixin-namespace-by-pod
-  files:
-  - kubernetes-mixin/namespace-by-pod.json
-- name: dashboards-mixin-namespace-by-workload
-  files:
-  - kubernetes-mixin/namespace-by-workload.json
-- name: dashboards-mixin-persistentvolumesusage
-  files:
-  - kubernetes-mixin/persistentvolumesusage.json
-- name: dashboards-mixin-pod-total
-  files:
-  - kubernetes-mixin/pod-total.json
-- name: dashboards-mixin-workload-total
-  files:
-  - kubernetes-mixin/workload-total.json
-#################################################
-# Misc Dashboard
-#################################################
-- name: dashboards-misc-blocky
-  files:
-  - misc/blocky-grafana.json
-- name: dashboards-nfs-full
-  files:
-  - nfs-full.json=misc/nfs-full.json
-- name: haproxy-full
-  files:
-  - haproxy-2-full.json=misc/haproxy-2-full.json
-- name: node-exporter-full
-  files:
-  - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
+  #################################################
+  # Kubernetes-Mixin dashboards
+  #################################################
+  - name: dashboards-mixin-cluster-total
+    files:
+      - kubernetes-mixin/cluster-total.json
+  - name: dashboards-mixin-controller-manager
+    files:
+      - kubernetes-mixin/controller-manager.json
+  - name: dashboards-mixin-k8s-resources-cluster
+    files:
+      - kubernetes-mixin/k8s-resources-cluster.json
+  - name: dashboards-mixin-k8s-resources-namespace
+    files:
+      - kubernetes-mixin/k8s-resources-namespace.json
+  - name: dashboards-mixin-k8s-resources-node
+    files:
+      - kubernetes-mixin/k8s-resources-node.json
+  - name: dashboards-mixin-k8s-resources-pod
+    files:
+      - kubernetes-mixin/k8s-resources-pod.json
+  - name: dashboards-mixin-k8s-resources-workload
+    files:
+      - kubernetes-mixin/k8s-resources-workload.json
+  - name: dashboards-mixin-k8s-resources-workloads-namespace
+    files:
+      - kubernetes-mixin/k8s-resources-workloads-namespace.json
+  - name: dashboards-mixin-kubelet
+    files:
+      - kubernetes-mixin/kubelet.json
+  - name: dashboards-mixin-namespace-by-pod
+    files:
+      - kubernetes-mixin/namespace-by-pod.json
+  - name: dashboards-mixin-namespace-by-workload
+    files:
+      - kubernetes-mixin/namespace-by-workload.json
+  - name: dashboards-mixin-persistentvolumesusage
+    files:
+      - kubernetes-mixin/persistentvolumesusage.json
+  - name: dashboards-mixin-pod-total
+    files:
+      - kubernetes-mixin/pod-total.json
+  - name: dashboards-mixin-workload-total
+    files:
+      - kubernetes-mixin/workload-total.json
+  #################################################
+  # Misc Dashboard
+  #################################################
+  - name: dashboards-misc-blocky
+    files:
+      - misc/blocky-grafana.json
+  - name: dashboards-nfs-full
+    files:
+      - nfs-full.json=misc/nfs-full.json
+  - name: haproxy-full
+    files:
+      - haproxy-2-full.json=misc/haproxy-2-full.json
+  - name: node-exporter-full
+    files:
+      - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
