@@ -16,17 +16,18 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [baikal](https://sabre.io/baikal/) - {Cal,Card}Dav server
   * [blocky](https://github.com/0xERR0R/blocky) - DNS proxy and ad-blocker
   * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
-  * [maddy](https://maddy.email/) - Completel and modern mailserver
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
   * [immich](https://immich.app/) - Self-hosted photo and video management with state-of-the-art ML
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
+  * [maddy](https://maddy.email/) - Completel and modern mailserver
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
   * [ntfy](https://ntfy.sh) - Push notifications made easy
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [thelounge](https://thelounge.chat/) - IRC client
+  * [vikunja](https://github.com/go-vikunja/vikunja) - Todo-app
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
@@ -34,7 +35,6 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
-  * [varnish](https://www.haproxy.com/blog/haproxy-varnish-and-the-single-hostname-website) - Caching reverse proxy
   * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
