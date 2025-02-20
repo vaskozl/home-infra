@@ -4,6 +4,7 @@ metadata:
   name: minilb-controller
 spec:
   podManagementPolicy: Parallel
+  serviceName: minilb
   template:
     spec:
       priorityClassName: system-node-critical
