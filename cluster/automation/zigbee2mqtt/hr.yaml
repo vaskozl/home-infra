@@ -17,6 +17,7 @@ spec:
     defaultPodOptions:
       nodeSelector:
         app: zigbee-controller
+      shareProcessNamespace: true
     controllers:
       zigbee2mqtt:
         containers:
@@ -40,21 +41,21 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /app/data
-            name: data
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /app/data
+              name: data
+              size: 1Mi
         type: statefulset
     ingress:
       app:
         hosts:
-        - host: zm.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: zm.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       zzh:
         hostPath: /dev/ttyUSB0

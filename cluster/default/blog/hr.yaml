@@ -38,11 +38,11 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -50,18 +50,19 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         annotations:
           haproxy.org/response-set-header: Cache-Control "public"
         className: haproxy-external
         hosts:
-        - host: sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       tmp:
         type: emptyDir

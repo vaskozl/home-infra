@@ -40,7 +40,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
@@ -52,6 +52,7 @@ spec:
         runAsUser: 2000
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         name: aggregator-config
@@ -59,7 +60,7 @@ spec:
       logs:
         existingClaim: logging-pvc
         globalMounts:
-        - path: /var/log/k8s
+          - path: /var/log/k8s
     service:
       app:
         controller: fluent-aggregator

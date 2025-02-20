@@ -47,25 +47,26 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
+      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-external
         hosts:
-        - host: jf.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: jf.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       cache:
         type: emptyDir

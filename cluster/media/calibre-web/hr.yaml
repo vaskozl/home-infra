@@ -40,18 +40,18 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 add:
-                - NET_BIND_SERVICE
+                  - NET_BIND_SERVICE
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -61,25 +61,26 @@ spec:
         runAsUser: 1000
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     enableServiceLinks: false
     ingress:
       app:
         hosts:
-        - host: cw.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: cw.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       cache:
         globalMounts:
-        - path: /cache
+          - path: /cache
         type: emptyDir
       media:
         existingClaim: torrents-v2
         globalMounts:
-        - path: /torrents
+          - path: /torrents
       tmp:
         type: emptyDir
     service:

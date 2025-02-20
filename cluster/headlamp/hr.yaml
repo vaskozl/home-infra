@@ -56,9 +56,9 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 add:
-                - NET_BIND_SERVICE
+                  - NET_BIND_SERVICE
                 drop:
-                - ALL
+                  - ALL
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
@@ -72,10 +72,11 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         globalMounts:
-        - path: /build/plugins
+          - path: /build/plugins
         type: emptyDir
     service:
       app:
@@ -87,9 +88,9 @@ spec:
     ingress:
       app:
         hosts:
-        - host: headlamp.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: headlamp.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http

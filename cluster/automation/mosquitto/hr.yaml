@@ -21,9 +21,9 @@ spec:
         containers:
           app:
             args:
-            - sh
-            - -c
-            - exec mosquitto -c "/config/$(hostname).conf"
+              - sh
+              - -c
+              - exec mosquitto -c "/config/$(hostname).conf"
             image:
               repository: ghcr.io/vaskozl/mosquitto
               tag: 2.0.20@sha256:c6be277b56fb996110d7fa37a734be9b6152acd4464594f886650a2a526322af
@@ -42,7 +42,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -52,6 +52,7 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         name: mosquitto-config

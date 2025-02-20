@@ -43,25 +43,26 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /opt/tplink/EAPController/data
-            name: data
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /opt/tplink/EAPController/data
+              name: data
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
+      shareProcessNamespace: true
     ingress:
       app:
         annotations:
           haproxy.org/server-ssl: 'true'
         hosts:
-        - host: omada.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: omada.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: omada

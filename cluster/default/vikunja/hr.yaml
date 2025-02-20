@@ -35,21 +35,21 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            name: db
-            size: 1Mi
-            globalMounts:
-            - path: /db
-          - accessMode: ReadWriteOnce
-            name: files
-            size: 1Mi
-            globalMounts:
-            - path: /app/vikunja/files
+            - accessMode: ReadWriteOnce
+              name: db
+              size: 1Mi
+              globalMounts:
+                - path: /db
+            - accessMode: ReadWriteOnce
+              name: files
+              size: 1Mi
+              globalMounts:
+                - path: /app/vikunja/files
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -59,22 +59,23 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         globalMounts:
-        - path: /etc/vikunja/config.yml
-          subPath: config.yml
+          - path: /etc/vikunja/config.yml
+            subPath: config.yml
         name: vikunja-config
         type: secret
     ingress:
       app:
         hosts:
-        - host: todo.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: todo.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: vikunja

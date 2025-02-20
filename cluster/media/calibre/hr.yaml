@@ -19,8 +19,8 @@ spec:
         containers:
           app:
             args:
-            - --port=8081
-            - /torrents/calibe-library
+              - --port=8081
+              - /torrents/calibe-library
             env:
               HOME: /config
             image:
@@ -42,16 +42,16 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -61,21 +61,22 @@ spec:
         runAsUser: 1000
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     enableServiceLinks: false
     ingress:
       app:
         hosts:
-        - host: cb.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: cb.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       media:
         existingClaim: torrents-v2
         globalMounts:
-        - path: /torrents
+          - path: /torrents
       tmp:
         type: emptyDir
     service:

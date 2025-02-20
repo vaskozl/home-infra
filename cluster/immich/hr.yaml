@@ -25,6 +25,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         runAsNonRoot: true
+      shareProcessNamespace: true
     controllers:
       server:
         containers:
@@ -33,7 +34,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.126.1@sha256:f8a3c78ec0a0ace20517acedaab9c2f3edcfc9b96e03080ba401acf55792470e
             env:
-              <<: &env-common
+              !!merge <<: &env-common
                 REDIS_HOSTNAME: immich-redis
                 DB_HOSTNAME: immich-postgres
                 DB_DATABASE_NAME: immich
@@ -58,7 +59,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.126.1@sha256:f8a3c78ec0a0ace20517acedaab9c2f3edcfc9b96e03080ba401acf55792470e
             env:
-              <<: *env-common
+              !!merge <<: *env-common
               IMMICH_WORKERS_EXCLUDE: *server-include
             securityContext: *security
             resources:
@@ -74,7 +75,7 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.126.1@sha256:0989db1266d91e553375289571b989d49e10690d466802fcf23326f16b747d4c
             env:
-              <<: *env-common
+              !!merge <<: *env-common
               MPLCONFIGDIR: /tmp/matplotlib
             securityContext: *security
             resources:
@@ -119,11 +120,11 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /var/lib/postgresql/data
-            name: pgdata
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/postgresql/data
+              name: pgdata
+              size: 1Mi
         type: statefulset
     persistence:
       upload:
@@ -133,10 +134,10 @@ spec:
         advancedMounts:
           server:
             app:
-            - path: /usr/src/app/upload
+              - path: /usr/src/app/upload
           microservices:
             app:
-            - path: /usr/src/app/upload
+              - path: /usr/src/app/upload
       photos:
         type: nfs
         server: syno.sko.ai
@@ -144,18 +145,18 @@ spec:
         advancedMounts:
           server:
             app:
-            - path: /mnt/syno-photos
-              readOnly: true
+              - path: /mnt/syno-photos
+                readOnly: true
           microservices:
             app:
-            - path: /mnt/syno-photos
-              readOnly: true
+              - path: /mnt/syno-photos
+                readOnly: true
       model-cache:
         type: emptyDir
         advancedMounts:
           machine-learning:
             app:
-            - path: /cache
+              - path: /cache
       tmp:
         type: emptyDir
     service:
@@ -183,9 +184,9 @@ spec:
       immich:
         className: haproxy-external
         hosts:
-        - host: immich.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: server
-              port: http
+          - host: immich.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: server
+                  port: http

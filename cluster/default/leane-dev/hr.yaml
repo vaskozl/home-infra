@@ -38,11 +38,11 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -50,21 +50,22 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         annotations:
           haproxy.org/response-set-header: Cache-Control "public"
         className: haproxy-external
         hosts:
-        - host: leane.dev
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: leane.dev
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
           - hosts:
-            - leane.dev
+              - leane.dev
             secretName: leane-dev-tls
     persistence:
       tmp:

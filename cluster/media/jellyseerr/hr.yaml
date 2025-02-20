@@ -38,16 +38,16 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /app/config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /app/config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -57,16 +57,17 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-external
         hosts:
-        - host: requests.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: requests.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: jellyseerr

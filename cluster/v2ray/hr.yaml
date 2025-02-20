@@ -38,7 +38,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
@@ -51,22 +51,23 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         globalMounts:
-        - path: /config
+          - path: /config
         name: config
         type: secret
     ingress:
       app:
         className: haproxy-external
         hosts:
-        - host: sko.ai
-          paths:
-          - path: /ray
-            service:
-              identifier: app
-              port: http
+          - host: sko.ai
+            paths:
+              - path: /ray
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: v2ray

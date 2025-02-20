@@ -31,7 +31,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -41,15 +41,16 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         hosts:
-        - host: cyberchef.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: cyberchef.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: cyberchef

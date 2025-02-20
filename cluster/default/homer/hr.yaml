@@ -36,7 +36,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -46,20 +46,21 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         hosts:
-        - host: home.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: home.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         globalMounts:
-        - path: /usr/share/webapps/homer/assets/config.yml
-          subPath: config.yml
+          - path: /usr/share/webapps/homer/assets/config.yml
+            subPath: config.yml
         name: homer-config
         type: configMap
     service:

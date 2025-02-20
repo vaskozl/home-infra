@@ -39,13 +39,13 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: arm64
       imagePullSecrets:
-      - name: regcred
+        - name: regcred
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -53,6 +53,7 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       tmp:
         type: emptyDir
@@ -60,14 +61,14 @@ spec:
       app:
         className: haproxy-external
         hosts:
-        - host: dogcalc.sko.ai
-          paths: &paths
-          - path: /
-            service:
-              identifier: app
-              port: http
-        - host: pawlanced.sko.ai
-          paths: *paths
+          - host: dogcalc.sko.ai
+            paths: &paths
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+          - host: pawlanced.sko.ai
+            paths: *paths
     service:
       app:
         controller: dogcalc

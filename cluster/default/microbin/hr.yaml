@@ -22,8 +22,8 @@ spec:
               MICROBIN_DATA_DIR: /var/lib/microbin
               MICROBIN_PORT: 8080
             envFrom:
-            - secretRef:
-                name: microbin.env
+              - secretRef:
+                  name: microbin.env
             image:
               repository: ghcr.io/vaskozl/microbin-bin
               tag: 2.0.4@sha256:3e44beb21686e2c59556f214e5c5e92bae58032563d73b5ef03cf148b0973fd7
@@ -42,16 +42,16 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /var/lib/microbin
-            name: data
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/microbin
+              name: data
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -61,16 +61,17 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-external
         hosts:
-        - host: mb.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: mb.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: microbin

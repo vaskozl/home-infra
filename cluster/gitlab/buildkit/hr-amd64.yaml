@@ -19,18 +19,18 @@ spec:
         containers:
           app:
             args:
-            - --root
-            - /cache
-            - --addr
-            - unix:///run/buildkit/buildkitd.sock
-            - --addr
-            - tcp://0.0.0.0:1234
-            - --tlscacert
-            - /certs/ca.pem
-            - --tlscert
-            - /certs/cert.pem
-            - --tlskey
-            - /certs/key.pem
+              - --root
+              - /cache
+              - --addr
+              - unix:///run/buildkit/buildkitd.sock
+              - --addr
+              - tcp://0.0.0.0:1234
+              - --tlscacert
+              - /certs/ca.pem
+              - --tlscert
+              - /certs/cert.pem
+              - --tlskey
+              - /certs/key.pem
             image:
               repository: ghcr.io/vaskozl/buildkit
               tag: 0.19.0@sha256:81bd5d20e1ec116db202d6c2343ddb4a2dd27f59517a1481d68f8bb9fdd64855
@@ -52,12 +52,13 @@ spec:
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
+      shareProcessNamespace: true
     persistence:
       cache:
         type: emptyDir
       certs:
         globalMounts:
-        - path: /certs
+          - path: /certs
         name: buildkit-daemon-certs
         type: secret
     service:

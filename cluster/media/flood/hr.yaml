@@ -19,7 +19,7 @@ spec:
         containers:
           app:
             args:
-            - /usr/bin/flood
+              - /usr/bin/flood
             env:
               FLOOD_OPTION_AUTH: none
               FLOOD_OPTION_HOST: 0.0.0.0
@@ -45,7 +45,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -55,16 +55,17 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         hosts:
-        - host: fl.sko.ai
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: app
-              port: http
+          - host: fl.sko.ai
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
     persistence:
       data:
         type: emptyDir

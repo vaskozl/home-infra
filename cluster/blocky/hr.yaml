@@ -38,9 +38,9 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 add:
-                - NET_BIND_SERVICE
+                  - NET_BIND_SERVICE
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
@@ -53,11 +53,12 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     persistence:
       config:
         globalMounts:
-        - path: /app/config.yml
-          subPath: config.yml
+          - path: /app/config.yml
+            subPath: config.yml
         name: config
         type: configMap
     service:

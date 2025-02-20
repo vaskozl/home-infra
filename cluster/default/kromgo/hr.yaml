@@ -51,7 +51,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -61,21 +61,22 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-external
         hosts:
-        - host: kromgo.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: kromgo.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         globalMounts:
-        - path: /kromgo/config.yaml
-          subPath: config.yaml
+          - path: /kromgo/config.yaml
+            subPath: config.yaml
         name: kromgo-config
         type: configMap
     service:

@@ -19,8 +19,8 @@ spec:
         containers:
           app:
             args:
-            - --config
-            - /config/configuration.yml
+              - --config
+              - /config/configuration.yml
             image:
               repository: ghcr.io/vaskozl/authelia-bin
               tag: 4.38.19@sha256:2e167740a4a8bb13b6a0310cb651c33b012497fbe331651c2e653827131f597e
@@ -40,7 +40,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
     defaultPodOptions:
       securityContext:
@@ -50,20 +50,21 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-internal
         hosts:
-        - host: gate.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: gate.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         globalMounts:
-        - path: /config
+          - path: /config
         name: authelia-config
         type: secret
       tmp:

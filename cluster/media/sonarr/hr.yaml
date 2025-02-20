@@ -36,16 +36,16 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -55,15 +55,16 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         hosts:
-        - host: sonarr.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: sonarr.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       tmp:
         type: emptyDir

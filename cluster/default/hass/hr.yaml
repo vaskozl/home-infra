@@ -36,14 +36,15 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
-          - accessMode: ReadWriteOnce
-            globalMounts:
-            - path: /config
-            name: config
-            size: 1Mi
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
+      shareProcessNamespace: true
     ingress:
       app:
         annotations:
@@ -56,12 +57,12 @@ spec:
             http-request deny unless allowed
         className: haproxy-external
         hosts:
-        - host: ha.sko.ai
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: ha.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     service:
       app:
         controller: hass

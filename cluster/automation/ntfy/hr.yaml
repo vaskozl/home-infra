@@ -31,7 +31,7 @@ spec:
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
@@ -45,8 +45,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
         sysctls:
-        - name: net.ipv4.ip_unprivileged_port_start
-          value: "0"
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
+      shareProcessNamespace: true
     service:
       app:
         controller: ntfy
@@ -74,8 +75,8 @@ spec:
         type: configMap
         name: ntfy-config
         globalMounts:
-        - path: /etc/ntfy
+          - path: /etc/ntfy
       cache:
         type: emptyDir
         globalMounts:
-        - path: /var/cache/ntfy
+          - path: /var/cache/ntfy
