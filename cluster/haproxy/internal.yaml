@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: internal
 spec:
+  interval: 1h
   chart:
     spec:
       chart: kubernetes-ingress

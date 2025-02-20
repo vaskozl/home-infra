@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: tailscale
 spec:
+  interval: 1h
   chart:
     spec:
       chart: tailscale-operator

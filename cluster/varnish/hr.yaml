@@ -6,6 +6,7 @@ metadata:
     patch.sko.ai/app-template: statefulset
   name: varnish
 spec:
+  interval: 1h
   chart:
     spec:
       chart: app-template
