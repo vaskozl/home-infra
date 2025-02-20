@@ -21,6 +21,11 @@ spec:
       ingressClassResource:
         name: haproxy-external
         default: false
+      daemonset:
+        useHostPort: true
+        hostPorts:
+          http: 80
+          https: 443
       service:
         loadBalancerIP: ${EI_INGRESS_EX}
         nodePorts:
