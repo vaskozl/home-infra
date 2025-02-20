@@ -3,9 +3,15 @@ kind: Kustomization
 namespace: minilb
 resources:
   - _namespace.yaml
-  - hr.yaml
+  - ds.yaml
+  - sts.yaml
   - rbac.yaml
   - sa.yaml
   - ../netpols/allow-all-ingress
 components:
   - ../common
+labels:
+  - pairs:
+      tier: node
+      app: minilb
+    includeSelectors: true

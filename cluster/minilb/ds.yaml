@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: minilb-dns
+spec:
+  template:
+    spec:
+      priorityClassName: system-node-critical
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      tolerations:
+        - operator: Exists
+          effect: NoSchedule
+      serviceAccountName: minilb
+      containers:
+        - name: minilb
+          image: ghcr.io/vaskozl/minilb:0.0.3@sha256:b23a23b7387bacf199748e468a58bf4b98f01a55678597b78de81e0a94d9467d
+          ports:
+            - containerPort: 53
+              protocol: UDP
+              hostPort: 5353
+          resources:
+            requests:
+              cpu: "5m"
+              memory: "10Mi"
