@@ -29,24 +29,3 @@ spec:
     service:
       type: NodePort
       nodePort: 30054
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: k8s-gateway
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: k8s-gateway
-                        ports:
-                          - containerPort: 1053
-                            hostPort: 5354
-                            name: dns-udp
-                            protocol: UDP
-                          - containerPort: 9153
-                            name: metrics
-                            protocol: TCP
