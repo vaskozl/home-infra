@@ -3,6 +3,9 @@ kind: ClusterRole
 metadata:
   name: minilb
 rules:
+  - apiGroups: [networking.k8s.io]
+    resources: [ingresses]
+    verbs: [get, list, watch]
   - apiGroups: [""]
     resources:
       - endpoints
