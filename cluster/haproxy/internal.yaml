@@ -21,16 +21,11 @@ spec:
       ingressClassResource:
         name: haproxy-internal
         default: true
-      service:
-        tcpPorts:
-          - name: ssh
-            port: 22
-            targetPort: 22
       config:
         request-set-header: X-Ingress-Class "haproxy-internal"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
-        - --configmap-tcp-services=haproxy/tcp-services
+        - --configmap-tcp-services=haproxy/tcp-internal
       extraVolumes:
         - name: lua
           secret:

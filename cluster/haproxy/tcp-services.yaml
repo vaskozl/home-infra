@@ -1,6 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: tcp-services
+  name: tcp-internal
 data:
   "22": gitlab/gitlab-gitlab-shell:22
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-external
+data:
+  "25": mailserver/mx:25

@@ -60,8 +60,6 @@ controller:
       http-response set-header X-Content-Type-Options "nosniff"
       http-response set-header X-Frame-Options "sameorigin"
       http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
-  extraArgs:
-    - --default-ssl-certificate=cert-manager/sko-ai-tls
   extraVolumeMounts:
     - name: lua
       mountPath: /usr/local/share/lua

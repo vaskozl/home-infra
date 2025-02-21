@@ -19,12 +19,19 @@ spec:
     controller:
       daemonset:
         useHostPort: true
+        hostPorts:
+          smtp: 25
+      containerPort:
+        smtp: 25
       ingressClass: haproxy-external
       ingressClassResource:
         name: haproxy-external
         default: false
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
+      extraArgs:
+        - --default-ssl-certificate=cert-manager/sko-ai-tls
+        - --configmap-tcp-services=haproxy/tcp-external
       extraVolumes:
         - name: lua
           secret:
