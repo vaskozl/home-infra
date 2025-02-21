@@ -78,13 +78,12 @@ spec:
     service:
       maddy:
         annotations:
-          coredns.io/hostname: mail
+          minilb/host: mail.sko.ai
         controller: maddy
         ports:
           smtp:
             primary: true
             port: 25
-            nodePort: 31025
           imap:
             port: 143
           smtp-secure:
@@ -96,4 +95,3 @@ spec:
           relay:
             port: 2225
         type: LoadBalancer
-        loadBalancerIP: ${EI_MAILSERVER}
