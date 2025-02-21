@@ -1,10 +1,9 @@
 controller:
   kind: DaemonSet
   service:
+    enabled: true
     type: LoadBalancer
     externalTrafficPolicy: Local
-    annotations:
-      tailscale.com/expose: "true"
   # Run on the masters
   nodeSelector:
     node-role.kubernetes.io/control-plane: ""

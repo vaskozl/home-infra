@@ -17,15 +17,12 @@ spec:
       name: common-values
   values:
     controller:
+      daemonset:
+        useHostPort: true
       ingressClass: haproxy-external
       ingressClassResource:
         name: haproxy-external
         default: false
-      service:
-        loadBalancerIP: ${EI_INGRESS_EX}
-        nodePorts:
-          http: 31080
-          https: 31443
       config:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraVolumes:
