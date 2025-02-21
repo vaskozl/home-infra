@@ -16,7 +16,7 @@ spec:
       serviceAccountName: minilb
       containers:
         - name: minilb
-          image: ghcr.io/vaskozl/minilb:0.0.3@sha256:b23a23b7387bacf199748e468a58bf4b98f01a55678597b78de81e0a94d9467d
+          image: ghcr.io/vaskozl/minilb:0.0.4@sha256:b23a23b7387bacf199748e468a58bf4b98f01a55678597b78de81e0a94d9467d
           args: [-controller=true]
           resources:
             requests:
