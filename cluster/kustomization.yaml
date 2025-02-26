@@ -7,6 +7,7 @@ resources:
   - cert-manager
   - default
   - flux-system
+  - gitlab
   - haproxy
   - headlamp
   - immich
@@ -18,9 +19,8 @@ resources:
   - minilb
   - nfs-subdir
   - rbac
+  - renovate
+  - tailscale
   - v2ray
   - vaultwarden
   - victoria-metrics
-  # Need amd64
-  - renovate
-  - gitlab
