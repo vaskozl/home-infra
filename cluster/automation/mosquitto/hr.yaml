@@ -60,9 +60,8 @@ spec:
     service:
       app:
         annotations:
-          coredns.io/hostname: mqtt
+          minilb/host: mqtt.sko.ai
         controller: mosquitto
-        loadBalancerIP: ${EI_MQTT}
         externalTrafficPolicy: Local
         ports:
           mqtt:
