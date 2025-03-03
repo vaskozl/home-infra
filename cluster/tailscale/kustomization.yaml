@@ -4,5 +4,6 @@ namespace: tailscale
 resources:
   - _namespace.yaml
   - hr.yaml
+  - ../netpols/allow-all-ingress
 components:
   - ../common
