@@ -3,6 +3,7 @@ controller:
   service:
     enabled: true
     type: LoadBalancer
+    loadBalancerClass: tailscale
     externalTrafficPolicy: Local
   # Run on the masters
   nodeSelector:

@@ -27,5 +27,8 @@ spec:
     replicaCount: 3
     ttl: 5
     service:
-      type: NodePort
+      type: ClusterIP
+      annotations:
+        tailscale.com/proxy-group: ts-ingress
+        tailscale.com/expose: "true"
       nodePort: 30054

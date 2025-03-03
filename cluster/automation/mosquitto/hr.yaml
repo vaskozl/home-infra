@@ -60,10 +60,11 @@ spec:
     service:
       app:
         annotations:
-          minilb/host: mqtt.sko.ai
+          coredns.io/hostname: mqtt
         controller: mosquitto
         externalTrafficPolicy: Local
+        type: LoadBalancer
+        loadBalancerClass: tailscale
         ports:
           mqtt:
             port: 1883
-        type: LoadBalancer

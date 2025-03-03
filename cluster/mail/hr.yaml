@@ -78,7 +78,7 @@ spec:
     service:
       maddy:
         annotations:
-          minilb/host: mail.sko.ai
+          coredns.io/hostname: mail
         controller: maddy
         ports:
           smtp:
@@ -95,3 +95,4 @@ spec:
           relay:
             port: 2225
         type: LoadBalancer
+        loadBalancerClass: tailscale

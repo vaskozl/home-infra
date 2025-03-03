@@ -52,6 +52,7 @@ spec:
       app:
         controller: ntfy
         type: LoadBalancer
+        loadBalancerClass: tailscale
         ports:
           smtp:
             port: 25
