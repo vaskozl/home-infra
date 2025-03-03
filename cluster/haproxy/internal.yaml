@@ -21,6 +21,11 @@ spec:
       ingressClassResource:
         name: haproxy-internal
         default: true
+      service:
+        tcpPorts:
+          - name: ssh
+            port: 22
+            targetPort: 22
       config:
         request-set-header: X-Ingress-Class "haproxy-internal"
       extraArgs:
