@@ -24,11 +24,8 @@ spec:
                 cpu: 10m
                 memory: 15Mi
     domain: sko.ai
-    replicaCount: 3
-    ttl: 5
+    replicaCount: 2
     service:
-      type: ClusterIP
+      type: LoadBalancer
       annotations:
-        tailscale.com/proxy-group: ts-ingress
         tailscale.com/expose: "true"
-      nodePort: 30054
