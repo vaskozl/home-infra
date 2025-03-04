@@ -4,7 +4,6 @@ controller:
     enabled: true
     type: LoadBalancer
     loadBalancerClass: tailscale
-    externalTrafficPolicy: Local
   # Run on the masters
   nodeSelector:
     node-role.kubernetes.io/control-plane: ""

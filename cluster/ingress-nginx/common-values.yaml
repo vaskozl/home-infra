@@ -10,7 +10,6 @@ controller:
     X-Content-Type-Options: nosniff
   service:
     type: LoadBalancer
-    externalTrafficPolicy: Local
   metrics:
     enabled: true
   config:

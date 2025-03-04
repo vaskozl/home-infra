@@ -64,7 +64,6 @@ spec:
         annotations:
           coredns.io/hostname: mqtt
         controller: mosquitto
-        externalTrafficPolicy: Local
         type: LoadBalancer
         loadBalancerClass: tailscale
         ports:

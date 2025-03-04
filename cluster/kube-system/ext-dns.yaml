@@ -8,7 +8,6 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "external-dns"
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Local
   loadBalancerIP: ${EI_EXT_DNS}
   ports:
     - port: 53
