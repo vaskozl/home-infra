@@ -3,6 +3,8 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: sonarr
+  annotations:
+    patch.sko.ai/app-template: common
 spec:
   interval: 1h
   chart:

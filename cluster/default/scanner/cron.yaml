@@ -18,7 +18,7 @@ spec:
                 - /script/scan-containers.pl
                 - -u
                 - -m=pixel@ntfy.sko.ai
-                - -s=ntfy.automation
+                - -s=ntfy.automation.svc.cluster.local
               volumeMounts:
                 - name: script
                   mountPath: /script

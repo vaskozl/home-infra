@@ -12,3 +12,7 @@ patches:
   - path: patches/hr.yaml
     target:
       kind: HelmRelease
+  - path: patches/hr-app-template.yaml
+    target:
+      kind: HelmRelease
+      annotationSelector: patch.sko.ai/app-template=common

@@ -61,7 +61,7 @@ spec:
               - to: alerts@ntfy.sko.ai
                 from: alertmanager@sko.ai
                 hello: am.sko.ai
-                smarthost: 'ntfy.automation:25'
+                smarthost: 'ntfy.automation.svc.cluster.local:25'
                 require_tls: false
                 send_resolved: true
                 headers:
