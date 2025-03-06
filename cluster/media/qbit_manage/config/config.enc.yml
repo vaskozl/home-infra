@@ -85,14 +85,15 @@ webhooks:
 orphaned:
   empty_after_x_days: 2
   exclude_patterns: null
+  max_orphaned_files_to_delete: 500
 sops:
   kms: []
   gcp_kms: []
   azure_kv: []
   hc_vault: []
   age: []
-  lastmodified: "2024-12-01T10:57:30Z"
-  mac: ENC[AES256_GCM,data:+xdfQSenuI2OxCVn6WvU0y+Q//P2tuSgqmUkfw2uAZXmW+Y1XgCijnVc4DtqwTAg6p9umUzH4xm2GR9lS4Q2Idcu3GA0l9ZGosyk87V6CiyhTp9GVVcepRpY48D1hpQEkA7HTSb/rk+OVw6Yzs2iMuXijvoutjJI51v7qrGfUPM=,iv:/pV0GybmRyEq8Y3oxF9SIO6ojEQli+wHZMSoR3x8pUU=,tag:1IDxzPlHfCUdmFzCMg1gpw==,type:str]
+  lastmodified: "2025-03-06T00:17:22Z"
+  mac: ENC[AES256_GCM,data:RMTBtjq7nY12MhWKzpWIhgXnbX6LClFmSKkcRaHKFcD79bhzCSg7peLG/NBl7V63CfkGeVLVFTUrD88NSo+2tu5jYdN0G9OR2MIWXwsj4V3Z6k/+xMLKVuHQ2Tv3c1/bgiABgkBtCiIL2KAPik7pFMc7Mk7JtwhkiZQQ9TkIxxw=,iv:SrIHTWcUSRZ5+T5i1MrtRf0do2//uucOSIyCVSJ2CY4=,tag:oQU4+BIWypEm8/hEUQbTdg==,type:str]
   pgp:
     - created_at: "2022-12-13T10:01:32Z"
       enc: |
@@ -121,4 +122,4 @@ sops:
         -----END PGP MESSAGE-----
       fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
   encrypted_regex: (pass|host|user)
-  version: 3.9.1
+  version: 3.9.4
