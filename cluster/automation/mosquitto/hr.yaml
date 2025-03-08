@@ -66,7 +66,7 @@ spec:
           minilb/host: mqtt.sko.ai
         controller: mosquitto
         type: LoadBalancer
-        loadBalancerClass: tailscale
+        loadBalancerClass: minilb
         ports:
           mqtt:
             port: 1883

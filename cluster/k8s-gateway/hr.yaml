@@ -52,6 +52,6 @@ spec:
               metadata:
                 name: app
               spec:
-                loadBalancerClass: tailscale
+                loadBalancerClass: minilb
             target:
               kind: Service
