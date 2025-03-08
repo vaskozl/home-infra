@@ -81,6 +81,7 @@ spec:
       maddy:
         annotations:
           coredns.io/hostname: mail
+          minilb/host: mail.sko.ai
         controller: maddy
         ports:
           smtp:
