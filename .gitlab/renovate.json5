@@ -98,5 +98,17 @@
       "groupName": "immich",
       "sourceUrl": "https://github.com/immich-app/immich",
     }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        "APK_PKG: (?<apkPkg>.*?)\\s+APK_VER: (?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "repology",
+      "depNameTemplate": "alpine_edge/{{{apkPkg}}}",
+      "versioningTemplate": "loose"
+    }
   ]
 }
