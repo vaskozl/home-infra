@@ -25,9 +25,6 @@ spec:
             image:
               repository: ghcr.io/vaskozl/maddy
               tag: 0.7.1@sha256:2f1f810f66d706495c4abb9ad26fcd9ae6f061da6031ec7b56b819c5f73ee393
-            args:
-              - '-config=/etc/maddy/maddy.conf'
-              - 'run'
             envFrom:
               - secretRef:
                   name: maddy-secrets
