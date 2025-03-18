@@ -22,7 +22,7 @@ spec:
         replicas: 2
         containers:
           app:
-            args:
+            command:
               - sh
               - -c
               - exec mosquitto -c "/config/$(hostname).conf"
