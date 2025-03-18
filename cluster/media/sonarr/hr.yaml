@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/sonarr-bin
-              tag: 4.0.13@sha256:00cdb989f0f29f9f1636f87bdae77f73b9afb0c6970c91585c38474570588cc2
+              repository: ghcr.io/vaskozl/sonarr
+              tag: 4.0.13@sha256:76acb078e807b89b0f24e5c2f566286b595a10e6a2ac9cf65da8e2eef5fa3433
             probes:
               liveness:
                 enabled: true

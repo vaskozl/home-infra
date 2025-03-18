@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/prowlarr-bin
-              tag: 1.31.2@sha256:189f2d6b78d7b87b320098abeb84e208f1c47a9a3ea2e1fa645d87319b868a05
+              repository: ghcr.io/vaskozl/prowlarr
+              tag: 1.31.2@sha256:bfcd55305fcf3aaef78a29a130d45c5ef7b0c61bb4cde982233605537b8d1f5f
             probes:
               liveness:
                 enabled: true
