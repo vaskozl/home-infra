@@ -21,17 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: alpine
-              tag: edge
-            command: [sh, -c]
-            env:
-              APK_PKG: lidarr
-              APK_VER: 2.9.6.4552-r0
-              EXEC: /usr/lib/lidarr/bin/Lidarr -nobrowser -data=/config
-            args:
-            - >
-              echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing/' >> /etc/apk/repositories &&
-              apk add --no-cache $APK_PKG=$APK_VER su-exec && exec su-exec 568:568 $EXEC
+              repository: ghcr.io/vaskozl/lidarr-bin
+              tag: 2.9.6@sha256:159a9575287e03f4d12fa91475379c6c22b5dd779e81b4a893be39792b0e0264
             probes:
               liveness:
                 enabled: true
@@ -43,6 +34,12 @@ spec:
               requests:
                 cpu: 150m
                 memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -52,6 +49,15 @@ spec:
               name: config
               size: 1Mi
         type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+      shareProcessNamespace: true
     ingress:
       app:
         hosts:
