@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -o errexit
 
 find . -type f -name '*.yaml' -print0 | while IFS= read -r -d $'\0' file;
