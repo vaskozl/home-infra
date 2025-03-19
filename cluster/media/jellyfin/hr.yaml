@@ -29,8 +29,8 @@ spec:
               JELLYFIN_WEB_DIR: /usr/share/jellyfin/web
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
             image:
-              repository: ghcr.io/vaskozl/jellyfin-server
-              tag: 10.10.6@sha256:928ec0ff0cbf927e6771f923a6cd521e060956ff3609d969091cb5b1e8ce7271
+              repository: ghcr.io/vaskozl/jellyfin
+              tag: 10.10.6@sha256:1f70ef090ea96deb4ebe3bc1ffe9dc1428a30d786a9090fba598aadbaab42ec4
             probes:
               liveness:
                 enabled: true
