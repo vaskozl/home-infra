@@ -6,5 +6,8 @@ configMapGenerator:
   - name: msmtprc
     files:
       - msmtprc
+  - name: nginx
+    files:
+      - nginx.conf
 configurations:
   - kustomizeconfig.yaml

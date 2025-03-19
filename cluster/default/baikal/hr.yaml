@@ -59,6 +59,12 @@ spec:
             subPath: msmtprc
         name: msmtprc
         type: configMap
+      nginx:
+        globalMounts:
+          - path: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+        name: nginx
+        type: configMap
     service:
       app:
         controller: baikal
