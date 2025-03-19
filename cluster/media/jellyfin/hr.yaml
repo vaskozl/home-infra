@@ -45,6 +45,8 @@ spec:
                 memory: 5Gi
             securityContext:
               privileged: true
+              runAsUser: 0
+              runAsGroup: 0
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
