@@ -20,7 +20,7 @@ spec:
       ripgrep:
         containers:
           app:
-            args:
+            command:
               - sleep
               - inf
             image:
