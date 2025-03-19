@@ -26,7 +26,7 @@ spec:
               JELLYFIN_DATA_DIR: /config
               JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
               JELLYFIN_LOG_DIR: /config/log
-              JELLYFIN_WEB_DIR: /usr/share/jellyfin/web
+              JELLYFIN_WEB_DIR: /usr/share/webapps/jellyfin-web
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
             image:
               repository: ghcr.io/vaskozl/jellyfin
