@@ -29,6 +29,10 @@ spec:
                 allowPrivilegeEscalation: false
                 capabilities:
                   drop: ["ALL"]
+                runAsUser: 0
+                runAsGroup: 0
+                seccompProfile:
+                  type: RuntimeDefault
               volumeMounts: &mounts
                 - name: logging-pvc
                   mountPath: /var/log/k8s
