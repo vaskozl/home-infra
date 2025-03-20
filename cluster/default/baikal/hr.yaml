@@ -39,7 +39,10 @@ spec:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /var/lib/baikal
+                - path: /usr/share/webapps/baikal/Specific/db
+                  subPath: db
+                - path: /usr/share/webapps/baikal/config
+                  subPath: config
               name: data
               size: 1Mi
         type: statefulset
