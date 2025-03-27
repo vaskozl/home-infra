@@ -11,23 +11,20 @@ spec:
           restartPolicy: Never
           containers:
             - name: msmtp
-              image: ghcr.io/vaskozl/msmtp:1.8.28@sha256:bf0af158b76008116461160ef9dbe20243032ededa89442b88a6a1e8c5b84fc6
+              image: ghcr.io/vaskozl/busybox:latest@sha256:bb2195e6c5caca0185f0456319d5463e03e985bf852e12af04e715afa1ce94a7
+              env:
+                - name: SMTPHOST
+                  value: mail.sko.ai:2225
               command: [sh, -c]
               args:
                 - |
                   for i in /reminders/*.txt; do
-                    cat "$i" | msmtp reminders@sko.ai
+                    cat "$i" | sendmail -f reminders@sko.ai reminders@sko.ai
                   done
               volumeMounts:
-                - mountPath: /etc/msmtprc
-                  name: msmtprc
-                  subPath: msmtprc
                 - mountPath: /reminders
                   name: reminders
           volumes:
-            - name: msmtprc
-              secret:
-                secretName: reminders-msmtprc
             - name: reminders
               secret:
                 secretName: reminders

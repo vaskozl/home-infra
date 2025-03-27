@@ -3,9 +3,6 @@ kind: Kustomization
 resources:
   - cron.yaml
 secretGenerator:
-  - name: reminders-msmtprc
-    files:
-      - msmtprc
   - name: reminders
     files:
       - reminders/trackers.txt
