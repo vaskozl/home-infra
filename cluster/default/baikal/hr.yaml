@@ -21,7 +21,7 @@ spec:
         containers:
           app:
             env:
-              SMTPHOST: mx.mailserver:2225
+              SMTPHOST: mx.mailserver.svc.cluster.local:2225
             image:
               repository: ghcr.io/vaskozl/baikal
               tag: 0.10.1@sha256:db3bb2f43d7d25c0696a485475e019179e6edfde160d9e220bfb04d917698ad7
