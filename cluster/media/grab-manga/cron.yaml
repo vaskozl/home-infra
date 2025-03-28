@@ -1,0 +1,66 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: grab-manga
+spec:
+  schedule: '@daily'
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+    spec:
+      template:
+        metadata:
+        spec:
+          # kcc build only works on amd64
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          restartPolicy: Never
+          containers:
+            - image: ghcr.io/vaskozl/kcc:latest
+              command: [bash, -c]
+              args:
+                - |
+                  # Download
+                  python /script/grab-manga \
+                    spy-x-family \
+                    dandadan \
+                    one-piece \
+                    akane-banashi
+
+                  # Upload
+                  find /tmp/kcc -type f -name '*.kepub.epub' | while read file; do
+                    mv "$file" "${file%.epub}"
+                    file="${file%.epub}"
+                    echo "Uploading $f to calibre-web"
+                    URL="http://$CALIBRE_WEB_SERVICE_HOST:$CALIBRE_WEB_SERVICE_PORT_HTTP"
+                    AUTH_FLAGS=( -c c.txt -b c.txt -H 'Remote-User: admin' )
+                    CSRF=$(curl "${AUTH_FLAGS[@]}" "$URL"  | grep csrf_token | sed -n 's/.*value="\(.*\)".*/\1/p')
+                    curl "${AUTH_FLAGS[@]}" -F "btn-upload=@$file" -F "csrf_token=$CSRF" "$URL/upload"
+                  done
+              name: kcc
+              resources:
+                requests:
+                  cpu: 15m
+                  memory: 100Mi
+                limits:
+                  cpu: 1000m
+                  memory: 1Gi
+              volumeMounts:
+                - name: tmp
+                  mountPath: /tmp
+                - name: state
+                  mountPath: /var/lib/manga
+                - name: script
+                  mountPath: /script
+          volumes:
+            - name: state
+              persistentVolumeClaim:
+                claimName: manga-grab-state
+            - name: script
+              configMap:
+                name: config
+            - name: tmp
+              emptyDir:
+                sizeLimit: 1500Mi

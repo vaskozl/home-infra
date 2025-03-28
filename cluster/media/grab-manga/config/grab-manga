@@ -1,0 +1,116 @@
+#!/usr/bin/python
+import os
+import re
+import sys
+import subprocess
+
+from typing import List
+from viz_manga import VizMangaDetails, VizMangaFetch
+from viz_manga.manga_details import Series
+
+
+
+def slug_to_title(slug: str) -> str:
+    # Replace dashes with spaces and capitalize words
+    return " ".join(word.capitalize() for word in slug.split("-"))
+
+
+# Function to convert chapter title
+def convert_chapter_title(chapter_title: str) -> str:
+    # Extract the number from the chapter title
+    match = re.match(r"ch-(\d+)", chapter_title)
+    if match:
+        # Divide the number by 100 and format it to one decimal place
+        chapter_number = float(match.group(1)) / 100
+        return f"{chapter_number:.1f}"
+    return chapter_title
+
+
+# Function to save free chapters for a series
+def save_free_chapters(series_slug: str, download_dir: str,
+                       downloaded_chapters: set):
+    details = VizMangaDetails()
+    series = Series(None, series_slug)
+
+    # Create series directory if it doesn't exist
+    series_dir = os.path.join(download_dir, series_slug)
+    os.makedirs(series_dir, exist_ok=True)
+
+    series_title = slug_to_title(series_slug)
+
+    resp = details.session.get(series.link)
+    author = re.search(r'Created by ([^<]+)', resp.text).group(1)
+
+    print(series)
+    # Get chapters for the series
+    for chapter in details.get_series_chapters(series):
+        if chapter.is_free and chapter.id not in downloaded_chapters:
+            chapter_num = convert_chapter_title(chapter.title)
+            chapter_dir = os.path.join(series_dir,
+                                       f"{series_dir}.{chapter_num}")
+            os.makedirs(chapter_dir, exist_ok=True)
+            viz = VizMangaFetch()
+            print(chapter)
+            success = viz.save_chapter(chapter.id, chapter_dir, combine=True)
+            if success:
+                downloaded_chapters.add(chapter.id)
+                # Run kcc-c2e
+                command = [
+                    "kcc-c2e",
+                    "--mozjpeg",
+                    "--profile=KoL",
+                    "--stretch",
+                    "--manga-style",
+                    "--splitter=0",
+                    "--output=/tmp/kcc",
+                    "--title",
+                    f"{series_title} Ch. {chapter_num}",
+                    "--author",
+                    f"{author}",
+                    chapter_dir
+                ]
+                subprocess.run(command, check=True)
+
+
+# Function to load downloaded chapters from a file
+def load_downloaded_chapters(file_path: str) -> set:
+    if not os.path.exists(file_path):
+        return set()
+    with open(file_path, 'r') as file:
+        return set(file.read().splitlines())
+
+
+# Function to save downloaded chapters to a file
+def save_downloaded_chapters(file_path: str, downloaded_chapters: set):
+    with open(file_path, 'w') as file:
+        file.write('\n'.join(downloaded_chapters))
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python script.py <series_slug1> <series_slug2> ...")
+        sys.exit(1)
+
+    # Directory to save downloaded chapters
+    download_dir = "/tmp/downloaded_chapters"
+    os.makedirs(download_dir, exist_ok=True)
+    os.makedirs("/tmp/kcc", exist_ok=True)
+
+    # File to track downloaded chapters
+    os.makedirs("/var/lib/manga", exist_ok=True)
+    downloaded_file = "/var/lib/manga/downloaded_chapters.txt"
+    downloaded_chapters = load_downloaded_chapters(downloaded_file)
+
+    # List of series slugs from command-line arguments
+    series_slugs = sys.argv[1:]
+
+    # Iterate through each series and save free chapters
+    for series_slug in series_slugs:
+        save_free_chapters(series_slug, download_dir, downloaded_chapters)
+
+    # Save updated downloaded chapters list
+    save_downloaded_chapters(downloaded_file, downloaded_chapters)
+
+
+if __name__ == "__main__":
+    main()
