@@ -44,6 +44,15 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /db
+              name: db
+              size: 1Mi
+        type: statefulset
     defaultPodOptions:
       securityContext:
         fsGroup: 568
