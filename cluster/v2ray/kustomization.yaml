@@ -7,7 +7,7 @@ resources:
 secretGenerator:
   - name: config
     files:
-      - v2ray.json=config/v2ray.json.enc
+      - v2ray.json=config/v2ray.enc.json
 components:
   - ../common
 configurations:
