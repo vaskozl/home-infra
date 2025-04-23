@@ -93,7 +93,7 @@ spec:
               repository: ghcr.io/vaskozl/valkey
               tag: 7.2.8@sha256:6cade6474c554faf882ed4ab2339fec689c79f9c8c3b052d99cd1f03c79841b1
             securityContext: *security
-            args: [--save, '', --appendonly, 'no']
+            args: [--save, '', --appendonly, 'no', --protected-mode, 'no']
             resources:
               limits:
                 memory: 140Mi
