@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.131.3@sha256:7e5b6729b12b5e5cc5d98bcc6f7c27f723fabae4ee77696855808ebd5200bbf8
             env:
-              !!merge <<: &env-common
+              <<: &env-common
                 REDIS_HOSTNAME: immich-redis
                 DB_HOSTNAME: immich-postgres
                 DB_DATABASE_NAME: immich
@@ -61,7 +61,7 @@ spec:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.131.3@sha256:7e5b6729b12b5e5cc5d98bcc6f7c27f723fabae4ee77696855808ebd5200bbf8
             env:
-              !!merge <<: *env-common
+              <<: *env-common
               IMMICH_WORKERS_EXCLUDE: *server-include
             securityContext: *security
             resources:
@@ -77,7 +77,7 @@ spec:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.131.2@sha256:29836cf73146057ac388546021fff3e00c923e22a28587cceb5108a5e537987d
             env:
-              !!merge <<: *env-common
+              <<: *env-common
               MPLCONFIGDIR: /tmp/matplotlib
             securityContext: *security
             resources:
@@ -90,8 +90,8 @@ spec:
         containers:
           app:
             image:
-              repository: registry.hub.docker.com/library/redis
-              tag: 7.4-alpine@sha256:02419de7eddf55aa5bcf49efb74e88fa8d931b4d77c07eff8a6b2144472b6952
+              repository: ghcr.io/vaskozl/valkey
+              tag: 7.2.8@sha256:6cade6474c554faf882ed4ab2339fec689c79f9c8c3b052d99cd1f03c79841b1
             securityContext: *security
             args: [--save, '', --appendonly, 'no']
             resources:
