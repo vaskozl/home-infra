@@ -21,7 +21,7 @@ pipeline:
       operation: lift
       nested_under: k_labels
       add_prefix: k_labels_
-    # Extra out the app and drop uneccesary labels
+    # Extract out the app and drop uneccesary labels
     - name: modify
       match: kube.*
       # Best-effort extraction of the app name
