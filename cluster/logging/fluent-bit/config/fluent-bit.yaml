@@ -5,6 +5,8 @@ pipeline:
       exclude_path: /var/log/*fluent*
       multiline.parser: cri
       tag: kube.*
+      mem_buf_limit: 10MB
+      storage.pause_on_chunks_overlimit: 'on'
   filters:
     - name: kubernetes # https://docs.fluentbit.io/manual/pipeline/filters/kubernetes
       match: kube.*
