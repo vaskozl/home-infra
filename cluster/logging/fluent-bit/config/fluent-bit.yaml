@@ -7,9 +7,11 @@ pipeline:
       tag: kube.*
       mem_buf_limit: 10MB
       storage.pause_on_chunks_overlimit: 'on'
+      skip_long_lines: 'on'
   filters:
     - name: kubernetes # https://docs.fluentbit.io/manual/pipeline/filters/kubernetes
       match: kube.*
+      annotations: off
     # Lift out the kubernetes labels so we can rename them
     - name: nest
       match: kube.*
@@ -50,3 +52,4 @@ pipeline:
     - name: forward
       match: '*'
       host: fluent-aggregator
+      retry_limit: 'false'
