@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: any
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          dnsConfig:
+            options:
+              - name: ndots
+                value: "1"

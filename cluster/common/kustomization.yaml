@@ -16,3 +16,6 @@ patches:
     target:
       kind: HelmRelease
       annotationSelector: patch.sko.ai/app-template=common
+  - path: patches/cronjob.yaml
+    target:
+      kind: CronJob
