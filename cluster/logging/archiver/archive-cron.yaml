@@ -17,7 +17,7 @@ spec:
         spec:
           containers:
             - name: logrotate
-              image: ghcr.io/vaskozl/archlinux:rolling@sha256:5b75e12bce91cf16a3f7e5281e1aa0f78937bb02d87f2785038b097bb8ab1ddb
+              image: ghcr.io/vaskozl/archlinux:rolling@sha256:ef31edc5cb81fbd4d8d2e01e3971dd2a8bbe36b172b6b99d5dcb40be367a86a0
               command: [sh, -c]
               # Delete all files older than 30 days
               # Compress all files older than 1 day
