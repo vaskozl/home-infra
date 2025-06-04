@@ -60,10 +60,10 @@ spec:
               tag: 8.21.0@sha256:8ccd9b57b537a92bba778a49a0c7a8367c61927170e632840fe8a056c4702d9f
             resources:
               limits:
-                memory: 30Mi
+                memory: 80Mi
               requests:
                 cpu: 10m
-                memory: 30Mi
+                memory: 80Mi
           redis:
             image:
               repository: redis
