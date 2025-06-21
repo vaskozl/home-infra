@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.134.0@sha256:073fc04c7e3d18ace466c20763809cf17aa55765ed610f12971b392a6a80b50c
+              tag: v1.135.3@sha256:df5bbf4e29eff4688063a005708f8b96f13073200b4a7378f7661568459b31e9
             env:
               <<: &env-common
                 REDIS_HOSTNAME: immich-redis
@@ -59,7 +59,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.134.0@sha256:073fc04c7e3d18ace466c20763809cf17aa55765ed610f12971b392a6a80b50c
+              tag: v1.135.3@sha256:df5bbf4e29eff4688063a005708f8b96f13073200b4a7378f7661568459b31e9
             env:
               <<: *env-common
               IMMICH_WORKERS_EXCLUDE: *server-include
@@ -75,7 +75,7 @@ spec:
           app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.134.0@sha256:e157e0fa0d4363b0b6bab1923adab5951bbcdb71cd9016470bc6810dae21d115
+              tag: v1.135.3@sha256:9f2f61d86af82d04926f9b896c995c502303052905517c5485dd26bf1e42a44e
             env:
               <<: *env-common
               MPLCONFIGDIR: /tmp/matplotlib
@@ -112,7 +112,7 @@ spec:
               POSTGRES_DB: immich
             image:
               repository: ghcr.io/immich-app/postgres
-              tag: 14-vectorchord0.3.0-pgvectors0.2.0@sha256:b8a840254e8e2db8720db3700a104623da372056347e80b598f00dd4da8df568
+              tag: 14-vectorchord0.3.0-pgvectors0.2.0@sha256:007a98749340534a0408a26435b1a0ab5ded76df788f897fdb6342c9c1b95448
             resources:
               limits:
                 memory: 550Mi
