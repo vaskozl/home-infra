@@ -14,7 +14,7 @@ spec:
               image: ghcr.io/vaskozl/busybox:latest@sha256:84be7f04ffea50683eddb2b7f274300d1830bed65d7bec913d983231cae21531
               env:
                 - name: SMTPHOST
-                  value: mx.mailserver.svc.cluster.local:2225
+                  value: mx-maddy.mailserver.svc.cluster.local:2225
               command: [sh, -c]
               args:
                 - |
