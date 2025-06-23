@@ -13,6 +13,15 @@ configMapGenerator:
     files:
       - config/maddy.conf
       - config/sieve.sh
+  - name: f2b-config
+    files:
+      - config/fail2ban.conf
+  - name: rspamd-config
+    files:
+      - config/rspamd.local.lua
+  - name: f2b-config
+    files:
+      - config/fail2ban.conf
 secretGenerator:
   - name: maddy-secrets
     envs:
