@@ -41,7 +41,7 @@ spec:
           initContainers:
             - image: *image
               name: fix-permissions
-              args: [sh, -c, 'chmod 700 /var/log/k8s/*']
+              command: [sh, -c, 'chmod 700 /var/log/k8s/*']
               resources:
                 limits:
                   memory: 5Mi
