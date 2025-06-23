@@ -105,12 +105,6 @@ spec:
         type: configMap
         globalMounts:
           - path: /etc/maddy
-      f2b-config:
-        name: f2b-config
-        type: configMap
-        globalMounts:
-          - path: /etc/fail2ban/fail2ban.conf
-            subPath: fail2ban.conf
       rspamd-config:
         name: rspamd-config
         type: configMap
