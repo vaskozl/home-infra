@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - hr.yaml
   - tls.yaml
+  - cert.yaml
 configMapGenerator:
   - name: lidarr-nginx
     files:
