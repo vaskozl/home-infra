@@ -94,7 +94,7 @@ spec:
       torrents:
         existingClaim: torrents-v2
       api-tls:
-        name: lidarr-audio-tls
+        name: api-lidarr-audio-tls
         type: secret
         globalMounts:
           - path: /etc/ssl/certs/lidarr.pem
