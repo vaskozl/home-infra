@@ -40,6 +40,20 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+          api:
+            image:
+              repository: ghcr.io/vaskozl/nginx
+              tag: 1.28.0@sha256:746dbe974add1147a390f50604d97473f1ba4815d7708c5b52122587efb59051
+            resources:
+              limits:
+                memory: 30Mi
+              requests:
+                cpu: 15m
+                memory: 30Mi
+            securityContext:
+              readOnlyRootFilesystem: false
+              runAsUser: 33
+              runAsGroup: 33
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -50,6 +64,10 @@ spec:
               size: 1Mi
         type: statefulset
     defaultPodOptions:
+      hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+            - "api.lidarr.audio"
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -57,6 +75,9 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: "0"
       shareProcessNamespace: true
     ingress:
       app:
@@ -72,6 +93,19 @@ spec:
         type: emptyDir
       torrents:
         existingClaim: torrents-v2
+      api-tls:
+        name: lidarr-audio-tls
+        type: secret
+        globalMounts:
+          - path: /etc/ssl/certs/lidarr.pem
+            subPath: tls.crt
+          - path: /etc/nginx/ssl
+      nginx:
+        name: lidarr-nginx
+        type: configMap
+        globalMounts:
+          - path: /etc/nginx/nginx.conf
+            subPath: nginx.conf
     service:
       app:
         controller: lidarr
