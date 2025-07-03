@@ -115,10 +115,10 @@ spec:
               tag: 14-vectorchord0.3.0-pgvectors0.2.0@sha256:b8a840254e8e2db8720db3700a104623da372056347e80b598f00dd4da8df568
             resources:
               limits:
-                memory: 550Mi
+                memory: 750Mi
               requests:
                 cpu: 10m
-                memory: 550Mi
+                memory: 750Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
