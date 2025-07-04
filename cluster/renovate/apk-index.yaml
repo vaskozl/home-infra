@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: apk
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.7.3
+  values:
+    controllers:
+      wolfi:
+        <<: &base-controller
+          containers:
+            app:
+              <<: &app
+                image:
+                  repository: ghcr.io/hown3d/renovate-apk-indexer
+                  tag: v0.1.0@sha256:e2cbe481b3e84c83f75649618c39d2ad767b5dd2a336ca31905a7489cb572c2a
+                args: ['-apk-index-url', 'https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz']
+                probes:
+                  liveness:
+                    enabled: true
+                  readiness:
+                    enabled: true
+                resources:
+                  limits:
+                    cpu: 1
+                    memory: 50Mi
+                  requests:
+                    cpu: 10m
+                    memory: 50Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    add:
+                      - NET_BIND_SERVICE
+                    drop:
+                      - ALL
+                  readOnlyRootFilesystem: true
+          statefulset:
+            podManagementPolicy: Parallel
+          type: statefulset
+      main:
+        <<: *base-controller
+        containers:
+          app:
+            <<: *app
+            args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/main/aarch64/APKINDEX.tar.gz']
+      community:
+        <<: *base-controller
+        containers:
+          app:
+            <<: *app
+            args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/community/aarch64/APKINDEX.tar.gz']
+      testing:
+        <<: *base-controller
+        containers:
+          app:
+            <<: *app
+            args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/testing/aarch64/APKINDEX.tar.gz']
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+      shareProcessNamespace: true
+    service:
+      wolfi:
+        controller: wolfi
+        ports:
+          http:
+            port: 3000
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000
+      community:
+        controller: community
+        ports:
+          http:
+            port: 3000
+      testing:
+        controller: testing
+        ports:
+          http:
+            port: 3000
