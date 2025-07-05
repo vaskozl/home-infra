@@ -34,10 +34,10 @@ spec:
                 resources:
                   limits:
                     cpu: 1
-                    memory: 80Mi
+                    memory: 160Mi
                   requests:
                     cpu: 10m
-                    memory: 80Mi
+                    memory: 160Mi
                 securityContext:
                   allowPrivilegeEscalation: false
                   capabilities:
@@ -55,18 +55,39 @@ spec:
           app:
             <<: *app
             args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/main/aarch64/APKINDEX.tar.gz']
+            resources:
+              limits:
+                cpu: 1
+                memory: 15Mi
+              requests:
+                cpu: 10m
+                memory: 15Mi
       community:
         <<: *base-controller
         containers:
           app:
             <<: *app
             args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/community/aarch64/APKINDEX.tar.gz']
+            resources:
+              limits:
+                cpu: 1
+                memory: 40Mi
+              requests:
+                cpu: 10m
+                memory: 40Mi
       testing:
         <<: *base-controller
         containers:
           app:
             <<: *app
             args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/testing/aarch64/APKINDEX.tar.gz']
+            resources:
+              limits:
+                cpu: 1
+                memory: 20Mi
+              requests:
+                cpu: 10m
+                memory: 20Mi
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
