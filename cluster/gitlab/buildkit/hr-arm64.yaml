@@ -34,8 +34,8 @@ spec:
               - --tlskey
               - /certs/key.pem
             image:
-              repository: ghcr.io/vaskozl/buildkit
-              tag: 0.20.1@sha256:c010273ff3dba224e3c1f03c25356f6f5197dee2122e8ba390294f3012d2bb6e
+              repository: ghcr.io/vaskozl/buildkitd
+              tag: 0.23.2@sha256:dc4eda9007213bee20d1aa4ff83a9aae9122086727471923874cb9b0037f878c
             probes:
               liveness:
                 enabled: true
