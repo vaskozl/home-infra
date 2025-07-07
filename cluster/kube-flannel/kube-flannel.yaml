@@ -132,7 +132,7 @@ spec:
       serviceAccountName: flannel
       initContainers:
         - name: install-config
-          image: ghcr.io/siderolabs/flannel:v0.27.0@sha256:6349a05c554d577f45953a797972c9aba233bfcaeb8969e1797166d82982beb6
+          image: ghcr.io/vaskozl/flannel:0.27.0@sha256:325ee98365a97f14c92933b2eaf408db1000b1f717e189d2bbdf6c28c59e3f2b
           command:
             - cp
           args:
@@ -146,9 +146,9 @@ spec:
               mountPath: /etc/kube-flannel/
       containers:
         - name: kube-flannel
-          image: ghcr.io/siderolabs/flannel:v0.27.0@sha256:6349a05c554d577f45953a797972c9aba233bfcaeb8969e1797166d82982beb6
+          image: ghcr.io/vaskozl/flannel:0.27.0@sha256:325ee98365a97f14c92933b2eaf408db1000b1f717e189d2bbdf6c28c59e3f2b
           command:
-            - /opt/bin/flanneld
+            - flanneld
           args:
             - --ip-masq
             - --kube-subnet-mgr
