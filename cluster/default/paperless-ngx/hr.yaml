@@ -66,8 +66,8 @@ spec:
                 memory: 80Mi
           redis:
             image:
-              repository: redis
-              tag: 8.0.2@sha256:b43d2dcbbdb1f9e1582e3a0f37e53bf79038522ccffb56a25858969d7a9b6c11
+              repository: ghcr.io/vaskozl/valkey
+              tag: 8.1.2-r1@sha256:08e7a62f08be4055442b472c60c4f9c15c13a08b79abc14e3788308390ef8c2d
             resources:
               limits:
                 memory: 50Mi
