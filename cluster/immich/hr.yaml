@@ -91,7 +91,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/valkey
-              tag: 8.1.2@sha256:039a2537c706c31224196d1fa8e9ed26a80e34bace39111bf0a64e670b3246cf
+              tag: 8.1.2@sha256:08e7a62f08be4055442b472c60c4f9c15c13a08b79abc14e3788308390ef8c2d
             securityContext: *security
             args: [--save, '', --appendonly, 'no', --protected-mode, 'no']
             resources:
