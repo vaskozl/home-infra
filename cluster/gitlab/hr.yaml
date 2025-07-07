@@ -134,8 +134,8 @@ spec:
             [runners.kubernetes]
               cpu_request = "500m"
               cpu_limit = "1"
-              memory_request = "200Mi"
-              memory_limit = "1Gi"
+              memory_request = "300Mi"
+              memory_limit = "2Gi"
               service_cpu_request = "100m"
               service_cpu_limit = "1"
               service_memory_request = "50Mi"
