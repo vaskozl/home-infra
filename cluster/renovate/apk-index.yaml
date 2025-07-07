@@ -71,10 +71,10 @@ spec:
             resources:
               limits:
                 cpu: 1
-                memory: 40Mi
+                memory: 60Mi
               requests:
                 cpu: 10m
-                memory: 40Mi
+                memory: 60Mi
       testing:
         <<: *base-controller
         containers:
