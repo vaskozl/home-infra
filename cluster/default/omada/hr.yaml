@@ -38,10 +38,10 @@ spec:
             resources:
               limits:
                 cpu: 2
-                memory: 1500Mi
+                memory: 1600Mi
               requests:
                 cpu: 100m
-                memory: 1500Mi
+                memory: 1600Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
