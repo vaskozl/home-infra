@@ -4,15 +4,10 @@ metadata:
   name: regcred
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: ENC[AES256_GCM,data:/u1IuuZHyfuCk6TM5FzDwobKV75y9j1aCu8g4DSlOkvtp2sto8LDzyVGCW8OwZ6joZpK0cHCGVIabQGvZrMG8FjBbTdjFTsbBQDkttVkrXzSnpizKAh1kmlCJ11i/69yvri28rhUwovOw98kcCibcuweAjaAxbvK0vD+aSk7Lgh5ZO5Ntjwuv4VnZ2Y=,iv:ck+5ifiHa1EL9EaubmClycbc82lJFKY8MH+znomIOZA=,tag:0yddfpAmwzWpTA/5RZc/tQ==,type:str]
+  .dockerconfigjson: ENC[AES256_GCM,data:VjTONQzzOBXp2NNdpYMgcM929MJrqXvalzfonh7e+nP9aiLRnBj3KJknw5IsJlhGKySNFyxhxaGK+6Iswdi0JQ+yv5lf1tb7GO30XC11fajAiGQ9AKSTImx4KP2TfQg3j4nNQt9S5p+8xsBmed9PsXAdShwhSHiElHqiwSbiyDkNnXKePKAdtxpv0WI=,iv:I3TaE70xI63IhrOm6dezj3I3b1VoferzODS0SXrIAro=,tag:iG1Zr1OL87BfFs5aorByTQ==,type:str]
 sops:
-  kms: []
-  gcp_kms: []
-  azure_kv: []
-  hc_vault: []
-  age: []
-  lastmodified: "2024-07-02T22:17:33Z"
-  mac: ENC[AES256_GCM,data:B7z8HdWYP1dao+GqePj+g03RaV1cGNdKlFWxrJqk5Tjvtph1bInc8szol3Y9XOpSuHFpwoD03F/jjirEXHGB8xZ8f2n2e6ay6DLrP4BF95mwrZYc6Ad/LDbRAN7OLlXr0xu/TkRrShVsRKgEl0HZC0j1teNBDVG4bpSrNaiPzxQ=,iv:ispBnaoOzhi9c/EXHgVNMlnI58SFFnwuwpkDG2+8eEQ=,tag:yswX/XWssI9sFspVZlFvDg==,type:str]
+  lastmodified: "2025-07-19T13:49:31Z"
+  mac: ENC[AES256_GCM,data:De177texQ9BMrynqwlY1a2t6MBi+U1wsr4OKGvaelDQHFwn4OcxaKXjMqCBTqyCMN4VCaUR1bYmcoM6OnyQpFATiWszdTayTI8HjkHkMSynyQPVzfRckJXJ5gauFycIKyvYMOSV+RssoZR/BfkkPwtOJD4CmTqa5v/gqSR85k54=,iv:qO7Vp7fZQ6voMRKsQhiwO43mwREKWuwKsQxmcHvR1bk=,tag:7LmWVBJtC6n2mTn2M9mnxQ==,type:str]
   pgp:
     - created_at: "2022-10-03T09:31:03Z"
       enc: |
@@ -41,4 +36,4 @@ sops:
         -----END PGP MESSAGE-----
       fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
   encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
-  version: 3.8.1
+  version: 3.10.2
