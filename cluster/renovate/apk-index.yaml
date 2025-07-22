@@ -63,8 +63,6 @@ spec:
                 cpu: 10m
                 memory: 160Mi
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 568
         runAsGroup: 568
