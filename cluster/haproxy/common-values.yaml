@@ -1,7 +1,4 @@
 controller:
-  image:
-    repository: ghcr.io/vaskozl/haproxy-ingress
-    tag: 0.14.8@sha256:daa8fe291ffbdf9d73bdbaeea590f1dbd841734fc725050cd5eaeeaad2206201
   kind: DaemonSet
   service:
     enabled: true
