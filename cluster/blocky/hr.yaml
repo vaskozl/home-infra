@@ -78,3 +78,6 @@ spec:
             primary: true
         type: LoadBalancer
         loadBalancerClass: tailscale
+        annotations:
+          tailscale.com/proxy-group: ingress-proxies
+
