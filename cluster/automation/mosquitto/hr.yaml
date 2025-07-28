@@ -63,10 +63,11 @@ spec:
       app:
         annotations:
           coredns.io/hostname: mqtt
-          minilb/host: mqtt.sko.ai
+          tailscale.com/hostname: mqtt
+          tailscale.com/proxy-group: ingress-proxies
         controller: mosquitto
         type: LoadBalancer
-        loadBalancerClass: minilb
+        loadBalancerClass: tailscale
         ports:
           mqtt:
             port: 1883
