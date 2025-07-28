@@ -3,7 +3,9 @@ controller:
   service:
     enabled: true
     type: LoadBalancer
-    loadBalancerClass: minilb
+    loadBalancerClass: tailscale
+    annotations:
+      tailscale.com/proxy-group: ingress-proxies
   # Run on the masters
   nodeSelector:
     node-role.kubernetes.io/control-plane: ""
