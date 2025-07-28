@@ -54,7 +54,11 @@ spec:
       app:
         controller: ntfy
         type: LoadBalancer
-        loadBalancerClass: minilb
+        loadBalancerClass: tailscale
+        annotations:
+          coredns.io/hostname: ntfy
+          tailscale.com/hostname: ntfy
+          tailscale.com/proxy-group: ingress-proxies
         ports:
           smtp:
             port: 25
