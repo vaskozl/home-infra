@@ -124,7 +124,8 @@ spec:
       maddy:
         annotations:
           coredns.io/hostname: mail
-          minilb/host: mail.sko.ai
+          tailscale.com/hostname: mail
+          tailscale.com/proxy-group: ingress-proxies
         controller: maddy
         ports:
           smtp:
@@ -141,7 +142,7 @@ spec:
           relay:
             port: 2225
         type: LoadBalancer
-        loadBalancerClass: minilb
+        loadBalancerClass: tailscale
       rspamd:
         controller: rspamd
         ports:
