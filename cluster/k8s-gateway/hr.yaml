@@ -28,7 +28,8 @@ spec:
     service:
       type: LoadBalancer
       annotations:
-        tailscale.com/expose: "true"
+        tailscale.com/hostname: k8s-gateway
+        tailscale.com/proxy-group: ingress-proxies
   postRenderers:
     - kustomize:
         patches:
@@ -52,6 +53,6 @@ spec:
               metadata:
                 name: app
               spec:
-                loadBalancerClass: minilb
+                loadBalancerClass: tailscale
             target:
               kind: Service
