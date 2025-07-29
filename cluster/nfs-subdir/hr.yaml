@@ -15,6 +15,9 @@ spec:
         namespace: flux-system
       interval: 1h
   values:
+    image:
+      repository: ghcr.io/vaskozl/nfs-subdir-external-provisioner
+      tag: 4.0.18@sha256:b14bb239fbe98b52202a5c89d8030606c1c3415a756a73d1ee97fb14c1696933
     nfs:
       server: syno.sko.ai
       path: /volume3/k8s-volumes
