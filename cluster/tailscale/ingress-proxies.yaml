@@ -1,8 +1,24 @@
 apiVersion: tailscale.com/v1alpha1
+kind: ProxyClass
+metadata:
+  name: ingress
+spec:
+  statefulSet:
+    pod:
+      tailscaleContainer:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 160Mi
+          limits:
+            memory: 160Mi
+---
+apiVersion: tailscale.com/v1alpha1
 kind: ProxyGroup
 metadata:
   name: ingress-proxies
   namespace: tailscale
 spec:
+  proxyClass: ingress
   type: ingress
   replicas: 3
