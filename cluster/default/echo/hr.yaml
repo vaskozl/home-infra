@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/openresty
-              tag: '1.27'
+              repository: openresty/openresty
+              tag: 1.19.9.1-12-alpine
             probes:
               liveness:
                 enabled: true
