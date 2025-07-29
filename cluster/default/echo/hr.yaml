@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/openresty
-              tag: '1.27'
+              tag: 1.27.1@sha256:24c58423906ee73f26554b62d801b7a6ef16d51546dfa16d31246883d9651e80
             probes:
               liveness:
                 enabled: true
@@ -60,7 +60,7 @@ spec:
     persistence:
       config:
         globalMounts:
-          - path: /usr/local/openresty/nginx/conf/nginx.conf
+          - path: /etc/nginx/nginx.conf
             subPath: nginx.conf
         name: echo-conf
         type: configMap
