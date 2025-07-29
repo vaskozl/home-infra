@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitlab-redis
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.1.2
+  values:
+    controllers:
+      main:
+        containers:
+          app:
+            envFrom:
+              - configMapRef:
+                 name: gitlab-redis-secret
+            command: ["sh", "-c"]
+            args: ["valkey", "--requirepass", "$secret"]
+            image:
+              repository: ghcr.io/vaskozl/valkey
+              tag: 8.1.3@sha256:92eaaf502422cce08db10b3192c9d2df9cda8c4766039a7eea32bab879dc1a6c
+            resources:
+              limits:
+                memory: 50Mi
+              requests:
+                cpu: 10m
+                memory: 18Mi
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+              name: data
+              size: 1Mi
+        type: statefulset
+    service:
+      main:
+        controller: main
+        ports:
+          redis:
+            port: 6379

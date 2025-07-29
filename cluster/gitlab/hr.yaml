@@ -46,6 +46,11 @@ spec:
         port: 2225
         tls: false
         authentication: ''
+      redis:
+        host: gitlab-redis
+        auth:
+          secret: gitlab-redis-secret
+          key: secret
       minio:
         enabled: false
       appConfig:
@@ -146,6 +151,8 @@ spec:
               helper_memory_limit = "200Mi"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
+    redis:
+      install: false
   postRenderers:
     - kustomize:
         patches:
