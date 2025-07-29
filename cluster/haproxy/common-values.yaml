@@ -1,21 +1,14 @@
 controller:
-  kind: DaemonSet
+  replicaCount: 3
   service:
     enabled: true
     type: LoadBalancer
     loadBalancerClass: tailscale
     annotations:
       tailscale.com/proxy-group: ingress-proxies
-  # Run on the masters
-  nodeSelector:
-    node-role.kubernetes.io/control-plane: ""
   tolerations:
     - effect: NoSchedule
       operator: Exists
-  containerPort:
-    http: 80
-    https: 443
-    stat: 1024
   config:
     load-balance: leastconn
     syslog-server: "address:stdout, format: raw, facility:daemon"

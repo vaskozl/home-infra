@@ -19,10 +19,6 @@ spec:
     controller:
       daemonset:
         useHostPort: true
-        hostPorts:
-          smtp: 25
-      containerPort:
-        smtp: 25
       ingressClass: haproxy-external
       ingressClassResource:
         name: haproxy-external
@@ -31,7 +27,6 @@ spec:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
-        - --configmap-tcp-services=haproxy/tcp-external
       extraVolumes:
         - name: lua
           secret:
@@ -39,15 +34,3 @@ spec:
         - name: txt-config
           configMap:
             name: txt-config
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |
-              - op: add
-                path: /spec/template/spec/securityContext/sysctls
-                value:
-                - name: net.ipv4.ip_unprivileged_port_start
-                  value: '0'
-            target:
-              kind: DaemonSet
-              version: v1
