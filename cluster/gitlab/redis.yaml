@@ -21,9 +21,9 @@ spec:
         containers:
           app:
             envFrom:
-              - configMapRef:
+              - secretRef:
                  name: gitlab-redis-secret
-            command: ["sh", "-c"]
+            command: ["sh", "-c", "exec"]
             args: ["valkey", "--requirepass", "$secret"]
             image:
               repository: ghcr.io/vaskozl/valkey
