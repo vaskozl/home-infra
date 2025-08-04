@@ -99,6 +99,12 @@
       "matchPackagePatterns": ["^ghcr\\.io/immich-app/"],
       "groupName": "immich",
       "sourceUrl": "https://github.com/immich-app/immich",
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["^ghcr\\.io/vaskozl/gitlab-*", "^ghcr\\.io/vaskozl/gitaly$"],
+      "groupName": "gitlab",
+      "sourceUrl": "https://gitlab.com/gitlab-org/build/CNG/",
     }
   ]
 }
