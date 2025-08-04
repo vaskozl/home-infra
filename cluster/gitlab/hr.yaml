@@ -86,13 +86,13 @@ spec:
     # Reduce memory usage
     gitlab:
       gitlab-exporter:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.1
+        #image:
+        #  repository: ghcr.io/vaskozl/gitlab-exporter
+        #  tag: 18.2.1
       gitaly:
-        image:
-          repository: ghcr.io/vaskozl/gitaly
-          tag: 18.2.1
+        #image:
+        #  repository: ghcr.io/vaskozl/gitaly
+        #  tag: 18.2.1
         resources:
           requests:
             cpu: 80m
@@ -114,15 +114,15 @@ spec:
         minReplicas: 1
         maxReplicas: 2
       gitlab-shell:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.1
+        #image:
+        #  repository: ghcr.io/vaskozl/gitlab-shell
+        #  tag: 18.2.1
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.1
+        #image:
+        #  repository: ghcr.io/vaskozl/gitlab-shell
+        #  tag: 18.2.1
         # The default requests are massive for a static server
         resources:
           requests:
@@ -176,10 +176,10 @@ spec:
               helper_memory_limit = "200Mi"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
-      image:
-        registry: ghcr.io
-        image: vaskozl/gitlab-runner
-        tag: 18.2.1
+      #image:
+        #registry: ghcr.io
+        #image: vaskozl/gitlab-runner
+        #tag: 18.2.1
     redis:
       install: false
   postRenderers:
