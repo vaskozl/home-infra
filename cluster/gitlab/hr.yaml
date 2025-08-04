@@ -16,6 +16,14 @@ spec:
       interval: 1h
   values:
     global:
+      gitlabBase:
+        image:
+          repository: ghcr.io/vaskozl/gitlab-base
+          tag: 18.2.1
+      certificates:
+        image:
+          repository: ghcr.io/vaskozl/gitlab-certificates
+          tag: 18.2.1
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -77,7 +85,14 @@ spec:
         ciSecureFiles: *rails
     # Reduce memory usage
     gitlab:
+      gitlab-exporter:
+        image:
+          repository: ghcr.io/vaskozl/gitlab-exporter
+          tag: 18.2.1
       gitaly:
+        image:
+          repository: ghcr.io/vaskozl/gitaly
+          tag: 18.2.1
         resources:
           requests:
             cpu: 80m
@@ -99,9 +114,15 @@ spec:
         minReplicas: 1
         maxReplicas: 2
       gitlab-shell:
+        image:
+          repository: ghcr.io/vaskozl/gitlab-shell
+          tag: 18.2.1
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
+        image:
+          repository: ghcr.io/vaskozl/gitlab-shell
+          tag: 18.2.1
         # The default requests are massive for a static server
         resources:
           requests:
@@ -114,6 +135,9 @@ spec:
               secret: object-storage
               key: toolbox.minio.toml
     registry:
+      image:
+        repository: ghcr.io/vaskozl/gitlab-container-registry
+        tag: 18.2.1
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
@@ -137,6 +161,7 @@ spec:
         config: |
           [[runners]]
             [runners.kubernetes]
+              helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1"
               cpu_request = "500m"
               cpu_limit = "1"
               memory_request = "300Mi"
@@ -151,6 +176,10 @@ spec:
               helper_memory_limit = "200Mi"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
+      image:
+        registry: ghcr.io
+        image: vaskozl/gitlab-runner
+        tag: 18.2.1
     redis:
       install: false
   postRenderers:
