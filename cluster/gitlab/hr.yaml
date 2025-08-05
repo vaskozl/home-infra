@@ -19,11 +19,11 @@ spec:
       gitlabBase:
         image:
           repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.1@sha256:ce21f454e1c3c273aa75f8c82e58f75b467fb898155c7e32505ec43e62fc16a3
+          tag: 18.2.1@sha256:39f633c3a44312d90ff5b1bf140c72d8a8f4f4cc60e2bf00954b48a5d241785b
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.1@sha256:68fb36f8b0b68319f2f22e6536b4a18bdfbba1803d8e32181c7c4c43f960acaa
+          tag: 18.2.1@sha256:04d03b6f0a498b7d418267781d50c624a0564f8bd012f5379cc795585100a522
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -88,11 +88,11 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.1@sha256:4aa1f5939ef45a38671eacc165849ea729649bc8594de96b71c1510ca993dc50
+          tag: 18.2.1@sha256:af9587e558b15fd43387508bb4ff20279e66572adc0f59312a7e111dab7b1145
       gitaly:
         image:
           repository: ghcr.io/vaskozl/gitaly
-          tag: 18.2.1@sha256:312140fb0d6f5be1065ccec0e77a3026a3ef277e52ecf865e3dd867588734040
+          tag: 18.2.1@sha256:1efb8f661b924122bd78da4bc42ec0c89cc201c83a5c313c6449a9cfd1872e66
         resources:
           requests:
             cpu: 80m
@@ -116,7 +116,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.1@sha256:d20f0c0250bbf231b554459c668b27f0d8b93e490cf3d51556ce808b9e5311db
+          tag: 18.2.1@sha256:81c944217ecb3bde8d66e55ed576e3c4ec33f11968bedf05efa24b37e83e4a7e
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
@@ -137,7 +137,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.1@sha256:4df9cb91644d4fd1260b690031ea7c2a4af6be39c8631d316f5003395c902ed2
+        tag: 18.2.1@sha256:d7bec4a9e3376014065e15000f095be00405d9d7ae1fedb2320b74f78a01334c
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
