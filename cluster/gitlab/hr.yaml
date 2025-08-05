@@ -88,7 +88,7 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.1@sha256:af9587e558b15fd43387508bb4ff20279e66572adc0f59312a7e111dab7b1145
+          tag: 18.2.1@sha256:9494640bfaef98ea18766612d940a7b7b364024a8e4682041dd5670048c594b0
       gitaly:
         image:
           repository: ghcr.io/vaskozl/gitaly
@@ -116,7 +116,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.1@sha256:5f90c88bdcb88b2f27f033cd6896cf7de64fd5508399a3ed7d329cdf2809c39f
+          tag: 18.2.1@sha256:72e9dcf39f05b5c4c28ae8ddaecb48ec06e85733001b5a96cbd3ba1b1000c1b1
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
