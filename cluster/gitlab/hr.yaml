@@ -120,9 +120,9 @@ spec:
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
-        #image:
-        #  repository: ghcr.io/vaskozl/gitlab-shell
-        #  tag: 18.2.1
+        image:
+          repository: ghcr.io/vaskozl/gitlab-pages
+          tag: 18.2.1@sha256:22b6f791840b7454871b8df6a039cd915c672dc45df92b3ff9dfd6a7c1072486
         # The default requests are massive for a static server
         resources:
           requests:
