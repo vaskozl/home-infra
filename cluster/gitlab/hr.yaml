@@ -22,8 +22,8 @@ spec:
           tag: 18.2.1@sha256:ce21f454e1c3c273aa75f8c82e58f75b467fb898155c7e32505ec43e62fc16a3
       certificates:
         image:
-          repository: ghcr.io/vaskozl/gitlab-certificates@sha256:68fb36f8b0b68319f2f22e6536b4a18bdfbba1803d8e32181c7c4c43f960acaa
-          tag: 18.2.1
+          repository: ghcr.io/vaskozl/gitlab-certificates
+          tag: 18.2.1@sha256:68fb36f8b0b68319f2f22e6536b4a18bdfbba1803d8e32181c7c4c43f960acaa
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
