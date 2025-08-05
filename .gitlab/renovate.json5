@@ -1,110 +1,163 @@
 {
-  "enabled": true,
-  "semanticCommits": "disabled",
-  "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 0,
-  "commitMessageTopic": "{{depName}}",
-  "commitMessageExtra": "to {{newVersion}}",
-  "pre-commit": {
-    "enabled": true
-  },
-  "ignoreDeps": [
-    "ghcr.io/fluxcd/helm-controller",
-    "ghcr.io/fluxcd/image-automation-controller",
-    "ghcr.io/fluxcd/image-reflector-controller",
-    "ghcr.io/fluxcd/kustomize-controller",
-    "ghcr.io/fluxcd/notification-controller",
-    "ghcr.io/fluxcd/source-controller",
-    "ghcr.io/vaskozl/baikal",
-    "ghcr.io/vaskozl/rspamd",
+  enabled: true,
+  semanticCommits: 'disabled',
+  dependencyDashboard: true,
+  dependencyDashboardTitle: 'Renovate Dashboard',
+  suppressNotifications: [
+    'prIgnoreNotification',
   ],
-  "flux": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  rebaseWhen: 'conflicted',
+  prHourlyLimit: 0,
+  prConcurrentLimit: 0,
+  commitMessageTopic: '{{depName}}',
+  commitMessageExtra: 'to {{newVersion}}',
+  'pre-commit': {
+    enabled: true,
   },
-  "helm-values": {
-    "fileMatch": ["cluster/.+\\.ya?ml$"]
+  ignoreDeps: [
+    'ghcr.io/fluxcd/helm-controller',
+    'ghcr.io/fluxcd/image-automation-controller',
+    'ghcr.io/fluxcd/image-reflector-controller',
+    'ghcr.io/fluxcd/kustomize-controller',
+    'ghcr.io/fluxcd/notification-controller',
+    'ghcr.io/fluxcd/source-controller',
+    'ghcr.io/vaskozl/baikal',
+    'ghcr.io/vaskozl/rspamd',
+  ],
+  flux: {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
   },
-  "kubernetes": {
-    "fileMatch": [
-      "cluster/.+\\.ya?ml$",
-    ]
+  'helm-values': {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
   },
-  "packageRules": [
-    // setup datasources
+  kubernetes: {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
+  },
+  packageRules: [
     {
-      "matchDatasources": ["helm"],
-      "separateMinorPatch": true,
-      "ignoreDeprecated": true,
-      "commitMessageTopic": "chart {{depName}}"
-    },
-    // global docker datasource settings
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "commitMessageTopic": "image {{depName}}"
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["digest"],
-      "commitMessageTopic": "{{{depName}}}{{#if currentValue}}:{{{currentValue}}}{{/if}} digest"
-    },
-    // add labels according to package and update types
-    {
-      "matchUpdateTypes": ["major"],
-      "labels": ["dep::major"]
-    },
-    {
-      "matchUpdateTypes": ["minor"],
-      "labels": ["dep::minor"]
-    },
-    {
-      "matchUpdateTypes": ["patch"],
-      "labels": ["dep::patch"]
-    },
-    {
-      "matchUpdateTypes": ["digest"],
-      "labels": ["dep::digest"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "addLabels": ["renovate::container"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "addLabels": ["renovate::helm"]
-    },
-    // enable automerge on < minor
-    {
-      "matchUpdateTypes": ["patch", "digest"],
-      "automerge": true
-    },
-    // Including minor for specific dependencies
-    {
-      "matchDatasources": ["docker"],
-      "matchPackageNames": [
-        "ghcr.io/renovatebot/renovate",
-        "ghcr.io/vaskozl/kubeconform",
-        "ghcr.io/vaskozl/cyberchef-web",
-        "ghcr.io/vaskozl/homer-web",
+      matchDatasources: [
+        'helm',
       ],
-      "matchUpdateTypes": ["minor"],
-      "automerge": true
+      separateMinorPatch: true,
+      ignoreDeprecated: true,
+      commitMessageTopic: 'chart {{depName}}',
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["^ghcr\\.io/immich-app/"],
-      "groupName": "immich",
-      "sourceUrl": "https://github.com/immich-app/immich",
+      matchDatasources: [
+        'docker',
+      ],
+      matchUpdateTypes: [
+        'major',
+        'minor',
+        'patch',
+      ],
+      commitMessageTopic: 'image {{depName}}',
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["^ghcr\\.io/vaskozl/gitlab-*", "^ghcr\\.io/vaskozl/gitaly$"],
-      "groupName": "gitlab",
-      "sourceUrl": "https://gitlab.com/gitlab-org/build/CNG/",
-    }
-  ]
+      matchDatasources: [
+        'docker',
+      ],
+      matchUpdateTypes: [
+        'digest',
+      ],
+      commitMessageTopic: '{{{depName}}}{{#if currentValue}}:{{{currentValue}}}{{/if}} digest',
+    },
+    {
+      matchUpdateTypes: [
+        'major',
+      ],
+      labels: [
+        'dep::major',
+      ],
+    },
+    {
+      matchUpdateTypes: [
+        'minor',
+      ],
+      labels: [
+        'dep::minor',
+      ],
+    },
+    {
+      matchUpdateTypes: [
+        'patch',
+      ],
+      labels: [
+        'dep::patch',
+      ],
+    },
+    {
+      matchUpdateTypes: [
+        'digest',
+      ],
+      labels: [
+        'dep::digest',
+      ],
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      addLabels: [
+        'renovate::container',
+      ],
+    },
+    {
+      matchDatasources: [
+        'helm',
+      ],
+      addLabels: [
+        'renovate::helm',
+      ],
+    },
+    {
+      matchUpdateTypes: [
+        'patch',
+        'digest',
+      ],
+      automerge: true,
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/renovatebot/renovate',
+        'ghcr.io/vaskozl/kubeconform',
+        'ghcr.io/vaskozl/cyberchef-web',
+        'ghcr.io/vaskozl/homer-web',
+      ],
+      matchUpdateTypes: [
+        'minor',
+      ],
+      automerge: true,
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      groupName: 'immich',
+      sourceUrl: 'https://github.com/immich-app/immich',
+      matchPackageNames: [
+        '/^ghcr\\.io/immich-app//',
+      ],
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      groupName: 'gitlab',
+      sourceUrl: 'https://gitlab.com/gitlab-org/build/CNG/',
+      matchPackageNames: [
+        '/^ghcr\\.io/vaskozl/gitlab-*/',
+        '/^ghcr\\.io/vaskozl/gitaly$/',
+      ],
+    },
+  ],
 }
