@@ -6,7 +6,8 @@ spec:
   staticEndpoints:
     nodePort:
       ports:
-      - "31667-31680"
+      - port: 31667
+        endPort: 31680
   statefulSet:
     pod:
       tailscaleContainer:
