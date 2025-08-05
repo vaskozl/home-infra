@@ -19,10 +19,10 @@ spec:
       gitlabBase:
         image:
           repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.1
+          tag: 18.2.1@sha256:ce21f454e1c3c273aa75f8c82e58f75b467fb898155c7e32505ec43e62fc16a3
       certificates:
         image:
-          repository: ghcr.io/vaskozl/gitlab-certificates
+          repository: ghcr.io/vaskozl/gitlab-certificates@sha256:68fb36f8b0b68319f2f22e6536b4a18bdfbba1803d8e32181c7c4c43f960acaa
           tag: 18.2.1
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
@@ -86,13 +86,13 @@ spec:
     # Reduce memory usage
     gitlab:
       gitlab-exporter:
-        #image:
-        #  repository: ghcr.io/vaskozl/gitlab-exporter
-        #  tag: 18.2.1
+        image:
+          repository: ghcr.io/vaskozl/gitlab-exporter
+          tag: 18.2.1@sha256:4aa1f5939ef45a38671eacc165849ea729649bc8594de96b71c1510ca993dc50
       gitaly:
-        #image:
-        #  repository: ghcr.io/vaskozl/gitaly
-        #  tag: 18.2.1
+        image:
+          repository: ghcr.io/vaskozl/gitaly
+          tag: 18.2.1@sha256:312140fb0d6f5be1065ccec0e77a3026a3ef277e52ecf865e3dd867588734040
         resources:
           requests:
             cpu: 80m
@@ -114,9 +114,9 @@ spec:
         minReplicas: 1
         maxReplicas: 2
       gitlab-shell:
-        #image:
-        #  repository: ghcr.io/vaskozl/gitlab-shell
-        #  tag: 18.2.1
+        image:
+          repository: ghcr.io/vaskozl/gitlab-shell
+          tag: 18.2.1@sha256:0046e237520a6486be3e5120714e3536490fddf52e18958acc938ec451ef28bf
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
@@ -137,7 +137,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.1
+        tag: 18.2.1@sha256:4df9cb91644d4fd1260b690031ea7c2a4af6be39c8631d316f5003395c902ed2
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
