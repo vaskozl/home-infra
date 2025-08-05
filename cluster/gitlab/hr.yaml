@@ -161,7 +161,7 @@ spec:
         config: |
           [[runners]]
             [runners.kubernetes]
-              helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1"
+              helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1@sha256:f34163a3431eaa1cc10a1b1bc1e62ff3f74314ff70036b4324f826c1e2e738cc"
               cpu_request = "500m"
               cpu_limit = "1"
               memory_request = "300Mi"
@@ -176,10 +176,10 @@ spec:
               helper_memory_limit = "200Mi"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
-      #image:
-        #registry: ghcr.io
-        #image: vaskozl/gitlab-runner
-        #tag: 18.2.1
+      image:
+        registry: ghcr.io
+        image: vaskozl/gitlab-runner
+        tag: 18.2.1@sha256:77226b1644961d5aa7e825ffa212ddc08fe3ef754572273fe99e8af05d917c22
     redis:
       install: false
   postRenderers:
