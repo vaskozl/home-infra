@@ -3,6 +3,10 @@ kind: ProxyClass
 metadata:
   name: ingress
 spec:
+  staticEndpoints:
+    nodePort:
+      ports:
+      - "31667-31680"
   statefulSet:
     pod:
       tailscaleContainer:
