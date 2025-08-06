@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: gitlab-redis
+  name: gitlab-postgresql
   annotations:
     patch.sko.ai/app-template: common
 spec:
@@ -20,13 +20,18 @@ spec:
       main:
         containers:
           app:
-            envFrom:
-              - secretRef:
-                 name: gitlab-redis-secret
-            args: ["--requirepass", "$(secret)"]
+            env:
+              PGDATA: /data/17
+              POSTGRES_USER: gitlab
+              POSTGRES_DATABASE: gitlabhq_production
+              POSTGRES_PASSWORD:
+                secretKeyRef:
+                  name: gitlab-postgresql-password
+                  key: postgresql-password
+            command: ["sleep", "36000"]
             image:
-              repository: ghcr.io/vaskozl/redis
-              tag: 8.0.3@sha256:9d048e620cc1efbe6308baec69cc9a8cc73ea2ed6134174c89d359b424d793c1
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 17.5@sha256:2bb6deeb571ef838a7bec80666c6362243b00819d3826138ab54604977370495
             probes:
               liveness:
                 enabled: true
@@ -34,10 +39,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 50Mi
+                memory: 256Mi
               requests:
-                cpu: 10m
-                memory: 18Mi
+                cpu: 250m
+                memory: 256Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -51,5 +56,5 @@ spec:
       main:
         controller: main
         ports:
-          redis:
+          postgresql:
             port: 6379

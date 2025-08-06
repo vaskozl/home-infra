@@ -59,6 +59,11 @@ spec:
         auth:
           secret: gitlab-redis-secret
           key: secret
+      psql:
+        host: gitlab-postgresql
+        password:
+          secret: gitlab-postgresql-password
+          key: postgresql-password
       minio:
         enabled: false
       appConfig:
@@ -181,6 +186,8 @@ spec:
         image: vaskozl/gitlab-runner
         tag: 18.2.1@sha256:ab3d93cbe4ec55b8713430f931a3f021de99c3c833c504941577c003fc655674
     redis:
+      install: false
+    postgresql:
       install: false
   postRenderers:
     - kustomize:

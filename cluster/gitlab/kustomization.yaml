@@ -3,12 +3,11 @@ kind: Kustomization
 namespace: gitlab
 resources:
   - _namespace.yaml
-  - authelia-ouath2.enc.yaml
-  - gitlab-redis-secret.yaml
-  - hr.yaml
-  - redis.yaml
   - buildkit
   - gc
+  - hr.yaml
+  - redis.yaml
+  - secrets
 components:
   - ../common
 secretGenerator:
