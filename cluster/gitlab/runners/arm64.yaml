@@ -16,6 +16,7 @@ spec:
       interval: 1h
   values:
     gitlabUrl: https://gitlab.sko.ai
+    secret: arm64-gitlab-runner-secret
     concurrent: 1
     runners:
       runUntagged: false
