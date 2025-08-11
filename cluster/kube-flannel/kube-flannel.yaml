@@ -90,6 +90,8 @@ data:
   net-conf.json: |
     {
       "Network": "10.244.0.0/16",
+      "EnableIPv6": true,
+      "IPv6Network": "fd00:10:244::/56",
       "EnableNFTables": true,
       "Backend": {
         "Type": "host-gw"
