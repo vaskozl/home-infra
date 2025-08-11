@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: gitlab
 resources:
   - _namespace.yaml
+  - apks.yaml
   - buildkit
   - gc
   - hr.yaml
