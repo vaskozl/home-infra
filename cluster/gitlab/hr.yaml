@@ -180,7 +180,7 @@ spec:
               helper_memory_request = "50Mi"
               helper_memory_limit = "200Mi"
               # Used by melange
-              service_account = "gitlab-gitlab-runner"
+              privileged = true
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
       image:
