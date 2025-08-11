@@ -19,11 +19,11 @@ spec:
       gitlabBase:
         image:
           repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.1@sha256:ac40173308efd665f0413c4e77f070e3a6be815f11d88bdaa2dd76e8b438e0fc
+          tag: 18.2.1@sha256:3c8000363ab5599c3571c57bb8f7075a54700bc7d533ec27cd3b5dd2c56166c8
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.1@sha256:9a7b64eec7ca4b28c21238cd4612f2eb678a7e0323dd7f1e8d2be8986148b64e
+          tag: 18.2.1@sha256:a47a5d50671c8d636b51a97cdc21b957b4e09eba3a942b64b1de53daa3030981
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
