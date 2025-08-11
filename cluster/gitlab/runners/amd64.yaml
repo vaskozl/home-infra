@@ -15,7 +15,7 @@ spec:
         namespace: flux-system
       interval: 1h
   values:
-    gitlabURL: https://gitlab.sko.ai
+    gitlabUrl: https://gitlab.sko.ai
     concurrent: 1
     runners:
       runUntagged: true
@@ -44,6 +44,9 @@ spec:
               name = "docker-emptydir"
               mount_path = "/var/run"
               medium = "Memory"
+            [[runners.kubernetes.volumes.persistent_volume_claim]]
+              name = "apk-repo-pvc"
+              mount_path = "/apks"
             [runners.kubernetes.node_selector]
               "kubernetes.io/arch" = "amd64"
     image:
