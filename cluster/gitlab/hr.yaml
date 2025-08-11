@@ -165,7 +165,6 @@ spec:
           kubernetes.io/arch: amd64
         config: |
           [[runners]]
-            tags = ["amd64", ""]
             [runners.kubernetes]
               helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1@sha256:f34163a3431eaa1cc10a1b1bc1e62ff3f74314ff70036b4324f826c1e2e738cc"
               cpu_request = "500m"
@@ -188,31 +187,6 @@ spec:
                 medium = "Memory"
               [runners.kubernetes.node_selector]
                 "kubernetes.io/arch" = "amd64"
-          [[runners]]
-            tags = ["arm64"]
-            [runners.kubernetes]
-              helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1@sha256:f34163a3431eaa1cc10a1b1bc1e62ff3f74314ff70036b4324f826c1e2e738cc"
-              cpu_request = "500m"
-              cpu_limit = "1"
-              memory_request = "300Mi"
-              memory_limit = "2Gi"
-              service_cpu_request = "100m"
-              service_cpu_limit = "1"
-              service_memory_request = "50Mi"
-              service_memory_limit = "1Gi"
-              helper_cpu_request = "5m"
-              helper_cpu_limit = "500m"
-              helper_memory_request = "50Mi"
-              helper_memory_limit = "200Mi"
-              # Used by dind
-              privileged = true
-              [[runners.kubernetes.volumes.empty_dir]]
-                name = "docker-emptydir"
-                mount_path = "/var/run"
-                medium = "Memory"
-              [runners.kubernetes.node_selector]
-                "kubernetes.io/arch" = "arm64"
-
       image:
         registry: ghcr.io
         image: vaskozl/gitlab-runner
