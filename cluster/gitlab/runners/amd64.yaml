@@ -17,6 +17,10 @@ spec:
   values:
     gitlabUrl: https://gitlab.sko.ai
     concurrent: 1
+    rbac:
+      create: true
+    serviceAccount:
+      create: true
     runners:
       secret: amd64-gitlab-runner-secret
       runUntagged: true
