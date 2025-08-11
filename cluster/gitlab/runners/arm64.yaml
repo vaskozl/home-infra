@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitlab-runner-arm64
+  namespace: gitlab
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: gitlab-runner
+      version: 0.79.1
+      sourceRef:
+        kind: HelmRepository
+        name: gitlab
+        namespace: flux-system
+      interval: 1h
+  values:
+    gitlabUrl: https://gitlab.sko.ai
+    concurrent: 1
+    runners:
+      runUntagged: false
+      tags: [arm64]
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      config: |
+        [[runners]]
+          [runners.kubernetes]
+            helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:18.2.1@sha256:f34163a3431eaa1cc10a1b1bc1e62ff3f74314ff70036b4324f826c1e2e738cc"
+            cpu_request = "500m"
+            cpu_limit = "1"
+            memory_request = "300Mi"
+            memory_limit = "2Gi"
+            service_cpu_request = "100m"
+            service_cpu_limit = "1"
+            service_memory_request = "50Mi"
+            service_memory_limit = "1Gi"
+            helper_cpu_request = "5m"
+            helper_cpu_limit = "500m"
+            helper_memory_request = "50Mi"
+            helper_memory_limit = "200Mi"
+            # Used by dind
+            privileged = true
+            [[runners.kubernetes.volumes.empty_dir]]
+              name = "docker-emptydir"
+              mount_path = "/var/run"
+              medium = "Memory"
+            [runners.kubernetes.node_selector]
+              "kubernetes.io/arch" = "arm64"
+    image:
+      registry: ghcr.io
+      image: vaskozl/gitlab-runner
+      tag: 18.2.1@sha256:ab3d93cbe4ec55b8713430f931a3f021de99c3c833c504941577c003fc655674
