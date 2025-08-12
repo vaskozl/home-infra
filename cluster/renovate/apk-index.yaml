@@ -62,6 +62,19 @@ spec:
               requests:
                 cpu: 10m
                 memory: 160Mi
+      index:
+        <<: *base-controller
+        containers:
+          app:
+            <<: *app
+            args: ['-apk-index-url', 'https://apks.sko.ai/aarch64/APKINDEX.tar.gz']
+            resources:
+              limits:
+                cpu: 1
+                memory: 60Mi
+              requests:
+                cpu: 10m
+                memory: 60Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -79,6 +92,11 @@ spec:
             port: 3000
       alpine:
         controller: alpine
+        ports:
+          http:
+            port: 3000
+      index:
+        controller: index
         ports:
           http:
             port: 3000
