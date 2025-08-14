@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: golink
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.2.0
+  values:
+    controllers:
+      golink:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/golink
+              tag: 1.0.0@sha256:66e59731a6a63de4e69142fb36de5995051bc495f9f24bd9d34183d049e6590e
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 80Mi
+              requests:
+                cpu: 10m
+                memory: 10Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+              name: data
+              size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+      shareProcessNamespace: true
+    ingress:
+      app:
+        className: haproxy-external
+        hosts:
+          - host: mb.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    service:
+      app:
+        controller: golink
+        ports:
+          http:
+            port: 8080
