@@ -22,12 +22,14 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/tailscale-idp
-              tag: 1.86.4@sha256:86a17958d5d68ff187babdde1513eb945c27f8eb1bd9b939d4a4d8ad2a4a26a3
+              tag: 1.86.4@sha256:49d0c6ec4ae6585727a7e0f3ef386092f7f3a981a3077e77398df0189da29bb1
+            env:
+              TAILSCALE_USE_WIP_CODE: 1
             probes:
               liveness:
-                enabled: true
+                enabled: false
               readiness:
-                enabled: true
+                enabled: false
             resources:
               limits:
                 memory: 80Mi
