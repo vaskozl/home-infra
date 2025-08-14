@@ -13,3 +13,12 @@ spec:
         name: tailscale
         namespace: flux-system
       interval: 1h
+  values:
+    operatorConfig:
+      image:
+        repository: ghcr.io/vaskozl/tailscale-operator
+        tag: 1.86.4@sha256:3989406bd1664ded8513a907b1f0afa9418b864bd45472108fc746cebfe74730
+    #proxyConfig:
+    #  image:
+    #    repository: ghcr.io/vaskozl/tailscale
+    #    tag: 1.86.4@...
