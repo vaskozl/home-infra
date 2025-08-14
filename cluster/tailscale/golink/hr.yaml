@@ -58,19 +58,3 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       shareProcessNamespace: true
-    ingress:
-      app:
-        className: haproxy-external
-        hosts:
-          - host: mb.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-    service:
-      app:
-        controller: golink
-        ports:
-          http:
-            port: 8080
