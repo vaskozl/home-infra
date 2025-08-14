@@ -59,6 +59,8 @@ spec:
           main:
             app:
               - path: /usr/share/nginx/html
+      run:
+        type: emptyDir
     service:
       app:
         controller: main

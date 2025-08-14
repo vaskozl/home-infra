@@ -45,7 +45,7 @@ spec:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /data
+                - path: /home/nonroot
               name: data
               size: 1Mi
         type: statefulset
