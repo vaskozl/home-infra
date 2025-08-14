@@ -19,7 +19,7 @@ spec:
       gitlabBase:
         image:
           repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.1@sha256:8d3b78a759c6d652c18dee7f0ed6ef0e1c8dd718ec9a7885d76f059144d45a07
+          tag: 18.2.1@sha256:eab3eeb339c4c77c9b1777c8e52b04329b2e496a836cd668d05d6ffcef4a91f7
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
@@ -97,7 +97,7 @@ spec:
       gitaly:
         image:
           repository: ghcr.io/vaskozl/gitaly
-          tag: 18.2.1@sha256:cfd1124e25420bad069a4ace21b9a2b55e98a88f9448d5923cb4ae4a6ca4cae4
+          tag: 18.2.2@sha256:397750ca8c004618f4acf4f5ea3f4fed2cabb47d795e0ac841db9ef4d4dad31e
         resources:
           requests:
             cpu: 80m
@@ -127,7 +127,7 @@ spec:
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.2.1@sha256:967be55331b94c69f6480cefae40eca029217c7b194b819d42b5a09e2cf486a8
+          tag: 18.2.2@sha256:726c8e92328b27e71ecd11a257c6b0bf412786bab0ac8df623d0953653dcefdb
         # The default requests are massive for a static server
         resources:
           requests:
