@@ -29,7 +29,6 @@ spec:
                   name: oauth2-proxy-env
             env:
               OAUTH2_PROXY_HTTP_ADDRESS: "http://[::]:4180"
-              OAUTH2_PROXY_FORCE_HTTPS: "true"
               OAUTH2_PROXY_PROVIDER: oidc
               OAUTH2_PROXY_COOKIE_SECURE: "false"
               OAUTH2_PROXY_COOKIE_SAMESITE: "lax"
