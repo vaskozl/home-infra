@@ -29,9 +29,6 @@ controller:
       capture request header User-Agent len 64
       capture request header Host len 64
 
-      # https redirect
-      http-request redirect scheme https if !{ ssl_fc }
-
       # Add UUID
       unique-id-format %[uuid()]
       unique-id-header X-Unique-ID
@@ -46,9 +43,9 @@ controller:
       http-request del-header remote- -m beg
       # Disable auth for specific backends
       acl public_hosts base -m reg -f /config/public_hosts.txt
-      # Authelia  Config:             Backend name            Path         Method  Cache    Success    Failure
-      http-request lua.auth-intercept authelia_authelia_http  /api/verify  HEAD    cookie   remote-*   -           if !public_hosts
-      http-request redirect location https://gate.sko.ai/?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
+      # Authelia  Config:             Backend name                    Path          Method  Cache    Success        Failure
+      http-request lua.auth-intercept oauth2-proxy_oauth2-proxy_http  /oauth2/auth  HEAD    cookie   x-forwarded-*   -           if !public_hosts
+      http-request redirect location https://auth.sko.ai/oauth2/start?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
 
       # Security Headers
       http-response set-header X-XSS-Protection "1; mode=block"
