@@ -43,7 +43,7 @@ spec:
               size: 1Mi
         type: statefulset
     defaultPodOptions:
-      hostNetwork: false
+      hostNetwork: true
     ingress:
       app:
         annotations:
