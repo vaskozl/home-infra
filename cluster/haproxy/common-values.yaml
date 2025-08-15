@@ -46,8 +46,8 @@ controller:
       http-request del-header x-forwarded- -m beg
       # Disable auth for specific backends
       acl public_hosts base -m reg -f /config/public_hosts.txt
-      # Authelia  Config:             Backend name                    Path          Method  Cache    Success        Failure
-      http-request lua.auth-intercept oauth2-proxy_oauth2-proxy_http  /oauth2/auth  HEAD    cookie   x-forwarded-*   -           if !public_hosts
+      # Authelia  Config:             Backend name                        Path          Method  Cache    Success        Failure
+      http-request lua.auth-intercept oauth2-proxy_svc_oauth2-proxy_http  /oauth2/auth  HEAD    cookie   x-forwarded-*   -           if !public_hosts
       http-request redirect location https://auth.sko.ai/oauth2/start?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
 
       # Security Headers
