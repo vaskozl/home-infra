@@ -122,7 +122,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.2@sha256:fbfcd1d79b56a82eeccdd84148ecc864ad2bcd784243711ac74d6e190de8efce
+          tag: 18.2.2@sha256:7403311234573073c19ba154e710a3b6c089d86c4d5fa0dd5524482ee07b6a1c
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
@@ -143,7 +143,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.2@sha256:c8075d6b65a2b92c5900d8527a7e43b2f1beaa3addc2a8c56a51f9a27fccd3b6
+        tag: 18.2.2@sha256:3ac10de74f9424a5faeb28a7595b1ceb3a2777201994cff9368f5a01255f4afe
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
