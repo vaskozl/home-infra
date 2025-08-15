@@ -40,7 +40,7 @@ controller:
       http-request set-header X-Forwarded-Uri %[path]
 
       # Drop any user supplied Remote-* headers
-      http-request del-header remote- -m beg
+      http-request del-header x-forwarded- -m beg
       # Disable auth for specific backends
       acl public_hosts base -m reg -f /config/public_hosts.txt
       # Authelia  Config:             Backend name                    Path          Method  Cache    Success        Failure
