@@ -54,6 +54,7 @@ spec:
             acl allowed path_beg /auth
             acl allowed path_beg /redirect/oauth
             http-request deny unless allowed
+            http-request redirect location /auth/oidc/redirect if { path -i / }
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Smart Home Management
           gethomepage.dev/group: Monitoring

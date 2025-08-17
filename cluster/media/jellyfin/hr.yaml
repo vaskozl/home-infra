@@ -64,6 +64,8 @@ spec:
       app:
         className: haproxy-external
         annotations:
+          haproxy.org/backend-config-snippet: |
+            http-request redirect location /sso/OID/start/ts if { path -i / }
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Media Center
           gethomepage.dev/group: Media
