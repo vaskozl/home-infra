@@ -101,6 +101,7 @@ spec:
           gethomepage.dev/group: Monitoring
           gethomepage.dev/icon: victoriametrics
           gethomepage.dev/name: VictoriaMetrics
+          gethomepage.dev/pod-selector: "app.kubernetes.io/name=vmsingle"
         hosts:
           - vm.sko.ai
     vmalert:
