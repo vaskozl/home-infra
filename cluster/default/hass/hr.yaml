@@ -54,12 +54,12 @@ spec:
             acl allowed path_beg /auth
             acl allowed path_beg /redirect/oauth
             http-request deny unless allowed
-            http-request redirect location /auth/oidc/redirect if { path -i / }
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Smart Home Management
           gethomepage.dev/group: Monitoring
           gethomepage.dev/icon: home-assistant
           gethomepage.dev/name: Home Assistant
+          gethomepage.dev/widget.url: "https://ha.sko.ai/auth/oidc/redirect"
         className: haproxy-external
         hosts:
           - host: ha.sko.ai
