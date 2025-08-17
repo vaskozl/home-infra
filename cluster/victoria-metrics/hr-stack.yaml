@@ -41,6 +41,10 @@ spec:
         hosts:
           - gf.sko.ai
       sidecar:
+        image:
+          registry: ghcr.io
+          repository: vaskozl/k8s-sidecar
+          tag: 1.30.9@sha256:b08ee6a629ec8aaf742259962a64b957dc5208916160a52a1ba86d89431f2b78
         dashboards:
           enabled: true
           label: grafana_dashboard
