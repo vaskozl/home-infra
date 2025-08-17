@@ -11,5 +11,8 @@ configMapGenerator:
       - config/services.yaml
       - config/settings.yaml
       - config/widgets.yaml
+      - config/proxmox.yaml
+      - config/custom.css
+      - config/custom.js
 configurations:
   - kustomizeconfig.yaml

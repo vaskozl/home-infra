@@ -80,6 +80,12 @@ spec:
             path: /app/config/settings.yaml
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
+          - subPath: proxmox.yaml
+            path: /app/config/proxmox.yaml
+          - subPath: cusotm.css
+            path: /app/config/custom.css
+          - subPath: cusotm.js
+            path: /app/config/custom.js
     service:
       app:
         controller: homepage
