@@ -116,6 +116,7 @@ spec:
             gethomepage.dev/group: Cloud
             gethomepage.dev/icon: gitlab
             gethomepage.dev/name: Gitlab
+            gethomepage.dev/pod-selector: "app=webservice"
         resources:
           limits:
             memory: 2Gi

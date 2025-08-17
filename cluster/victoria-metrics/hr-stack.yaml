@@ -33,6 +33,7 @@ spec:
           gethomepage.dev/group: Monitoring
           gethomepage.dev/icon: grafana
           gethomepage.dev/name: Grafana
+          gethomepage.dev/pod-selector: "app.kubernetes.io/name=grafana"
         hosts:
           - gf.sko.ai
       sidecar:
