@@ -25,9 +25,6 @@ controller:
       http-request set-src hdr(cf-connecting-ip) if is_cloudflare
       http-request del-header x-forwarded-for
 
-      # https redirect
-      http-request redirect scheme https if !{ ssl_fc }
-
       # Capture headers for logging
       capture request header User-Agent len 64
       capture request header Host len 64
