@@ -23,7 +23,7 @@ spec:
         containers:
           app:
             env:
-              PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429/
+              PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8428/
               SERVER_HOST: 0.0.0.0
               HEALTH_HOST: 0.0.0.0
             image:

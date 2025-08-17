@@ -9,9 +9,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 8429
+      port: 8428
       protocol: TCP
-      targetPort: 8429
+      targetPort: 8428
   selector:
     app.kubernetes.io/component: monitoring
     app.kubernetes.io/name: vmsingle
