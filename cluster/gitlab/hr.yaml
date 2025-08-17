@@ -40,12 +40,6 @@ spec:
         # TLS is enabled by default
         tls:
           enabled: false
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Git and everything but the kitchen sink
-          gethomepage.dev/group: Cloud
-          gethomepage.dev/icon: gitlab
-          gethomepage.dev/name: Gitlab
       kas:
         enabled: false
       pages:
@@ -115,6 +109,13 @@ spec:
         maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 1
+        ingress:
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/description: Git and everything but the kitchen sink
+            gethomepage.dev/group: Cloud
+            gethomepage.dev/icon: gitlab
+            gethomepage.dev/name: Gitlab
         resources:
           limits:
             memory: 2Gi
