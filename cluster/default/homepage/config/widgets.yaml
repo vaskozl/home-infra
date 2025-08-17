@@ -1,3 +1,17 @@
 ---
-# Homepage widgets configuration
-# Add your widgets configuration here
+- kubernetes:
+    cluster:
+      show: false
+    nodes:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
+- datetime:
+    text_size: xs
+    locale: en-GB
+    format:
+      dateStyle: short
+      timeStyle: short
+      hourCycle: h23
+      timeZone: Europe/London
