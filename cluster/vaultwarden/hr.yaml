@@ -45,6 +45,12 @@ spec:
         type: statefulset
     ingress:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Password Manager
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: bitwarden
+          gethomepage.dev/name: Bitwarden
         hosts:
           - host: bw.sko.ai
             paths:

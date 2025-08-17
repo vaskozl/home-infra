@@ -58,6 +58,11 @@ spec:
       app:
         annotations:
           haproxy.org/server-ssl: 'true'
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: TPLink Network Management
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: https://play-lh.googleusercontent.com/FW3wu85sc7EtgSnPoCY_NBQq4yeB0ZcUL62dkruhcDTs7u3OsnbGL0-mzFMiGbmiaw
+          gethomepage.dev/name: Omada Controller
         hosts:
           - host: omada.sko.ai
             paths:

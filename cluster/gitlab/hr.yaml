@@ -40,6 +40,12 @@ spec:
         # TLS is enabled by default
         tls:
           enabled: false
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Git and everything but the kitchen sink
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: gitlab
+          gethomepage.dev/name: Gitlab
       kas:
         enabled: false
       pages:

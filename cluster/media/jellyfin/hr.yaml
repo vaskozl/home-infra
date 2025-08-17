@@ -63,6 +63,12 @@ spec:
     ingress:
       app:
         className: haproxy-external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Media Center
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: jellyfin
+          gethomepage.dev/name: Jellyfin
         hosts:
           - host: jf.sko.ai
             paths:

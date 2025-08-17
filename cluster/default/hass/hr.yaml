@@ -54,6 +54,11 @@ spec:
             acl allowed path_beg /auth
             acl allowed path_beg /redirect/oauth
             http-request deny unless allowed
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Smart Home Management
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: home-assistant
+          gethomepage.dev/name: Home Assistant
         className: haproxy-external
         hosts:
           - host: ha.sko.ai

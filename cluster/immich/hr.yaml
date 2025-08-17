@@ -186,6 +186,12 @@ spec:
     ingress:
       immich:
         className: haproxy-external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Search through photos and videos
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: immich
+          gethomepage.dev/name: Immich
         hosts:
           - host: immich.sko.ai
             paths:

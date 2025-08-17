@@ -50,6 +50,12 @@ spec:
         type: statefulset
     ingress:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Calendar and contacts with invites
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: baikal
+          gethomepage.dev/name: Baïkal
         hosts:
           - host: bk.sko.ai
             paths:

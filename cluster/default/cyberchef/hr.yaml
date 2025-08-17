@@ -46,6 +46,12 @@ spec:
       shareProcessNamespace: true
     ingress:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: The Cyber Swiss Army Knife
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: cyberchef
+          gethomepage.dev/name: Cyberchef
         hosts:
           - host: cyberchef.sko.ai
             paths:

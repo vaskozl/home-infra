@@ -27,6 +27,12 @@ spec:
     grafana:
       ingress:
         enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Server Monitoring Dashboards
+          gethomepage.dev/group: Monitoring
+          gethomepage.dev/icon: grafana
+          gethomepage.dev/name: Grafana
         hosts:
           - gf.sko.ai
       sidecar:
@@ -88,6 +94,12 @@ spec:
             memory: 1.2Gi
       ingress:
         enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Server Metrics
+          gethomepage.dev/group: Monitoring
+          gethomepage.dev/icon: victoriametrics
+          gethomepage.dev/name: VictoriaMetrics
         hosts:
           - vm.sko.ai
     vmalert:

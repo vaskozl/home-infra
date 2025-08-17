@@ -67,6 +67,12 @@ spec:
     enableServiceLinks: false
     ingress:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Ebook management
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: calibre-web
+          gethomepage.dev/name: Calibre Web
         hosts:
           - host: cw.sko.ai
             paths:

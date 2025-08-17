@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: homer
+  name: homepage
   annotations:
     patch.sko.ai/app-template: common
 spec:
@@ -17,12 +17,14 @@ spec:
       version: 4.2.0
   values:
     controllers:
-      homer:
+      homepage:
+        serviceAccount:
+          identifier: homepage
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/homer-web
-              tag: 25.05.2@sha256:df5f0fd138666c5c9ea087e7b1f486f27d77f7997f9710c70ba29dac583eacce
+              repository: ghcr.io/gethomepage/homepage
+              tag: v1.4.5@sha256:9cdc0cb35224fdfcbdc1d37440b42f05bd803d475a7211fed13bd69a65e4a1d4
             probes:
               liveness:
                 enabled: true
@@ -59,14 +61,27 @@ spec:
                   port: http
     persistence:
       config:
-        globalMounts:
-          - path: /usr/share/webapps/homer/assets/config.yml
-            subPath: config.yml
-        name: homer-config
+        enabled: true
         type: configMap
+        name: homepage-config
+        globalMounts:
+          - subPath: bookmarks.yaml
+            path: /app/config/bookmarks.yaml
+          - subPath: docker.yaml
+            path: /app/config/docker.yaml
+          - subPath: kubernetes.yaml
+            path: /app/config/kubernetes.yaml
+          - subPath: services.yaml
+            path: /app/config/services.yaml
+          - subPath: settings.yaml
+            path: /app/config/settings.yaml
+          - subPath: widgets.yaml
+            path: /app/config/widgets.yaml
     service:
       app:
-        controller: homer
+        controller: homepage
         ports:
           http:
             port: 8080
+    serviceAccount:
+      homepage: {}

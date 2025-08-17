@@ -72,6 +72,12 @@ spec:
         type: secret
     ingress:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Plan your projects with the elegance
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: vikunja
+          gethomepage.dev/name: Vikunja
         hosts:
           - host: todo.sko.ai
             paths:
