@@ -37,7 +37,7 @@ spec:
               OAUTH2_PROXY_EMAIL_DOMAINS: "*"
               OAUTH2_PROXY_SCOPE: openid profile email
               OAUTH2_PROXY_PREFER_EMAIL_TO_USER: "true"
-              OAUTH2_PROXY_SET_AUTHORIZATION_HEADER: "true"
+              OAUTH2_PROXY_SET_XAUTHREQUEST: "true"
               OAUTH2_PROXY_REVERSE_PROXY: "true"
               OAUTH2_PROXY_SILENCE_PING_LOGGING: "true"
               OAUTH2_PROXY_OIDC_ISSUER_URL: https://idp.ide-bicolor.ts.net
