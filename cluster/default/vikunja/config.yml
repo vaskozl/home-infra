@@ -12,11 +12,6 @@ auth:
         clientid: 5f904a0d44a57408a81aa33adac9a85a
         clientsecret: ENC[AES256_GCM,data:P58R1JvqpOMDi65WAy102x6ShsdF2/MottSY4f6IjbrLpun2gbeomJV5R92dksOx7SVJ7IvOq43K6D0bHIXsUw==,iv:EayOPwF+1RRM6lE/e7vEci5rCjPZ+ARad33H/HfPJqg=,tag:X9SkO/7JgLA1Sqk04WuT7A==,type:str]
         scope: openid profile email
-      - name: authelia
-        authurl: https://gate.sko.ai
-        clientid: vikunja
-        clientsecret: ENC[AES256_GCM,data:ERlKsYEZnmNLWGGFGOomtA4xzWxEJryDZtaXYHibk4XXoZmUNbIP9h8wWSTbfQ2sOyOM81kp2I9IWUMTMB2G7sycHKhzrxLt,iv:xrN9eWpmRVNlhpHB2mVhuBCtX6tODxw7A0Xvp/Q7rNk=,tag:Hj1dZTGgl/N0OqSAxJ2Ocg==,type:str]
-        scope: openid profile email
 mailer:
   enabled: true
   host: mail.sko.ai
@@ -25,8 +20,8 @@ mailer:
   username: ""
   password: ""
 sops:
-  lastmodified: "2025-08-15T21:38:08Z"
-  mac: ENC[AES256_GCM,data:iOKI2AIQ9waMRK+k743SnAB1UZtaHn8QTe4GoaQ2ogoxuu6s41qVcFP0gLH7VBwo8g7nhK/wSObhdYmIDvzgljCmi26daWlnf0npClxNaIxUGDVKrwYkxR9kjuVHHODOo1kXZD7NT8mnEWky8RgT66G2o9Mgqp0RAzUKimqOjKE=,iv:+x4mZFBb00B9aEKCnLN/Xfwm81221/I52QfboRzVdiI=,tag:8mZ8uH6xPWOXA6oIXSZytQ==,type:str]
+  lastmodified: "2025-08-17T10:56:36Z"
+  mac: ENC[AES256_GCM,data:Jyx02QszG2OaTU3gpgfRQnEvMEJwEY8RT/6duRWP324jGVvryTpDcTuK/CAi++S1qRcFvPgRtEmVh43zwOt7JzICcvgNQ68hJwt0OwLcf1oUofc+LCGZHvj61TPiqKkogZiP5BdOQ8QVFq2aF37cEbvr4DaSPeYy4J9qwMk/L8U=,iv:mFZkJhTt5jXqFC+6z6okIu7AkDQuRakYs7TwYlgQTtg=,tag:399IF1J5tlzJ2A7voj9z/Q==,type:str]
   pgp:
     - created_at: "2025-02-07T19:54:36Z"
       enc: |-

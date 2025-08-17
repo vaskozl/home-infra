@@ -76,7 +76,6 @@ spec:
           syncProfileAttributes: [email]
           blockAutoCreatedUsers: false
           providers:
-            - secret: authelia-oauth2
             - secret: ts-oauth2
         lfs: &rails
           connection:
