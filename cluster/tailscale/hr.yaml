@@ -18,7 +18,7 @@ spec:
       image:
         repository: ghcr.io/vaskozl/tailscale-operator
         tag: 1.86.4@sha256:3989406bd1664ded8513a907b1f0afa9418b864bd45472108fc746cebfe74730
-    #proxyConfig:
-    #  image:
-    #    repository: ghcr.io/vaskozl/tailscale
-    #    tag: 1.86.4@...
+    proxyConfig:
+      image:
+        repository: ghcr.io/vaskozl/tailscale
+        tag: 1.86.4@sha256:6a6017b90e24a231e04024396948846a03f0a1cf7a9d2c9729d5118e8af07f6d
