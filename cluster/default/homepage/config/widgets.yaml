@@ -7,14 +7,13 @@
       cpu: true
       memory: true
       showLabel: true
+- search:
+    provider: google
+    target: _blank
 - datetime:
-    text_size: xs
     locale: en-GB
     format:
       dateStyle: short
       timeStyle: short
       hourCycle: h23
       timeZone: Europe/London
-- search:
-    provider: google
-    target: _blank
