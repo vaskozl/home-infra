@@ -77,10 +77,9 @@ spec:
     persistence:
       config:
         globalMounts:
-          - path: /kromgo/config.yaml
-            subPath: config.yaml
+          - path: /kromgo
         name: kromgo-config
-        type: configMap
+        type: secret
     service:
       app:
         controller: kromgo
