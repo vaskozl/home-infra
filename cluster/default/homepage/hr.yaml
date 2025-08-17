@@ -23,7 +23,8 @@ spec:
         containers:
           app:
             env:
-              HOMEPAGE_ALLOWED_HOSTS: home.sko.ai &host
+              LOG_TARGETS: stdout
+              HOMEPAGE_ALLOWED_HOSTS: home.sko.ai
             image:
               repository: ghcr.io/gethomepage/homepage
               tag: v1.4.5@sha256:9cdc0cb35224fdfcbdc1d37440b42f05bd803d475a7211fed13bd69a65e4a1d4
@@ -55,7 +56,7 @@ spec:
     ingress:
       app:
         hosts:
-          - host: *host
+          - host: home.sko.ai
             paths:
               - path: /
                 service:
