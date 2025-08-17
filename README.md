@@ -12,12 +12,12 @@
 Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11th Gen Intel Nuc:
 
 * Apps:
-  * [authelia](https://github.com/authelia/authelia) - SSO server
   * [baikal](https://sabre.io/baikal/) - {Cal,Card}Dav server
   * [blocky](https://github.com/0xERR0R/blocky) - DNS proxy and ad-blocker
   * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
+  * [golink](https://github.com/tailscale/golink) - Tailscale Link Shorterner
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [homer](https://hub.docker.com/r/b4bz/homer/tags) - Application Dashboard
   * [immich](https://immich.app/) - Self-hosted photo and video management with state-of-the-art ML
@@ -30,14 +30,15 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [vikunja](https://github.com/go-vikunja/vikunja) - Todo-app
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
-  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
-  * [minilb](https://github.com/vaskozl/minilb) - Ultralight DNS based load balancer
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
+  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
+  * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
-  * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
-  * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
+  * [tailscale-idp](https://github.com/tailscale/tailscale/tree/main/cmd/tsidp) - Tailscale OIDC IDP
+  * [tailscale-operator](https://github.com/tailscale/tailscale/tree/main/cmd/k8s-operator) - Tailscale Operator
+  * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
 
 ## Secret management
 
