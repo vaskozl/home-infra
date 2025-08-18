@@ -48,19 +48,21 @@ sub _installed_packages {
           next if $pacman_q{$container_image};
 
           # Check if the image name contains "vaskozl"
-          if ($container_image =~ IMAGE_FILTER) {
-            print "Scanning $container_image\n" if $verbose;
+          if ($container_image && $container_image =~ IMAGE_FILTER) {
+            print "Extracting sbom of $container_image\n" if $verbose;
             # TODO: Use wss instead of shelling out
             my $path = SBOM_PATH;
-            my @lines = `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- [ -d "$path" ] && find . "$path/*.json"`;
+            my @lines = `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- sh -c '[ -d "$path" ] && find "$path" -type f'`;
 
             # Store the spdx if we haven't seen it before
             for (@lines) {
-              $spdx{$_} //=  `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- cat "$_"`;
+              chomp;
+              next unless $_;
+              $spdx{$_} ||=  `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- cat '$_'`;
             }
 
             warn "Could not enumerate packages in $container_image" unless @lines;
-            $pacman_q{$container_image}{$name} = \@lines;
+            $pacman_q{$container_image} = \@lines;
           }
       }
   }
@@ -72,8 +74,8 @@ sub _generate_report {
   my $report;
 
   for my $ctr (keys %{$ctrs}) {
-    my %installed = %{$ctrs->{$ctr}};
-    for my $name (keys %installed) {
+    my @installed = @{$ctrs->{$ctr}};
+    for my $name (@installed) {
       if (exists $scans->{$name}) {
         push @{$scans->{$name}{affected_ctrs}}, $ctr;
       }
@@ -81,12 +83,18 @@ sub _generate_report {
   }
   for my $pkg (%$scans) {
     my $scan = $scans->{$pkg};
-    for my $match (@{$scan->{matches}) {
+    for my $match (@{$scan->{matches}}) {
       my $vuln = $match->{vulnerability};
       $report .= "$vuln->{severity}: $match->{artifact}{name} is affected by $vuln->{id}: $vuln->{dataSource}";
       $report .= "\n";
+      $report .= " $vuln->{description}\n";
+
+      my @fixed_in = @{$vuln->{fix}{versions}};
+      $report .=  join(' ', ' Update to', @fixed_in, '\n') if @fixed_in;
+      $report .= " No fix available :(\n" unless @fixed_in;
+
       for my $ctr (@{$scan->{affected_ctrs}}) {
-        $report .= "\t$ctr\n";
+        $report .= "  * $ctr\n";
       }
       $report .= "\n";
     }
@@ -94,26 +102,29 @@ sub _generate_report {
   $report
 }
 
-sub _sdpx_to_scans {
+sub _spdx_to_scans {
   my $spdx = shift;
 
   my %scans;
   for (%$spdx) {
     open my $fh, '>', 'sbom.json' or die "Cannot open file: $!";
-    print $fh $spdx{$_};
+    my $content = $spdx->{$_};
+    next unless $content;
+    print $fh $content;
 
     # Close the file
-    $scans{$_} = decode_json `grype sbom:sbom.json --add-cpes-if-none --distro wolfi -o json`;
+    print "Scanning $_\n" if $verbose;
+    $scans{$_} = decode_json(`grype sbom:sbom.json --add-cpes-if-none --distro wolfi -o json`);
     close $fh;
   }
 
-  return \$scans;
+  return \%scans;
 }
 
 
-my $ctrs, $spdx = _installed_packages;
+my ($ctrs, $spdx) = _installed_packages;
 
-my $scans = _spdx_to_scans;
+my $scans = _spdx_to_scans($spdx);
 
 my $report = _generate_report($ctrs, $scans);
 
