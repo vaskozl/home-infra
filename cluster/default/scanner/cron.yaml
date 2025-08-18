@@ -15,6 +15,7 @@ spec:
               image: ghcr.io/vaskozl/perl-mojolicious:9.41@sha256:364c7e2973a1918e5fd61949bc4438e1325ae625e61a4e67794c0824626b31c0
               args:
                 - /script/scan-containers.pl
+                - -v
                 - -u
                 - -m=pixel@ntfy.sko.ai
                 - -s=ntfy.automation.svc.cluster.local

@@ -107,14 +107,14 @@ sub _spdx_to_scans {
 
   my %scans;
   for (%$spdx) {
-    open my $fh, '>', 'sbom.json' or die "Cannot open file: $!";
+    open my $fh, '>', '/tmp/sbom.json' or die "Cannot open file: $!";
     my $content = $spdx->{$_};
     next unless $content;
     print $fh $content;
 
     # Close the file
     print "Scanning $_\n" if $verbose;
-    $scans{$_} = decode_json(`grype sbom:sbom.json --add-cpes-if-none --distro wolfi -o json`);
+    $scans{$_} = decode_json(`grype sbom:/tmp/sbom.json --add-cpes-if-none --distro wolfi -o json`);
     close $fh;
   }
 
