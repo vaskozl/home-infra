@@ -60,6 +60,9 @@ spec:
           - am.sko.ai
       spec:
         externalURL: "https://am.sko.ai"
+        image:
+          repository: ghcr.io/vaskozl/prometheus-alertmanager
+          tag: 0.28.1@sha256:b15db44382231145223fdf071db8162440d88678d0b7ae7645187c72c69cda6a
       config:
         route:
           routes:
