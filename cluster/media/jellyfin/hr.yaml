@@ -30,7 +30,7 @@ spec:
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
             image:
               repository: ghcr.io/vaskozl/jellyfin
-              tag: 10.10.7@sha256:d353166fef9c317a6a63614e0f1fbb476aac3c3b795e85b958fbd57001af1943
+              tag: 10.10.7@sha256:0bd79a48095a1598dda8cde47e2d5bfeb1d06788dee7adf3369bf6bca19026e0
             probes:
               liveness:
                 enabled: true
