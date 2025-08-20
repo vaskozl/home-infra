@@ -129,13 +129,13 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.2@sha256:d3e6f69206cb139e2d056a188c5ebf06ce6133ef322e6b36556df45c79e6cfa8
+          tag: 18.2.3@sha256:3169e4acbed755b96e896708b35a9ca3a0e4b67eb9b0d87523d3222daa24fd05
         minReplicas: 1
         maxReplicas: 2
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.2.2@sha256:8bd4fc7566c50f14354a6ee0061ea380b3153cd15ecf366ebb1313977690f5f3
+          tag: 18.2.4@sha256:2ba73d60f69079f84994127326ce3b48ef696240dba7158793371b0ab05b047a
         # The default requests are massive for a static server
         resources:
           requests:
