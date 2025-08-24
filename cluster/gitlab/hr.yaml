@@ -158,8 +158,7 @@ spec:
         secret: object-storage
         key: registry.minio.yaml
     # Disable things we handle by ourselves
-    certmanager:
-      install: false
+    installCertmanager: false
     nginx-ingress:
       enabled: false
     prometheus:
