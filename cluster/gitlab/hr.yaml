@@ -97,7 +97,7 @@ spec:
       gitaly:
         image:
           repository: ghcr.io/vaskozl/gitaly
-          tag: 18.2.4@sha256:982a8fbca1688687f9394cb314d93025fc610258e99d2d4a674a1ca2185c0493
+          tag: 18.3.0@sha256:17dcfe7167868cdb617d422bb81c3547b5dd93a38dc44b51f54fb64da29efccf
         resources:
           requests:
             cpu: 80m
@@ -132,6 +132,12 @@ spec:
           tag: 18.2.4@sha256:600ab47dea36080983ef4f76e341c44aebde19287f7f2236822fabb84919fa9d
         minReplicas: 1
         maxReplicas: 2
+        extraVolumes: |
+          - name: var-log-gitlab-shell
+            emptyDir: {}
+        extraVolumeMounts: |
+          - name: var-log-gitlab-shell
+            mountPath: /var/log/gitlab-shell
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
