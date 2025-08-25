@@ -31,7 +31,7 @@ spec:
             command: ["sleep", "36000"]
             image:
               repository: ghcr.io/vaskozl/postgresql
-              tag: 17.6@sha256:8460341197ff2d26953edbdc85f97c810595da21da1edb05411367e99c86424d
+              tag: 17.6@sha256:58870ad6570a190108560bd7483f9789bff0e4883a4052690865ef51107bc980
             probes:
               liveness:
                 enabled: true
