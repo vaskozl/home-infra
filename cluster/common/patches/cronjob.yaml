@@ -6,6 +6,7 @@ spec:
   jobTemplate:
     spec:
       template:
+        shareProcessNamespace: true
         spec:
           dnsConfig:
             options:
