@@ -11,6 +11,7 @@ spec:
       labels:
         app: sysdig-agent
     spec:
+      shareProcessNamespace: true
       containers:
         - args:
             - sleep

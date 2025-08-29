@@ -5,6 +5,7 @@ metadata:
 spec:
   template:
     spec:
+      shareProcessNamespace: true
       containers:
         - name: fluent-bit
           image: ghcr.io/vaskozl/fluent-bit:4.0.8@sha256:ec3295f3b0259e74b2aa7dd2f2f6a89eb2b2b3305b6c612f6695d94c6d5b3450
