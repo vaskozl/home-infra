@@ -6,8 +6,8 @@ spec:
   jobTemplate:
     spec:
       template:
-        shareProcessNamespace: true
         spec:
+          shareProcessNamespace: true
           dnsConfig:
             options:
               - name: ndots
