@@ -54,7 +54,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-      shareProcessNamespace: true
     persistence:
       config:
         name: mosquitto-config

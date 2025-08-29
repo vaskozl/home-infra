@@ -55,7 +55,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-      shareProcessNamespace: true
     persistence:
       tmp:
         type: emptyDir

@@ -59,7 +59,6 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-      shareProcessNamespace: true
     ingress:
       app:
         className: haproxy-external

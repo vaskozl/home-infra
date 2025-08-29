@@ -54,7 +54,6 @@ spec:
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
-      shareProcessNamespace: true
     persistence:
       cache:
         type: emptyDir

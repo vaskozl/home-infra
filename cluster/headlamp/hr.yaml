@@ -73,7 +73,6 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
-      shareProcessNamespace: true
     persistence:
       config:
         globalMounts:

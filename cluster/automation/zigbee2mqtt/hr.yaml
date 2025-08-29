@@ -19,7 +19,6 @@ spec:
     defaultPodOptions:
       nodeSelector:
         app: zigbee-controller
-      shareProcessNamespace: true
     controllers:
       zigbee2mqtt:
         containers:

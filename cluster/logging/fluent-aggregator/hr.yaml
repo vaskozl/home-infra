@@ -53,7 +53,6 @@ spec:
         runAsUser: 2000
         seccompProfile:
           type: RuntimeDefault
-      shareProcessNamespace: true
     persistence:
       config:
         name: aggregator-config
