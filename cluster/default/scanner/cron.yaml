@@ -17,8 +17,8 @@ spec:
                 - /script/scan-containers.pl
                 - -v
                 - -u
-                - -m=scans@sko.ai
-                - -s=mx-maddy.mailserver.svc.cluster.local:2225
+                - -m=pixel@ntfy.sko.ai
+                - -s=ntfy.automation.svc.cluster.local
               volumeMounts:
                 - name: script
                   mountPath: /script
