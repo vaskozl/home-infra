@@ -25,7 +25,7 @@ spec:
                 image:
                   repository: ghcr.io/vaskozl/renovate-apk-indexer
                   tag: v0.1.1@sha256:81848f48da190c0780db1fa97dbc298c5c01236a7be3d52986cfa6c76c26e25c
-                args: ['-apk-index-url', 'https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz']
+                args: ['-apk-index-url', 'https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz,https://apks.sko.ai/aarch64/APKINDEX.tar.gz']
                 probes:
                   liveness:
                     enabled: true
@@ -62,19 +62,6 @@ spec:
               requests:
                 cpu: 10m
                 memory: 160Mi
-      index:
-        <<: *base-controller
-        containers:
-          app:
-            <<: *app
-            args: ['-apk-index-url', 'https://apks.sko.ai/aarch64/APKINDEX.tar.gz']
-            resources:
-              limits:
-                cpu: 1
-                memory: 60Mi
-              requests:
-                cpu: 10m
-                memory: 60Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 568
