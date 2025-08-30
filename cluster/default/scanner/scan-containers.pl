@@ -94,6 +94,7 @@ sub _generate_report {
       $report .= " No fix available :(\n" unless @fixed_in;
 
       for my $ctr (@{$scan->{affected_ctrs}}) {
+        $ctr =~ s/@.*$//;
         $report .= "  * $ctr\n";
       }
       $report .= "\n";
