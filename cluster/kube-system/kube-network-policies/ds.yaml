@@ -7,7 +7,6 @@ spec:
     spec:
       hostNetwork: true
       priorityClassName: system-node-critical
-      dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
       tolerations:
@@ -16,15 +15,16 @@ spec:
       serviceAccountName: kube-network-policies
       containers:
         - name: kube-network-policies
-          image: ghcr.io/vaskozl/kube-network-policies:v0.5.1
+          image: ghcr.io/vaskozl/kube-network-policies:0.9.1@sha256:dba4c46748040b533604a0cd1343d4e42b1c73ff48b7c4dbe1b86e43b220f737
           args:
-            - /bin/netpol
             - --hostname-override=$(MY_NODE_NAME)
             - -v=1
           volumeMounts:
-            - name: lib-modules
-              mountPath: /lib/modules
-              readOnly: true
+            - name: nri-plugin
+              mountPath: /var/run/nri
+            - name: netns
+              mountPath: /var/run/netns
+              mountPropagation: HostToContainer
           resources:
             requests:
               cpu: "100m"
@@ -39,6 +39,9 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
       volumes:
-        - name: lib-modules
+        - name: nri-plugin
           hostPath:
-            path: /lib/modules
+            path: /var/run/nri
+        - name: netns
+          hostPath:
+            path: /var/run/netns
