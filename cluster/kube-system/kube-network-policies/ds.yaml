@@ -31,6 +31,7 @@ spec:
               memory: "50Mi"
           securityContext:
             privileged: true
+            runAsUser: 0
             capabilities:
               add: ["NET_ADMIN"]
           env:
