@@ -23,6 +23,7 @@ getopt
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
 my $k8s_api = 'https://kubernetes.default.svc.cluster.local';
+my $affected_ctr_limit = 5;
 
 sub _k8s_headers { { 'Authorization' => "Bearer $token", 'Accept' => 'application/json' } }
 
@@ -93,7 +94,7 @@ sub _generate_report {
       $report .=  join(' ', ' Update to', @fixed_in, '\n') if @fixed_in;
       $report .= " No fix available :(\n" unless @fixed_in;
 
-      for my $ctr (@{$scan->{affected_ctrs}}) {
+      for my $ctr (@{$scan->{affected_ctrs}}[0 .. $affected_ctr_limit-1]) {
         $ctr =~ s/@.*$//;
         $report .= "  * $ctr\n";
       }
