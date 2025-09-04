@@ -28,7 +28,7 @@ spec:
               HEALTH_HOST: 0.0.0.0
             image:
               repository: ghcr.io/vaskozl/kromgo
-              tag: 0.7.1@sha256:e521974b69bcfaecd83e60e5f495a830a645f716a3a0b0773b221042ea5be291
+              tag: 0.7.1@sha256:0e3b83bc784390fd4a22e39b38404bcb4493442f5e2ad8a072b3fa8be933bcbe
             probes:
               liveness: &probes
                 enabled: true
