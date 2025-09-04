@@ -96,7 +96,7 @@ sub _generate_report {
 
       for my $ctr (@{$scan->{affected_ctrs}}[0 .. $affected_ctr_limit-1]) {
         $ctr =~ s/@.*$//;
-        $report .= "  * $ctr\n";
+        $report .= "  * $ctr\n" if $ctr;
       }
       $report .= "\n";
     }
