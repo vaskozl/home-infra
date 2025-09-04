@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/code-server
-              tag: 4.103@sha256:ff2fabd7018ddfeb5593e4426e7af5df6ef069918095e59af3ff7107b1e53b35
+              tag: 4.103.2@sha256:281b323da39e50aaf2249aff63cc5ed94a2a31d10ea1e41ace04f71c3b31d7bc
             env:
               EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"}'
             probes:
@@ -38,28 +38,46 @@ spec:
                 memory: 500Mi
             securityContext:
               allowPrivilegeEscalation: false
+              fsGroup: 1000
+              runAsGroup: 1000
+              runAsUser: 1000
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
               capabilities:
                 add:
                   - NET_BIND_SERVICE
                 drop:
                   - ALL
+          dind:
+            image:
+              repository: cgr.dev/chainguard/docker-dind
+              tag: latest
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 50m
+                memory: 100Mi
+            securityContext:
+              privileged: true
+              runAsUser: 0
         statefulset:
           podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /home/coder
+              name: home
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsUser: 1000
-        runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
     persistence:
-      config:
+      var-run:
         globalMounts:
-          - path: /home/coder
+          - path: /var/run
         type: emptyDir
     service:
       app:
