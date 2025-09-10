@@ -3,6 +3,11 @@ kind: ProxyClass
 metadata:
   name: ingress
 spec:
+  staticEndpoints:
+    nodePort:
+      ports:
+      - port: 31667
+        endPort: 31680
   statefulSet:
     pod:
       securityContext:
