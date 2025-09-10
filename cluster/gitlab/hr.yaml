@@ -96,8 +96,8 @@ spec:
           tag: 18.2.4@sha256:a2120e3e9201b7077b0a3ef8227c930210adcb1bf39b48c4ffd31c139b61d359
       gitaly:
         image:
-          repository: ghcr.io/vaskozl/gitaly
-          tag: 18.3.1@sha256:9b7200da241b02c65f411c68b5d0fe1b2b2f0100d9459aa6f208b81d5a3441e7
+          #repository: ghcr.io/vaskozl/gitaly
+          #tag: 18.3.1@sha256:9b7200da241b02c65f411c68b5d0fe1b2b2f0100d9459aa6f208b81d5a3441e7
         resources:
           requests:
             cpu: 80m
