@@ -93,7 +93,7 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.4@sha256:e708178e84563dd471fd039d9d014817e1eae182e78519a599f04913a01f5140
+          tag: 18.2.4@sha256:542a8919dd6dcceec9bb3916b0d1f187e7cbf52af4f2bc2500586f19a2342201
       gitaly:
         image:
           #repository: ghcr.io/vaskozl/gitaly
@@ -129,7 +129,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:536390a5eb972833ed6c4a179af8314524fc6e3dfb9578c9a531a61c9e48a445
+          tag: 18.2.4@sha256:14f7116b1547a2a6077b1a103c57b52a9f2f9be8b73e47283f87d91f028d8be5
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
@@ -141,7 +141,7 @@ spec:
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.3.1@sha256:33e88fe513e4d2b0c547e16fd3ef6b508dd0d1a5202a1d8518dd7a30d5abf6ff
+          tag: 18.3.2@sha256:b5434e665840ce5389368fc17fa1cf5a72b23715ea31048f7ebf411e9f21e0c2
         # The default requests are massive for a static server
         resources:
           requests:
