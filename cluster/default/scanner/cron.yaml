@@ -18,6 +18,7 @@ spec:
                 - -v
                 - -u
                 - -m=scans@sko.ai
+                - -f=scans@sko.ai
                 - -s=mx-maddy.mailserver.svc.cluster.local:2225
               volumeMounts:
                 - name: script
