@@ -79,7 +79,7 @@ spec:
               - to: alertmanager@sko.ai
                 from: alertmanager@sko.ai
                 hello: am.sko.ai
-                smarthost: 'mail.sko.ai:2225'
+                smarthost: 'mx-maddy.mailserver.svc.cluster.local:2225'
                 tls_config:
                   insecure_skip_verify: true
                 send_resolved: true
