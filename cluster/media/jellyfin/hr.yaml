@@ -20,17 +20,9 @@ spec:
       jellyfin:
         containers:
           app:
-            env:
-              JELLYFIN_CACHE_DIR: /cache
-              JELLYFIN_CONFIG_DIR: /config/config
-              JELLYFIN_DATA_DIR: /config
-              JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
-              JELLYFIN_LOG_DIR: /config/log
-              JELLYFIN_WEB_DIR: /usr/share/webapps/jellyfin-web
-              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
             image:
               repository: ghcr.io/vaskozl/jellyfin
-              tag: 10.10.7@sha256:4e54a6541ba37ca039001e0d718d8f4cc15ba7e7f2ecd727f737218efe16c929
+              tag: 10.10.7@sha256:639ab99200c5f78fc4a3a89cde16a570574f9db6d970d00031140bd50d3fe2ce
             probes:
               liveness:
                 enabled: true
