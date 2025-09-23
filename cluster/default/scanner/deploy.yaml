@@ -25,3 +25,16 @@ spec:
         - name: script
           configMap:
             name: script
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: scanner
+spec:
+  selector:
+    matchLabels:
+      app: scanner
+  podMetricsEndpoints:
+    - port: 9090
+      path: /metrics
+      interval: 300s
