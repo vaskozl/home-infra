@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: scanner
 spec:
+  serviceName: scanner
   template:
     spec:
       serviceAccountName: scanner-sa
