@@ -13,7 +13,7 @@ use constant IMAGE_FILTER  => qr{ghcr[.]io/vaskozl};
 use constant SA_TOKEN      => '/var/run/secrets/kubernetes.io/serviceaccount/token';
 use constant SBOM_PATH     => '/var/lib/db/sbom';
 use constant RPT_CTR_LIMIT => 5;
-use constant SCAN_PERIOD   => 24 * 3600 * 3;
+use constant SCAN_PERIOD   => 259200; # 3 days
 
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
@@ -31,7 +31,7 @@ sub _installed_packages {
   my %pacman_q;
   my %spdx;
   my %processed_images;
-  for my $pod (@{$pod_data->{items}}) {
+  for my $pod (@{$pod_data->{items}}[0..2]) {
       my $namespace = $pod->{metadata}{namespace};
       my $pod_name = $pod->{metadata}{name};
 
@@ -173,4 +173,4 @@ get '/metrics' => sub {
 Mojo::IOLoop->recurring(SCAN_PERIOD => sub { _run_all() });
 _run_all();
 
-app->start;
+app->start('daemon', '-l', 'http://[::]:9090');
