@@ -1,0 +1,58 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: container-vulns-alerts
+spec:
+  groups:
+    - name: container-vulns
+      interval: 1m
+      rules:
+        - alert: ContainerCriticalVulns
+          expr: |
+            sum(container_vulns{severity=~"Critical|High|Low"}) by (image, id, pkg) > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Critical/High vulnerability in {{ $labels.image }}"
+            description: |
+              Container {{ $labels.image }} has a Critical/High vulnerability:
+              CVE: {{ $labels.id }}
+              Package: {{ $labels.pkg }}
+
+        - alert: ContainerMediumVulnsFixAvailable
+          expr: |
+            sum(container_vulns{severity="Medium"} unless container_vulns{severity="Medium",fixed=""}) by (image, id, pkg) > 0
+          for: 30m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Medium vulnerability with fix in {{ $labels.image }}"
+            description: |
+              Container {{ $labels.image }} has a Medium vulnerability with a fix available:
+              CVE: {{ $labels.id }}
+              Package: {{ $labels.pkg }}
+
+        - alert: ContainerLowVulnsFixAvailable
+          expr: |
+            sum(container_vulns{severity="Low"} unless container_vulns{severity="Low",fixed=""}) by (image, id, pkg) > 0
+          for: 24h
+          labels:
+            severity: info
+          annotations:
+            summary: "Low vulnerability with fix in {{ $labels.image }}"
+            description: |
+              Container {{ $labels.image }} has a Low vulnerability with a fix available:
+              CVE: {{ $labels.id }}
+              Package: {{ $labels.pkg }}
+
+        - alert: ContainerTooManyVulns
+          expr: |
+            sum(container_vulns) by (image) > 20
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: "Too many vulnerabilities in {{ $labels.image }}"
+            description: |
+              Container {{ $labels.image }} has more than 20 vulnerabilities in total.

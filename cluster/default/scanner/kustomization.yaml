@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - deploy.yaml
   - rbac.yaml
+  - alerts.yaml
 labels:
   - pairs:
       app: scanner

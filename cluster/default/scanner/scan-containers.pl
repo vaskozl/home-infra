@@ -95,8 +95,9 @@ sub _generate_report {
 
       for my $ctr (@{$scan->{affected_ctrs}}[0 .. RPT_CTR_LIMIT-1]) {
         $ctr =~ s/@.*$//;
-        $report .= "  * $ctr\n" if $ctr;
+        next unless $ctr;
 
+        $report .= "  * $ctr\n";
 
         my %labels = (
           id       => $vuln->{id},
