@@ -30,7 +30,7 @@ metrics:
         min: 0
         max: 1024
   - name: CVE High
-    query: count(count by (id) (container_vulns{severity="High"})) or scalar(0)
+    query: count(count by (id) (container_vulns{severity="Critical|High"})) or scalar(0)
     colors:
       - color: "red"
         min: 0
