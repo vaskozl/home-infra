@@ -6,7 +6,6 @@ use JSON::XS qw(decode_json encode_json);
 use MIME::Lite;
 use Mojolicious::Lite;
 use Mojo::UserAgent;
-use Mojo::Util qw(getopt dumper);
 use Path::Tiny;
 
 use constant ARCH_SECURITY => 'https://security.archlinux.org/issues/all.json';
@@ -15,13 +14,6 @@ use constant SA_TOKEN      => '/var/run/secrets/kubernetes.io/serviceaccount/tok
 use constant SBOM_PATH     => '/var/lib/db/sbom';
 use constant RPT_CTR_LIMIT => 5;
 use constant SCAN_PERIOD   => 24 * 3600 * 3;
-
-getopt
-  'u|upgradable' => \my $upgradeable,
-  'm|mailto=s'   => \my $mail_to,
-  'f|from=s'     => \my $mail_from,
-  's|server=s'   => \my $mail_server,
-  'v|verbose'    => \my $verbose;
 
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
@@ -39,7 +31,7 @@ sub _installed_packages {
   my %pacman_q;
   my %spdx;
   my %processed_images;
-  for my $pod (@{$pod_data->{items}}[0..5]) {
+  for my $pod (@{$pod_data->{items}}) {
       my $namespace = $pod->{metadata}{namespace};
       my $pod_name = $pod->{metadata}{name};
 
@@ -53,7 +45,7 @@ sub _installed_packages {
 
           # Check if the image name contains "vaskozl"
           if ($container_image && $container_image =~ IMAGE_FILTER) {
-            print "Extracting sbom of $container_image\n" if $verbose;
+            print "Extracting sbom of $container_image\n";
             # TODO: Use wss instead of shelling out
             my $path = SBOM_PATH;
             my @lines = `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- sh -c '[ -d "$path" ] && find "$path" -type f'`;
@@ -133,7 +125,7 @@ sub _spdx_to_scans {
     print $fh $content;
 
     # Close the file
-    print "Scanning $_\n" if $verbose;
+    print "Scanning $_\n";
     $scans{$_} = decode_json(`grype sbom:/tmp/sbom.json --add-cpes-if-none --distro wolfi -o json`);
     close $fh;
   }
@@ -149,16 +141,16 @@ sub _run_all {
 
   my $report = _generate_report($ctrs, $scans);
 
-  if ($mail_to and $report) {
+  if ($ENV{'MAIL_TO'} and $report) {
     # Create a new email message
     my $msg = MIME::Lite->new(
-      From    => $mail_from || 'scanner',
-      To      => $mail_to,
+      From    => $ENV{'SCAN_MAIL_FROM'} || 'scanner',
+      To      => $ENV{'SCAN_MAIL_TO'},
       Subject => 'Vulnerability Report',
       Data    => $report,
     );
 
-    $msg->send('smtp', $mail_server);
+    $msg->send('smtp', $ENV{'SCAN_MAIL_SERVER'});
     print "Email sent successfully\n";
   } else {
     print $report;
