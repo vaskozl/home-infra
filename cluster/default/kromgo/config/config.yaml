@@ -29,20 +29,20 @@ metrics:
       - color: "yellow"
         min: 0
         max: 1024
-  - name: vuln_high
-    query: count(count by (id) (container_vulns{severity="high"}))
+  - name: CVE High
+    query: count(count by (id) (container_vulns{severity="High"})) or scalar(0)
     colors:
-      - color: "green"
+      - color: "red"
         min: 0
         max: 1024
-  - name: vuln_medium
-    query: count(count by (id) (container_vulns{severity="medium"}))
+  - name: CVE Medium
+    query: count(count by (id) (container_vulns{severity="Medium"})) or scalar(0)
     colors:
-      - color: "green"
+      - color: "yellow"
         min: 0
         max: 1024
-  - name: vuln_low
-    query: count(count by (id) (container_vulns{severity="low"}))
+  - name: CVE Low
+    query: count(count by (id) (container_vulns{severity="Low"})) or scalar(0)
     colors:
       - color: "green"
         min: 0
