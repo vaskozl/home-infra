@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use feature qw(say);
 
 use JSON::XS qw(decode_json encode_json);
 use MIME::Lite;
@@ -13,7 +14,7 @@ use constant IMAGE_FILTER  => qr{ghcr[.]io/vaskozl};
 use constant SA_TOKEN      => '/var/run/secrets/kubernetes.io/serviceaccount/token';
 use constant SBOM_PATH     => '/var/lib/db/sbom';
 use constant RPT_CTR_LIMIT => 5;
-use constant SCAN_PERIOD   => 259200; # 3 days
+use constant SCAN_PERIOD   => 3 * 24 * 3600; # 3 days
 
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
@@ -31,7 +32,7 @@ sub _installed_packages {
   my %pacman_q;
   my %spdx;
   my %processed_images;
-  for my $pod (@{$pod_data->{items}}[0..2]) {
+  for my $pod (@{$pod_data->{items}}) {
       my $namespace = $pod->{metadata}{namespace};
       my $pod_name = $pod->{metadata}{name};
 
@@ -45,7 +46,7 @@ sub _installed_packages {
 
           # Check if the image name contains "vaskozl"
           if ($container_image && $container_image =~ IMAGE_FILTER) {
-            print "Extracting sbom of $container_image\n";
+            say "Extracting sbom of $container_image";
             # TODO: Use wss instead of shelling out
             my $path = SBOM_PATH;
             my @lines = `kubectl exec -n "$namespace" "$pod_name" -c "$container_name" -- sh -c '[ -d "$path" ] && find "$path" -type f'`;
@@ -125,7 +126,7 @@ sub _spdx_to_scans {
     print $fh $content;
 
     # Close the file
-    print "Scanning $_\n";
+    say "Scanning $_";
     $scans{$_} = decode_json(`grype sbom:/tmp/sbom.json --add-cpes-if-none --distro wolfi -o json`);
     close $fh;
   }
@@ -151,7 +152,7 @@ sub _run_all {
     );
 
     $msg->send('smtp', $ENV{'SCAN_MAIL_SERVER'});
-    print "Email sent successfully\n";
+    say "Email sent successfully";
   } else {
     print $report;
   }
@@ -161,7 +162,7 @@ sub _run_all {
 get '/metrics' => sub {
   my $c = shift;
 
-  my $txt;
+  my $txt = "# HELP container_vulns The number of CVEs\n";
   for my $labels (%metrics) {
     my $cnt = $metrics{$labels};
 
@@ -170,7 +171,7 @@ get '/metrics' => sub {
   $c->render(text => $txt);
 };
 
-Mojo::IOLoop->recurring(SCAN_PERIOD => sub { _run_all() });
-_run_all();
+Mojo::IOLoop->recurring(int(SCAN_PERIOD) => sub { _run_all() });
+Mojo::IOLoop->timer(0 => sub { _run_all() });
 
 app->start('daemon', '-l', 'http://[::]:9090');

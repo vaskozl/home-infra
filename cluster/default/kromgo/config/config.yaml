@@ -29,3 +29,21 @@ metrics:
       - color: "yellow"
         min: 0
         max: 1024
+  - name: vuln_high
+    query: count(count by (id) (container_vulns{severity="high"}))
+    colors:
+      - color: "green"
+        min: 0
+        max: 1024
+  - name: vuln_medium
+    query: count(count by (id) (container_vulns{severity="medium"}))
+    colors:
+      - color: "green"
+        min: 0
+        max: 1024
+  - name: vuln_low
+    query: count(count by (id) (container_vulns{severity="low"}))
+    colors:
+      - color: "green"
+        min: 0
+        max: 1024

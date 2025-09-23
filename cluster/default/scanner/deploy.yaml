@@ -18,6 +18,9 @@ spec:
               value: mx-maddy.mailserver.svc.cluster.local:2225
           args:
             - /script/scan-containers.pl
+          ports:
+            - name: metrics
+              containerPort: 9090
           volumeMounts:
             - name: script
               mountPath: /script
@@ -35,6 +38,6 @@ spec:
     matchLabels:
       app: scanner
   podMetricsEndpoints:
-    - port: 9090
+    - port: metrics
       path: /metrics
       interval: 300s
