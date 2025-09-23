@@ -168,11 +168,10 @@ get '/metrics' => sub {
   my $c = shift;
 
   my $txt = "# HELP container_vulns The number of CVEs\n";
-  for my $labels (%metrics) {
-    my $cnt = $metrics{$labels};
-
+  while(my ($labels, $cnt) = each %metrics) {
     $txt .= "container_vulns{$labels} $cnt\n";
   }
+
   $c->render(text => $txt);
 };
 
