@@ -4,6 +4,7 @@ use warnings;
 
 use JSON::XS qw(decode_json encode_json);
 use MIME::Lite;
+use Mojolicious::Lite;
 use Mojo::UserAgent;
 use Mojo::Util qw(getopt dumper);
 use Path::Tiny;
@@ -12,6 +13,8 @@ use constant ARCH_SECURITY => 'https://security.archlinux.org/issues/all.json';
 use constant IMAGE_FILTER  => qr{ghcr[.]io/vaskozl};
 use constant SA_TOKEN      => '/var/run/secrets/kubernetes.io/serviceaccount/token';
 use constant SBOM_PATH     => '/var/lib/db/sbom';
+use constant RPT_CTR_LIMIT => 5;
+use constant SCAN_PERIOD   => 24 * 3600 * 3;
 
 getopt
   'u|upgradable' => \my $upgradeable,
@@ -23,7 +26,7 @@ getopt
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
 my $k8s_api = 'https://kubernetes.default.svc.cluster.local';
-my $affected_ctr_limit = 5;
+my %metrics;
 
 sub _k8s_headers { { 'Authorization' => "Bearer $token", 'Accept' => 'application/json' } }
 
@@ -36,7 +39,7 @@ sub _installed_packages {
   my %pacman_q;
   my %spdx;
   my %processed_images;
-  for my $pod (@{$pod_data->{items}}) {
+  for my $pod (@{$pod_data->{items}}[0..5]) {
       my $namespace = $pod->{metadata}{namespace};
       my $pod_name = $pod->{metadata}{name};
 
@@ -73,6 +76,7 @@ sub _installed_packages {
 sub _generate_report {
   my ($ctrs, $scans) = @_;
   my $report;
+  %metrics = ();
 
   for my $ctr (keys %{$ctrs}) {
     my @installed = @{$ctrs->{$ctr}};
@@ -86,7 +90,9 @@ sub _generate_report {
     my $scan = $scans->{$pkg};
     for my $match (@{$scan->{matches}}) {
       my $vuln = $match->{vulnerability};
-      $report .= "$vuln->{severity}: $match->{artifact}{name} is affected by $vuln->{id}: $vuln->{dataSource}";
+      my $name = $match->{artifact}{name};
+
+      $report .= "$vuln->{severity}: $name is affected by $vuln->{id}: $vuln->{dataSource}";
       $report .= "\n";
       $report .= " $vuln->{description}\n";
 
@@ -94,9 +100,21 @@ sub _generate_report {
       $report .=  join(' ', ' Update to', @fixed_in, "\n") if @fixed_in;
       $report .= " No fix available :(\n" unless @fixed_in;
 
-      for my $ctr (@{$scan->{affected_ctrs}}[0 .. $affected_ctr_limit-1]) {
+      for my $ctr (@{$scan->{affected_ctrs}}[0 .. RPT_CTR_LIMIT-1]) {
         $ctr =~ s/@.*$//;
         $report .= "  * $ctr\n" if $ctr;
+
+
+        my %labels = (
+          id       => $vuln->{id},
+          severity => $vuln->{severity},
+          pkg      => $name,
+          fixed    => shift @fixed_in,
+          image    => $ctr
+        );
+
+        my $label_string = join(",", map { "$_=\"$labels{$_}\"" } keys %labels);
+        $metrics{$label_string}++;
       }
       $report .= "\n";
     }
@@ -124,23 +142,43 @@ sub _spdx_to_scans {
 }
 
 
-my ($ctrs, $spdx) = _installed_packages;
+sub _run_all {
+  my ($ctrs, $spdx) = _installed_packages;
 
-my $scans = _spdx_to_scans($spdx);
+  my $scans = _spdx_to_scans($spdx);
 
-my $report = _generate_report($ctrs, $scans);
+  my $report = _generate_report($ctrs, $scans);
 
-if ($mail_to and $report) {
-  # Create a new email message
-  my $msg = MIME::Lite->new(
-    From    => $mail_from || 'scanner',
-    To      => $mail_to,
-    Subject => 'Vulnerability Report',
-    Data    => $report,
-  );
+  if ($mail_to and $report) {
+    # Create a new email message
+    my $msg = MIME::Lite->new(
+      From    => $mail_from || 'scanner',
+      To      => $mail_to,
+      Subject => 'Vulnerability Report',
+      Data    => $report,
+    );
 
-  $msg->send('smtp', $mail_server);
-  print "Email sent successfully\n";
-} else {
-  print $report;
+    $msg->send('smtp', $mail_server);
+    print "Email sent successfully\n";
+  } else {
+    print $report;
+  }
 }
+
+# Expose some prometheus metrics like a good k8s citizen
+get '/metrics' => sub {
+  my $c = shift;
+
+  my $txt;
+  for my $labels (%metrics) {
+    my $cnt = $metrics{$labels};
+
+    $txt .= "container_vulns{$labels} $cnt\n";
+  }
+  $c->render(text => $txt);
+};
+
+Mojo::IOLoop->recurring(SCAN_PERIOD => sub { _run_all() });
+_run_all();
+
+app->start;
