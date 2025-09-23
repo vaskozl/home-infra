@@ -14,7 +14,7 @@ use constant IMAGE_FILTER  => qr{ghcr[.]io/vaskozl};
 use constant SA_TOKEN      => '/var/run/secrets/kubernetes.io/serviceaccount/token';
 use constant SBOM_PATH     => '/var/lib/db/sbom';
 use constant RPT_CTR_LIMIT => 5;
-use constant SCAN_PERIOD   => 3 * 24 * 3600; # 3 days
+use constant SCAN_PERIOD   => 6 * 3600; # 6 hours
 
 my $ua = Mojo::UserAgent->new->insecure(1);
 my $token = path(SA_TOKEN)->slurp;
@@ -32,6 +32,7 @@ sub _installed_packages {
   my %pacman_q;
   my %spdx;
   my %processed_images;
+  my $i = 0;
   for my $pod (@{$pod_data->{items}}) {
       my $namespace = $pod->{metadata}{namespace};
       my $pod_name = $pod->{metadata}{name};
@@ -119,17 +120,20 @@ sub _generate_report {
 sub _spdx_to_scans {
   my $spdx = shift;
 
-  my %scans;
-  for (%$spdx) {
-    open my $fh, '>', '/tmp/sbom.json' or die "Cannot open file: $!";
-    my $content = $spdx->{$_};
-    next unless $content;
-    print $fh $content;
+  `grype db update`;
 
-    # Close the file
-    say "Scanning $_";
-    $scans{$_} = decode_json(`grype sbom:/tmp/sbom.json --add-cpes-if-none --distro wolfi -o json`);
-    close $fh;
+  my %scans;
+  my $i = 0;
+  for (%$spdx) {
+      open my $fh, '>', '/tmp/sbom.json' or die "Cannot open file: $!";
+      my $content = $spdx->{$_};
+      next unless $content;
+      print $fh $content;
+
+      # Close the file
+      say "Scanning $_";
+      $scans{$_} = decode_json(`GRYPE_DB_AUTO_UPDATE=false grype sbom:/tmp/sbom.json --add-cpes-if-none --distro wolfi -o json`);
+      close $fh;
   }
 
   return \%scans;
