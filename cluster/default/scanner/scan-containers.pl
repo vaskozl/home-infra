@@ -91,7 +91,7 @@ sub _generate_report {
       $report .= " $vuln->{description}\n";
 
       my @fixed_in = @{$vuln->{fix}{versions}};
-      $report .=  join(' ', ' Update to', @fixed_in, '\n') if @fixed_in;
+      $report .=  join(' ', ' Update to', @fixed_in, "\n") if @fixed_in;
       $report .= " No fix available :(\n" unless @fixed_in;
 
       for my $ctr (@{$scan->{affected_ctrs}}[0 .. $affected_ctr_limit-1]) {
