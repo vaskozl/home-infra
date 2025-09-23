@@ -9,7 +9,7 @@ spec:
       rules:
         - alert: ContainerCriticalVulns
           expr: |
-            sum(container_vulns{severity=~"Critical|High|Low"}) by (image, id, pkg) > 0
+            sum(container_vulns{severity=~"Critical|High"}) by (image, id, pkg) > 0
           for: 5m
           labels:
             severity: critical
