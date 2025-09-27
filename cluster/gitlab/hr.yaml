@@ -23,7 +23,7 @@ spec:
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.4@sha256:d56be5356569e719483d503e30c0ddc2f24372c07de3c66b33dfdcb744a36baf
+          tag: 18.2.4@sha256:106ce4bf2405a478cd1e203e4e9a54a87da42e138c339dc099b0ff4a550f83be
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -93,7 +93,7 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.4@sha256:edd00b32f414dbccbc9239ac32716ee05fd2f6ccd5d5c42c10ddcae015c79273
+          tag: 18.2.4@sha256:ec33bd72452d3b406f95205261fbb89776b8af3e41a08496e51bf292a73f5a4d
       gitaly:
         image:
           #repository: ghcr.io/vaskozl/gitaly
@@ -129,7 +129,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:25826eb8220acb44f6180cb928946f74db090a9236bca0250ab3a3116906860d
+          tag: 18.2.4@sha256:f2732bc61b13ca5e7be88ca690199b038758e4c88e38d2c7bd571cc5272bacb8
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
@@ -156,7 +156,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.4@sha256:a29fd52f471072d8f8d393c16b49d9747b1a283ebc6f83e01059ad2f112af40c
+        tag: 18.2.4@sha256:39f04f05ed28b1ff96fe1527665445de9afdd7fa40aca782a54d009899993bb2
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
