@@ -9,8 +9,8 @@ spec:
       rules:
         - alert: ContainerCriticalVulns
           expr: |
-            sum(container_vulns{severity=~"Critical|High"}) by (image, id, pkg) > 0
-          for: 5m
+            sum(container_vulns{severity=~"Critical|High"}) by (image, id, pkg)[1h:]) > 0
+          for: 2h
           labels:
             severity: critical
           annotations:
@@ -22,8 +22,8 @@ spec:
 
         - alert: ContainerMediumVulnsFixAvailable
           expr: |
-            sum(container_vulns{severity="Medium"} unless container_vulns{severity="Medium",fixed=""}) by (image, id, pkg) > 0
-          for: 30m
+            max_over_time(sum(container_vulns{severity="Medium"} unless container_vulns{severity="Medium",fixed=""}) by (image, id, pkg)[1h:]) > 0
+          for: 24h
           labels:
             severity: warning
           annotations:
@@ -35,12 +35,12 @@ spec:
 
         - alert: ContainerLowVulnsFixAvailable
           expr: |
-            sum(container_vulns{severity="Low"} unless container_vulns{severity="Low",fixed=""}) by (image, id, pkg) > 0
+            max_over_time(sum(container_vulns{severity="Low"} unless container_vulns{severity="Low",fixed=""}) by (image, id, pkg)[1h:]) > 0
           for: 24h
           labels:
             severity: info
           annotations:
-            summary: "Low vulnerability with fix in {{ $labels.image }}"
+            max_over_time(summary: "Low vulnerability with fix in {{ $labels.image }}"
             description: |
               Container {{ $labels.image }} has a Low vulnerability with a fix available:
               CVE: {{ $labels.id }}
@@ -48,7 +48,7 @@ spec:
 
         - alert: ContainerTooManyVulns
           expr: |
-            sum(container_vulns) by (image) > 20
+            max_over_time(sum(container_vulns) by (image)[1h:]) > 20
           for: 1h
           labels:
             severity: warning
