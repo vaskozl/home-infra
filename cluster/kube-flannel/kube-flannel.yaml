@@ -134,7 +134,7 @@ spec:
       serviceAccountName: flannel
       initContainers:
         - name: install-config
-          image: ghcr.io/vaskozl/flannel:0.27.3@sha256:4f8c84dbc32bb74695136fa7b6063b24740503dfac651ae3889051eaf7a2ffcd
+          image: ghcr.io/vaskozl/flannel:0.27.3@sha256:cf428d8279efd4e15a46d78809a91aed80227b1a0f8827c9cd19a394f8a4525d
           command:
             - cp
           args:
@@ -148,7 +148,7 @@ spec:
               mountPath: /etc/kube-flannel/
       containers:
         - name: kube-flannel
-          image: ghcr.io/vaskozl/flannel:0.27.3@sha256:4f8c84dbc32bb74695136fa7b6063b24740503dfac651ae3889051eaf7a2ffcd
+          image: ghcr.io/vaskozl/flannel:0.27.3@sha256:cf428d8279efd4e15a46d78809a91aed80227b1a0f8827c9cd19a394f8a4525d
           command:
             - flanneld
           args:
