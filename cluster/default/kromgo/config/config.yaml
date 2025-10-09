@@ -30,19 +30,19 @@ metrics:
         min: 0
         max: 1024
   - name: CVE High
-    query: count(count by (id) (container_vulns{severity="Critical|High"})) or scalar(0)
+    query: count(count by (id) (scanner_vulnerabilities{severity="Critical|High"})) or scalar(0)
     colors:
       - color: "red"
         min: 0
         max: 1024
   - name: CVE Medium
-    query: count(count by (id) (container_vulns{severity="Medium"})) or scalar(0)
+    query: count(count by (id) (scanner_vulnerabilities{severity="Medium"})) or scalar(0)
     colors:
       - color: "yellow"
         min: 0
         max: 1024
   - name: CVE Low
-    query: count(count by (id) (container_vulns{severity="Low"})) or scalar(0)
+    query: count(count by (id) (scanner_vulnerabilities{severity="Low"})) or scalar(0)
     colors:
       - color: "green"
         min: 0
