@@ -9,19 +9,10 @@ spec:
       serviceAccountName: scanner-sa
       containers:
         - name: scanner-container
-          image: ghcr.io/vaskozl/perl-mojolicious:9.41@sha256:62bcabc0e36d788d57fa1ae53319b0e97ae0d50082a448ed0710ab569af7a333
-          args:
-            - /script/scan-containers.pl
+          image: ghcr.io/vaskozl/wolfi-scanner:0.0.3@sha256:2754d89419db8d248dadee5990bdaa34b0c404477a7221b3205e8a7618fa8745
           ports:
             - name: metrics
               containerPort: 9090
-          volumeMounts:
-            - name: script
-              mountPath: /script
-      volumes:
-        - name: script
-          configMap:
-            name: script
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMPodScrape
