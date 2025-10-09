@@ -128,8 +128,8 @@ spec:
         maxReplicas: 2
       gitlab-shell:
         image:
-          repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:741e4ee8c20270f25915ab332863476781088ce579a8559663ee6a918dc00dc0
+          #repository: ghcr.io/vaskozl/gitlab-shell
+          #tag: 18.2.4@sha256:741e4ee8c20270f25915ab332863476781088ce579a8559663ee6a918dc00dc0
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
