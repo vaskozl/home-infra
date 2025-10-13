@@ -153,6 +153,7 @@ spec:
             - flanneld
           args:
             - --ip-masq
+            - --ip-masq-fully-random-disable=true
             - --kube-subnet-mgr
           resources:
             requests:
