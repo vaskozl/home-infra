@@ -9,7 +9,7 @@ spec:
       rules:
         - alert: ContainerCriticalVulns
           expr: |
-            max_over_time(sum(scanner_vulnerabilities{severity=~"Critical|High"}) by (image, id, pkg)[1h:]) > 0
+            scanner_vulnerabilities{severity=~"Critical|High"} > 0
           for: 2h
           labels:
             severity: critical
@@ -22,7 +22,7 @@ spec:
 
         - alert: ContainerMediumVulnsFixAvailable
           expr: |
-            max_over_time(sum(scanner_vulnerabilities{severity="Medium"} unless scanner_vulnerabilities{severity="Medium",fixable="yes"}) by (image, id, pkg)[1h:]) > 0
+            scanner_vulnerabilities{severity=~"Medium",fixable="yes"} > 0
           for: 24h
           labels:
             severity: warning
@@ -33,22 +33,9 @@ spec:
               CVE: {{ $labels.id }}
               Package: {{ $labels.pkg }}
 
-        - alert: ContainerLowVulnsFixAvailable
-          expr: |
-            max_over_time(sum(scanner_vulnerabilities{severity="Low"} unless scanner_vulnerabilities{severity="Low",fixable="yes"}) by (image, id, pkg)[1h:]) > 0
-          for: 24h
-          labels:
-            severity: info
-          annotations:
-            max_over_time(summary: "Low vulnerability with fix in {{ $labels.image }}"
-            description: |
-              Container {{ $labels.image }} has a Low vulnerability with a fix available:
-              CVE: {{ $labels.id }}
-              Package: {{ $labels.pkg }}
-
         - alert: ContainerTooManyVulns
           expr: |
-            max_over_time(sum(scanner_vulnerabilities) by (image)[1h:]) > 20
+            sum(scanner_vulnerabilities) by (image) > 20
           for: 1h
           labels:
             severity: warning
