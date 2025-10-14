@@ -21,7 +21,7 @@ spec:
         containers:
           app:
             env:
-              BASE_URL: https://mealie.sko.ai &host
+              BASE_URL: &host https://mealie.sko.ai
               OIDC_AUTH_ENABLED: 'true'
               OIDC_AUTO_REDIRECT: 'true'
               ALLOW_PASSWORD_LOGIN: 'false'
