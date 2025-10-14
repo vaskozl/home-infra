@@ -24,6 +24,10 @@ spec:
               OIDC_AUTH_ENABLED: 'true'
               OIDC_AUTO_REDIRECT: 'true'
               ALLOW_PASSWORD_LOGIN: 'false'
+              SMTP_HOST: 'mx-maddy.mailserver.svc.cluster.local'
+              SMTP_PORT: '2225'
+              SMTP_AUTH_STRATEGY: none
+              SMTP_FROM_EMAIL: mealie@sko.ai
             envFrom:
               - secretRef:
                   name: mealie.env
