@@ -1,0 +1,6 @@
+nameReference:
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - path: spec/values/controllers/mealie/containers/app/envFrom/secretRef/name
+        kind: HelmRelease

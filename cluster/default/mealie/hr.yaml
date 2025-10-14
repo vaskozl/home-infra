@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mealie
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.3.0
+  values:
+    controllers:
+      mealie:
+        containers:
+          app:
+            env:
+              OIDC_AUTH_ENABLED: 'true'
+            envFrom:
+              - secretRef:
+                  name: mealie.env
+            image:
+              repository: ghcr.io/mealie-recipes/mealie
+              tag: v3.3.2@sha256:d51ae3b5051439844c1bbe437fb7edffa0826cb9988b366e17ffc7170a8d5ed2
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 80Mi
+              requests:
+                cpu: 10m
+                memory: 10Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /app/data
+              name: data
+              size: 1Mi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 911
+        runAsGroup: 911
+        runAsNonRoot: true
+        runAsUser: 911
+        seccompProfile:
+          type: RuntimeDefault
+    ingress:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Recipe manager and meal planner
+          gethomepage.dev/group: Other
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/0986fef4753b28ee07dfc3ac12c3e45b3aed9b1f/svg/mealie.svg
+          gethomepage.dev/name: Malie
+        className: haproxy-external
+        hosts:
+          - host: mealie.sko.ai
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    service:
+      app:
+        controller: mealie
+        ports:
+          http:
+            port: 9000
