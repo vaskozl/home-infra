@@ -22,6 +22,7 @@ spec:
           app:
             env:
               OIDC_AUTH_ENABLED: 'true'
+              OIDC_AUTO_REDIRECT: 'true'
               ALLOW_PASSWORD_LOGIN: 'false'
             envFrom:
               - secretRef:
