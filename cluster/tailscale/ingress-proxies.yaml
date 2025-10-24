@@ -9,13 +9,13 @@ spec:
         runAsGroup: 0
         runAsUser: 0
         runAsNonRoot: false
-      tailscaleContainer:
-        resources:
-          requests:
-            cpu: 100m
-            memory: 160Mi
-          limits:
-            memory: 160Mi
+          #tailscaleContainer:
+          #  resources:
+          #    requests:
+          #      cpu: 100m
+          #      memory: 160Mi
+          #    limits:
+          #      memory: 160Mi
 ---
 apiVersion: tailscale.com/v1alpha1
 kind: ProxyGroup
