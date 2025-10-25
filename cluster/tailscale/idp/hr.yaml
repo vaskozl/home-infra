@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/tailscale-idp
-              tag: 1.90.0@sha256:62292498ad44e145bbe30b0c666bc089417eac1527a6706716e8c11c65be94fb
+              tag: 1.90.0@sha256:bce74a7d347fb3d26dff9e88cda5fe3f7a744541c875768cc2bfa1cf59eeca15
             env:
               TAILSCALE_USE_WIP_CODE: 1
             probes:
