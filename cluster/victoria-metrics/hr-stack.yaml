@@ -28,7 +28,7 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/grafana
-        tag: 12.2.1@sha256:3592473399b937c6b0e2a354f66a65a55e82ec4952d45e66adad71c04c183ffb
+        tag: 12.2.1@sha256:c59b40590c42452214ce647bfc7032b9678b435ca30b5a656977e66c170cf4bc
       ingress:
         enabled: true
         annotations:
@@ -44,7 +44,7 @@ spec:
         image:
           registry: ghcr.io
           repository: vaskozl/k8s-sidecar
-          tag: 1.31.0@sha256:3e93809e1d46036722230d3ecb445b39b1d21c5e294324672884dc8fc2d9ab16
+          tag: 1.31.0@sha256:c30924e7697c92e77c036b6d47f6422dbe909fe74e78ae86d8a9af0c39b303f6
         dashboards:
           enabled: true
           label: grafana_dashboard
