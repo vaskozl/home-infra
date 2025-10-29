@@ -21,7 +21,7 @@ spec:
         containers:
           app:
             env:
-              BASE_URL: &host https://mealie.sko.ai
+              BASE_URL: https://mealie.sko.ai
               OIDC_AUTH_ENABLED: 'true'
               OIDC_AUTO_REDIRECT: 'true'
               ALLOW_PASSWORD_LOGIN: 'false'
@@ -76,9 +76,9 @@ spec:
           gethomepage.dev/description: Recipe manager and meal planner
           gethomepage.dev/group: Other
           gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/0986fef4753b28ee07dfc3ac12c3e45b3aed9b1f/svg/mealie.svg
-          gethomepage.dev/name: Malie
+          gethomepage.dev/name: Mealie
         hosts:
-          - host: *host
+          - host: mealie.sko.ai
             paths:
               - path: /
                 service:

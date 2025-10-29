@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/tailscale-idp
-              tag: 1.90.3@sha256:dadc4581d5dea1b964f1ef4aec1a12498d7737f40f1455a1107dcfdfaff30a7f
+              repository: ghcr.io/vaskozl/tsidp
+              tag: 0.0.5@sha256:1ab112711d086d8cc866fea36f09153e63d28e429ff3b8a66c6c18365c8c9762
             env:
               TAILSCALE_USE_WIP_CODE: 1
             probes:
