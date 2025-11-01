@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/fluent-bit
-              tag: 4.1.1@sha256:23eac60dea5e91242dc465c1094811d12fc5ef5e81270e894efb5fb90d1ebdb1
+              tag: 4.1.1@sha256:5c7a4e2c692664369145a1093380a4544a9e6364f72193c2e76536f7eb9fd916
             args: [-c, "/config/fluent-bit.yaml"]
             probes:
               liveness:
