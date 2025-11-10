@@ -23,7 +23,7 @@ spec:
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.4@sha256:78a371a6a1c6d189104e7f42a242275409ee9b446110f8925e8e0204871934b4
+          tag: 18.2.4@sha256:b2871b2e92e43c02270b43cba0b6d0337abfbd0888b86945cf7f35ccc536327b
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -93,7 +93,7 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.4@sha256:74b1fae9127dcd8d33ffb186b6ad25bb72bf43bc8897cbfc093a59ab2fe8a3bd
+          tag: 18.2.4@sha256:b085d8a906d824579d45419c9972b53c4f3f469f3cf2ac773eca966f689bc98a
       gitaly:
         image:
           #repository: ghcr.io/vaskozl/gitaly
@@ -129,7 +129,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:12b0e1a924e83e148013b75ca8b437648bb388b62e677397bd18f0b906ffd2ea
+          tag: 18.2.4@sha256:2f3a2a84e5e661b71f98db7ca0e290db0a26e26c9a6e051dea3328d1dd15cd06
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
@@ -141,7 +141,7 @@ spec:
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.5.1@sha256:55a9fef24dc4964a7e3ee54d7701c608d524c9838dd549d6b61f2b4867c5e3c0
+          tag: 18.5.1@sha256:30665fedb2b09344fbb5fa8f8c9c8f89c390f047758d52d392c53012478c9ac4
         # The default requests are massive for a static server
         resources:
           requests:
@@ -156,7 +156,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.4@sha256:1274497750013a3cabe75e9cf013a875298b09da81366385d2e5548352f7d02f
+        tag: 18.2.4@sha256:2afe8b109e6364fe57a32b1575cdb59224f0fe563f2655926d8f57bb46b55629
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
