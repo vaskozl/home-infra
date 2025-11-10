@@ -53,6 +53,9 @@ spec:
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
+      # MongoDB 8 requires AVX or similar
+      nodeSelector:
+        kubernetes.io/arch: amd64
     ingress:
       app:
         annotations:
