@@ -19,11 +19,11 @@ spec:
       gitlabBase:
         image:
           repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.4@sha256:ce7d3d8076f878ab7f48e9d85ee623d92d2178732c424c6ec0f3b332ea329355
+          tag: 18.2.4@sha256:c8424e0c274a4dcc02b769a99b7dd05fec51741347066458437783e4217524f3
       certificates:
         image:
           repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.4@sha256:b2871b2e92e43c02270b43cba0b6d0337abfbd0888b86945cf7f35ccc536327b
+          tag: 18.2.4@sha256:d544cd188eeef0b21bfb86f92ae5e3108ce1064b82f33eb7d3a35eb533d79c38
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -93,7 +93,7 @@ spec:
       gitlab-exporter:
         image:
           repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.4@sha256:b085d8a906d824579d45419c9972b53c4f3f469f3cf2ac773eca966f689bc98a
+          tag: 18.2.4@sha256:3543a599acdf9495469da86ce6dc811f355b188ef5291d317435b318e5655c83
       gitaly:
         image:
           #repository: ghcr.io/vaskozl/gitaly
@@ -129,7 +129,7 @@ spec:
       gitlab-shell:
         image:
           repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:2f3a2a84e5e661b71f98db7ca0e290db0a26e26c9a6e051dea3328d1dd15cd06
+          tag: 18.2.4@sha256:21e54d621df3c1d8da09e8a585b0fd17bb6ad7e55a5294691b90e3e0cf7a2eff
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
@@ -141,7 +141,7 @@ spec:
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.5.1@sha256:30665fedb2b09344fbb5fa8f8c9c8f89c390f047758d52d392c53012478c9ac4
+          tag: 18.5.1@sha256:7fe5547a4e1691d24c949a5ba176437e5dec19a568fb14b8b9666b97a8b66ec1
         # The default requests are massive for a static server
         resources:
           requests:
@@ -156,7 +156,7 @@ spec:
     registry:
       image:
         repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.4@sha256:2afe8b109e6364fe57a32b1575cdb59224f0fe563f2655926d8f57bb46b55629
+        tag: 18.2.4@sha256:c6414a50d91998fd87197663a44f2d95374c55bf94689f37c5195c79868daa12
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
