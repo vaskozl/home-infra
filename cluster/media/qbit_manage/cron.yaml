@@ -27,9 +27,9 @@ spec:
               resources:
                 requests:
                   cpu: 1200m
-                  memory: 280Mi
+                  memory: 1Gi
                 limits:
-                  memory: 280Mi
+                  memory: 1Gi
               volumeMounts:
                 - mountPath: /config/config.static.yml
                   subPath: config.yml
