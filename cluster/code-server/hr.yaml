@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/code-server
-              tag: 4.105.1@sha256:5e76d7b2e95138ec2473b6d687ea681ea6ec848e57e1a17da0f50e04d1ca1d56
+              tag: 4.105.1@sha256:a00ca69d05737bbac609876c4fdae82efb95113b1928c1484b75c38c8e36ce7c
             env:
               EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"}'
             probes:
