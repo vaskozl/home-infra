@@ -41,6 +41,7 @@ spec:
               OAUTH2_PROXY_SILENCE_PING_LOGGING: "true"
               OAUTH2_PROXY_OIDC_ISSUER_URL: https://idp.ide-bicolor.ts.net
               OAUTH2_PROXY_LOGIN_URL: https://login.tailscale.com/
+              OAUTH2_PROXY_CHALLENGE_METHOD: S256
             probes:
               liveness:
                 enabled: true
