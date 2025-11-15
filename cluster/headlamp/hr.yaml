@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/headlamp-k8s/headlamp
-              tag: v0.37.0@sha256:d5bbe372f9afeb940e42cab7b46676ea8d670c829bb7b2bcdbb504af0dcf03b9
+              tag: v0.38.0@sha256:62df24952ed956ec36a2d5859a1dcede5fad00b8d0043b9ce19cda914706325a
             args:
               - "-in-cluster"
               - "-plugins-dir=/build/plugins"
