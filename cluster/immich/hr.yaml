@@ -90,7 +90,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.2.3@sha256:02a144724ccd4cd06b54a182beab3812c23f3f1b5f214ef977af693ded16f249
+              tag: 8.2.3@sha256:603abff4e4d09d1f618fef651d61317eef874655edf9ec03344350bf48008e75
             securityContext: *security
             args: [--save, '', --appendonly, 'no', --protected-mode, 'no']
             resources:
