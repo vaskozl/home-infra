@@ -81,10 +81,10 @@ spec:
             securityContext: *security
             resources:
               limits:
-                memory: 1860Mi
+                memory: 2050Mi
               requests:
                 cpu: 70m
-                memory: 1860Mi
+                memory: 2050Mi
       redis:
         containers:
           app:
