@@ -47,8 +47,7 @@ spec:
               globalMounts:
                 - path: /config
               name: config
-              storageClass: syno-raid
-              size: 1Gi
+              size: 3Gi
         type: statefulset
     defaultPodOptions:
       securityContext:

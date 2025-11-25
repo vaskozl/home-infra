@@ -47,7 +47,7 @@ spec:
               globalMounts:
                 - path: /config
               name: config
-              size: 1Mi
+              size: 1Gi
         type: statefulset
     defaultPodOptions:
       securityContext:
