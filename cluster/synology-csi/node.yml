@@ -62,7 +62,7 @@ spec:
         securityContext:
           privileged: true
         imagePullPolicy: Always
-        image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.8.0
+        image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.15.0
         args:
         - --v=5
         - --csi-address=$(ADDRESS) # the csi socket path inside the pod
