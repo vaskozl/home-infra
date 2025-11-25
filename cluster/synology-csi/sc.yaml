@@ -1,0 +1,14 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: syno-raid
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+provisioner: csi.san.synology.com
+parameters:
+  location: '/volume3'
+  fsType: 'ext4'
+  formatOptions: -E nodiscard
+reclaimPolicy: Delete
+allowVolumeExpansion: true

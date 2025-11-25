@@ -1,0 +1,11 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- controller.yml
+- csi-driver.yml
+- namespace.yml
+- node.yml
+- secret.yaml
+- sc.yaml
+- snapshotter
