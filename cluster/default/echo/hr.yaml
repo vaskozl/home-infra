@@ -62,7 +62,7 @@ spec:
                     value: /
               backendRefs:
                 - kind: Service
-                  name: app
+                  name: echoserver
                   port: 8080
     persistence:
       config:
