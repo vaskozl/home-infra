@@ -48,15 +48,22 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
+    route:
       app:
-        hosts:
-          - host: echo.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        parentRefs:
+          - name: sko-ai
+            namespace: envoy
+        hostnames:
+          - echo.sko.ai
+        rules:
+            - matches:
+                - path:
+                    type: PathPrefix
+                    value: /
+              backendRefs:
+                - kind: Service
+                  name: app
+                  port: 8080
     persistence:
       config:
         globalMounts:
