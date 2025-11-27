@@ -1,0 +1,33 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: envoy-gateway
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.6.0
+  url: oci://mirror.gcr.io/envoyproxy/gateway-helm
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: envoy-gateway
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: envoy-gateway
+  interval: 1h
+  values:
+    config:
+      envoyGateway:
+        provider:
+          type: Kubernetes
+          kubernetes:
+            deploy:
+              type: GatewayNamespace
+    global:
+      imageRegistry: mirror.gcr.io
