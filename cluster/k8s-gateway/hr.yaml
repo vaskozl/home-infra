@@ -13,6 +13,7 @@ spec:
         namespace: flux-system
       version: 2.4.0
   values:
+    watchedResources: ["Service", "HTTPRoute"]
     controllers:
       k8s-gateway:
         containers:
