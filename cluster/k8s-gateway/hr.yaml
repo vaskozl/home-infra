@@ -13,7 +13,7 @@ spec:
         namespace: flux-system
       version: 2.4.0
   values:
-    watchedResources: ["Service", "HTTPRoute"]
+    watchedResources: ["Service", "HTTPRoute", "Ingress", "TCPRoute", "UDPRoute"]
     controllers:
       k8s-gateway:
         containers:
