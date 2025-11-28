@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: dogcalc
   annotations:
     patch.sko.ai/app-template: common
+  name: dogcalc
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,11 +14,10 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       dogcalc:
-        strategy: RollingUpdate
-        replicas: 2
         containers:
           app:
             image:
@@ -43,11 +41,13 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+        replicas: 2
+        strategy: RollingUpdate
     defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: arm64
       imagePullSecrets:
         - name: regcred
+      nodeSelector:
+        kubernetes.io/arch: arm64
       securityContext:
         fsGroup: 568
         runAsGroup: 568
@@ -58,18 +58,14 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-    ingress:
+    route:
       app:
-        className: haproxy-external
-        hosts:
-          - host: dogcalc.sko.ai
-            paths: &paths
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: pawlanced.sko.ai
-            paths: *paths
+        hostnames:
+          - dogcalc.sko.ai
+          - pawlanced.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: dogcalc

@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kromgo
   annotations:
     patch.sko.ai/app-template: common
+  name: kromgo
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,33 +14,32 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       kromgo:
-        replicas: 2
-        strategy: RollingUpdate
         containers:
           app:
             env:
+              HEALTH_HOST: 0.0.0.0
               PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8428/
               SERVER_HOST: 0.0.0.0
-              HEALTH_HOST: 0.0.0.0
             image:
               repository: ghcr.io/vaskozl/kromgo
               tag: 0.7.4@sha256:4536063ab02b590945b13ee6487396df71da062dfdcfff086e9ed2917e7a7de8
             probes:
-              liveness: &probes
-                enabled: true
+              liveness: &1
                 custom: true
+                enabled: true
                 spec:
+                  failureThreshold: 3
                   httpGet:
                     path: /readyz
                     port: 8888
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              readiness: *1
             resources:
               limits:
                 cpu: 50m
@@ -55,6 +53,8 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+        replicas: 2
+        strategy: RollingUpdate
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -63,22 +63,19 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app:
-        className: haproxy-external
-        hosts:
-          - host: kromgo.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         globalMounts:
           - path: /kromgo
         name: kromgo-config
         type: secret
+    route:
+      app:
+        hostnames:
+          - kromgo.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: kromgo
