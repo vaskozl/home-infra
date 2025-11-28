@@ -3,11 +3,10 @@ kind: Kustomization
 namespace: envoy
 resources:
   - _namespace.yaml
+  - gateways
   - hr.yaml
   - proxy.yaml
-  - gateway.yaml
-  - oidc.yaml
-  - oidc-secret.yaml
+  - security
   - ../netpols/allow-all-ingress
 components:
   - ../common
