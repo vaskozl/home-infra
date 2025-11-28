@@ -10,6 +10,5 @@ spec:
         type: LoadBalancer
         loadBalancerClass: tailscale
         annotations:
-          tailscale.com/hostname: gateway-envoy
           tailscale.com/proxy-group: ingress-proxies
 
