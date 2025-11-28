@@ -23,6 +23,19 @@ spec:
           - kind: Secret
             group: ""
             name: sko-ai-tls
+    - name: https-apex
+      protocol: HTTPS
+      port: 443
+      hostname: "sko.ai"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: sko-ai-apex-tls
     - name: https-leane
       protocol: HTTPS
       port: 443
