@@ -21,6 +21,11 @@ spec:
     name: envoy-gateway
   interval: 1h
   values:
+    deployment:
+      envoyGateway:
+        image:
+          repository: ghcr.io/vaskozl/envoy-gateway
+          tag: 1.6.0@sha256:26afe2198e1775e3660567819f9c7d4a4000849e5577b4e1a414ac7993f2307e
     config:
       envoyGateway:
         provider:
@@ -28,5 +33,3 @@ spec:
           kubernetes:
             deploy:
               type: GatewayNamespace
-    global:
-      imageRegistry: mirror.gcr.io
