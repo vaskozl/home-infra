@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: omada
   annotations:
     patch.sko.ai/app-template: common
+  name: omada
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       omada:
@@ -53,25 +53,22 @@ spec:
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
-      # MongoDB 8 requires AVX or similar
       nodeSelector:
         kubernetes.io/arch: amd64
-    ingress:
+    route:
       app:
         annotations:
-          haproxy.org/server-ssl: 'true'
-          gethomepage.dev/enabled: "true"
           gethomepage.dev/description: TPLink Network Management
+          gethomepage.dev/enabled: 'true'
           gethomepage.dev/group: Monitoring
           gethomepage.dev/icon: https://play-lh.googleusercontent.com/FW3wu85sc7EtgSnPoCY_NBQq4yeB0ZcUL62dkruhcDTs7u3OsnbGL0-mzFMiGbmiaw
           gethomepage.dev/name: Omada Controller
-        hosts:
-          - host: omada.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+          haproxy.org/server-ssl: 'true'
+        hostnames:
+          - omada.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: omada
