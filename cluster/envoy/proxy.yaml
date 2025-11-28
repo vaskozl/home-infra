@@ -20,6 +20,8 @@ spec:
     kubernetes:
       envoyDeployment:
         replicas: 3
+        container:
+          image: ghcr.io/vaskozl/envoy:1.36.2@sha256:cffabf6ed2f628021feb426f951f17280d11c7cdf75862823e1d1de59c458712
       envoyService:
         type: LoadBalancer
         loadBalancerClass: tailscale
