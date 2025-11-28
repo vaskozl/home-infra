@@ -155,9 +155,18 @@
       groupName: 'gitlab',
       sourceUrl: 'https://gitlab.com/gitlab-org/build/CNG/',
       matchPackageNames: [
-        '/^ghcr\\.io/vaskozl/gitlab-*/',
+        '/^ghcr\\.io/vaskozl/gitlab/',
         '/^ghcr\\.io/vaskozl/gitaly$/',
       ],
     },
+    {
+      matchDepNames: [
+        "envoy-gateway",
+        "/^ghcr\\.io/vaskozl/envoy/"
+      ],
+      groupName: 'envoy-gateway',
+      sourceUrl: 'https://github.com/envoyproxy/gateway',
+    },
+
   ],
 }
