@@ -6,6 +6,8 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
+      envoyDeployment:
+        replicas: 3
       envoyService:
         type: LoadBalancer
         loadBalancerClass: tailscale
