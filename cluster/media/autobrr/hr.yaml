@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: autobrr
   annotations:
     patch.sko.ai/app-template: common
+  name: autobrr
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       autobrr:
@@ -25,13 +25,16 @@ spec:
               tag: v1.69.0@sha256:b14f129e3c6293a595e7a03e025e5c7dd4095bd96100f2889a226816ae39ee0a
             probes:
               liveness:
-                enabled: true
                 custom: true
+                enabled: true
                 spec:
+                  exec:
+                    command:
+                      - sh
+                      - -c
+                      - curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"
                   periodSeconds: 300
                   timeoutSeconds: 30
-                  exec:
-                    command: [sh, -c, 'curl -X DELETE "http://localhost:7474/api/release?olderThan=168&apikey=${AUTOBRR_API_KEY}"']
               readiness:
                 enabled: true
             resources:
@@ -64,15 +67,13 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
+    route:
       app:
-        hosts:
-          - host: autobrr.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - autobrr.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: autobrr

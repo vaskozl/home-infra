@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: code-server
   annotations:
     patch.sko.ai/app-template: common
+  name: code-server
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,16 +14,17 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       code-server:
         containers:
           app:
+            env:
+              EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"}'
             image:
               repository: ghcr.io/vaskozl/code-server
               tag: 4.106.2@sha256:f2ca496151a09226034d2ccc06d142300c3b3d879e9a39bc0689d326bcc20762
-            env:
-              EXTENSIONS_GALLERY: '{"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"}'
             probes:
               liveness:
                 enabled: true
@@ -38,17 +38,17 @@ spec:
                 memory: 500Mi
             securityContext:
               allowPrivilegeEscalation: false
-              fsGroup: 1000
-              runAsGroup: 1000
-              runAsUser: 1000
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
               capabilities:
                 add:
                   - NET_BIND_SERVICE
                 drop:
                   - ALL
+              fsGroup: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
+              runAsUser: 1000
+              seccompProfile:
+                type: RuntimeDefault
           dind:
             image:
               repository: cgr.dev/chainguard/docker-dind
@@ -79,6 +79,13 @@ spec:
         globalMounts:
           - path: /var/run
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - code.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: code-server
@@ -86,12 +93,3 @@ spec:
           http:
             port: 8080
             primary: true
-    ingress:
-      app:
-        hosts:
-          - host: code.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
