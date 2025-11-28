@@ -2,8 +2,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: ts-public
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: tailscale
   listeners:
@@ -35,7 +33,7 @@ spec:
         certificateRefs:
           - kind: Secret
             group: ""
-            name: sko-ai-apex-tls
+            name: sko-ai-tls
     - name: https-leane
       protocol: HTTPS
       port: 443
