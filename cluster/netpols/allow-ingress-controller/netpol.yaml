@@ -9,7 +9,7 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: "ingress-nginx"
+              kubernetes.io/metadata.name: "envoy"
     - from:
         - namespaceSelector:
             matchLabels:
