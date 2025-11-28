@@ -38,8 +38,9 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
+  * [envoy-gateway](https://github.com/envoyproxy/gateway) - Gateway API controller
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
-  * [tailscale-idp](https://github.com/tailscale/tailscale/tree/main/cmd/tsidp) - Tailscale OIDC IDP
+  * [tsidp](https://github.com/tailscale/tsidp) - Tailscale OIDC IDP
   * [tailscale-operator](https://github.com/tailscale/tailscale/tree/main/cmd/k8s-operator) - Tailscale Operator
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
 
