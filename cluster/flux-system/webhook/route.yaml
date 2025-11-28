@@ -1,0 +1,20 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: webhook-receiver
+  namespace: flux-system
+spec:
+  parentRefs:
+    - name: ts-public
+      namespace: envoy
+  hostnames:
+    - flux-webhook.sko.ai
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: webhook-receiver
+          port: 80
+          weight: 1

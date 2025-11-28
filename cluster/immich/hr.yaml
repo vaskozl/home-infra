@@ -1,114 +1,73 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: immich
-  namespace: immich
   annotations:
     patch.sko.ai/app-template: common
+  name: immich
+  namespace: immich
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
-      version: 4.4.0
       interval: 1h
       sourceRef:
         kind: HelmRepository
-        namespace: flux-system
         name: bjw-s
+        namespace: flux-system
+      version: 4.4.0
+  interval: 1h
   values:
-    # For intel iGPU
-    defaultPodOptions:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
     controllers:
-      server:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/immich-app/immich-server
-              tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
-            env:
-              <<: &env-common
-                REDIS_HOSTNAME: immich-redis
-                DB_HOSTNAME: immich-postgres
-                DB_DATABASE_NAME: immich
-                DB_USERNAME: immich
-                DB_PASSWORD: immich
-              IMMICH_WORKERS_INCLUDE: &server-include 'api'
-            securityContext: &security
-              readOnlyRootFilesystem: true
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
-            resources:
-              limits:
-                memory: 360Mi
-              requests:
-                cpu: 65m
-                memory: 360Mi
-      microservices:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/immich-app/immich-server
-              tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
-            env:
-              <<: *env-common
-              IMMICH_WORKERS_EXCLUDE: *server-include
-            securityContext: *security
-            resources:
-              limits:
-                memory: 1050Mi
-              requests:
-                cpu: 50m
-                memory: 1050Mi
       machine-learning:
         containers:
           app:
+            env:
+              !!merge <<: &1
+                DB_DATABASE_NAME: immich
+                DB_HOSTNAME: immich-postgres
+                DB_PASSWORD: immich
+                DB_USERNAME: immich
+                REDIS_HOSTNAME: immich-redis
+              MPLCONFIGDIR: /cache/matplotlib
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v2.3.1@sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908
-            env:
-              <<: *env-common
-              MPLCONFIGDIR: /cache/matplotlib
-            securityContext: *security
             resources:
               limits:
                 memory: 2050Mi
               requests:
                 cpu: 70m
                 memory: 2050Mi
-      redis:
+            securityContext: &2
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+      microservices:
         containers:
           app:
+            env:
+              !!merge <<: *1
+              IMMICH_WORKERS_EXCLUDE: api
             image:
-              repository: ghcr.io/vaskozl/redis
-              tag: 8.4.0@sha256:c9ab38e7fbff64128520c2323a44bc2d108f98acf81d350324d3d3756db23975
-            securityContext: *security
-            args: [--save, '', --appendonly, 'no', --protected-mode, 'no']
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
             resources:
               limits:
-                memory: 140Mi
+                memory: 1050Mi
               requests:
-                cpu: 10m
-                memory: 140Mi
-        statefulset:
-          podManagementPolicy: Parallel
-        type: statefulset
+                cpu: 50m
+                memory: 1050Mi
+            securityContext: *2
       postgres:
         containers:
           app:
             env:
-              POSTGRES_USER: immich
-              POSTGRES_PASSWORD: immich
               POSTGRES_DB: immich
+              POSTGRES_PASSWORD: immich
+              POSTGRES_USER: immich
             image:
               repository: ghcr.io/immich-app/postgres
               tag: 14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
@@ -127,51 +86,100 @@ spec:
               name: pgdata
               size: 1Mi
         type: statefulset
+      redis:
+        containers:
+          app:
+            args:
+              - --save
+              - ''
+              - --appendonly
+              - no
+              - --protected-mode
+              - no
+            image:
+              repository: ghcr.io/vaskozl/redis
+              tag: 8.4.0@sha256:c9ab38e7fbff64128520c2323a44bc2d108f98acf81d350324d3d3756db23975
+            resources:
+              limits:
+                memory: 140Mi
+              requests:
+                cpu: 10m
+                memory: 140Mi
+            securityContext: *2
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+      server:
+        containers:
+          app:
+            env:
+              !!merge <<: *1
+              IMMICH_WORKERS_INCLUDE: api
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.3.1@sha256:f8d06a32b1b2a81053d78e40bf8e35236b9faefb5c3903ce9ca8712c9ed78445
+            resources:
+              limits:
+                memory: 360Mi
+              requests:
+                cpu: 65m
+                memory: 360Mi
+            securityContext: *2
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
     persistence:
-      upload:
-        type: nfs
-        server: syno.sko.ai
-        path: /volume3/k8s-volumes/immich
-        advancedMounts:
-          server:
-            app:
-              - path: /usr/src/app/upload
-          microservices:
-            app:
-              - path: /usr/src/app/upload
-      photos:
-        type: nfs
-        server: syno.sko.ai
-        path: /volume3/photo
-        advancedMounts:
-          server:
-            app:
-              - path: /mnt/syno-photos
-                readOnly: true
-          microservices:
-            app:
-              - path: /mnt/syno-photos
-                readOnly: true
       model-cache:
-        type: emptyDir
         advancedMounts:
           machine-learning:
             app:
               - path: /cache
               - path: /.cache
+        type: emptyDir
+      photos:
+        advancedMounts:
+          microservices:
+            app:
+              - path: /mnt/syno-photos
+                readOnly: true
+          server:
+            app:
+              - path: /mnt/syno-photos
+                readOnly: true
+        path: /volume3/photo
+        server: syno.sko.ai
+        type: nfs
       tmp:
         type: emptyDir
+      upload:
+        advancedMounts:
+          microservices:
+            app:
+              - path: /usr/src/app/upload
+          server:
+            app:
+              - path: /usr/src/app/upload
+        path: /volume3/k8s-volumes/immich
+        server: syno.sko.ai
+        type: nfs
+    route:
+      app:
+        hostnames:
+          - ~
+        parentRefs:
+          - name: ts-public
+            namespace: envoy
     service:
       machine-learning:
         controller: machine-learning
         ports:
           http:
             port: 3003
-      server:
-        controller: server
-        ports:
-          http:
-            port: 2283
       postgres:
         controller: postgres
         ports:
@@ -182,19 +190,8 @@ spec:
         ports:
           http:
             port: 6379
-    ingress:
-      immich:
-        className: haproxy-external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Search through photos and videos
-          gethomepage.dev/group: Media
-          gethomepage.dev/icon: immich
-          gethomepage.dev/name: Immich
-        hosts:
-          - host: immich.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: server
-                  port: http
+      server:
+        controller: server
+        ports:
+          http:
+            port: 2283

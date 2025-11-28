@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: haproxy
 resources:
   - _namespace.yaml
-  - external.yaml
   - internal.yaml
   - tcp-services.yaml
   - vmservicescrape.yaml

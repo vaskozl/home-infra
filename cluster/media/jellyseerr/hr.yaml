@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: jellyseerr
   annotations:
     patch.sko.ai/app-template: common
+  name: jellyseerr
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       jellyseerr:
@@ -59,22 +59,19 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
+    route:
       app:
-        className: haproxy-external
         annotations:
-          gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Find and request media
+          gethomepage.dev/enabled: 'true'
           gethomepage.dev/group: Media
           gethomepage.dev/icon: jellyseerr
           gethomepage.dev/name: Jellyseerr
-        hosts:
-          - host: requests.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - requests.sko.ai
+        parentRefs:
+          - name: ts-public
+            namespace: envoy
     service:
       app:
         controller: jellyseerr

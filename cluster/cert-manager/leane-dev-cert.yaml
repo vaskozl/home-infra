@@ -11,8 +11,11 @@ spec:
       name: letsencrypt-http-key
     solvers:
       - http01:
-          ingress:
-            class: haproxy-external
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: ts-public
+                namespace: envoy
+                kind: Gateway
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

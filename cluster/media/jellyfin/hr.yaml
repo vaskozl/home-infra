@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: jellyfin
   annotations:
     patch.sko.ai/app-template: common
+  name: jellyfin
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       jellyfin:
@@ -37,8 +37,8 @@ spec:
                 memory: 5Gi
             securityContext:
               privileged: true
-              runAsUser: 0
               runAsGroup: 0
+              runAsUser: 0
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -51,23 +51,6 @@ spec:
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
-    ingress:
-      app:
-        className: haproxy-external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Media Center
-          gethomepage.dev/group: Media
-          gethomepage.dev/icon: jellyfin
-          gethomepage.dev/name: Jellyfin
-          gethomepage.dev/href: "https://jf.sko.ai/sso/OID/start/ts"
-        hosts:
-          - host: jf.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       cache:
         type: emptyDir
@@ -76,6 +59,20 @@ spec:
         type: hostPath
       torrents:
         existingClaim: torrents-v2
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: Media Center
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Media
+          gethomepage.dev/href: https://jf.sko.ai/sso/OID/start/ts
+          gethomepage.dev/icon: jellyfin
+          gethomepage.dev/name: Jellyfin
+        hostnames:
+          - jf.sko.ai
+        parentRefs:
+          - name: ts-public
+            namespace: envoy
     service:
       app:
         controller: jellyfin
