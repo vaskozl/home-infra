@@ -1,0 +1,33 @@
+apiVersion: 'gateway.networking.k8s.io/v1'
+kind: 'HTTPRoute'
+metadata:
+  name: 'oidc'
+spec:
+  parentRefs:
+    - name: 'ts-internal'
+  hostnames:
+    - 'oidc.sko.ai'
+  rules:
+    - matches:
+        - path:
+            type: 'PathPrefix'
+            value: '/'
+---
+apiVersion: 'gateway.envoyproxy.io/v1alpha1'
+kind: 'SecurityPolicy'
+metadata:
+  name: 'oidc'
+spec:
+  targetRefs:
+    - group: 'gateway.networking.k8s.io'
+      kind: 'Gateway'
+      name: 'ts-internal'
+  oidc:
+    provider:
+      issuer: 'https://idp.ide-bicolor.ts.net'
+    clientID: 'df138d2d21dc5b8f6e34a2867f9d3a92'
+    clientSecret:
+      name: 'oidc-client-secret'
+    cookieDomain: 'sko.ai'
+    redirectURL: 'https://oidc.sko.ai/openid_connect/callback'
+    refreshToken: true

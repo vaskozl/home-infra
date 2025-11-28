@@ -6,6 +6,8 @@ resources:
   - hr.yaml
   - proxy.yaml
   - gateway.yaml
+  - oidc.yaml
+  - oidc-secret.yaml
   - ../netpols/allow-all-ingress
 components:
   - ../common
