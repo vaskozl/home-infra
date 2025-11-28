@@ -176,7 +176,7 @@ spec:
             namespace: envoy
         rules:
           - backendRefs:
-              - name: immich-server
+              - identifier: server
                 port: 2283
     service:
       machine-learning:
