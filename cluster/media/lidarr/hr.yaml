@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: lidarr
   annotations:
     patch.sko.ai/app-template: common
+  name: lidarr
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       lidarr:
@@ -59,27 +59,25 @@ spec:
           type: RuntimeDefault
         sysctls:
           - name: net.ipv4.ip_unprivileged_port_start
-            value: "0"
-    ingress:
-      app:
-        hosts:
-          - host: lidarr.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+            value: '0'
     persistence:
+      api-tls:
+        globalMounts:
+          - path: /etc/ssl/certs/lidarr.pem
+            subPath: tls.crt
+        name: api-lidarr-audio-tls
+        type: secret
       tmp:
         type: emptyDir
       torrents:
         existingClaim: torrents-v2
-      api-tls:
-        name: api-lidarr-audio-tls
-        type: secret
-        globalMounts:
-          - path: /etc/ssl/certs/lidarr.pem
-            subPath: tls.crt
+    route:
+      app:
+        hostnames:
+          - lidarr.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: lidarr

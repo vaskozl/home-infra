@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: readarr
   annotations:
     patch.sko.ai/app-template: common
+  name: readarr
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       readarr:
@@ -57,20 +57,18 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app:
-        hosts:
-          - host: readarr.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       tmp:
         type: emptyDir
       torrents:
         existingClaim: torrents-v2
+    route:
+      app:
+        hostnames:
+          - readarr.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: readarr

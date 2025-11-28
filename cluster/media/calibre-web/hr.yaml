@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: calibre-web
   annotations:
     patch.sko.ai/app-template: common
+  name: calibre-web
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       calibre-web:
@@ -64,21 +64,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
     enableServiceLinks: false
-    ingress:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Ebook management
-          gethomepage.dev/group: Media
-          gethomepage.dev/icon: calibre-web
-          gethomepage.dev/name: Calibre Web
-        hosts:
-          - host: cw.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       cache:
         globalMounts:
@@ -90,6 +75,19 @@ spec:
           - path: /torrents
       tmp:
         type: emptyDir
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: Ebook management
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Media
+          gethomepage.dev/icon: calibre-web
+          gethomepage.dev/name: Calibre Web
+        hostnames:
+          - cw.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: calibre-web

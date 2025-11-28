@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vaultwarden
   annotations:
     patch.sko.ai/app-template: common
+  name: vaultwarden
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       vaultwarden:
@@ -43,21 +43,19 @@ spec:
               name: data
               size: 1Mi
         type: statefulset
-    ingress:
+    route:
       app:
         annotations:
-          gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Password Manager
+          gethomepage.dev/enabled: 'true'
           gethomepage.dev/group: Cloud
           gethomepage.dev/icon: bitwarden
           gethomepage.dev/name: Bitwarden
-        hosts:
-          - host: bw.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - bw.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: vaultwarden

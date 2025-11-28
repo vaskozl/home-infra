@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: apks
   annotations:
     patch.sko.ai/app-template: common
+  name: apks
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       main:
@@ -31,8 +31,8 @@ spec:
                 memory: 30Mi
             securityContext:
               readOnlyRootFilesystem: false
-              runAsUser: 33
               runAsGroup: 33
+              runAsUser: 33
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -42,24 +42,22 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app:
-        hosts:
-          - host: apks.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       apks:
-        existingClaim: apk-repo-pvc
         advancedMounts:
           main:
             app:
               - path: /usr/share/nginx/html
+        existingClaim: apk-repo-pvc
       run:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - apks.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: main

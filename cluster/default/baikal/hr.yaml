@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: baikal
   annotations:
     patch.sko.ai/app-template: common
+  name: baikal
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       baikal:
@@ -48,21 +48,6 @@ spec:
               name: data
               size: 1Mi
         type: statefulset
-    ingress:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Calendar and contacts with invites
-          gethomepage.dev/group: Cloud
-          gethomepage.dev/icon: baikal
-          gethomepage.dev/name: Baïkal
-        hosts:
-          - host: bk.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       nginx:
         globalMounts:
@@ -70,6 +55,19 @@ spec:
             subPath: nginx.conf
         name: nginx
         type: configMap
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: Calendar and contacts with invites
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: baikal
+          gethomepage.dev/name: Baïkal
+        hostnames:
+          - bk.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: baikal

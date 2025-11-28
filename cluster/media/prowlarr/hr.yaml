@@ -1,10 +1,10 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: prowlarr
   annotations:
     patch.sko.ai/app-template: common
+  name: prowlarr
 spec:
   chart:
     spec:
@@ -57,18 +57,16 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app:
-        hosts:
-          - host: prowlarr.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - prowlarr.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
     service:
       app:
         controller: prowlarr
