@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: k8s-gateway
         namespace: flux-system
-      version: 2.4.0
+      version: 3.2.8
   values:
     watchedResources: ["Service", "HTTPRoute", "Ingress", "TCPRoute", "UDPRoute"]
     controllers:
@@ -28,6 +28,7 @@ spec:
     replicaCount: 2
     service:
       type: LoadBalancer
+      loadBalancerClass: tailscale
       annotations:
         tailscale.com/hostname: k8s-gateway
         tailscale.com/proxy-group: ingress-proxies
@@ -48,12 +49,3 @@ spec:
                           value: "1"
             target:
               kind: Deployment
-          - patch: |-
-              apiVersion: v1
-              kind: Service
-              metadata:
-                name: app
-              spec:
-                loadBalancerClass: tailscale
-            target:
-              kind: Service
