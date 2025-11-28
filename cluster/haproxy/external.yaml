@@ -27,10 +27,3 @@ spec:
         request-set-header: X-Ingress-Class "haproxy-external"
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
-      extraVolumes:
-        - name: lua
-          secret:
-            secretName: lua
-        - name: txt-config
-          configMap:
-            name: txt-config

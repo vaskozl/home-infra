@@ -14,16 +14,3 @@ configMapGenerator:
   - name: common-values
     files:
       - values.yaml=common-values.yaml
-  - name: txt-config
-    files:
-      - config/public_hosts.txt
-      - cf-ips-v4.txt=https://www.cloudflare.com/ips-v4
-      - cf-ips-v6.txt=https://www.cloudflare.com/ips-v6
-secretGenerator:
-  - name: lua
-    files:
-      - lua/haproxy-lua-http.lua
-      - lua/auth-request.lua
-      - lua/json.lua
-configurations:
-  - kustomizeconfig.yaml

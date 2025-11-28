@@ -31,10 +31,3 @@ spec:
       extraArgs:
         - --default-ssl-certificate=cert-manager/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-internal
-      extraVolumes:
-        - name: lua
-          secret:
-            secretName: lua
-        - name: txt-config
-          configMap:
-            name: txt-config

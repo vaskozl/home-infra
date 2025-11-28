@@ -15,48 +15,16 @@ controller:
     scale-server-slots: "2"
     log-format: "ip=%ci dt=%tr backend=%b perf=%TR/%Tw/%Tc/%Tr/%Ta code=%ST bytes_read=%B term=%tsc metrics=%ac/%fc/%bc/%sc/%rc
       srv_queue=%sq  backend_queue=%bq ua=%{+Q}[capture.req.hdr(0)] host=%{+Q}[capture.req.hdr(1)] ver=%HV method=%HM uri=%HU"
-    global-config-snippet: |
-      lua-prepend-path /usr/local/share/lua/?.lua
-      lua-load /usr/local/share/lua/auth-request.lua
     frontend-config-snippet: |
-      # set true source if cloudflare
-      acl is_cloudflare src -f /config/cf-ips-v4.txt
-      acl is_cloudflare src -f /config/cf-ips-v6.txt
-      http-request set-src hdr(cf-connecting-ip) if is_cloudflare
-      http-request del-header x-forwarded-for
-
       # Capture headers for logging
       capture request header User-Agent len 64
       capture request header Host len 64
-
-      # Add UUID
-      unique-id-format %[uuid()]
-      unique-id-header X-Unique-ID
-      http-response set-header X-Unique-ID %[unique-id]
-
-      # Authelia needs these headers to work correctly
-      http-request set-header X-Forwarded-Proto https
-      http-request set-header X-Forwarded-Host %[req.hdr(Host)]
-      http-request set-header X-Forwarded-Uri %[path]
-
-      http-request del-header x-auth-request- -m beg
-
-      # Disable auth for specific backends
-      acl public_hosts base -m reg -f /config/public_hosts.txt
-      # Authelia  Config:             Backend name                        Path          Method  Cache    Success            Failure
-      http-request lua.auth-intercept oauth2-proxy_svc_oauth2-proxy_http  /oauth2/auth  HEAD    cookie   x-auth-request-*   -           if !public_hosts
-      http-request redirect location https://auth.sko.ai/oauth2/start?rd=%[url] if !{ var(txn.auth_response_successful) -m bool } !public_hosts
 
       # Security Headers
       http-response set-header X-XSS-Protection "1; mode=block"
       http-response set-header X-Content-Type-Options "nosniff"
       http-response set-header X-Frame-Options "sameorigin"
       http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
-  extraVolumeMounts:
-    - name: lua
-      mountPath: /usr/local/share/lua
-    - name: txt-config
-      mountPath: /config
   resources:
     requests:
       memory: 250Mi
