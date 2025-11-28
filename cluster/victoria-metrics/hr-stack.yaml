@@ -29,17 +29,21 @@ spec:
         registry: ghcr.io
         repository: vaskozl/grafana
         tag: 12.2.2@sha256:263e6545b9dccb0be7f447991641af0483225d72a1ec07a6100e5d0450f5d018
-      ingress:
-        enabled: true
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Server Monitoring Dashboards
-          gethomepage.dev/group: Monitoring
-          gethomepage.dev/icon: grafana
-          gethomepage.dev/name: Grafana
-          gethomepage.dev/pod-selector: "app.kubernetes.io/name=grafana"
-        hosts:
-          - gf.sko.ai
+      route:
+        main:
+          enabled: true
+          parentRefs:
+            - name: ts-internal
+              namespace: envoy
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/description: Server Monitoring Dashboards
+            gethomepage.dev/group: Monitoring
+            gethomepage.dev/icon: grafana
+            gethomepage.dev/name: Grafana
+            gethomepage.dev/pod-selector: "app.kubernetes.io/name=grafana"
+          hostnames:
+            - gf.sko.ai
       sidecar:
         image:
           registry: ghcr.io
@@ -54,9 +58,12 @@ spec:
           enabled: true
           org_role: Editor
     alertmanager:
-      ingress:
+      route:
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
         enabled: true
-        hosts:
+        hostnames:
           - am.sko.ai
       spec:
         externalURL: "https://am.sko.ai"
@@ -105,8 +112,11 @@ spec:
           requests:
             cpu: 530m
             memory: 1.2Gi
-      ingress:
+      route:
         enabled: true
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Server Metrics
@@ -114,12 +124,15 @@ spec:
           gethomepage.dev/icon: victoriametrics
           gethomepage.dev/name: VictoriaMetrics
           gethomepage.dev/pod-selector: "app.kubernetes.io/name=vmsingle"
-        hosts:
+        hostnames:
           - vm.sko.ai
     vmalert:
-      ingress:
+      route:
         enabled: true
-        hosts:
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
+        hostnames:
           - va.sko.ai
     vmagent:
       spec:
@@ -142,9 +155,9 @@ spec:
           requests:
             cpu: 500m
             memory: 100Mi
-      ingress:
+      route:
         enabled: true
-        hosts:
+        hostnames:
           - vma.sko.ai
     kubelet:
       vmScrape:
