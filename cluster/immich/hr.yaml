@@ -170,10 +170,14 @@ spec:
     route:
       app:
         hostnames:
-          - ~
+          - immich.sko.ai
         parentRefs:
           - name: ts-public
             namespace: envoy
+        rules:
+          - backendRefs:
+              - name: immich-server
+                port: 2283
     service:
       machine-learning:
         controller: machine-learning
