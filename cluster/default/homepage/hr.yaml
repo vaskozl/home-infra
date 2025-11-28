@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: homepage
   annotations:
     patch.sko.ai/app-template: common
+  name: homepage
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,16 +14,15 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       homepage:
-        serviceAccount:
-          identifier: homepage
         containers:
           app:
             env:
-              LOG_TARGETS: stdout
               HOMEPAGE_ALLOWED_HOSTS: home.sko.ai
+              LOG_TARGETS: stdout
             image:
               repository: ghcr.io/gethomepage/homepage
               tag: v1.7.0@sha256:b6ac42c31845ea7c862d71451c16413a6284430d8ff08e16ad791f42718a7c71
@@ -45,6 +43,8 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+        serviceAccount:
+          identifier: homepage
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -53,39 +53,37 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
-      app:
-        hosts:
-          - host: home.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         enabled: true
-        type: configMap
-        name: homepage-config
         globalMounts:
-          - subPath: bookmarks.yaml
-            path: /app/config/bookmarks.yaml
-          - subPath: docker.yaml
-            path: /app/config/docker.yaml
-          - subPath: kubernetes.yaml
-            path: /app/config/kubernetes.yaml
-          - subPath: services.yaml
-            path: /app/config/services.yaml
-          - subPath: settings.yaml
-            path: /app/config/settings.yaml
-          - subPath: widgets.yaml
-            path: /app/config/widgets.yaml
-          - subPath: proxmox.yaml
-            path: /app/config/proxmox.yaml
-          - subPath: custom.css
-            path: /app/config/custom.css
-          - subPath: custom.js
-            path: /app/config/custom.js
+          - path: /app/config/bookmarks.yaml
+            subPath: bookmarks.yaml
+          - path: /app/config/docker.yaml
+            subPath: docker.yaml
+          - path: /app/config/kubernetes.yaml
+            subPath: kubernetes.yaml
+          - path: /app/config/services.yaml
+            subPath: services.yaml
+          - path: /app/config/settings.yaml
+            subPath: settings.yaml
+          - path: /app/config/widgets.yaml
+            subPath: widgets.yaml
+          - path: /app/config/proxmox.yaml
+            subPath: proxmox.yaml
+          - path: /app/config/custom.css
+            subPath: custom.css
+          - path: /app/config/custom.js
+            subPath: custom.js
+        name: homepage-config
+        type: configMap
+    route:
+      app:
+        hostnames:
+          - home.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: homepage

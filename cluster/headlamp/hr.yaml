@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: headlamp
   annotations:
     patch.sko.ai/app-template: common
+  name: headlamp
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,33 +14,25 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       headlamp:
-        initContainers:
-          plugins:
-            image:
-              repository: ghcr.io/headlamp-k8s/headlamp-plugin-flux
-              tag: v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
-            command:
-              - /bin/sh
-              - -c
-              - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
         containers:
           app:
-            image:
-              repository: ghcr.io/headlamp-k8s/headlamp
-              tag: v0.38.0@sha256:62df24952ed956ec36a2d5859a1dcede5fad00b8d0043b9ce19cda914706325a
             args:
-              - "-in-cluster"
-              - "-plugins-dir=/build/plugins"
-              - "-oidc-client-id=$(OIDC_CLIENT_ID)"
-              - "-oidc-client-secret=$(OIDC_CLIENT_SECRET)"
-              - "-oidc-idp-issuer-url=$(OIDC_ISSUER_URL)"
-              - "-oidc-scopes=$(OIDC_SCOPES)"
+              - -in-cluster
+              - -plugins-dir=/build/plugins
+              - -oidc-client-id=$(OIDC_CLIENT_ID)
+              - -oidc-client-secret=$(OIDC_CLIENT_SECRET)
+              - -oidc-idp-issuer-url=$(OIDC_ISSUER_URL)
+              - -oidc-scopes=$(OIDC_SCOPES)
             envFrom:
               - secretRef:
                   name: oidc
+            image:
+              repository: ghcr.io/headlamp-k8s/headlamp
+              tag: v0.38.0@sha256:62df24952ed956ec36a2d5859a1dcede5fad00b8d0043b9ce19cda914706325a
             probes:
               liveness:
                 enabled: true
@@ -60,6 +51,15 @@ spec:
                   - NET_BIND_SERVICE
                 drop:
                   - ALL
+        initContainers:
+          plugins:
+            command:
+              - /bin/sh
+              - -c
+              - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+            image:
+              repository: ghcr.io/headlamp-k8s/headlamp-plugin-flux
+              tag: v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
@@ -69,8 +69,8 @@ spec:
       securityContext:
         fsGroup: 101
         runAsGroup: 101
-        runAsUser: 100
         runAsNonRoot: true
+        runAsUser: 100
         seccompProfile:
           type: RuntimeDefault
     persistence:
@@ -78,6 +78,13 @@ spec:
         globalMounts:
           - path: /build/plugins
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - headlamp.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: headlamp
@@ -85,12 +92,3 @@ spec:
           http:
             port: 4466
             primary: true
-    ingress:
-      app:
-        hosts:
-          - host: headlamp.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http

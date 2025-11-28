@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: mealie
   annotations:
     patch.sko.ai/app-template: common
+  name: mealie
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,20 +14,21 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       mealie:
         containers:
           app:
             env:
+              ALLOW_PASSWORD_LOGIN: 'false'
               BASE_URL: https://mealie.sko.ai
               OIDC_AUTH_ENABLED: 'true'
               OIDC_AUTO_REDIRECT: 'true'
-              ALLOW_PASSWORD_LOGIN: 'false'
-              SMTP_HOST: 'mx-maddy.mailserver.svc.cluster.local'
-              SMTP_PORT: '2225'
               SMTP_AUTH_STRATEGY: none
               SMTP_FROM_EMAIL: mealie@sko.ai
+              SMTP_HOST: mx-maddy.mailserver.svc.cluster.local
+              SMTP_PORT: '2225'
             envFrom:
               - secretRef:
                   name: mealie.env
@@ -69,21 +69,19 @@ spec:
         runAsUser: 911
         seccompProfile:
           type: RuntimeDefault
-    ingress:
+    route:
       app:
         annotations:
-          gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Recipe manager and meal planner
+          gethomepage.dev/enabled: 'true'
           gethomepage.dev/group: Other
           gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/0986fef4753b28ee07dfc3ac12c3e45b3aed9b1f/svg/mealie.svg
           gethomepage.dev/name: Mealie
-        hosts:
-          - host: mealie.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - mealie.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: mealie
