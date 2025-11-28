@@ -45,7 +45,7 @@ spec:
     defaultPodOptions:
       hostNetwork: true
     route:
-      app:
+      internal:
         annotations:
           gethomepage.dev/description: Smart Home Management
           gethomepage.dev/enabled: 'true'
@@ -56,8 +56,24 @@ spec:
         hostnames:
           - ha.sko.ai
         parentRefs:
+          - name: ts-internal
+            namespace: envoy
+      public:
+        labels:
+          k8s-gateway.dns/ignore: "true"
+        hostnames:
+          - ha.sko.ai
+        parentRefs:
           - name: ts-public
             namespace: envoy
+        rules:
+          - matches:
+            - path:
+                value: /api
+            - path:
+                value: /auth
+            - path:
+                value: /redirect/oauth
     service:
       app:
         controller: hass
