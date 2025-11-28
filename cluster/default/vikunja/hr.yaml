@@ -1,12 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: vikunja
   annotations:
     patch.sko.ai/app-template: common
+  name: vikunja
 spec:
-  interval: 1h
   chart:
     spec:
       chart: app-template
@@ -15,6 +14,7 @@ spec:
         name: bjw-s
         namespace: flux-system
       version: 4.4.0
+  interval: 1h
   values:
     controllers:
       vikunja:
@@ -44,15 +44,15 @@ spec:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
-              name: db
-              size: 1Mi
               globalMounts:
                 - path: /db
-            - accessMode: ReadWriteOnce
-              name: files
+              name: db
               size: 1Mi
+            - accessMode: ReadWriteOnce
               globalMounts:
                 - path: /app/vikunja/files
+              name: files
+              size: 1Mi
         type: statefulset
     defaultPodOptions:
       securityContext:
@@ -69,21 +69,19 @@ spec:
             subPath: config.yml
         name: vikunja-config
         type: secret
-    ingress:
+    route:
       app:
         annotations:
-          gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Plan your projects with the elegance
+          gethomepage.dev/enabled: 'true'
           gethomepage.dev/group: Cloud
           gethomepage.dev/icon: vikunja
           gethomepage.dev/name: Vikunja
-        hosts:
-          - host: todo.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - todo.sko.ai
+        parentRefs:
+          - name: ts-internal
+            namespace: envoy
     service:
       app:
         controller: vikunja
