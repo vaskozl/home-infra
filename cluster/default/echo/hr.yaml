@@ -51,19 +51,10 @@ spec:
     route:
       app:
         parentRefs:
-          - name: sko-ai
+          - name: ts-internal
             namespace: envoy
         hostnames:
           - echo.sko.ai
-        rules:
-            - matches:
-                - path:
-                    type: PathPrefix
-                    value: /
-              backendRefs:
-                - kind: Service
-                  name: echoserver
-                  port: 8080
     persistence:
       config:
         globalMounts:
