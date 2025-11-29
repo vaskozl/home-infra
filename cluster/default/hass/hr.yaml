@@ -62,9 +62,9 @@ spec:
           - backendRefs:
               - identifier: app
                 port: 8123
-          - matches:
-            - path:
-                value: /
+            matches:
+              - path:
+                  value: /
       public:
         labels:
           k8s-gateway.dns/ignore: "true"
@@ -77,13 +77,13 @@ spec:
           - backendRefs:
               - identifier: app
                 port: 8123
-          - matches:
-            - path:
-                value: /api
-            - path:
-                value: /auth
-            - path:
-                value: /redirect/oauth
+            matches:
+              - path:
+                  value: /api
+              - path:
+                  value: /auth
+              - path:
+                  value: /redirect/oauth
     service:
       app:
         controller: hass
