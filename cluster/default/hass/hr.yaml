@@ -56,7 +56,7 @@ spec:
         hostnames:
           - ha.sko.ai
         parentRefs:
-          - name: ts-internal
+          - name: ts-internal-noauth
             namespace: envoy
       public:
         labels:
