@@ -58,6 +58,13 @@ spec:
         parentRefs:
           - name: ts-internal-noauth
             namespace: envoy
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8123
+          - matches:
+            - path:
+                value: /
       public:
         labels:
           k8s-gateway.dns/ignore: "true"
@@ -67,6 +74,9 @@ spec:
           - name: ts-public
             namespace: envoy
         rules:
+          - backendRefs:
+              - identifier: app
+                port: 8123
           - matches:
             - path:
                 value: /api
