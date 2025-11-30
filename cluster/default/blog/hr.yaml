@@ -40,7 +40,7 @@ spec:
               capabilities:
                 drop:
                   - ALL
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
         replicas: 2
     defaultPodOptions:
       imagePullSecrets:
