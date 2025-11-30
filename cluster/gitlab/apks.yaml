@@ -25,10 +25,10 @@ spec:
               tag: 1.29.3@sha256:3d0eaef717e832d2791eddfb436c814c6190322753e2a35ca9ef26060df3f40d
             resources:
               limits:
-                memory: 30Mi
+                memory: 60Mi
               requests:
                 cpu: 15m
-                memory: 30Mi
+                memory: 60Mi
             securityContext:
               readOnlyRootFilesystem: false
               runAsGroup: 33
