@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/tsidp
-              tag: 0.0.7@sha256:dbeceedd26b04f30d1834264704d0d3e3e37169af682416f96df88bc3c3d42ab
+              tag: 0.0.7@sha256:9d47eb2f29cf80dd3c076ff4357d15faf0d9408fdf4268ca7cd170521451a237
             env:
               TAILSCALE_USE_WIP_CODE: 1
             probes:
