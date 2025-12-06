@@ -27,6 +27,11 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 20
+                  periodSeconds: 30
             resources:
               limits:
                 memory: 660Mi
