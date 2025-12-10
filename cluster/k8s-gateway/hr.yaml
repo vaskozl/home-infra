@@ -29,6 +29,7 @@ spec:
     service:
       type: LoadBalancer
       loadBalancerClass: tailscale
+      nodePort: 30054
       annotations:
         tailscale.com/hostname: k8s-gateway
         tailscale.com/proxy-group: ingress-proxies
