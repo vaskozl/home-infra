@@ -22,6 +22,7 @@ spec:
         replicas: 3
       envoyService:
         type: LoadBalancer
-        loadBalancerClass: tailscale
+        loadBalancerClass: minilb
         annotations:
+          tailscale.com/expose: "true"
           tailscale.com/proxy-group: ingress-proxies
