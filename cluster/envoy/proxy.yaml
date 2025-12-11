@@ -25,17 +25,4 @@ spec:
           tailscale.com/proxy-group: ingress-proxies
       envoyDeployment:
         replicas: 3
-        pod:
-          ports:
-            - name: http
-              containerPort: 80
-              hostPort: 80
-              protocol: TCP
-            - name: https
-              containerPort: 443
-              hostPort: 443
-              protocol: TCP
-          securityContext:
-            sysctls:
-              - name: net.ipv4.ip_unprivileged_port_start
-                value: "0"
+      useListenerPortAsContainerPort: true
