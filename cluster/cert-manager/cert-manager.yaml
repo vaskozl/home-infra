@@ -15,16 +15,16 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/cert-manager-controller
-      tag: 1.19.2@sha256:dce0f440a609c027afb6c11384359058df1bbde3ca5a4bd36c814d345a4aa0b1
+      tag: 1.19.2@sha256:a4164a29aecd460e2f4e2681b2bea87d5d2d3630ee99f9f04e1631a68d380425
     cainjector:
       replicaCount: 1
       image:
         repository: ghcr.io/vaskozl/cert-manager-cainjector
-        tag: 1.19.2@sha256:e618d13bee2e045c993633df404fddbe67aa5a4266e38af661d8439c759ab4e2
+        tag: 1.19.2@sha256:949f1e6b9114f132a1ced330da88eb4da7d0820cb7166bc396250584516dbf12
     acmesolver:
       image:
         repository: ghcr.io/vaskozl/cert-manager-acmesolver
-        tag: 1.19.2@sha256:11a027ecf955ca497c721722b1799c73f5a8342de6863745704f931ee4cd3da5
+        tag: 1.19.2@sha256:c5bce0527160700cae49e6f13cebf0b47f22f1a2801e269c733531d42ed9ea44
     webhook:
       image:
         repository: ghcr.io/vaskozl/cert-manager-webhook
