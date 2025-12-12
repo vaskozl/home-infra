@@ -9,7 +9,3 @@ resources:
   - ../netpols/allow-all-ingress
 components:
   - ../common
-configMapGenerator:
-  - name: common-values
-    files:
-      - values.yaml=common-values.yaml

@@ -18,10 +18,11 @@ spec:
   provider:
     type: Kubernetes
     kubernetes:
-      envoyDeployment:
-        replicas: 3
       envoyService:
         type: LoadBalancer
-        loadBalancerClass: tailscale
+        loadBalancerClass: minilb
         annotations:
           tailscale.com/proxy-group: ingress-proxies
+      envoyDeployment:
+        replicas: 3
+      useListenerPortAsContainerPort: true

@@ -124,13 +124,12 @@ spec:
       maddy:
         annotations:
           coredns.io/hostname: mail
-          tailscale.com/hostname: mail
-          tailscale.com/proxy-group: ingress-proxies
         controller: maddy
         ports:
           smtp:
             primary: true
             port: 25
+            nodePort: 30896
           imap:
             port: 143
           smtp-secure:
@@ -142,7 +141,7 @@ spec:
           relay:
             port: 2225
         type: LoadBalancer
-        loadBalancerClass: tailscale
+        loadBalancerClass: minilb
       rspamd:
         controller: rspamd
         ports:
