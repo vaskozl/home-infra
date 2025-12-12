@@ -28,8 +28,7 @@ spec:
     replicaCount: 2
     ttl: 30
     service:
-      type: LoadBalancer
-      loadBalancerClass: tailscale
+      type: NodePort
       nodePort: 32690
       annotations:
         tailscale.com/hostname: k8s-gateway
