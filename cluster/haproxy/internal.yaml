@@ -31,6 +31,10 @@ spec:
       tolerations:
         - effect: NoSchedule
           operator: Exists
+      containerPort:
+        http: 80
+        https: 443
+        stat: 1024
       config:
         request-set-header: X-Ingress-Class "haproxy-internal"
         load-balance: leastconn
