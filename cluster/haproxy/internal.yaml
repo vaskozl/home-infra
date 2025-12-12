@@ -22,6 +22,7 @@ spec:
         name: haproxy-internal
         default: true
       service:
+        loadBalancerClass: minilb
         tcpPorts:
           - name: ssh
             port: 22
