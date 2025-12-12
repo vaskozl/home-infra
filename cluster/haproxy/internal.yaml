@@ -20,6 +20,7 @@ spec:
         name: haproxy-internal
         default: true
       service:
+        type: LoadBalancer
         loadBalancerClass: minilb
         tcpPorts:
           - name: ssh
