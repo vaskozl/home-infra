@@ -26,6 +26,7 @@ spec:
                 memory: 15Mi
     domain: sko.ai
     replicaCount: 2
+    ttl: 30
     service:
       type: LoadBalancer
       loadBalancerClass: tailscale
