@@ -7,11 +7,6 @@ auth:
     enabled: true
     redirecturl: https://todo.sko.ai/auth/openid/
     providers:
-      - name: tailscale
-        authurl: https://idp.ide-bicolor.ts.net
-        clientid: 5f904a0d44a57408a81aa33adac9a85a
-        clientsecret: ENC[AES256_GCM,data:P58R1JvqpOMDi65WAy102x6ShsdF2/MottSY4f6IjbrLpun2gbeomJV5R92dksOx7SVJ7IvOq43K6D0bHIXsUw==,iv:EayOPwF+1RRM6lE/e7vEci5rCjPZ+ARad33H/HfPJqg=,tag:X9SkO/7JgLA1Sqk04WuT7A==,type:str]
-        scope: openid profile email
       - name: pocket-id
         authurl: https://pi.sko.ai
         clientid: 16254009-7f90-4506-9ebc-c98402988c6e
@@ -25,8 +20,8 @@ mailer:
   username: ""
   password: ""
 sops:
-  lastmodified: "2025-12-13T15:57:01Z"
-  mac: ENC[AES256_GCM,data:CB9Vp/kNLEhlfhbhIPCU1+XJxZ+y4WMTkgpGNeeMZYffCg0D6J9YGfrOVQEAe8yVjdwQ3mCyhBLHkusWTLRgFm5ZP8BFsAGA0CZ/TP3HtUUhdE43oOnACbz0tJMoe08MpLF7Exh9Lxz1sGSypQPrBLYLcRyccoStGo7yVtB5Zzs=,iv:zyLY/hObMyNqT5a2+KE4obbYcYfmPyo54kXSaqxm3HA=,tag:GKQaO3EN6ZfrGrcQ3wqLbg==,type:str]
+  lastmodified: "2025-12-13T16:12:15Z"
+  mac: ENC[AES256_GCM,data:X/J4DPRdqbUbtxKLP0bn2T1ShO6iYf8yFjdhwnD5U0IR8Tvq9L+V2RQnethb7gqkDTPbIrdLuQTMVNUmJhzsPcQ4PuEAG6NqFYdV6vTR4oyttlPtE0T9L1VMhCIteLnRlmXoYl1ijGgo2faA/B+hw3GAsKkz2G2cv4RzEd05mvI=,iv:hekRQhfzHs0/g/wKGxthKr9NG7bJbmPcVdgz5AQ+BWk=,tag:fJgD1OIlRhTxzpoaDIqu6w==,type:str]
   pgp:
     - created_at: "2025-02-07T19:54:36Z"
       enc: |-
