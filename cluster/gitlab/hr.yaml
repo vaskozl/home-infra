@@ -76,7 +76,6 @@ spec:
           syncProfileAttributes: [email]
           blockAutoCreatedUsers: false
           providers:
-            - secret: ts-oauth2
             - secret: pi-oauth2
         lfs: &rails
           connection:
