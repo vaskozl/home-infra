@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: pocket-id
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.5.0
+  interval: 1h
+  values:
+    controllers:
+      pocket-id:
+        containers:
+          app:
+            env:
+              APP_URL: https://pi.sko.ai
+            image:
+              repository: ghcr.io/pocket-id/pocket-id
+              tag: v1.16.0-distroless
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 100Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /app/data
+              name: data
+              size: 1Gi
+        type: statefulset
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: OIDC Provider
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Cloud
+          gethomepage.dev/icon: pocket-id-light
+          gethomepage.dev/name: Pocket-ID
+        hostnames:
+          - pi.sko.ai
+        parentRefs:
+          - name: ts-internal-noauth
+            namespace: envoy
+    service:
+      app:
+        controller: pocket-id
+        ports:
+          http:
+            port: 1411
