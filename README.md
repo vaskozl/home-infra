@@ -29,19 +29,19 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
   * [ntfy](https://ntfy.sh) - Push notifications made easy
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
+  * [pocket-id](https://github.com/pocket-id/pocket-id) - Simple OIDC provider
   * [thelounge](https://thelounge.chat/) - IRC client
   * [vikunja](https://github.com/go-vikunja/vikunja) - Todo-app
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
+  * [envoy-gateway](https://github.com/envoyproxy/gateway) - Gateway API controller
   * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
   * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
-  * [envoy-gateway](https://github.com/envoyproxy/gateway) - Gateway API controller
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
-  * [tsidp](https://github.com/tailscale/tsidp) - Tailscale OIDC IDP
-  * [tailscale-operator](https://github.com/tailscale/tailscale/tree/main/cmd/k8s-operator) - Tailscale Operator
+  * [minilb](https://github.com/vaskozl/minilb) - The smallest LoadBalancer
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
 
 ## Secret management
