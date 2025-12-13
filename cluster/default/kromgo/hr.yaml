@@ -21,12 +21,12 @@ spec:
         containers:
           app:
             env:
-              HEALTH_HOST: 0.0.0.0
               PROMETHEUS_URL: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8428/
+              HEALTH_HOST: 0.0.0.0
               SERVER_HOST: 0.0.0.0
             image:
               repository: ghcr.io/vaskozl/kromgo
-              tag: 0.7.4@sha256:b169f4664347e8f0143df82a23600afabcdd4174bff5d64edd93b870dde0b0e4
+              tag: 0.7.4@sha256:9aea041d8666c79a40de5cb1f8073ddef8116bed92a8c30c065ddaaf5f05e27e
             probes:
               liveness: &1
                 custom: true
