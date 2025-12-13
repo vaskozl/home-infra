@@ -36,6 +36,12 @@ spec:
               requests:
                 cpu: 100m
                 memory: 300Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -45,6 +51,14 @@ spec:
               name: data
               size: 1Gi
         type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
     route:
       app:
         annotations:
