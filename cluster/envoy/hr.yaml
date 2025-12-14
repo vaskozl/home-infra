@@ -28,6 +28,8 @@ spec:
           tag: 1.6.1@sha256:0cc8da0007cbd0b253c1ea479e762586bbf022bc753f37d18e747de4b94c06c7
     config:
       envoyGateway:
+        extensionApis:
+          enableBackend: true
         provider:
           type: Kubernetes
           kubernetes:
