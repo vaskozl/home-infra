@@ -69,9 +69,26 @@ spec:
         parentRefs:
           - name: ts-internal
             namespace: envoy
+        rules:
+          - backendRefs:
+              - group: gateway.envoyproxy.io
+                kind: Backend
+                name: omada-backend
     service:
       app:
         controller: omada
         ports:
           http:
             port: 443
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: omada-backend
+spec:
+  endpoints:
+    - fqdn:
+        hostname: omada.default.svc.cluster.local
+        port: 443
+  tls:
+    insecureSkipVerify: true
