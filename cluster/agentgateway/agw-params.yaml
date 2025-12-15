@@ -1,0 +1,9 @@
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayParameters
+metadata:
+  name: agw-params
+spec:
+  service:
+    spec:
+      type: LoadBalancer
+      loadBalancerClass: minilb

@@ -3,9 +3,11 @@ kind: Kustomization
 namespace: agentgateway
 resources:
   - _namespace.yaml
+  - agw-params.yaml
   - hr.yaml
   - hr-crds.yaml
   - gateways
+  - sko-ai-tls.yaml
   - ../netpols/allow-all-ingress
 components:
   - ../common
