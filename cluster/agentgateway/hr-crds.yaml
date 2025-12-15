@@ -2,25 +2,22 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: kgateway
+  name: agentgateway-crds
 spec:
   interval: 1h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: v2.1.2
-  url: oci://cr.kgateway.dev/kgateway-dev/charts/kgateway
+    tag: v2.2.0-main
+  url: oci://ghcr.io/kgateway-dev/charts/agentgateway-crds
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kgateway
+  name: agentgateway-crds
 spec:
   chartRef:
     kind: OCIRepository
-    name: kgateway
+    name: agentgateway-crds
   interval: 1h
-  values:
-    agentgateway:
-      enabled: true
