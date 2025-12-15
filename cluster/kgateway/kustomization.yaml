@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kgateway
+resources:
+  - _namespace.yaml
+  - hr.yaml
+  - hr-crds.yaml
+  - ../netpols/allow-all-ingress
+components:
+  - ../common
