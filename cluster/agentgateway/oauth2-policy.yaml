@@ -20,10 +20,12 @@ spec:
         path: |
           "/oauth2/auth"
         redirect: |
-          "/oauth2/start?rd=" + request.url()
+          "https://auth.sko.ai/oauth2/start?rd=" + request.scheme + "://" + request.host + request.path
         allowedRequestHeaders:
         - Cookie
         addRequestHeaders:
+          x-forwarded-proto: request.scheme
           x-forwarded-host: request.host
+          x-forwarded-uri: request.path
         allowedResponseHeaders:
         - x-auth-request-user
