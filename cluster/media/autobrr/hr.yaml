@@ -72,8 +72,8 @@ spec:
         hostnames:
           - autobrr.sko.ai
         parentRefs:
-          - name: ts-internal
-            namespace: envoy
+          - name: internal
+            namespace: agentgateway
     service:
       app:
         controller: autobrr

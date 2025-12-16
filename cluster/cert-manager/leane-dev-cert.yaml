@@ -13,15 +13,15 @@ spec:
       - http01:
           gatewayHTTPRoute:
             parentRefs:
-              - name: ts-public
-                namespace: envoy
+              - name: public
+                namespace: agentgateway
                 kind: Gateway
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: leane-dev
-  namespace: envoy
+  namespace: agentgateway
 spec:
   secretName: leane-dev-tls
   issuerRef:

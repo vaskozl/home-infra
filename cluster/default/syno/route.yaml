@@ -4,8 +4,8 @@ metadata:
   name: syno
 spec:
   parentRefs:
-    - name: ts-public
-      namespace: envoy
+    - name: public
+      namespace: agentgateway
   hostnames:
     - syno.sko.ai
   rules:

@@ -66,7 +66,7 @@ spec:
           - prowlarr.sko.ai
         parentRefs:
           - name: internal-noauth
-            namespace: envoy
+            namespace: agentgateway
     service:
       app:
         controller: prowlarr

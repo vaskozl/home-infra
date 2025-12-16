@@ -70,8 +70,8 @@ spec:
         hostnames:
           - requests.sko.ai
         parentRefs:
-          - name: ts-public
-            namespace: envoy
+          - name: public
+            namespace: agentgateway
     service:
       app:
         controller: jellyseerr

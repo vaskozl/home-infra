@@ -62,7 +62,7 @@ spec:
           - ha.sko.ai
         parentRefs:
           - name: internal-noauth
-            namespace: envoy
+            namespace: agentgateway
         rules:
           - backendRefs:
               - identifier: app
@@ -76,8 +76,8 @@ spec:
         hostnames:
           - ha.sko.ai
         parentRefs:
-          - name: ts-public
-            namespace: envoy
+          - name: public
+            namespace: agentgateway
         rules:
           - backendRefs:
               - identifier: app

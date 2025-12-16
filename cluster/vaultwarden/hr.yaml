@@ -55,7 +55,7 @@ spec:
           - bw.sko.ai
         parentRefs:
           - name: internal-noauth
-            namespace: envoy
+            namespace: agentgateway
     service:
       app:
         controller: vaultwarden

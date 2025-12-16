@@ -33,7 +33,7 @@ spec:
         main:
           enabled: true
           parentRefs:
-            - name: ts-internal
+            - name: internal
               namespace: envoy
           annotations:
             gethomepage.dev/enabled: "true"
@@ -60,7 +60,7 @@ spec:
     alertmanager:
       route:
         parentRefs:
-          - name: ts-internal
+          - name: internal
             namespace: envoy
         enabled: true
         hostnames:
@@ -115,7 +115,7 @@ spec:
       route:
         enabled: true
         parentRefs:
-          - name: ts-internal
+          - name: internal
             namespace: envoy
         annotations:
           gethomepage.dev/enabled: "true"
@@ -130,7 +130,7 @@ spec:
       route:
         enabled: true
         parentRefs:
-          - name: ts-internal
+          - name: internal
             namespace: envoy
         hostnames:
           - va.sko.ai

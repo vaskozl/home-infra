@@ -5,8 +5,8 @@ metadata:
   namespace: flux-system
 spec:
   parentRefs:
-    - name: ts-public
-      namespace: envoy
+    - name: public
+      namespace: agentgateway
   hostnames:
     - flux-webhook.sko.ai
   rules:

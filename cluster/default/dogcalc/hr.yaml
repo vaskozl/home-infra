@@ -64,8 +64,8 @@ spec:
           - dogcalc.sko.ai
           - pawlanced.sko.ai
         parentRefs:
-          - name: ts-public
-            namespace: envoy
+          - name: public
+            namespace: agentgateway
     service:
       app:
         controller: dogcalc

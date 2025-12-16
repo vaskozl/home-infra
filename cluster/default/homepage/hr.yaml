@@ -82,8 +82,8 @@ spec:
         hostnames:
           - home.sko.ai
         parentRefs:
-          - name: ts-internal
-            namespace: envoy
+          - name: internal
+            namespace: agentgateway
     service:
       app:
         controller: homepage

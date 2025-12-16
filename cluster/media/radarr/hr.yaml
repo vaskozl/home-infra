@@ -68,7 +68,7 @@ spec:
           - radarr.sko.ai
         parentRefs:
           - name: internal-noauth
-            namespace: envoy
+            namespace: agentgateway
     service:
       app:
         controller: radarr

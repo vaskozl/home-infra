@@ -62,8 +62,8 @@ spec:
         hostnames:
           - leane.dev
         parentRefs:
-          - name: ts-public
-            namespace: envoy
+          - name: public
+            namespace: agentgateway
     service:
       app:
         controller: blog
