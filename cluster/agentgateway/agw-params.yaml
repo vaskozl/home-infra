@@ -3,6 +3,9 @@ kind: AgentgatewayParameters
 metadata:
   name: agw-params
 spec:
+  deployment:
+    spec:
+      replicas: 2
   service:
     spec:
       type: LoadBalancer
