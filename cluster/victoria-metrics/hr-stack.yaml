@@ -34,7 +34,7 @@ spec:
           enabled: true
           parentRefs:
             - name: internal
-              namespace: envoy
+              namespace: agentgateway
           annotations:
             gethomepage.dev/enabled: "true"
             gethomepage.dev/description: Server Monitoring Dashboards
@@ -61,7 +61,7 @@ spec:
       route:
         parentRefs:
           - name: internal
-            namespace: envoy
+            namespace: agentgateway
         enabled: true
         hostnames:
           - am.sko.ai
@@ -116,7 +116,7 @@ spec:
         enabled: true
         parentRefs:
           - name: internal
-            namespace: envoy
+            namespace: agentgateway
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Server Metrics
@@ -131,7 +131,7 @@ spec:
         enabled: true
         parentRefs:
           - name: internal
-            namespace: envoy
+            namespace: agentgateway
         hostnames:
           - va.sko.ai
     vmagent:

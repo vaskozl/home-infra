@@ -67,8 +67,8 @@ spec:
         hostnames:
           - omada.sko.ai
         parentRefs:
-          - name: ts-internal
-            namespace: envoy
+          - name: internal
+            namespace: agentgateway
         rules:
           - backendRefs:
               - group: gateway.envoyproxy.io
