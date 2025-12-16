@@ -20,7 +20,7 @@ spec:
         path: |
           "/oauth2/auth"
         redirect: |
-          "/oauth2/start?rd=" + request.path
+          "/oauth2/start?rd=" + request.url()
         allowedRequestHeaders:
         - Cookie
         addRequestHeaders:
