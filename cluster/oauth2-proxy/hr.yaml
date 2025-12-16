@@ -70,15 +70,13 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
-    ingress:
+    route:
       app:
-        hosts:
-          - host: auth.sko.ai
-            paths:
-              - path: /oauth2
-                service:
-                  identifier: app
-                  port: http
+        parentRefs:
+          - name: internal-noauth
+            namespace: agentgateway
+        hostnames:
+          - auth.sko.ai
     service:
       app:
         controller: oauth2-proxy

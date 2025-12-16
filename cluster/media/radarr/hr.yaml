@@ -67,7 +67,7 @@ spec:
         hostnames:
           - radarr.sko.ai
         parentRefs:
-          - name: ts-internal-noauth
+          - name: internal-noauth
             namespace: envoy
     service:
       app:
