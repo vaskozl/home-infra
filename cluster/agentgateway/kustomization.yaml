@@ -4,9 +4,10 @@ namespace: agentgateway
 resources:
   - _namespace.yaml
   - agw-params.yaml
-  - hr.yaml
-  - hr-crds.yaml
   - gateways
+  - hr-crds.yaml
+  - hr.yaml
+  - oauth2-policy.yaml
   - sko-ai-tls.yaml
   - ../netpols/allow-all-ingress
 components:

@@ -1,0 +1,15 @@
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: oauth2-policy
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal
+  traffic:
+    extAuth:
+      backendRef:
+        name: oauth2-proxy
+        namespace: oauth2-proxy
+        port: 4180
