@@ -10,12 +10,9 @@ spec:
   traffic:
     extAuth:
       backendRef:
-        # Doesn't work
         name: oauth2-proxy
         namespace: oauth2-proxy
         port: 4180
-      forwardBody:
-        maxSize: 1024
       http:
         path: |
           "/oauth2/auth"
@@ -27,5 +24,3 @@ spec:
           x-forwarded-proto: request.scheme
           x-forwarded-host: request.host
           x-forwarded-uri: request.path
-        allowedResponseHeaders:
-        - x-auth-request-user
