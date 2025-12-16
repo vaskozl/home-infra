@@ -1,0 +1,12 @@
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: omada-policy
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: omada
+  backend:
+    tls:
+      insecureSkipVerify: All
