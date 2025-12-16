@@ -63,17 +63,11 @@ spec:
           gethomepage.dev/group: Monitoring
           gethomepage.dev/icon: https://play-lh.googleusercontent.com/FW3wu85sc7EtgSnPoCY_NBQq4yeB0ZcUL62dkruhcDTs7u3OsnbGL0-mzFMiGbmiaw
           gethomepage.dev/name: Omada Controller
-          haproxy.org/server-ssl: 'true'
         hostnames:
           - omada.sko.ai
         parentRefs:
           - name: internal
             namespace: agentgateway
-        rules:
-          - backendRefs:
-              - group: gateway.envoyproxy.io
-                kind: Backend
-                name: omada-backend
     service:
       app:
         controller: omada
