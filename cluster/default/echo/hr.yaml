@@ -52,7 +52,7 @@ spec:
       app:
         parentRefs:
           - name: internal-noauth
-            namespace: envoy
+            namespace: agentgateway
         hostnames:
           - echo.sko.ai
     persistence:
