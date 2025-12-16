@@ -14,3 +14,16 @@ spec:
         name: oauth2-proxy
         namespace: oauth2-proxy
         port: 4180
+      forwardBody:
+        maxSize: 1024
+      http:
+        path: |
+          "/oauth2/auth"
+        redirect: |
+          "/oauth2/start?rd=" + request.path
+        allowedRequestHeaders:
+        - Cookie
+        addRequestHeaders:
+          x-forwarded-host: request.host
+        allowedResponseHeaders:
+        - x-auth-request-user
