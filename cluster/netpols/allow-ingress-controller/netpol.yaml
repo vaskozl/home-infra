@@ -13,8 +13,4 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: "envoy"
-    - from:
-        - namespaceSelector:
-            matchLabels:
               kubernetes.io/metadata.name: "haproxy"
