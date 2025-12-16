@@ -66,7 +66,7 @@ spec:
           - fl.sko.ai
         parentRefs:
           - name: internal
-            namespace: envoy
+            namespace: agentgateway
     service:
       app:
         controller: flood
