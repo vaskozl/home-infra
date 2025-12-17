@@ -15,10 +15,9 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: agentgateway
+  name: argo-workflows
 spec:
   chartRef:
     kind: OCIRepository
     name: argo-workflows
   interval: 1h
-
