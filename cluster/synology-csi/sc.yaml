@@ -9,6 +9,6 @@ provisioner: csi.san.synology.com
 parameters:
   location: '/volume3'
   fsType: 'ext4'
-  enableSpaceReclamation: 'true'
+  formatOptions: -E nodiscard
 reclaimPolicy: Delete
 allowVolumeExpansion: true
