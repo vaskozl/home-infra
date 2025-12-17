@@ -22,7 +22,8 @@ spec:
     name: argo-workflows
   interval: 1h
   values:
-    ingress:
-      enabled: true
-      hosts:
-      - workflows.sko.ai
+    server:
+      ingress:
+        enabled: true
+        hosts:
+        - workflows.sko.ai
