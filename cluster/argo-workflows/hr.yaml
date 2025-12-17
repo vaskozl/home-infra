@@ -39,7 +39,7 @@ spec:
           key: client-secret
         redirectUrl: "https://workflows.sko.ai/oauth2/callback"
         rbac:
-          enabled: true
+          enabled: false
         scopes:
           - openid
           - profile
