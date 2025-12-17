@@ -4,5 +4,6 @@ namespace: argo-workflows
 resources:
   - _namespace.yaml
   - hr.yaml
+  - oidc-secret.yaml
 components:
   - ../common

@@ -1,4 +1,3 @@
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
@@ -26,4 +25,20 @@ spec:
       ingress:
         enabled: true
         hosts:
-        - workflows.sko.ai
+          - workflows.sko.ai
+      sso:
+        enabled: true
+        issuer: https://pi.sko.ai
+        clientId:
+          name: oidc
+          key: client-id
+        clientSecret:
+          name: oidc
+          key: client-secret
+        redirectUrl: "https://workflows.sko.ai/oauth2/callback"
+        rbac:
+          enabled: true
+        scopes:
+          - openid
+          - profile
+          - groups
