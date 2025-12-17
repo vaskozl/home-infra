@@ -26,6 +26,8 @@ spec:
         enabled: true
         hosts:
           - workflows.sko.ai
+      authModes:
+        - sso
       sso:
         enabled: true
         issuer: https://pi.sko.ai
