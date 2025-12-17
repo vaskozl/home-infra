@@ -159,14 +159,5 @@
         '/^ghcr\\.io/vaskozl/gitaly$/',
       ],
     },
-    {
-      matchDepNames: [
-        "envoy-gateway",
-        "/^ghcr\\.io/vaskozl/envoy/"
-      ],
-      groupName: 'envoy-gateway',
-      sourceUrl: 'https://github.com/envoyproxy/gateway',
-    },
-
   ],
 }
