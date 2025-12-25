@@ -23,6 +23,7 @@ spec:
             image:
               repository: ghcr.io/vaskozl/golink
               tag: 1.0.0@sha256:b8a6a0d0af6ac74a0a97f541eb986620bf71144ecc34aba9408a1d0c96f16877
+            args: [-dev-listen, '[::]:3000']
             probes:
               liveness:
                 enabled: false
@@ -57,3 +58,16 @@ spec:
         runAsUser: 568
         seccompProfile:
           type: RuntimeDefault
+    route:
+      app:
+        parentRefs:
+          - name: internal-noauth
+            namespace: agentgateway
+        hostnames:
+          - go.sko.ai
+    service:
+      app:
+        controller: golink
+        ports:
+          http:
+            port: 8080
