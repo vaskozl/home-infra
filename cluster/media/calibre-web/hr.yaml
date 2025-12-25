@@ -86,7 +86,7 @@ spec:
         hostnames:
           - cw.sko.ai
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
     service:
       app:
