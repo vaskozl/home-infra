@@ -19,8 +19,13 @@ spec:
         redirect: |
           "https://auth.sko.ai/oauth2/start?rd=" + request.scheme + "://" + request.host + request.path
         allowedRequestHeaders:
-        - Cookie
+          - Cookie
         addRequestHeaders:
           x-forwarded-proto: request.scheme
           x-forwarded-host: request.host
           x-forwarded-uri: request.path
+        allowedResponseHeaders:
+          - X-Auth-Request-User
+          - X-Auth-Request-Groups
+          - X-Auth-Request-Email
+          - X-Auth-Request-Preferred-Username
