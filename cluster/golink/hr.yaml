@@ -48,7 +48,7 @@ spec:
               globalMounts:
                 - path: /home/nonroot
               name: data
-              size: 1Mi
+              size: 1Gi
         type: statefulset
     defaultPodOptions:
       securityContext:
