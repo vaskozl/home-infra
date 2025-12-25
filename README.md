@@ -20,7 +20,6 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [calibre](https://github.com/kovidgoyal/calibre) and [calibre-web](https://github.com/janeczku/calibre-web) - Lovely E-Book library management
   * [flood](https://github.com/jesec/flood) - Pretty and mobile friendly \*torrent frontend
   * [gitlab](https://gitlab.com/) - Git + Everything possibly related
-  * [golink](https://github.com/tailscale/golink) - Tailscale Link Shorterner
   * [home-assistant](https://github.com/home-assistant/core) - Home Automation
   * [homepage](https://github.com/gethomepage/homepage) - Application Dashboard
   * [immich](https://immich.app/) - Self-hosted photo and video management with state-of-the-art ML
