@@ -1,0 +1,44 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: jellyfin-restart
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jellyfin-restart
+rules:
+  - apiGroups: ["apps", "extensions"]
+    resources: ["statefulsets"]
+    resourceNames: ["jellyfin"]
+    verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jellyfin-restart
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jellyfin-restart
+subjects:
+  - kind: ServiceAccount
+    name: jellyfin-restart
+    namespace: media
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: jellyfin-restart
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 4 * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: jellyfin-restart
+          containers:
+            - name: kubectl
+              image: ghcr.io/vaskozl/kubectl
+              args: [rollout, restart, sts/jellyfin]
