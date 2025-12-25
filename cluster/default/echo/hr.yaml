@@ -51,7 +51,7 @@ spec:
     route:
       app:
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
         hostnames:
           - echo.sko.ai
