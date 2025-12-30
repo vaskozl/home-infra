@@ -14,6 +14,7 @@ spec:
     spec:
       template:
         spec:
+          ttlSecondsAfterFinished: 1800
           automountServiceAccountToken: false
           restartPolicy: Never
           containers:
