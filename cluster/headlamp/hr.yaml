@@ -83,7 +83,7 @@ spec:
         hostnames:
           - headlamp.sko.ai
         parentRefs:
-          - name: internal
+          - name: internal-noauth
             namespace: agentgateway
     service:
       app:
