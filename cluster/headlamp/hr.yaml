@@ -59,7 +59,7 @@ spec:
               - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
             image:
               repository: ghcr.io/headlamp-k8s/headlamp-plugin-flux
-              tag: v0.1.0-beta-2@sha256:c63dc4e10d7ddb95c966194b5e6fbe2012feb7f932bafa24692daed3cf6c248a
+              tag: v0.5.0@sha256:05c3df203b2ff82e09e944e31cd16ab66429f37df7566ba0d47285add7c78c5a
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
