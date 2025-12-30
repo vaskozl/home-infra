@@ -3,7 +3,7 @@ kind: OCIRepository
 metadata:
   name: argo-workflows
 spec:
-  interval: 1h
+  interval: 24h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
@@ -19,7 +19,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: argo-workflows
-  interval: 1h
+  interval: 24h
   values:
     server:
       ingress:

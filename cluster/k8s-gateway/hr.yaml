@@ -3,7 +3,7 @@ kind: HelmRelease
 metadata:
   name: k8s-gateway
 spec:
-  interval: 1h
+  interval: 24h
   chart:
     spec:
       chart: k8s-gateway

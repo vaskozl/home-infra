@@ -4,7 +4,7 @@ kind: OCIRepository
 metadata:
   name: agentgateway-crds
 spec:
-  interval: 1h
+  interval: 24h
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
@@ -20,4 +20,4 @@ spec:
   chartRef:
     kind: OCIRepository
     name: agentgateway-crds
-  interval: 1h
+  interval: 24h

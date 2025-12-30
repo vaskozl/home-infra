@@ -4,7 +4,7 @@ metadata:
   name: metallb
   namespace: metallb
 spec:
-  interval: 1h
+  interval: 24h
   chart:
     spec:
       chart: metallb
@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: metallb
         namespace: flux-system
-      interval: 1h
+      interval: 24h
   values:
     crds:
       enabled: true

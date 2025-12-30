@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: jetstack
       version: v1.19.2
-  interval: 1h
+  interval: 24h
   values:
     image:
       repository: ghcr.io/vaskozl/cert-manager-controller

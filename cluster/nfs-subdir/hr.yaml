@@ -4,7 +4,7 @@ metadata:
   name: nfs-provisioner
   namespace: nfs-subdir
 spec:
-  interval: 1h
+  interval: 24h
   chart:
     spec:
       chart: nfs-subdir-external-provisioner
@@ -13,7 +13,7 @@ spec:
         kind: HelmRepository
         name: nfs-subdir
         namespace: flux-system
-      interval: 1h
+      interval: 24h
   values:
     image:
       repository: ghcr.io/vaskozl/nfs-subdir-external-provisioner

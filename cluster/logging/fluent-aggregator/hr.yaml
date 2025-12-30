@@ -6,11 +6,11 @@ metadata:
   annotations:
     patch.sko.ai/app-template: common
 spec:
-  interval: 1h
+  interval: 24h
   chart:
     spec:
       chart: app-template
-      interval: 1h
+      interval: 24h
       sourceRef:
         kind: HelmRepository
         name: bjw-s

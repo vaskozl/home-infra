@@ -10,13 +10,13 @@ spec:
   chart:
     spec:
       chart: app-template
-      interval: 1h
+      interval: 24h
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
       version: 4.5.0
-  interval: 1h
+  interval: 24h
   values:
     controllers:
       machine-learning:
