@@ -28,7 +28,7 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/grafana
-        tag: 12.3.1@sha256:259e377d626c58f2d1c74c2480e2fd46ffc2ee785a1afccd5ecd6653a8401662
+        tag: 12.3.1@sha256:76901ffad4b53fedbbb16b3c59e16ac789705adaebedba1aa6fcdc5493861d28
       route:
         main:
           enabled: true
@@ -48,7 +48,7 @@ spec:
         image:
           registry: ghcr.io
           repository: vaskozl/k8s-sidecar
-          tag: 2.1.4@sha256:66842224831ce110e77011b0175b2482e74fb6df6fb1523ce37199c0370c2807
+          tag: 2.1.4@sha256:a9aaba535cb4e34f4f0c5d231e1cf8128584bd568baf811281d9b97dada1300c
         dashboards:
           enabled: true
           label: grafana_dashboard
@@ -69,7 +69,7 @@ spec:
         externalURL: "https://am.sko.ai"
         image:
           repository: ghcr.io/vaskozl/prometheus-alertmanager
-          tag: 0.30.0@sha256:98ab1355a254493511e9a11095e10b3fc38c0684c531dfa9681b02b15028c031
+          tag: 0.30.0@sha256:7ac17089c0fbf43438f861ae497f861c9fbe17db3e0fed667ce99d43c2f4507c
       config:
         route:
           routes:
