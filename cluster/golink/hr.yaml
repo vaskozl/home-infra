@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/golink
-              tag: 1.0.0@sha256:b8a6a0d0af6ac74a0a97f541eb986620bf71144ecc34aba9408a1d0c96f16877
+              tag: 1.0.0@sha256:170122a003c247079ce6bd273526879c00517b7d9dfdf7ea7b39e2a9ff149f9e
             args: [-dev-listen, '[::]:3000']
             probes:
               liveness:
