@@ -18,6 +18,7 @@ spec:
   values:
     controllers:
       jellyfin:
+        containers:
           app:
             image:
               repository: ghcr.io/jellyfin/jellyfin
