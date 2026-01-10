@@ -21,8 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/jellyfin
-              tag: 10.11.5@sha256:61f35a10a792e9367d49ac9694357ac944ab5e9da1a3dd293e7d3da51e271cf5
+              repository: ghcr.io/jellyfin/jellyfin
+              tag: 10.11.5
             probes:
               liveness:
                 enabled: true
