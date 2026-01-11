@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: k8s-gateway
         namespace: flux-system
-      version: 3.4.0
+      version: 3.4.1
   values:
     watchedResources: ["Service", "HTTPRoute", "Ingress", "TCPRoute", "UDPRoute"]
     controllers:
