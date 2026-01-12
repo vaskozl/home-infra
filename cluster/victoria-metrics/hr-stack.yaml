@@ -79,6 +79,7 @@ spec:
             - matchers:
                 - severity=~"warning|critical"
               receiver: mail-monitoring
+              repeat_interval: 24h
         receivers:
           - name: 'blackhole'
           - name: "mail-monitoring"
