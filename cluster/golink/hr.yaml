@@ -65,6 +65,12 @@ spec:
         type: emptyDir
     route:
       app:
+        annotations:
+          gethomepage.dev/description: A shortlink service
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Other
+          gethomepage.dev/icon: sh-tailscale
+          gethomepage.dev/name: golink
         parentRefs:
           - name: internal-noauth
             namespace: agentgateway
