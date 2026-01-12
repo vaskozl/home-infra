@@ -98,15 +98,19 @@ spec:
               name: media
               size: 1Mi
         type: statefulset
-    ingress:
+    route:
       app:
-        hosts:
-          - host: paperless.sko.ai
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        annotations:
+          gethomepage.dev/description: Document management system
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Other
+          gethomepage.dev/icon: sh-paperless-ngx
+          gethomepage.dev/name: Paperless
+        hostnames:
+          - paperless.sko.ai
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
     service:
       app:
         controller: paperless-ngx
