@@ -85,6 +85,7 @@ spec:
   parentRefs:
     - name: internal-noauth
       namespace: agentgateway
+      sectionName: http
   hostnames:
     - go
   rules:
