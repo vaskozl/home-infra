@@ -76,22 +76,3 @@ spec:
         ports:
           http:
             port: 3000
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: go-redirect
-spec:
-  parentRefs:
-    - name: internal-noauth
-      namespace: agentgateway
-      sectionName: http
-  hostnames:
-    - go
-  rules:
-    - filters:
-        - type: RequestRedirect
-          requestRedirect:
-            scheme: https
-            hostname: "go.sko.ai"
-            statusCode: 301
