@@ -16,14 +16,6 @@ spec:
       interval: 24h
   values:
     global:
-      gitlabBase:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-base
-          tag: 18.2.4@sha256:130cc8e997b0263fc0bf70f40baf9da70f3c11daddce8ed72bd43484ee79919e
-      certificates:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-certificates
-          tag: 18.2.4@sha256:a092cc2026c018fa19ecaa556f9527a377d865840f024522984028a2ceb4e9a6
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
@@ -90,14 +82,7 @@ spec:
         ciSecureFiles: *rails
     # Reduce memory usage
     gitlab:
-      gitlab-exporter:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-exporter
-          tag: 18.2.4@sha256:4531919ee60b9ff8b2db0f0969bc979079b69114d3ddc3a59738dd34aa27d1f0
       gitaly:
-        image:
-          #repository: ghcr.io/vaskozl/gitaly
-          #tag: 18.3.1@sha256:9b7200da241b02c65f411c68b5d0fe1b2b2f0100d9459aa6f208b81d5a3441e7
         resources:
           requests:
             cpu: 80m
@@ -127,9 +112,6 @@ spec:
         minReplicas: 1
         maxReplicas: 2
       gitlab-shell:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-shell
-          tag: 18.2.4@sha256:2518093b49404c56d5bbf906eccabb7172602ffaf3352987c0812206de9e0678
         minReplicas: 1
         maxReplicas: 2
         extraVolumes: |
@@ -141,7 +123,7 @@ spec:
       gitlab-pages:
         image:
           repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.7.0@sha256:569836e302e7af3a0496e70eb182b9853e36bd4ca12d008d6351d17b524f41d3
+          tag: 18.7.1@sha256:3446655af4f458dcb52c5753545fc47e9e9ca06396c05110f0fc580583a26eb0
         # The default requests are massive for a static server
         resources:
           requests:
@@ -154,9 +136,6 @@ spec:
               secret: object-storage
               key: toolbox.minio.toml
     registry:
-      image:
-        repository: ghcr.io/vaskozl/gitlab-container-registry
-        tag: 18.2.4@sha256:d2bf469203b227fe997ec5f0d35309c240080649119cad83295f5f2dc4f07892
       ingress:
         annotations:
           haproxy.org/timeout-server: 600s
