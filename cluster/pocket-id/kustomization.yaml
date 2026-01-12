@@ -4,5 +4,11 @@ namespace: pocket-id
 resources:
   - _namespace.yaml
   - hr.yaml
+secretGenerator:
+  - name: pocket-id-env
+    envs:
+      - secrets.enc.env
 components:
   - ../common
+configurations:
+  - kustomizeconfig.yaml
