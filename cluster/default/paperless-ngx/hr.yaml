@@ -76,8 +76,8 @@ spec:
                 memory: 18Mi
           tika:
             image:
-              repository: ghcr.io/paperless-ngx/tika
-              tag: 2.9.1-minimal@sha256:20db3df89eaeb1b271dd840888fe909b88b12f4b86ef641ec07a1d45d4c5168f
+              repository: apache/tika
+              tag: 3.2.1.0@sha256:df12b41af58c9833e60bdc231ffc4b59f5b7a83bfe2d63e3dc7aab7da923abba
             resources:
               limits:
                 memory: 220Mi
