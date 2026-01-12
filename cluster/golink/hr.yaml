@@ -23,7 +23,9 @@ spec:
             image:
               repository: ghcr.io/vaskozl/golink
               tag: 1.0.0@sha256:b82503379f31e66cecab170e5f892d440486dcd947a3c2256a93d2d67fbb9e35
-            args: [-dev-listen, '[::]:3000']
+            args:
+              - "-dev-listen='[::]:3000'"
+              - "-sqlitedb=/home/nonroot/golink.db"
             probes:
               liveness:
                 enabled: false
@@ -74,3 +76,21 @@ spec:
         ports:
           http:
             port: 3000
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: go-redirect
+spec:
+  parentRefs:
+    - name: internal-noauth
+      namespace: agentgateway
+  hostnames:
+    - go
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            hostname: "go.sko.ai"
+            statusCode: 301
