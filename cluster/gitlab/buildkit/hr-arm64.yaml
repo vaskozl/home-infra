@@ -35,7 +35,7 @@ spec:
               - /certs/key.pem
             image:
               repository: ghcr.io/vaskozl/buildkitd
-              tag: 0.26.3@sha256:9d20a79ebdf89201b94238b360b282a24aeea19791fe15194bde749ddd51602d
+              tag: 0.26.3@sha256:d0432eb04bc3d74226daef0151572ae68ca9b6715e931db9f18402cb2ffb170a
             probes:
               liveness:
                 enabled: true
