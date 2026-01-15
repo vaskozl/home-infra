@@ -35,21 +35,10 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [kgateway/agentgateway](https://github.com/kgateway-dev/kgateway) - The best Gateway API controller
-  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel the lightest CNI
+  * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel is the lightest CNI
   * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
   * [haproxytech ingress](https://github.com/haproxytech/kubernetes-ingress) - Haproxy.org Ingress controller
   * [kube-network-policies](https://github.com/kubernetes-sigs/kube-network-policies) - Official and small netpol enforcement
   * [minilb](https://github.com/vaskozl/minilb) - The smallest LoadBalancer
   * [victoria-metrics](https://github.com/VictoriaMetrics/VictoriaMetrics) - Lighter prometheus alternative
-
-## Secret management
-
-I use [mozilla SOPS](https://github.com/mozilla/sops) for secret encryption as it [supported out of the box in Flux2](https://toolkit.fluxcd.io/guides/mozilla-sops/). After adding a passwordless secret key to your cluster, add it to your `flux-system/gotk-sync.yaml` if you want to be able do decrypt secrets in the main `flux-system` kustomization.
-
-I use a [pre-commit hook](scripts/find-unencrypted-secrets.sh) to ensure that secrets are never pushed unencrypted. Assuming you have a `.sosp.yaml` the only thing you need to do is:
-
-```
-sops -e -i my-secret.yaml # That's it
-sops my-secret.yaml # To edit it directly in your $EDITOR
-```
