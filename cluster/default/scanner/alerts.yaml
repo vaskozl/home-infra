@@ -9,12 +9,12 @@ spec:
       rules:
         - alert: ContainerCriticalVulns
           expr: |
-            scanner_vulnerabilities{severity=~"Critical|High"} > 0
+            scanner_vulnerabilities{severity=~"Critical|High",fixable="yes"} > 0
           for: 2h
           labels:
             severity: critical
           annotations:
-            summary: "Critical/High vulnerability in {{ $labels.image }}"
+            summary: "Critical/High with fix vulnerability in {{ $labels.image }}"
             description: |
               Container {{ $labels.image }} has a Critical/High vulnerability:
               CVE: {{ $labels.id }}
