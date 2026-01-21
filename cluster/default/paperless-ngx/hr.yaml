@@ -32,7 +32,7 @@ spec:
               PAPERLESS_WEBSERVER_WORKERS: 1
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.20.5@sha256:59521628c3b4aa4e37c976924f74c30e507acd89eea2dbc74f13f0354159f536
+              tag: 2.20.5@sha256:665f2f5cc5482ea2e44f90a7fa170908aaeb95d8d3c70e17f746de8fcb81f644
             probes:
               liveness:
                 enabled: true
@@ -67,7 +67,7 @@ spec:
           redis:
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.4.0@sha256:2ee5027f223a4a9d4071f370e8a5ac96af7cfae149067cb415c00f3b879d64ca
+              tag: 8.4.0@sha256:d0f120ee064802a189f3e37c40be6e1f79ebf6539c1dce57257ef759709ac36f
             resources:
               limits:
                 memory: 50Mi
