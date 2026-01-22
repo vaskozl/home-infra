@@ -23,7 +23,7 @@ spec:
         containers:
           app:
             env:
-              !!merge <<: &1
+              <<: &env
                 DB_DATABASE_NAME: immich
                 DB_HOSTNAME: immich-postgres
                 DB_PASSWORD: immich
@@ -39,7 +39,7 @@ spec:
               requests:
                 cpu: 70m
                 memory: 2050Mi
-            securityContext: &2
+            securityContext: &securityContext
               allowPrivilegeEscalation: false
               capabilities:
                 drop:
@@ -49,7 +49,7 @@ spec:
         containers:
           app:
             env:
-              !!merge <<: *1
+              <<: *env
               IMMICH_WORKERS_EXCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
@@ -60,7 +60,7 @@ spec:
               requests:
                 cpu: 50m
                 memory: 1050Mi
-            securityContext: *2
+            securityContext: *securityContext
       postgres:
         containers:
           app:
@@ -90,12 +90,9 @@ spec:
         containers:
           app:
             args:
-              - --save
-              - ''
-              - --appendonly
-              - no
-              - --protected-mode
-              - no
+              - --save=''
+              - --appendonly=no
+              - --protected-mode=no
             image:
               repository: ghcr.io/vaskozl/redis
               tag: 8.4.0@sha256:d0f120ee064802a189f3e37c40be6e1f79ebf6539c1dce57257ef759709ac36f
@@ -105,7 +102,7 @@ spec:
               requests:
                 cpu: 10m
                 memory: 140Mi
-            securityContext: *2
+            securityContext: *securityContext
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
@@ -113,7 +110,7 @@ spec:
         containers:
           app:
             env:
-              !!merge <<: *1
+              <<: *env
               IMMICH_WORKERS_INCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
@@ -124,7 +121,7 @@ spec:
               requests:
                 cpu: 65m
                 memory: 360Mi
-            securityContext: *2
+            securityContext: *securityContext
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: amd64
