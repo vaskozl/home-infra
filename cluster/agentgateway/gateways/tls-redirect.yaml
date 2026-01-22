@@ -10,6 +10,11 @@ spec:
       sectionName: http
     - name: public
       sectionName: http
+  # Do not force https on bare domains (allows go/links)
+  hostnames:
+    - "*.com"
+    - "*.ai"
+    - "*.dev"
   rules:
     - filters:
         - type: RequestRedirect
