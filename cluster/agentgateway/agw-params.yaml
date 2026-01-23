@@ -3,9 +3,25 @@ kind: AgentgatewayParameters
 metadata:
   name: agw-params
 spec:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
   deployment:
     spec:
       replicas: 2
+      template:
+        spec:
+          containers:
+            - name: agentgateway
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 64Mi
+                limits:
+                  memory: 256Mi
   service:
     spec:
       type: LoadBalancer
