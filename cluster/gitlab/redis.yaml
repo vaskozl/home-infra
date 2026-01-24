@@ -26,7 +26,7 @@ spec:
             args: ["--requirepass", "$(secret)"]
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.4.0@sha256:83dda32c48da910ead8a8192038fa25e1472bed4e31060a159f01e2a196bd4ef
+              tag: 8.4.0@sha256:b2429ca2b940f40d4a5bd6a7028ac50f38559cf10742874c74f59648bfb1f439
             probes:
               liveness:
                 enabled: true

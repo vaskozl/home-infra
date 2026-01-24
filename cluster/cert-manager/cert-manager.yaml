@@ -15,20 +15,20 @@ spec:
   values:
     image:
       repository: ghcr.io/vaskozl/cert-manager-controller
-      tag: 1.19.2@sha256:49e42bc0d6700797a4d0502d238b250ab27099167994b9cafc4f1561fee70792
+      tag: 1.19.2@sha256:34d3b34acf98158254c8e251697176476c5b9935066d45a9e921cb0111491ec7
     cainjector:
       replicaCount: 1
       image:
         repository: ghcr.io/vaskozl/cert-manager-cainjector
-        tag: 1.19.2@sha256:40cf82a528a2fdebe7ee6f3f04f8ed7abcdfa016e300beb14f585848ad323fe1
+        tag: 1.19.2@sha256:167677c539281e902a280f9882d0dc91722a250d32abadf4631c3301bd405104
     acmesolver:
       image:
         repository: ghcr.io/vaskozl/cert-manager-acmesolver
-        tag: 1.19.2@sha256:6fee2e3cb7a242613f8e232fda2c7f55fdf76e8513d1df04cb4c1edfd890dab4
+        tag: 1.19.2@sha256:a440c5357e171d7d2e31ab13c85165d7918412dca92fc94c67f614a2326676b8
     webhook:
       image:
         repository: ghcr.io/vaskozl/cert-manager-webhook
-        tag: 1.19.2@sha256:83d98797a033a11c9b176909ada67f6c5cd73450c4d007dd24d15b9d47ed41f3
+        tag: 1.19.2@sha256:8e5d32fdfdbf946714f6598699fb6ccc80b56f4bf1f03478a0ec60f72f7b9cf7
     installCRDs: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53
