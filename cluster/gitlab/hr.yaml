@@ -121,9 +121,6 @@ spec:
           - name: var-log-gitlab-shell
             mountPath: /var/log/gitlab-shell
       gitlab-pages:
-        image:
-          repository: ghcr.io/vaskozl/gitlab-pages
-          tag: 18.7.1@sha256:3446655af4f458dcb52c5753545fc47e9e9ca06396c05110f0fc580583a26eb0
         # The default requests are massive for a static server
         resources:
           requests:
