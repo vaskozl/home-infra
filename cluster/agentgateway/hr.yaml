@@ -29,6 +29,6 @@ spec:
       limits:
         memory: 256Mi
     gatewayClassParametersRefs:
-      agentgateway-v2:
+      agentgateway:
         name: agw-params
         namespace: agentgateway
