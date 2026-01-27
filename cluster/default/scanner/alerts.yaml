@@ -10,7 +10,7 @@ spec:
         - alert: ContainerCriticalVulns
           expr: |
             scanner_vulnerabilities{severity=~"Critical|High",fixable="yes"} > 0
-          for: 2h
+          for: 1d
           labels:
             severity: critical
           annotations:
@@ -23,7 +23,7 @@ spec:
         - alert: ContainerMediumVulnsFixAvailable
           expr: |
             scanner_vulnerabilities{severity=~"Medium",fixable="yes"} > 0
-          for: 24h
+          for: 7d
           labels:
             severity: warning
           annotations:
@@ -36,7 +36,7 @@ spec:
         - alert: ContainerTooManyVulns
           expr: |
             sum(scanner_vulnerabilities) by (image) > 20
-          for: 1h
+          for: 1d
           labels:
             severity: warning
           annotations:
