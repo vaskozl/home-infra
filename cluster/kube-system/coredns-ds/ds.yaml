@@ -13,7 +13,7 @@ spec:
       serviceAccountName: coredns
       containers:
         - name: coredns
-          image: registry.k8s.io/coredns/coredns:v1.13.2@sha256:94caebb89dcfb9d2c4be45bfda34410a3e1092458fbbbc0284365c9e4c9a7818
+          image: registry.k8s.io/coredns/coredns:v1.14.1@sha256:82b57287b29beb757c740dbbe68f2d4723da94715b563fffad5c13438b71b14a
           args:
             - -conf
             - /etc/coredns/Corefile
