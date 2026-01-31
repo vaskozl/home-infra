@@ -32,7 +32,7 @@ spec:
               MPLCONFIGDIR: /cache/matplotlib
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.4.1@sha256:b3deefd1826f113824e9d7bc30d905e7f823535887d03f869330946b6db3b44a
+              tag: v2.5.2@sha256:531d2bccbe20d0412496e36455715a18d692911eca5e2ee37d32e1e4f50e14bb
             resources:
               limits:
                 memory: 2050Mi
@@ -53,7 +53,7 @@ spec:
               IMMICH_WORKERS_EXCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.4.1@sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1
+              tag: v2.5.2@sha256:8ac5a6d471fbb6fcfec6bc34854dd5a947c1795547f0d9345d9bf1803d1209e3
             resources:
               limits:
                 memory: 1050Mi
@@ -117,7 +117,7 @@ spec:
               IMMICH_WORKERS_INCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.4.1@sha256:e6a6298e67ae077808fdb7d8d5565955f60b0708191576143fc02d30ab1389d1
+              tag: v2.5.2@sha256:8ac5a6d471fbb6fcfec6bc34854dd5a947c1795547f0d9345d9bf1803d1209e3
             resources:
               limits:
                 memory: 360Mi
