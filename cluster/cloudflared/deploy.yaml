@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared-deployment
+spec:
+  replicas: 2
+  template:
+    spec:
+      securityContext:
+        sysctls:
+          # Allows ICMP traffic
+          - name: net.ipv4.ping_group_range
+            value: "568 568"
+      containers:
+        - image: ghcr.io/vaskozl/cloudflared:2026.1.2@sha256:1ef8bcb70a5f732516f0f8f84a8eceb089738a9fcccac88d027861f43a112cff
+          name: cloudflared
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tunnel-token
+                  key: token
+          args:
+            - tunnel
+            - --no-autoupdate
+            - --loglevel
+            - info
+            - --metrics
+            - 0.0.0.0:2000
+            - run
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            initialDelaySeconds: 10
+            periodSeconds: 10
