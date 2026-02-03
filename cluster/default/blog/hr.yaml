@@ -57,8 +57,6 @@ spec:
         type: emptyDir
     route:
       app:
-        annotations:
-          haproxy.org/response-set-header: Cache-Control "public"
         hostnames:
           - sko.ai
         parentRefs:

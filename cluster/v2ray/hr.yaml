@@ -59,16 +59,20 @@ spec:
           - path: /config
         name: config
         type: secret
-    ingress:
+    route:
       app:
-        className: haproxy-external
-        hosts:
-          - host: sko.ai
-            paths:
-              - path: /ray
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - sko.ai
+        parentRefs:
+          - name: public
+            namespace: agentgateway
+        rules:
+          - matches:
+              - path:
+                  value: /ray
+            backendRefs:
+              - identifier: app
+                port: 8080
     service:
       app:
         controller: v2ray
