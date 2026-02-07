@@ -1,19 +1,20 @@
 {
-  enabled: true,
-  semanticCommits: 'disabled',
-  dependencyDashboard: true,
-  dependencyDashboardTitle: 'Renovate Dashboard',
-  suppressNotifications: [
-    'prIgnoreNotification',
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:best-practices",
+    ":automergeBranch",
+    ":automergePatch",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    "group:allDigest",
   ],
+  dependencyDashboardTitle: 'Renovate Dashboard',
+  suppressNotifications: [ 'prIgnoreNotification' ],
   rebaseWhen: 'conflicted',
   prHourlyLimit: 0,
   prConcurrentLimit: 0,
   commitMessageTopic: '{{depName}}',
   commitMessageExtra: 'to {{newVersion}}',
-  'pre-commit': {
-    enabled: true,
-  },
   ignoreDeps: [
     'ghcr.io/fluxcd/helm-controller',
     'ghcr.io/fluxcd/image-automation-controller',
@@ -24,21 +25,9 @@
     'ghcr.io/vaskozl/baikal',
     'ghcr.io/vaskozl/rspamd',
   ],
-  flux: {
-    managerFilePatterns: [
-      '/cluster/.+\\.ya?ml$/',
-    ],
-  },
-  'helm-values': {
-    managerFilePatterns: [
-      '/cluster/.+\\.ya?ml$/',
-    ],
-  },
-  kubernetes: {
-    managerFilePatterns: [
-      '/cluster/.+\\.ya?ml$/',
-    ],
-  },
+  flux: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
+  'helm-values': { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
+  kubernetes: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
   packageRules: [
     {
       matchDatasources: [
@@ -58,15 +47,6 @@
         'patch',
       ],
       commitMessageTopic: 'image {{depName}}',
-    },
-    {
-      matchDatasources: [
-        'docker',
-      ],
-      matchUpdateTypes: [
-        'digest',
-      ],
-      "groupName": "image-digests",
     },
     {
       matchUpdateTypes: [
