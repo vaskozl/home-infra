@@ -1,0 +1,48 @@
+version: '3'
+services:
+  qbittorrent:
+    image: ghcr.io/vaskozl/qbittorrent-nox:5.0.4
+    container_name: qbittorrent
+    restart: unless-stopped
+    network_mode: host
+    user: "0:0"
+    environment:
+      - HOME=/config
+      - XDG_CONFIG_HOME=/config
+      - XDG_DATA_HOME=/config
+    volumes:
+      - /volume3/docker/qbittorrent/config:/config
+      - /volume1/torrents-v2/torrents:/torrents
+    entrypoint: nice -n 10 ionice -c3 qbittorrent-nox --webui-port='55555'
+    cpu_shares: 16
+    mem_limit: 4G
+  cross-seedd:
+    image: ghcr.io/cross-seed/cross-seed:5.9.2
+    container_name: cross-seedd
+    restart: unless-stopped
+    network_mode: host
+    user: "568:568"
+    cpu_shares: 16
+    mem_limit: 1G
+    volumes:
+      - /volume3/docker/qbittorrent/config/qBittorrent/BT_backup/:/torrents:ro
+      - /volume3/docker/qbittorrent/config/cross-seeds:/cross-seeds
+      - /volume3/docker/qbittorrent/config/cross-config:/config
+    command: daemon
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:v1.6.1
+    container_name: node-exporter
+    network_mode: host
+    volumes:
+      - /:/host:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+      - /run/udev/data:/host/root/run/udev/data:ro
+    command:
+      - --web.listen-address=0.0.0.0:9100
+      - --path.rootfs=/host/root
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.udev.data=/host/root/run/udev/data
+    restart: unless-stopped

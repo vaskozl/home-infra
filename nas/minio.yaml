@@ -1,0 +1,15 @@
+version: '3'
+services:
+  s3:
+    image: ghcr.io/vaskozl/minio:0.20251015
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    user: 1026:100
+    environment:
+      - MINIO_ROOT_USER=vasko
+      - MINIO_ROOT_PASSWORD=REPLACE_ME
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - /volume3/docker/minio/data:/data
