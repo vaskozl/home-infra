@@ -34,6 +34,7 @@
       matchDatasources: [ 'docker' ],
       commitMessageTopic: 'image {{depName}}',
     },
+    // Automerge minor for these allowlist
     {
       matchDatasources: [
         'docker',
@@ -44,10 +45,24 @@
         'ghcr.io/vaskozl/k8s-sidecar',
         'ghcr.io/vaskozl/kubeconform',
         'ghcr.io/vaskozl/oauth2-proxy',
-        'ghcr.io/vaskozl/renovate',
       ],
       matchUpdateTypes: [
         'minor',
+      ],
+      automerge: true,
+    },
+    // Automerge major using dates
+    {
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/vaskozl/cloudflared',
+        'ghcr.io/home-assistant/home-assistant',
+        'ghcr.io/vaskozl/renovate',
+      ],
+      matchUpdateTypes: [
+        'major', 'minor',
       ],
       automerge: true,
     },
