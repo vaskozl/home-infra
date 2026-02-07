@@ -61,7 +61,7 @@ spec:
       - name: csi-driver-registrar
         securityContext:
           privileged: true
-        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0@sha256:11f199f6bec47403b03cb49c79a41f445884b213b382582a60710b8c6fdc316a
         imagePullPolicy: IfNotPresent
         args:
         - --v=5
