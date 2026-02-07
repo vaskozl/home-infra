@@ -10,9 +10,6 @@
   ],
   dependencyDashboardTitle: 'Renovate Dashboard',
   suppressNotifications: [ 'prIgnoreNotification' ],
-  rebaseWhen: 'conflicted',
-  prHourlyLimit: 0,
-  prConcurrentLimit: 0,
   commitMessageTopic: '{{depName}}',
   commitMessageExtra: 'to {{newVersion}}',
   ignoreDeps: [
@@ -30,78 +27,12 @@
   kubernetes: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
   packageRules: [
     {
-      matchDatasources: [
-        'helm',
-      ],
-      separateMinorPatch: true,
-      ignoreDeprecated: true,
+      matchDatasources: [ 'helm' ],
       commitMessageTopic: 'chart {{depName}}',
     },
     {
-      matchDatasources: [
-        'docker',
-      ],
-      matchUpdateTypes: [
-        'major',
-        'minor',
-        'patch',
-      ],
+      matchDatasources: [ 'docker' ],
       commitMessageTopic: 'image {{depName}}',
-    },
-    {
-      matchUpdateTypes: [
-        'major',
-      ],
-      labels: [
-        'dep::major',
-      ],
-    },
-    {
-      matchUpdateTypes: [
-        'minor',
-      ],
-      labels: [
-        'dep::minor',
-      ],
-    },
-    {
-      matchUpdateTypes: [
-        'patch',
-      ],
-      labels: [
-        'dep::patch',
-      ],
-    },
-    {
-      matchUpdateTypes: [
-        'digest',
-      ],
-      labels: [
-        'dep::digest',
-      ],
-    },
-    {
-      matchDatasources: [
-        'docker',
-      ],
-      addLabels: [
-        'renovate::container',
-      ],
-    },
-    {
-      matchDatasources: [
-        'helm',
-      ],
-      addLabels: [
-        'renovate::helm',
-      ],
-    },
-    {
-      matchUpdateTypes: [
-        'patch',
-        'digest',
-      ],
-      automerge: true,
     },
     {
       matchDatasources: [
