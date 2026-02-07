@@ -9,7 +9,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: v2.2.0
+    tag: v2.2.0@sha256:a3c206cec86e192cfe07ecce3cae3bc53ceb71c0aa938d3cb104e92a4ad52553
   url: oci://ghcr.io/kgateway-dev/charts/agentgateway-crds
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
