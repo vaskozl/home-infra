@@ -27,6 +27,7 @@
   flux: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
   'helm-values': { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
   kubernetes: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
+  'docker-compose': { managerFilePatterns: [ '/nas/.+\\.ya?ml$/' ] },
   packageRules: [
     {
       matchDatasources: [ 'helm' ],
