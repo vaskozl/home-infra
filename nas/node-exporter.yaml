@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-exporter:
-    image: quay.io/prometheus/node-exporter:v1.6.1
+    image: quay.io/prometheus/node-exporter:v1.10.2@sha256:337ff1d356b68d39cef853e8c6345de11ce7556bb34cda8bd205bcf2ed30b565
     container_name: node-exporter
     network_mode: host
     volumes:
