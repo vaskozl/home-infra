@@ -17,7 +17,7 @@ services:
     cpu_shares: 16
     mem_limit: 4G
   cross-seedd:
-    image: ghcr.io/cross-seed/cross-seed:5.9.2
+    image: ghcr.io/cross-seed/cross-seed:6.13.6@sha256:e2bf5b593e4e7d699e6242423ad7966190cd52ba8eefafdfdbb0cb5b0b609b96
     container_name: cross-seedd
     restart: unless-stopped
     network_mode: host
