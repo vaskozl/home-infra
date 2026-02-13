@@ -24,7 +24,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [homepage](https://github.com/gethomepage/homepage) - Application Dashboard
   * [immich](https://immich.app/) - Self-hosted photo and video management with state-of-the-art ML
   * [jellyfin](https://github.com/jellyfin/jellyfin) - Media System
-  * [maddy](https://maddy.email/) - Completel and modern mailserver
+  * [maddy](https://maddy.email/) - Complete and modern mailserver
   * [my blog](https://sko.ai) - Built with via Gitlab Runners + Buildkitd
   * [ntfy](https://ntfy.sh) - Push notifications made easy
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
