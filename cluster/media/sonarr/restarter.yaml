@@ -41,5 +41,5 @@ spec:
           serviceAccountName: sonarr-restart
           containers:
             - name: kubectl
-              image: ghcr.io/vaskozl/kubectl@sha256:8e2be2cc86b1f1d268314916588c437530273b445f576e21e981f3feaa9758b6
+              image: ghcr.io/vaskozl/kubectl@sha256:a2d25cbbe995c642c5c5674e6ab0137c2b6fb88662ecd29c91903260c67c7361
               args: [rollout, restart, sts/sonarr]

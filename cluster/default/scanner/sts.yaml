@@ -9,7 +9,7 @@ spec:
       serviceAccountName: scanner-sa
       containers:
         - name: scanner-container
-          image: ghcr.io/vaskozl/wolfi-scanner:0.0.3@sha256:f4913b816a4eecb6af99828bddcf565b437910afce3fbaad9f7564753de8bb03
+          image: ghcr.io/vaskozl/wolfi-scanner:0.0.3@sha256:e84ae5a8891c728d756f28c8f84529bfffa9804cd2bafbe3f589ef27724a0cbf
           ports:
             - name: metrics
               containerPort: 9090
