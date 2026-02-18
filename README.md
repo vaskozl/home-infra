@@ -7,9 +7,9 @@
 [![talos](https://kromgo.sko.ai/os?format=badge)](https://talos.dev/)
 [![nodes](https://kromgo.sko.ai/nodes?format=badge)](https://github.com/kashalls/kromgo)
 [![pods](https://kromgo.sko.ai/pods?format=badge)](https://github.com/kashalls/kromgo)
-[![cve-high](https://kromgo.sko.ai/CVE%20High?format=badge)](https://github.com/kashalls/kromgo)
-[![cve-med](https://kromgo.sko.ai/CVE%20Medium?format=badge)](https://github.com/kashalls/kromgo)
-[![cve-low](https://kromgo.sko.ai/CVE%20Low?format=badge)](https://github.com/kashalls/kromgo)
+[![cve-high](https://kromgo.sko.ai/CVE%20High?format=badge)](https://github.com/vaskozl/wolfi-scanner)
+[![cve-med](https://kromgo.sko.ai/CVE%20Medium?format=badge)](https://github.com/vaskozl/wolfi-scanner)
+[![cve-low](https://kromgo.sko.ai/CVE%20Low?format=badge)](https://github.com/vaskozl/wolfi-scanner)
 <br />
 
 Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11th Gen Intel Nuc:
