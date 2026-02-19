@@ -14,7 +14,7 @@ spec:
       serviceAccountName: minilb
       containers:
         - name: minilb
-          image: ghcr.io/vaskozl/minilb:0.1.0@sha256:571495f87932762bb4ec8fe257cd13546ed636f5f08be4f1976a8d6ee88b8753
+          image: ghcr.io/vaskozl/minilb:0.2.0@sha256:239ecbab75c40c99d3173d2c1236753b11ba0e5f0595b3b51aed2d8337db7b53
           ports:
             - containerPort: 53
               protocol: UDP
