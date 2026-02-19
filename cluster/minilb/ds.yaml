@@ -17,9 +17,17 @@ spec:
           image: ghcr.io/vaskozl/minilb:0.2.0@sha256:239ecbab75c40c99d3173d2c1236753b11ba0e5f0595b3b51aed2d8337db7b53
           ports:
             - containerPort: 53
-              protocol: UDP
               hostPort: 5353
+              name: dns
+              protocol: UDP
+            - containerPort: 8080
+              name: healthz
+          readinessProbe: &probe
+            httpGet:
+              path: /healthz
+              port: healthz
+          livenessProbe: *probe
           resources:
             requests:
-              cpu: "5m"
+              cpu: "15m"
               memory: "10Mi"
