@@ -43,8 +43,8 @@ spec:
             helper_cpu_limit = "500m"
             helper_memory_request = "50Mi"
             helper_memory_limit = "200Mi"
-            # Used by dind
-            privileged = true
+            # Used by bubblewrap
+            cap_add = ["NET_ADMIN", "SYS_ADMIN"]
             [[runners.kubernetes.volumes.empty_dir]]
               name = "docker-emptydir"
               mount_path = "/var/run"
