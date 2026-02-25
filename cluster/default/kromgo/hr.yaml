@@ -83,6 +83,9 @@ spec:
                   set:
                     - name: Cache-Control
                       value: no-cache
+            backendRefs:
+              - identifier: app
+                port: 8080
     service:
       app:
         controller: kromgo
