@@ -76,6 +76,13 @@ spec:
         parentRefs:
           - name: public
             namespace: agentgateway
+        rules:
+          - filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Cache-Control
+                      value: no-cache
     service:
       app:
         controller: kromgo
