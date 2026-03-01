@@ -18,7 +18,7 @@ spec:
   values:
     controllers:
       sing-box:
-        replicas: 1
+        replicas: 2
         containers:
           app:
             image:
@@ -32,10 +32,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 110Mi
+                memory: 50Mi
               requests:
                 cpu: 30m
-                memory: 110Mi
+                memory: 50Mi
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
