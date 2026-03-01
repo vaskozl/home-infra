@@ -11,7 +11,7 @@
 			"listen_port": 8080,
 			"users": [
 				{
-					"name": "sko.ai",
+					"name": "pixel",
 					"uuid": "ENC[AES256_GCM,data:5TNRXZWJ3bpBZiPJQ0zXXF76IHVM6X8KMhhIQIRlafeQj51/,iv:PXzrYFhyU+fQB0stBwPIFirIP1+aehdYF4n0SQJc0jI=,tag:p4tjjjsrW3xUrjwGkTb1xg==,type:str]",
 					"alterId": 0
 				}
@@ -19,6 +19,25 @@
 			"transport": {
 				"type": "ws",
 				"path": "/stream",
+				"max_early_data": 0,
+				"early_data_header_name": "Sec-WebSocket-Protocol"
+			}
+		},
+		{
+			"type": "vless",
+			"tag": "vless-ws-in",
+			"listen": "::",
+			"listen_port": 8080,
+			"users": [
+				{
+					"name": "pixel",
+					"uuid": "ENC[AES256_GCM,data:5TNRXZWJ3bpBZiPJQ0zXXF76IHVM6X8KMhhIQIRlafeQj51/,iv:PXzrYFhyU+fQB0stBwPIFirIP1+aehdYF4n0SQJc0jI=,tag:p4tjjjsrW3xUrjwGkTb1xg==,type:str]",
+					"flow": ""
+				}
+			],
+			"transport": {
+				"type": "ws",
+				"path": "/streaml",
 				"max_early_data": 0,
 				"early_data_header_name": "Sec-WebSocket-Protocol"
 			}
@@ -35,8 +54,8 @@
 	},
 	"experimental": {},
 	"sops": {
-		"lastmodified": "2026-03-01T14:49:48Z",
-		"mac": "ENC[AES256_GCM,data:oVx/+Z6ttpHBlH2JXECxHVOrv83lzi1BlNCuI8mChf+hJ1eyHdPXtTNhX4mR3FKaPnWkpzOfE6xrzu1/gTZZdCwn1ZPozWJLHm4VQKNnuYdXx81lNerAPfZSnR+mEarlqBMri76rbek5Kfoy2GZsNSN40V+A5Bhxrom9y/8zd/w=,iv:U1CNt0V+alQPtVZ7VwC4mdPkmzvf3tKNnX+9U1rfe8Q=,tag:k5+pCivBHfvEmpBbvAyBJg==,type:str]",
+		"lastmodified": "2026-03-01T15:16:39Z",
+		"mac": "ENC[AES256_GCM,data:6t0Ea6qn8zwQjX9qcTadOGg7hwMDRqDO31lo1jRLKgoOjorhhqUMocV4M4S/1VdwE1l0dhpVkOF9oxCn5LbMrr0UyaS/J03z5NzCo0nSRDHpaw2V26UUI/B/v0kUOMZ1H5qLQCGPFOzNmM7jPs6a84pGDvJIbPmtRO0HfhjoJbo=,iv:8yITjjtuE1hXT+PP3ltmf7dw9vHR9/mEU7C4tp0+PrM=,tag:M95a+IgE4FlMI8EABnVEGQ==,type:str]",
 		"pgp": [
 			{
 				"created_at": "2026-03-01T13:19:41Z",
