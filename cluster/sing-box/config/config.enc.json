@@ -1,40 +1,48 @@
 {
+	"log": {},
+	"dns": {},
 	"inbounds": [
 		{
-			"port": 8080,
-			"listen": "0.0.0.0",
-			"protocol": "vmess",
-			"settings": {
-				"clients": [
-					{
-						"id": "ENC[AES256_GCM,data:pDvTQp6wqtLG7YYdGnyRyPfaMWofZCeMaj7AZnlDE6iqHbbB,iv:hOTTIbgNSCQR+BpplDGqbtCaaNzO82TYLH9yCSdJmJ8=,tag:roDT95cjTgppl6yyFR9Xvw==,type:str]"
-					}
-				]
-			},
-			"streamSettings": {
-				"network": "ws",
-				"wsSettings": {
-					"path": "/sing/"
+			"type": "vmess",
+			"tag": "vmess-ws-in",
+			"listen": "::",
+			"listen_port": 8080,
+			"users": [
+				{
+					"name": "sko.ai",
+					"uuid": "ENC[AES256_GCM,data:5TNRXZWJ3bpBZiPJQ0zXXF76IHVM6X8KMhhIQIRlafeQj51/,iv:PXzrYFhyU+fQB0stBwPIFirIP1+aehdYF4n0SQJc0jI=,tag:p4tjjjsrW3xUrjwGkTb1xg==,type:str]",
+					"alterId": 0
 				}
+			],
+			"transport": {
+				"type": "ws",
+				"path": "/stream",
+				"max_early_data": 0,
+				"early_data_header_name": "Sec-WebSocket-Protocol"
 			}
 		}
 	],
 	"outbounds": [
 		{
-			"protocol": "freedom"
+			"type": "direct",
+			"tag": "direct"
 		}
 	],
+	"route": {
+		"final": "direct"
+	},
+	"experimental": {},
 	"sops": {
-		"lastmodified": "2026-03-01T11:43:29Z",
-		"mac": "ENC[AES256_GCM,data:mgBiLMKSL1pnO7788DpUNc+cAx0ouuU58qrN4qY6lAzqx6aBoNT46zJDW2V606exeiHgmZyaZUzQigcbR/+iyzpBdRn/yT5nK6D5zm1go33+1iz8r/XzVETgPK9jSSqRgWVW3N6fyI52vCwJhTZ0z6+Yx0iTbbvc7orcHVOhZYg=,iv:Iz2jKhRZv8jRupAA1w7hsXkwLTPhbtcCtboEQOB07bk=,tag:n0xngZGTwEsCeueJQYMhcw==,type:str]",
+		"lastmodified": "2026-03-01T13:19:41Z",
+		"mac": "ENC[AES256_GCM,data:fmMdCEUqsHY2Q4+H7OMCrGmTBz2mVMoQBnBfI9ppGh68sONZ8KbA9ZjDqX+N8xBupe9+k5I0UWjR+1TjhNoa9TXugRO6zbrVg2DUW1qgQ+eEC6DhlVoeboQcqJdHGDuoKiCJ7QBQ+1KqpqCPjDpaHcwb9mBufE9FHemC5yWjbw0=,iv:3Ao2isnC6U9Sybk37c/dAOJAK+rKreo5jfNPkFcqzKo=,tag:Gxp2v/9JNdT2ixpTZII5FA==,type:str]",
 		"pgp": [
 			{
-				"created_at": "2024-08-23T20:13:59Z",
-				"enc": "-----BEGIN PGP MESSAGE-----\n\nhQMOA4x50yY5upzjEAv7BJhPZwNwlTyTeVpE+anwT8jg1f+18+ZR2ulXNMVwpPu2\nKa9rfnyOOmVvRLIuxERLzDRhQM7Bju+dRfYfu/0YQRSYcMiqbpFkBuv79OwHN2vN\nQi2xd85BdvhLRyv5exhQBrosowSGa/sBf+yF1bSVD9UPJOS3a9+TQiDxYbp79km8\nLxaYik0RhKe2YATd0uBR2idlAKCfBDgE+NH1AxjjE8GJi1pP+f063onAG/CIwPTh\nRfXCD10h8cAbf1etWtQgS0xwjbo9ZIcg5B9caFVIkU2wPUBj9HdfO3TTzwopSXv+\n8pSrZcizrqz4n9QU5XaQf8ItD2IEud6Eb+KJQgUescuhyNcOYpFqrE1wevjB5n7r\nFT+o0muKHmNr9pGky+meEkjwLSo6RnmCm+x8klFsfWYNDY2in5650YNbU25M9t5c\n82z6oFZ2JQ/s3LK5VdslrdKqlwXYTcXG7L1nKBR36vsKfDkT+0t5d5BoOYPx8+hJ\nXMTpDvim3hxqCjqhVhTkC/4uwmPQ5H+Mx9JQ9Ii0+eFeMo2DizlUT4Qa8R6FuxMb\nIKkz8lRBLgTz66J8Za6JOprPHJzIhijMBlSG1pNCYEqJc+DW7ix6jYJYge6+9SrU\niGbL8kMP44OsmYwDxgj5C9BZODCAzmWR/5qHG1tXow45qWwTCDA49duhQbwYCLcj\njrX25+4XtGVZWCWGvSlP/2UXPTss+XlRYDbRhRCOOOaHAx8cxBPSgfxwFpZa5j/g\nHDxXKzB5twI+Hbp/p/BnA2l01/jXJpAProQ2wW2eWryFcuHmVCv/UyJZVop1jbED\n23y9f69+Ye9g0nBjlovc9Z51TPj8gjwiOchpR6TaoQP4vnp/bSKxFjCxxuuryPGg\n81jXCtqBNZSRAgb1x8F3MuRs9ICxePC6ssIqp2Unls70NunsGxfDSnsKk51DkJlx\nzxHb3bRG+m4TO0SgnrdxtRVIoucSsVKnWATsKunpdvDQvUm+0JQCYenL8W01KJO2\nQH3xpE/HO7XgcTTNgav6DWXSXgHWpN/xwXijYFl7e7eMjjK8GdO8I8DPtobdYCyr\n8LnIu1WJg5j0dVtcWyEZkNmVjafyScHaCHLBFzVZQlteG6YzB9geSAIM6A0cvw+d\ndj8SZ69FSYIlWtyf4ANWuys=\n=zLQ1\n-----END PGP MESSAGE-----",
+				"created_at": "2026-03-01T13:19:41Z",
+				"enc": "-----BEGIN PGP MESSAGE-----\n\nhQMOA4x50yY5upzjEAv+KpSUJzAkoKsFDyS8u4Ac9hXqTtvjUu0eMUg46JLfjyXf\nxhummmgQtxZ4QCqZfC48cG18nRboi7r6dXt+0SKgJGKpsi2HPR0gqL/4+J76Gu8c\nvTI1PpgzonUFd5zDri0dEKzo/fcU8qEAssBffG3D9BZf+9F2uzb0uEAmtIdPNrmh\nW3uyggYfl2Xeb89cYAT0tQ06mYFH/ZpLXPaZRE959XoLv0HJbNe5PEOeerjNhvJT\ntV8qq/30u5Zjqnt5Toa9ov+sxghwQ/kSgcOzoTsxK4QC9rNyJB6JjgSVmIFsYVVp\nY+9KHeZMU1Qtg4ry9AUANL5DZKD3EjyN0xFsr/6NCsikRJteOVrasPGmpsqme41E\nW34hpHX/TvV6W7YJvZ9xE8vv36r9WsPHqq0UIwuPBANlpP1zpDoe5U2dojQjBA6K\nMYsw3//eKge6tHATJUhe4U2bH3uDeVXov8uE+My3i9WvutzJ7HEgTSr2rtqjUdZd\nKxo83pUM9XBPCSX5bCI+DACTAPD0aTalTnrIuQRMgoWS2G1FOeoUi0/V0W1ipj7J\nxIS3Je8IbxUPpFH5bJWlr2zfsNfLu93kbWCYGKZIMeQzKCL/NvIWLaev2Ot+R/RO\nmdT4+Tb9bj6QgZd0uC/cld0QOOYpF4kaZJn36N6MbV3Qo13b9bDnhTzK0ioNolP5\nnR0Cd34WKyHq+NuRj7SQFdlGL0jzcMMVcdob8h3pawQSET0oS+IFCjX/mu5uRYNY\ncig/whE5+wH+9PK1P9BS06nGHh7pN8yhc5+lzHcxbda/tQdeyoruLaAV4bqbij5I\nVFab7fkbsSE3t3Vwe+274IqXAUrDr0GdgMd5YVIlIIS0IRi4aBT1hMMuUmLczyAx\nKytnih7KbiltZsLploUdkxs9EMlToBony3DgLn6ONdvx0PohAg505c0s2uILWi5f\nN2M0AUwC2WKDjzf4FEKDAC7A+csbsLD4QC2josxe1trePznXiynEJNITL0ZKDyT0\n4kO3IQJENxuoDqSfI2fFLlHSXgGmLT+axU55TQutxDta+yfI4o2rn6bbGqQgKjeZ\nRQDnwhYen8wNO7vRfcXgUByUuIdLYy1XCdB2NFOyvqN9drIJOdbEewOjbJBvtIRw\nVI6GermgWr2Ts1bZZ22Ke/c=\n=AMcr\n-----END PGP MESSAGE-----",
 				"fp": "E940DD1F01DE41AC266825F72E962083AFA12A4D"
 			}
 		],
-		"encrypted_regex": "^id$",
+		"encrypted_regex": "uuid",
 		"version": "3.11.0"
 	}
 }
