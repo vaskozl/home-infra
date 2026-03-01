@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: trusttunnel
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 24h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.6.2
+  values:
+    controllers:
+      trusttunnel:
+        replicas: 1
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/trusttunnel
+              tag: 1.0.9@sha256:9a7d2a79b2a96b9d12944b846a2e1acddad6b9972749bb21bb743fc67b21a695
+            command: [trusttunnel, /config/vpn.toml, /config/hosts.toml]
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 150Mi
+              requests:
+                cpu: 30m
+                memory: 150Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /config
+              name: config
+              size: 1Gi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    route:
+      app:
+        hostnames:
+          - trust.sko.ai
+        parentRefs:
+          - name: public
+            namespace: agentgateway
+        rules:
+          - matches:
+              - path:
+                  value: /
+            backendRefs:
+              - identifier: app
+                port: 8443
+
+    service:
+      app:
+        controller: trusttunnel
+        ports:
+          http:
+            port: 8443
