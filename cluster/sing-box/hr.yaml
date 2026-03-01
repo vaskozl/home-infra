@@ -1,0 +1,81 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sing-box
+  annotations:
+    patch.sko.ai/app-template: common
+spec:
+  interval: 24h
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.6.2
+  values:
+    controllers:
+      sing-box:
+        replicas: 1
+        containers:
+          app:
+            image:
+              repository: ghcr.io/sagernet/sing-box
+              tag: v1.13.0@sha256:d12357595495228bd673b4b3ef8d882c774ce7c4369bd22e89a2761029c53758
+            args: [run, -c, /etc/sing-box/config.json]
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 110Mi
+              requests:
+                cpu: 30m
+                memory: 110Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      config:
+        globalMounts:
+          - path: /etc/sing-box
+        name: config
+        type: secret
+    route:
+      app:
+        hostnames:
+          - sko.ai
+        parentRefs:
+          - name: public
+            namespace: agentgateway
+        rules:
+          - matches:
+              - path:
+                  value: /sing
+            backendRefs:
+              - identifier: app
+                port: 8080
+    service:
+      app:
+        controller: sing-box
+        ports:
+          http:
+            port: 8080

@@ -1,17 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - agentgateway
+  - argo-workflows
   - automation
   - cert-manager
-  - default
   - cloudflared
+  - default
   - flux-system
   - gitlab
   - golink
   - haproxy
   - headlamp
   - immich
-  - agentgateway
   - kube-flannel
   - kube-system
   - logging
@@ -19,11 +20,11 @@ resources:
   - media
   - minilb
   - nfs-subdir
-  - argo-workflows
-  - pocket-id
   - oauth2-proxy
+  - pocket-id
   - rbac
   - renovate
+  - sing-box
   - synology-csi
   - vaultwarden
   - victoria-metrics
