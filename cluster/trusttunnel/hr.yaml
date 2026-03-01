@@ -42,6 +42,9 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: true
+              sysctls:
+              - name: net.ipv4.ip_unprivileged_port_start
+                value: "80"
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -72,11 +75,11 @@ spec:
                   value: /
             backendRefs:
               - identifier: app
-                port: 8443
+                port: 443
 
     service:
       app:
         controller: trusttunnel
         ports:
           http:
-            port: 8443
+            port: 443
