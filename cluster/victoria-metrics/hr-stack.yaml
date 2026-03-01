@@ -28,7 +28,7 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/grafana
-        tag: 12.3.4@sha256:001fc10920d692a3b7a2f896e02572f0c9e45c667dc672833485a5f7087845da
+        tag: 12.3.4@sha256:2b15d4e54c3bedc31e2b6b242dc33833deac6c1320e0839d2d67a1505c944264
       route:
         main:
           enabled: true
@@ -69,7 +69,7 @@ spec:
         externalURL: "https://am.sko.ai"
         image:
           repository: ghcr.io/vaskozl/prometheus-alertmanager
-          tag: 0.31.1@sha256:d4bb2ad307e8690255523f2ca8e0cfca42c79a276221de9d7d8fab0b57c29af5
+          tag: 0.31.1@sha256:aac38de0417ebbd9a86693d5c65be369c23d95f1f247a5bdc6bb2039a720c3a4
       config:
         route:
           routes:
