@@ -5,29 +5,10 @@
 	"dns": {},
 	"inbounds": [
 		{
-			"type": "vmess",
-			"tag": "vmess-ws-in",
-			"listen": "::",
-			"listen_port": 8080,
-			"users": [
-				{
-					"name": "pixel",
-					"uuid": "ENC[AES256_GCM,data:5TNRXZWJ3bpBZiPJQ0zXXF76IHVM6X8KMhhIQIRlafeQj51/,iv:PXzrYFhyU+fQB0stBwPIFirIP1+aehdYF4n0SQJc0jI=,tag:p4tjjjsrW3xUrjwGkTb1xg==,type:str]",
-					"alterId": 0
-				}
-			],
-			"transport": {
-				"type": "ws",
-				"path": "/stream",
-				"max_early_data": 0,
-				"early_data_header_name": "Sec-WebSocket-Protocol"
-			}
-		},
-		{
 			"type": "vless",
 			"tag": "vless-ws-in",
 			"listen": "::",
-			"listen_port": 8081,
+			"listen_port": 8080,
 			"users": [
 				{
 					"name": "pixel",
@@ -37,7 +18,7 @@
 			],
 			"transport": {
 				"type": "ws",
-				"path": "/streaml",
+				"path": "/api/v2/stream",
 				"max_early_data": 0,
 				"early_data_header_name": "Sec-WebSocket-Protocol"
 			}
@@ -54,8 +35,8 @@
 	},
 	"experimental": {},
 	"sops": {
-		"lastmodified": "2026-03-01T15:19:32Z",
-		"mac": "ENC[AES256_GCM,data:4EIL0RlE3Hz1fRDgG/yEyo2B6tIj3eIZ8YXh13EUksbJRb9lvZ+dE60NbTQJV8oNqPXUBoubwPXV4Zsn4ce30AbJkJjVq2n3po+bx5fB4WM5wJoslr2w5PldX5CjjGjHUg7hc2wSBNW/NFDhjApwm4/s1OEDs9QDQxXgVWSjfXA=,iv:3kHlToahMbZSS0+g8V/fH/I4trDP8waUoSFSighDWnQ=,tag:wBp7jPp4ehsn6UI6h671xg==,type:str]",
+		"lastmodified": "2026-03-01T15:44:15Z",
+		"mac": "ENC[AES256_GCM,data:BAAcXswrccddjBtrRLCOCcV9JFACHmzmUZ4b9o97qQgFubC7fsaq5cspcmkCwAv9iiy63i6RSpo/gFgqC+YgOMlYXoAeLIZz1xx+dd4++C/AirZEcQZG0BaZWlXqGrLLpkem1iE3/pN41bWhj6g/G7Y8E7JPXoiqIlzsk6SoJSo=,iv:0ExufusJSQqpfmBC6e/0xLgLjlHQpB6SWQTl+tG1Avw=,tag:uoBvGDhPmu03s4thL8BhVw==,type:str]",
 		"pgp": [
 			{
 				"created_at": "2026-03-01T13:19:41Z",
