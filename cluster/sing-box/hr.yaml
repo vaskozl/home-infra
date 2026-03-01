@@ -71,11 +71,23 @@ spec:
               - path:
                   value: /stream
             backendRefs:
-              - identifier: app
+              - identifier: vmess
                 port: 8080
+          - matches:
+              - path:
+                  value: /streaml
+            backendRefs:
+              - identifier: vless
+                port: 8081
+
     service:
-      app:
+      vmess:
         controller: sing-box
         ports:
           http:
             port: 8080
+      vless:
+        controller: sing-box
+        ports:
+          http:
+            port: 8081
