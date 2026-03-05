@@ -5,12 +5,6 @@ metadata:
 spec:
   gatewayClassName: agentgateway
   listeners:
-    - name: ssh
-      port: 22
-      protocol: TCP
-      allowedRoutes:
-        namespaces:
-          from: All
     - name: http
       port: 80
       protocol: HTTP

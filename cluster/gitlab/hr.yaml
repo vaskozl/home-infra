@@ -24,32 +24,14 @@ spec:
       edition: ce
       hosts:
         domain: sko.ai
-        https: true
-      gatewayApi:
-        enabled: true
-        installEnvoy: false
-        configureCertmanager: false
-        gatewayRef:
-          name: internal-noauth
-          namespace: agentgateway
-        class:
-          name: "agentgateway"
-          controllerName: "agentgateway.dev/agentgateway"
-        listeners:
-          gitlab-web:
-            protocol: ""
-            tls: {}
-          gitlab-ssh:
-            protocol: "TCP"
-          registry-web:
-            protocol: ""
-            tls: {}
-          pages-web:
-            protocol: ""
-            tls: {}
       ingress:
-        enabled: false
+        class: &class haproxy-internal
+        provider: *class
+        # Wildcard is configured by default
         configureCertmanager: false
+        # TLS is enabled by default
+        tls:
+          enabled: false
       kas:
         enabled: false
       pages:
@@ -112,7 +94,7 @@ spec:
         maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 1
-        gatewayRoute:
+        ingress:
           annotations:
             gethomepage.dev/enabled: "true"
             gethomepage.dev/description: Git and everything but the kitchen sink
@@ -151,6 +133,9 @@ spec:
               secret: object-storage
               key: toolbox.minio.toml
     registry:
+      ingress:
+        annotations:
+          haproxy.org/timeout-server: 600s
       storage:
         secret: object-storage
         key: registry.minio.yaml
@@ -195,11 +180,3 @@ spec:
                       kubernetes.io/arch: amd64
             target:
               kind: StatefulSet
-    - kustomize:
-        patches:
-          - patch: |-
-              - op: remove
-                path: /spec/parentRefs/0/sectionName
-            target:
-              group: gateway.networking.k8s.io
-              kind: HTTPRoute
