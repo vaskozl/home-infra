@@ -8,6 +8,7 @@
     ":skipStatusChecks",
     ":disableRateLimiting",
     ":dependencyDashboard",
+    ":pinDigestsDisabled", // https://github.com/renovatebot/renovate/issues/29768
     "group:allDigest",
   ],
   dependencyDashboardTitle: 'Renovate Dashboard',
