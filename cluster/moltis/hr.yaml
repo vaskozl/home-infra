@@ -57,13 +57,19 @@ spec:
           app:
             image:
               repository: ghcr.io/moltis-org/moltis
-              tag: 0.10.17@sha256:f13c9a0c584e29f739f1d7b22c914b19810e55afe3577bfcea427057cbb1bff3
+              tag: 0.10.18@sha256:b155dd370fd26d5ea7286ea41011fcfec5ea6effd93486dd0809e310f02ec9bc
             args:
               - --bind
               - "[::]"
               - --port
               - "13131"
               - --no-tls
+            resources:
+              requests:
+                cpu: 1
+                memory: 1Gi
+              limits:
+                memory: 1Gi
             env:
               TZ: "${TZ}"
               MOLTIS_BEHIND_PROXY: "true"
