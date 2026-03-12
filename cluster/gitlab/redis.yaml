@@ -40,12 +40,6 @@ spec:
                 memory: 250Mi
         statefulset:
           podManagementPolicy: Parallel
-          volumeClaimTemplates:
-            - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /data
-              name: data
-              size: 1Mi
         type: statefulset
     service:
       main:
