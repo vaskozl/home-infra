@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: moltis
+  namespace: moltis
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.6.2
+  interval: 24h
+  values:
+    controllers:
+      moltis:
+        type: statefulset
+        initContainers:
+          daemon:
+            image:
+              repository: docker
+              tag: 29.3.0-dind@sha256:1ba18449911d01f477a3fc104123c85d677addc60701b14b3fcb5381f9c4a537
+            restartPolicy: Always
+            securityContext:
+              privileged: true
+            env:
+              - name: DOCKER_TLS_CERTDIR
+                value: /certs
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec: &probeSpec
+                  exec:
+                    command: ["docker", "info"]
+                  periodSeconds: 2
+                  timeoutSeconds: 3
+                  failureThreshold: 60
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  !!merge <<: *probeSpec
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  !!merge <<: *probeSpec
+                  periodSeconds: 20
+                  timeoutSeconds: 3
+                  failureThreshold: 3
+        containers:
+          app:
+            image:
+              repository: ghcr.io/moltis-org/moltis
+              tag: 0.10.17@sha256:f13c9a0c584e29f739f1d7b22c914b19810e55afe3577bfcea427057cbb1bff3
+            args:
+              - --bind
+              - "[::]"
+              - --port
+              - "13131"
+              - --no-tls
+            env:
+              TZ: "${TZ}"
+              MOLTIS_BEHIND_PROXY: "true"
+              MOLTIS_CONFIG_DIR: /config
+              MOLTIS_DATA_DIR: /data
+              MOLTIS_WEBAUTHN_RP_ID: "{{ .Release.Name }}.sko.ai"
+              MOLTIS_WEBAUTHN_ORIGIN: "https://{{ .Release.Name }}.sko.ai"
+              DOCKER_HOST: tcp://localhost:2376
+              DOCKER_CERT_PATH: /certs/client
+              DOCKER_TLS_VERIFY: "1"
+            envFrom:
+              - secretRef:
+                  name: moltis
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 13131
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness: *probe
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    service:
+      app:
+        controller: moltis
+        ports:
+          http:
+            port: 80
+            targetPort: *port
+    route:
+      main:
+        hostnames: ["{{ .Release.Name }}.sko.ai"]
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+    persistence:
+      data:
+        existingClaim: moltis
+        globalMounts:
+          - path: /config
+            subPath: config
+          - path: /data
+            subPath: data
+      tmp:
+        type: emptyDir
+      certs:
+        type: emptyDir
