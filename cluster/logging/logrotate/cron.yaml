@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - name: logrotate
-              image: &image ghcr.io/vaskozl/logrotate:3.22.0@sha256:3c82492443925d1ac04922ddeb2bec5308fd46f977498ab0764ce01d8b9b0489
+              image: &image ghcr.io/vaskozl/logrotate:3.22.0@sha256:635c205fa58794990d7bb1949904b75bb80f2733e1bd19f92f961467fd269033
               args: ['-v', '/config/logrotate.conf', '-s', '/var/log/k8s/logrotate.status']
               resources:
                 requests:
