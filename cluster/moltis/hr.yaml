@@ -16,7 +16,6 @@ spec:
   values:
     controllers:
       moltis:
-        type: statefulset
         initContainers:
           daemon:
             image:
@@ -98,6 +97,18 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+                  subPath: data
+                - path: /config
+                  subPath: config
+              name: config
+              size: 1Gi
+        type: statefulset
     service:
       app:
         controller: moltis
@@ -116,13 +127,6 @@ spec:
               - identifier: app
                 port: 80
     persistence:
-      data:
-        existingClaim: moltis
-        globalMounts:
-          - path: /config
-            subPath: config
-          - path: /data
-            subPath: data
       tmp:
         type: emptyDir
       certs:
