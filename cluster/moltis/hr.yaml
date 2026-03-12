@@ -106,6 +106,8 @@ spec:
                   subPath: data
                 - path: /config
                   subPath: config
+                - path: /home/moltis
+                  subPath: home-moltis
               name: config
               size: 1Gi
         type: statefulset
