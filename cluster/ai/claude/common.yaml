@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: claude
+  name: common
 spec:
-  schedule: "0 0 * * *"
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
@@ -14,13 +14,6 @@ spec:
           containers:
             - name: claude
               image: ghcr.io/vaskozl/claude:2.1.76
-              args:
-                - --dangerously-skip-permissions
-                - -p
-                - |
-                  View repos you have access to in Gitlab. Clone them if needed.
-                  Review MRs you are able to that have not been reviewed before.
-                  Post your reviews on each.
               envFrom:
                 - secretRef:
                     name: claude-env

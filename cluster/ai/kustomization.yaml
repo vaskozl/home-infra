@@ -3,13 +3,4 @@ kind: Kustomization
 namespace: ai
 resources:
   - _namespace.yaml
-  - claude-cronjob.yaml
-  - claude-pvc.yaml
-configMapGenerator:
-  - name: claude-md
-    files:
-      - CLAUDE.md
-secretGenerator:
-  - name: claude-env
-    envs:
-      - claude.enc.env
+  - claude

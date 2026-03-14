@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ai
+resources:
+  - glab-review.yaml
+patches:
+  - path: common.yaml
+    target:
+      kind: CronJob
+configMapGenerator:
+  - name: claude-md
+    files:
+      - config/CLAUDE.md
+secretGenerator:
+  - name: claude-env
+    envs:
+      - config/claude.enc.env

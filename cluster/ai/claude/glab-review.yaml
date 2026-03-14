@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: glab-review
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: claude
+              args:
+                - --dangerously-skip-permissions
+                - -p
+                - |
+                  View repos you have access to in Gitlab. Clone them if needed.
+                  Review MRs you are able to that have not been reviewed before.
+                  Post your reviews on each.
