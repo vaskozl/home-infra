@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pocket-id
+spec:
+  serviceName: pocket-id
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app
+          image: ghcr.io/pocket-id/pocket-id@sha256:e3e0fa59d06f6651448766e279077929694a644865759264f941a700f67d13eb
+          env:
+            - name: APP_URL
+              value: https://pi.sko.ai
+          envFrom:
+            - secretRef:
+                name: pocket-id-env
+          ports:
+            - name: http
+              containerPort: 1411
+          resources:
+            requests:
+              cpu: 20m
+              memory: 80Mi
+            limits:
+              memory: 80Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          probes:
+            liveness:
+              httpGet:
+                path: /api/health/live
+                port: http
+              initialDelaySeconds: 10
+              periodSeconds: 10
+            readiness:
+              httpGet:
+                path: /api/health/ready
+                port: http
+              initialDelaySeconds: 10
+              periodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pocket-id
+spec:
+  ports:
+    - name: http
+      port: 1411
+      targetPort: 1411
+      protocol: TCP

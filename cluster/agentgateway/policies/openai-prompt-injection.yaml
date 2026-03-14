@@ -1,0 +1,25 @@
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: openai-prompt-injection-guard
+  namespace: agentgateway
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: lmstudio
+  backend:
+    ai:
+      promptGuard:
+        request:
+          - regex:
+              action: Reject
+              matches:
+                # Prompt injection patterns
+                - "(?i)(ignore|disregard|forget|override|bypass|skip|dismiss|drop|abandon)\\s+(all\\s+|any\\s+|your\\s+)?(previous|prior|earlier|above|existing|current|original|initial|given|preset)\\s+(instructions|rules|guidelines|directives|constraints|restrictions|prompts|programming|configuration)"
+                - "(?i)(the (previous|above|old|original|initial|existing) (instructions?|rules?|guidelines?|constraints?)\\s+(are|is|were|should be|must be)\\s+(ignored|void|null|overridden|replaced|superseded|invalidated|canceled|revoked|obsolete))"
+                - "(?i)(from now on|effective immediately|starting now|henceforth)\\s*(,\\s+)?(you\\s+)?(will|shall|must|should|are to|need to)\\s+(be|act|respond|answer|behave|operate|function)"
+                - "(?i)(your new|revised|updated)\\s+(purpose|goal|objective|role|instruction|directive|rule)"
+            response:
+              message: "Request blocked: prompt injection detected. Attempts to override system instructions are not permitted."
+              statusCode: 403

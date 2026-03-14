@@ -32,6 +32,8 @@ spec:
                 spec:
                   failureThreshold: 20
                   periodSeconds: 30
+            env:
+              OPENAI_BASE_URL: https://inference.sko.ai/v1
             resources:
               limits:
                 memory: 660Mi

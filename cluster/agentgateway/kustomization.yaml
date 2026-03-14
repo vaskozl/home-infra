@@ -10,5 +10,8 @@ resources:
   - oauth2-policy.yaml
   - sko-ai-tls.yaml
   - ../netpols/allow-all-ingress
+  - backends/
+  - policies/
+  - routes/
 components:
   - ../common
