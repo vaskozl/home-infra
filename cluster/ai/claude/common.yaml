@@ -14,6 +14,12 @@ spec:
           containers:
             - name: claude
               image: ghcr.io/vaskozl/claude:2.1.76
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 200Mi
+                limits:
+                  memory: 200Mi
               envFrom:
                 - secretRef:
                     name: claude-env

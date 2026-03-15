@@ -4,10 +4,15 @@ namespace: ai
 resources:
   - glab-review.yaml
   - pvc.yaml
+  - sts.yaml
 patches:
   - path: common.yaml
     target:
       kind: CronJob
+labels:
+  - pairs:
+      app.kubernetes.io/name: claude
+    includeSelectors: true
 configMapGenerator:
   - name: claude-md
     files:
