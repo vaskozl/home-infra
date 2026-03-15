@@ -12,7 +12,10 @@ spec:
         runAsNonRoot: true
         runAsUser: 568
         seccompProfile:
-          type: RuntimeDefault
+          type: Unconfined
+        capabilities:
+          add:
+            - SYS_ADMIN
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
