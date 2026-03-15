@@ -6,6 +6,13 @@ spec:
   serviceName: claude
   template:
     spec:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:

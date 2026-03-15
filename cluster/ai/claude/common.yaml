@@ -8,6 +8,13 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            fsGroup: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 568
+            seccompProfile:
+              type: RuntimeDefault
           restartPolicy: Never
           nodeSelector:
             kubernetes.io/arch: amd64
