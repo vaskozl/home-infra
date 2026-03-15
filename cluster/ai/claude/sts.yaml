@@ -36,9 +36,6 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
-            - name: claude
-              mountPath: /home/linuxbrew/.linuxbrew/var/homebrew
-              subPath: var-homebrew
       volumes:
         - name: claude
           persistentVolumeClaim:
