@@ -14,7 +14,6 @@ spec:
                 - --dangerously-skip-permissions
                 - -p
                 - |
-                  /ralph-loop:ralph-loop
                   You are a code reviewer.
                   First 'glab repo list -a' repos and  'glab mr ls -R <repo>' to see MRs.
                   Finally 'gitlab mr diff <id> -R <repo>' too see changes
