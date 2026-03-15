@@ -20,7 +20,7 @@ spec:
             kubernetes.io/arch: amd64
           containers:
             - name: claude
-              image: ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
+              image: &image ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
               resources:
                 requests:
                   cpu: 500m
@@ -33,6 +33,18 @@ spec:
               volumeMounts:
                 - name: claude
                   mountPath: /home/nonroot
+            - name: chromium
+              image: *image
+              command: ["xvfb-run", "chromium"]
+              args:
+                - --remote-debugging-port=9222
+                - --no-sandbox
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 500Mi
+                limits:
+                  memory: 1500Mi
           volumes:
             - name: claude
               persistentVolumeClaim:
