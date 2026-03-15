@@ -13,11 +13,7 @@ labels:
   - pairs:
       app.kubernetes.io/name: claude
     includeSelectors: true
-configMapGenerator:
-  - name: claude-md
-    files:
-      - config/CLAUDE.md
 secretGenerator:
   - name: claude-env
     envs:
-      - config/claude.enc.env
+      - claude.enc.env

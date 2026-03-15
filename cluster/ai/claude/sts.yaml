@@ -29,15 +29,9 @@ spec:
             - secretRef:
                 name: claude-env
           volumeMounts:
-            - name: claudemd
-              mountPath: /home/nonroot/.claude/CLAUDE.md
-              subPath: CLAUDE.md
             - name: claude
               mountPath: /home/nonroot
       volumes:
-        - name: claudemd
-          configMap:
-            name: claude-md
         - name: claude
           persistentVolumeClaim:
             claimName: claude-pvc
