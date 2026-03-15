@@ -14,6 +14,8 @@ spec:
                 - --dangerously-skip-permissions
                 - -p
                 - |
-                  View repos you have access to in Gitlab. Clone them if needed.
+                  You are a code reviewer.
+                  First `glab repo list -a` repos and  `glab mr ls -R <repo> to see MRs.
+                  Finally `gitlab mr diff <id> -R <repo>` too see changes
                   Review MRs you are able to that have not been reviewed before.
-                  Post your reviews on each.
+                  Post your reviews on each and approve them if you think they are ready.
