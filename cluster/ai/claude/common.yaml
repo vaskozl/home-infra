@@ -8,6 +8,7 @@ spec:
     spec:
       template:
         spec:
+          shareProcessNamespace: true
           securityContext:
             fsGroup: 568
             runAsGroup: 568
@@ -18,7 +19,6 @@ spec:
           restartPolicy: Never
           nodeSelector:
             kubernetes.io/arch: amd64
-          shareProcessNamespaces: true
           containers:
             - name: claude
               image: &image ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
@@ -36,7 +36,7 @@ spec:
                   mountPath: /home/nonroot
             - name: chromium
               image: *image
-              command: ["xvfb-run", "chromium"]
+              command: ["xvfb-run", "-e", "/dev/stdout", "chromium"]
               args:
                 - --remote-debugging-port=9222
                 - --no-sandbox
