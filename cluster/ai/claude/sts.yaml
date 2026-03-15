@@ -26,10 +26,7 @@ spec:
               mountPath: /home/nonroot/.claude/CLAUDE.md
               subPath: CLAUDE.md
             - name: claude
-              mountPath: /home/nonroot/.local
-              subPath: dotlocal
-            - name: claude
-              mountPath: /home/nonroot/.claude
+              mountPath: /home/nonroot
       volumes:
         - name: claudemd
           configMap:
