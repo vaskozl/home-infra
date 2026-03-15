@@ -15,6 +15,7 @@ spec:
           type: RuntimeDefault
       nodeSelector:
         kubernetes.io/arch: amd64
+      shareProcessNamespaces: true
       containers:
         - name: claude
           image: &image ghcr.io/vaskozl/claude:2.1.76@sha256:e3cab772b82a47e0dc2de79d3a17eb926d584417b631a403a8e92c19a7ad5c8c

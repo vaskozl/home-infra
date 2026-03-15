@@ -18,6 +18,7 @@ spec:
           restartPolicy: Never
           nodeSelector:
             kubernetes.io/arch: amd64
+          shareProcessNamespaces: true
           containers:
             - name: claude
               image: &image ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
