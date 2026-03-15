@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: glab-review
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 1 * * *"
   jobTemplate:
     spec:
       template:
