@@ -7,13 +7,13 @@ use POSIX qw(strftime);
 my $MAX = 80;
 my $POW = 2;
 
+# Non-dimmable: shellydimmer2-F4CFA2ECAE73
 my @SHELLIES = qw(
   shellydimmer2-3C6105E44BF8
   shellydimmer2-3C6105E42925
   shellydimmer2-3C6105E34976
   shellydimmer2-84CCA8AD776A
   shellydimmer2-F4CFA2ECDC0B
-  shellydimmer2-F4CFA2ECAE73
 );
 
 sub default_brightness {
