@@ -14,10 +14,10 @@ spec:
           command: ["sleep", "inf"]
           resources:
             requests:
-              cpu: 100m
-              memory: 200Mi
+              cpu: 500m
+              memory: 2500Mi
             limits:
-              memory: 200Mi
+              memory: 2500Mi
           envFrom:
             - secretRef:
                 name: claude-env
