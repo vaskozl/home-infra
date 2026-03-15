@@ -17,13 +17,13 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
+          image: ghcr.io/vaskozl/claude:2.1.76@sha256:e3cab772b82a47e0dc2de79d3a17eb926d584417b631a403a8e92c19a7ad5c8c
           command: ["sleep", "inf"]
           env:
-            - name: PATH
-              value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/linuxbrew/.linuxbrew/bin
-            - name: HOMEBREW_NO_AUTO_UPDATE
-              value: "1"
+            - name: AGENT_BROWSER_HEADED
+              value: "true"
+            - name: AGENT_BROWSER_EXECUTABLE_PATH
+              value: /home/nonroot/bin/x-chromium
           resources:
             requests:
               cpu: 500m
