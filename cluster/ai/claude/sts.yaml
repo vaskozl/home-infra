@@ -19,11 +19,6 @@ spec:
         - name: claude
           image: ghcr.io/vaskozl/claude:2.1.76@sha256:e3cab772b82a47e0dc2de79d3a17eb926d584417b631a403a8e92c19a7ad5c8c
           command: ["sleep", "inf"]
-          env:
-            - name: AGENT_BROWSER_HEADED
-              value: "true"
-            - name: AGENT_BROWSER_EXECUTABLE_PATH
-              value: /home/nonroot/bin/x-chromium
           resources:
             requests:
               cpu: 500m
