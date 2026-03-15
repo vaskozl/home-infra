@@ -19,6 +19,11 @@ spec:
         - name: claude
           image: ghcr.io/vaskozl/claude:2.1.76@sha256:27e8b9633b7b83c09f8b2247cafd7dd82a0bed92ed8908fca188dafbece0749b
           command: ["sleep", "inf"]
+          env:
+            - name: PATH
+              value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/linuxbrew/.linuxbrew/bin
+            - name: HOMEBREW_NO_AUTO_UPDATE
+              value: "1"
           resources:
             requests:
               cpu: 500m
@@ -31,6 +36,9 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
+            - name: claude
+              mountPath: /home/linuxbrew/.linuxbrew/var/homebrew
+              subPath: var-homebrew
       volumes:
         - name: claude
           persistentVolumeClaim:
