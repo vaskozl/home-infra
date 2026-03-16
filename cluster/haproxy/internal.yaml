@@ -27,7 +27,7 @@ spec:
             port: 22
             targetPort: 22
       extraArgs:
-        - --default-ssl-certificate=cert-manager/sko-ai-tls
+        - --default-ssl-certificate=agentgateway/sko-ai-tls
         - --configmap-tcp-services=haproxy/tcp-internal
       tolerations:
         - effect: NoSchedule
