@@ -32,18 +32,6 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
-        - name: chromium
-          image: *image
-          command: ["xvfb-run", "-e", "/dev/stdout", "chromium"]
-          args:
-            - --remote-debugging-port=9222
-            - --no-sandbox
-          resources:
-            requests:
-              cpu: 100m
-              memory: 500Mi
-            limits:
-              memory: 1500Mi
       volumes:
         - name: claude
           persistentVolumeClaim:
