@@ -11,8 +11,6 @@ spec:
           containers:
             - name: claude
               args:
-                - --dangerously-skip-permissions
-                - -p
                 - |
                   You are a code reviewer.
                   First 'glab repo list -a' repos and  'glab mr ls -R <repo>' to see MRs.
