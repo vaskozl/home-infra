@@ -13,7 +13,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 568
         seccompProfile:
-          type: Unconfined
+          type: RuntimeDefault
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
@@ -37,11 +37,7 @@ spec:
           command: ["xvfb-run", "-e", "/dev/stdout", "chromium"]
           args:
             - --remote-debugging-port=9222
-            - --incognito
-          securityContext:
-            capabilities:
-              add:
-                - SYS_ADMIN
+            - --no-sandbox
           resources:
             requests:
               cpu: 100m
