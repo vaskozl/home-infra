@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - glab-review.yaml
+  - hn-summary.yaml
   - pvc.yaml
   - sts.yaml
 patches:

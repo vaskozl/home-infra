@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hn-summary
+spec:
+  schedule: "0 10 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: claude
+              args:
+                - |
+                  Good morning, explore the top https://news.ycombinator.com/news articles and email me a summary.
