@@ -32,7 +32,7 @@ spec:
               PAPERLESS_WEBSERVER_WORKERS: 1
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.20.11@sha256:1919ba5edec278e81d2393efc82c97c9e3e18ef9dfcb43fdcfa7359dd3adfe99
+              tag: 2.20.12@sha256:de559198890b6e56bdb696581d80d1e713cecbea15b775a01c08f728a68ffa91
             probes:
               liveness:
                 enabled: true
