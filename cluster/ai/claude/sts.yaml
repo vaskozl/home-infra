@@ -19,7 +19,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: claude
-          image: &image ghcr.io/vaskozl/pi-coding-agent:0.59.0@sha256:0f9f71bcc1b2d530095bb218bc2189c1147d7596b148a1a696e28340b3c848e3
+          image: &image ghcr.io/vaskozl/pi-coding-agent:0.61.1
           command: ["sleep", "inf"]
           resources:
             requests:
