@@ -23,7 +23,7 @@ spec:
           containers:
             - name: qwen
               image: &image ghcr.io/vaskozl/qwen-code:0.13.0
-              command: ["qwen", "--yolo", "-p"]
+              command: ["qwen", "--yolo"]
               resources:
                 requests:
                   cpu: 500m
