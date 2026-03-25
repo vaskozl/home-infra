@@ -23,8 +23,14 @@ spec:
           containers:
             - name: qwen
               image: &image ghcr.io/vaskozl/qwen-code:0.13.0
-              command: ["qwen", "--yolo", "--system-prompt='You are an autonomous agent that is awoken via a cron. Complete
-                  your task indepedently.'"]
+              command:
+                - qwen
+                - --yolo
+                - --system-prompt
+                - >-
+                  You are an autonomous agent that is awoken via a cron. Complete your task independently.
+                  If you struggle with something (e.g., take a long time to figure out the correct syntax for a command),
+                  use the save_memory tool to save it for an easier time next time.
               resources:
                 requests:
                   cpu: 500m
