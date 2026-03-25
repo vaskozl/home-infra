@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ai
+resources:
+  - glab-review.yaml
+  - hn-summary.yaml
+  - pvc.yaml
+  - sts.yaml
+patches:
+  - path: common.yaml
+    target:
+      kind: CronJob
+labels:
+  - pairs:
+      app.kubernetes.io/name: qwen
+    includeSelectors: true
+secretGenerator:
+  - name: qwen-env
+    envs:
+      - qwen.enc.env

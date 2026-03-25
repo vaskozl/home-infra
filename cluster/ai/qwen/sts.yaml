@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: qwen
+spec:
+  serviceName: qwen
+  template:
+    spec:
+      shareProcessNamespace: true
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: qwen
+          image: &image ghcr.io/vaskozl/qwen-code:0.13.0
+          command: ["sleep", "inf"]
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2500Mi
+            limits:
+              memory: 2500Mi
+          envFrom:
+            - secretRef:
+                name: qwen-env
+          volumeMounts:
+            - name: qwen
+              mountPath: /home/nonroot
+      volumes:
+        - name: qwen
+          persistentVolumeClaim:
+            claimName: qwen-pvc
