@@ -12,6 +12,9 @@ spec:
       securityContext:
         seccompProfile:
           type: Unconfined
+        sysctls:
+          - name: user.max_user_namespaces
+            value: "63359"
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
