@@ -20,7 +20,7 @@ spec:
       containers:
         - name: qwen
           image: &image ghcr.io/vaskozl/qwen-code:0.13.0
-          command: ["sleep", "inf"]
+          command: [ralph]
           resources:
             requests:
               cpu: 500m
@@ -33,7 +33,17 @@ spec:
           volumeMounts:
             - name: qwen
               mountPath: /home/nonroot
+            - name: ralph
+              mountPath: /usr/local/bin/ralph
+              subPath: ralph.sh
+            - name: ralph
+              mountPath: /etc/qwen/prompt.md
+              subPath: prompt.md
       volumes:
         - name: qwen
           persistentVolumeClaim:
             claimName: qwen-pvc
+        - name: ralph
+          configMap:
+            name: ralph-prompt
+            defaultMode: 0555

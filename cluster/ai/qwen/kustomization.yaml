@@ -3,7 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ai
 resources:
-  - glab-review.yaml
   - hn-summary.yaml
   - pvc.yaml
   - sts.yaml
@@ -19,3 +18,8 @@ secretGenerator:
   - name: qwen-env
     envs:
       - qwen.enc.env
+configMapGenerator:
+  - name: ralph-prompt
+    files:
+      - prompt.md
+      - ralph.sh
