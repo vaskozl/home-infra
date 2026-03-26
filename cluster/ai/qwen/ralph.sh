@@ -1,11 +1,10 @@
 #!/bin/sh
 # Ralph loop — runs qwen in a loop, building a fresh prompt each iteration
-# with live repo and issue context. Sleeps between iterations; the agent can
-# request a longer sleep by outputting <sleep>SECONDS</sleep>.
+# with live repo and issue context. Sleeps between iterations
 set -eu
 
 PROMPT_FILE="${PROMPT_FILE:-/etc/qwen/prompt.md}"
-SLEEP_DEFAULT="${SLEEP_DEFAULT:-300}"
+SLEEP_DEFAULT="${SLEEP_DEFAULT:-600}"
 
 build_prompt() {
   sed "s/HOSTNAME/$(hostname)/g" "$PROMPT_FILE"
@@ -35,10 +34,5 @@ while true; do
   result=$(qwen --yolo -p "$prompt" 2>&1) || true
   echo "$result"
 
-  sleep_dur=$SLEEP_DEFAULT
-  custom=$(echo "$result" | sed -n 's/.*<sleep>\([0-9]*\)<\/sleep>.*/\1/p' | tail -1)
-  [ -n "$custom" ] && sleep_dur=$custom
-
-  echo "--- Sleeping ${sleep_dur}s ---"
-  sleep "$sleep_dur"
+  echo "$result" | grep -q '<sleep/>' && echo "--- Sleeping ---" && sleep $SLEEP_DEFAULT
 done

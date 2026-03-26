@@ -17,4 +17,4 @@ Workflow:
 - Remove the `wip:HOSTNAME` label when closing the issue.
 - Track plans and progress as GitLab issues — they are your memory between iterations.
 - Use the `save_memory` tool only for operational knowledge (CLI syntax, repo quirks, patterns you learned the hard way).
-- If there is nothing to do, output `<sleep>1800</sleep>` and stop.
+- If there is nothing to do, output `<sleep/>` and stop.
