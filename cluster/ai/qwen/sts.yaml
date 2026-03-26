@@ -5,22 +5,23 @@ metadata:
   name: qwen
 spec:
   serviceName: qwen
+  hostUsers: false
   template:
     spec:
       shareProcessNamespace: true
       securityContext:
-        fsGroup: 568
-        runAsGroup: 568
-        runAsNonRoot: true
-        runAsUser: 568
         seccompProfile:
-          type: RuntimeDefault
+          type: Unconfined
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
         - name: qwen
           image: &image ghcr.io/vaskozl/qwen-code:0.13.0
           command: [ralph]
+          securityContext:
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
           resources:
             requests:
               cpu: 500m
