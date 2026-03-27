@@ -5,26 +5,18 @@ metadata:
   name: qwen
 spec:
   serviceName: qwen
-  hostUsers: false
   template:
     spec:
       shareProcessNamespace: true
       securityContext:
         seccompProfile:
           type: Unconfined
-        sysctls:
-          - name: user.max_user_namespaces
-            value: "63359"
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
         - name: qwen
-          image: &image ghcr.io/vaskozl/qwen-code:0.13.0
+          image: &image ghcr.io/vaskozl/qwen-code:0.13.1
           command: [ralph]
-          securityContext:
-            capabilities:
-              add: ["SYS_ADMIN"]
-            allowPrivilegeEscalation: true
           resources:
             requests:
               cpu: 500m
@@ -46,6 +38,21 @@ spec:
             - name: settings
               mountPath: /home/nonroot/.qwen/settings.json
               subPath: settings.json
+            - name: docker-socket
+              mountPath: /var/run
+        - name: dind
+          image: cgr.dev/chainguard/docker-dind
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              memory: 8Gi
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run
       volumes:
         - name: qwen
           persistentVolumeClaim:
@@ -57,3 +64,5 @@ spec:
         - name: settings
           configMap:
             name: qwen-settings
+        - name: docker-socket
+          emptyDir: {}
