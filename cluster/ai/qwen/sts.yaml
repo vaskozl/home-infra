@@ -43,6 +43,9 @@ spec:
             - name: ralph
               mountPath: /etc/qwen/prompt.md
               subPath: prompt.md
+            - name: settings
+              mountPath: /home/nonroot/.qwen/settings.json
+              subPath: settings.json
       volumes:
         - name: qwen
           persistentVolumeClaim:
@@ -51,3 +54,6 @@ spec:
           configMap:
             name: ralph-prompt
             defaultMode: 0555
+        - name: settings
+          configMap:
+            name: qwen-settings
