@@ -44,13 +44,7 @@ spec:
               volumeMounts:
                 - name: qwen
                   mountPath: /home/nonroot
-                - name: settings
-                  mountPath: /home/nonroot/.qwen/settings.json
-                  subPath: settings.json
           volumes:
             - name: qwen
               persistentVolumeClaim:
                 claimName: qwen-pvc
-            - name: settings
-              configMap:
-                name: qwen-settings

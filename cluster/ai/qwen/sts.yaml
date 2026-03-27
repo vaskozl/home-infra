@@ -36,9 +36,6 @@ spec:
             - name: ralph
               mountPath: /etc/qwen/prompt.md
               subPath: prompt.md
-            - name: settings
-              mountPath: /home/nonroot/.qwen/settings.json
-              subPath: settings.json
             - name: docker-socket
               mountPath: /var/run
         - name: dind
@@ -67,8 +64,5 @@ spec:
           configMap:
             name: ralph-prompt
             defaultMode: 0555
-        - name: settings
-          configMap:
-            name: qwen-settings
         - name: docker-socket
           emptyDir: {}
