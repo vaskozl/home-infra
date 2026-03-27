@@ -18,6 +18,8 @@ spec:
     spec:
       hostUsers: false
       shareProcessNamespace: true
+      securityContext:
+        fsGroup: 568
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
@@ -31,7 +33,6 @@ spec:
             allowPrivilegeEscalation: true
             runAsUser: 568
             runAsGroup: 568
-            fsGroup: 568
           resources:
             requests:
               cpu: 500m
