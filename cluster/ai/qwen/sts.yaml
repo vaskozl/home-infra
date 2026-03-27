@@ -29,6 +29,9 @@ spec:
             seccompProfile:
               type: Unconfined
             allowPrivilegeEscalation: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
           resources:
             requests:
               cpu: 500m
