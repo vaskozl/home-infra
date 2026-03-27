@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: ai
 resources:
   - hn-summary.yaml
-  - pvc.yaml
   - sts.yaml
 patches:
   - path: common.yaml

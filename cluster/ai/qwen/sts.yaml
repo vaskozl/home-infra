@@ -5,9 +5,18 @@ metadata:
   name: qwen
 spec:
   serviceName: qwen
-  hostUsers: false
+  volumeClaimTemplates:
+    - metadata:
+        name: qwen
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
   template:
     spec:
+      hostUsers: false
       shareProcessNamespace: true
       nodeSelector:
         kubernetes.io/arch: amd64
@@ -39,9 +48,6 @@ spec:
               mountPath: /etc/qwen/prompt.md
               subPath: prompt.md
       volumes:
-        - name: qwen
-          persistentVolumeClaim:
-            claimName: qwen-pvc
         - name: ralph
           configMap:
             name: ralph-prompt
