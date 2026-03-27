@@ -11,6 +11,7 @@ spec:
       securityContext:
         seccompProfile:
           type: Unconfined
+        fsGroup: 1234
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
@@ -42,6 +43,11 @@ spec:
               mountPath: /var/run
         - name: dind
           image: cgr.dev/chainguard/docker-dind
+          args:
+            - --iptables=false
+            - --ip-masq=false
+            - --bridge=none
+            - --group=1234
           securityContext:
             privileged: true
           resources:
