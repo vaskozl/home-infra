@@ -5,19 +5,21 @@ metadata:
   name: qwen
 spec:
   serviceName: qwen
+  hostUsers: false
   template:
     spec:
       shareProcessNamespace: true
-      securityContext:
-        seccompProfile:
-          type: Unconfined
-        fsGroup: 1234
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
         - name: qwen
           image: &image ghcr.io/vaskozl/qwen-code:0.13.1
           command: [ralph]
+          securityContext:
+            procMount: Unmasked
+            seccompProfile:
+              type: Unconfined
+            allowPrivilegeEscalation: true
           resources:
             requests:
               cpu: 500m
@@ -36,28 +38,6 @@ spec:
             - name: ralph
               mountPath: /etc/qwen/prompt.md
               subPath: prompt.md
-            - name: docker-socket
-              mountPath: /var/run
-        - name: dind
-          image: cgr.dev/chainguard/docker-dind
-          args:
-            - --iptables=false
-            - --ip-masq=false
-            - --bridge=none
-            - --group=1234
-          securityContext:
-            privileged: true
-          resources:
-            requests:
-              cpu: 100m
-              memory: 500Mi
-            limits:
-              memory: 8Gi
-          volumeMounts:
-            - name: docker-socket
-              mountPath: /var/run
-            - name: qwen
-              mountPath: /home/nonroot
       volumes:
         - name: qwen
           persistentVolumeClaim:
@@ -66,5 +46,3 @@ spec:
           configMap:
             name: ralph-prompt
             defaultMode: 0555
-        - name: docker-socket
-          emptyDir: {}
