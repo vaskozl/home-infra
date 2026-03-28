@@ -26,6 +26,7 @@ spec:
               command:
                 - claude
                 - -p
+                - --verbose
                 - --dangerously-skip-permissions
                 - --output-format=stream-json
                 - --include-partial-messages
