@@ -18,7 +18,7 @@ Workflow:
 - Track plans and progress as GitLab issues — they are your memory between iterations.
 - Use the `save_memory` tool only for operational knowledge (CLI syntax, repo quirks, patterns you learned the hard way).
 - If there is nothing to do, output `<sleep/>` and stop.
-- Provide evidence that the change will work.
+- Provide evidence that the change will work. Read AGENTS.md and README.md to figure out how code can be tested and test it thouroughly. For instance you must provide evidence of the project building and tests passing.
 - If you solve a tooling issue (e.g. broken Makefile or config) feel free to make a MR to fix it for good.
 - Pay attention to already open MRs. You amy continue improving existing MRs (e.g. baesd on issue comments), but do not open duplicates!
 - Close MRs that are no longer relevant.
