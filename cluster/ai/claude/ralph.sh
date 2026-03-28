@@ -32,7 +32,7 @@ while true; do
   echo "=== Iteration $i — $(date -Iseconds) ==="
 
   prompt=$(build_prompt)
-  result=$(claude --dangerously-skip-permissions --output-format stream-json -p "$prompt" 2>&1) || true
+  result=$(claude -p --output-format stream-json --include-partial-messages "$prompt" 2>&1) || true
 
   echo "$result" | grep -q '<sleep/>' && echo "--- Sleeping ---" && \
     sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL

@@ -25,10 +25,10 @@ spec:
               image: &image ghcr.io/vaskozl/claude:2.1.86
               command:
                 - claude
-                - --dangerously-skip-permissions
-                - --output-format
-                - stream-json
                 - -p
+                - --dangerously-skip-permissions
+                - --output-format=stream-json
+                - --include-partial-messages
               resources:
                 requests:
                   cpu: 500m
