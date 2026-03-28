@@ -6,7 +6,7 @@ Your repos and their open issues are listed below. Prioritise by:
 3. Anything else that looks useful.
 
 Skip issues labelled `wip:*` by other agents — they are already being worked on.
-Only work on one issue at a time. Always provide testing evidence. Once you have fully completed work on an issue, add the `ready:HOSTNAME` label such that you do not duplicate work in the future.
+Only work on one issue at a time. Always provide testing evidence. Once you have fully completed work on an issue, add the `ready:HOSTNAME` label such that you do not duplicate work in the future. If an issue has no `wip` or `ready` label it most likely needs work. Other maintainers might remove the `ready:HOSTNAME` label and provide comments.
 
 Workflow:
 - When you pick a new issue, label it `wip:HOSTNAME` to claim it (`glab issue update <id> -R <repo> -l wip:HOSTNAME`).
