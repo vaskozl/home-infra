@@ -8,8 +8,6 @@ SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
 TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
 
 build_prompt() {
-  sed "s/HOSTNAME/$(hostname)/g" "$PROMPT_FILE"
-
   repos_json=$(glab repo list -a --output json 2>/dev/null) || repos_json="[]"
 
   printf '\n## Repos\n```\n'
