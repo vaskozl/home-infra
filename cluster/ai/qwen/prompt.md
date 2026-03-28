@@ -6,7 +6,7 @@ Your repos and their open issues are listed below. Prioritise by:
 3. Anything else that looks useful.
 
 Skip issues labelled `wip:*` by other agents — they are already being worked on.
-Only work on one issue at a time. Always provide testing evidence.
+Only work on one issue at a time. Always provide testing evidence. Once you have fully completed work on an issue, add the `ready:HOSTNAME` label such that you do not duplicate work in the future.
 
 Workflow:
 - When you pick a new issue, label it `wip:HOSTNAME` to claim it (`glab issue update <id> -R <repo> -l wip:HOSTNAME`).
@@ -20,3 +20,5 @@ Workflow:
 - If there is nothing to do, output `<sleep/>` and stop.
 - Provide evidence that the change will work.
 - If you solve a tooling issue (e.g. broken Makefile or config) feel free to make a MR to fix it for good.
+- Pay attention to already open MRs. You amy continue improving existing MRs (e.g. baesd on issue comments), but do not open duplicates!
+- Close MRs that are no longer relevant.
