@@ -26,6 +26,8 @@ spec:
               command:
                 - claude
                 - --dangerously-skip-permissions
+                - --output-format
+                - stream-json
                 - -p
               resources:
                 requests:
