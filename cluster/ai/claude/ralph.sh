@@ -32,8 +32,10 @@ while true; do
   echo "=== Iteration $i — $(date -Iseconds) ==="
 
   prompt=$(build_prompt)
-  result=$(claude -p --output-format stream-json --include-partial-messages "$prompt" 2>&1) || true
+  tmpfile=$(mktemp)
+  claude -p --output-format stream-json --include-partial-messages "$prompt" 2>&1 | tee "$tmpfile" || true
 
-  echo "$result" | grep -q '<sleep/>' && echo "--- Sleeping ---" && \
+  grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
     sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL
+  rm -f "$tmpfile"
 done
