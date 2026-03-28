@@ -12,6 +12,7 @@ spec:
           shareProcessNamespace: true
           securityContext:
             fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
             runAsGroup: 568
             runAsNonRoot: true
             runAsUser: 568

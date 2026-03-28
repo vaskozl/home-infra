@@ -20,6 +20,7 @@ spec:
       shareProcessNamespace: true
       securityContext:
         fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
       nodeSelector:
         kubernetes.io/arch: amd64
       containers:
