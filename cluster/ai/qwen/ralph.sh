@@ -5,6 +5,7 @@ set -eu
 
 PROMPT_FILE="${PROMPT_FILE:-/etc/qwen/prompt.md}"
 SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
+TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
 
 build_prompt() {
   sed "s/HOSTNAME/$(hostname)/g" "$PROMPT_FILE"
@@ -32,7 +33,7 @@ while true; do
 
   prompt=$(build_prompt)
   result=$(qwen --yolo -p "$prompt" 2>&1) || true
-  echo "$result"
 
-  echo "$result" | grep -q '<sleep/>' && echo "--- Sleeping ---" && sleep $SLEEP_INTERVAL
+  echo "$result" | grep -q '<sleep/>' && echo "--- Sleeping ---" && \
+    sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL
 done
