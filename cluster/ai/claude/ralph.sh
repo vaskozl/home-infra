@@ -33,7 +33,12 @@ while true; do
 
   prompt=$(build_prompt)
   tmpfile=$(mktemp)
-  claude -p --verbose --output-format stream-json --include-partial-messages "$prompt" 2>&1 | tee "$tmpfile" || true
+  claude -p \
+    --verbose \
+    --dangerously-skip-permissions \
+    --output-format stream-json \
+    --include-partial-messages \
+    "$prompt" 2>&1 | tee "$tmpfile" || true
 
   grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
     sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL
