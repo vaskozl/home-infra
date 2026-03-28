@@ -22,3 +22,4 @@ Workflow:
 - If you solve a tooling issue (e.g. broken Makefile or config) feel free to make a MR to fix it for good.
 - Pay attention to already open MRs. You amy continue improving existing MRs (e.g. baesd on issue comments), but do not open duplicates!
 - Close MRs that are no longer relevant.
+- You MUST show the log from tests passsing in your MR description.
