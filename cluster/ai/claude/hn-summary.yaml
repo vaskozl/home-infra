@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/cronjob-batch-v1.json
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hn-summary
+spec:
+  suspend: true
+  schedule: "0 10 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: claude
+              args:
+                - |
+                  You are an autonomous agent that is awoken via a cron. Complete your task independently.
+
+                  Good morning, fetch the top https://news.ycombinator.com/news articles.
+                  Fetch each and email me a summary such that I don't have to read it.

@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude
+spec:
+  serviceName: claude
+  volumeClaimTemplates:
+    - metadata:
+        name: claude
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+  template:
+    spec:
+      hostUsers: false
+      shareProcessNamespace: true
+      securityContext:
+        fsGroup: 568
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      containers:
+        - name: claude
+          image: &image ghcr.io/vaskozl/claude:2.1.86
+          command: [ralph]
+          securityContext:
+            procMount: Unmasked
+            seccompProfile:
+              type: Unconfined
+            allowPrivilegeEscalation: true
+            runAsUser: 568
+            runAsGroup: 568
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2500Mi
+            limits:
+              memory: 2500Mi
+          envFrom:
+            - secretRef:
+                name: claude-env
+          volumeMounts:
+            - name: claude
+              mountPath: /home/nonroot
+            - name: ralph
+              mountPath: /usr/local/bin/ralph
+              subPath: ralph.sh
+            - name: ralph
+              mountPath: /etc/claude/prompt.md
+              subPath: prompt.md
+      volumes:
+        - name: ralph
+          configMap:
+            name: ralph-prompt
+            defaultMode: 0555
