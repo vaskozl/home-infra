@@ -1,0 +1,23 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: claude
+spec:
+  scaleTargetRef:
+    kind: StatefulSet
+    name: claude
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  # Scale to 0 during Anthropic peak hours (weekdays 13:00-19:00 UTC / 5am-11am PT).
+  # During peak, Claude session limits are consumed faster, interrupting long-running jobs.
+  # Trigger is active during off-peak; when inactive minReplicaCount=0 applies.
+  triggers:
+    - type: cron
+      metadata:
+        timezone: UTC
+        # Start: weekday evenings (end of peak), end: next weekday midday (start of peak)
+        # Since end (13:00) < start (19:00), the window spans midnight.
+        # On Fridays, the next matching end is Monday 13:00, covering the full weekend.
+        start: "0 19 * * 1-5"
+        end: "0 13 * * 1-5"
+        desiredReplicas: "1"

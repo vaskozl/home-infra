@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - sts.yaml
+  - scaledobject.yaml
 patches:
   - path: common.yaml
     target:
