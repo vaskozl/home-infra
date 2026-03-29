@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Ralph loop — runs claude in a loop, building a fresh prompt each iteration
 # with live repo and issue context. Sleeps between iterations
 set -eu
@@ -8,8 +8,6 @@ SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
 TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
 
 build_prompt() {
-  cat "$PROMPT_FILE"
-
   repos_json=$(glab repo list -a --output json 2>/dev/null) || repos_json="[]"
 
   printf '\n## Repos\n```\n'
@@ -47,13 +45,14 @@ while true; do
 
   prompt=$(build_prompt)
   tmpfile=$(mktemp)
-  claude -p \
+  claude -p "$prompt" \
+    --system-prompt-file "$PROMPT_FILE" \
     --verbose \
     --dangerously-skip-permissions \
     --output-format stream-json \
     --include-partial-messages \
     --effort low \
-    "$prompt" 2>&1 | tee "$tmpfile" || true
+    2>&1 | tee >(grep '<sleep/>' > "$tmpfile") || true
 
   grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
     sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL

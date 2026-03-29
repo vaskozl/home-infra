@@ -16,6 +16,7 @@ spec:
             storage: 10Gi
   template:
     spec:
+      serviceAccountName: claude
       hostUsers: false
       shareProcessNamespace: true
       securityContext:
