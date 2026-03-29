@@ -3,7 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - agentgateway
-  - ai
+  - ai/ks.yaml
   - argo-workflows
   - automation
   - cert-manager
@@ -15,7 +15,7 @@ resources:
   - haproxy
   - headlamp
   - immich
-  - keda
+  - keda/ks.yaml
   - kube-flannel
   - kube-system
   - logging
