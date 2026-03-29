@@ -10,9 +10,7 @@ spec:
         - name: claude
           command: [ralph]
           env:
-            - name: CLAUDE_MODEL
-              value: claude-sonnet-4-6
-            - name: MODEL_TIER
+            - name: ANTHROPIC_MODEL
               value: sonnet
           volumeMounts:
             - name: ralph

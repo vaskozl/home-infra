@@ -45,7 +45,6 @@ while true; do
   tmpfile=$(mktemp)
   claude -p "$(cat "$promptfile")" \
     --system-prompt-file "$PROMPT_FILE" \
-    --model claude-opus-4-6 \
     --verbose \
     --dangerously-skip-permissions \
     --output-format stream-json \

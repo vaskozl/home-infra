@@ -9,6 +9,9 @@ spec:
       containers:
         - name: claude
           command: [planner]
+          env:
+            - name: ANTHROPIC_MODEL
+              value: opus
           volumeMounts:
             - name: planner
               mountPath: /usr/local/bin/planner

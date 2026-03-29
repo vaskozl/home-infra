@@ -6,8 +6,8 @@ set -eu
 PROMPT_FILE="${PROMPT_FILE:-/etc/claude/prompt.md}"
 SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
 TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
-CLAUDE_MODEL="${CLAUDE_MODEL:-claude-sonnet-4-6}"
-MODEL_TIER="${MODEL_TIER:-sonnet}"
+# ANTHROPIC_MODEL is set by the container env (e.g. sonnet, opus, haiku).
+# Claude Code resolves these aliases to the latest pinned version.
 
 build_prompt() {
   repos_json=$(glab repo list -a --output json 2>/dev/null) || repos_json="[]"
@@ -26,7 +26,7 @@ build_prompt() {
 
   section=""
   while read -r repo; do
-    issues=$(glab issue list -R "$repo" --label 'workflow::ready for development' --label "model::${MODEL_TIER}" 2>&1) || true
+    issues=$(glab issue list -R "$repo" --label 'workflow::ready for development' --label "model::${ANTHROPIC_MODEL}" 2>&1) || true
     if echo "$issues" | grep -q '^#'; then
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
     fi
@@ -65,7 +65,6 @@ while true; do
   tmpfile=$(mktemp)
   claude -p "$(cat "$promptfile")" \
     --system-prompt-file "$PROMPT_FILE" \
-    --model "$CLAUDE_MODEL" \
     --verbose \
     --dangerously-skip-permissions \
     --output-format stream-json \
