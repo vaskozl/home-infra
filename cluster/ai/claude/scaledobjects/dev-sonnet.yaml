@@ -1,11 +1,11 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: claude
+  name: claude-worker-sonnet
 spec:
   scaleTargetRef:
     kind: StatefulSet
-    name: claude
+    name: claude-worker-sonnet
   minReplicaCount: 0
   maxReplicaCount: 1
   # Scale to 0 during Anthropic peak hours (weekdays 13:00-19:00 UTC / 5am-11am PT).

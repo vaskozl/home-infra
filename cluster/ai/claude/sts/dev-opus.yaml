@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude-worker-opus
+spec:
+  template:
+    spec:
+      containers:
+        - name: claude
+          command: [ralph]
+          env:
+            - name: CLAUDE_MODEL
+              value: claude-opus-4-6
+            - name: MODEL_TIER
+              value: opus
+          volumeMounts:
+            - name: ralph
+              mountPath: /usr/local/bin/ralph
+              subPath: ralph.sh
+            - name: ralph
+              mountPath: /etc/claude/prompt.md
+              subPath: prompt-dev.md
+      volumes:
+        - name: ralph
+          configMap:
+            name: ralph-prompt
+            defaultMode: 0555

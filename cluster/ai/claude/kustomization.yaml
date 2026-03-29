@@ -4,12 +4,16 @@ kind: Kustomization
 namespace: ai
 resources:
   - rbac.yaml
-  - sts.yaml
-  - scaledobject.yaml
+  - sts/lead.yaml
+  - sts/dev-sonnet.yaml
+  - sts/dev-opus.yaml
+  - scaledobjects/lead.yaml
+  - scaledobjects/dev-sonnet.yaml
+  - scaledobjects/dev-opus.yaml
 patches:
-  - path: common.yaml
+  - path: sts/common.yaml
     target:
-      kind: CronJob
+      kind: StatefulSet
 labels:
   - pairs:
       app.kubernetes.io/name: claude
@@ -21,5 +25,9 @@ secretGenerator:
 configMapGenerator:
   - name: ralph-prompt
     files:
-      - prompt.md
-      - ralph.sh
+      - prompt-dev.md=prompts/prompt-dev.md
+      - ralph.sh=prompts/ralph.sh
+  - name: planner-prompt
+    files:
+      - prompt-lead.md=prompts/prompt-lead.md
+      - planner.sh=prompts/planner.sh

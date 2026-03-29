@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude-lead-opus
+spec:
+  template:
+    spec:
+      containers:
+        - name: claude
+          command: [planner]
+          volumeMounts:
+            - name: planner
+              mountPath: /usr/local/bin/planner
+              subPath: planner.sh
+            - name: planner
+              mountPath: /etc/claude/prompt.md
+              subPath: prompt-lead.md
+      volumes:
+        - name: planner
+          configMap:
+            name: planner-prompt
+            defaultMode: 0555

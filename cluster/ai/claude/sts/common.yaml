@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: claude
+  name: common
 spec:
   serviceName: claude
   volumeClaimTemplates:
@@ -26,8 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: claude
-          image: &image ghcr.io/vaskozl/claude:latest@sha256:57b8bd7313fc8dc086907adf9b5f892e2b2462e19fdf88322a66fef53d33b8ec
-          command: [ralph]
+          image: ghcr.io/vaskozl/claude:latest@sha256:57b8bd7313fc8dc086907adf9b5f892e2b2462e19fdf88322a66fef53d33b8ec
           securityContext:
             procMount: Unmasked
             seccompProfile:
@@ -47,14 +46,3 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
-            - name: ralph
-              mountPath: /usr/local/bin/ralph
-              subPath: ralph.sh
-            - name: ralph
-              mountPath: /etc/claude/prompt.md
-              subPath: prompt.md
-      volumes:
-        - name: ralph
-          configMap:
-            name: ralph-prompt
-            defaultMode: 0555
