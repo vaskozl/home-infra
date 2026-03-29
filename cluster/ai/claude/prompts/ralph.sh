@@ -22,7 +22,7 @@ build_prompt() {
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
     fi
   done <<< "$repos"
-  [ -n "$section" ] && printf '\n## My in-progress issues\n%s\n' "$section"
+  if [ -n "$section" ]; then printf '\n## My in-progress issues\n%s\n' "$section"; fi
 
   section=""
   while read -r repo; do
@@ -31,19 +31,18 @@ build_prompt() {
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
     fi
   done <<< "$repos"
-  [ -n "$section" ] && printf '\n## Issues ready for dev\n%s\n' "$section"
+  if [ -n "$section" ]; then printf '\n## Issues ready for dev\n%s\n' "$section"; fi
 
   section=""
   while read -r repo; do
-    mrs=$(glab mr list -R "$repo" --label agent \
-      --not-label 'workflow::in dev' \
-      --not-label 'workflow::in review' \
-      --not-label 'workflow::blocked' 2>&1) || true
+    mrs=$(glab mr list -R "$repo" --label agent 2>&1) || true
+    # Exclude MRs that have a workflow:: label (they're already being handled)
+    mrs=$(echo "$mrs" | grep -v 'workflow::' || true)
     if echo "$mrs" | grep -q '^!'; then
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
     fi
   done <<< "$repos"
-  [ -n "$section" ] && printf '\n## MRs needing work\n%s\n' "$section"
+  if [ -n "$section" ]; then printf '\n## MRs needing work\n%s\n' "$section"; fi
 }
 
 i=0

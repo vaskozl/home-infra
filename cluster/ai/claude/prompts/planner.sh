@@ -24,7 +24,7 @@ build_prompt() {
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
     fi
   done <<< "$repos"
-  [ -n "$section" ] && printf '\n## Issues needing planning\n%s\n' "$section"
+  if [ -n "$section" ]; then printf '\n## Issues needing planning\n%s\n' "$section"; fi
 }
 
 i=0
