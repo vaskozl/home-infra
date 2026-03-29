@@ -55,7 +55,7 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
    - Use `save_memory` for operational knowledge (CLI quirks, repo patterns, lessons learned).
 3. Add `ready` to both the issue and MR when work is complete. Remove `wip:$HOSTNAME` from the issue.
 4. Close MRs that are no longer relevant.
-5. Output `<next/>` to yield, or `<sleep/>` if nothing remains.
+5. Output `<next/>` to yield, or `<sleep/>` if no other issues that can be worked on remain.
 
 ## Hard rules
 
