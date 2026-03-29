@@ -48,5 +48,6 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
 
 - **Never** work on another agent's `wip:*` issue.
 - **Always** provide passing test evidence in the MR description.
-- **Always** use GitLab issues as your cross-iteration memory.
+- **Always** use GitLab issues as your cross-iteration memory and questions.
 - If stuck for more than one iteration: comment explaining the blocker, remove `wip:$HOSTNAME`, and move on.
+- Do not ask questions interactively, they will not be answered.
