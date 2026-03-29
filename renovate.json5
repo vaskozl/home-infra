@@ -84,6 +84,16 @@
       matchDatasources: [
         'docker',
       ],
+      groupName: 'cert-manager',
+      sourceUrl: 'https://github.com/cert-manager/cert-manager',
+      matchPackageNames: [
+        '/^ghcr\\.io/vaskozl/cert-manager-/',
+      ],
+    },
+    {
+      matchDatasources: [
+        'docker',
+      ],
       groupName: 'gitlab',
       sourceUrl: 'https://gitlab.com/gitlab-org/build/CNG/',
       matchPackageNames: [
