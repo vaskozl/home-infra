@@ -25,17 +25,17 @@ secretGenerator:
     envs:
       - claude.enc.env
 configMapGenerator:
-  - name: ralph-prompt
+  - name: ralph-dev
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
-      - prompt-dev.md=prompts/prompt-dev.md
-      - ralph.sh=prompts/ralph.sh
-  - name: planner-prompt
+      - prompt.md=prompts/prompt-dev.md
+      - ralph-dev.sh=prompts/ralph-dev.sh
+  - name: ralph-lead
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
-      - prompt-lead.md=prompts/prompt-lead.md
-      - planner.sh=prompts/planner.sh
+      - prompt.md=prompts/prompt-lead.md
+      - ralph-lead.sh=prompts/ralph-lead.sh

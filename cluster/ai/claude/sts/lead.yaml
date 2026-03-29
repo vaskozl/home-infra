@@ -8,19 +8,19 @@ spec:
     spec:
       containers:
         - name: claude
-          command: [planner]
+          command: [ralph-lead]
           env:
             - name: ANTHROPIC_MODEL
               value: opus
           volumeMounts:
-            - name: planner
-              mountPath: /usr/local/bin/planner
-              subPath: planner.sh
-            - name: planner
+            - name: ralph
+              mountPath: /usr/local/bin/ralph-lead
+              subPath: ralph-lead.sh
+            - name: ralph
               mountPath: /etc/claude/prompt.md
-              subPath: prompt-lead.md
+              subPath: prompt.md
       volumes:
-        - name: planner
+        - name: ralph
           configMap:
-            name: planner-prompt
+            name: ralph-lead
             defaultMode: 0555
