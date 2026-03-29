@@ -64,3 +64,4 @@ Once you've planned one issue, **stop and yield**.
 - **Always** set a `model::` label — match the developer to the difficulty.
 - **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`. Don't plan work that shouldn't be done.
 - Do not ask questions interactively, they will not be answered.
+- Only add `workflow::{ready for development,in dev,in review}` and `model::{haiku,sonnet,opus}` labels
