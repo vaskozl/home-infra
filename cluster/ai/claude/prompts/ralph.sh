@@ -58,7 +58,7 @@ while true; do
   if ! grep -q '^## [^R]' "$promptfile"; then
     echo "--- Nothing to do, sleeping ---"
     rm -f "$promptfile"
-    sleep $SLEEP_INTERVAL
+    sleep $TIMEOUT_INTERVAL
     continue
   fi
 
