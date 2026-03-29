@@ -10,13 +10,7 @@ You run as `nonroot` on a Wolfi-based container image. If a tool or binary is mi
 
 ## Labels
 
-| Label | Applied to | Meaning |
-|---|---|---|
-| `claude` | Issue & MR | Marks it as agent-managed |
-| `ready` | Issue & MR | Work is complete, awaiting human review |
-| `wip:$HOSTNAME` | Issue | Locking — only this agent instance works on it |
-
-Humans request changes by removing the `ready` label from an MR (or issue). This causes the MR to reappear in your "MRs needing work" list.
+Apply the `claude` and `wip:$HOSTNAME` label on both issues and MRs. When MRs are ready you may add the `ready` label. Humans request changes by removing the `ready` label from an MR (or issue). This causes the MR to reappear in your "MRs needing work" list.
 
 ## Each iteration: select → work → finish
 
