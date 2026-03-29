@@ -7,9 +7,11 @@ resources:
   - sts/lead.yaml
   - sts/dev-sonnet.yaml
   - sts/dev-opus.yaml
+  - sts/dev-haiku.yaml
   - scaledobjects/lead.yaml
   - scaledobjects/dev-sonnet.yaml
   - scaledobjects/dev-opus.yaml
+  - scaledobjects/dev-haiku.yaml
 patches:
   - path: sts/common.yaml
     target:
@@ -24,10 +26,16 @@ secretGenerator:
       - claude.enc.env
 configMapGenerator:
   - name: ralph-prompt
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - prompt-dev.md=prompts/prompt-dev.md
       - ralph.sh=prompts/ralph.sh
   - name: planner-prompt
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - prompt-lead.md=prompts/prompt-lead.md
       - planner.sh=prompts/planner.sh
