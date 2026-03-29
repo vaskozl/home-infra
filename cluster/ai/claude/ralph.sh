@@ -24,6 +24,20 @@ build_prompt() {
           printf '```$ glab issue list -R %s\n%s\n```\n' "$repo" "$issues"
         fi
       done
+
+  printf '\n## MRs needing work\n'
+  mrs_output=$(echo "$repos_json" | jq -r '.[].path_with_namespace' 2>/dev/null \
+    | while read -r repo; do
+        mrs=$(glab mr list -R "$repo" --label claude --not-label ready 2>&1) || true
+        if echo "$mrs" | grep -q '^!'; then
+          printf '```$ glab mr list -R %s --label claude --not-label ready\n%s\n```\n' "$repo" "$mrs"
+        fi
+      done)
+  if [ -n "$mrs_output" ]; then
+    printf '%s\n' "$mrs_output"
+  else
+    printf 'No unready MRs with the `claude` label found.\n'
+  fi
 }
 
 i=0
