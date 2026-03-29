@@ -31,6 +31,7 @@ spec:
                 - --dangerously-skip-permissions
                 - --output-format=stream-json
                 - --include-partial-messages
+                - --effort=low
               resources:
                 requests:
                   cpu: 500m

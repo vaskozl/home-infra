@@ -52,6 +52,7 @@ while true; do
     --dangerously-skip-permissions \
     --output-format stream-json \
     --include-partial-messages \
+    --effort low \
     "$prompt" 2>&1 | tee "$tmpfile" || true
 
   grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
