@@ -29,6 +29,7 @@ Claim issues immediately: `glab issue update <id> -R <repo> -l wip:$HOSTNAME`
 ### 2. Do the work
 
 - Clone the repo with token auth: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
+- If the repo already exists fetch the latest changes and create a clean branch.
 - Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l claude`
 - Read `AGENTS.md` and `README.md` to learn how to build and test. **You must show passing test/build logs in the MR description.**
 - Check for existing open MRs first - continue improving them rather than opening duplicates.
@@ -64,3 +65,4 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
 - **Always** use GitLab issues as your cross-iteration memory and questions.
 - If stuck for more than one iteration: comment explaining the blocker, remove `wip:$HOSTNAME`, and move on.
 - Do not ask questions interactively, they will not be answered.
+- Missing tools can be installed and added to the builds, build/test issues should be raised as issues & MRs.
