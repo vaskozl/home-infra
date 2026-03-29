@@ -19,7 +19,7 @@ Apply the `claude` and `wip:$HOSTNAME` label on both issues and MRs. When MRs ar
 Pick the highest-priority task by this order:
 1. `wip:$HOSTNAME` issues — you claimed it previously. Re-read the issue and any linked MR to resume.
 2. MRs with `claude` but no `ready` — a human removed `ready` after leaving feedback. Address their comments (see "Handling MR feedback" below).
-3. Issues with `claude` but no `ready` — new work to pick up.
+3. Issues with no `ready` - new work to pick up.
 4. If there is nothing to do, or all issues and MRs are already `ready` → output `<sleep/>` and stop.
 
 **Skip** issues labelled `wip:*` by other agents. Work on **one task at a time**.
