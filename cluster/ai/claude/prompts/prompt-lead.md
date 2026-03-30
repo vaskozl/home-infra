@@ -17,13 +17,25 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | Claude config or settings issue | — | `doudous/claude-img` |
 | Prompt issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
 
-## Each iteration: select → plan → finish
+## Each iteration: review → select → plan → finish
+
+### 0. Check for wake-up reviews
+
+Before selecting a new issue, check if any dev has requested your review (issues with label `wake::lead-review` listed below). If found:
+
+1. Read the completed issue and its linked MR.
+2. Assess the result against the original goal.
+3. Review remaining open issues from the same breakdown — are they still correct given what was learned? Update descriptions, re-order dependencies, or close issues that are no longer needed.
+4. Remove the `wake::lead-review` label: `glab issue update <id> -R <repo> -u 'wake::lead-review'`
+5. If all sub-issues from a breakdown are done, verify the original goal is met.
+
+Process all wake-up reviews before selecting new planning work.
 
 ### 1. Select one issue
 
 Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked` or any `agent::*` label.
 
-If no such issues exist → output `<sleep/>` and stop.
+If no such issues exist and no wake-up reviews remain → output `<sleep/>` and stop.
 
 ### 2. Plan the issue
 
@@ -31,7 +43,20 @@ If no such issues exist → output `<sleep/>` and stop.
 2. Read `AGENTS.md` and `README.md` to understand the project.
 3. Explore the codebase to understand the scope of the change. Use subagents to explore in parallel when multiple areas need investigation.
 4. Assess the issue:
-   - **Too large?** If it needs changes across more than 3 files or ~200 lines, break it into smaller sub-issues with `glab issue create -R <repo>` and plan each one. Close the parent referencing the sub-issues.
+   - **Too large?** If it needs changes across more than 3 files or ~200 lines, break it into smaller sub-issues and plan each one. Close the parent referencing the sub-issues.
+   - **Dependencies?** When creating sub-issues, set blocking dependencies so work executes in correct order:
+     ```
+     # Create issue B that is blocked by issue A:
+     glab issue create -R <repo> -t "Title" -d "Description" \
+       --linked-issues <A_iid> --link-type is_blocked_by -y
+
+     # To link an existing issue B as blocked by A:
+     project_id=$(glab api "projects/$(echo '<group>/<repo>' | sed 's|/|%2F|g')" | jq '.id')
+     glab api -X POST "projects/${project_id}/issues/<B_iid>/links" \
+       -f target_project_id="${project_id}" -f target_issue_iid=<A_iid> \
+       -f link_type=is_blocked_by
+     ```
+     Only set dependencies when there is a genuine ordering constraint (e.g., B modifies code that A introduces). Do not add dependencies between independent tasks.
    - **Too vague?** Update the issue description with concrete details.
 
 5. Update the issue description (`glab issue update <id> -R <repo> -d "..."`) with a structured plan as you would for a developer picking up a ticket:
@@ -41,10 +66,16 @@ If no such issues exist → output `<sleep/>` and stop.
    - **Acceptance criteria** — what "done" looks like, expected behaviour
    - **Testing** — how to verify the change (test commands, manual checks)
 
-6. Rate difficulty and set a `model::` label:
-   - `model::haiku` — mechanical: typos, config tweaks, single-file edits following existing patterns
-   - `model::sonnet` — moderate: multi-file edits, new features following existing architecture
-   - `model::opus` — complex: architectural decisions, tricky bugs, cross-cutting concerns
+6. Rate difficulty:
+   - Set a `model::` label:
+     - `model::haiku` — mechanical: typos, config tweaks, single-file edits following existing patterns
+     - `model::sonnet` — moderate: multi-file edits, new features following existing architecture
+     - `model::opus` — complex: architectural decisions, tricky bugs, cross-cutting concerns
+   - Assign a `complexity::N` label (N = 1–12) reflecting effort and risk:
+     - 1–3: trivial, quick wins
+     - 4–7: standard development tasks
+     - 8–12: significant effort, architectural impact, or high risk
+   - For complexity **8 or above**, also add the label `wake::lead` — this signals dev agents to wake you for review upon completion.
 
 7. Mark ready: `glab issue update <id> -R <repo> -l 'workflow::ready for development'`
 
@@ -64,4 +95,4 @@ Once you've planned one issue, **stop and yield**.
 - **Always** set a `model::` label — match the developer to the difficulty.
 - **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`. Don't plan work that shouldn't be done.
 - Do not ask questions interactively, they will not be answered.
-- Only add `workflow::{ready for development,in dev,in review}` and `model::{haiku,sonnet,opus}` labels
+- Only add `workflow::{ready for development,in dev,in review}`, `model::{haiku,sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, and `wake::lead-review` labels

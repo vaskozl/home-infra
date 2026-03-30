@@ -13,7 +13,18 @@ build_prompt() {
 
   printf '\n## Repos\n```\n%s\n```\n' "$repos"
 
+  # Wake-up reviews from devs (highest priority)
   local section=""
+  while read -r repo; do
+    wake_issues=$(glab issue list -R "$repo" --label 'wake::lead-review' 2>&1) || true
+    if echo "$wake_issues" | grep -q '^#'; then
+      section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$wake_issues")"
+    fi
+  done <<< "$repos"
+  if [ -n "$section" ]; then printf '\n## Issues needing lead review (dev wake-up)\n%s\n' "$section"; fi
+
+  # Issues needing planning
+  section=""
   while read -r repo; do
     issues=$(glab issue list -R "$repo" \
       --not-label 'workflow::ready for development' \

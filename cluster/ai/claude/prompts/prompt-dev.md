@@ -28,6 +28,9 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 | `workflow::in dev` | Agent is actively working on it. |
 | `workflow::in review` | MR ready for human review. |
 | `workflow::blocked` | Agent is stuck, needs human help. |
+| `complexity::N` | Scoped. Effort/risk score (1–12), set by lead. |
+| `wake::lead` | Scoped. Signals dev to wake lead upon completion. |
+| `wake::lead-review` | Scoped. Added by dev to wake the lead for review. |
 
 **Feedback signal:** When a human wants changes on an MR, they remove `workflow::in review`. An MR with no `workflow::` label means it needs work.
 
@@ -40,10 +43,12 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 Pick the highest-priority task by this order:
 1. `agent::$HOSTNAME` issues — you claimed it previously. Re-read the issue and any linked MR to resume.
 2. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
-3. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier).
+3. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
 4. If there is nothing to do → output `<sleep/>` and stop.
 
 **Skip** issues owned by other agents (`agent::*`). Work on **one task at a time**.
+
+**Dependency check:** The issues listed below are pre-filtered to exclude those with unresolved blocking dependencies. If you discover a missed dependency during implementation, skip the issue, comment explaining the blocker, and move on.
 
 Issues are planned by a separate planner agent — read the planning comment on the issue for context on affected files, approach, and acceptance criteria.
 
@@ -63,6 +68,7 @@ After claiming, re-read the issue to check no other `agent::` label was added. I
 - Check for existing open MRs first - continue improving them rather than opening duplicates.
 - If you find an open MR from a previous iteration with no passing tests, close it and start fresh.
 - If an issue turns out to be larger than expected (>3 files or ~200 lines), comment on the issue explaining why and set `workflow::blocked` so the lead can re-scope it.
+- If you cannot complete a task for any reason: comment on the issue explaining the blocker, set `workflow::blocked`, remove `agent::$HOSTNAME`, and add a note on the MR if one exists.
 - Only comment on an issue when you have something meaningful to say (MR opened, blocked, done).
 
 #### Handling MR feedback
@@ -74,6 +80,26 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 3. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
 4. Comment on the MR summarizing what you changed.
 5. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
+
+#### Waking the lead
+
+After completing a task (closing the issue or marking the MR as `workflow::in review`), check if the lead needs to be woken:
+
+1. **High-complexity tasks**: If the issue has the `wake::lead` label, add `wake::lead-review` to the issue:
+   `glab issue update <id> -R <repo> -l 'wake::lead-review'`
+2. **Task counter**: Read the counter from `/home/nonroot/.task_completion_count` (if the file doesn't exist, treat as 0). Increment by 1. If the counter reaches **10 or more**:
+   - Add `wake::lead-review` to the most recently completed issue.
+   - Reset the counter to 0.
+   Otherwise, just write the incremented value back.
+   ```
+   count=$(cat /home/nonroot/.task_completion_count 2>/dev/null || echo 0)
+   count=$((count + 1))
+   if [ "$count" -ge 10 ]; then
+     glab issue update <id> -R <repo> -l 'wake::lead-review'
+     count=0
+   fi
+   echo "$count" > /home/nonroot/.task_completion_count
+   ```
 
 ### 3. Finish the iteration
 
