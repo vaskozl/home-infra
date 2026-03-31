@@ -52,25 +52,42 @@ build_prompt() {
   done <<< "$repos"
   if [ -n "$section" ]; then printf '\n## Issues ready for dev\n%s\n' "$section"; fi
 
-  # Build not[labels][] query params for excluded MR labels
-  local not_label_params=""
+  # Build a jq select expression to exclude MRs with any of the excluded labels.
+  # GitLab API does not support combining labels= and not[labels][]= filters.
+  local jq_exclude='.'
   for label in "${EXCLUDED_MR_LABELS[@]}"; do
-    not_label_params+="&not[labels][]=$(urlencode "$label")"
+    jq_exclude+=" | select(.labels | map(. == $(printf '%s' "$label" | jq -Rs .)) | any | not)"
   done
   local gitlab_host="${GITLAB_HOST:-https://gitlab.sko.ai}"
 
-  section=""
+  local conflict_section="" work_section=""
   while read -r repo; do
     encoded_repo=$(urlencode "$repo")
-    mrs=$(curl -sf \
-      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=agent&per_page=100${not_label_params}" \
-      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null | \
-      jq -r '.[] | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
+    payload=$(curl -sf \
+      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=agent&per_page=100" \
+      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
+
+    # MRs with conflicts — wake regardless of workflow:: label
+    mrs=$(printf '%s' "$payload" | jq -r --arg model "$ANTHROPIC_MODEL" \
+      '.[] | select(.has_conflicts == true)
+           | select(.labels | map(test($model)) | any)
+           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
     if [ -n "$mrs" ]; then
-      section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
+      conflict_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
+    fi
+
+    # MRs needing work (no conflict, no excluded labels)
+    mrs=$(printf '%s' "$payload" | jq -r --arg model "$ANTHROPIC_MODEL" \
+      ".[] | select(.has_conflicts == false or .has_conflicts == null)
+           | select(.labels | map(test(\$model)) | any)
+           | ${jq_exclude}
+           | \"!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))\"" 2>/dev/null) || true
+    if [ -n "$mrs" ]; then
+      work_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
     fi
   done <<< "$repos"
-  if [ -n "$section" ]; then printf '\n## MRs needing work\n%s\n' "$section"; fi
+  if [ -n "$conflict_section" ]; then printf '\n## MRs with conflicts\n%s\n' "$conflict_section"; fi
+  if [ -n "$work_section" ]; then printf '\n## MRs needing work\n%s\n' "$work_section"; fi
 }
 
 i=0

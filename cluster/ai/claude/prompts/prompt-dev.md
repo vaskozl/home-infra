@@ -24,6 +24,7 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 | Label | Purpose |
 |---|---|
 | `agent::$HOSTNAME` | Scoped. Ownership claim — only one agent can own an item. |
+| `model::$ANTHROPIC_MODEL` | Scoped. Model tier that created this MR — used to route feedback back to the right agent. |
 | `workflow::ready for development` | Available for an agent to pick up. |
 | `workflow::in dev` | Agent is actively working on it. |
 | `workflow::in review` | MR ready for human review. |
@@ -42,9 +43,10 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 
 Pick the highest-priority task by this order:
 1. `agent::$HOSTNAME` issues — you claimed it previously. Re-read the issue and any linked MR to resume.
-2. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
-3. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
-4. If there is nothing to do → output `<sleep/>` and stop.
+2. MRs with conflicts — rebase on latest main, resolve conflicts, and force-push: `git fetch origin && git rebase origin/main`.
+3. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
+4. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
+5. If there is nothing to do → output `<sleep/>` and stop.
 
 **Skip** issues owned by other agents (`agent::*`). Work on **one task at a time**.
 
@@ -61,7 +63,13 @@ After claiming, re-read the issue to check no other `agent::` label was added. I
 ### 2. Do the work
 
 - Ensure you have a clean, up-to-date checkout of the repo's default branch before creating your feature branch. Clone with token auth if needed: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
-- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l agent -l 'workflow::in dev' -l 'agent::$HOSTNAME'`
+- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l agent -l 'workflow::in dev' -l 'agent::$HOSTNAME' -l "model::${ANTHROPIC_MODEL}"`
+- **Before pushing**, always rebase on the latest default branch to avoid conflicts:
+  ```
+  git fetch origin && git rebase origin/main
+  ```
+  Resolve any conflicts during rebase before pushing. Do not push a branch that has conflicts.
+- **After opening the MR**, verify it has no conflicts: `glab mr view <id> -R <repo> --output json | jq '.has_conflicts'`. If `true`, rebase and force-push to resolve before marking `workflow::in review`.
 - Use short imperative commit messages in "Add foo" style (e.g. `Add redis health check`, `Fix ingress TLS config`, `Remove unused CRD`).
 - Read `AGENTS.md` and `README.md` to learn how to build and test.
 - **Run tests locally before pushing. Do not push code that fails tests.** Include passing test/build logs in the MR description.
@@ -76,7 +84,7 @@ After claiming, re-read the issue to check no other `agent::` label was added. I
 When you pick up an MR with no `workflow::` label (human requested changes):
 
 1. Read ALL comments and discussion threads: `glab mr view <id> -R <repo> -c`
-2. Check out the existing branch and push fixes — do **not** open a new MR.
+2. Check out the existing branch, rebase on latest main (`git fetch origin && git rebase origin/main`), and push fixes — do **not** open a new MR.
 3. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
 4. Comment on the MR summarizing what you changed.
 5. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
