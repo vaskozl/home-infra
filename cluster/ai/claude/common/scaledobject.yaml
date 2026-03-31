@@ -1,14 +1,12 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: claude-worker-haiku
+  name: common
 spec:
-  scaleTargetRef:
-    kind: StatefulSet
-    name: claude-worker-haiku
   minReplicaCount: 0
   maxReplicaCount: 1
-  # Same schedule as other agents — scale to 0 during Anthropic peak hours.
+  # Scale to 0 during Anthropic peak hours (weekdays 13:00-19:00 UTC).
+  # When inactive, minReplicaCount=0 applies. Friday start covers the full weekend.
   triggers:
     - type: cron
       metadata:

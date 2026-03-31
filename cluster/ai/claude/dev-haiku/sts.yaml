@@ -12,13 +12,6 @@ spec:
           env:
             - name: ANTHROPIC_MODEL
               value: haiku
-          volumeMounts:
-            - name: ralph
-              mountPath: /usr/local/bin/ralph-dev
-              subPath: ralph-dev.sh
-            - name: ralph
-              mountPath: /etc/claude/prompt.md
-              subPath: prompt.md
       volumes:
         - name: ralph
           configMap:

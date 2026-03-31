@@ -46,3 +46,15 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
+            - name: ralph
+              mountPath: /usr/local/bin/ralph-dev
+              subPath: ralph-dev.sh
+            - name: ralph
+              mountPath: /usr/local/bin/ralph-lead
+              subPath: ralph-lead.sh
+            - name: ralph
+              mountPath: /etc/claude/prompt.md
+              subPath: prompt.md
+            - name: ralph
+              mountPath: /usr/local/lib/ralph-common.sh
+              subPath: ralph-common.sh

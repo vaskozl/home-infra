@@ -4,18 +4,17 @@ kind: Kustomization
 namespace: ai
 resources:
   - rbac.yaml
-  - sts/lead.yaml
-  - sts/dev-sonnet.yaml
-  - sts/dev-opus.yaml
-  - sts/dev-haiku.yaml
-  - scaledobjects/lead.yaml
-  - scaledobjects/dev-sonnet.yaml
-  - scaledobjects/dev-opus.yaml
-  - scaledobjects/dev-haiku.yaml
+  - lead
+  - dev-sonnet
+  - dev-opus
+  - dev-haiku
 patches:
-  - path: sts/common.yaml
+  - path: common/sts.yaml
     target:
       kind: StatefulSet
+  - path: common/scaledobject.yaml
+    target:
+      kind: ScaledObject
 labels:
   - pairs:
       app.kubernetes.io/name: claude
@@ -32,6 +31,7 @@ configMapGenerator:
     files:
       - prompt.md=prompts/prompt-dev.md
       - ralph-dev.sh=prompts/ralph-dev.sh
+      - ralph-common.sh=prompts/ralph-common.sh
   - name: ralph-lead
     options:
       annotations:
@@ -39,3 +39,4 @@ configMapGenerator:
     files:
       - prompt.md=prompts/prompt-lead.md
       - ralph-lead.sh=prompts/ralph-lead.sh
+      - ralph-common.sh=prompts/ralph-common.sh

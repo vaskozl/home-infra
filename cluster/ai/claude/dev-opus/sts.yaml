@@ -2,25 +2,18 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: claude-lead-opus
+  name: claude-worker-opus
 spec:
   template:
     spec:
       containers:
         - name: claude
-          command: [ralph-lead]
+          command: [ralph-dev]
           env:
             - name: ANTHROPIC_MODEL
               value: opus
-          volumeMounts:
-            - name: ralph
-              mountPath: /usr/local/bin/ralph-lead
-              subPath: ralph-lead.sh
-            - name: ralph
-              mountPath: /etc/claude/prompt.md
-              subPath: prompt.md
       volumes:
         - name: ralph
           configMap:
-            name: ralph-lead
+            name: ralph-dev
             defaultMode: 0555

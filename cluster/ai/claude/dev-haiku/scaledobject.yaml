@@ -1,0 +1,8 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: claude-worker-haiku
+spec:
+  scaleTargetRef:
+    kind: StatefulSet
+    name: claude-worker-haiku

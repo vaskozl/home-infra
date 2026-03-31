@@ -9,26 +9,16 @@ TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
 # ANTHROPIC_MODEL is set by the container env (e.g. sonnet, opus, haiku).
 # Claude Code resolves these aliases to the latest pinned version.
 
-# Check if an issue has unresolved (open) blocking dependencies.
-# Returns 0 (has blockers) or 1 (clear to work on).
-has_unresolved_blockers() {
-  local repo="$1" iid="$2"
-  local encoded_repo
-  encoded_repo=$(echo "$repo" | sed 's|/|%2F|g')
+# shellcheck source=ralph-common.sh
+source /usr/local/lib/ralph-common.sh
 
-  local project_id
-  project_id=$(glab api "projects/${encoded_repo}" 2>/dev/null | jq -r '.id') || return 1
-
-  local open_blockers
-  open_blockers=$(glab api "projects/${project_id}/issues/${iid}/links" 2>/dev/null \
-    | jq '[.[] | select(.link_type == "is_blocked_by" and .state != "closed")] | length') || return 1
-
-  [ "$open_blockers" -gt 0 ]
-}
+# MRs with any of these labels are excluded from "MRs needing work".
+# Add labels here to suppress additional MR states from waking agents.
+EXCLUDED_MR_LABELS=("workflow::in review")
 
 build_prompt() {
-  repos_json=$(glab repo list -a --output json 2>/dev/null) || repos_json="[]"
-  repos=$(echo "$repos_json" | jq -r '.[].path_with_namespace' 2>/dev/null)
+  local repos
+  repos=$(list_repos)
 
   printf '\n## Repos\n```\n%s\n```\n' "$repos"
 
@@ -62,12 +52,21 @@ build_prompt() {
   done <<< "$repos"
   if [ -n "$section" ]; then printf '\n## Issues ready for dev\n%s\n' "$section"; fi
 
+  # Build not[labels][] query params for excluded MR labels
+  local not_label_params=""
+  for label in "${EXCLUDED_MR_LABELS[@]}"; do
+    not_label_params+="&not[labels][]=$(urlencode "$label")"
+  done
+  local gitlab_host="${GITLAB_HOST:-https://gitlab.sko.ai}"
+
   section=""
   while read -r repo; do
-    mrs=$(glab mr list -R "$repo" --label agent 2>&1) || true
-    # Exclude MRs that have a workflow:: label (they're already being handled)
-    mrs=$(echo "$mrs" | grep -v 'workflow::' || true)
-    if echo "$mrs" | grep -q '^!'; then
+    encoded_repo=$(urlencode "$repo")
+    mrs=$(curl -sf \
+      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=agent&per_page=100${not_label_params}" \
+      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null | \
+      jq -r '.[] | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
+    if [ -n "$mrs" ]; then
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
     fi
   done <<< "$repos"

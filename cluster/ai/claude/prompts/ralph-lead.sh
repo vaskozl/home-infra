@@ -7,9 +7,16 @@ PROMPT_FILE="${PROMPT_FILE:-/etc/claude/prompt.md}"
 SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
 TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
 
+# shellcheck source=ralph-common.sh
+source /usr/local/lib/ralph-common.sh
+
+# Issues with these labels are never shown to the planner.
+# Add labels here to exclude additional issue types (e.g. renovate, spam).
+EXCLUDED_ISSUE_LABELS=(renovate)
+
 build_prompt() {
-  repos_json=$(glab repo list -a --output json 2>/dev/null) || repos_json="[]"
-  repos=$(echo "$repos_json" | jq -r '.[].path_with_namespace' 2>/dev/null)
+  local repos
+  repos=$(list_repos)
 
   printf '\n## Repos\n```\n%s\n```\n' "$repos"
 
@@ -23,6 +30,12 @@ build_prompt() {
   done <<< "$repos"
   if [ -n "$section" ]; then printf '\n## Issues needing lead review (dev wake-up)\n%s\n' "$section"; fi
 
+  # Build --not-label flags for glab
+  local not_label_args=()
+  for label in "${EXCLUDED_ISSUE_LABELS[@]}"; do
+    not_label_args+=(--not-label "$label")
+  done
+
   # Issues needing planning
   section=""
   while read -r repo; do
@@ -30,7 +43,8 @@ build_prompt() {
       --not-label 'workflow::ready for development' \
       --not-label 'workflow::in dev' \
       --not-label 'workflow::in review' \
-      --not-label 'workflow::blocked' 2>&1) || true
+      --not-label 'workflow::blocked' \
+      "${not_label_args[@]}" 2>&1) || true
     if echo "$issues" | grep -q '^#'; then
       section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
     fi
