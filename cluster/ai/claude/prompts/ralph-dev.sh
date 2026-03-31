@@ -63,23 +63,22 @@ build_prompt() {
   local conflict_section="" work_section=""
   while read -r repo; do
     encoded_repo=$(urlencode "$repo")
+    encoded_model=$(urlencode "model::${ANTHROPIC_MODEL}")
     payload=$(curl -sf \
-      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=agent&per_page=100" \
+      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=${encoded_model}&per_page=100" \
       -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
 
     # MRs with conflicts — wake regardless of workflow:: label
-    mrs=$(printf '%s' "$payload" | jq -r --arg model "$ANTHROPIC_MODEL" \
+    mrs=$(printf '%s' "$payload" | jq -r \
       '.[] | select(.has_conflicts == true)
-           | select(.labels | map(test($model)) | any)
            | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
     if [ -n "$mrs" ]; then
       conflict_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
     fi
 
     # MRs needing work (no conflict, no excluded labels)
-    mrs=$(printf '%s' "$payload" | jq -r --arg model "$ANTHROPIC_MODEL" \
+    mrs=$(printf '%s' "$payload" | jq -r \
       ".[] | select(.has_conflicts == false or .has_conflicts == null)
-           | select(.labels | map(test(\$model)) | any)
            | ${jq_exclude}
            | \"!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))\"" 2>/dev/null) || true
     if [ -n "$mrs" ]; then

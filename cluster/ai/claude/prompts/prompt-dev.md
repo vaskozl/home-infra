@@ -63,7 +63,7 @@ After claiming, re-read the issue to check no other `agent::` label was added. I
 ### 2. Do the work
 
 - Ensure you have a clean, up-to-date checkout of the repo's default branch before creating your feature branch. Clone with token auth if needed: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
-- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l agent -l 'workflow::in dev' -l 'agent::$HOSTNAME' -l "model::${ANTHROPIC_MODEL}"`
+- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l 'agent::$HOSTNAME' -l "model::${ANTHROPIC_MODEL}"`
 - **Before pushing**, always rebase on the latest default branch to avoid conflicts:
   ```
   git fetch origin && git rebase origin/main
