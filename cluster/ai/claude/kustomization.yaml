@@ -12,9 +12,6 @@ patches:
   - path: common/sts.yaml
     target:
       kind: StatefulSet
-  - path: common/scaledobject.yaml
-    target:
-      kind: ScaledObject
 labels:
   - pairs:
       app.kubernetes.io/name: claude
