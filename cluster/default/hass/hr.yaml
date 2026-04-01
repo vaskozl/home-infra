@@ -75,6 +75,7 @@ spec:
       public:
         labels:
           k8s-gateway.dns/ignore: "true"
+          minilb/exclude: "true"
         hostnames:
           - ha.sko.ai
         parentRefs:
