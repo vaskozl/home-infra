@@ -44,19 +44,18 @@ If no such issues exist and no wake-up reviews remain → output `<sleep/>` and 
 3. Explore the codebase to understand the scope of the change. Use subagents to explore in parallel when multiple areas need investigation.
 4. Assess the issue:
    - **Too large?** If it needs changes across more than 3 files or ~200 lines, break it into smaller sub-issues and plan each one. Close the parent referencing the sub-issues.
-   - **Dependencies?** When creating sub-issues, set blocking dependencies so work executes in correct order:
+   - **Dependencies?** When creating sub-issues, encode blocking dependencies in the issue description so workers respect ordering. Add a `## Blocked by` section listing each blocker:
      ```
-     # Create issue B that is blocked by issue A:
-     glab issue create -R <repo> -t "Title" -d "Description" \
-       --linked-issues <A_iid> --link-type is_blocked_by -y
+     ## Blocked by
+     - #12 Add shared I2C bus
+     - #13 Define SharedState struct
+     ```
+     Workers parse this section to skip issues with open blockers. Only add blockers when there is a genuine ordering constraint (e.g., B modifies code that A introduces). Do not add dependencies between independent tasks.
 
-     # To link an existing issue B as blocked by A:
-     project_id=$(glab api "projects/$(echo '<group>/<repo>' | sed 's|/|%2F|g')" | jq '.id')
-     glab api -X POST "projects/${project_id}/issues/<B_iid>/links" \
-       -f target_project_id="${project_id}" -f target_issue_iid=<A_iid> \
-       -f link_type=is_blocked_by
+     To add a blocker to an existing issue, update its description to include the `## Blocked by` section:
      ```
-     Only set dependencies when there is a genuine ordering constraint (e.g., B modifies code that A introduces). Do not add dependencies between independent tasks.
+     glab issue update <B_iid> -R <repo> -d "$(glab issue view <B_iid> -R <repo> --output json | jq -r '.description')\n\n## Blocked by\n- #<A_iid> <A title>"
+     ```
    - **Too vague?** Update the issue description with concrete details.
 
 5. Update the issue description (`glab issue update <id> -R <repo> -d "..."`) with a structured plan as you would for a developer picking up a ticket:

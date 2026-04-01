@@ -15,18 +15,29 @@ urlencode() {
 }
 
 # Check if an issue has unresolved (open) blocking dependencies.
+# Parses "## Blocked by" sections from the issue description (CE-compatible).
 # Returns 0 (has blockers) or 1 (clear to work on).
 has_unresolved_blockers() {
   local repo="$1" iid="$2"
   local encoded_repo
   encoded_repo=$(echo "$repo" | sed 's|/|%2F|g')
 
-  local project_id
-  project_id=$(glab api "projects/${encoded_repo}" 2>/dev/null | jq -r '.id') || return 1
+  local description
+  description=$(glab api "projects/${encoded_repo}/issues/${iid}" 2>/dev/null | jq -r '.description // ""') || return 1
 
-  local open_blockers
-  open_blockers=$(glab api "projects/${project_id}/issues/${iid}/links" 2>/dev/null \
-    | jq '[.[] | select(.link_type == "is_blocked_by" and .state != "closed")] | length') || return 1
+  # Extract issue IIDs from "## Blocked by" section lines like "- #N" or "- #N Title"
+  local blocker_iids
+  blocker_iids=$(printf '%s' "$description" \
+    | awk '/^## Blocked by/{found=1; next} found && /^## /{found=0} found && /^- #[0-9]+/{print}' \
+    | grep -oP '#\K[0-9]+') || true
 
-  [ "$open_blockers" -gt 0 ]
+  [ -z "$blocker_iids" ] && return 1  # no blockers listed
+
+  local open=0
+  while read -r bid; do
+    state=$(glab api "projects/${encoded_repo}/issues/${bid}" 2>/dev/null | jq -r '.state // "opened"') || continue
+    [ "$state" != "closed" ] && open=$((open + 1))
+  done <<< "$blocker_iids"
+
+  [ "$open" -gt 0 ]
 }
