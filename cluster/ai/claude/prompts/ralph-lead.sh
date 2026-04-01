@@ -4,8 +4,8 @@
 set -eu
 
 PROMPT_FILE="${PROMPT_FILE:-/etc/claude/prompt.md}"
-SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
-TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
+SLEEP_INTERVAL="${SLEEP_INTERVAL:-300}"
+TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-60}"
 
 # shellcheck source=ralph-common.sh
 source /usr/local/lib/ralph-common.sh

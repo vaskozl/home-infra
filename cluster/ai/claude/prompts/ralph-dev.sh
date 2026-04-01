@@ -4,8 +4,8 @@
 set -eu
 
 PROMPT_FILE="${PROMPT_FILE:-/etc/claude/prompt.md}"
-SLEEP_INTERVAL="${SLEEP_INTERVAL:-1800}"
-TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-120}"
+SLEEP_INTERVAL="${SLEEP_INTERVAL:-300}"
+TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-60}"
 # ANTHROPIC_MODEL is set by the container env (e.g. sonnet, opus, haiku).
 # Claude Code resolves these aliases to the latest pinned version.
 
