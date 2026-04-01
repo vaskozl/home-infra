@@ -66,10 +66,10 @@ If no such issues exist and no wake-up reviews remain → output `<sleep/>` and 
    - **Testing** — how to verify the change (test commands, manual checks)
 
 6. Rate difficulty:
-   - Set a `model::` label:
-     - `model::haiku` — mechanical: typos, config tweaks, single-file edits following existing patterns
-     - `model::sonnet` — moderate: multi-file edits, new features following existing architecture
-     - `model::opus` — complex: architectural decisions, tricky bugs, cross-cutting concerns
+   - Set a `model::` label. **Default to `model::sonnet`** — only deviate when there is a clear reason:
+     - `model::haiku` — truly mechanical, zero-judgment work: fixing a typo, changing a config value, renaming a symbol in one file. If in doubt, use sonnet.
+     - `model::sonnet` — everything else: single or multi-file edits, new features, bug fixes, refactors
+     - `model::opus` — complex: architectural decisions, tricky bugs, cross-cutting concerns with high risk
    - Assign a `complexity::N` label (N = 1–12) reflecting effort and risk:
      - 1–3: trivial, quick wins
      - 4–7: standard development tasks
