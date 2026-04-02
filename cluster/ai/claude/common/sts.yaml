@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:latest@sha256:57b8bd7313fc8dc086907adf9b5f892e2b2462e19fdf88322a66fef53d33b8ec
+          image: ghcr.io/vaskozl/claude:latest@sha256:bd0091812bc1aa78bcab50410d304f9d0bdfcc065573a4526335f01327a45e67
           securityContext:
             procMount: Unmasked
             seccompProfile:
