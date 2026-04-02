@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: agentgateway
 resources:
   - _namespace.yaml
-  - agw-params.yaml
   - hr.yaml
   - oauth2-policy.yaml
   - sko-ai-tls.yaml
