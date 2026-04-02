@@ -60,13 +60,21 @@ build_prompt() {
   done
   local gitlab_host="${GITLAB_HOST:-https://gitlab.sko.ai}"
 
-  local conflict_section="" work_section=""
+  local ci_fail_section="" conflict_section="" work_section=""
   while read -r repo; do
     encoded_repo=$(urlencode "$repo")
     encoded_model=$(urlencode "model::${ANTHROPIC_MODEL}")
     payload=$(curl -sf \
       "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=${encoded_model}&per_page=100" \
       -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
+
+    # MRs with failed CI pipelines — highest priority, wake immediately
+    mrs=$(printf '%s' "$payload" | jq -r \
+      '.[] | select(.head_pipeline.status == "failed")
+           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
+    if [ -n "$mrs" ]; then
+      ci_fail_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
+    fi
 
     # MRs with conflicts — wake regardless of workflow:: label
     mrs=$(printf '%s' "$payload" | jq -r \
@@ -85,6 +93,7 @@ build_prompt() {
       work_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
     fi
   done <<< "$repos"
+  if [ -n "$ci_fail_section" ]; then printf '\n## MRs with failed CI\n%s\n' "$ci_fail_section"; fi
   if [ -n "$conflict_section" ]; then printf '\n## MRs with conflicts\n%s\n' "$conflict_section"; fi
   if [ -n "$work_section" ]; then printf '\n## MRs needing work\n%s\n' "$work_section"; fi
 }
