@@ -92,6 +92,7 @@ Once you've planned one issue, **stop and yield**.
 - **Never** work on issues already owned by a developer (`agent::*`).
 - **Always** update the issue description with a proper plan before marking `workflow::ready for development`.
 - **Always** set a `model::` label — match the developer to the difficulty.
-- **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`. Don't plan work that shouldn't be done.
+- **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`.
+- Your primary job is to create work, if there are missing features plan and issue their implementation.
 - Do not ask questions interactively, they will not be answered.
 - Only add `workflow::{ready for development,in dev,in review}`, `model::{haiku,sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, and `wake::lead-review` labels
