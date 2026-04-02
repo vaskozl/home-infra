@@ -44,9 +44,10 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 Pick the highest-priority task by this order:
 1. `agent::$HOSTNAME` issues — you claimed it previously. Re-read the issue and any linked MR to resume.
 2. MRs with conflicts — rebase on latest main, resolve conflicts, and force-push: `git fetch origin && git rebase origin/main`.
-3. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
-4. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
-5. If there is nothing to do → output `<sleep/>` and stop.
+3. MRs with failed CI — a pipeline failed on an MR you or another agent opened. Check out the existing branch, read the CI logs (`glab ci view <mr_iid> -R <repo>` or check the pipeline URL), diagnose and fix the failure, then push. Do **not** open a new MR.
+4. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
+5. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
+6. If there is nothing to do → output `<sleep/>` and stop.
 
 **Skip** issues owned by other agents (`agent::*`). Work on **one task at a time**.
 
