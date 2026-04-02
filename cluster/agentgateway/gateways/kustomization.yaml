@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: agentgateway
 resources:
   - agw-params.yaml
+  - oauth2-policy.yaml
   - internal.yaml
   - internal-noauth.yaml
   - public.yaml
