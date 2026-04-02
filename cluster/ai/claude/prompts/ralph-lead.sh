@@ -67,6 +67,21 @@ build_prompt() {
     fi
   done <<< "$repos"
   if [ -n "$section" ]; then printf '\n## Issues needing planning\n%s\n' "$section"; fi
+
+  # Repos with failed CI on the default branch
+  section=""
+  while read -r repo; do
+    encoded_repo=$(urlencode "$repo")
+    pipeline=$(curl -sf \
+      "${gitlab_host}/api/v4/projects/${encoded_repo}/pipelines?ref=main&per_page=1&order_by=updated_at&sort=desc" \
+      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
+    info=$(printf '%s' "$pipeline" | jq -r \
+      '.[] | select(.status == "failed") | "Pipeline #\(.id) failed at \(.updated_at) — \(.web_url)"' 2>/dev/null) || true
+    if [ -n "$info" ]; then
+      section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$info")"
+    fi
+  done <<< "$repos"
+  if [ -n "$section" ]; then printf '\n## Repos with failed CI on main\n%s\n' "$section"; fi
 }
 
 i=0
