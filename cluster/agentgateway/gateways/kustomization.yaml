@@ -1,7 +1,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: agentgateway
 resources:
-- internal.yaml
-- internal-noauth.yaml
-- public.yaml
+  - agw-params.yaml
+  - oauth2-policy.yaml
+  - internal.yaml
+  - internal-noauth.yaml
+  - public.yaml
