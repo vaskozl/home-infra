@@ -20,7 +20,7 @@ urlencode() {
 has_unresolved_blockers() {
   local repo="$1" iid="$2"
   local encoded_repo
-  encoded_repo=$(echo "$repo" | sed 's|/|%2F|g')
+  encoded_repo=$(urlencode "$repo")
 
   local description
   description=$(glab api "projects/${encoded_repo}/issues/${iid}" 2>/dev/null | jq -r '.description // ""') || return 1

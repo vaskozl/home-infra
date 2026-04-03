@@ -31,13 +31,10 @@ build_prompt() {
   if [ -n "$section" ]; then printf '\n## Issues needing lead review (dev wake-up)\n%s\n' "$section"; fi
 
   # MRs with failed CI pipelines (cross-repo visibility for lead)
-  local gitlab_host="${GITLAB_HOST:-https://gitlab.sko.ai}"
   local ci_section=""
   while read -r repo; do
     encoded_repo=$(urlencode "$repo")
-    payload=$(curl -sf \
-      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&per_page=100" \
-      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
+    payload=$(glab api "projects/${encoded_repo}/merge_requests?state=opened&per_page=100" 2>/dev/null) || true
     mrs=$(printf '%s' "$payload" | jq -r \
       '.[] | select(.head_pipeline.status == "failed")
            | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true

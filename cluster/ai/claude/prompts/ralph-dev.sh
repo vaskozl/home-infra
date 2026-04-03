@@ -58,15 +58,11 @@ build_prompt() {
   for label in "${EXCLUDED_MR_LABELS[@]}"; do
     jq_exclude+=" | select(.labels | map(. == $(printf '%s' "$label" | jq -Rs .)) | any | not)"
   done
-  local gitlab_host="${GITLAB_HOST:-https://gitlab.sko.ai}"
-
   local ci_fail_section="" conflict_section="" work_section=""
   while read -r repo; do
     encoded_repo=$(urlencode "$repo")
     encoded_model=$(urlencode "model::${ANTHROPIC_MODEL}")
-    payload=$(curl -sf \
-      "${gitlab_host}/api/v4/projects/${encoded_repo}/merge_requests?state=opened&labels=${encoded_model}&per_page=100" \
-      -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" 2>/dev/null) || true
+    payload=$(glab api "projects/${encoded_repo}/merge_requests?state=opened&labels=${encoded_model}&per_page=100" 2>/dev/null) || true
 
     # MRs with failed CI pipelines — highest priority, wake immediately
     mrs=$(printf '%s' "$payload" | jq -r \
