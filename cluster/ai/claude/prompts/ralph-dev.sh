@@ -16,111 +16,75 @@ source /usr/local/lib/ralph-common.sh
 # Add labels here to suppress additional MR states from waking agents.
 EXCLUDED_MR_LABELS=("workflow::in review")
 
+# Callback: open issues assigned to this agent.
+_dev_my_issues() {
+  local repo="$1" issues
+  issues=$(glab issue list -R "$repo" --label "agent::${HOSTNAME}" 2>&1) || true
+  echo "$issues" | grep -q '^#' && printf '%s' "$issues" || true
+}
+
+# Callback: issues ready for dev, filtered for unresolved blockers.
+_dev_ready_issues() {
+  local repo="$1" issues filtered="" line iid
+  issues=$(glab issue list -R "$repo" \
+    --label 'workflow::ready for development' \
+    --label "model::${ANTHROPIC_MODEL}" 2>&1) || true
+  echo "$issues" | grep -q '^#' || return 0
+  while IFS= read -r line; do
+    if echo "$line" | grep -q '^#'; then
+      iid=$(echo "$line" | sed 's/^#\([0-9]*\).*/\1/')
+      has_unresolved_blockers "$repo" "$iid" || filtered+="${line}"$'\n'
+    fi
+  done <<< "$issues"
+  printf '%s' "$filtered"
+}
+
 build_prompt() {
   local repos
   repos=$(list_repos)
 
   printf '\n## Repos\n```\n%s\n```\n' "$repos"
 
-  local section=""
-  while read -r repo; do
-    issues=$(glab issue list -R "$repo" --label "agent::${HOSTNAME}" 2>&1) || true
-    if echo "$issues" | grep -q '^#'; then
-      section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$issues")"
-    fi
-  done <<< "$repos"
-  if [ -n "$section" ]; then printf '\n## My in-progress issues\n%s\n' "$section"; fi
+  build_repo_section "My in-progress issues" "$repos" _dev_my_issues
+  build_repo_section "Issues ready for dev" "$repos" _dev_ready_issues
 
-  section=""
-  while read -r repo; do
-    issues=$(glab issue list -R "$repo" --label 'workflow::ready for development' --label "model::${ANTHROPIC_MODEL}" 2>&1) || true
-    if echo "$issues" | grep -q '^#'; then
-      # Filter out issues with unresolved blocking dependencies
-      filtered=""
-      while IFS= read -r line; do
-        if echo "$line" | grep -q '^#'; then
-          iid=$(echo "$line" | sed 's/^#\([0-9]*\).*/\1/')
-          if ! has_unresolved_blockers "$repo" "$iid"; then
-            filtered+="${line}"$'\n'
-          fi
-        fi
-      done <<< "$issues"
-      if [ -n "$filtered" ]; then
-        section+="$(printf '### %s\n```\n%s```\n' "$repo" "$filtered")"
-      fi
-    fi
-  done <<< "$repos"
-  if [ -n "$section" ]; then printf '\n## Issues ready for dev\n%s\n' "$section"; fi
-
-  # Build a jq select expression to exclude MRs with any of the excluded labels.
-  # GitLab API does not support combining labels= and not[labels][]= filters.
-  local jq_exclude='.'
+  # MR sections: one API call per repo, three filter passes on the same payload.
+  # GitLab API does not support combining labels= and not[labels][]= filters,
+  # so the exclude filter is applied client-side via jq.
+  local encoded_model jq_exclude ci_fail_section="" conflict_section="" work_section=""
+  encoded_model=$(urlencode "model::${ANTHROPIC_MODEL}")
+  jq_exclude='.'
   for label in "${EXCLUDED_MR_LABELS[@]}"; do
     jq_exclude+=" | select(.labels | map(. == $(printf '%s' "$label" | jq -Rs .)) | any | not)"
   done
-  local ci_fail_section="" conflict_section="" work_section=""
+
   while read -r repo; do
-    encoded_repo=$(urlencode "$repo")
-    encoded_model=$(urlencode "model::${ANTHROPIC_MODEL}")
-    payload=$(glab api "projects/${encoded_repo}/merge_requests?state=opened&labels=${encoded_model}&per_page=100" 2>/dev/null) || true
+    local payload mrs
+    payload=$(fetch_open_mrs "$repo" "labels=${encoded_model}")
 
     # MRs with failed CI pipelines — highest priority, wake immediately
-    mrs=$(printf '%s' "$payload" | jq -r \
+    mrs=$(format_mrs "$payload" \
       '.[] | select(.head_pipeline.status == "failed")
-           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
-    if [ -n "$mrs" ]; then
-      ci_fail_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
-    fi
+           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"')
+    [ -n "$mrs" ] && ci_fail_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
 
     # MRs with conflicts — wake regardless of workflow:: label
-    mrs=$(printf '%s' "$payload" | jq -r \
+    mrs=$(format_mrs "$payload" \
       '.[] | select(.has_conflicts == true)
-           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"' 2>/dev/null) || true
-    if [ -n "$mrs" ]; then
-      conflict_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
-    fi
+           | "!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))"')
+    [ -n "$mrs" ] && conflict_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
 
     # MRs needing work (no conflict, no excluded labels)
-    mrs=$(printf '%s' "$payload" | jq -r \
+    mrs=$(format_mrs "$payload" \
       ".[] | select(.has_conflicts == false or .has_conflicts == null)
            | ${jq_exclude}
-           | \"!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))\"" 2>/dev/null) || true
-    if [ -n "$mrs" ]; then
-      work_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
-    fi
+           | \"!\(.iid)\t\(.references.full)\t\(.title)\t(main) ← (\(.source_branch))\"")
+    [ -n "$mrs" ] && work_section+="$(printf '### %s\n```\n%s\n```\n' "$repo" "$mrs")"
   done <<< "$repos"
+
   if [ -n "$ci_fail_section" ]; then printf '\n## MRs with failed CI\n%s\n' "$ci_fail_section"; fi
   if [ -n "$conflict_section" ]; then printf '\n## MRs with conflicts\n%s\n' "$conflict_section"; fi
   if [ -n "$work_section" ]; then printf '\n## MRs needing work\n%s\n' "$work_section"; fi
 }
 
-i=0
-while true; do
-  i=$((i + 1))
-  echo "=== Iteration $i — $(date -Iseconds) ==="
-
-  promptfile=$(mktemp)
-  build_prompt > "$promptfile"
-
-  # Only the "## Repos" header is always present.
-  # Any additional "## " header means there's work to do.
-  if ! grep -q '^## [^R]' "$promptfile"; then
-    echo "--- Nothing to do, sleeping ---"
-    rm -f "$promptfile"
-    sleep $TIMEOUT_INTERVAL
-    continue
-  fi
-
-  tmpfile=$(mktemp)
-  claude -p "$(cat "$promptfile")" \
-    --system-prompt-file "$PROMPT_FILE" \
-    --verbose \
-    --dangerously-skip-permissions \
-    --output-format stream-json \
-    --include-partial-messages \
-    2>&1 | tee >(grep '<sleep/>' > "$tmpfile") || true
-
-  grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
-    sleep $SLEEP_INTERVAL || sleep $TIMEOUT_INTERVAL
-  rm -f "$tmpfile" "$promptfile"
-done
+run_agent_loop build_prompt "$SLEEP_INTERVAL" "$TIMEOUT_INTERVAL"
