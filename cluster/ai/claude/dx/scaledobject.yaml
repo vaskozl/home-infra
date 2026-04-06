@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: claude-dx-sonnet
+spec:
+  scaleTargetRef:
+    kind: StatefulSet
+    name: claude-dx-sonnet
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  triggers:
+    - type: cron
+      metadata:
+        timezone: UTC
+        start: "0 3 * * 1-5"
+        end: "0 5 * * 1-5"
+        desiredReplicas: "1"

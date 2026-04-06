@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude-dx-sonnet
+spec:
+  template:
+    spec:
+      containers:
+        - name: claude
+          command: [ralph-dx]
+          env:
+            - name: ANTHROPIC_MODEL
+              value: sonnet
+      volumes:
+        - name: ralph
+          configMap:
+            name: ralph-dx
+            defaultMode: 0555
