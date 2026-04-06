@@ -8,6 +8,7 @@ resources:
   - dev-sonnet
   - dev-opus
   - dev-haiku
+  - dx
 patches:
   - path: common/sts.yaml
     target:
@@ -36,4 +37,12 @@ configMapGenerator:
     files:
       - prompt.md=prompts/prompt-lead.md
       - ralph-lead.sh=prompts/ralph-lead.sh
+      - ralph-common.sh=prompts/ralph-common.sh
+  - name: ralph-dx
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - prompt.md=prompts/prompt-dx.md
+      - ralph-dx.sh=prompts/ralph-dx.sh
       - ralph-common.sh=prompts/ralph-common.sh

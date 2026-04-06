@@ -53,6 +53,9 @@ spec:
               mountPath: /usr/local/bin/ralph-lead
               subPath: ralph-lead.sh
             - name: ralph
+              mountPath: /usr/local/bin/ralph-dx
+              subPath: ralph-dx.sh
+            - name: ralph
               mountPath: /etc/claude/prompt.md
               subPath: prompt.md
             - name: ralph
