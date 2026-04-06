@@ -10,31 +10,23 @@ TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-300}"
 # shellcheck source=ralph-common.sh
 source /usr/local/lib/ralph-common.sh
 
-_exec_rg() {
-  kubectl exec -n logging ripgrep-0 -- rg "$@" /logs 2>/dev/null || true
-}
-
 build_prompt() {
   local repos
   repos=$(list_repos)
   printf '\n## Repos\n```\n%s\n```\n' "$repos"
 
-  printf '\n## Agent log analysis\n'
-  printf 'Use `kubectl exec -n logging ripgrep-0 -- rg <pattern> /logs` to search logs.\n'
-  printf 'Logs use format: {msg} pod={pod} ctr={ctr} ts={ts}\n\n'
-
-  # Sample recent errors across all claude pods
-  printf '### Recent errors (claude pods)\n```\n'
-  _exec_rg -i 'error' --glob '*claude*' -c | tail -20
-  printf '\n```\n'
-
-  printf '### Panics, crashes, OOM\n```\n'
-  _exec_rg -i 'panic|crash|fatal|killed|OOM' --glob '*claude*' -c | tail -20
-  printf '\n```\n'
-
-  printf '### Rate limits and API errors\n```\n'
-  _exec_rg -i 'rate.limit|429|overloaded|capacity' --glob '*claude*' -c | tail -20
-  printf '\n```\n'
+  # DX agent always runs on each KEDA wake — include a non-Repos header
+  printf '\n## DX audit — %s\n' "$(date -Iseconds)"
+  printf 'Agent logs live at /logs/ai/ on the ripgrep pod.\n'
+  printf 'Each line: <JSON> pod=<pod> ctr=<ctr> ts=<ts> — strip trailing fields before piping to jq:\n\n'
+  printf '```bash\n'
+  printf '# Recent agent sessions (result lines carry cost, turns, outcome)\n'
+  printf "kubectl exec -n logging ripgrep-0 -- rg '\"type\":\"result\"' /logs/ai/claude-worker-sonnet.log |"
+  printf ' \\\n'
+  printf "  tail -20 | sed 's/ pod=[^ ]* ctr=[^ ]* ts=[^ ]*//' | \\\n"
+  printf "  jq '{pod: .session_id, cost: .total_cost_usd, turns: .num_turns,"
+  printf " ok: (.is_error | not), preview: .result[:120]}'\n"
+  printf '```\n'
 }
 
 run_agent_loop build_prompt "$SLEEP_INTERVAL" "$TIMEOUT_INTERVAL" \

@@ -15,41 +15,35 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | Claude config or settings issue | — | `doudous/claude-img` |
 | Prompt issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
 
-## Repos
-
-```
-doudous/home-infra
-doudous/guinotia
-doudous/apkontainers
-doudous/packages
-doudous/claude-img
-doudous/minilb
-leane/matcha
-leane/blog
-leane/java-interview
-doudous/ci-templates
-leane/javex
-leane/encrypter
-leane/adventofcode2024
-gitlab-instance-f47f69af/Monitoring
-```
+The user prompt contains the current repo list (dynamically fetched at runtime) and a timestamp for this run.
 
 ## Each iteration: audit → analyze → report → sleep
 
 ### 1. Analyze the log data
 
-The user prompt contains pre-sampled log data from the agent fleet. Review it carefully. Use `kubectl exec -n logging ripgrep-0 -- rg <pattern> /logs` to dig deeper into any concerning patterns.
+Agent logs are stored in `/logs/ai/` on the ripgrep pod (`ripgrep-0` in namespace `logging`).
+Files are named like `claude-worker-sonnet.log`, `claude-lead-opus.log`, etc.
 
-Useful ripgrep patterns:
+Each log line is JSON followed by metadata: `<JSON> pod=<pod> ctr=<ctr> ts=<ts>`.
+Strip the trailing fields before piping to jq:
+
 ```bash
-# Errors by pod
-kubectl exec -n logging ripgrep-0 -- rg -i 'error' --glob '*claude*' -c /logs
+# Session outcomes (cost, turns, success) — most useful starting point
+kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/claude-worker-sonnet.log | \
+  tail -30 | sed 's/ pod=[^ ]* ctr=[^ ]* ts=[^ ]*//' | \
+  jq '{session: .session_id, cost: .total_cost_usd, turns: .num_turns, ok: (.is_error | not), preview: .result[:120]}'
 
-# Specific pod logs
-kubectl exec -n logging ripgrep-0 -- rg '' --glob '*claude-worker-sonnet*' /logs | tail -50
+# Tool errors (Exit code N, tool_use_error, permission denied)
+kubectl exec -n logging ripgrep-0 -- rg 'tool_use_error|Exit code [^0]|permission denied' /logs/ai/ | \
+  grep -v '"exit_code":0' | tail -20
 
-# Time-bounded search (last 24h approximate)
-kubectl exec -n logging ripgrep-0 -- rg -i 'panic|crash|OOM' --glob '*claude*' /logs
+# All log files available
+kubectl exec -n logging ripgrep-0 -- ls /logs/ai/
+
+# Search across all claude logs
+kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/ | \
+  sed 's/ pod=[^ ]* ctr=[^ ]* ts=[^ ]*//' | \
+  jq -s 'sort_by(.total_cost_usd) | reverse | .[0:10] | .[] | {session: .session_id, cost: .total_cost_usd, turns: .num_turns}'
 ```
 
 ### 2. Check Kubernetes pod health
