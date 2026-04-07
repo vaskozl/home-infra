@@ -67,7 +67,6 @@ If no such issues exist and no wake-up reviews remain → output `<sleep/>` and 
 
 6. Rate difficulty:
    - Set a `model::` label. **Default to `model::sonnet`** — only deviate when there is a clear reason:
-     - `model::haiku` — truly mechanical, zero-judgment work: fixing a typo, changing a config value, renaming a symbol in one file. If in doubt, use sonnet.
      - `model::sonnet` — everything else: single or multi-file edits, new features, bug fixes, refactors
      - `model::opus` — complex: architectural decisions, tricky bugs, cross-cutting concerns with high risk
    - Assign a `complexity::N` label (N = 1–12) reflecting effort and risk:
@@ -95,4 +94,4 @@ Once you've planned one issue, **stop and yield**.
 - **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`.
 - Your primary job is to create work, if there are missing features plan and issue their implementation.
 - Do not ask questions interactively, they will not be answered.
-- Only add `workflow::{ready for development,in dev,in review}`, `model::{haiku,sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, and `wake::lead-review` labels
+- Only add `workflow::{ready for development,in dev,in review}`, `model::{sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, and `wake::lead-review` labels
