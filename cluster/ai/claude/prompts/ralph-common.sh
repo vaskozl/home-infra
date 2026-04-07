@@ -14,6 +14,16 @@ urlencode() {
   printf '%s' "$1" | jq -Rr @uri
 }
 
+# Check if an issue is already claimed by any agent.
+# Returns 0 (claimed) or 1 (not claimed).
+is_claimed() {
+  local repo="$1" iid="$2"
+  local encoded_repo
+  encoded_repo=$(urlencode "$repo")
+  glab api "projects/${encoded_repo}/issues/${iid}" 2>/dev/null \
+    | jq -e '[.labels[] | select(startswith("agent::"))] | length > 0' &>/dev/null
+}
+
 # Check if an issue has unresolved (open) blocking dependencies.
 # Parses "## Blocked by" sections from the issue description (CE-compatible).
 # Returns 0 (has blockers) or 1 (clear to work on).
@@ -105,6 +115,7 @@ run_agent_loop() {
   while true; do
     i=$((i + 1))
     echo "=== ${iteration_label} $i — $(date -Iseconds) ==="
+    sleep $((RANDOM % 45))
     promptfile=$(mktemp)
     "$build_prompt_fn" > "$promptfile"
     # Only the "## Repos" header is always present.

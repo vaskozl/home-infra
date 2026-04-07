@@ -33,6 +33,7 @@ _dev_ready_issues() {
   while IFS= read -r line; do
     if echo "$line" | grep -q '^#'; then
       iid=$(echo "$line" | sed 's/^#\([0-9]*\).*/\1/')
+      is_claimed "$repo" "$iid" && continue
       has_unresolved_blockers "$repo" "$iid" || filtered+="${line}"$'\n'
     fi
   done <<< "$issues"
