@@ -58,13 +58,16 @@ Issues are planned by a separate planner agent — read the planning comment on 
 Claim issues immediately, then verify you won the race:
 ```
 glab issue update <id> -R <repo> -l 'agent::$HOSTNAME' -l 'workflow::in dev' -u 'workflow::ready for development'
+sleep 10
+glab issue view <id> -R <repo> --output json | jq '.labels[]'
 ```
-After claiming, re-read the issue to check no other `agent::` label was added. If another agent claimed it first, remove your label and skip to the next issue.
+After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `agent::$HOSTNAME` is still present — `agent::` is a scoped label, so if another agent claimed after you, YOUR label was silently replaced by theirs. If your label is missing, the other agent won — skip to the next issue without removing any labels.
 
 ### 2. Do the work
 
 - Ensure you have a clean, up-to-date checkout of the repo's default branch before creating your feature branch. Clone with token auth if needed: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
 - Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l 'agent::$HOSTNAME' -l "model::${ANTHROPIC_MODEL}"`
+  **Important:** `Closes #<id>` MUST appear in the MR description for GitLab to auto-close the issue on merge. If your description is longer, ensure it still contains this text. Verify after creation: `glab mr view <id> -R <repo> --output json | jq '.description'`
 - **Before pushing**, always rebase on the latest default branch to avoid conflicts:
   ```
   git fetch origin && git rebase origin/main
