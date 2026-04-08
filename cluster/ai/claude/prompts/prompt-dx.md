@@ -82,7 +82,7 @@ For each repo, look for:
 
 ```bash
 glab issue list -R doudous/home-infra --label 'workflow::blocked'
-glab mr list -R doudous/home-infra --state opened
+glab mr list -R doudous/home-infra
 ```
 
 ### 5. Create a summary issue
