@@ -95,11 +95,18 @@ After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `
 
 When you pick up an MR with no `workflow::` label (human requested changes):
 
-1. Read ALL comments and discussion threads: `glab mr view <id> -R <repo> -c`
-2. Check out the existing branch, rebase on latest main (`git fetch origin && git rebase origin/main`), and push fixes — do **not** open a new MR.
-3. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
-4. Comment on the MR summarizing what you changed.
-5. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
+1. **Claim the MR** to prevent another agent from also picking it up:
+   ```
+   glab mr update <id> -R <repo> -l 'agent::$HOSTNAME' -l 'workflow::in dev'
+   sleep 10
+   glab mr view <id> -R <repo> --output json | jq '.labels[]'
+   ```
+   After 10 seconds, re-read the labels. Verify that `agent::$HOSTNAME` is still present — `agent::` is a scoped label, so if another agent claimed after you, your label was silently replaced. If your label is missing, skip this MR.
+2. Read ALL comments and discussion threads: `glab mr view <id> -R <repo> -c`
+3. Check out the existing branch, rebase on latest main (`git fetch origin && git rebase origin/main`), and push fixes — do **not** open a new MR.
+4. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
+5. Comment on the MR summarizing what you changed.
+6. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
 
 #### Waking the lead
 

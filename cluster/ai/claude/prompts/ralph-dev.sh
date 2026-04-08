@@ -14,7 +14,7 @@ source /usr/local/lib/ralph-common.sh
 
 # MRs with any of these labels are excluded from "MRs needing work".
 # Add labels here to suppress additional MR states from waking agents.
-EXCLUDED_MR_LABELS=("workflow::in review")
+EXCLUDED_MR_LABELS=("workflow::in review" "workflow::in dev")
 
 # Callback: open issues assigned to this agent.
 _dev_my_issues() {
