@@ -111,7 +111,7 @@ run_agent_loop() {
   local iteration_label="${4:-Iteration}"
   local idle_msg="${5:-Nothing to do, sleeping}"
   local idle_sleep="${6:-$timeout_interval}"
-  local i=0 promptfile tmpfile
+  local i=0 promptfile tmpfile authfile
   while true; do
     i=$((i + 1))
     echo "=== ${iteration_label} $i — $(date -Iseconds) ==="
@@ -127,15 +127,21 @@ run_agent_loop() {
       continue
     fi
     tmpfile=$(mktemp)
+    authfile=$(mktemp)
     claude -p "$(cat "$promptfile")" \
       --system-prompt-file "$PROMPT_FILE" \
       --verbose \
       --dangerously-skip-permissions \
       --output-format stream-json \
       --include-partial-messages \
-      2>&1 | tee >(grep '<sleep/>' > "$tmpfile") || true
+      2>&1 | tee >(tee "$authfile" | grep '<sleep/>' > "$tmpfile") || true
+    if grep -qE 'OAuth token has expired|token.*expired|HTTP 401' "$authfile"; then
+      echo "FATAL: Auth failure detected — OAuth token expired or invalid. Exiting."
+      rm -f "$tmpfile" "$authfile" "$promptfile"
+      exit 1
+    fi
     grep -q '<sleep/>' "$tmpfile" && echo "--- Sleeping ---" && \
       sleep "$sleep_interval" || sleep "$timeout_interval"
-    rm -f "$tmpfile" "$promptfile"
+    rm -f "$tmpfile" "$authfile" "$promptfile"
   done
 }
