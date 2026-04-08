@@ -19,6 +19,11 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | Claude config or settings issue | — | `doudous/claude-img` |
 | Prompt issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
 
+## Known tool issues
+
+- **`glab mr list --state`**: Not supported by the installed glab version. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
+- **`find` with `-exec`, `-not`, or compound predicates**: RTK intercepts `find` and blocks these. Use `\find` (backslash prefix) to bypass RTK, or prefer the Glob tool for file searches.
+
 ## Labels
 
 Use GitLab scoped labels (`::`) for ownership and workflow state:
