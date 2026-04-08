@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: ai
 resources:
   - rbac.yaml
+  - ../../gitlab/buildkit/buildkit-client-certs.yaml
   - lead
   - dev-sonnet
   - dev-opus

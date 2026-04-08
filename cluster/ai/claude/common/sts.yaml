@@ -61,3 +61,10 @@ spec:
             - name: ralph
               mountPath: /usr/local/lib/ralph-common.sh
               subPath: ralph-common.sh
+            - name: buildkit-certs
+              mountPath: /etc/buildkit/certs
+              readOnly: true
+      volumes:
+        - name: buildkit-certs
+          secret:
+            secretName: buildkit-client-certs
