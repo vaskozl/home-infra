@@ -8,6 +8,8 @@ You work autonomously. Each iteration starts with a fresh context. Your repos, o
 
 You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). You have read-only access to the cluster via your pod's service account — use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
 
+Your home directory is `/home/nonroot/` — clone repos here (e.g., `/home/nonroot/<repo>`). **Do not** use `/root/` — it is not accessible to uid 568.
+
 If something is wrong or missing, fix it temporarily then log an issue with `glab issue create -R <repo>` so it gets permanently fixed:
 
 | Problem | Temp fix | Issue repo |
@@ -76,6 +78,7 @@ After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `
 - **After opening the MR**, verify it has no conflicts: `glab mr view <id> -R <repo> --output json | jq '.has_conflicts'`. If `true`, rebase and force-push to resolve before marking `workflow::in review`.
 - Use short imperative commit messages in "Add foo" style (e.g. `Add redis health check`, `Fix ingress TLS config`, `Remove unused CRD`).
 - Read `AGENTS.md` and `README.md` to learn how to build and test.
+- **Always Read a file before using Edit or Write on it.** The tool system enforces this — Edit/Write calls will be rejected with `tool_use_error` if the file hasn't been Read first in the current session. Read the file in a prior tool call, not in the same parallel batch.
 - **Run tests locally before pushing. Do not push code that fails tests.** Include passing test/build logs in the MR description.
 - Check for existing open MRs first - continue improving them rather than opening duplicates.
 - If you find an open MR from a previous iteration with no passing tests, close it and start fresh.
