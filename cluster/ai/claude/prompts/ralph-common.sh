@@ -136,7 +136,7 @@ run_agent_loop() {
       --output-format stream-json \
       --include-partial-messages \
       2>&1 | tee >(tee "$authfile" | grep '<sleep/>' > "$tmpfile") || true
-    if grep -qE 'OAuth token has expired|token.*expired|HTTP 401' "$authfile"; then
+    if grep -qE 'OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error' "$authfile"; then
       echo "FATAL: Auth failure detected — OAuth token expired or invalid. Exiting."
       rm -f "$tmpfile" "$authfile" "$promptfile"
       exit 1
