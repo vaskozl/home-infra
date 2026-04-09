@@ -24,6 +24,25 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 - **`glab mr list --state`**: Not supported by the installed glab version. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
 - **`find` with `-exec`, `-not`, or compound predicates**: RTK intercepts `find` and blocks these. Use `\find` (backslash prefix) to bypass RTK, or prefer the Glob tool for file searches.
 
+## glab quick-reference
+
+| Task | Command |
+|---|---|
+| List open issues | `glab issue list -R <repo>` |
+| List open MRs | `glab mr list -R <repo>` |
+| View issue details | `glab issue view <id> -R <repo>` |
+| View issue as JSON | `glab issue view <id> -R <repo> --output json` |
+| Update issue labels | `glab issue update <id> -R <repo> -l 'label-to-add' -u 'label-to-remove'` |
+| Update issue description | `glab issue update <id> -R <repo> -d "new description"` |
+| Create MR | `glab mr create -d "description" -l 'label'` |
+| View MR details | `glab mr view <id> -R <repo>` |
+| View MR as JSON | `glab mr view <id> -R <repo> --output json` |
+| View MR comments | `glab mr view <id> -R <repo> -c` |
+| Add MR comment | `glab mr note <id> -R <repo> -m "comment"` |
+| Resolve MR thread | `glab mr note <id> -R <repo> --resolve <discussion_id>` |
+| View CI status | `glab ci view <mr_iid> -R <repo>` |
+| API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
+
 ## Labels
 
 Use GitLab scoped labels (`::`) for ownership and workflow state:
