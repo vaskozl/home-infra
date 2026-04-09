@@ -1,8 +1,0 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
-metadata:
-  name: claude-lead-opus
-spec:
-  scaleTargetRef:
-    kind: StatefulSet
-    name: claude-lead-opus
