@@ -104,6 +104,7 @@ if [ -n "$EXISTING" ]; then
 else
   glab issue create -R doudous/home-infra \
     --title "DX audit: $TODAY" \
+    --label "type::dx-audit" \
     --description "..."
 fi
 ```

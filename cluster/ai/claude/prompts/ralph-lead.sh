@@ -12,7 +12,7 @@ source /usr/local/lib/ralph-common.sh
 
 # Issues with these labels are never shown to the planner.
 # Add labels here to exclude additional issue types (e.g. renovate, spam).
-EXCLUDED_ISSUE_LABELS=(renovate)
+EXCLUDED_ISSUE_LABELS=(renovate type::dx-audit)
 
 # Callback: issues flagged for lead review by dev agents.
 _lead_wake_issues() {
