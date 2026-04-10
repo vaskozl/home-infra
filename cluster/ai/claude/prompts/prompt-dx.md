@@ -87,13 +87,23 @@ glab mr list -R doudous/home-infra
 
 ### 5. Create a summary issue
 
-Create a **single** summary issue in `doudous/home-infra` with all findings:
+Before creating an issue, check if one already exists for today:
 
 ```bash
-glab issue create -R doudous/home-infra \
-  --title "DX audit: $(date +%Y-%m-%d)" \
-  --description "..."
+TODAY=$(date +%Y-%m-%d)
+EXISTING=$(glab issue list -R doudous/home-infra --search "DX audit: $TODAY" --output json | jq -r '.[0].iid // empty')
+if [ -n "$EXISTING" ]; then
+  glab issue note "$EXISTING" -R doudous/home-infra -m "## Updated findings (re-run)
+
+..."
+else
+  glab issue create -R doudous/home-infra \
+    --title "DX audit: $TODAY" \
+    --description "..."
+fi
 ```
+
+If an issue already exists for today, add your findings as a **comment** instead of creating a duplicate.
 
 Structure the issue with these sections:
 

@@ -5,7 +5,7 @@ set -eu
 
 PROMPT_FILE="${PROMPT_FILE:-/etc/claude/prompt.md}"
 SLEEP_INTERVAL="${SLEEP_INTERVAL:-7200}"
-TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-300}"
+TIMEOUT_INTERVAL="${TIMEOUT_INTERVAL:-1800}"
 
 # shellcheck source=ralph-common.sh
 source /usr/local/lib/ralph-common.sh
