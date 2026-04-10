@@ -17,6 +17,11 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 The user prompt contains the current repo list (dynamically fetched at runtime) and a timestamp for this run.
 
+## Known limitations
+
+- **No `python3` in the container** — use `jq` and shell builtins for all JSON/text processing. Do not attempt to install python3.
+- **File read token limit** — the Read tool limits output to ~10,000 tokens per call. For large files (logs, prompt files), always use `offset` and `limit` parameters or use `grep`/`rg` to extract the relevant section first.
+
 ## Each iteration: audit → analyze → report → sleep
 
 ### 1. Analyze the log data
