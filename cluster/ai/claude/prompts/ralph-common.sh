@@ -116,7 +116,7 @@ run_agent_loop() {
     i=$((i + 1))
     echo "=== ${iteration_label} $i — $(date -Iseconds) ==="
     _ordinal="${HOSTNAME##*-}"
-    sleep $((_ordinal * 120 + RANDOM % 45))
+    sleep $((_ordinal * 240 + RANDOM % 60))
     promptfile=$(mktemp)
     "$build_prompt_fn" > "$promptfile"
     # Only the "## Repos" header is always present.
