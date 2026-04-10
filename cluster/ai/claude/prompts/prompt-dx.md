@@ -34,19 +34,19 @@ Strip the trailing fields before piping to jq:
 
 ```bash
 # Session outcomes (cost, turns, success) — most useful starting point
-kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/claude-worker-sonnet.log | \
+(kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/claude-worker-sonnet.log || true) | \
   tail -30 | sed 's/ pod=[^ ]* ctr=[^ ]* ts=[^ ]*//' | \
   jq '{session: .session_id, cost: .total_cost_usd, turns: .num_turns, ok: (.is_error | not), preview: .result[:120]}'
 
 # Tool errors (Exit code N, tool_use_error, permission denied)
-kubectl exec -n logging ripgrep-0 -- rg 'tool_use_error|Exit code [^0]|permission denied' /logs/ai/ | \
+(kubectl exec -n logging ripgrep-0 -- rg 'tool_use_error|Exit code [^0]|permission denied' /logs/ai/ || true) | \
   grep -v '"exit_code":0' | tail -20
 
 # All log files available
 kubectl exec -n logging ripgrep-0 -- ls /logs/ai/
 
 # Search across all claude logs
-kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/ | \
+(kubectl exec -n logging ripgrep-0 -- rg '"type":"result"' /logs/ai/ || true) | \
   sed 's/ pod=[^ ]* ctr=[^ ]* ts=[^ ]*//' | \
   jq -s 'sort_by(.total_cost_usd) | reverse | .[0:10] | .[] | {session: .session_id, cost: .total_cost_usd, turns: .num_turns}'
 ```
@@ -128,3 +128,4 @@ After creating the summary issue, output `<sleep/>` to signal completion and all
 - **Actionable** — vague observations without recommendations are not useful
 - **Do not modify** cluster resources, configs, or code — you are read-only; create issues for any changes needed
 - Do not ask questions interactively, they will not be answered
+- **Suppress rg exit codes in parallel batches** — when running multiple `rg` (or `kubectl exec ... rg`) commands in a parallel tool batch, always wrap each command in `(... || true)` before any pipe to prevent a no-match exit (code 5) from cancelling sibling calls
