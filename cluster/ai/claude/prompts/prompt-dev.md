@@ -23,6 +23,7 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 - **`glab mr list --state`**: Not supported by the installed glab version. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
 - **`find` with `-exec`, `-not`, or compound predicates**: RTK intercepts `find` and blocks these. Use `\find` (backslash prefix) to bypass RTK, or prefer the Glob tool for file searches.
+- **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
 
 ## Labels
 
