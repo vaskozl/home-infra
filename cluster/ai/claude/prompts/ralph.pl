@@ -3,7 +3,7 @@
 use v5.38;
 no warnings 'experimental';
 use Getopt::Long qw(GetOptions);
-use JSON::XS qw(decode_json);
+use JSON::PP qw(decode_json);
 
 use constant PROMPT_DIR       => '/etc/claude';
 use constant COMMON_PROMPT    => PROMPT_DIR . '/prompt-common.md';
