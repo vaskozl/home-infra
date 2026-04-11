@@ -8,12 +8,12 @@ spec:
     spec:
       containers:
         - name: claude
-          command: [ralph-lead]
+          args: [lead]
           env:
             - name: ANTHROPIC_MODEL
               value: opus
       volumes:
         - name: ralph
           configMap:
-            name: ralph-lead
+            name: ralph
             defaultMode: 0555

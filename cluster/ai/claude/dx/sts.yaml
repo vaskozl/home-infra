@@ -8,12 +8,12 @@ spec:
     spec:
       containers:
         - name: claude
-          command: [ralph-dx]
+          args: [dx]
           env:
             - name: ANTHROPIC_MODEL
               value: sonnet
       volumes:
         - name: ralph
           configMap:
-            name: ralph-dx
+            name: ralph
             defaultMode: 0555

@@ -8,12 +8,12 @@ spec:
     spec:
       containers:
         - name: claude
-          command: [ralph-dev]
+          args: [dev]
           env:
             - name: ANTHROPIC_MODEL
               value: sonnet
       volumes:
         - name: ralph
           configMap:
-            name: ralph-dev
+            name: ralph
             defaultMode: 0555

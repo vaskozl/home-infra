@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:latest@sha256:552e07194e4553afae67b126644d3c53f92e1cf6cc8b9c73ad90ab3fc5a568db
+          image: ghcr.io/vaskozl/claude:latest@sha256:ec7c16d4dc81c9eb327d6efaf8ab9d0ad26e5d8685d3032e9df94c53fe705909
           securityContext:
             procMount: Unmasked
             seccompProfile:
@@ -43,24 +43,25 @@ spec:
           envFrom:
             - secretRef:
                 name: claude-env
+          command: [ralph]
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
             - name: ralph
-              mountPath: /usr/local/bin/ralph-dev
-              subPath: ralph-dev.sh
+              mountPath: /usr/local/bin/ralph
+              subPath: ralph.pl
             - name: ralph
-              mountPath: /usr/local/bin/ralph-lead
-              subPath: ralph-lead.sh
+              mountPath: /etc/claude/prompt-common.md
+              subPath: prompt-common.md
             - name: ralph
-              mountPath: /usr/local/bin/ralph-dx
-              subPath: ralph-dx.sh
+              mountPath: /etc/claude/prompt-dev.md
+              subPath: prompt-dev.md
             - name: ralph
-              mountPath: /etc/claude/prompt.md
-              subPath: prompt.md
+              mountPath: /etc/claude/prompt-lead.md
+              subPath: prompt-lead.md
             - name: ralph
-              mountPath: /usr/local/lib/ralph-common.sh
-              subPath: ralph-common.sh
+              mountPath: /etc/claude/prompt-dx.md
+              subPath: prompt-dx.md
             - name: buildkit-certs
               mountPath: /etc/buildkit/certs
               readOnly: true
