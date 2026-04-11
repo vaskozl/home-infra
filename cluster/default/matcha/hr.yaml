@@ -1,0 +1,76 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: matcha
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 4.6.2
+  interval: 24h
+  values:
+    controllers:
+      blog:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/orangecadet/matcha
+              tag: latest
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 100m
+                memory: 50Mi
+              requests:
+                cpu: 2m
+                memory: 10Mi
+            env:
+              data_dir: /app/config
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+        replicas: 2
+    defaultPodOptions:
+      imagePullSecrets:
+        - name: regcred
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      database:
+        existingClaim: database
+        globalMounts:
+          - path: /app/config
+      tmp:
+        type: emptyDir
+    route:
+      app:
+        hostnames:
+          - sko.ai
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+    service:
+      app:
+        controller: matcha
+        ports:
+          http:
+            port: 8080
