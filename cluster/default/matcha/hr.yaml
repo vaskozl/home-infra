@@ -27,8 +27,24 @@ spec:
             probes:
               liveness:
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8000
+                  initialDelaySeconds: 10
+                  periodSeconds: 30
+                  failureThreshold: 3
+                readiness:
+                  enabled: true
+                  custom: true
+                  spec:
+                    httpGet:
+                      path: /
+                      port: 8000
+                    initialDelaySeconds: 5
+                    periodSeconds: 10
+                    failureThreshold: 3
             resources:
               limits:
                 cpu: 100m
@@ -37,7 +53,7 @@ spec:
                 cpu: 2m
                 memory: 10Mi
             env:
-              data_dir: /app/config
+              data_dir: /app/database
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
@@ -80,4 +96,4 @@ spec:
         controller: matcha
         ports:
           http:
-            port: 8080
+            port: 8000
