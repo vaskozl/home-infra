@@ -47,11 +47,11 @@ spec:
                   failureThreshold: 3
             resources:
               limits:
-                cpu: 100m
-                memory: 50Mi
+                cpu: 1000m
+                memory: 1Gi
               requests:
-                cpu: 2m
-                memory: 10Mi
+                cpu: 500m
+                memory: 500Mi
             env:
               data_dir: /app/database
             securityContext:
