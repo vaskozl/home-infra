@@ -44,7 +44,6 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: false
-        replicas: 1
         statefulset:
           volumeClaimTemplates:
             - name: database
