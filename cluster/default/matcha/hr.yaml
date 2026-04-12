@@ -17,7 +17,8 @@ spec:
   interval: 24h
   values:
     controllers:
-      blog:
+      matcha:
+        type: statefulset
         containers:
           app:
             image:
@@ -43,7 +44,14 @@ spec:
                 drop:
                   - ALL
               readOnlyRootFilesystem: false
-        replicas: 2
+        replicas: 1
+        statefulset:
+          volumeClaimTemplates:
+            - name: database
+              accessMode: "ReadWriteOnce"
+              globalMounts:
+              - path: /app/database
+              size: 1Gi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -58,7 +66,7 @@ spec:
       database:
         existingClaim: database
         globalMounts:
-          - path: /app/config
+          - path: /app/database
       tmp:
         type: emptyDir
     route:
