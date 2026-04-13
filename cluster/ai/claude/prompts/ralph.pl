@@ -252,9 +252,13 @@ sub run_loop($role, $prompt_file, $dry_run) {
             $has_sleep = 1 if $line =~ m{<sleep/>};
         }
         close $pipe;
+        my $exit_code = $? >> 8;
 
-        die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
-          if $output =~ /OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/;
+        if ($exit_code != 0) {
+            die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
+              if $output =~ /OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/;
+            warn "claude exited with code $exit_code\n";
+        }
 
         if ($has_sleep) { print "--- Sleeping ---\n"; sleep SLEEP_INTERVAL }
         else            { sleep TIMEOUT_INTERVAL }
