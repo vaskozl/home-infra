@@ -167,6 +167,7 @@ sub lead_prompt(@repos) {
         'workflow::ready for development', 'workflow::in dev',
         'workflow::in review',             'workflow::blocked',
         'renovate',                        'type::dx-audit',
+        'claude::ignore',
     );
     my $planning = '';
     for my $repo (@repos) {

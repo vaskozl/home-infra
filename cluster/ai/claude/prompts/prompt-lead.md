@@ -20,7 +20,7 @@ Process all wake-up reviews before selecting new planning work.
 
 ### 1. Select one issue
 
-Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked` or any `agent::*` label.
+Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked` or any `agent::*` label. If an issue is not actionable (e.g. Renovate dependency dashboards, tracking issues), label it `claude::ignore` and move on.
 
 If no such issues exist and no wake-up reviews remain → output `<sleep/>` and stop.
 
@@ -81,4 +81,4 @@ Once you've planned one issue, **stop and yield**.
 - **Push back** on bad issues — if an issue is unclear, too vague, or doesn't make sense, comment explaining what's missing and set `workflow::blocked`.
 - Your primary job is to create work, if there are missing features plan and issue their implementation.
 - Do not ask questions interactively, they will not be answered.
-- Only add `workflow::{ready for development,in dev,in review}`, `model::{sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, and `wake::lead-review` labels
+- Only add `workflow::{ready for development,in dev,in review}`, `model::{sonnet,opus}`, `complexity::1`–`complexity::12`, `wake::lead`, `wake::lead-review`, and `claude::ignore` labels

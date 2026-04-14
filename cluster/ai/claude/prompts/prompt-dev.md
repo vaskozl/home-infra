@@ -122,6 +122,7 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
 
 - **Never** work on another agent's `agent::*` issue.
 - **Always** run tests before pushing and provide passing test evidence in the MR description.
+- **Upload screenshot evidence** — after completing UI-visible changes or verifying behaviour, use the `chrome-devtools` MCP tools to take a screenshot, then upload it to the MR as proof (see "Uploading image evidence" in the common prompt).
 - **Always** use GitLab issues as your cross-iteration memory and questions.
 - If stuck for more than one iteration: comment explaining the blocker, set `workflow::blocked`, remove `agent::$HOSTNAME`, and move on.
 - Do not ask questions interactively, they will not be answered.
