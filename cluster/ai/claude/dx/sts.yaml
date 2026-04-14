@@ -12,6 +12,8 @@ spec:
           env:
             - name: ANTHROPIC_MODEL
               value: sonnet
+            - name: SLEEP_INTERVAL
+              value: "7200"
       volumes:
         - name: ralph
           configMap:
