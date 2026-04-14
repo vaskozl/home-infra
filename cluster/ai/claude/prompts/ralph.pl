@@ -3,7 +3,7 @@
 use v5.38;
 no warnings 'experimental';
 use Getopt::Long qw(GetOptions);
-use JSON::PP qw(decode_json);
+use JSON::PP     qw(decode_json);
 
 use constant PROMPT_DIR       => '/etc/claude';
 use constant COMMON_PROMPT    => PROMPT_DIR . '/prompt-common.md';
@@ -14,47 +14,59 @@ use constant TIMEOUT_INTERVAL => $ENV{TIMEOUT_INTERVAL} // 60;
 # GitLab helpers
 # ---------------------------------------------------------------------------
 
-sub _gl_api($path) {
+sub _gl_api ($path) {
     my $json = qx(glab api '$path' 2>/dev/null) // '';
     return undef unless $json =~ /\S/;
     eval { decode_json($json) };
 }
 
-sub _run(@cmd) {
+sub _run (@cmd) {
     open my $fh, '-|', @cmd or return '';
     local $/;
     <$fh> // '';
 }
 
-sub _urlencode($s) {
+sub _urlencode ($s) {
     $s =~ s/([^A-Za-z0-9\-._~])/sprintf '%%%02X', ord $1/ge;
     $s;
 }
 
-sub gl_repos() {
-    my $data = eval {
-        decode_json(scalar qx(glab repo list -a --output json 2>/dev/null))
-    };
+sub gl_repos () {
+    my $data = eval { decode_json(scalar qx(glab repo list -a --output json 2>/dev/null)); };
     $data ? map { $_->{path_with_namespace} } @$data : ();
 }
 
-sub gl_issues($repo, @args) { _run('glab', 'issue', 'list', '-R', $repo, @args) }
+sub gl_issues ($repo, @args) {
+    _run('glab', 'issue', 'list', '-R', $repo, @args);
+}
 
-sub gl_open_mrs($repo, @labels) {
+sub gl_issues_api ($repo, @labels) {
+    my $enc = _urlencode($repo);
+    my $lbl = join ',', map { _urlencode($_) } @labels;
+    my $r   = _gl_api("projects/$enc/issues?labels=$lbl&state=opened&per_page=100");
+    ref($r) eq 'ARRAY' ? $r : [];
+}
+
+sub gl_open_mrs ($repo, @labels) {
     my $enc    = _urlencode($repo);
     my @params = ('state=opened', 'per_page=100');
-    push @params, 'labels=' . join(',', map { _urlencode($_) } @labels) if @labels;
+    push @params, 'labels=' . join(',', map { _urlencode($_) } @labels)
+      if @labels;
     my $r = _gl_api("projects/${enc}/merge_requests?" . join('&', @params));
     ref($r) eq 'ARRAY' ? $r : [];
 }
 
-sub gl_is_claimed($repo, $iid) {
-    my $enc   = _urlencode($repo);
-    my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
-    grep { /^agent::/ } @{$issue->{labels} // []};
+sub _has_agent_label (@labels) {
+    grep { /^agent::/ } @labels;
 }
 
-sub gl_has_unresolved_blockers($repo, $iid) {
+sub gl_is_claimed ($repo, $iid) {
+    my $enc   = _urlencode($repo);
+    my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
+    _has_agent_label(@{$issue->{labels} // []});
+}
+
+sub gl_has_unresolved_blockers ($repo, $iid) {
     my $enc   = _urlencode($repo);
     my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
 
@@ -77,22 +89,24 @@ sub gl_has_unresolved_blockers($repo, $iid) {
 # Prompt helpers
 # ---------------------------------------------------------------------------
 
-sub _repos_header(@repos) { sprintf "\n## Repos\n```\n%s\n```\n", join "\n", @repos }
+sub _repos_header (@repos) {
+    sprintf "\n## Repos\n```\n%s\n```\n", join "\n", @repos;
+}
 
-sub _format_mr($mr) {
+sub _format_mr ($mr) {
     sprintf "!%d\t%s\t%s\t(main) ← (%s)",
       $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch};
 }
 
-sub _mr_block($repo, @mrs) {
+sub _mr_block ($repo, @mrs) {
     sprintf "### %s\n```\n%s\n```\n", $repo, join "\n", map { _format_mr($_) } @mrs;
 }
 
-sub _section($header, $body) {
+sub _section ($header, $body) {
     $body =~ /\S/ ? "\n## $header\n$body\n" : '';
 }
 
-sub _repo_block($repo, $text) {
+sub _repo_block ($repo, $text) {
     return '' unless $text && $text =~ /\S/;
     $text =~ s/\s+\z//;
     "### $repo\n```\n$text\n```\n";
@@ -102,50 +116,75 @@ sub _repo_block($repo, $text) {
 # Prompt builders
 # ---------------------------------------------------------------------------
 
-sub dev_prompt(@repos) {
+sub dev_prompt (@repos) {
     my $out = _repos_header(@repos);
 
     my $mine = '';
     for my $repo (@repos) {
-        my $t = gl_issues($repo, '--label', "agent::$ENV{HOSTNAME}");
-        $mine .= _repo_block($repo, $t) if $t =~ /^#/m;
+        my @issues = @{gl_issues_api($repo, "agent::$ENV{HOSTNAME}")};
+        next unless @issues;
+        my $text = join "\n", map { sprintf "#%d\t%s", $_->{iid}, $_->{title} } @issues;
+        $mine .= _repo_block($repo, $text);
     }
     $out .= _section('My in-progress issues', $mine);
 
+    # MRs this agent was working on (left from a previous run)
+    my $my_mrs = '';
+    for my $repo (@repos) {
+        my $mrs = gl_open_mrs($repo, "agent::$ENV{HOSTNAME}", "workflow::in dev");
+        $my_mrs .= _mr_block($repo, @$mrs) if @$mrs;
+    }
+    $out .= _section('My in-progress MRs', $my_mrs);
+
+    # Issues stuck in "in dev" with no agent claim (orphaned)
+    my $stale = '';
+    for my $repo (@repos) {
+        my @issues = @{gl_issues_api($repo, 'workflow::in dev', "model::$ENV{ANTHROPIC_MODEL}")};
+        my @unclaimed =
+          grep { !_has_agent_label(@{$_->{labels} // []}) } @issues;
+        next unless @unclaimed;
+        my $text = join "\n", map { sprintf "#%d\t%s", $_->{iid}, $_->{title} } @unclaimed;
+        $stale .= _repo_block($repo, $text);
+    }
+    $out .= _section('Unclaimed in-dev issues', $stale);
+
+    # New work available
     my $ready = '';
     for my $repo (@repos) {
         my $t = gl_issues(
-            $repo, '--label', 'workflow::ready for development',
-                   '--label', "model::$ENV{ANTHROPIC_MODEL}",
+            $repo,     '--label', 'workflow::ready for development',
+            '--label', "model::$ENV{ANTHROPIC_MODEL}",
         );
         next unless $t =~ /^#/m;
-        my $filtered = join "\n", grep {
-                 /^#(\d+)/
-              && !gl_is_claimed($repo, $1)
-              && !gl_has_unresolved_blockers($repo, $1)
-        } split /\n/, $t;
+        my $filtered = join "\n",
+          grep { /^#(\d+)/ && !gl_is_claimed($repo, $1) && !gl_has_unresolved_blockers($repo, $1) }
+          split /\n/, $t;
         $ready .= _repo_block($repo, $filtered);
     }
     $out .= _section('Issues ready for dev', $ready);
 
+    # MR triage (CI failures, conflicts, human feedback)
     my %excl = map { $_ => 1 } 'workflow::in review', 'workflow::in dev';
     my ($ci_fail, $conflicts, $needs_work) = ('', '', '');
     for my $repo (@repos) {
         my $mrs = gl_open_mrs($repo, "model::$ENV{ANTHROPIC_MODEL}");
         my @f   = grep { ($_->{head_pipeline}{status} // '') eq 'failed' } @$mrs;
         my @c   = grep { $_->{has_conflicts} } @$mrs;
-        my @w   = grep { !$_->{has_conflicts} && !grep { $excl{$_} } @{$_->{labels}} } @$mrs;
+        my @w   = grep {
+            !$_->{has_conflicts} && !grep { $excl{$_} }
+              @{$_->{labels}}
+        } @$mrs;
         $ci_fail    .= _mr_block($repo, @f) if @f;
         $conflicts  .= _mr_block($repo, @c) if @c;
         $needs_work .= _mr_block($repo, @w) if @w;
     }
     $out .= _section('MRs with failed CI', $ci_fail);
-    $out .= _section('MRs with conflicts',  $conflicts);
-    $out .= _section('MRs needing work',    $needs_work);
+    $out .= _section('MRs with conflicts', $conflicts);
+    $out .= _section('MRs needing work',   $needs_work);
     $out;
 }
 
-sub lead_prompt(@repos) {
+sub lead_prompt (@repos) {
     my $out = _repos_header(@repos);
 
     my $wake = '';
@@ -178,7 +217,7 @@ sub lead_prompt(@repos) {
     $out;
 }
 
-sub dx_prompt(@repos) {
+sub dx_prompt (@repos) {
     my $out = _repos_header(@repos);
     chomp(my $ts = qx(date -Iseconds));
     $out .= "\n## DX audit — $ts\n";
@@ -201,17 +240,35 @@ END
 # ---------------------------------------------------------------------------
 
 my %ROLES = (
-    dev  => { label => 'Iteration',         idle => 'Nothing to do, sleeping',        idle_sleep => TIMEOUT_INTERVAL, prompt => \&dev_prompt  },
-    lead => { label => 'Planner iteration',  idle => 'No unrefined issues, sleeping',  idle_sleep => TIMEOUT_INTERVAL, prompt => \&lead_prompt },
-    dx   => { label => 'DX audit',          idle => 'No analysis needed, sleeping',   idle_sleep => SLEEP_INTERVAL,   prompt => \&dx_prompt   },
+    dev => {
+        label      => 'Iteration',
+        idle       => 'Nothing to do, sleeping',
+        idle_sleep => TIMEOUT_INTERVAL,
+        prompt     => \&dev_prompt
+    },
+    lead => {
+        label      => 'Planner iteration',
+        idle       => 'No unrefined issues, sleeping',
+        idle_sleep => TIMEOUT_INTERVAL,
+        prompt     => \&lead_prompt
+    },
+    dx => {
+        label      => 'DX audit',
+        idle       => 'No analysis needed, sleeping',
+        idle_sleep => SLEEP_INTERVAL,
+        prompt     => \&dx_prompt
+    },
 );
 
-sub run_loop($role, $prompt_file, $dry_run) {
-    my @repos = gl_repos();
+sub run_loop ($role, $prompt_file, $dry_run) {
+    my @repos = gl_repos;
     if ($dry_run) { print $role->{prompt}->(@repos); return }
 
     require File::Temp;
-    my $sys     = File::Temp->new(UNLINK => 1, SUFFIX => '.md');
+    my $sys = File::Temp->new(
+        UNLINK => 1,
+        SUFFIX => '.md'
+    );
     my $syspath = $sys->filename;
     for my $f (COMMON_PROMPT, $prompt_file) {
         open my $fh, '<', $f or die "Cannot read $f: $!\n";
@@ -229,7 +286,7 @@ sub run_loop($role, $prompt_file, $dry_run) {
         my ($ord) = ($ENV{HOSTNAME} // '') =~ /(\d+)$/;
         sleep(($ord // 0) * 240 + int rand 60);
 
-        @repos = gl_repos();
+        @repos = gl_repos;
         my $prompt = $role->{prompt}->(@repos);
 
         unless ($prompt =~ /^## [^R]/m) {
@@ -240,12 +297,15 @@ sub run_loop($role, $prompt_file, $dry_run) {
 
         my ($output, $has_sleep) = ('', 0);
         open my $pipe, '-|',
-          'claude', '-p', $prompt,
-          '--system-prompt-file',      $syspath,
-          '--verbose',                 '--dangerously-skip-permissions',
-          '--output-format',           'stream-json',
-          '--include-partial-messages'
-          or do { warn "Failed to launch claude: $!\n"; sleep TIMEOUT_INTERVAL; next };
+          'claude',               '-p', $prompt,
+          '--system-prompt-file', $syspath,
+          '--verbose',            '--dangerously-skip-permissions',
+          '--output-format',      'stream-json', '--include-partial-messages'
+          or do {
+            warn "Failed to launch claude: $!\n";
+            sleep TIMEOUT_INTERVAL;
+            next;
+          };
 
         while (my $line = <$pipe>) {
             print $line;
@@ -257,7 +317,8 @@ sub run_loop($role, $prompt_file, $dry_run) {
 
         if ($exit_code != 0) {
             die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
-              if $output =~ /OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/;
+              if $output =~
+              /OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/;
             warn "claude exited with code $exit_code\n";
         }
 
@@ -272,9 +333,10 @@ sub run_loop($role, $prompt_file, $dry_run) {
 
 my $dry_run = 0;
 
-GetOptions('dry-run|n' => \$dry_run) or die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
+GetOptions('dry-run|n' => \$dry_run)
+  or die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
 
-my $cmd  = shift @ARGV // die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
-my $role = $ROLES{$cmd}             // die "Unknown command: $cmd\n";
+my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
+my $role = $ROLES{$cmd} // die "Unknown command: $cmd\n";
 
 run_loop($role, PROMPT_DIR . "/prompt-${cmd}.md", $dry_run);
