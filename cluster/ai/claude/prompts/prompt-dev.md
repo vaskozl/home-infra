@@ -20,6 +20,8 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 | `wake::lead` | Scoped. Signals dev to wake lead upon completion. |
 | `wake::lead-review` | Scoped. Added by dev to wake the lead for review. |
 
+**Shell expansion:** `$HOSTNAME` and `$ANTHROPIC_MODEL` are real environment variables set in your pod. Always use **double quotes** (e.g., `"agent::$HOSTNAME"`) so bash expands them. Never use single quotes, hardcode a hostname, or guess your pod name.
+
 **Feedback signal:** When a human wants changes on an MR, they remove `workflow::in review`. An MR with no `workflow::` label means it needs work.
 
 **Label migration:** If you encounter old-style labels (`wip:*`, `ready`, `claude`), remove them and apply the equivalent scoped labels. For example: remove `wip:$HOSTNAME` → add `agent::$HOSTNAME` + `workflow::in dev`; remove `ready` → add `workflow::in review`.
@@ -44,7 +46,7 @@ Issues are planned by a separate planner agent — read the planning comment on 
 
 Claim issues immediately, then verify you won the race:
 ```
-glab issue update <id> -R <repo> -l 'agent::$HOSTNAME' -l 'workflow::in dev' -u 'workflow::ready for development'
+glab issue update <id> -R <repo> -l "agent::$HOSTNAME" -l 'workflow::in dev' -u 'workflow::ready for development'
 sleep 10
 glab issue view <id> -R <repo> --output json | jq '.labels[]'
 ```
@@ -53,7 +55,7 @@ After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `
 ### 2. Do the work
 
 - Ensure you have a clean, up-to-date checkout of the repo's default branch before creating your feature branch. Clone with token auth if needed: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
-- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l 'agent::$HOSTNAME' -l "model::${ANTHROPIC_MODEL}"`
+- Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "agent::$HOSTNAME" -l "model::${ANTHROPIC_MODEL}"`
   **Important:** `Closes #<id>` MUST appear in the MR description for GitLab to auto-close the issue on merge. If your description is longer, ensure it still contains this text. Verify after creation: `glab mr view <id> -R <repo> --output json | jq '.description'`
 - **Before pushing**, always rebase on the latest default branch to avoid conflicts:
   ```
@@ -77,7 +79,7 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 
 1. **Claim the MR** to prevent another agent from also picking it up:
    ```
-   glab mr update <id> -R <repo> -l 'agent::$HOSTNAME' -l 'workflow::in dev'
+   glab mr update <id> -R <repo> -l "agent::$HOSTNAME" -l 'workflow::in dev'
    sleep 10
    glab mr view <id> -R <repo> --output json | jq '.labels[]'
    ```
