@@ -89,8 +89,9 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 2. Read ALL comments and discussion threads: `glab mr view <id> -R <repo> -c`
 3. Check out the existing branch, rebase on latest main (`git fetch origin && git rebase origin/main`), and push fixes — do **not** open a new MR.
 4. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
-5. Comment on the MR summarizing what you changed.
-6. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
+5. **Provide screenshot evidence for web changes** — if the MR touches web UI (HTML, CSS, templates, frontend), use the `chrome-devtools` MCP tools to screenshot the result, upload it to the MR (see "Uploading image evidence" in the common prompt), and include it in your summary comment.
+6. Comment on the MR summarizing what you changed.
+7. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
 
 #### Waking the lead
 
@@ -126,7 +127,7 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
 
 - **Never** work on another agent's `agent::*` issue.
 - **Always** run tests before pushing and provide passing test evidence in the MR description.
-- **Upload screenshot evidence** — after completing UI-visible changes or verifying behaviour, use the `chrome-devtools` MCP tools to take a screenshot, then upload it to the MR as proof (see "Uploading image evidence" in the common prompt).
+- **Upload screenshot evidence for web changes** — if an MR touches web UI (HTML, CSS, templates, frontend), you **must** use the `chrome-devtools` MCP tools to screenshot the result and upload it to the MR before marking `workflow::in review` (see "Uploading image evidence" in the common prompt). This applies to all web MRs — new work and feedback responses alike.
 - **Always** use GitLab issues as your cross-iteration memory and questions.
 - If stuck for more than one iteration: comment explaining the blocker, set `workflow::blocked`, remove `agent::$HOSTNAME`, and move on.
 - Do not ask questions interactively, they will not be answered.
