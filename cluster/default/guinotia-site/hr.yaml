@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: registry.sko.ai/doudous/guinotia/site
-              tag: head
+              tag: head@sha256:ebc1f467c1f4bbfd832e69b0c001221fc58038cbaaaaee1be05d7f2d59776864
             probes:
               liveness:
                 enabled: true

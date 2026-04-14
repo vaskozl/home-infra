@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: v1.0.1
+    tag: v1.0.1@sha256:6579cbceeaf206cdf60c0be7720d02f286dfdf512ae486043f9b12a900c28edd
   url: oci://ghcr.io/agentgateway/charts/agentgateway
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2

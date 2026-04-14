@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/orangecadet/matcha
-              tag: latest
+              tag: latest@sha256:b78b63a06c7e740ca4018e57e877c5de925e56d911817e4e6d709b5f0d15c5db
             probes:
               liveness:
                 enabled: true
