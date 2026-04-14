@@ -30,7 +30,8 @@ spec:
           command: ["sh", "-c"]
           args:
             - |
-              claude mcp add chrome-devtools -- npx -y chrome-devtools-mcp@latest --browserUrl=http://127.0.0.1:9222
+              claude mcp remove chrome-devtools 2>/dev/null
+              claude mcp add --transport http chrome-devtools http://127.0.0.1:8080
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
@@ -88,6 +89,21 @@ spec:
               memory: 500Mi
             limits:
               memory: 1500Mi
+        - name: chrome-devtools-mcp
+          image: cgr.dev/chainguard/node:latest
+          command: ["npx"]
+          args:
+            - -y
+            - mcp-proxy@latest
+            - --transport
+            - streamablehttp
+            - --port
+            - "8080"
+            - --
+            - npx
+            - -y
+            - chrome-devtools-mcp@latest
+            - --browserUrl=http://127.0.0.1:9222
       volumes:
         - name: buildkit-certs
           secret:
