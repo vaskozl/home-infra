@@ -49,12 +49,12 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
 ### Uploading image evidence
 
-Use the chrome-devtools MCP tools to take a screenshot, save it to a file, upload it to GitLab, and embed the returned markdown in your MR or issue comment:
+Use the chrome-devtools MCP tools to take a screenshot, save it to `/tmp/screenshots/evidence.png` (a volume shared between the `claude` and `chrome-devtools-mcp` containers), upload it to GitLab, and embed the returned markdown in your MR or issue comment:
 
 ```bash
 # 1. Upload to GitLab (glab api doesn't support multipart, use curl)
 UPLOAD=$(curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
-  --form "file=@./evidence.png" \
+  --form "file=@/tmp/screenshots/evidence.png" \
   "${GITLAB_HOST}/api/v4/projects/${repo/\//%2F}/uploads")
 IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
 # 2. Use $IMG_MD in a comment
