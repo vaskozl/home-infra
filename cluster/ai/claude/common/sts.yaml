@@ -104,7 +104,12 @@ spec:
             - -y
             - chrome-devtools-mcp@latest
             - --browserUrl=http://127.0.0.1:9222
+          volumeMounts:
+            - name: screenshots
+              mountPath: /home/nonroot
       volumes:
         - name: buildkit-certs
           secret:
             secretName: buildkit-client-certs
+        - name: screenshots
+          emptyDir: {}
