@@ -28,6 +28,7 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 - **`glab mr list --state`**: Not supported by the installed glab version. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
 - **`find` with `-exec`, `-not`, or compound predicates**: RTK intercepts `find` and blocks these. Use `\find` (backslash prefix) to bypass RTK, or prefer the Glob tool for file searches.
 - **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
+- **`python3`**: Not installed in the container. Use `jq` or `perl` for all JSON/text processing.
 
 ## glab quick-reference
 
@@ -47,6 +48,13 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | Resolve MR thread | `glab mr note <id> -R <repo> --resolve <discussion_id>` |
 | View CI status | `glab ci view <mr_iid> -R <repo>` |
 | API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
+
+> **glab JSON label format (important)**
+> - `glab issue view / mr view --output json` → labels are **strings**: `["label1", "label2"]`
+> - `glab issue list / mr list --output json` → labels are **objects**: `[{"name": "label1", ...}]`
+> - Use `.labels[]` (no `.name`) when processing `view` output with jq
+> - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades
+
 ### Uploading image evidence
 
 Use the chrome-devtools MCP tools to take a screenshot, save it to a file, upload it to GitLab, and embed the returned markdown in your MR or issue comment:
