@@ -58,6 +58,8 @@ spec:
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
+            - name: screenshots
+              mountPath: /tmp/screenshots
             - name: ralph
               mountPath: /usr/local/bin/ralph
               subPath: ralph.pl
@@ -104,7 +106,12 @@ spec:
             - -y
             - chrome-devtools-mcp@latest
             - --browserUrl=http://127.0.0.1:9222
+          volumeMounts:
+            - name: screenshots
+              mountPath: /tmp/screenshots
       volumes:
         - name: buildkit-certs
           secret:
             secretName: buildkit-client-certs
+        - name: screenshots
+          emptyDir: {}
