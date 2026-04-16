@@ -7,7 +7,7 @@ The user prompt contains the current repo list (dynamically fetched at runtime) 
 ## Fleet scaling policy (do not re-litigate)
 
 - **Only `claude-dx-sonnet` is intended to scale to 0.** It runs a scheduled daily audit and has no reason to be resident — KEDA cron in `cluster/ai/claude/dx/scaledobject.yaml` handles this.
-- **`claude-lead-opus`, `claude-worker-opus`, `claude-worker-sonnet` are always-on monitors.** They poll the issue queue and must be resident to pick up work the moment it appears. Idle polling loops with no tasks in the queue are the *expected* steady state, not a defect. **Do not** propose scaling these down, setting `replicas: 0`, or adding KEDA cron triggers to them, even if a day's logs are 100% "nothing to do". The cost of an idle pod is cheaper than delayed response to a new issue.
+- **`claude-lead-opus`, `claude-worker-opus`, `claude-worker-sonnet`, `claude-reviewer-sonnet` are always-on monitors.** They poll the issue/MR queue and must be resident to pick up work the moment it appears. Idle polling loops with no tasks in the queue are the *expected* steady state, not a defect. **Do not** propose scaling these down, setting `replicas: 0`, or adding KEDA cron triggers to them, even if a day's logs are 100% "nothing to do". The cost of an idle pod is cheaper than delayed response to new work.
 - If CPU/memory *requests* on these pods are clearly overprovisioned vs. actual usage, that *is* fair game — right-size requests, don't scale replicas.
 
 ## Known limitations
@@ -28,7 +28,7 @@ kubectl get pod -n logging ripgrep-0 -o jsonpath='{.status.phase}' 2>/dev/null
 If the pod is not in `Running` phase, **skip this section entirely** and note in the summary issue: "Log analysis skipped — ripgrep-0 pod unavailable (status: <phase>)." Do not attempt the grep/exec commands below; they will fail with no useful output.
 
 Agent logs are stored in `/logs/ai/` on the ripgrep pod (`ripgrep-0` in namespace `logging`).
-Files are named like `claude-worker-sonnet.log`, `claude-lead-opus.log`, etc.
+Files are named like `claude-worker-sonnet.log`, `claude-worker-opus.log`, `claude-lead-opus.log`, `claude-reviewer-sonnet.log`, `claude-dx-sonnet.log`. Audit **all** of them — the reviewer's log is as important as the workers'; reviewers can churn on bad renovate MRs or repeatedly defer the same MRs, which is a real problem even if nothing crashes.
 
 Each log line is JSON followed by metadata: `<JSON> pod=<pod> ctr=<ctr> ts=<ts>`.
 Strip the trailing fields before piping to jq:
@@ -97,7 +97,11 @@ glab issue list -R doudous/home-infra --label 'workflow::blocked'
 glab mr list -R doudous/home-infra
 ```
 
-### 5. Create a summary issue
+### 5. Create a summary issue (only if there's something to report)
+
+**Skip the summary issue entirely when the logs are clean.** If you walked through sections 1–4 and found nothing actionable — no crashes, no anomalous errors, no overprovisioned pods, no stuck workflow items — do not open an issue. Jump straight to step 6. A clean run is its own signal; an empty issue is noise.
+
+Open an issue only when you have at least one concrete finding with evidence.
 
 Before creating an issue, check if one already exists for today:
 
@@ -133,7 +137,7 @@ For each finding:
 - Recommend a concrete action
 - Optionally create a follow-up issue for significant improvements (see de-duplication rules below)
 
-If everything looks healthy, say so explicitly — a clean bill of health is also valuable signal.
+If everything looks healthy, just output `<sleep/>` — do not open an issue for a clean run.
 
 #### Follow-up issue de-duplication
 
@@ -160,7 +164,7 @@ After creating the summary issue, output `<sleep/>` to signal completion and all
 
 ## Hard rules
 
-- **One summary issue per run** — do not create multiple issues unless findings warrant separate tracking items
+- **At most one summary issue per run** — and none at all when there are no actionable findings. Do not create multiple summary issues.
 - **No duplicate follow-ups** — search open *and* closed issues before creating any follow-up improvement issue (see "Follow-up issue de-duplication" above). A closed issue on the same topic means do not recreate it
 - **Evidence-based** — every finding must have supporting data (log lines, event counts, timestamps)
 - **Actionable** — vague observations without recommendations are not useful

@@ -8,6 +8,7 @@ resources:
   - lead
   - dev-sonnet
   - dev-opus
+  - reviewer
   - dx
 patches:
   - path: common/sts.yaml
@@ -30,5 +31,6 @@ configMapGenerator:
       - prompt-common.md=prompts/prompt-common.md
       - prompt-dev.md=prompts/prompt-dev.md
       - prompt-lead.md=prompts/prompt-lead.md
+      - prompt-reviewer.md=prompts/prompt-reviewer.md
       - prompt-dx.md=prompts/prompt-dx.md
       - ralph.pl=prompts/ralph.pl

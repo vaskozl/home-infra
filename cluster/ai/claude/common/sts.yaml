@@ -73,6 +73,9 @@ spec:
               mountPath: /etc/claude/prompt-lead.md
               subPath: prompt-lead.md
             - name: ralph
+              mountPath: /etc/claude/prompt-reviewer.md
+              subPath: prompt-reviewer.md
+            - name: ralph
               mountPath: /etc/claude/prompt-dx.md
               subPath: prompt-dx.md
             - name: buildkit-certs

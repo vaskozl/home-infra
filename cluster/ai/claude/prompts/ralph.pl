@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# ralph — Usage: ralph [--dry-run|-n] <dev|lead|dx>
+# ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
 use v5.38;
 no warnings 'experimental';
 use Getopt::Long qw(GetOptions);
@@ -36,15 +36,19 @@ sub gl_repos () {
     $data ? map { $_->{path_with_namespace} } @$data : ();
 }
 
+use constant IGNORE_TITLE_RE => qr/renovate dashboard/i;
+
 sub gl_issues ($repo, @args) {
-    _run('glab', 'issue', 'list', '-R', $repo, @args);
+    my $out = _run('glab', 'issue', 'list', '-R', $repo, @args);
+    join "\n", grep { !/${\ IGNORE_TITLE_RE}/ } split /\n/, $out;
 }
 
 sub gl_issues_api ($repo, @labels) {
     my $enc = _urlencode($repo);
     my $lbl = join ',', map { _urlencode($_) } @labels;
     my $r   = _gl_api("projects/$enc/issues?labels=$lbl&state=opened&per_page=100");
-    ref($r) eq 'ARRAY' ? $r : [];
+    return [] unless ref($r) eq 'ARRAY';
+    [ grep { ($_->{title} // '') !~ IGNORE_TITLE_RE } @$r ];
 }
 
 sub gl_open_mrs ($repo, @labels) {
@@ -193,10 +197,10 @@ sub lead_prompt (@repos) {
 
     my $wake = '';
     for my $repo (@repos) {
-        my $t = gl_issues($repo, '--label', 'wake::lead-review');
+        my $t = gl_issues($repo, '--label', 'wake::lead');
         $wake .= _repo_block($repo, $t) if $t =~ /^#/m;
     }
-    $out .= _section('Issues needing lead review (dev wake-up)', $wake);
+    $out .= _section('Issues flagged wake::lead (dev wants re-plan)', $wake);
 
     my $ci_fail = '';
     for my $repo (@repos) {
@@ -218,6 +222,38 @@ sub lead_prompt (@repos) {
         $planning .= _repo_block($repo, $t) if $t =~ /^#/m;
     }
     $out .= _section('Issues needing planning', $planning);
+    $out;
+}
+
+sub reviewer_prompt (@repos) {
+    my $out = _repos_header(@repos);
+
+    my ($ready, $renovate) = ('', '');
+    for my $repo (@repos) {
+        my $enc = _urlencode($repo);
+        my $mrs = gl_open_mrs($repo);
+        my (@r, @ren);
+        for my $mr (@$mrs) {
+            my @labels = @{$mr->{labels} // []};
+            next if grep { $_ eq 'claude::ignore' || $_ eq 'review::deferred' } @labels;
+            next if ($mr->{head_pipeline}{status} // '') eq 'failed';
+            my $is_renovate = ($mr->{source_branch} // '') =~ m{^renovate/};
+            my $in_review   = grep { $_ eq 'workflow::in review' } @labels;
+            next unless $is_renovate || $in_review;
+            # Deliberately NOT filtering agent::* here — workflow::in review is the
+            # authoritative "dev is done" signal; any agent::* on an in-review MR is
+            # a stale claim the dev forgot to strip. The 10s verify on claim handles
+            # multi-reviewer races.
+            my $a = _gl_api("projects/$enc/merge_requests/$mr->{iid}/approvals");
+            next if $a && ($a->{approved} || @{$a->{approved_by} // []});
+            if ($is_renovate) { push @ren, $mr }
+            else              { push @r,   $mr }
+        }
+        $ready    .= _mr_block($repo, @r)   if @r;
+        $renovate .= _mr_block($repo, @ren) if @ren;
+    }
+    $out .= _section('MRs awaiting review',          $ready);
+    $out .= _section('Renovate MRs awaiting review', $renovate);
     $out;
 }
 
@@ -255,6 +291,12 @@ my %ROLES = (
         idle       => 'No unrefined issues, sleeping',
         idle_sleep => TIMEOUT_INTERVAL,
         prompt     => \&lead_prompt
+    },
+    reviewer => {
+        label      => 'Review iteration',
+        idle       => 'No MRs to review, sleeping',
+        idle_sleep => TIMEOUT_INTERVAL,
+        prompt     => \&reviewer_prompt
     },
     dx => {
         label      => 'DX audit',
@@ -338,9 +380,9 @@ sub run_loop ($role, $prompt_file, $dry_run) {
 my $dry_run = 0;
 
 GetOptions('dry-run|n' => \$dry_run)
-  or die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
+  or die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
 
-my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|dx>\n";
+my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
 my $role = $ROLES{$cmd} // die "Unknown command: $cmd\n";
 
 run_loop($role, PROMPT_DIR . "/prompt-${cmd}.md", $dry_run);

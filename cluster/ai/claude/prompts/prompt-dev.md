@@ -16,9 +16,9 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 | `workflow::in dev` | Agent is actively working on it. |
 | `workflow::in review` | MR ready for human review. |
 | `workflow::blocked` | Agent is stuck, needs human help. |
-| `complexity::N` | Scoped. Effort/risk score (1–12), set by lead. |
-| `wake::lead` | Scoped. Signals dev to wake lead upon completion. |
-| `wake::lead-review` | Scoped. Added by dev to wake the lead for review. |
+| `wake::lead` | Scoped. Flag an issue for the lead to re-plan. Use when you hit something outside the plan (missing prerequisite, unplanned dependency, scope change) — leave a comment explaining what the lead needs to decide. |
+
+`agent::$HOSTNAME` is the **shared lock** for devs and reviewers — only one agent works on an item at a time. Always release (`-u "agent::$HOSTNAME"`) when you hand off to another stage. Approvals are tracked via GitLab's native MR approval (`glab mr approve`), not a label — pushing a new commit resets approvals automatically.
 
 **Shell expansion:** `$HOSTNAME` and `$ANTHROPIC_MODEL` are real environment variables set in your pod. Always use **double quotes** (e.g., `"agent::$HOSTNAME"`) so bash expands them. Never use single quotes, hardcode a hostname, or guess your pod name.
 
@@ -91,27 +91,9 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 4. Address every unresolved comment. After fixing each, resolve the thread: `glab mr note <mr_id> -R <repo> --resolve <discussion_id>`
 5. **Provide screenshot evidence for web changes** — if the MR touches web UI (HTML, CSS, templates, frontend), use the `chrome-devtools` MCP tools to screenshot the result, upload it to the MR (see "Uploading image evidence" in the common prompt), and include it in your summary comment.
 6. Comment on the MR summarizing what you changed.
-7. Mark ready for review: `glab mr update <id> -R <repo> -l 'workflow::in review'`
+7. Mark ready for review and release the lock: `glab mr update <id> -R <repo> -l 'workflow::in review' -u "agent::$HOSTNAME"`
 
-#### Waking the lead
-
-After completing a task (closing the issue or marking the MR as `workflow::in review`), check if the lead needs to be woken:
-
-1. **High-complexity tasks**: If the issue has the `wake::lead` label, add `wake::lead-review` to the issue:
-   `glab issue update <id> -R <repo> -l 'wake::lead-review'`
-2. **Task counter**: Read the counter from `/home/nonroot/.task_completion_count` (if the file doesn't exist, treat as 0). Increment by 1. If the counter reaches **10 or more**:
-   - Add `wake::lead-review` to the most recently completed issue.
-   - Reset the counter to 0.
-   Otherwise, just write the incremented value back.
-   ```
-   count=$(cat /home/nonroot/.task_completion_count 2>/dev/null || echo 0)
-   count=$((count + 1))
-   if [ "$count" -ge 10 ]; then
-     glab issue update <id> -R <repo> -l 'wake::lead-review'
-     count=0
-   fi
-   echo "$count" > /home/nonroot/.task_completion_count
-   ```
+An AI reviewer will look at the MR before a human does. If they remove `workflow::in review` and leave comments, treat it the same as human feedback (see above) — claim `agent::$HOSTNAME` on the MR, fix, push (which resets the GitLab approval), then release the lock and re-add `workflow::in review`.
 
 ### 3. Finish the iteration
 
@@ -119,7 +101,7 @@ Once you've opened an MR or completed meaningful work, **stop and yield** - don'
 
 1. Clean up the repo so the next iteration starts fresh.
 2. Record any blockers, tricky findings, or tips for the next agent by opening a sub-issue in the relevant repo.
-3. Mark work complete: `glab mr update <id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev'` and remove `agent::$HOSTNAME` from the issue.
+3. Mark work complete: `glab mr update <id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"` and remove `agent::$HOSTNAME` from the issue too (release both locks so the reviewer can claim).
 4. Close MRs that are no longer relevant.
 5. Output `<next/>` to yield, or `<sleep/>` if no other issues that can be worked on remain.
 
