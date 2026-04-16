@@ -122,6 +122,10 @@ sub dev_prompt (@repos) {
     my $mine = '';
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, "agent::$ENV{HOSTNAME}")};
+        # Skip issues already in review — dev has nothing to do until human acts.
+        @issues = grep {
+            !grep { $_ eq 'workflow::in review' } @{$_->{labels} // []}
+        } @issues;
         next unless @issues;
         my $text = join "\n", map { sprintf "#%d\t%s", $_->{iid}, $_->{title} } @issues;
         $mine .= _repo_block($repo, $text);
