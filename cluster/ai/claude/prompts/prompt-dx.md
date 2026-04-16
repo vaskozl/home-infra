@@ -19,6 +19,14 @@ The user prompt contains the current repo list (dynamically fetched at runtime) 
 
 ### 1. Analyze the log data
 
+Before running log analysis commands, verify the ripgrep pod is available:
+
+```bash
+kubectl get pod -n logging ripgrep-0 -o jsonpath='{.status.phase}' 2>/dev/null
+```
+
+If the pod is not in `Running` phase, **skip this section entirely** and note in the summary issue: "Log analysis skipped — ripgrep-0 pod unavailable (status: <phase>)." Do not attempt the grep/exec commands below; they will fail with no useful output.
+
 Agent logs are stored in `/logs/ai/` on the ripgrep pod (`ripgrep-0` in namespace `logging`).
 Files are named like `claude-worker-sonnet.log`, `claude-lead-opus.log`, etc.
 
@@ -61,7 +69,7 @@ kubectl top pods -n ai 2>/dev/null || true
 
 Clone the repo and inspect the agent config:
 ```bash
-git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/doudous/home-infra.git /tmp/home-infra
+git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/doudous/home-infra.git /home/nonroot/home-infra
 ```
 
 Look at `cluster/ai/claude/` for:
@@ -69,6 +77,12 @@ Look at `cluster/ai/claude/` for:
 - Scheduling windows (ScaledObjects) — are they appropriate?
 - Prompt files — are they causing repeated failures or confusion?
 - Common patterns — are multiple agents making the same mistakes?
+
+After finishing the inspection, remove the clone to avoid stale repos accumulating across runs:
+
+```bash
+rm -rf /home/nonroot/home-infra
+```
 
 ### 4. Check workflow health across repos
 
