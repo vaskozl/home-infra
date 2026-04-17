@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sagernet/sing-box
-              tag: v1.13.7@sha256:1f769f9a8ee4a3d175fd5e497e54b1128dc7e66ef09391d4b372dfad402575db
+              tag: v1.13.8@sha256:78b4cb731ee9fea46f8d882c3939452d422bbba78e9f153ce023bbb85a8cc6ee
             args: [run, -c, /etc/sing-box/config.json]
             probes:
               liveness:
