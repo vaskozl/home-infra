@@ -12,6 +12,12 @@ pipeline:
     - name: kubernetes # https://docs.fluentbit.io/manual/pipeline/filters/kubernetes
       match: kube.*
       annotations: off
+      # Default buffer_size is 32K; responses from the API server for pods
+      # with many containers/labels exceed it and the http_client then logs
+      # "cannot increase buffer: current=32000 requested=64768 max=32000",
+      # which can wedge the filter and silently drop records. 0 = unlimited.
+      # See issue #86.
+      buffer_size: 0
     # Lift out the kubernetes labels so we can rename them
     - name: nest
       match: kube.*
