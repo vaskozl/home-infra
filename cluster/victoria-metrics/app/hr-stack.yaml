@@ -220,6 +220,10 @@ spec:
     kubeApiServer:
       enabled: false
     prometheus-node-exporter:
+      image:
+        registry: ghcr.io
+        repository: vaskozl/prometheus-node-exporter
+        tag: 1.11.1@sha256:dab695b70903a1453ef363c44115a186a6bd280159b9fd66a889a27244ae5d5b
       extraArgs:
         - --collector.disable-defaults
         - --collector.uname
