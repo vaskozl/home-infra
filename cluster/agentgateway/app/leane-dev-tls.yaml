@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: leane-dev
+spec:
+  secretName: leane-dev-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: leane.dev
+  dnsNames:
+    - leane.dev
+    - '*.leane.dev'

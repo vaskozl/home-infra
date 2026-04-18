@@ -40,6 +40,19 @@ spec:
     - name: https-leane
       protocol: HTTPS
       port: 443
+      hostname: "*.leane.dev"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: leane-dev-tls
+    - name: https-leane-apex
+      protocol: HTTPS
+      port: 443
       hostname: "leane.dev"
       allowedRoutes:
         namespaces:
