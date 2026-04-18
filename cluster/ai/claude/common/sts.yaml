@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: &image ghcr.io/vaskozl/claude:latest@sha256:53a15b19b0eec976f632875acce8b0fa4fd160d68b87e5fabccb0ca6063a5e8f
+          image: &image ghcr.io/vaskozl/claude:latest@sha256:3d7fab2e1f4785d33cb83d984281897a3f8c8cf63acd178e580cbe4f85b86543
           command: ["sh", "-c"]
           args:
             - |
@@ -95,7 +95,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:13d25cd2ccb10ecb9f98b7694fcdef9405dcfac7925b9edd2b44869c0d3330b9
+          image: cgr.dev/chainguard/node:latest@sha256:9522f33b0c65cfa04646229e1cebfef486a6ee389b9f6f5015d7ac2359a121f3
           command: ["npx"]
           args:
             - -y
