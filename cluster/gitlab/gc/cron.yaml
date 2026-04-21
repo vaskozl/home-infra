@@ -14,7 +14,7 @@ spec:
           serviceAccountName: gitlab-registry-serviceaccount
           containers:
             - name: kubectl-exec
-              image: ghcr.io/vaskozl/kubectl:1.35@sha256:3343fa3fbf0ea20904bab7daccd624fcc109455586ac3f81247e1c3c0535f0ec
+              image: ghcr.io/vaskozl/kubectl:1.35@sha256:5106878f66630f3cd60f2afaaeba7a64a4104ff41e41d29d1bed0670d656f322
               command:
                 - "kubectl"
                 - "exec"
