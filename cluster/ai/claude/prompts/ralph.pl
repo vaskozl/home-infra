@@ -70,6 +70,12 @@ sub gl_is_claimed ($repo, $iid) {
     _has_agent_label(@{$issue->{labels} // []});
 }
 
+sub gl_has_open_mr ($repo, $iid) {
+    my $enc = _urlencode($repo);
+    my $mrs = _gl_api("projects/${enc}/issues/${iid}/related_merge_requests") or return 0;
+    ref($mrs) eq 'ARRAY' && grep { ($_->{state} // '') eq 'opened' } @$mrs;
+}
+
 sub gl_has_unresolved_blockers ($repo, $iid) {
     my $enc   = _urlencode($repo);
     my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
@@ -149,7 +155,9 @@ sub dev_prompt (@repos) {
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, 'workflow::in dev', "model::$ENV{ANTHROPIC_MODEL}")};
         my @unclaimed =
-          grep { !_has_agent_label(@{$_->{labels} // []}) } @issues;
+          grep { !gl_has_open_mr($repo, $_->{iid}) }
+          grep { !_has_agent_label(@{$_->{labels} // []}) }
+          @issues;
         next unless @unclaimed;
         my $text = join "\n", map { sprintf "#%d\t%s", $_->{iid}, $_->{title} } @unclaimed;
         $stale .= _repo_block($repo, $text);
