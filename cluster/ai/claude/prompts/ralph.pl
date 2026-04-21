@@ -155,8 +155,8 @@ sub dev_prompt (@repos) {
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, 'workflow::in dev', "model::$ENV{ANTHROPIC_MODEL}")};
         my @unclaimed =
-          grep { !_has_agent_label(@{$_->{labels} // []}) }
           grep { !gl_has_open_mr($repo, $_->{iid}) }
+          grep { !_has_agent_label(@{$_->{labels} // []}) }
           @issues;
         next unless @unclaimed;
         my $text = join "\n", map { sprintf "#%d\t%s", $_->{iid}, $_->{title} } @unclaimed;
