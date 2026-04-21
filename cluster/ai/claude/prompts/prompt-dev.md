@@ -95,13 +95,20 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 
 An AI reviewer will look at the MR before a human does. If they remove `workflow::in review` and leave comments, treat it the same as human feedback (see above) — claim `agent::$HOSTNAME` on the MR, fix, push (which resets the GitLab approval), then release the lock and re-add `workflow::in review`.
 
+**Note on the linked issue:** When handling MR feedback, the linked issue's `workflow::in review` label stays unchanged throughout — you only operate on the MR, not the issue. The issue only changes state when the MR merges (auto-closed via `Closes #<id>`) or is closed unmerged.
+
 ### 3. Finish the iteration
 
 Once you've opened an MR or completed meaningful work, **stop and yield** - don't continue to the next task.
 
 1. Clean up the repo so the next iteration starts fresh.
 2. Record any blockers, tricky findings, or tips for the next agent by opening a sub-issue in the relevant repo.
-3. Mark work complete: `glab mr update <id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"` and remove `agent::$HOSTNAME` from the issue too (release both locks so the reviewer can claim).
+3. Mark work complete — update both the MR and the issue:
+   ```bash
+   glab mr update <mr_iid> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"
+   glab issue update <issue_id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"
+   ```
+   Both locks must be released. The issue's `workflow::in review` now mirrors the MR state — no agent action is needed on the issue until the MR merges (auto-closes via `Closes #<id>`) or the lead re-opens the cycle.
 4. Close MRs that are no longer relevant.
 5. Output `<next/>` to yield, or `<sleep/>` if no other issues that can be worked on remain.
 
