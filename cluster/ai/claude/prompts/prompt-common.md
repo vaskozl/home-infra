@@ -50,10 +50,9 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 | API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
 
 > **glab JSON label format (important)**
-> - `glab issue view / mr view --output json` → labels are **strings**: `["label1", "label2"]`
-> - `glab issue list / mr list --output json` → labels are **objects**: `[{"name": "label1", ...}]`
-> - Use `.labels[]` (no `.name`) when processing `view` output with jq
-> - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades
+> - All `glab --output json` output (issue view/list, mr view/list) returns labels as **plain strings**: `["label1", "label2"]`.
+> - Always iterate with `.labels[]` — never `.labels[].name`, which will fail with `Cannot index string with string "name"`.
+> - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades from aborting sibling tool calls.
 
 ### Uploading image evidence
 
