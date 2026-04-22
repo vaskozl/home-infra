@@ -102,5 +102,17 @@
         '/^ghcr\\.io/vaskozl/gitaly$/',
       ],
     },
+    {
+      // Major postgres upgrades require data directory migration (pg_upgrade
+      // or dump/restore) and cannot be done via a simple image tag bump.
+      // Block major updates for stateful postgres images; minor/patch still fine.
+      matchDatasources: ['docker'],
+      matchPackageNames: [
+        'ghcr.io/vaskozl/postgresql',
+        'ghcr.io/immich-app/postgres',
+      ],
+      matchUpdateTypes: ['major'],
+      enabled: false,
+    },
   ],
 }
