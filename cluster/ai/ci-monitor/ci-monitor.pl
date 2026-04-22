@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use LWP::UserAgent;
+use HTTP::Request;
 use JSON::PP;
 use URI::Escape qw(uri_escape);
 
@@ -24,6 +25,9 @@ for my $i (0 .. $#ARGV) {
 
 my $ua = LWP::UserAgent->new(timeout => 30);
 $ua->default_header('PRIVATE-TOKEN' => $TOKEN);
+
+# Strip newlines from API-sourced strings to prevent GitLab quick-action injection
+sub _sanitize { my $s = shift // ''; $s =~ s/[\r\n]+/ /g; return $s }
 
 sub api_get {
     my ($path) = @_;
@@ -167,7 +171,7 @@ sub create_issue {
 
     # Fetch commit title
     my $commit = api_get("/projects/$enc/repository/commits/$sha");
-    my $title  = $commit ? $commit->{title} : '(unknown)';
+    my $title  = _sanitize($commit ? $commit->{title} : '(unknown)');
 
     # Fetch failed jobs
     my @failed = get_failed_jobs($enc, $pid);
@@ -176,8 +180,10 @@ sub create_issue {
     if (@failed) {
         $jobs_md = "\n## Failed jobs\n";
         for my $job (@failed) {
-            my $reason = $job->{failure_reason} // 'unknown';
-            $jobs_md .= "- [$job->{name} ($job->{stage})]($job->{web_url}) — $reason\n";
+            my $name   = _sanitize($job->{name});
+            my $stage  = _sanitize($job->{stage});
+            my $reason = _sanitize($job->{failure_reason} // 'unknown');
+            $jobs_md .= "- [$name ($stage)]($job->{web_url}) — $reason\n";
         }
     }
 
@@ -215,8 +221,10 @@ sub add_new_failure_note {
     if (@failed) {
         $jobs_md = "\nFailed jobs:\n";
         for my $job (@failed) {
-            my $reason = $job->{failure_reason} // 'unknown';
-            $jobs_md .= "- [$job->{name} ($job->{stage})]($job->{web_url}) — $reason\n";
+            my $name   = _sanitize($job->{name});
+            my $stage  = _sanitize($job->{stage});
+            my $reason = _sanitize($job->{failure_reason} // 'unknown');
+            $jobs_md .= "- [$name ($stage)]($job->{web_url}) — $reason\n";
         }
     }
 
