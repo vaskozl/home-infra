@@ -2,259 +2,97 @@
 use v5.20;
 use strict;
 use warnings;
-
 use Mojo::UserAgent;
-use Mojo::JSON    qw(encode_json decode_json);
-use Mojo::Util    qw(url_escape);
-use Getopt::Long  qw(GetOptions);
+use Mojo::JSON qw(encode_json);
+use Mojo::Util qw(url_escape);
+use Getopt::Long;
 
 my @REPOS = ('doudous/packages', 'doudous/apkontainers');
 my $HOST  = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL = 'ci::main-failed';
-
-my ($DRY_RUN, $ONLY_REPO);
-GetOptions(
-    'dry-run'  => \$DRY_RUN,
-    'repo=s'   => \$ONLY_REPO,
-) or die "Usage: $0 [--dry-run] [--repo <name>]\n";
+my ($DRY, $REPO);
+GetOptions('dry-run' => \$DRY, 'repo=s' => \$REPO);
 
 my $ua = Mojo::UserAgent->new;
-$ua->on(start => sub {
-    my ($ua, $tx) = @_;
-    $tx->req->headers->header('PRIVATE-TOKEN' => $TOKEN);
-});
+$ua->on(start => sub { $_[1]->req->headers->header('PRIVATE-TOKEN' => $TOKEN) });
 
-# Strip newlines from API-sourced strings to prevent GitLab quick-action injection
-sub _sanitize { my $s = shift // ''; $s =~ s/[\r\n]+/ /g; return $s }
+sub clean { (my $s = shift // '') =~ s/[\r\n]+/ /g; $s }
 
-sub api_get {
-    my ($path) = @_;
-    my $url = "$HOST/api/v4$path";
-    my $res = $ua->get($url)->result;
-    unless ($res->is_success) {
-        warn "GET $url failed: " . $res->code . " " . $res->message . "\n";
-        return undef;
-    }
-    return $res->json;
+sub api {
+    my ($m, $path, %p) = @_;
+    if ($DRY && $m ne 'GET') { say "  [dry] $m $path"; return {} }
+    my $r = ($m eq 'GET' ? $ua->get("$HOST/api/v4$path")
+                         : $ua->$m("$HOST/api/v4$path" => {'Content-Type' => 'application/json'} => encode_json(\%p)))->result;
+    $r->is_success ? $r->json : do { warn "$m $path: " . $r->code . "\n"; undef }
 }
 
-sub api_post {
-    my ($path, %params) = @_;
-    my $url = "$HOST/api/v4$path";
-    if ($DRY_RUN) {
-        say "  [dry-run] POST $path " . encode_json(\%params);
-        return {};
-    }
-    my $res = $ua->post($url => {'Content-Type' => 'application/json'} => encode_json(\%params))->result;
-    unless ($res->is_success) {
-        warn "POST $url failed: " . $res->code . " " . $res->message . " — " . $res->body . "\n";
-        return undef;
-    }
-    return $res->json;
+sub failed_jobs_md {
+    my ($e, $pid) = @_;
+    my @f = grep { $_->{status} eq 'failed' } @{api(GET => "/projects/$e/pipelines/$pid/jobs?per_page=100") // []};
+    @f ? "\n\n## Failed jobs\n" . join('', map {
+        "- [" . clean($_->{name}) . " (" . clean($_->{stage}) . ")]($_->{web_url}) — " . clean($_->{failure_reason} // 'unknown') . "\n"
+    } @f) : ''
 }
 
-sub api_put {
-    my ($path, %params) = @_;
-    my $url = "$HOST/api/v4$path";
-    if ($DRY_RUN) {
-        say "  [dry-run] PUT $path " . encode_json(\%params);
-        return {};
-    }
-    my $res = $ua->put($url => {'Content-Type' => 'application/json'} => encode_json(\%params))->result;
-    unless ($res->is_success) {
-        warn "PUT $url failed: " . $res->code . " " . $res->message . " — " . $res->body . "\n";
-        return undef;
-    }
-    return $res->json;
-}
-
-sub ensure_label {
-    my ($enc) = @_;
-    if ($DRY_RUN) {
-        say "  [dry-run] ensure label '$LABEL' exists in project $enc";
-        return;
-    }
-    my $url = "$HOST/api/v4/projects/$enc/labels";
-    my $res = $ua->post($url => {'Content-Type' => 'application/json'} => encode_json({ name => $LABEL, color => '#e24329' }))->result;
-    # 201 = created, 409 = already exists — both are fine
-    unless ($res->code == 201 || $res->code == 409) {
-        warn "Could not ensure label: " . $res->code . " " . $res->message . "\n";
-    }
-}
-
-sub process_repo {
+sub process {
     my ($repo) = @_;
-    my $enc = url_escape($repo, '^A-Za-z0-9\-._~');
-
+    my $e = url_escape($repo, '^A-Za-z0-9\-._~');
     say "\n=== $repo ===";
 
-    # 1. Get latest pipeline on main
-    my $pipelines = api_get("/projects/$enc/pipelines?ref=main&per_page=1");
-    unless ($pipelines && @$pipelines) {
-        warn "No pipelines found for $repo\n";
-        return;
-    }
-    my $pipeline = $pipelines->[0];
-    my $status   = $pipeline->{status};
-    my $sha      = $pipeline->{sha};
-    my $pid      = $pipeline->{id};
-    my $pipe_url = $pipeline->{web_url};
+    my $pipes = api(GET => "/projects/$e/pipelines?ref=main&per_page=1") or return;
+    @$pipes or return warn "No pipelines found\n";
+    my ($st, $sha, $pid, $purl) = @{$pipes->[0]}{qw(status sha id web_url)};
+    say "  Latest pipeline: #$pid  status=$st  sha=$sha";
 
-    say "  Latest pipeline: #$pid  status=$status  sha=$sha";
+    my $issues = api(GET => "/projects/$e/issues?state=opened&labels=" . url_escape($LABEL));
+    my $open   = $issues && @$issues ? $issues->[0] : undef;
+    say $open ? "  Existing issue: #$open->{iid}" : "  No existing issue";
 
-    # 2. Look for existing open issue with ci::main-failed label
-    my $issues   = api_get("/projects/$enc/issues?state=opened&labels=" . url_escape($LABEL));
-    my $existing = ($issues && @$issues) ? $issues->[0] : undef;
+    if ($st eq 'failed' && !$open) {
+        say "  Action: CREATE issue";
+        unless ($DRY) {
+            $ua->post("$HOST/api/v4/projects/$e/labels" =>
+                {'Content-Type' => 'application/json'} => encode_json({name => $LABEL, color => '#e24329'}))->result;
+        }
+        my $c = api(GET => "/projects/$e/repository/commits/$sha") // {};
+        api(POST => "/projects/$e/issues",
+            title       => "CI failed on main: " . substr($sha, 0, 8),
+            description => "Latest pipeline on \`main\` failed.\n\n- Pipeline: $purl\n"
+                . "- Commit: $sha — " . clean($c->{title}) . failed_jobs_md($e, $pid)
+                . "\n\n<!-- ci-monitor sha=$sha pipeline=$pid -->",
+            labels => $LABEL);
 
-    if ($existing) {
-        say "  Existing issue: #" . $existing->{iid} . " — " . $existing->{title};
-    } else {
-        say "  No existing issue.";
-    }
-
-    # 3. Decide action
-    if ($status eq 'failed') {
-        if (!$existing) {
-            say "  Action: CREATE issue (pipeline failed, no open issue)";
-            create_issue($repo, $enc, $pipeline);
-        } else {
-            # Check if this is a newer failing commit
-            my $body = $existing->{description} // '';
-            my ($stored_sha) = $body =~ /<!-- ci-monitor sha=(\S+)/;
-            if ($stored_sha && $stored_sha ne $sha) {
-                say "  Action: ADD NOTE (new failing commit $sha, was $stored_sha)";
-                add_new_failure_note($enc, $existing->{iid}, $pipeline);
-            } else {
-                say "  Action: NO-OP (issue already open for same commit)";
+    } elsif ($st eq 'failed' && $open) {
+        my ($prev) = ($open->{description} // '') =~ /<!-- ci-monitor sha=(\S+)/;
+        if ($prev && $prev ne $sha) {
+            say "  Action: ADD NOTE (new failing commit $sha, was $prev)";
+            api(POST => "/projects/$e/issues/$open->{iid}/notes",
+                body => "New commit also failed on \`main\`:\n\n- Pipeline: $purl\n- Commit: $sha"
+                    . failed_jobs_md($e, $pid));
+            unless ($DRY) {
+                (my $desc = $open->{description} // '') =~
+                    s|<!-- ci-monitor sha=\S+ pipeline=\d+ -->|<!-- ci-monitor sha=$sha pipeline=$pid -->|;
+                api(PUT => "/projects/$e/issues/$open->{iid}", description => $desc);
             }
-        }
-    } elsif ($status eq 'success') {
-        if ($existing) {
-            say "  Action: CLOSE issue (pipeline now green)";
-            close_issue($enc, $existing->{iid}, $pipe_url);
         } else {
-            say "  Action: NO-OP (pipeline green, no open issue)";
+            say "  Action: NO-OP (issue already open for this commit)";
         }
+
+    } elsif ($st eq 'success' && $open) {
+        say "  Action: CLOSE issue #$open->{iid}";
+        api(POST => "/projects/$e/issues/$open->{iid}/notes",
+            body => "Auto-closed — latest pipeline on \`main\` is green: $purl");
+        api(PUT => "/projects/$e/issues/$open->{iid}", state_event => 'close');
+
     } else {
-        # running, pending, canceled, skipped, etc.
-        say "  Action: NO-OP (status=$status, waiting for terminal state)";
+        say "  Action: NO-OP (status=$st)";
     }
 }
 
-sub get_failed_jobs {
-    my ($enc, $pid) = @_;
-    my $jobs = api_get("/projects/$enc/pipelines/$pid/jobs?per_page=100");
-    return () unless $jobs;
-    return grep { $_->{status} eq 'failed' } @$jobs;
-}
-
-sub create_issue {
-    my ($repo, $enc, $pipeline) = @_;
-
-    ensure_label($enc);
-
-    my $sha      = $pipeline->{sha};
-    my $short    = substr($sha, 0, 8);
-    my $pid      = $pipeline->{id};
-    my $pipe_url = $pipeline->{web_url};
-
-    # Fetch commit title
-    my $commit = api_get("/projects/$enc/repository/commits/$sha");
-    my $title  = _sanitize($commit ? $commit->{title} : '(unknown)');
-
-    # Fetch failed jobs
-    my @failed = get_failed_jobs($enc, $pid);
-
-    my $jobs_md = '';
-    if (@failed) {
-        $jobs_md = "\n## Failed jobs\n";
-        for my $job (@failed) {
-            my $name   = _sanitize($job->{name});
-            my $stage  = _sanitize($job->{stage});
-            my $reason = _sanitize($job->{failure_reason} // 'unknown');
-            $jobs_md .= "- [$name ($stage)]($job->{web_url}) — $reason\n";
-        }
-    }
-
-    my $body = <<END;
-Latest pipeline on \`main\` failed.
-
-- Pipeline: $pipe_url
-- Commit: $sha — $title
-$jobs_md
-<!-- ci-monitor sha=$sha pipeline=$pid -->
-END
-
-    my $issue_title = "CI failed on main: $short";
-    say "  Creating issue: \"$issue_title\"";
-
-    my $result = api_post("/projects/$enc/issues",
-        title       => $issue_title,
-        description => $body,
-        labels      => $LABEL,
-    );
-    if ($result && $result->{iid}) {
-        say "  Created issue #" . $result->{iid};
-    }
-}
-
-sub add_new_failure_note {
-    my ($enc, $iid, $pipeline) = @_;
-    my $sha      = $pipeline->{sha};
-    my $pid      = $pipeline->{id};
-    my $pipe_url = $pipeline->{web_url};
-
-    my @failed  = get_failed_jobs($enc, $pid);
-    my $jobs_md = '';
-    if (@failed) {
-        $jobs_md = "\nFailed jobs:\n";
-        for my $job (@failed) {
-            my $name   = _sanitize($job->{name});
-            my $stage  = _sanitize($job->{stage});
-            my $reason = _sanitize($job->{failure_reason} // 'unknown');
-            $jobs_md .= "- [$name ($stage)]($job->{web_url}) — $reason\n";
-        }
-    }
-
-    my $note = "A new commit also failed on \`main\`:\n\n- Pipeline: $pipe_url\n- Commit: $sha\n$jobs_md\n<!-- ci-monitor sha=$sha pipeline=$pid -->";
-    say "  Adding note to #$iid";
-
-    api_post("/projects/$enc/issues/$iid/notes", body => $note);
-
-    # Update sentinel in issue body
-    my $issue = api_get("/projects/$enc/issues/$iid");
-    if ($issue) {
-        my $desc = $issue->{description} // '';
-        $desc =~ s/<!-- ci-monitor sha=\S+ pipeline=\d+ -->/<!-- ci-monitor sha=$sha pipeline=$pid -->/;
-        api_put("/projects/$enc/issues/$iid", description => $desc);
-    }
-}
-
-sub close_issue {
-    my ($enc, $iid, $pipe_url) = @_;
-    say "  Adding close note to #$iid";
-    api_post("/projects/$enc/issues/$iid/notes",
-        body => "Auto-closed — latest pipeline on \`main\` is green: $pipe_url",
-    );
-    say "  Closing issue #$iid";
-    api_put("/projects/$enc/issues/$iid", state_event => 'close');
-}
-
-# Main
-my @repos        = $ONLY_REPO ? ($ONLY_REPO) : @REPOS;
-my $failed_count = 0;
-
-say "ci-monitor starting" . ($DRY_RUN ? " [DRY RUN]" : "") . " — checking: " . join(', ', @repos);
-
-for my $repo (@repos) {
-    eval { process_repo($repo) };
-    if ($@) {
-        warn "ERROR processing $repo: $@\n";
-        $failed_count++;
-    }
-}
-
-die "All repos failed — exiting non-zero\n" if $failed_count == scalar @repos;
-
+my @repos = $REPO ? ($REPO) : @REPOS;
+say "ci-monitor" . ($DRY ? " [DRY RUN]" : "") . " — checking: " . join(', ', @repos);
+my $errs = 0;
+for my $r (@repos) { eval { process($r) } or do { warn "ERROR: $@"; $errs++ } }
+die "All repos failed\n" if $errs == @repos;
 say "\nDone.";
