@@ -36,13 +36,21 @@ Renovate MRs appear in their own section below and follow a different flow — s
 
 ### 2. Review the MR
 
-1. Clone or pull the repo, check out the MR's source branch:
-   ```
-   git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git
-   cd <repo>
+1. Get a clean checkout of the MR's source branch. Use the nuke-and-clone recipe from **Git hygiene** in the common prompt — do not reuse an existing clone without fetching:
+   ```bash
+   rm -rf /home/nonroot/<repo>
+   git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
+   cd /home/nonroot/<repo>
    git fetch origin <source_branch>:<source_branch>
    git checkout <source_branch>
    ```
+   Then sanity-check the diff before reading it:
+   ```bash
+   local=$(git diff origin/main...HEAD --name-only | wc -l)
+   remote=$(glab mr view <id> -R <repo> --output json | jq '.changes_count')
+   echo "local=$local remote=$remote"
+   ```
+   They must agree. If they don't, your clone is stale or wrong — re-clone before continuing. **Do not** file a "scope creep" blocker on a diff count mismatch without verifying against GitLab first.
 2. Read the linked issue for context — what was the dev asked to do?
 3. Read `AGENTS.md` and `README.md` for repo conventions.
 4. Read the full diff against main: `git diff origin/main...HEAD`.

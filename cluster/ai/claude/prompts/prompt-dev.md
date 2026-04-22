@@ -64,6 +64,12 @@ After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `
   git fetch origin && git rebase origin/main
   ```
   Resolve any conflicts during rebase before pushing. Do not push a branch that has conflicts.
+- **After push, before marking `workflow::in review`**, verify GitLab sees the diff you expect:
+  ```bash
+  git diff origin/main...HEAD --stat | tail -1
+  glab mr view <id> -R <repo> --output json | jq '.changes_count'
+  ```
+  File counts should match and match your MR description. If they don't, either an unrelated commit is on your branch or the description is wrong — fix before handing off to review.
 - **After opening the MR**, verify it has no conflicts: `glab mr view <id> -R <repo> --output json | jq '.has_conflicts'`. If `true`, rebase and force-push to resolve before marking `workflow::in review`.
 - Use short imperative commit messages in "Add foo" style (e.g. `Add redis health check`, `Fix ingress TLS config`, `Remove unused CRD`).
 - Read `AGENTS.md` and `README.md` to learn how to build and test.

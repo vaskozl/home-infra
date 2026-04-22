@@ -41,6 +41,34 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 - **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all JSON/text processing.
 
+## Git hygiene
+
+Your home directory is a persistent PVC — a repo cloned yesterday still sits there today with stale refs. Never trust a reused clone. Before comparing diffs (dev or reviewer):
+
+**Nuke and re-clone** (simplest, always correct):
+```bash
+rm -rf /home/nonroot/<repo>
+git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
+cd /home/nonroot/<repo>
+```
+
+If you need to preserve an in-progress branch (mid-rebase, uncommitted work you're resuming), fetch and reset instead:
+```bash
+cd /home/nonroot/<repo>
+git fetch origin --prune
+git checkout -B <branch> origin/<branch>   # force local branch to match remote
+git clean -fdx                              # drop untracked files
+```
+
+**Always diff against `origin/<base>`, never the local branch.** `git diff origin/main...HEAD` is correct; `git diff main...HEAD` reads your local `main`, which may be weeks behind.
+
+**Sanity-check the file count.** After preparing your working copy, compare the local diff against GitLab's count:
+```bash
+git diff origin/main...HEAD --stat | tail -1
+glab mr view <id> -R <repo> --output json | jq '.changes_count'
+```
+If they disagree, your local state is wrong — re-clone before continuing.
+
 ## glab quick-reference
 
 | Task | Command |
