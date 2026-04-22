@@ -36,15 +36,18 @@ Renovate MRs appear in their own section below and follow a different flow — s
 
 ### 2. Review the MR
 
-1. Get a clean checkout of the MR's source branch. Follow the **fetch-and-reset recipe** from **Git hygiene** in the common prompt, substituting `<source_branch>` for `<branch>`. Do not reuse an existing clone without fetching.
-
-   Then sanity-check the diff before reading it:
+1. Get a clean checkout of the MR's source branch. Clone if needed, then fetch and check out the branch:
+   ```bash
+   git fetch origin --prune
+   git checkout -B <source_branch> origin/<source_branch>
+   ```
+   Sanity-check the file count against GitLab before reading the diff:
    ```bash
    n_local=$(git diff origin/main...HEAD --name-only | wc -l)
    remote=$(glab mr view <id> -R <repo> --output json | jq '.changes_count')
    echo "local=$n_local remote=$remote"
    ```
-   They must agree. If they don't, your clone is stale or wrong — re-clone before continuing. **Do not** file a "scope creep" blocker on a diff count mismatch without verifying against GitLab first.
+   They must agree. If they don't, re-clone and retry. **Do not** file a "scope creep" blocker on a diff count mismatch without verifying against GitLab first.
 2. Read the linked issue for context — what was the dev asked to do?
 3. Read `AGENTS.md` and `README.md` for repo conventions.
 4. Read the full diff against main: `git diff origin/main...HEAD`.
