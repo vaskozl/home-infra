@@ -2,33 +2,37 @@
 # ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
 use v5.38;
 no warnings 'experimental';
-use Getopt::Long qw(GetOptions);
-use JSON::PP     qw(decode_json);
+use Getopt::Long  qw(GetOptions);
+use Mojo::UserAgent;
+use Mojo::JSON    qw(decode_json);
+use Mojo::URL;
+use Mojo::Util    qw(url_escape);
 
 use constant PROMPT_DIR       => '/etc/claude';
 use constant COMMON_PROMPT    => PROMPT_DIR . '/prompt-common.md';
 use constant SLEEP_INTERVAL   => $ENV{SLEEP_INTERVAL}   // 300;
 use constant TIMEOUT_INTERVAL => $ENV{TIMEOUT_INTERVAL} // 60;
 
+my $UA = Mojo::UserAgent->new->request_timeout(30);
+$UA->on(start => sub ($ua, $tx) {
+    $tx->req->headers->header('PRIVATE-TOKEN' => $ENV{GITLAB_TOKEN});
+});
+my $API_BASE = ($ENV{GITLAB_HOST} // 'https://gitlab.sko.ai') . '/api/v4';
+
 # ---------------------------------------------------------------------------
 # GitLab helpers
 # ---------------------------------------------------------------------------
 
 sub _gl_api ($path) {
-    my $json = qx(glab api '$path' 2>/dev/null) // '';
-    return undef unless $json =~ /\S/;
-    eval { decode_json($json) };
+    my $res = eval { $UA->get("$API_BASE/$path")->result } or return undef;
+    return undef unless $res->is_success;
+    eval { $res->json };
 }
 
 sub _run (@cmd) {
     open my $fh, '-|', @cmd or return '';
     local $/;
     <$fh> // '';
-}
-
-sub _urlencode ($s) {
-    $s =~ s/([^A-Za-z0-9\-._~])/sprintf '%%%02X', ord $1/ge;
-    $s;
 }
 
 sub gl_repos () {
@@ -44,17 +48,17 @@ sub gl_issues ($repo, @args) {
 }
 
 sub gl_issues_api ($repo, @labels) {
-    my $enc = _urlencode($repo);
-    my $lbl = join ',', map { _urlencode($_) } @labels;
+    my $enc = url_escape($repo);
+    my $lbl = join ',', map { url_escape($_) } @labels;
     my $r   = _gl_api("projects/$enc/issues?labels=$lbl&state=opened&per_page=100");
     return [] unless ref($r) eq 'ARRAY';
     [ grep { ($_->{title} // '') !~ IGNORE_TITLE_RE } @$r ];
 }
 
 sub gl_open_mrs ($repo, @labels) {
-    my $enc    = _urlencode($repo);
+    my $enc    = url_escape($repo);
     my @params = ('state=opened', 'per_page=100');
-    push @params, 'labels=' . join(',', map { _urlencode($_) } @labels)
+    push @params, 'labels=' . join(',', map { url_escape($_) } @labels)
       if @labels;
     my $r = _gl_api("projects/${enc}/merge_requests?" . join('&', @params));
     ref($r) eq 'ARRAY' ? $r : [];
@@ -65,19 +69,19 @@ sub _has_agent_label (@labels) {
 }
 
 sub gl_is_claimed ($repo, $iid) {
-    my $enc   = _urlencode($repo);
+    my $enc   = url_escape($repo);
     my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
     _has_agent_label(@{$issue->{labels} // []});
 }
 
 sub gl_has_open_mr ($repo, $iid) {
-    my $enc = _urlencode($repo);
+    my $enc = url_escape($repo);
     my $mrs = _gl_api("projects/${enc}/issues/${iid}/related_merge_requests") or return 0;
     ref($mrs) eq 'ARRAY' && grep { ($_->{state} // '') eq 'opened' } @$mrs;
 }
 
 sub gl_has_unresolved_blockers ($repo, $iid) {
-    my $enc   = _urlencode($repo);
+    my $enc   = url_escape($repo);
     my $issue = _gl_api("projects/${enc}/issues/$iid") or return 0;
 
     my (@blockers, $in);
@@ -238,7 +242,7 @@ sub reviewer_prompt (@repos) {
 
     my ($ready, $renovate) = ('', '');
     for my $repo (@repos) {
-        my $enc = _urlencode($repo);
+        my $enc = url_escape($repo);
         my $mrs = gl_open_mrs($repo);
         my (@r, @ren);
         for my $mr (@$mrs) {
