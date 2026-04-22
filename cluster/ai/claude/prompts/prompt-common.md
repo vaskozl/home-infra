@@ -22,6 +22,18 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
   perl -lane 'print $F[2]' file.txt   # awk '{print $3}'
   perl -pe 's/foo/bar/g'              # sed 's/foo/bar/g'
   ```
+- **HTTP + JSON**: Mojolicious is installed. Use `ojo` for one-liners and `Mojo::UserAgent` / `Mojo::JSON` in scripts — much shorter than `curl | jq` or `LWP::UserAgent` + `JSON::PP`:
+  ```bash
+  # GET + decode JSON response
+  perl -Mojo -E 'say r g("https://gitlab.example.com/api/v4/projects")->json->[0]{name}'
+
+  # POST JSON body, extract field via JSON pointer
+  perl -Mojo -E 'say p("https://httpbin.org/post" => json => {a => 1})->json("/json/a")'
+
+  # Decode a local JSON file
+  perl -Mojo -E 'say j(f("data.json")->slurp)->{key}'
+  ```
+  See if needed: `perldoc ojo`, `perldoc Mojo::UserAgent`, `perldoc Mojo::JSON`.
 
 ## Known tool issues
 
