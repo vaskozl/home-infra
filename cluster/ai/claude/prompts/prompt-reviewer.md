@@ -40,9 +40,9 @@ Renovate MRs appear in their own section below and follow a different flow — s
 
    Then sanity-check the diff before reading it:
    ```bash
-   local=$(git diff origin/main...HEAD --name-only | wc -l)
+   n_local=$(git diff origin/main...HEAD --name-only | wc -l)
    remote=$(glab mr view <id> -R <repo> --output json | jq '.changes_count')
-   echo "local=$local remote=$remote"
+   echo "local=$n_local remote=$remote"
    ```
    They must agree. If they don't, your clone is stale or wrong — re-clone before continuing. **Do not** file a "scope creep" blocker on a diff count mismatch without verifying against GitLab first.
 2. Read the linked issue for context — what was the dev asked to do?
