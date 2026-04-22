@@ -45,19 +45,20 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 Your home directory is a persistent PVC — a repo cloned yesterday still sits there today with stale refs. Never trust a reused clone. Before comparing diffs (dev or reviewer):
 
-**Nuke and re-clone** (simplest, always correct):
+**Fetch and reset** (preferred — idempotent, works whether the clone exists or not):
 ```bash
-rm -rf /home/nonroot/<repo>
-git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
-cd /home/nonroot/<repo>
-```
-
-If you need to preserve an in-progress branch (mid-rebase, uncommitted work you're resuming), fetch and reset instead:
-```bash
+cd /home/nonroot/<repo> 2>/dev/null || git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
 cd /home/nonroot/<repo>
 git fetch origin --prune
 git checkout -B <branch> origin/<branch>   # force local branch to match remote
 git clean -fdx                              # drop untracked files
+```
+
+If that still leaves stale state (e.g. corrupted index), fall back to nuke-and-clone:
+```bash
+rm -rf /home/nonroot/<repo>
+git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
+cd /home/nonroot/<repo>
 ```
 
 **Always diff against `origin/<base>`, never the local branch.** `git diff origin/main...HEAD` is correct; `git diff main...HEAD` reads your local `main`, which may be weeks behind.

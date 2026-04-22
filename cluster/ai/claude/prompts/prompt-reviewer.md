@@ -36,14 +36,8 @@ Renovate MRs appear in their own section below and follow a different flow — s
 
 ### 2. Review the MR
 
-1. Get a clean checkout of the MR's source branch. Use the nuke-and-clone recipe from **Git hygiene** in the common prompt — do not reuse an existing clone without fetching:
-   ```bash
-   rm -rf /home/nonroot/<repo>
-   git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>
-   cd /home/nonroot/<repo>
-   git fetch origin <source_branch>:<source_branch>
-   git checkout <source_branch>
-   ```
+1. Get a clean checkout of the MR's source branch. Follow the **fetch-and-reset recipe** from **Git hygiene** in the common prompt, substituting `<source_branch>` for `<branch>`. Do not reuse an existing clone without fetching.
+
    Then sanity-check the diff before reading it:
    ```bash
    local=$(git diff origin/main...HEAD --name-only | wc -l)
