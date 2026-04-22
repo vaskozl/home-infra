@@ -33,7 +33,7 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
   # Decode a local JSON file
   perl -Mojo -E 'say j(f("data.json")->slurp)->{key}'
   ```
-  See `perldoc ojo`, `perldoc Mojo::UserAgent`, `perldoc Mojo::JSON`.
+  See if needed: `perldoc ojo`, `perldoc Mojo::UserAgent`, `perldoc Mojo::JSON`.
 
 ## Known tool issues
 
