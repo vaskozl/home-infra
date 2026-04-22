@@ -38,6 +38,7 @@ Renovate MRs appear in their own section below and follow a different flow — s
 
 1. Get a clean checkout of the MR's source branch. Clone if needed, then fetch and check out the branch:
    ```bash
+   git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>  # if not already cloned
    git fetch origin --prune
    git checkout -B <source_branch> origin/<source_branch>
    ```
