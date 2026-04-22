@@ -40,10 +40,14 @@ sub process {
     my $e = url_escape($repo, '^A-Za-z0-9\-._~');
     say "\n=== $repo ===";
 
-    my $pipes = api(GET => "/projects/$e/pipelines?ref=main&per_page=1") or return;
-    @$pipes or return warn "No pipelines found\n";
-    my ($st, $sha, $pid, $purl) = @{$pipes->[0]}{qw(status sha id web_url)};
-    say "  Latest pipeline: #$pid  status=$st  sha=$sha";
+    # Fetch last 20 to find the most-recent terminal state — necessary because
+    # repos like apkontainers trigger per-package partial pipelines, so the
+    # absolute latest may be "running" for one package while another failed
+    my $pipes = api(GET => "/projects/$e/pipelines?ref=main&per_page=20") or return;
+    my ($p) = grep { $_->{status} =~ /^(?:failed|success)$/ } @{$pipes // []};
+    unless ($p) { say "  No terminal pipeline in last 20 — skipping"; return }
+    my ($st, $sha, $pid, $purl) = @{$p}{qw(status sha id web_url)};
+    say "  Latest terminal: #$pid  status=$st  sha=$sha";
 
     my $issues = api(GET => "/projects/$e/issues?state=opened&labels=" . url_escape($LABEL));
     my $open   = $issues && @$issues ? $issues->[0] : undef;
