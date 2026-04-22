@@ -3,28 +3,27 @@ use v5.20;
 use strict;
 use warnings;
 
-use LWP::UserAgent;
-use HTTP::Request;
-use JSON::PP;
-use URI::Escape qw(uri_escape);
+use Mojo::UserAgent;
+use Mojo::JSON    qw(encode_json decode_json);
+use Mojo::Util    qw(url_escape);
+use Getopt::Long  qw(GetOptions);
 
 my @REPOS = ('doudous/packages', 'doudous/apkontainers');
 my $HOST  = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL = 'ci::main-failed';
 
-my $DRY_RUN  = grep { $_ eq '--dry-run' } @ARGV;
-my $ONLY_REPO;
-for my $i (0 .. $#ARGV) {
-    if ($ARGV[$i] eq '--repo' && defined $ARGV[$i+1]) {
-        $ONLY_REPO = $ARGV[$i+1];
-    } elsif ($ARGV[$i] =~ /^--repo=(.+)$/) {
-        $ONLY_REPO = $1;
-    }
-}
+my ($DRY_RUN, $ONLY_REPO);
+GetOptions(
+    'dry-run'  => \$DRY_RUN,
+    'repo=s'   => \$ONLY_REPO,
+) or die "Usage: $0 [--dry-run] [--repo <name>]\n";
 
-my $ua = LWP::UserAgent->new(timeout => 30);
-$ua->default_header('PRIVATE-TOKEN' => $TOKEN);
+my $ua = Mojo::UserAgent->new;
+$ua->on(start => sub {
+    my ($ua, $tx) = @_;
+    $tx->req->headers->header('PRIVATE-TOKEN' => $TOKEN);
+});
 
 # Strip newlines from API-sourced strings to prevent GitLab quick-action injection
 sub _sanitize { my $s = shift // ''; $s =~ s/[\r\n]+/ /g; return $s }
@@ -32,12 +31,12 @@ sub _sanitize { my $s = shift // ''; $s =~ s/[\r\n]+/ /g; return $s }
 sub api_get {
     my ($path) = @_;
     my $url = "$HOST/api/v4$path";
-    my $resp = $ua->get($url);
-    unless ($resp->is_success) {
-        warn "GET $url failed: " . $resp->status_line . "\n";
+    my $res = $ua->get($url)->result;
+    unless ($res->is_success) {
+        warn "GET $url failed: " . $res->code . " " . $res->message . "\n";
         return undef;
     }
-    return decode_json($resp->decoded_content);
+    return $res->json;
 }
 
 sub api_post {
@@ -47,13 +46,12 @@ sub api_post {
         say "  [dry-run] POST $path " . encode_json(\%params);
         return {};
     }
-    my $resp = $ua->post($url, Content => encode_json(\%params),
-                         'Content-Type' => 'application/json');
-    unless ($resp->is_success) {
-        warn "POST $url failed: " . $resp->status_line . " — " . $resp->decoded_content . "\n";
+    my $res = $ua->post($url => {'Content-Type' => 'application/json'} => encode_json(\%params))->result;
+    unless ($res->is_success) {
+        warn "POST $url failed: " . $res->code . " " . $res->message . " — " . $res->body . "\n";
         return undef;
     }
-    return decode_json($resp->decoded_content);
+    return $res->json;
 }
 
 sub api_put {
@@ -63,39 +61,31 @@ sub api_put {
         say "  [dry-run] PUT $path " . encode_json(\%params);
         return {};
     }
-    my $req = HTTP::Request->new(PUT => $url);
-    $req->header('PRIVATE-TOKEN' => $TOKEN);
-    $req->header('Content-Type'  => 'application/json');
-    $req->content(encode_json(\%params));
-    my $resp = $ua->request($req);
-    unless ($resp->is_success) {
-        warn "PUT $url failed: " . $resp->status_line . " — " . $resp->decoded_content . "\n";
+    my $res = $ua->put($url => {'Content-Type' => 'application/json'} => encode_json(\%params))->result;
+    unless ($res->is_success) {
+        warn "PUT $url failed: " . $res->code . " " . $res->message . " — " . $res->body . "\n";
         return undef;
     }
-    return decode_json($resp->decoded_content);
+    return $res->json;
 }
 
 sub ensure_label {
     my ($enc) = @_;
-    # Create label if it doesn't exist; ignore 409 conflict
-    my $url = "$HOST/api/v4/projects/$enc/labels";
     if ($DRY_RUN) {
         say "  [dry-run] ensure label '$LABEL' exists in project $enc";
         return;
     }
-    my $resp = $ua->post($url,
-        Content => encode_json({ name => $LABEL, color => '#e24329' }),
-        'Content-Type' => 'application/json',
-    );
+    my $url = "$HOST/api/v4/projects/$enc/labels";
+    my $res = $ua->post($url => {'Content-Type' => 'application/json'} => encode_json({ name => $LABEL, color => '#e24329' }))->result;
     # 201 = created, 409 = already exists — both are fine
-    unless ($resp->code == 201 || $resp->code == 409) {
-        warn "Could not ensure label: " . $resp->status_line . "\n";
+    unless ($res->code == 201 || $res->code == 409) {
+        warn "Could not ensure label: " . $res->code . " " . $res->message . "\n";
     }
 }
 
 sub process_repo {
     my ($repo) = @_;
-    my $enc = uri_escape($repo, '^A-Za-z0-9\-._~');
+    my $enc = url_escape($repo, '^A-Za-z0-9\-._~');
 
     say "\n=== $repo ===";
 
@@ -114,7 +104,7 @@ sub process_repo {
     say "  Latest pipeline: #$pid  status=$status  sha=$sha";
 
     # 2. Look for existing open issue with ci::main-failed label
-    my $issues = api_get("/projects/$enc/issues?state=opened&labels=" . uri_escape($LABEL));
+    my $issues   = api_get("/projects/$enc/issues?state=opened&labels=" . url_escape($LABEL));
     my $existing = ($issues && @$issues) ? $issues->[0] : undef;
 
     if ($existing) {
@@ -212,11 +202,10 @@ END
 sub add_new_failure_note {
     my ($enc, $iid, $pipeline) = @_;
     my $sha      = $pipeline->{sha};
-    my $short    = substr($sha, 0, 8);
     my $pid      = $pipeline->{id};
     my $pipe_url = $pipeline->{web_url};
 
-    my @failed = get_failed_jobs($enc, $pid);
+    my @failed  = get_failed_jobs($enc, $pid);
     my $jobs_md = '';
     if (@failed) {
         $jobs_md = "\nFailed jobs:\n";
@@ -233,8 +222,7 @@ sub add_new_failure_note {
 
     api_post("/projects/$enc/issues/$iid/notes", body => $note);
 
-    # Update sentinel in issue body by updating the issue description
-    # (fetch current body, replace old sentinel with new one)
+    # Update sentinel in issue body
     my $issue = api_get("/projects/$enc/issues/$iid");
     if ($issue) {
         my $desc = $issue->{description} // '';
@@ -254,8 +242,8 @@ sub close_issue {
 }
 
 # Main
+my @repos        = $ONLY_REPO ? ($ONLY_REPO) : @REPOS;
 my $failed_count = 0;
-my @repos = $ONLY_REPO ? ($ONLY_REPO) : @REPOS;
 
 say "ci-monitor starting" . ($DRY_RUN ? " [DRY RUN]" : "") . " — checking: " . join(', ', @repos);
 
@@ -267,8 +255,6 @@ for my $repo (@repos) {
     }
 }
 
-if ($failed_count == scalar @repos) {
-    die "All repos failed — exiting non-zero\n";
-}
+die "All repos failed — exiting non-zero\n" if $failed_count == scalar @repos;
 
 say "\nDone.";
