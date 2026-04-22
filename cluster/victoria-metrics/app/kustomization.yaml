@@ -7,7 +7,7 @@ resources:
   - hr-stack.yaml
   - hr-logs.yaml
   - prom-adapter.yaml
-  - mcp.yaml
+  - mcp
   - dashboards
 secretGenerator:
   - name: vm-secrets
