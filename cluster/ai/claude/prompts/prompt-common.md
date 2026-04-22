@@ -41,6 +41,16 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 - **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all JSON/text processing.
 
+## Git hygiene
+
+Your home directory is a persistent PVC — repos may have stale refs from a previous iteration. Before diffing or reviewing, fetch:
+
+```bash
+git fetch origin --prune
+```
+
+**Always diff against `origin/<base>`, not the local branch.** `git diff origin/main...HEAD` is correct; `git diff main...HEAD` may read a stale local ref.
+
 ## glab quick-reference
 
 | Task | Command |
