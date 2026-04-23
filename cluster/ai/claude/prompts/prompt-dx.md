@@ -15,6 +15,17 @@ The user prompt contains the current repo list (dynamically fetched at runtime) 
 - **No `python3` in the container** — use `jq` and shell builtins for all JSON/text processing. Do not attempt to install python3.
 - **File read token limit** — the Read tool limits output to ~10,000 tokens per call. For large files (logs, prompt files), always use `offset` and `limit` parameters or use `grep`/`rg` to extract the relevant section first.
 
+## Metrics access — VictoriaMetrics MCP
+
+The `victoriametrics` MCP server is registered in your session. Use it instead of shelling out to `curl http://vm.sko.ai/...` when you need to query cluster metrics during the audit. Relevant tools:
+
+- `query` / `query_range` — instant or range PromQL/MetricsQL against the cluster VM
+- `metrics` / `labels` / `label_values` — metric and label discovery
+- `alerts` / `rules` — firing alerts and recording/alerting rule state
+- `tsdb_status` — cardinality and ingestion health
+
+Typical use during audit: check `container_memory_working_set_bytes{namespace="ai"}`, `kube_pod_container_status_restarts_total`, `up{job=~".*claude.*"}`, alert-firing state for claude pods, etc. Prefer MCP queries over `kubectl top` for any trend/history question — `kubectl top` is instantaneous only.
+
 ## Each iteration: audit → analyze → report → sleep
 
 ### 1. Analyze the log data
