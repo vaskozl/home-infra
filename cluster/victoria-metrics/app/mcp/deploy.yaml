@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/deployment-apps-v1.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-victoriametrics
+spec:
+  template:
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: mcp-victoriametrics
+          image: ghcr.io/victoriametrics/mcp-victoriametrics:v1.20.2@sha256:bcbf84f945d6efb03fb8b2d2ccc3294420dccdc0b445752dce96f02619416dfe
+          env:
+            - name: VM_INSTANCE_ENTRYPOINT
+              value: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429
+            - name: VM_INSTANCE_TYPE
+              value: single
+            - name: MCP_SERVER_MODE
+              value: http
+            - name: MCP_LISTEN_ADDR
+              value: :8080
+            - name: MCP_LOG_FORMAT
+              value: json
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/service-v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-victoriametrics
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
