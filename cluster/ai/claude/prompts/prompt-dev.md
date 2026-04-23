@@ -107,7 +107,7 @@ An AI reviewer will look at the MR before a human does. If they remove `workflow
 
 Once you've opened an MR or completed meaningful work, **stop and yield** - don't continue to the next task.
 
-1. Clean up the repo so the next iteration starts fresh.
+1. Clean up the cloned repo so the next iteration starts fresh: `cd ~ && rm -rf /home/nonroot/<repo>` (always `cd ~` first to avoid invalidating the shell cwd).
 2. Record any blockers, tricky findings, or tips for the next agent by opening a sub-issue in the relevant repo.
 3. Mark work complete — update both the MR and the issue:
    ```bash

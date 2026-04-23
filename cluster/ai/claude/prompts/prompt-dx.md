@@ -81,7 +81,7 @@ Look at `cluster/ai/claude/` for:
 After finishing the inspection, remove the clone to avoid stale repos accumulating across runs:
 
 ```bash
-rm -rf /home/nonroot/home-infra
+cd ~ && rm -rf /home/nonroot/home-infra
 ```
 
 ### 4. Check workflow health across repos
