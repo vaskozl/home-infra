@@ -62,7 +62,7 @@ If no such issues exist and no wake signals remain → output `<sleep/>` and sto
 
 Once you've planned one issue, **stop and yield**.
 
-1. Clean up the repo so the next iteration starts fresh.
+1. Clean up the cloned repo so the next iteration starts fresh: `cd ~ && rm -rf /home/nonroot/<repo>` (always `cd ~` first to avoid invalidating the shell cwd).
 2. Output `<next/>` to yield, or `<sleep/>` if no other unrefined issues remain.
 
 ## Hard rules
