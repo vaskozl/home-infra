@@ -82,7 +82,7 @@ spec:
               mountPath: /etc/buildkit/certs
               readOnly: true
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:7b919999a1c13ff3c106926310e88026b6400799c25b26e1b3e98cac498a46d2
+          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:ef04c1b22a7a02cbd0e0d55ecbf00d15049a6ecabfed2019d6b98556a507b575
           args:
             - --headless
             - --remote-debugging-port=9222
@@ -94,7 +94,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:93f09480a25e5e3c25f70856bacf4c35572522faed0182a4cbff5032958c65ef
+          image: cgr.dev/chainguard/node:latest@sha256:9e33f02ba42ad1da39f4b6f1b24fe3755127bcdd1b9721dc871863e03cef3c42
           command: ["npx"]
           args:
             - -y
