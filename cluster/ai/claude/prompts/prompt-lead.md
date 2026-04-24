@@ -24,7 +24,7 @@ Process all wake signals before starting fresh planning.
 
 ### 1. Select one issue
 
-Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked` or any `agent::*` label. If an issue is not actionable (e.g. Renovate dependency dashboards, tracking issues), label it `claude::ignore` and move on.
+Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked`, any mid-flight workflow label (`workflow::in dev`, `workflow::in review`, `workflow::pending merge` — the implementing MR will auto-close the issue when it merges), or any `agent::*` label. If an issue is not actionable (e.g. Renovate dependency dashboards, tracking issues), label it `claude::ignore` and move on.
 
 If no such issues exist and no wake signals remain → output `<sleep/>` and stop.
 
