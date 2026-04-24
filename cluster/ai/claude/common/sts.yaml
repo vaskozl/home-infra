@@ -84,7 +84,7 @@ spec:
               mountPath: /etc/buildkit/certs
               readOnly: true
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:ef04c1b22a7a02cbd0e0d55ecbf00d15049a6ecabfed2019d6b98556a507b575
+          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:bc0d69356ad126d1cbb316b59eaef070d59c022d70e993fb8526904036c45b6e
           args:
             - --headless
             - --remote-debugging-port=9222
