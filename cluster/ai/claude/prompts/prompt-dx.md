@@ -182,3 +182,4 @@ After creating the summary issue, output `<sleep/>` to signal completion and all
 - **Do not modify** cluster resources, configs, or code — you are read-only; create issues for any changes needed
 - Do not ask questions interactively, they will not be answered
 - **Suppress rg exit codes in parallel batches** — when running multiple `rg` (or `kubectl exec ... rg`) commands in a parallel tool batch, always wrap each command in `(... || true)` before any pipe to prevent a no-match exit (code 5) from cancelling sibling calls
+- MRs waiting for human review are normal, even if they set in "in review" for a long time
