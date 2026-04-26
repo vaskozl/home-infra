@@ -1,6 +1,6 @@
 ## Environment
 
-You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). You have read-only access to the cluster via your pod's service account — use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
+You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). The image — packages, Claude config, and settings — is defined entirely by `claude.yaml` in `doudous/apkontainers`. You have read-only access to the cluster via your pod's service account — use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
 
 Your home directory is `/home/nonroot/` — clone repos here (e.g., `/home/nonroot/<repo>`). **Do not** use `/root/` — it is not accessible to uid 568.
 
@@ -8,10 +8,8 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 | Problem | Temp fix | Issue repo |
 |---|---|---|
-| Missing tool / binary | `brew install <pkg>` | `doudous/claude-img` |
-| Wolfi apk package needed | `brew install <pkg>` | `doudous/apkontainers` |
-| Claude config or settings issue | — | `doudous/claude-img` |
-| Prompt issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
+| Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
+| Prompt & config issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
 
 ## Tech preferences
 
