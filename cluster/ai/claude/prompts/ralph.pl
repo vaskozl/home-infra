@@ -353,7 +353,7 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             next;
         }
 
-        my ($output, $has_sleep) = ('', 0);
+        my ($output, $has_sleep, $result_line) = ('', 0, '');
         open my $pipe, '-|',
           'claude',               '-p', $prompt,
           '--system-prompt-file', $syspath,
@@ -368,10 +368,39 @@ sub run_loop ($role, $prompt_file, $dry_run) {
         while (my $line = <$pipe>) {
             print $line;
             $output .= $line;
-            $has_sleep = 1 if $line =~ m{<sleep/>};
+            $has_sleep  = 1    if $line =~ m{<sleep/>};
+            $result_line = $line if $line =~ /"type"\s*:\s*"result"/;
         }
         close $pipe;
         my $exit_code = $? >> 8;
+
+        # Rate-limit detection: 429 response → sleep until parsed reset time
+        if ($result_line) {
+            my $r = eval { decode_json($result_line) };
+            if ($r && $r->{is_error} && ($r->{api_error_status} // 0) == 429) {
+                my $msg       = $r->{result} // '';
+                my $sleep_secs = 1800;    # fallback: 30 min if parse fails
+                if ($msg =~ /resets\s+(\d{1,2}):(\d{2})\s*(am|pm)\s*\(UTC\)/i) {
+                    my ($h, $m, $ampm) = ($1, $2, lc $3);
+                    $h += 12 if $ampm eq 'pm' && $h != 12;
+                    $h  = 0  if $ampm eq 'am' && $h == 12;
+                    my $now          = time;
+                    my @gm           = gmtime($now);
+                    my $midnight_utc = $now - $gm[0] - $gm[1] * 60 - $gm[2] * 3600;
+                    my $reset_epoch  = $midnight_utc + $h * 3600 + $m * 60;
+                    $reset_epoch += 86400 if $reset_epoch <= $now;
+                    $sleep_secs = $reset_epoch - $now + 60;
+                }
+                my @wake    = gmtime(time + $sleep_secs);
+                my $wake_ts = sprintf "%04d-%02d-%02dT%02d:%02d:%02dZ",
+                    $wake[5] + 1900, $wake[4] + 1, $wake[3],
+                    $wake[2], $wake[1], $wake[0];
+                printf "--- Rate-limited (429); sleeping %ds until %s ---\n",
+                    $sleep_secs, $wake_ts;
+                sleep $sleep_secs;
+                next;
+            }
+        }
 
         if ($exit_code != 0) {
             die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
