@@ -353,7 +353,7 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             next;
         }
 
-        my ($output, $has_sleep, $result_line) = ('', 0, '');
+        my ($output, $has_sleep) = ('', 0);
         open my $pipe, '-|',
           'claude',               '-p', $prompt,
           '--system-prompt-file', $syspath,
@@ -369,27 +369,20 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             print $line;
             $output .= $line;
             $has_sleep = 1 if $line =~ m{<sleep/>};
-            $result_line = $line if $line =~ /"type"\s*:\s*"result"/;
         }
         close $pipe;
         my $exit_code = $? >> 8;
 
-        # Rate-limit: sleep until reset time + 60s buffer
-        if ($result_line) {
-            my $r = eval { decode_json($result_line) };
-            if ($r && $r->{is_error} && ($r->{api_error_status} // 0) == 429) {
-                my $secs = 1800;  # fallback 30 min if parse fails
-                if (($r->{result} // '') =~ /resets\s+(\d{1,2}):(\d{2})\s*(am|pm)\s*\(UTC\)/i) {
-                    my ($h, $m, $ap) = ($1, $2, lc $3);
-                    $h = ($h % 12) + ($ap eq 'pm' ? 12 : 0);
-                    my @t = gmtime;
-                    $secs = ($h * 3600 + $m * 60) - ($t[2] * 3600 + $t[1] * 60 + $t[0]) + 60;
-                    $secs += 86400 if $secs <= 60;
-                }
-                warn "Rate-limited (429); sleeping ${secs}s\n";
-                sleep $secs;
-                next;
-            }
+        # Rate-limit: check any result-type line in the stream output
+        my $is_429 = grep {
+            my $r = eval { decode_json($_) };
+            $r && $r->{is_error} && ($r->{api_error_status} // 0) == 429
+        } grep { /"type"\s*:\s*"result"/ } split /\n/, $output;
+
+        if ($is_429) {
+            warn "Rate-limited (429); sleeping\n";
+            sleep SLEEP_INTERVAL;
+            next;
         }
 
         if ($exit_code != 0) {
