@@ -373,6 +373,18 @@ sub run_loop ($role, $prompt_file, $dry_run) {
         close $pipe;
         my $exit_code = $? >> 8;
 
+        # Rate-limit: check any result-type line in the stream output
+        my $is_429 = grep {
+            my $r = eval { decode_json($_) };
+            $r && $r->{is_error} && ($r->{api_error_status} // 0) == 429
+        } grep { /"type"\s*:\s*"result"/ } split /\n/, $output;
+
+        if ($is_429) {
+            warn "Rate-limited (429); sleeping\n";
+            sleep SLEEP_INTERVAL;
+            next;
+        }
+
         if ($exit_code != 0) {
             die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
               if $output =~
