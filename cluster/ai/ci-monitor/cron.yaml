@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/cronjob-batch-v1.json
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ci-monitor
+spec:
+  schedule: '17 * * * *'
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+    spec:
+      template:
+        metadata:
+        spec:
+          containers:
+            - args: [/script/ci-monitor.pl]
+              image: ghcr.io/vaskozl/perl-mojolicious:9.41@sha256:f839b3f43c1c2cbfe197b4f9e6bbe9e2ccc1779acb0468b2cf76deb3e2981727
+              name: ci-monitor
+              envFrom:
+                - secretRef:
+                    name: claude-env
+              resources:
+                requests:
+                  cpu: 20m
+                  memory: 64Mi
+                limits:
+                  memory: 128Mi
+              volumeMounts:
+                - mountPath: /script
+                  name: script
+          restartPolicy: Never
+          volumes:
+            - configMap:
+                defaultMode: 420
+                name: ci-monitor-script
+              name: script
