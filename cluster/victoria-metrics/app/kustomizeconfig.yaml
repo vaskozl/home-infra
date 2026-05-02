@@ -11,3 +11,5 @@ nameReference:
         kind: HelmRelease
       - path: spec/values/grafana/dashboardsConfigMaps/misc
         kind: HelmRelease
+      - path: spec/values/grafana/dashboardsConfigMaps/node-exporter
+        kind: HelmRelease

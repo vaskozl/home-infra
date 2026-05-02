@@ -48,6 +48,7 @@ spec:
       dashboardsConfigMaps:
         mixin: dashboards-mixin
         misc: dashboards-misc
+        node-exporter: dashboards-node-exporter
       grafana.ini:
         auth.anonymous:
           enabled: true

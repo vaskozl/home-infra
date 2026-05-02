@@ -33,6 +33,8 @@ configMapGenerator:
       - dashboards/misc/blocky-grafana.json
       - nfs-full.json=dashboards/misc/nfs-full.json
       - haproxy-2-full.json=dashboards/misc/haproxy-2-full.json
+  - name: dashboards-node-exporter
+    files:
       - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
 generatorOptions:
   annotations:
