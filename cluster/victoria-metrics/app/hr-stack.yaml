@@ -45,15 +45,9 @@ spec:
             gethomepage.dev/pod-selector: "app.kubernetes.io/name=grafana"
           hostnames:
             - gf.sko.ai
-      sidecar:
-        image:
-          registry: ghcr.io
-          repository: vaskozl/k8s-sidecar
-          tag: 2.6.0@sha256:57406b6bcbde13212fea1f73ce82a7f3e0259112d1e2c42edbb695cc08601116
-        dashboards:
-          enabled: true
-          label: grafana_dashboard
-          searchNamespace: ALL
+      dashboardsConfigMaps:
+        mixin: dashboards-mixin
+        misc: dashboards-misc
       grafana.ini:
         auth.anonymous:
           enabled: true

@@ -4,3 +4,10 @@ nameReference:
     fieldSpecs:
       - path: spec/valuesFrom/name
         kind: HelmRelease
+  - kind: ConfigMap
+    version: v1
+    fieldSpecs:
+      - path: spec/values/grafana/dashboardsConfigMaps/mixin
+        kind: HelmRelease
+      - path: spec/values/grafana/dashboardsConfigMaps/misc
+        kind: HelmRelease

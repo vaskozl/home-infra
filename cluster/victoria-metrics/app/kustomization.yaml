@@ -7,10 +7,35 @@ resources:
   - hr-stack.yaml
   - prom-adapter.yaml
   - mcp
-  - dashboards
 secretGenerator:
   - name: vm-secrets
     files:
       - values.yaml=values.enc.yaml
+configMapGenerator:
+  - name: dashboards-mixin
+    files:
+      - dashboards/kubernetes-mixin/cluster-total.json
+      - dashboards/kubernetes-mixin/controller-manager.json
+      - dashboards/kubernetes-mixin/k8s-resources-cluster.json
+      - dashboards/kubernetes-mixin/k8s-resources-namespace.json
+      - dashboards/kubernetes-mixin/k8s-resources-node.json
+      - dashboards/kubernetes-mixin/k8s-resources-pod.json
+      - dashboards/kubernetes-mixin/k8s-resources-workload.json
+      - dashboards/kubernetes-mixin/k8s-resources-workloads-namespace.json
+      - dashboards/kubernetes-mixin/kubelet.json
+      - dashboards/kubernetes-mixin/namespace-by-pod.json
+      - dashboards/kubernetes-mixin/namespace-by-workload.json
+      - dashboards/kubernetes-mixin/persistentvolumesusage.json
+      - dashboards/kubernetes-mixin/pod-total.json
+      - dashboards/kubernetes-mixin/workload-total.json
+  - name: dashboards-misc
+    files:
+      - dashboards/misc/blocky-grafana.json
+      - nfs-full.json=dashboards/misc/nfs-full.json
+      - haproxy-2-full.json=dashboards/misc/haproxy-2-full.json
+      - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
+generatorOptions:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 configurations:
   - kustomizeconfig.yaml
