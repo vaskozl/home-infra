@@ -1,0 +1,19 @@
+version: '3'
+services:
+  node-exporter:
+    image: ghcr.io/vaskozl/prometheus-node-exporter:1.11.1@sha256:9cef742bcd4cd37923068c2ea0344315457d60cfe3ec60cd27d572ea0891dd81
+    container_name: node-exporter
+    network_mode: host
+    volumes:
+      - /:/host:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+      - /run/udev/data:/host/root/run/udev/data:ro
+    command:
+      - --web.listen-address=127.0.0.1:9100
+      - --path.rootfs=/host/root
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.udev.data=/host/root/run/udev/data
+    restart: unless-stopped
