@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:1a3a3ce6140b6c18048cf5976cc50e1993c1db930c5b80b20f7f6f3c43301b06
+          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:3fe3e321f02ae51cb818648071f36a47bbc85cf1347dfe3148dd684e7b8056c7
           command: ["sh", "-c"]
           args:
             - |
@@ -84,7 +84,7 @@ spec:
               mountPath: /etc/buildkit/certs
               readOnly: true
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:d7b4c39f2d089b91fd45531c874990dc1f25870eb4018b33dfedc8aa267d4a08
+          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:b813584f3d929f720f7d8f29c669cf1c97f7f415f472e37f8da6378d05cc3a87
           args:
             - --headless
             - --remote-debugging-port=9222
