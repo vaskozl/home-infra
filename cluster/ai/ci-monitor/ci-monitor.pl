@@ -29,43 +29,6 @@ binmode STDERR, ':encoding(UTF-8)';
 
 my @REPOS  = ('doudous/packages', 'doudous/apkontainers');
 
-# Per-repo stale-job filters.  Called after the broken-job list is built.
-# Returns a reason string if the job should be dropped, undef to keep it.
-# $e is the URL-escaped project path, $job is the broken-job hash,
-# $cache is a per-process() scratch hash (avoids redundant API calls).
-my %REPO_FILTERS = (
-    'doudous/packages' => sub {
-        my ($e, $job, $cache) = @_;
-        # Legacy parametrised names like "package: [amd64, foo.yaml]" don't
-        # match the current gen-dag.sh output; drop them immediately.
-        return 'legacy-name' unless $job->{name} =~ /^([a-z0-9._+-]+)-(amd64|arm64)$/;
-        my $base = $1;
-        # Confirm the corresponding yaml still exists at main HEAD.
-        # Use exists+undef sentinel instead of //= so an API failure doesn't
-        # collapse to {} and silently filter everything out.
-        unless (exists $cache->{tree}) {
-            my $res = paged_tree($e);
-            if (!defined $res) {
-                warn "    could not fetch tree for $e — skipping yaml-existence check\n";
-                $cache->{tree} = undef;  # sentinel: fetch failed
-            } else {
-                $cache->{tree} = +{ map { $_->{name} => 1 } @$res };
-                say "    tree cache: " . scalar(keys %{$cache->{tree}}) . " entries";
-            }
-        }
-        return undef unless defined $cache->{tree};  # keep on fetch failure
-        return 'no-yaml' unless $cache->{tree}{"$base.yaml"};
-        return undef;  # keep
-    },
-    'doudous/apkontainers' => sub {
-        my ($e, $job, $cache) = @_;
-        # apkontainers uses a single claude.yaml; job names should be simple
-        # identifiers.  Drop anything that looks like a legacy parametrised form.
-        return 'legacy-name' unless $job->{name} =~ /^[a-z0-9._+-]+$/;
-        return undef;
-    },
-);
-
 my $HOST   = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN  = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL  = 'ci::main-failed';
@@ -110,13 +73,6 @@ sub fetch_all {
         ($url) = $link =~ /<([^>]+)>;\s*rel="next"/;
     }
     \@items
-}
-
-sub paged_tree {
-    my ($e) = @_;
-    # GitLab silently clamps per_page to 100 on the tree endpoint; use keyset
-    # pagination to retrieve all entries even if the repo exceeds 100 files.
-    fetch_all("$HOST/api/v4/projects/$e/repository/tree?pagination=keyset&per_page=100&ref=main")
 }
 
 # Walk a pipeline + all its downstream bridge pipelines (recursive),
@@ -169,22 +125,6 @@ sub process {
         push @broken, { %$latest, _last_success => $last_ok };
     }
     say "  skipped $recovered job(s) with a later successful run" if $recovered;
-
-    if (my $filter = $REPO_FILTERS{$repo}) {
-        my $cache = {};
-        my @kept;
-        for my $b (@broken) {
-            if (my $reason = $filter->($e, $b, $cache)) {
-                say "    filtered $b->{name} ($reason)";
-            } else {
-                push @kept, $b;
-            }
-        }
-        if (@broken > @kept) {
-            say "  filtered " . (@broken - @kept) . " stale entr" . (@broken - @kept == 1 ? 'y' : 'ies');
-        }
-        @broken = @kept;
-    }
 
     my $open = (api(GET => "/projects/$e/issues?state=opened&labels=" . url_escape($LABEL)) // [])->[0];
 
