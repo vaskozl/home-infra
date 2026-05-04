@@ -23,14 +23,16 @@ use Mojo::UserAgent;
 use Mojo::JSON qw(encode_json);
 use Mojo::Util qw(url_escape);
 use Getopt::Long;
+use POSIX qw(strftime);
 binmode STDOUT, ':encoding(UTF-8)';
 binmode STDERR, ':encoding(UTF-8)';
 
 my @REPOS  = ('doudous/packages', 'doudous/apkontainers');
+
 my $HOST   = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN  = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL  = 'ci::main-failed';
-my $LOOKBACK = 100;  # number of recent main pipelines to scan
+my $LOOKBACK_HOURS = 25;  # scan pipelines updated in the last N hours (25h gives overlap for daily crons)
 my ($DRY, $REPO_ARG);
 GetOptions('dry-run' => \$DRY, 'repo=s' => \$REPO_ARG) or die "bad args\n";
 
@@ -53,6 +55,26 @@ sub api {
     undef
 }
 
+# Fetch all pages from a GitLab API endpoint by following Link: rel="next" headers.
+# Returns an arrayref of all items, or undef on the first API failure.
+sub fetch_all {
+    my ($start_url) = @_;
+    my $url = $start_url;
+    my @items;
+    while ($url) {
+        my $tx = $ua->get($url);
+        my $r  = $tx->result;
+        unless ($r->is_success) {
+            warn "    GET $url -> " . $r->code . "\n";
+            return undef;
+        }
+        push @items, @{ $r->json };
+        my $link = $r->headers->header('Link') // '';
+        ($url) = $link =~ /<([^>]+)>;\s*rel="next"/;
+    }
+    \@items
+}
+
 # Walk a pipeline + all its downstream bridge pipelines (recursive),
 # returning every leaf job. $seen guards against cycles.
 sub walk_jobs {
@@ -73,8 +95,9 @@ sub process {
     my $e = url_escape($repo, '^A-Za-z0-9\-._~');
     say "\n=== $repo ===";
 
-    my $pipes = api(GET => "/projects/$e/pipelines?ref=main&per_page=$LOOKBACK") // [];
-    say "  scanning last " . scalar(@$pipes) . " main pipelines";
+    my $since = strftime('%Y-%m-%dT%H:%M:%SZ', gmtime(time - $LOOKBACK_HOURS * 3600));
+    my $pipes = fetch_all("$HOST/api/v4/projects/$e/pipelines?ref=main&updated_after=" . url_escape($since) . "&per_page=100") // [];
+    say "  scanning " . scalar(@$pipes) . " main pipelines updated since $since";
 
     # Track every finished run per job name, then for each name find:
     #   - the latest run (decides current state)
@@ -127,13 +150,13 @@ sub process {
     my $sentinel = "<!-- ci-monitor jobs=" . join(',', @names) . " -->";
     my $title = "CI failed on main: " . scalar(@broken) . " job" . (@broken > 1 ? 's' : '');
     my $body  = "Currently-failing jobs on `main` (latest finished run is `failed`,"
-              . " no later success in last $LOOKBACK pipelines):\n\n"
+              . " no later success in last ${LOOKBACK_HOURS}h):\n\n"
               . join('', map {
                   my $g = $_->{_last_success};
                   my $green = $g
                       ? sprintf('last green %s ([#%d](%s))',
                                 date($g->{finished_at}), $g->{_pid}, $g->{web_url})
-                      : "_never green in last $LOOKBACK main pipelines_";
+                      : "_never green in last ${LOOKBACK_HOURS}h of main pipelines_";
                   sprintf("- [`%s` (`%s`)](%s) failed %s — %s (pipeline #%d); %s\n",
                       clean($_->{name}), clean($_->{stage}), $_->{web_url},
                       date($_->{finished_at}), clean($_->{failure_reason} // 'unknown'),
