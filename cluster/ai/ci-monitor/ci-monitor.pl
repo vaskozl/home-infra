@@ -40,10 +40,18 @@ my %REPO_FILTERS = (
         return 'legacy-name' unless $job->{name} =~ /^([a-z0-9._+-]+)-(amd64|arm64)$/;
         my $base = $1;
         # Confirm the corresponding yaml still exists at main HEAD.
-        $cache->{tree} //= +{
-            map { $_->{name} => 1 }
-                @{ api(GET => "/projects/$e/repository/tree?per_page=200&ref=main") // [] }
-        };
+        # Use exists+undef sentinel instead of //= so an API failure doesn't
+        # collapse to {} and silently filter everything out.
+        unless (exists $cache->{tree}) {
+            my $res = api(GET => "/projects/$e/repository/tree?per_page=200&ref=main");
+            if (!defined $res) {
+                warn "    could not fetch tree for $e — skipping yaml-existence check\n";
+                $cache->{tree} = undef;  # sentinel: fetch failed
+            } else {
+                $cache->{tree} = +{ map { $_->{name} => 1 } @$res };
+            }
+        }
+        return undef unless defined $cache->{tree};  # keep on fetch failure
         return 'no-yaml' unless $cache->{tree}{"$base.yaml"};
         return undef;  # keep
     },
