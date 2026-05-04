@@ -27,6 +27,35 @@ binmode STDOUT, ':encoding(UTF-8)';
 binmode STDERR, ':encoding(UTF-8)';
 
 my @REPOS  = ('doudous/packages', 'doudous/apkontainers');
+
+# Per-repo stale-job filters.  Called after the broken-job list is built.
+# Returns a reason string if the job should be dropped, undef to keep it.
+# $e is the URL-escaped project path, $job is the broken-job hash,
+# $cache is a per-process() scratch hash (avoids redundant API calls).
+my %REPO_FILTERS = (
+    'doudous/packages' => sub {
+        my ($e, $job, $cache) = @_;
+        # Legacy parametrised names like "package: [amd64, foo.yaml]" don't
+        # match the current gen-dag.sh output; drop them immediately.
+        return 'legacy-name' unless $job->{name} =~ /^([a-z0-9._+-]+)-(amd64|arm64)$/;
+        my $base = $1;
+        # Confirm the corresponding yaml still exists at main HEAD.
+        $cache->{tree} //= +{
+            map { $_->{name} => 1 }
+                @{ api(GET => "/projects/$e/repository/tree?per_page=200&ref=main") // [] }
+        };
+        return 'no-yaml' unless $cache->{tree}{"$base.yaml"};
+        return undef;  # keep
+    },
+    'doudous/apkontainers' => sub {
+        my ($e, $job, $cache) = @_;
+        # apkontainers uses a single claude.yaml; job names should be simple
+        # identifiers.  Drop anything that looks like a legacy parametrised form.
+        return 'legacy-name' unless $job->{name} =~ /^[a-z0-9._+-]+$/;
+        return undef;
+    },
+);
+
 my $HOST   = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN  = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL  = 'ci::main-failed';
@@ -102,6 +131,22 @@ sub process {
         push @broken, { %$latest, _last_success => $last_ok };
     }
     say "  skipped $recovered job(s) with a later successful run" if $recovered;
+
+    if (my $filter = $REPO_FILTERS{$repo}) {
+        my $cache = {};
+        my @kept;
+        for my $b (@broken) {
+            if (my $reason = $filter->($e, $b, $cache)) {
+                say "    filtered $b->{name} ($reason)";
+            } else {
+                push @kept, $b;
+            }
+        }
+        if (@broken > @kept) {
+            say "  filtered " . (@broken - @kept) . " stale entr" . (@broken - @kept == 1 ? 'y' : 'ies');
+        }
+        @broken = @kept;
+    }
 
     my $open = (api(GET => "/projects/$e/issues?state=opened&labels=" . url_escape($LABEL)) // [])->[0];
 
