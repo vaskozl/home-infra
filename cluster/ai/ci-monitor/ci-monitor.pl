@@ -43,12 +43,13 @@ my %REPO_FILTERS = (
         # Use exists+undef sentinel instead of //= so an API failure doesn't
         # collapse to {} and silently filter everything out.
         unless (exists $cache->{tree}) {
-            my $res = api(GET => "/projects/$e/repository/tree?per_page=200&ref=main");
+            my $res = paged_tree($e);
             if (!defined $res) {
                 warn "    could not fetch tree for $e — skipping yaml-existence check\n";
                 $cache->{tree} = undef;  # sentinel: fetch failed
             } else {
                 $cache->{tree} = +{ map { $_->{name} => 1 } @$res };
+                say "    tree cache: " . scalar(keys %{$cache->{tree}}) . " entries";
             }
         }
         return undef unless defined $cache->{tree};  # keep on fetch failure
@@ -88,6 +89,29 @@ sub api {
     return $r->json if $r->is_success;
     warn "    $method $path -> " . $r->code . "\n";
     undef
+}
+
+# Fetch all entries from a project's root tree using keyset pagination.
+# GitLab silently clamps per_page to 100 on the tree endpoint, so a plain
+# per_page=200 only returns the first 100 entries once the repo exceeds that.
+# Keyset pagination follows the Link: rel="next" header until exhausted.
+# Returns an arrayref of all entries, or undef on the first API failure.
+sub paged_tree {
+    my ($e) = @_;
+    my $url = "$HOST/api/v4/projects/$e/repository/tree?pagination=keyset&per_page=100&ref=main";
+    my @entries;
+    while ($url) {
+        my $tx = $ua->get($url);
+        my $r  = $tx->result;
+        unless ($r->is_success) {
+            warn "    GET tree -> " . $r->code . "\n";
+            return undef;
+        }
+        push @entries, @{ $r->json };
+        my $link = $r->headers->header('Link') // '';
+        ($url) = $link =~ /<([^>]+)>;\s*rel="next"/;
+    }
+    \@entries
 }
 
 # Walk a pipeline + all its downstream bridge pipelines (recursive),
