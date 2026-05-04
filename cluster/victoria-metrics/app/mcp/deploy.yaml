@@ -16,7 +16,7 @@ spec:
           image: ghcr.io/victoriametrics/mcp-victoriametrics:v1.20.2@sha256:bcbf84f945d6efb03fb8b2d2ccc3294420dccdc0b445752dce96f02619416dfe
           env:
             - name: VM_INSTANCE_ENTRYPOINT
-              value: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8429
+              value: http://vmsingle-stack.victoria-metrics.svc.cluster.local:8428
             - name: VM_INSTANCE_TYPE
               value: single
             - name: MCP_SERVER_MODE
