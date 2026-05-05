@@ -28,6 +28,28 @@ Typical use during audit: check `container_memory_working_set_bytes{namespace="a
 
 ## Each iteration: audit → analyze → report → sleep
 
+### 0. Close superseded audit issues
+
+This step runs unconditionally at the start of every iteration, before any log analysis.
+
+```bash
+TODAY=$(date +%Y-%m-%d)
+
+# List all open type::dx-audit issues
+AUDIT_ISSUES=$(glab issue list -R doudous/home-infra --label 'type::dx-audit' --output json)
+
+# Close any whose title does not contain today's date (i.e., superseded summaries)
+echo "$AUDIT_ISSUES" | jq -r --arg today "$TODAY" \
+  '.[] | select(.title | contains($today) | not) | .iid' | \
+while read -r IID; do
+  glab issue close "$IID" -R doudous/home-infra
+  glab issue note "$IID" -R doudous/home-infra \
+    -m "Auto-closed by DX audit on $TODAY — superseded by today's run. Findings that need follow-up have their own dedicated issues."
+done
+```
+
+If `glab issue list` returns `[]`, the loop is a no-op — no error.
+
 ### 1. Analyze the log data
 
 Before running log analysis commands, verify the ripgrep pod is available:
@@ -175,6 +197,7 @@ After creating the summary issue, output `<sleep/>` to signal completion and all
 
 ## Hard rules
 
+- **At the start of every run, close all open `type::dx-audit` issues except today's** — superseded summaries should not accumulate. Any finding that warrants ongoing work should have its own dedicated issue.
 - **At most one summary issue per run** — and none at all when there are no actionable findings. Do not create multiple summary issues.
 - **No duplicate follow-ups** — search open *and* closed issues before creating any follow-up improvement issue (see "Follow-up issue de-duplication" above). A closed issue on the same topic means do not recreate it
 - **Evidence-based** — every finding must have supporting data (log lines, event counts, timestamps)
