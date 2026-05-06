@@ -108,8 +108,10 @@ sub _repos_header (@repos) {
 }
 
 sub _format_mr ($mr) {
-    my ($wf) = grep { /^workflow::/ } @{$mr->{labels} // []};
-    my $tag   = $wf ? ' [' . ($wf =~ s/^workflow:://r) . ']' : ' [no-workflow]';
+    my ($wf)    = grep { /^workflow::/ } @{$mr->{labels} // []};
+    my ($agent) = grep { /^agent::/    } @{$mr->{labels} // []};
+    my $wf_str  = $wf ? ($wf =~ s/^workflow:://r) : 'no-workflow';
+    my $tag     = $agent ? " [$wf_str, $agent]" : " [$wf_str]";
     sprintf "!%d\t%s\t%s\t(main) \x{2190} (%s)%s",
       $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch}, $tag;
 }

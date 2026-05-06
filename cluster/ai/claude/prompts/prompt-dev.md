@@ -37,7 +37,7 @@ Pick the highest-priority task by this order:
 4. MRs with conflicts — rebase on latest main, resolve conflicts, and force-push: `git fetch origin && git rebase origin/main`.
 5. MRs with failed CI — a pipeline failed on an MR you or another agent opened.
 
-   **If the MR already has `agent::<other-hostname>` (visible in the `[workflow]` tag or via `jq '.labels[]'`), skip it** — another agent is already on it.
+   **If the MR already has `agent::<other-hostname>` (visible in the MR row tag, e.g. `[in review, agent::claude-worker-sonnet-1]`), skip it** — another agent is already on it.
 
    1. Claim the MR and flip it out of review to prevent races:
       ```
