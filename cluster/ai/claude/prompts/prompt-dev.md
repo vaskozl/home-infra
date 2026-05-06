@@ -35,24 +35,7 @@ Pick the highest-priority task by this order:
 2. Your in-progress MRs (`agent::$HOSTNAME`) — left from a previous run. Check out the existing branch, rebase on main, and continue where the previous agent left off. If the work looks complete, mark `workflow::in review`.
 3. Unclaimed `workflow::in dev` issues — orphaned from a previous agent run (no `agent::` label). Claim with `agent::$HOSTNAME`, check for an existing MR or branch, and resume.
 4. MRs with conflicts — rebase on latest main, resolve conflicts, and force-push: `git fetch origin && git rebase origin/main`.
-5. MRs with failed CI — a pipeline failed on an MR you or another agent opened.
-
-   **If the MR already has `agent::<other-hostname>` (visible in the MR row tag, e.g. `[in review, agent::claude-worker-sonnet-1]`), skip it** — another agent is already on it.
-
-   1. Claim the MR and flip it out of review to prevent races:
-      ```
-      glab mr update <id> -R <repo> -l "agent::$HOSTNAME" -l 'workflow::in dev' -u 'workflow::in review'
-      sleep 10
-      glab mr view <id> -R <repo> --output json | jq '.labels[]'
-      ```
-      After 10 seconds, verify `agent::$HOSTNAME` is still present — if not, another agent won; skip this MR.
-      Removing `workflow::in review` prevents the reviewer from racing you once CI re-runs and goes green.
-   2. Read the failure: `glab ci view <mr_iid> -R <repo>` or open the pipeline URL.
-   3. Check out the existing branch, fix the issue, rebase on `origin/main` if needed, and push. Do **not** open a new MR.
-   4. Once CI is green, hand back to review and release the lock:
-      ```
-      glab mr update <id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"
-      ```
+5. MRs with failed CI — a pipeline failed on an MR you or another agent opened. Check out the existing branch, read the CI logs (`glab ci view <mr_iid> -R <repo>` or check the pipeline URL), diagnose and fix the failure, then push. Do **not** open a new MR.
 
    **CI in progress (not yet failed):** If the pipeline is still running and there is no actionable failure to fix, output `<sleep/>` and stop — do **not** poll within the same session. Ralph will re-schedule you on the next iteration (≤5 min) and the pipeline state will be re-evaluated then.
 6. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
