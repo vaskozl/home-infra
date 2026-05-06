@@ -36,6 +36,8 @@ Pick the highest-priority task by this order:
 3. Unclaimed `workflow::in dev` issues — orphaned from a previous agent run (no `agent::` label). Claim with `agent::$HOSTNAME`, check for an existing MR or branch, and resume.
 4. MRs with conflicts — rebase on latest main, resolve conflicts, and force-push: `git fetch origin && git rebase origin/main`.
 5. MRs with failed CI — a pipeline failed on an MR you or another agent opened. Check out the existing branch, read the CI logs (`glab ci view <mr_iid> -R <repo>` or check the pipeline URL), diagnose and fix the failure, then push. Do **not** open a new MR.
+
+   **CI in progress (not yet failed):** If the pipeline is still running and there is no actionable failure to fix, output `<sleep/>` and stop — do **not** poll within the same session. Ralph will re-schedule you on the next iteration (≤5 min) and the pipeline state will be re-evaluated then.
 6. MRs with no `workflow::` label — a human removed `workflow::in review` to request changes. Address their comments (see "Handling MR feedback" below).
 7. Issues with `workflow::ready for development` — new work to pick up. Only pick issues listed below (pre-filtered to your model tier and dependency-free).
 8. If there is nothing to do → output `<sleep/>` and stop.

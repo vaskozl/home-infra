@@ -358,7 +358,8 @@ sub run_loop ($role, $prompt_file, $dry_run) {
           'claude',               '-p', $prompt,
           '--system-prompt-file', $syspath,
           '--verbose',            '--dangerously-skip-permissions',
-          '--output-format',      'stream-json'
+          '--output-format',      'stream-json',
+          '--max-turns',          '100'
           or do {
             warn "Failed to launch claude: $!\n";
             sleep TIMEOUT_INTERVAL;
