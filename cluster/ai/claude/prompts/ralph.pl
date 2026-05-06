@@ -2,6 +2,7 @@
 # ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
 use v5.38;
 no warnings 'experimental';
+binmode STDOUT, ':utf8';
 use Getopt::Long  qw(GetOptions);
 use Mojo::UserAgent;
 use Mojo::JSON    qw(decode_json);
@@ -99,6 +100,20 @@ sub gl_has_unresolved_blockers ($repo, $iid) {
     0;
 }
 
+# Return list of open MR IIDs that have a failed pipeline.
+# Uses the pipelines API (source=merge_request_event) rather than the MR list
+# API, because the MR list endpoint returns head_pipeline: null.
+sub gl_failed_mr_iids ($repo) {
+    my $enc   = url_escape($repo);
+    my $pipes = _gl_api(
+        "projects/${enc}/pipelines?source=merge_request_event&status=failed&per_page=100"
+    ) or return ();
+    my %seen;
+    grep { !$seen{$_}++ }
+    map  { ($_->{ref} // '') =~ m{^refs/merge-requests/(\d+)/head$} ? ($1) : () }
+    @$pipes;
+}
+
 # ---------------------------------------------------------------------------
 # Prompt helpers
 # ---------------------------------------------------------------------------
@@ -108,8 +123,12 @@ sub _repos_header (@repos) {
 }
 
 sub _format_mr ($mr) {
-    sprintf "!%d\t%s\t%s\t(main) ← (%s)",
-      $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch};
+    my ($wf)    = grep { /^workflow::/ } @{$mr->{labels} // []};
+    my ($agent) = grep { /^agent::/    } @{$mr->{labels} // []};
+    my $wf_str  = $wf ? ($wf =~ s/^workflow:://r) : 'no-workflow';
+    my $tag     = $agent ? " [$wf_str, $agent]" : " [$wf_str]";
+    sprintf "!%d\t%s\t%s\t(main) \x{2190} (%s)%s",
+      $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch}, $tag;
 }
 
 sub _mr_block ($repo, @mrs) {
@@ -187,10 +206,11 @@ sub dev_prompt (@repos) {
     my %excl = map { $_ => 1 } 'workflow::in review', 'workflow::in dev';
     my ($ci_fail, $conflicts, $needs_work) = ('', '', '');
     for my $repo (@repos) {
-        my $mrs = gl_open_mrs($repo, "model::$ENV{ANTHROPIC_MODEL}");
-        my @f   = grep { ($_->{head_pipeline}{status} // '') eq 'failed' } @$mrs;
-        my @c   = grep { $_->{has_conflicts} } @$mrs;
-        my @w   = grep {
+        my $mrs  = gl_open_mrs($repo, "model::$ENV{ANTHROPIC_MODEL}");
+        my %open = map { $_->{iid} => $_ } @$mrs;
+        my @f    = map { $open{$_} // () } gl_failed_mr_iids($repo);
+        my @c    = grep { $_->{has_conflicts} } @$mrs;
+        my @w    = grep {
             !$_->{has_conflicts} && !grep { $excl{$_} }
               @{$_->{labels}}
         } @$mrs;
@@ -213,14 +233,6 @@ sub lead_prompt (@repos) {
         $wake .= _repo_block($repo, $t) if $t =~ /^#/m;
     }
     $out .= _section('Issues flagged wake::lead (dev wants re-plan)', $wake);
-
-    my $ci_fail = '';
-    for my $repo (@repos) {
-        my $mrs = gl_open_mrs($repo);
-        my @f   = grep { ($_->{head_pipeline}{status} // '') eq 'failed' } @$mrs;
-        $ci_fail .= _mr_block($repo, @f) if @f;
-    }
-    $out .= _section('MRs with failed CI', $ci_fail);
 
     my @not_labels = map { ('--not-label', $_) } (
         'workflow::ready for development', 'workflow::in dev',
