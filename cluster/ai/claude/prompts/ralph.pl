@@ -108,8 +108,10 @@ sub _repos_header (@repos) {
 }
 
 sub _format_mr ($mr) {
-    sprintf "!%d\t%s\t%s\t(main) ← (%s)",
-      $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch};
+    my ($wf) = grep { /^workflow::/ } @{$mr->{labels} // []};
+    my $tag   = $wf ? ' [' . ($wf =~ s/^workflow:://r) . ']' : ' [no-workflow]';
+    sprintf "!%d\t%s\t%s\t(main) \x{2190} (%s)%s",
+      $mr->{iid}, $mr->{references}{full}, $mr->{title}, $mr->{source_branch}, $tag;
 }
 
 sub _mr_block ($repo, @mrs) {
@@ -213,14 +215,6 @@ sub lead_prompt (@repos) {
         $wake .= _repo_block($repo, $t) if $t =~ /^#/m;
     }
     $out .= _section('Issues flagged wake::lead (dev wants re-plan)', $wake);
-
-    my $ci_fail = '';
-    for my $repo (@repos) {
-        my $mrs = gl_open_mrs($repo);
-        my @f   = grep { ($_->{head_pipeline}{status} // '') eq 'failed' } @$mrs;
-        $ci_fail .= _mr_block($repo, @f) if @f;
-    }
-    $out .= _section('MRs with failed CI', $ci_fail);
 
     my @not_labels = map { ('--not-label', $_) } (
         'workflow::ready for development', 'workflow::in dev',
