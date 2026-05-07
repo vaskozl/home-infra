@@ -56,10 +56,10 @@ spec:
               tag: v2.6.3@sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
             resources:
               limits:
-                memory: 1050Mi
+                memory: 1300Mi
               requests:
                 cpu: 50m
-                memory: 1050Mi
+                memory: 1300Mi
             securityContext: *securityContext
       postgres:
         containers:
@@ -120,10 +120,10 @@ spec:
               tag: v2.6.3@sha256:0cc1f82953d9598eb9e9dd11cbde1f50fe54f9c46c4506b089e8ad7bfc9d1f0c
             resources:
               limits:
-                memory: 360Mi
+                memory: 512Mi
               requests:
                 cpu: 65m
-                memory: 360Mi
+                memory: 512Mi
             securityContext: *securityContext
     defaultPodOptions:
       nodeSelector:
