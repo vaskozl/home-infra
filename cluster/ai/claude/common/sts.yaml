@@ -110,6 +110,12 @@ spec:
             - -y
             - chrome-devtools-mcp@latest
             - --browserUrl=http://127.0.0.1:9222
+          resources:
+            requests:
+              cpu: 50m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
           volumeMounts:
             - name: screenshots
               mountPath: /tmp/screenshots
