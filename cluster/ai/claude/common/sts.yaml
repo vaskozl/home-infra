@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:b6fd277d310f0b3b05f42d23ee3db4eb61ba5a6073457896fc70db2628777df6
+          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:ae50dd3dae15017ee3040bdb16b677985f605985b9898f6835cae851d64845b6
           command: ["sh", "-c"]
           args:
             - |
@@ -84,7 +84,7 @@ spec:
               mountPath: /etc/buildkit/certs
               readOnly: true
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:1c156edf2bc39f0596f0cfdb865acd4077bbfe3c2be408350ee170e74bce2dad
+          image: ghcr.io/vaskozl/chromium:147.0.7727@sha256:c9deaa15cc46724f4fb2cd93f2d76dc0ca991b1d3fc28a08b27416264bf87227
           args:
             - --headless
             - --remote-debugging-port=9222
@@ -96,7 +96,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:7bc7f436da8dc45464fac89b79199bf4b28b82ca9aaaf4ea279646423a435289
+          image: cgr.dev/chainguard/node:latest@sha256:681fce217d057966784cf9462277ab899fc5274b3c2dd0acd8a2e1ac757310cc
           command: ["npx"]
           args:
             - -y
