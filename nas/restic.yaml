@@ -7,6 +7,6 @@ services:
     network_mode: host
     user: "568:568"
     entrypoint: rest-server
-    command: --listen :8000 --path /data --append-only --private-repos
+    command: --listen :8000 --path /data --private-repos
     volumes:
       - /volume3/docker/restic/data:/data
