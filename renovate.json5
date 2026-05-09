@@ -32,6 +32,12 @@
   'docker-compose': { managerFilePatterns: [ '/nas/.+\\.ya?ml$/' ] },
   packageRules: [
     {
+      // helm-values manager emits pinDigest MRs despite :pinDigestsDisabled when a
+      // separate digest: field is present; disable explicitly. renovatebot/renovate#29768
+      matchUpdateTypes: ['pinDigest'],
+      enabled: false,
+    },
+    {
       matchDatasources: [ 'helm' ],
       commitMessageTopic: 'chart {{depName}}',
     },

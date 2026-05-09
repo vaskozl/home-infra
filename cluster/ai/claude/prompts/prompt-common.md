@@ -73,6 +73,10 @@ git fetch origin --prune
 > - Always iterate with `.labels[]` — never `.labels[].name`, which will fail with `Cannot index string with string "name"`.
 > - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades from aborting sibling tool calls.
 
+## Code comments
+
+Keep inline comments short and forward-looking — explain *why* a rule exists, not its history. Avoid referencing specific commits, MR numbers, or past incidents.
+
 ### Uploading image evidence
 
 Use the chrome-devtools MCP tools to take a screenshot, save it to `/tmp/screenshots/evidence.png` (a volume shared between the `claude` and `chrome-devtools-mcp` containers), upload it to GitLab, and embed the returned markdown in your MR or issue comment:
