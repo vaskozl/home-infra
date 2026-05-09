@@ -20,6 +20,8 @@ spec:
       vaultwarden:
         containers:
           app:
+            env:
+              ROCKET_PORT: 8080
             image:
               repository: ghcr.io/dani-garcia/vaultwarden
               tag: 1.36.0@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c
@@ -34,6 +36,12 @@ spec:
               requests:
                 cpu: 100m
                 memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
@@ -43,6 +51,14 @@ spec:
               name: data
               size: 1Mi
         type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
     route:
       app:
         annotations:
@@ -61,4 +77,4 @@ spec:
         controller: vaultwarden
         ports:
           http:
-            port: 80
+            port: 8080
