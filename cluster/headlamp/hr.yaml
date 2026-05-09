@@ -64,6 +64,7 @@ spec:
           podManagementPolicy: Parallel
         type: statefulset
     defaultPodOptions:
+      automountServiceAccountToken: true
       nodeSelector:
         kubernetes.io/arch: amd64
       securityContext:

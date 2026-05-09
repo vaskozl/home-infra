@@ -46,6 +46,7 @@ spec:
         serviceAccount:
           identifier: homepage
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         fsGroup: 568
         runAsGroup: 568
