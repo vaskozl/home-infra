@@ -1,0 +1,16 @@
+version: '3'
+services:
+  syncthing:
+    image: ghcr.io/vaskozl/syncthing:2.0.16@sha256:669526ca19aa72d466aefc5393696d009e057b68172e62d895d6940e96b40b4c
+    container_name: syncthing
+    restart: unless-stopped
+    network_mode: host
+    user: "568:568"
+    environment:
+      - HOME=/var/syncthing
+      - STGUIADDRESS=0.0.0.0:8384
+    volumes:
+      - /volume3/syncthing/data:/var/syncthing
+      - /volume3/photo:/volume3/photo:ro
+    cpu_shares: 16
+    mem_limit: 2G
