@@ -13,6 +13,7 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 ## Tech preferences
 
+- **CI / container images**: Use our own `ghcr.io/vaskozl/<name>` chainguard images (built from `doudous/apkontainers`) instead of Docker Hub mutable tags like `alpine:latest` or `debian:latest`. They're minimal, multi-arch, regularly rebuilt for security patches, and we control the contents. If no existing image fits, add a new yaml to `doudous/apkontainers` rather than reaching for a public mutable tag.
 - **Backend code**: Write efficient, lean server side templated pages HTML sites. Prefer full-page navigation — it's simpler and correct. For cases that genuinely need partial page swaps, use [fixi.js](https://github.com/bigskysoftware/fixi) (a light htmx alternative that can be vendored) rather than heavier JS frameworks.
 - **One-liners**: Reach for `perl` over `python`/`awk`/`sed` — it's always available and usually shorter:
   ```bash
