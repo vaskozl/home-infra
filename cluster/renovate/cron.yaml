@@ -22,9 +22,13 @@ spec:
                   value: debug
                 - name: BINARY_SOURCE
                   value: install
+                # Allows the epoch-reset postUpgradeTask defined in packages/renovate.json5.
+                # Pattern (after JSON decode): ^sed -i -E 's[^']+' '[^']+\.ya?ml'$
+                # Matches: sed -i -E 's/<expr>' '<name>.yaml' — requires sed -i -E, a
+                # single-quoted substitution, and a .yaml/.yml filename argument.
                 - name: RENOVATE_ALLOWED_COMMANDS
                   value: |-
-                    ["^sed -i -E 's/\\^\\(\\[\\[:space:\\]\\]\\*epoch:\\)[^']*' '[^']+\\.ya?ml'$"]
+                    ["^sed -i -E 's[^']+' '[^']+\\.ya?ml'$"]
               envFrom:
                 - secretRef:
                     name: renovate-env
