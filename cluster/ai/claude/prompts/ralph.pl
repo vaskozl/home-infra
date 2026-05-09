@@ -359,7 +359,7 @@ sub run_loop ($role, $prompt_file, $dry_run) {
         @repos = gl_repos;
         my $prompt = $role->{prompt}->(@repos);
 
-        unless ($prompt =~ /^## [^R]/m) {
+        unless ($prompt =~ /^## (?!Repos\b)/m) {
             print "--- $role->{idle} ---\n";
             sleep $role->{idle_sleep};
             next;
