@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: restic
+spec:
+  parentRefs:
+    - name: public
+      namespace: agentgateway
+  hostnames:
+    - restic.sko.ai
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: /
+      backendRefs:
+        - name: restic
+          port: 8000
+          weight: 1
