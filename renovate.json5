@@ -32,6 +32,16 @@
   'docker-compose': { managerFilePatterns: [ '/nas/.+\\.ya?ml$/' ] },
   packageRules: [
     {
+      // Disable pinDigest updates globally — :pinDigestsDisabled is already extended
+      // but Renovate still emits pinDigest MRs when a separate `digest:` field is
+      // detected by the helm-values manager (it tries to fold digest into tag).
+      // This broke the VM stack sub-chart (prometheus-node-exporter) which expects
+      // tag and digest as separate YAML fields; see commit 972ac0e62 and !5830.
+      // https://github.com/renovatebot/renovate/issues/29768
+      matchUpdateTypes: ['pinDigest'],
+      enabled: false,
+    },
+    {
       matchDatasources: [ 'helm' ],
       commitMessageTopic: 'chart {{depName}}',
     },
