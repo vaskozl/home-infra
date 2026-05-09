@@ -1,11 +1,12 @@
 version: '3'
 services:
   restic:
-    image: ghcr.io/vaskozl/restic:0.18.1@sha256:e6649cd09a65d9cf3520492e12836e26f841313a2e378ff6addf7af71ffaedd2
+    image: restic/rest-server:0.14.0@sha256:d2aff06f47eb38637dff580c3e6bce4af98f386c396a25d32eb6727ec96214a5
     container_name: restic
     restart: unless-stopped
     network_mode: host
     user: "568:568"
-    command: rest-server --listen :8000 --path /data --append-only --private-repos
+    entrypoint: rest-server
+    command: --listen :8000 --path /data --append-only --private-repos
     volumes:
       - /volume3/docker/restic/data:/data
