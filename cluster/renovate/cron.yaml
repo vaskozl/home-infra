@@ -22,6 +22,9 @@ spec:
                   value: debug
                 - name: BINARY_SOURCE
                   value: install
+                - name: RENOVATE_ALLOWED_COMMANDS
+                  value: |-
+                    ["^sed -i -E 's/\\^\\(\\[\\[:space:\\]\\]\\*epoch:\\)[^']*' '[^']+\\.ya?ml'$"]
               envFrom:
                 - secretRef:
                     name: renovate-env
