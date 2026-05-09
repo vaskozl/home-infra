@@ -12,5 +12,6 @@ services:
     volumes:
       - /volume3/syncthing/data:/var/syncthing
       - /volume3/photo:/volume3/photo:ro
+      - /volume3/k8s-volumes/vaultwarden-data-vaultwarden-0-pvc-1fc48917-f0c2-4a0f-8667-80cf47da1dc9:/volume3/vaultwarden:ro
     cpu_shares: 16
     mem_limit: 2G
