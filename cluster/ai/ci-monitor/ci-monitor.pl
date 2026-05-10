@@ -164,7 +164,7 @@ sub process {
                 } @broken)
               . "\n_Filed by [ci-monitor](https://gitlab.sko.ai/doudous/home-infra/-/tree/main/cluster/ai/ci-monitor)._"
               . " Close this issue manually if a listed job is no longer relevant"
-              . " (e.g. package removed, job renamed) — ci-monitor will reopen a fresh"
+              . " (e.g. package removed) — ci-monitor will reopen a fresh"
               . " issue if the same name reappears as failing on `main`.\n"
               . "\n$sentinel";
 
