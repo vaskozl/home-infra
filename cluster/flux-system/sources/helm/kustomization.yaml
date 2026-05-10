@@ -5,11 +5,9 @@ resources:
   - bjw-s.yaml
   - gitlab-charts.yaml
   - haproxytech.yaml
-  - k8s-gateway.yaml
   - kedacore.yaml
   - metrics-server.yaml
   - nfs-subdir.yaml
-  - vm-charts.yaml
 patches:
   - path: common.yaml
     target:
