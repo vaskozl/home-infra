@@ -30,7 +30,6 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [omada-controller](https://github.com/mbentley/docker-omada-controller) - TP-Link Omada Network Controller
   * [pocket-id](https://github.com/pocket-id/pocket-id) - Simple OIDC provider
   * [thelounge](https://thelounge.chat/) - IRC client
-  * [vikunja](https://github.com/go-vikunja/vikunja) - Todo-app
 * System:
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
