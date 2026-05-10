@@ -33,6 +33,7 @@ my $HOST   = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN  = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
 my $LABEL  = 'ci::main-failed';
 my $LOOKBACK_HOURS = 25;  # scan pipelines updated in the last N hours (25h gives overlap for daily crons)
+my $STALE_HOURS    = $ENV{STALE_HOURS} // 6;  # jobs unseen for this many hours before the latest run are treated as orphaned/renamed
 my ($DRY, $REPO_ARG);
 GetOptions('dry-run' => \$DRY, 'repo=s' => \$REPO_ARG) or die "bad args\n";
 
@@ -106,17 +107,35 @@ sub process {
     # exists. The grep is defensive (the sort already makes latest first), but
     # makes the "subsequent success skips creation" rule explicit and visible.
     my %runs;
+    my $max_seen = '';
     for my $p (@$pipes) {
         for my $j (walk_jobs($e, $p->{id})) {
             next unless $j->{finished_at};
             push @{$runs{$j->{name}}}, $j;
+            $max_seen = $j->{finished_at} if $j->{finished_at} gt $max_seen;
         }
     }
-    my (@broken, $recovered);
+
+    # Compute stale cutoff: a job whose latest run is more than STALE_HOURS older
+    # than the most-recent finished run in the scan is treated as orphaned/renamed
+    # and excluded from the broken set (it will never receive a later success run).
+    my $stale_cutoff = '';
+    if ($max_seen) {
+        require Time::Local;
+        my ($Y,$mo,$d,$H,$M,$S) = $max_seen =~ /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
+        my $max_epoch = Time::Local::timegm($S, $M, $H, $d, $mo-1, $Y-1900);
+        $stale_cutoff = strftime('%Y-%m-%dT%H:%M:%SZ', gmtime($max_epoch - $STALE_HOURS * 3600));
+    }
+
+    my (@broken, $recovered, $stale);
     for my $name (sort keys %runs) {
         my @sorted = sort { $b->{finished_at} cmp $a->{finished_at} } @{$runs{$name}};
         my $latest = $sorted[0];
         next unless $latest->{status} eq 'failed';
+        if ($stale_cutoff && $latest->{finished_at} lt $stale_cutoff) {
+            $stale++;
+            next;
+        }
         if (grep { $_->{status} eq 'success' && $_->{finished_at} gt $latest->{finished_at} } @sorted) {
             $recovered++;
             next;
@@ -124,6 +143,7 @@ sub process {
         my ($last_ok) = grep { $_->{status} eq 'success' } @sorted;
         push @broken, { %$latest, _last_success => $last_ok };
     }
+    say "  skipped $stale orphaned/renamed job(s) (no run in last ${STALE_HOURS}h)" if $stale;
     say "  skipped $recovered job(s) with a later successful run" if $recovered;
 
     my $open = (api(GET => "/projects/$e/issues?state=opened&labels=" . url_escape($LABEL)) // [])->[0];
