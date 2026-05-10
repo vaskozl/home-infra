@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/jellyfin
-              tag: 10.11.8@sha256:f201df67f45c4c01755b9daa84e30448ef5dcdbd70741b52dc053a40d019891d
+              tag: 10.11.8@sha256:25118ff7e76501c062ceba11ad0cc348bb8c54a469ea4f64eb06b68541130e0e
             probes:
               liveness:
                 enabled: true
