@@ -23,8 +23,6 @@
     'ghcr.io/fluxcd/kustomize-controller',
     'ghcr.io/fluxcd/notification-controller',
     'ghcr.io/fluxcd/source-controller',
-    'ghcr.io/vaskozl/baikal',
-    'ghcr.io/vaskozl/rspamd',
   ],
   flux: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
   'helm-values': { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
