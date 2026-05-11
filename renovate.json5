@@ -118,5 +118,17 @@
       matchUpdateTypes: ['major'],
       enabled: false,
     },
+    {
+      // The agentgateway OCI repos contain both legacy kgateway-era v2.x tags
+      // (Feb 2026) and the standalone v1.x lineage (Mar 2026+). Despite v2 > v1,
+      // v1.x is the current line — pin to <2.0.0 to stop Renovate proposing
+      // downgrades to the legacy chart.
+      matchDatasources: ['docker'],
+      matchPackageNames: [
+        'ghcr.io/agentgateway/charts/agentgateway',
+        'ghcr.io/agentgateway/charts/agentgateway-crds',
+      ],
+      allowedVersions: '<2.0.0',
+    },
   ],
 }
