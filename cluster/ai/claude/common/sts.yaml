@@ -113,7 +113,7 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 512Mi
+              memory: 600Mi   # was 512Mi; covers observed 7d peak ~559MB with headroom
             limits:
               memory: 1Gi
           volumeMounts:
