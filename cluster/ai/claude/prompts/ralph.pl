@@ -371,7 +371,7 @@ sub run_loop ($role, $prompt_file, $dry_run) {
           '--system-prompt-file', $syspath,
           '--verbose',            '--dangerously-skip-permissions',
           '--output-format',      'stream-json',
-          '--max-turns',          '100'
+          '--max-turns',          '200'
           or do {
             warn "Failed to launch claude: $!\n";
             sleep TIMEOUT_INTERVAL;
@@ -394,20 +394,6 @@ sub run_loop ($role, $prompt_file, $dry_run) {
 
         if ($is_429) {
             warn "Rate-limited (429); sleeping\n";
-            sleep SLEEP_INTERVAL;
-            next;
-        }
-
-        # Max-turns exhaustion: a 101-turn is_error session means the agent ran out
-        # of context — back off harder than a normal idle sleep so the next attempt
-        # starts fresh and doesn't immediately re-enter the same loop.
-        my $max_turns_hit = grep {
-            my $r = eval { decode_json($_) };
-            $r && $r->{is_error} && (($r->{num_turns} // 0) >= 100)
-        } grep { /"type"\s*:\s*"result"/ } split /\n/, $output;
-
-        if ($max_turns_hit) {
-            warn "Max turns reached; backing off\n";
             sleep SLEEP_INTERVAL;
             next;
         }
