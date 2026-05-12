@@ -398,6 +398,20 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             next;
         }
 
+        # Max-turns exhaustion: a 101-turn is_error session means the agent ran out
+        # of context — back off harder than a normal idle sleep so the next attempt
+        # starts fresh and doesn't immediately re-enter the same loop.
+        my $max_turns_hit = grep {
+            my $r = eval { decode_json($_) };
+            $r && $r->{is_error} && (($r->{num_turns} // 0) >= 100)
+        } grep { /"type"\s*:\s*"result"/ } split /\n/, $output;
+
+        if ($max_turns_hit) {
+            warn "Max turns reached; backing off\n";
+            sleep SLEEP_INTERVAL;
+            next;
+        }
+
         if ($exit_code != 0) {
             die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
               if $output =~
