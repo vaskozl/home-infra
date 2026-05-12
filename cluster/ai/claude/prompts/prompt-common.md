@@ -38,6 +38,7 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 - **`glab mr list --state`**: Not supported by glab. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
 - **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
+- **`glab ci status --ref`**: The `--ref` flag does not exist. Use `glab ci status -R <repo> -b <branch>` to check a branch, or `glab ci view <mr_iid> -R <repo>` for a specific MR's pipeline. There is no flag to query by commit SHA — use `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/repository/commits/<sha>/statuses"` if a SHA-specific lookup is required.
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all JSON/text processing.
 
 ## Git hygiene
