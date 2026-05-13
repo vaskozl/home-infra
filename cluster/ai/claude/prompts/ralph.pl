@@ -100,18 +100,23 @@ sub gl_has_unresolved_blockers ($repo, $iid) {
     0;
 }
 
-# Return list of open MR IIDs that have a failed pipeline.
-# Uses the pipelines API (source=merge_request_event) rather than the MR list
-# API, because the MR list endpoint returns head_pipeline: null.
+# Return list of open MR IIDs whose LATEST pipeline failed.
+# Iterates pipelines (sorted by created_at DESC) and dedupes by ref to keep
+# only each MR's most recent pipeline, avoiding the historical-failure trap
+# of filtering by status=failed (which returns every failed pipeline ever).
+# Uses the pipelines API rather than the MR list because that endpoint always
+# returns head_pipeline: null.
 sub gl_failed_mr_iids ($repo) {
     my $enc   = url_escape($repo);
     my $pipes = _gl_api(
-        "projects/${enc}/pipelines?source=merge_request_event&status=failed&per_page=100"
+        "projects/${enc}/pipelines?source=merge_request_event&per_page=100"
     ) or return ();
-    my %seen;
-    grep { !$seen{$_}++ }
-    map  { ($_->{ref} // '') =~ m{^refs/merge-requests/(\d+)/head$} ? ($1) : () }
-    @$pipes;
+    my %latest;
+    for my $p (@$pipes) {
+        my ($iid) = ($p->{ref} // '') =~ m{^refs/merge-requests/(\d+)/head$} or next;
+        $latest{$iid} //= $p->{status};   # first occurrence is newest (sorted DESC)
+    }
+    grep { ($latest{$_} // '') eq 'failed' } keys %latest;
 }
 
 # ---------------------------------------------------------------------------
@@ -254,13 +259,14 @@ sub reviewer_prompt (@repos) {
 
     my ($ready, $renovate) = ('', '');
     for my $repo (@repos) {
-        my $enc = url_escape($repo);
-        my $mrs = gl_open_mrs($repo);
+        my $enc    = url_escape($repo);
+        my $mrs    = gl_open_mrs($repo);
+        my %failed = map { $_ => 1 } gl_failed_mr_iids($repo);
         my (@r, @ren);
         for my $mr (@$mrs) {
             my @labels = @{$mr->{labels} // []};
             next if grep { $_ eq 'claude::ignore' || $_ eq 'review::deferred' } @labels;
-            next if ($mr->{head_pipeline}{status} // '') eq 'failed';
+            next if $failed{$mr->{iid}};
             my $is_renovate = ($mr->{source_branch} // '') =~ m{^renovate/};
             my $in_review   = grep { $_ eq 'workflow::in review' } @labels;
             next unless $is_renovate || $in_review;
