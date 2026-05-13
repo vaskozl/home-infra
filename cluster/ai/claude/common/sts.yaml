@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:cad2b6f6b32d85f8132716dca4ec530feb0eaac1dc3de458d2c59163a47c3ab6
+          image: &image ghcr.io/vaskozl/claude:2.1.113@sha256:5ab662fdc8c2353c245e7b90e2e642f6a50e286a3d5f86a5915264215b46749f
           command: ["sh", "-c"]
           args:
             - |
@@ -56,12 +56,30 @@ spec:
           envFrom:
             - secretRef:
                 name: claude-env
+          env:
+            # Suppress non-essential traffic — agents are headless, no humans
+            # to read "How am I doing?" surveys or bug-report nudges, and the
+            # image SHA is pinned so the autoupdater is wasted background work.
+            # Names verified against the claude 2.1.113 binary (strings(1) on
+            # /usr/sbin/claude). DISABLE_NON_ESSENTIAL_MODEL_CALLS is not
+            # honored by 2.1.113 — DISABLE_TELEMETRY + DISABLE_ERROR_REPORTING
+            # cover the same surface.
+            - { name: DISABLE_TELEMETRY,       value: "1" }
+            - { name: DISABLE_BUG_COMMAND,     value: "1" }
+            - { name: DISABLE_AUTOUPDATER,     value: "1" }
+            - { name: DISABLE_ERROR_REPORTING, value: "1" }
+            # Disable auto-compact — we manage context resets explicitly via
+            # /clear at INPUT_TOKEN_SOFT_CAP. Letting claude auto-compact mid
+            # turn would race the supervisor's token accounting.
+            - { name: DISABLE_AUTO_COMPACT,    value: "1" }
           command: [ralph]
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
             - name: screenshots
               mountPath: /tmp/screenshots
+            - name: turn-fifo
+              mountPath: /run/claude
             - name: ralph
               mountPath: /usr/local/bin/ralph
               subPath: ralph.pl
@@ -80,6 +98,9 @@ spec:
             - name: ralph
               mountPath: /etc/claude/prompt-dx.md
               subPath: prompt-dx.md
+            - name: ralph
+              mountPath: /home/nonroot/.claude/settings.json
+              subPath: claude-settings.json
             - name: buildkit-certs
               mountPath: /etc/buildkit/certs
               readOnly: true
@@ -125,3 +146,7 @@ spec:
             secretName: buildkit-client-certs
         - name: screenshots
           emptyDir: {}
+        - name: turn-fifo
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
