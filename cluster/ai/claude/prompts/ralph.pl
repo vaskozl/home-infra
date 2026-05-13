@@ -404,6 +404,8 @@ sub _install_claude_md ($cmd) {
 sub _spawn_tmux_session () {
     _tmux('new-session', '-d', '-s', TMUX_SESSION,
         '-e', 'TERM=' . TMUX_TERM,
+        '-e', 'LANG=C.UTF-8',
+        '-e', 'LC_ALL=C.UTF-8',
         '-x', TMUX_WIDTH, '-y', TMUX_HEIGHT,
         'exec ' . CLAUDE_BIN . ' --dangerously-skip-permissions')
       or die "Failed to spawn tmux session\n";
@@ -413,6 +415,7 @@ sub _spawn_tmux_session () {
     # First-run workspace-trust prompt: press Enter to accept. If no prompt
     # is shown, the empty submit is a no-op.
     _tmux('send-keys', '-t', TMUX_SESSION, 'Enter');
+    sleep 1;
 }
 
 sub _restart_tmux_session () {
@@ -426,11 +429,13 @@ sub _enqueue_prompt ($prompt) {
     open my $w, '|-',
       'tmux', '-L', TMUX_SOCKET, 'load-buffer', '-'
       or die "tmux load-buffer: $!\n";
+    binmode $w, ':encoding(UTF-8)';
     print $w $prompt;
     close $w or die "tmux load-buffer failed (exit @{[$? >> 8]})\n";
 
     _tmux('paste-buffer', '-d', '-t', TMUX_SESSION)
       or die "tmux paste-buffer failed\n";
+    sleep 1;
     _tmux('send-keys', '-t', TMUX_SESSION, 'Enter')
       or die "tmux send-keys failed\n";
 }
