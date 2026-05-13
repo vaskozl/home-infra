@@ -1,16 +1,5 @@
 {
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/home/nonroot/.claude/hooks/rtk-rewrite.sh"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "matcher": "",
@@ -22,10 +11,5 @@
         ]
       }
     ]
-  },
-  "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "permissions": {
-    "defaultMode": "auto"
   }
 }

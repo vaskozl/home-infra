@@ -57,21 +57,16 @@ spec:
             - secretRef:
                 name: claude-env
           env:
-            # Suppress non-essential traffic — agents are headless, no humans
-            # to read "How am I doing?" surveys or bug-report nudges, and the
-            # image SHA is pinned so the autoupdater is wasted background work.
-            # Names verified against the claude 2.1.113 binary (strings(1) on
-            # /usr/sbin/claude). DISABLE_NON_ESSENTIAL_MODEL_CALLS is not
-            # honored by 2.1.113 — DISABLE_TELEMETRY + DISABLE_ERROR_REPORTING
-            # cover the same surface.
-            - { name: DISABLE_TELEMETRY,       value: "1" }
-            - { name: DISABLE_BUG_COMMAND,     value: "1" }
-            - { name: DISABLE_AUTOUPDATER,     value: "1" }
-            - { name: DISABLE_ERROR_REPORTING, value: "1" }
-            # Disable auto-compact — we manage context resets explicitly via
-            # /clear at INPUT_TOKEN_SOFT_CAP. Letting claude auto-compact mid
-            # turn would race the supervisor's token accounting.
-            - { name: DISABLE_AUTO_COMPACT,    value: "1" }
+            # Suppress non-essential traffic — agents are headless and the
+            # image SHA is pinned.
+            - name: DISABLE_TELEMETRY
+              value: "1"
+            - name: DISABLE_BUG_COMMAND
+              value: "1"
+            - name: DISABLE_AUTOUPDATER
+              value: "1"
+            - name: DISABLE_ERROR_REPORTING
+              value: "1"
           command: [ralph]
           volumeMounts:
             - name: claude

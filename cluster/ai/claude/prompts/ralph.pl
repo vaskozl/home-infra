@@ -1,12 +1,10 @@
 #!/usr/bin/perl
 # ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
 #
-# Session model: one persistent claude TUI per pod, driven through a tmux
-# session. Ralph spawns claude once and injects each iteration's prompt via
-# `tmux send-keys`; a Stop hook (configured in ~/.claude/settings.json) signals
-# turn completion by writing one line to /run/claude/turn.fifo. Iterations
-# share one conversation — context resets are managed by `/clear` (soft cap)
-# and full tmux respawn (hard reset).
+# One persistent claude TUI per pod, driven through a tmux session. Each
+# iteration's task is piped in as a user turn; a Stop hook writes one line
+# to /run/claude/turn.fifo when claude finishes. On timeout the tmux session
+# is killed and respawned; auto-compact handles context.
 use v5.38;
 no warnings 'experimental';
 binmode STDOUT, ':utf8';
@@ -19,22 +17,19 @@ use Mojo::JSON    qw(decode_json);
 use Mojo::URL;
 use Mojo::UserAgent;
 use Mojo::Util    qw(url_escape);
-use POSIX         qw(mkfifo :sys_wait_h);
+use POSIX         qw(mkfifo);
 
-use constant PROMPT_DIR           => '/etc/claude';
-use constant COMMON_PROMPT        => PROMPT_DIR . '/prompt-common.md';
-use constant SLEEP_INTERVAL       => $ENV{SLEEP_INTERVAL}       // 300;
-use constant TIMEOUT_INTERVAL     => $ENV{TIMEOUT_INTERVAL}     // 60;
-use constant INPUT_TOKEN_SOFT_CAP => $ENV{INPUT_TOKEN_SOFT_CAP} // 80_000;
-use constant STOP_TIMEOUT         => $ENV{STOP_TIMEOUT}         // 600;
-use constant CLEAR_TIMEOUT        => $ENV{CLEAR_TIMEOUT}        // 30;
-use constant CLAUDE_BOOT_DELAY    => $ENV{CLAUDE_BOOT_DELAY}    // 5;
-use constant TMUX_SOCKET          => $ENV{TMUX_SOCKET}          // 'claude';
-use constant TMUX_SESSION         => $ENV{TMUX_SESSION}         // 'ralph';
-use constant TURN_FIFO            => $ENV{TURN_FIFO}            // '/run/claude/turn.fifo';
-use constant CLAUDE_BIN           => $ENV{CLAUDE_BIN}           // 'claude';
-use constant AUTH_FAIL_RE         =>
-    qr/OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/i;
+use constant PROMPT_DIR        => '/etc/claude';
+use constant COMMON_PROMPT     => PROMPT_DIR . '/prompt-common.md';
+use constant SLEEP_INTERVAL    => $ENV{SLEEP_INTERVAL}    // 300;
+use constant TIMEOUT_INTERVAL  => $ENV{TIMEOUT_INTERVAL}  // 60;
+use constant STOP_TIMEOUT      => $ENV{STOP_TIMEOUT}      // 600;
+use constant CLAUDE_BOOT_DELAY => $ENV{CLAUDE_BOOT_DELAY} // 5;
+use constant TMUX_SOCKET       => $ENV{TMUX_SOCKET}       // 'claude';
+use constant TMUX_SESSION      => $ENV{TMUX_SESSION}      // 'ralph';
+use constant TURN_FIFO         => $ENV{TURN_FIFO}         // '/run/claude/turn.fifo';
+use constant CLAUDE_BIN        => $ENV{CLAUDE_BIN}        // 'claude';
+use constant CLAUDE_MD         => ($ENV{HOME} // '/home/nonroot') . '/.claude/CLAUDE.md';
 
 my $UA = Mojo::UserAgent->new->request_timeout(30);
 $UA->on(start => sub ($ua, $tx) {
@@ -361,28 +356,9 @@ my %ROLES = (
 # ---------------------------------------------------------------------------
 # tmux supervisor
 # ---------------------------------------------------------------------------
-#
-# Layout:
-#   - One tmux session per pod (-L $TMUX_SOCKET, named $TMUX_SESSION) hosting
-#     a long-lived interactive `claude` TUI.
-#   - One FIFO at TURN_FIFO. The Stop hook writes one JSON line per turn end.
-#     The supervisor keeps it open O_RDWR so writers never block on open and
-#     reads never return EOF.
-#   - Per-iteration: feed prompt via `tmux load-buffer` + `paste-buffer` +
-#     `send-keys Enter`, wait on FIFO for the Stop event, parse the transcript
-#     for the last assistant message, update pacing + token counters.
 
 sub _tmux (@args) {
     system('tmux', '-L', TMUX_SOCKET, @args) == 0;
-}
-
-sub _tmux_capture () {
-    open my $fh, '-|',
-      'tmux', '-L', TMUX_SOCKET,
-      'capture-pane', '-p', '-t', TMUX_SESSION, '-S', '-200'
-      or return '';
-    local $/;
-    <$fh> // '';
 }
 
 sub _ensure_fifo () {
@@ -395,6 +371,7 @@ sub _ensure_fifo () {
     1;
 }
 
+# Open the FIFO O_RDWR so writers never block on open and reads never EOF.
 sub _open_fifo () {
     _ensure_fifo();
     sysopen(my $fh, TURN_FIFO, O_RDWR | O_NONBLOCK)
@@ -412,30 +389,30 @@ sub _kill_tmux_session () {
     _tmux('kill-session', '-t', TMUX_SESSION);
 }
 
-sub _spawn_tmux_session () {
-    # Idempotent: leave a running session alone (allows ralph respawn without
-    # interrupting a long-running claude).
-    return if _tmux_session_exists();
-
-    my $bin = CLAUDE_BIN;
-    # Env vars are set on the container in sts.yaml, but re-export them here so
-    # that local invocation (no Kubernetes) also suppresses telemetry/updates.
-    # Names verified against claude 2.1.113 (see comment in sts.yaml).
-    my $cmd = qq{exec env DISABLE_TELEMETRY=1 DISABLE_BUG_COMMAND=1 }
-        . qq{DISABLE_AUTOUPDATER=1 DISABLE_ERROR_REPORTING=1 }
-        . qq{DISABLE_AUTO_COMPACT=1 }
-        . qq{$bin --dangerously-skip-permissions};
-
-    _tmux('new-session', '-d', '-s', TMUX_SESSION,
-        '-x', '200', '-y', '50', $cmd)
-      or die "Failed to spawn tmux session\n";
-    sleep CLAUDE_BOOT_DELAY;
+# Write the combined common + role prompt to ~/.claude/CLAUDE.md so claude
+# loads role context automatically at startup.
+sub _install_claude_md ($cmd) {
+    my $out = path(CLAUDE_MD);
+    $out->dirname->make_path;
+    my $body = path(COMMON_PROMPT)->slurp . "\n" . path(PROMPT_DIR . "/prompt-${cmd}.md")->slurp;
+    $out->spew($body);
 }
 
+sub _spawn_tmux_session () {
+    return if _tmux_session_exists();
+    _tmux('new-session', '-d', '-s', TMUX_SESSION,
+        '-x', '200', '-y', '50',
+        'exec ' . CLAUDE_BIN . ' --dangerously-skip-permissions')
+      or die "Failed to spawn tmux session\n";
+    sleep CLAUDE_BOOT_DELAY;
+    # First-run workspace-trust prompt: press Enter to accept. If no prompt
+    # is shown, the empty submit is a no-op.
+    _tmux('send-keys', '-t', TMUX_SESSION, 'Enter');
+}
+
+# load-buffer + paste-buffer avoids send-keys' literal-text quoting traps
+# (newlines, $, `, etc); trailing Enter submits the turn.
 sub _enqueue_prompt ($prompt) {
-    # load-buffer reads from stdin; paste-buffer dumps into the pane; the
-    # trailing Enter submits. Going through a buffer avoids send-keys'
-    # literal-text quoting traps (newlines, $, `, etc).
     open my $w, '|-',
       'tmux', '-L', TMUX_SOCKET, 'load-buffer', '-'
       or die "tmux load-buffer: $!\n";
@@ -451,13 +428,13 @@ sub _enqueue_prompt ($prompt) {
 # Block until the next newline-delimited Stop event on the FIFO, or until
 # $timeout seconds elapse. Returns the decoded hash, or undef on timeout.
 sub _await_stop ($fifo, $timeout) {
-    my $sel = IO::Select->new($fifo);
+    my $sel      = IO::Select->new($fifo);
     my $deadline = time + $timeout;
-    my $buf = '';
+    my $buf      = '';
     while (time < $deadline) {
         my $remain = $deadline - time;
         my @ready  = $sel->can_read($remain);
-        next unless @ready;
+        last unless @ready;
         my $n = sysread $fifo, $buf, 8192, length $buf;
         if (!defined $n) {
             next if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
@@ -473,13 +450,10 @@ sub _await_stop ($fifo, $timeout) {
     undef;
 }
 
-# Read the JSONL transcript and return the last assistant message entry (or
-# undef). Each entry on disk looks like:
-#   {"type":"assistant","message":{"content":[{"type":"text","text":"..."}],
-#    "usage":{...}}, ...}
+# Read the JSONL transcript and return the last assistant message entry.
 sub _last_assistant_entry ($transcript_path) {
     return undef unless $transcript_path && -r $transcript_path;
-    my @lines = path($transcript_path)->lines({ binmode => ':encoding(UTF-8)' });
+    my @lines = split /\n/, path($transcript_path)->slurp;
     for my $line (reverse @lines) {
         my $e = eval { decode_json($line) } or next;
         return $e if ($e->{type} // '') eq 'assistant';
@@ -495,41 +469,27 @@ sub _assistant_text ($entry) {
       @$content;
 }
 
-sub _entry_input_tokens ($entry) {
-    my $u = ref $entry eq 'HASH' && ref $entry->{message} eq 'HASH'
-      ? $entry->{message}{usage} : undef;
-    return 0 unless ref $u eq 'HASH';
-    ($u->{input_tokens} // 0)
-      + ($u->{cache_creation_input_tokens} // 0)
-      + ($u->{cache_read_input_tokens}     // 0);
-}
-
-sub run_loop ($role, $prompt_file, $dry_run) {
+sub run_loop ($role, $cmd, $dry_run) {
     my @repos = gl_repos;
     if ($dry_run) { print $role->{prompt}->(@repos); return }
 
-    # Boot: FIFO + tmux + claude. Once per pod lifetime.
+    _install_claude_md($cmd);
     my $fifo = _open_fifo();
     _spawn_tmux_session();
 
-    # Startup jitter — keep pods staggered across the cluster, but only once
-    # (iterations no longer cold-start claude).
+    # Startup jitter — keep pods staggered across the cluster.
     my ($ord) = ($ENV{HOSTNAME} // '') =~ /(\d+)$/;
     sleep(($ord // 0) * 240 + int rand 60);
 
-    my $i              = 0;
-    my $input_tokens   = 0;       # cumulative since last /clear (or session start)
-
+    my $i = 0;
     while (1) {
         $i++;
         chomp(my $ts = qx(date -Iseconds));
-        printf "=== %s %d — %s (tok=%d) ===\n",
-          $role->{label}, $i, $ts, $input_tokens;
+        printf "=== %s %d — %s ===\n", $role->{label}, $i, $ts;
 
-        # Detect hard failure: tmux session gone (claude crashed, OOM, etc).
+        # Hard failure (claude crashed, OOM, etc): respawn.
         unless (_tmux_session_exists()) {
             warn "tmux session missing; respawning\n";
-            $input_tokens = 0;
             _spawn_tmux_session();
         }
 
@@ -542,56 +502,24 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             next;
         }
 
-        # Soft-cap context reset BEFORE the next turn — keeps the invariant
-        # strict (don't issue another turn over an already-bloated context).
-        if ($input_tokens >= INPUT_TOKEN_SOFT_CAP) {
-            printf "--- soft cap crossed (%d >= %d); /clear ---\n",
-              $input_tokens, INPUT_TOKEN_SOFT_CAP;
-            _tmux('send-keys', '-t', TMUX_SESSION, '/clear', 'Enter');
-            my $cleared = _await_stop($fifo, CLEAR_TIMEOUT);
-            if (!$cleared) {
-                warn "no Stop after /clear within ${\ CLEAR_TIMEOUT }s; hard reset\n";
-                _kill_tmux_session();
-                _spawn_tmux_session();
-            }
-            $input_tokens = 0;
-        }
-
         _enqueue_prompt($prompt);
         my $stop = _await_stop($fifo, STOP_TIMEOUT);
 
         if (!$stop) {
-            warn "turn timeout (${\ STOP_TIMEOUT }s) — hard reset\n";
+            warn "turn timeout (${\ STOP_TIMEOUT }s) — restarting tmux\n";
             _kill_tmux_session();
             _spawn_tmux_session();
-            $input_tokens = 0;
             sleep TIMEOUT_INTERVAL;
             next;
         }
 
         my $entry = _last_assistant_entry($stop->{transcript_path});
         my $body  = _assistant_text($entry);
-        $input_tokens += _entry_input_tokens($entry);
 
-        # Print a short preview so pod logs still tell us what happened.
         if (length $body) {
             my $preview = substr $body, 0, 400;
             $preview =~ s/\n/\\n/g;
             print "--- assistant: $preview", (length $body > 400 ? '…' : ''), "\n";
-        }
-
-        # Rate-limit: check transcript body and tmux pane for 429 markers.
-        my $pane    = _tmux_capture();
-        my $is_429  = ($body =~ /\b429\b|rate[\s_-]?limit/i)
-                   || ($pane =~ /\b429\b|rate[\s_-]?limit/i);
-
-        die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
-          if $body =~ AUTH_FAIL_RE || $pane =~ AUTH_FAIL_RE;
-
-        if ($is_429) {
-            warn "Rate-limited (429); sleeping\n";
-            sleep SLEEP_INTERVAL;
-            next;
         }
 
         if ($body =~ m{<sleep/>}) {
@@ -616,4 +544,4 @@ GetOptions('dry-run|n' => \$dry_run)
 my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
 my $role = $ROLES{$cmd} // die "Unknown command: $cmd\n";
 
-run_loop($role, PROMPT_DIR . "/prompt-${cmd}.md", $dry_run);
+run_loop($role, $cmd, $dry_run);

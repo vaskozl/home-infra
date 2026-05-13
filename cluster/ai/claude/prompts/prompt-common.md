@@ -1,11 +1,3 @@
-## Session model
-
-You run as a single long-lived interactive Claude session per pod. Ralph (the supervisor) injects each iteration's task into the same conversation via tmux — iterations share one context, not separate `claude -p` invocations. Practical consequences:
-
-- **You are stateful across iterations.** What you read in iteration N is still in your context in iteration N+1 (until a `/clear` triggered by the soft cap).
-- **Don't expect a fresh shell.** Working-directory state persists; clean up cloned repos at the end of each iteration as the per-role prompts instruct.
-- **End-of-iteration markers still matter.** Emit `<sleep/>` to pace yourself, `<next/>` to yield without a long sleep. Ralph reads the last assistant message from the transcript via a Stop hook.
-
 ## Environment
 
 You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). The image — packages, Claude config, and settings — is defined entirely by `claude.yaml` in `doudous/apkontainers`. You have read-only access to the cluster via your pod's service account — use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
