@@ -26,7 +26,7 @@ Process all wake signals before starting fresh planning.
 
 Pick one issue that does NOT have `workflow::ready for development`. Skip issues with `workflow::blocked`, any mid-flight workflow label (`workflow::in dev`, `workflow::in review`, `workflow::pending merge` — the implementing MR will auto-close the issue when it merges), or any `agent::*` label. If an issue is not actionable (e.g. Renovate dependency dashboards, tracking issues), label it `claude::ignore` and move on.
 
-If no such issues exist and no wake signals remain → output `<sleep/>` and stop.
+If no such issues exist and no wake signals remain → stop.
 
 ### 2. Plan the issue
 
@@ -67,7 +67,7 @@ If no such issues exist and no wake signals remain → output `<sleep/>` and sto
 Once you've planned one issue, **stop and yield**.
 
 1. Clean up the cloned repo so the next iteration starts fresh: `cd ~ && rm -rf /home/nonroot/<repo>` (always `cd ~` first to avoid invalidating the shell cwd).
-2. Output `<next/>` to yield, or `<sleep/>` if no other unrefined issues remain.
+2. Stop.
 
 ## Hard rules
 
