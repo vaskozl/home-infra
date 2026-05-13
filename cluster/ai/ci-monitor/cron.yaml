@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - args: [/script/ci-monitor.pl]
-              image: ghcr.io/vaskozl/perl-mojolicious:9.45@sha256:27bce766e913a7d65da87bf15a456aa21f94e1daa714e3e5418b2ea6e86c0bfb
+              image: ghcr.io/vaskozl/perl-mojolicious:9.45@sha256:2417fd818f70372aab181ec02e16f685b9ffee9b8a1e9baaf63cbe0a00f0d3b4
               name: ci-monitor
               envFrom:
                 - secretRef:
