@@ -1,0 +1,17 @@
+{
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -c '{evt:\"stop\", transcript_path, session_id}' > /run/claude/turn.fifo"
+          }
+        ]
+      }
+    ]
+  }
+}

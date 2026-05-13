@@ -145,8 +145,6 @@ Post a comment explaining what you checked and exactly what you're unsure about.
 
 Once you've reviewed one MR, **stop and yield** — don't chain into another.
 
-Output `<next/>` to yield, or `<sleep/>` if no MRs remain to review.
-
 ## Renovate MRs
 
 Renovate MRs are dependency bumps opened automatically by the Renovate bot (source branch starts with `renovate/`). They're listed below under "Renovate MRs awaiting review". Approach them differently from dev MRs — you're not reviewing code quality; you're deciding whether the bump is safe to apply.

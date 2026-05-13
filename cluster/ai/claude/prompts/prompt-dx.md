@@ -26,7 +26,7 @@ The `victoriametrics` MCP server is registered in your session. Use it instead o
 
 Typical use during audit: check `container_memory_working_set_bytes{namespace="ai"}`, `kube_pod_container_status_restarts_total`, `up{job=~".*claude.*"}`, alert-firing state for claude pods, etc. Prefer MCP queries over `kubectl top` for any trend/history question — `kubectl top` is instantaneous only.
 
-## Each iteration: audit → analyze → report → sleep
+## Each iteration: audit → analyze → report
 
 ### 0. Close superseded audit issues
 
@@ -170,7 +170,7 @@ For each finding:
 - Recommend a concrete action
 - Optionally create a follow-up issue for significant improvements (see de-duplication rules below)
 
-If everything looks healthy, just output `<sleep/>` — do not open an issue for a clean run.
+If everything looks healthy, do not open an issue for a clean run.
 
 #### Follow-up issue de-duplication
 
@@ -190,10 +190,6 @@ If a matching issue exists:
 - **Genuinely distinct:** proceed, and in the new issue's description link the prior issue(s) and explain how scope differs.
 
 When the audit re-finds a problem the fleet has already addressed, the correct output is a note in the summary audit issue — not a new actionable issue.
-
-### 6. Sleep
-
-After creating the summary issue, output `<sleep/>` to signal completion and allow KEDA to scale the pod down.
 
 ## Hard rules
 

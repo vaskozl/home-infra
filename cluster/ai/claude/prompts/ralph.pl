@@ -1,18 +1,38 @@
 #!/usr/bin/perl
 # ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
+#
+# Drives one claude TUI per iteration through a tmux session. The role's
+# work list is piped in as a single user turn; a Stop hook writes one line
+# to /run/claude/turn.fifo when the turn finishes. Each iteration kills and
+# respawns tmux so claude starts with a clean context.
 use v5.38;
 no warnings 'experimental';
 binmode STDOUT, ':utf8';
+use Errno         qw(EAGAIN EWOULDBLOCK EINTR);
+use Fcntl         qw(O_RDWR O_NONBLOCK);
 use Getopt::Long  qw(GetOptions);
-use Mojo::UserAgent;
+use IO::Select;
+use Mojo::File    qw(path);
 use Mojo::JSON    qw(decode_json);
-use Mojo::URL;
+use Mojo::UserAgent;
 use Mojo::Util    qw(url_escape);
+use POSIX         qw(mkfifo strftime);
 
-use constant PROMPT_DIR       => '/etc/claude';
-use constant COMMON_PROMPT    => PROMPT_DIR . '/prompt-common.md';
-use constant SLEEP_INTERVAL   => $ENV{SLEEP_INTERVAL}   // 300;
-use constant TIMEOUT_INTERVAL => $ENV{TIMEOUT_INTERVAL} // 60;
+use constant PROMPT_DIR        => '/etc/claude';
+use constant COMMON_PROMPT     => PROMPT_DIR . '/prompt-common.md';
+use constant SLEEP_INTERVAL    => $ENV{SLEEP_INTERVAL}    // 300;
+use constant TIMEOUT_INTERVAL  => $ENV{TIMEOUT_INTERVAL}  // 60;
+use constant STOP_TIMEOUT      => $ENV{STOP_TIMEOUT}      // 7200;
+use constant CLAUDE_BOOT_DELAY => $ENV{CLAUDE_BOOT_DELAY} // 5;
+use constant TMUX_SOCKET       => $ENV{TMUX_SOCKET}       // 'claude';
+use constant TMUX_SESSION      => $ENV{TMUX_SESSION}      // 'ralph';
+use constant TMUX_WIDTH        => $ENV{TMUX_WIDTH}        // 120;
+use constant TMUX_HEIGHT       => $ENV{TMUX_HEIGHT}       // 32;
+use constant TMUX_TERM         => $ENV{TMUX_TERM}         // 'xterm-256color';
+use constant TURN_FIFO         => $ENV{TURN_FIFO}         // '/run/claude/turn.fifo';
+use constant CLAUDE_BIN        => $ENV{CLAUDE_BIN}        // 'claude';
+use constant CLAUDE_MD         => ($ENV{HOME} // '/home/nonroot') . '/.claude/CLAUDE.md';
+use constant IGNORE_TITLE_RE   => qr/renovate dashboard/i;
 
 my $UA = Mojo::UserAgent->new->request_timeout(30);
 $UA->on(start => sub ($ua, $tx) {
@@ -37,11 +57,9 @@ sub _run (@cmd) {
 }
 
 sub gl_repos () {
-    my $data = eval { decode_json(scalar qx(glab repo list -a --output json 2>/dev/null)); };
+    my $data = eval { decode_json(_run('glab', 'repo', 'list', '-a', '--output', 'json')) };
     $data ? map { $_->{path_with_namespace} } @$data : ();
 }
-
-use constant IGNORE_TITLE_RE => qr/renovate dashboard/i;
 
 sub gl_issues ($repo, @args) {
     my $out = _run('glab', 'issue', 'list', '-R', $repo, @args);
@@ -289,7 +307,7 @@ sub reviewer_prompt (@repos) {
 
 sub dx_prompt (@repos) {
     my $out = _repos_header(@repos);
-    chomp(my $ts = qx(date -Iseconds));
+    my $ts  = strftime("%FT%T%z", localtime);
     $out .= "\n## DX audit — $ts\n";
     $out .= <<'END';
 Agent logs live at /logs/ai/ on the ripgrep pod.
@@ -336,31 +354,124 @@ my %ROLES = (
     },
 );
 
-sub run_loop ($role, $prompt_file, $dry_run) {
+# ---------------------------------------------------------------------------
+# tmux supervisor
+# ---------------------------------------------------------------------------
+
+sub _tmux (@args) {
+    system('tmux', '-L', TMUX_SOCKET, @args) == 0;
+}
+
+sub _ensure_fifo () {
+    my $p = TURN_FIFO;
+    (my $dir = $p) =~ s{/[^/]+$}{};
+    path($dir)->make_path;
+    return 1 if -p $p;
+    unlink $p if -e $p;
+    mkfifo($p, 0600) or die "mkfifo $p: $!\n";
+    1;
+}
+
+# Open the FIFO O_RDWR so writers never block on open and reads never EOF.
+sub _open_fifo () {
+    _ensure_fifo();
+    sysopen(my $fh, TURN_FIFO, O_RDWR | O_NONBLOCK)
+      or die "open " . TURN_FIFO . ": $!\n";
+    $fh;
+}
+
+# Idempotent: succeeds whether or not a session exists. Forks to keep
+# tmux's "no such session/server" noise off our stderr.
+sub _kill_tmux_session () {
+    my $pid = fork // die "fork: $!";
+    if ($pid == 0) {
+        open STDERR, '>', '/dev/null';
+        exec 'tmux', '-L', TMUX_SOCKET, 'kill-session', '-t', TMUX_SESSION;
+        exit 0;
+    }
+    waitpid $pid, 0;
+}
+
+# Write the combined common + role prompt to ~/.claude/CLAUDE.md so claude
+# loads role context automatically at startup.
+sub _install_claude_md ($cmd) {
+    my $out = path(CLAUDE_MD);
+    $out->dirname->make_path;
+    my $body = path(COMMON_PROMPT)->slurp . "\n" . path(PROMPT_DIR . "/prompt-${cmd}.md")->slurp;
+    $out->spew($body);
+}
+
+sub _spawn_tmux_session () {
+    _tmux('new-session', '-d', '-s', TMUX_SESSION,
+        '-e', 'TERM=' . TMUX_TERM,
+        '-x', TMUX_WIDTH, '-y', TMUX_HEIGHT,
+        'exec ' . CLAUDE_BIN . ' --dangerously-skip-permissions')
+      or die "Failed to spawn tmux session\n";
+    # Pin the window — attaching clients otherwise resize claude's viewport.
+    _tmux('set-option', '-t', TMUX_SESSION, 'window-size', 'manual');
+    sleep CLAUDE_BOOT_DELAY;
+    # First-run workspace-trust prompt: press Enter to accept. If no prompt
+    # is shown, the empty submit is a no-op.
+    _tmux('send-keys', '-t', TMUX_SESSION, 'Enter');
+}
+
+sub _restart_tmux_session () {
+    _kill_tmux_session();
+    _spawn_tmux_session();
+}
+
+# load-buffer + paste-buffer avoids send-keys' literal-text quoting traps
+# (newlines, $, `, etc); trailing Enter submits the turn.
+sub _enqueue_prompt ($prompt) {
+    open my $w, '|-',
+      'tmux', '-L', TMUX_SOCKET, 'load-buffer', '-'
+      or die "tmux load-buffer: $!\n";
+    print $w $prompt;
+    close $w or die "tmux load-buffer failed (exit @{[$? >> 8]})\n";
+
+    _tmux('paste-buffer', '-d', '-t', TMUX_SESSION)
+      or die "tmux paste-buffer failed\n";
+    _tmux('send-keys', '-t', TMUX_SESSION, 'Enter')
+      or die "tmux send-keys failed\n";
+}
+
+# Block until the next newline-delimited Stop event on the FIFO, or until
+# $timeout seconds elapse. Returns the decoded hash, or undef on timeout.
+sub _await_stop ($fifo, $timeout) {
+    my $sel      = IO::Select->new($fifo);
+    my $deadline = time + $timeout;
+    my $buf      = '';
+    while (time < $deadline) {
+        my $remain = $deadline - time;
+        my @ready  = $sel->can_read($remain);
+        last unless @ready;
+        my $n = sysread $fifo, $buf, 8192, length $buf;
+        if (!defined $n) {
+            next if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
+            warn "FIFO sysread: $!\n";
+            return undef;
+        }
+        next if $n == 0;
+        if ((my $nl = index $buf, "\n") >= 0) {
+            my $line = substr $buf, 0, $nl;
+            return eval { decode_json($line) } || { evt => 'stop' };
+        }
+    }
+    undef;
+}
+
+sub run_loop ($role, $cmd, $dry_run) {
     my @repos = gl_repos;
     if ($dry_run) { print $role->{prompt}->(@repos); return }
 
-    require File::Temp;
-    my $sys = File::Temp->new(
-        UNLINK => 1,
-        SUFFIX => '.md'
-    );
-    my $syspath = $sys->filename;
-    for my $f (COMMON_PROMPT, $prompt_file) {
-        open my $fh, '<', $f or die "Cannot read $f: $!\n";
-        local $/;
-        print $sys readline($fh);
-    }
-    $sys->flush;
+    _install_claude_md($cmd);
+    my $fifo = _open_fifo();
 
     my $i = 0;
     while (1) {
         $i++;
-        chomp(my $ts = qx(date -Iseconds));
+        my $ts = strftime("%FT%T%z", localtime);
         printf "=== %s %d — %s ===\n", $role->{label}, $i, $ts;
-
-        my ($ord) = ($ENV{HOSTNAME} // '') =~ /(\d+)$/;
-        sleep(($ord // 0) * 240 + int rand 60);
 
         @repos = gl_repos;
         my $prompt = $role->{prompt}->(@repos);
@@ -371,48 +482,14 @@ sub run_loop ($role, $prompt_file, $dry_run) {
             next;
         }
 
-        my ($output, $has_sleep) = ('', 0);
-        open my $pipe, '-|',
-          'claude',               '-p', $prompt,
-          '--system-prompt-file', $syspath,
-          '--verbose',            '--dangerously-skip-permissions',
-          '--output-format',      'stream-json',
-          '--max-turns',          '200'
-          or do {
-            warn "Failed to launch claude: $!\n";
-            sleep TIMEOUT_INTERVAL;
-            next;
-          };
+        # Fresh claude every iteration — clean context, no auto-compact games.
+        _restart_tmux_session();
+        _enqueue_prompt($prompt);
+        my $stop = _await_stop($fifo, STOP_TIMEOUT);
+        _kill_tmux_session();
 
-        while (my $line = <$pipe>) {
-            print $line;
-            $output .= $line;
-            $has_sleep = 1 if $line =~ m{<sleep/>};
-        }
-        close $pipe;
-        my $exit_code = $? >> 8;
-
-        # Rate-limit: check any result-type line in the stream output
-        my $is_429 = grep {
-            my $r = eval { decode_json($_) };
-            $r && $r->{is_error} && ($r->{api_error_status} // 0) == 429
-        } grep { /"type"\s*:\s*"result"/ } split /\n/, $output;
-
-        if ($is_429) {
-            warn "Rate-limited (429); sleeping\n";
-            sleep SLEEP_INTERVAL;
-            next;
-        }
-
-        if ($exit_code != 0) {
-            die "FATAL: Auth failure — token expired or invalid. Exiting.\n"
-              if $output =~
-              /OAuth token has expired|token.*expired|HTTP 401|API Error: 401|authentication_error/;
-            warn "claude exited with code $exit_code\n";
-        }
-
-        if ($has_sleep) { print "--- Sleeping ---\n"; sleep SLEEP_INTERVAL }
-        else            { sleep TIMEOUT_INTERVAL }
+        warn "turn timeout (${\ STOP_TIMEOUT }s)\n" unless $stop;
+        sleep TIMEOUT_INTERVAL;
     }
 }
 
@@ -428,4 +505,4 @@ GetOptions('dry-run|n' => \$dry_run)
 my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
 my $role = $ROLES{$cmd} // die "Unknown command: $cmd\n";
 
-run_loop($role, PROMPT_DIR . "/prompt-${cmd}.md", $dry_run);
+run_loop($role, $cmd, $dry_run);
