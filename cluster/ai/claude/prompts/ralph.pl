@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# ralph — Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
+# ralph: Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
 #
 # Drives one claude TUI per iteration through a tmux session. The role's
 # work list is piped in as a single user turn; a Stop hook writes one line
@@ -178,7 +178,7 @@ sub dev_prompt (@repos) {
     my $mine = '';
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, "agent::$ENV{HOSTNAME}")};
-        # Skip issues already in review — dev has nothing to do until human acts.
+        # Skip issues already in review; dev has nothing to do until human acts.
         @issues = grep {
             !grep { $_ eq 'workflow::in review' } @{$_->{labels} // []}
         } @issues;
@@ -288,7 +288,7 @@ sub reviewer_prompt (@repos) {
             my $is_renovate = ($mr->{source_branch} // '') =~ m{^renovate/};
             my $in_review   = grep { $_ eq 'workflow::in review' } @labels;
             next unless $is_renovate || $in_review;
-            # Deliberately NOT filtering agent::* here — workflow::in review is the
+            # Deliberately NOT filtering agent::* here: workflow::in review is the
             # authoritative "dev is done" signal; any agent::* on an in-review MR is
             # a stale claim the dev forgot to strip. The 10s verify on claim handles
             # multi-reviewer races.
@@ -308,10 +308,10 @@ sub reviewer_prompt (@repos) {
 sub dx_prompt (@repos) {
     my $out = _repos_header(@repos);
     my $ts  = strftime("%FT%T%z", localtime);
-    $out .= "\n## DX audit — $ts\n";
+    $out .= "\n## DX audit ($ts)\n";
     $out .= <<'END';
 Agent logs live at /logs/ai/ on the ripgrep pod.
-Each line: <JSON> pod=<pod> ctr=<ctr> ts=<ts> — strip trailing fields before piping to jq:
+Each line: <JSON> pod=<pod> ctr=<ctr> ts=<ts>; strip trailing fields before piping to jq:
 
 ```bash
 # Recent agent sessions (result lines carry cost, turns, outcome)
@@ -409,7 +409,7 @@ sub _spawn_tmux_session () {
         '-x', TMUX_WIDTH, '-y', TMUX_HEIGHT,
         'exec ' . CLAUDE_BIN . ' --dangerously-skip-permissions')
       or die "Failed to spawn tmux session\n";
-    # Pin the window — attaching clients otherwise resize claude's viewport.
+    # Pin the window: attaching clients otherwise resize claude's viewport.
     _tmux('set-option', '-t', TMUX_SESSION, 'window-size', 'manual');
     sleep CLAUDE_BOOT_DELAY;
     # First-run workspace-trust prompt: press Enter to accept. If no prompt
@@ -476,7 +476,7 @@ sub run_loop ($role, $cmd, $dry_run) {
     while (1) {
         $i++;
         my $ts = strftime("%FT%T%z", localtime);
-        printf "=== %s %d — %s ===\n", $role->{label}, $i, $ts;
+        printf "=== %s %d: %s ===\n", $role->{label}, $i, $ts;
 
         @repos = gl_repos;
         my $prompt = $role->{prompt}->(@repos);
@@ -487,7 +487,7 @@ sub run_loop ($role, $cmd, $dry_run) {
             next;
         }
 
-        # Fresh claude every iteration — clean context, no auto-compact games.
+        # Fresh claude every iteration: clean context, no auto-compact games.
         _restart_tmux_session();
         _enqueue_prompt($prompt);
         my $stop = _await_stop($fifo, STOP_TIMEOUT);
