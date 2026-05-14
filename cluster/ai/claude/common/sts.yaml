@@ -112,7 +112,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:c4eef5fc5d641289ed438a00ead0f180f2ae8ba35c570c04ecf99045747b613b
+          image: cgr.dev/chainguard/node:latest@sha256:ebd1ed57de167ea250f3b7ab595056f7c9c85b06c5522ca9235dc9cf5542f81e
           command: ["npx"]
           args:
             - -y
