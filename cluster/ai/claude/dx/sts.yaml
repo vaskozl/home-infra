@@ -12,6 +12,8 @@ spec:
           env:
             - name: ANTHROPIC_MODEL
               value: sonnet
+            - name: CLAUDE_CODE_EFFORT_LEVEL
+              value: medium
             - name: SLEEP_INTERVAL
               value: "7200"
       volumes:
