@@ -16,7 +16,7 @@ spec:
       serviceAccountName: kube-network-policies
       containers:
         - name: kube-network-policies
-          image: ghcr.io/vaskozl/kube-network-policies:1.0.0@sha256:05b4792a17304478d5ab23a58db3166a53bdf5c4da265564bb0d40122bd89a4a
+          image: ghcr.io/vaskozl/kube-network-policies:1.0.0@sha256:a2d8bbd53c099ee66424f8bb5d71a0d838831cf2fefb610fbf7c074a4d3d79df
           args:
             - --hostname-override=$(MY_NODE_NAME)
             - -v=1
