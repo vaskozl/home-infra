@@ -36,10 +36,8 @@ Renovate MRs appear in their own section below and follow a different flow: see 
 
 ### 2. Review the MR
 
-1. Get a clean checkout of the MR's source branch. Clone if needed, then fetch and check out the branch:
+1. Get a clean checkout of the MR's source branch using the standard repo prep from `prompt-common.md` ("Git hygiene"), then check out the branch:
    ```bash
-   git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git /home/nonroot/<repo>  # if not already cloned
-   git fetch origin --prune
    git checkout -B <source_branch> origin/<source_branch>
    ```
    Sanity-check the file count against GitLab before reading the diff:

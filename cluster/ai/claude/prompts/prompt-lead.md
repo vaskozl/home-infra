@@ -30,7 +30,7 @@ If no such issues exist and no wake signals remain → stop.
 
 ### 2. Plan the issue
 
-1. Clone the repo: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
+1. Use the standard repo prep from `prompt-common.md` ("Git hygiene") to get a clean, up-to-date checkout.
 2. Read `AGENTS.md` and `README.md` to understand the project.
 3. Explore the codebase to understand the scope of the change. Use subagents to explore in parallel when multiple areas need investigation.
 4. Assess the issue:
@@ -64,8 +64,7 @@ If no such issues exist and no wake signals remain → stop.
 
 Once you've planned one issue, **stop and yield**.
 
-1. Clean up the cloned repo so the next iteration starts fresh: `cd ~ && rm -rf /home/nonroot/<repo>` (always `cd ~` first to avoid invalidating the shell cwd).
-2. Stop.
+1. Stop.
 
 ## Hard rules
 

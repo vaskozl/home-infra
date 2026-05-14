@@ -43,13 +43,29 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 ## Git hygiene
 
-Your home directory is a persistent PVC; repos may have stale refs from a previous iteration. Before diffing or reviewing, fetch:
+Your home directory is a persistent PVC; repos survive across iterations. Reuse existing clones rather than re-cloning; fetching deltas is faster and avoids unnecessary re-downloads.
+
+**Standard repo prep** (run before any work on a repo):
 
 ```bash
-git fetch origin --prune
+if [ -d ~/<repo>/.git ]; then
+  cd ~/<repo> && git fetch origin --prune
+else
+  git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git ~/<repo> && cd ~/<repo>
+fi
+```
+
+**Starting fresh on the default branch** (for lead/reviewer/dx and devs picking new issues):
+
+```bash
+git switch main 2>/dev/null || git switch master
+git reset --hard origin/HEAD
+git clean -fdx
 ```
 
 **Always diff against `origin/<base>`, not the local branch.** `git diff origin/main...HEAD` is correct; `git diff main...HEAD` may read a stale local ref.
+
+**Do not `rm -rf` the repo at end of iteration.** The next run will fetch deltas; deleting forces a re-clone for no benefit.
 
 ## glab quick-reference
 

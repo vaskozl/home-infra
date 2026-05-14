@@ -100,22 +100,11 @@ kubectl top pods -n ai 2>/dev/null || true
 
 ### 3. Review agent configuration
 
-Clone the repo and inspect the agent config:
-```bash
-git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/doudous/home-infra.git /home/nonroot/home-infra
-```
-
-Look at `cluster/ai/claude/` for:
+Use the standard repo prep from `prompt-common.md` ("Git hygiene") to get the `doudous/home-infra` repo, then inspect the agent config under `cluster/ai/claude/` for:
 - Resource limits (CPU/memory) vs actual usage
 - Scheduling windows (ScaledObjects): are they appropriate?
 - Prompt files: are they causing repeated failures or confusion?
 - Common patterns: are multiple agents making the same mistakes?
-
-After finishing the inspection, remove the clone to avoid stale repos accumulating across runs:
-
-```bash
-cd ~ && rm -rf /home/nonroot/home-infra
-```
 
 ### 4. Check workflow health across repos
 

@@ -58,7 +58,7 @@ After claiming, **wait 10 seconds** then re-read the issue labels. Verify that `
 
 ### 2. Do the work
 
-- Ensure you have a clean, up-to-date checkout of the repo's default branch before creating your feature branch. Clone with token auth if needed: `git clone https://oauth2:${GITLAB_TOKEN}@gitlab.sko.ai/<group>/<repo>.git`
+- Before creating your feature branch, use the standard repo prep from `prompt-common.md` ("Git hygiene") to get a clean, up-to-date checkout of the default branch.
 - Branch using `git checkout -b ${HOSTNAME}/<id>`, commit, push, then create the MR with: `glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "agent::$HOSTNAME" -l "model::${ANTHROPIC_MODEL}"`
   **Important:** `Closes #<id>` MUST appear in the MR description for GitLab to auto-close the issue on merge. If your description is longer, ensure it still contains this text. Verify after creation: `glab mr view <id> -R <repo> --output json | jq '.description'`
 - **Before pushing**, always rebase on the latest default branch to avoid conflicts:
@@ -109,16 +109,15 @@ An AI reviewer will look at the MR before a human does. If they remove `workflow
 
 Once you've opened an MR or completed meaningful work, **stop and yield** - don't continue to the next task.
 
-1. Clean up the cloned repo so the next iteration starts fresh: `cd ~ && rm -rf /home/nonroot/<repo>` (always `cd ~` first to avoid invalidating the shell cwd).
-2. Record any blockers, tricky findings, or tips for the next agent by opening a sub-issue in the relevant repo.
-3. Mark work complete: update both the MR and the issue:
+1. Record any blockers, tricky findings, or tips for the next agent by opening a sub-issue in the relevant repo.
+2. Mark work complete: update both the MR and the issue:
    ```bash
    glab mr update <mr_iid> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"
    glab issue update <issue_id> -R <repo> -l 'workflow::in review' -u 'workflow::in dev' -u "agent::$HOSTNAME"
    ```
    Both locks must be released. The issue's `workflow::in review` now mirrors the MR state: no agent action is needed on the issue until the MR merges (auto-closes via `Closes #<id>`) or the lead re-opens the cycle.
-4. Close MRs that are no longer relevant.
-5. Stop.
+3. Close MRs that are no longer relevant.
+4. Stop.
 
 ## Hard rules
 
