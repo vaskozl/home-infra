@@ -1,27 +1,27 @@
 ## Environment
 
-You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). The image — packages, Claude config, and settings — is defined entirely by `claude.yaml` in `doudous/apkontainers`. You have read-only access to the cluster via your pod's service account — use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
+You run as `nonroot` on a Wolfi-based container image inside the `home-infra` Kubernetes cluster (namespace: `ai`). The image (packages, Claude config, and settings) is defined entirely by `claude.yaml` in `doudous/apkontainers`. You have read-only access to the cluster via your pod's service account; use `kubectl` to inspect workloads, pods, events, and resources across all namespaces.
 
-Your home directory is `/home/nonroot/` — clone repos here (e.g., `/home/nonroot/<repo>`). **Do not** use `/root/` — it is not accessible to uid 568.
+Your home directory is `/home/nonroot/`. Clone repos here (e.g., `/home/nonroot/<repo>`). **Do not** use `/root/`; it is not accessible to uid 568.
 
 If something is wrong or missing, fix it temporarily then log an issue with `glab issue create -R <repo>` so it gets permanently fixed:
 
 | Problem | Temp fix | Issue repo |
 |---|---|---|
 | Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
-| Prompt & config issues (unclear/missing instructions in this file) | — | `doudous/home-infra` |
+| Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
 
 ## Tech preferences
 
 - **CI / container images**: Use our own `ghcr.io/vaskozl/<name>` chainguard images (built from `doudous/apkontainers`) instead of Docker Hub mutable tags like `alpine:latest` or `debian:latest`. They're minimal, multi-arch, regularly rebuilt for security patches, and we control the contents. If no existing image fits, add a new yaml to `doudous/apkontainers` rather than reaching for a public mutable tag.
-- **Backend code**: Write efficient, lean server side templated pages HTML sites. Prefer full-page navigation — it's simpler and correct. For cases that genuinely need partial page swaps, use [fixi.js](https://github.com/bigskysoftware/fixi) (a light htmx alternative that can be vendored) rather than heavier JS frameworks.
-- **One-liners**: Reach for `perl` over `python`/`awk`/`sed` — it's always available and usually shorter:
+- **Backend code**: Write efficient, lean server side templated pages HTML sites. Prefer full-page navigation; it's simpler and correct. For cases that genuinely need partial page swaps, use [fixi.js](https://github.com/bigskysoftware/fixi) (a light htmx alternative that can be vendored) rather than heavier JS frameworks.
+- **One-liners**: Reach for `perl` over `python`/`awk`/`sed`; it's always available and usually shorter:
   ```bash
   perl -MJSON::XS -lane 'print decode_json($_)->{name}' file.json
   perl -lane 'print $F[2]' file.txt   # awk '{print $3}'
   perl -pe 's/foo/bar/g'              # sed 's/foo/bar/g'
   ```
-- **HTTP + JSON**: Mojolicious is installed. Use `ojo` for one-liners and `Mojo::UserAgent` / `Mojo::JSON` in scripts — much shorter than `curl | jq` or `LWP::UserAgent` + `JSON::PP`:
+- **HTTP + JSON**: Mojolicious is installed. Use `ojo` for one-liners and `Mojo::UserAgent` / `Mojo::JSON` in scripts; much shorter than `curl | jq` or `LWP::UserAgent` + `JSON::PP`:
   ```bash
   # GET + decode JSON response
   perl -Mojo -E 'say r g("https://gitlab.example.com/api/v4/projects")->json->[0]{name}'
@@ -38,12 +38,12 @@ If something is wrong or missing, fix it temporarily then log an issue with `gla
 
 - **`glab mr list --state`**: Not supported by glab. Use `glab mr list` (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
 - **`glab issue close -c`**: The `-c` flag does not exist. To close an issue with a comment, use two separate commands: `glab issue close <id> -R <repo>` then `glab issue note <id> -R <repo> -m "..."`.
-- **`glab ci status --ref`**: The `--ref` flag does not exist. Use `glab ci status -R <repo> -b <branch>` to check a branch, or `glab ci view <mr_iid> -R <repo>` for a specific MR's pipeline. There is no flag to query by commit SHA — use `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/repository/commits/<sha>/statuses"` if a SHA-specific lookup is required.
+- **`glab ci status --ref`**: The `--ref` flag does not exist. Use `glab ci status -R <repo> -b <branch>` to check a branch, or `glab ci view <mr_iid> -R <repo>` for a specific MR's pipeline. There is no flag to query by commit SHA; use `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/repository/commits/<sha>/statuses"` if a SHA-specific lookup is required.
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all JSON/text processing.
 
 ## Git hygiene
 
-Your home directory is a persistent PVC — repos may have stale refs from a previous iteration. Before diffing or reviewing, fetch:
+Your home directory is a persistent PVC; repos may have stale refs from a previous iteration. Before diffing or reviewing, fetch:
 
 ```bash
 git fetch origin --prune
@@ -72,12 +72,14 @@ git fetch origin --prune
 
 > **glab JSON label format (important)**
 > - All `glab --output json` output (issue view/list, mr view/list) returns labels as **plain strings**: `["label1", "label2"]`.
-> - Always iterate with `.labels[]` — never `.labels[].name`, which will fail with `Cannot index string with string "name"`.
+> - Always iterate with `.labels[]`, never `.labels[].name`, which will fail with `Cannot index string with string "name"`.
 > - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades from aborting sibling tool calls.
 
 ## Code comments
 
-Keep inline comments short and forward-looking — explain *why* a rule exists, not its history. Avoid referencing specific commits, MR numbers, or past incidents.
+Default to **no comment**. Only add one when the *why* is non-obvious (a hidden constraint, a workaround for a real bug, behaviour that would surprise a reader). Never narrate history: no "previously this did X", no "fixed bug where Y", no MR/issue numbers, no "added for the Z flow". The diff and commit message carry that context; code comments rot.
+
+Never use em dashes (U+2014) in code, commit messages, or MR descriptions. Use `--`, a colon, or restructure the sentence.
 
 ### Uploading image evidence
 
