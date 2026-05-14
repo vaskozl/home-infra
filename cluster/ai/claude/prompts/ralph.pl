@@ -30,23 +30,20 @@ use constant TMUX_WIDTH        => $ENV{TMUX_WIDTH}        // 120;
 use constant TMUX_HEIGHT       => $ENV{TMUX_HEIGHT}       // 32;
 use constant TMUX_TERM         => $ENV{TMUX_TERM}         // 'xterm-256color';
 use constant TURN_FIFO         => $ENV{TURN_FIFO}         // '/run/claude/turn.fifo';
+use constant PROMPT_FILE       => $ENV{PROMPT_FILE}       // '/run/claude/prompt.md';
 use constant CLAUDE_BIN        => $ENV{CLAUDE_BIN}        // 'claude';
 use constant CLAUDE_MD         => ($ENV{HOME} // '/home/nonroot') . '/.claude/CLAUDE.md';
 use constant IGNORE_TITLE_RE   => qr/renovate dashboard/i;
 
-my $UA = Mojo::UserAgent->new->request_timeout(30);
-$UA->on(start => sub ($ua, $tx) {
+my $ua = Mojo::UserAgent->new->request_timeout(30);
+$ua->on(start => sub ($ua, $tx) {
     $tx->req->headers->header('PRIVATE-TOKEN' => $ENV{GITLAB_TOKEN});
 });
 my $API_BASE = ($ENV{GITLAB_HOST} // 'https://gitlab.sko.ai') . '/api/v4';
 
-# ---------------------------------------------------------------------------
-# GitLab helpers
-# ---------------------------------------------------------------------------
-
 sub _gl_api ($path) {
-    my $res = eval { $UA->get("$API_BASE/$path")->result } or return undef;
-    return undef unless $res->is_success;
+    my $res = eval { $ua->get("$API_BASE/$path")->result } or return;
+    return unless $res->is_success;
     eval { $res->json };
 }
 
@@ -63,7 +60,7 @@ sub gl_repos () {
 
 sub gl_issues ($repo, @args) {
     my $out = _run('glab', 'issue', 'list', '-R', $repo, @args);
-    join "\n", grep { !/${\ IGNORE_TITLE_RE}/ } split /\n/, $out;
+    join "\n", grep { $_ !~ IGNORE_TITLE_RE } split /\n/, $out;
 }
 
 sub gl_issues_api ($repo, @labels) {
@@ -118,28 +115,21 @@ sub gl_has_unresolved_blockers ($repo, $iid) {
     0;
 }
 
-# Return list of open MR IIDs whose LATEST pipeline failed.
-# Iterates pipelines (sorted by created_at DESC) and dedupes by ref to keep
-# only each MR's most recent pipeline, avoiding the historical-failure trap
-# of filtering by status=failed (which returns every failed pipeline ever).
-# Uses the pipelines API rather than the MR list because that endpoint always
-# returns head_pipeline: null.
+# Dedup pipelines by MR ref to keep each MR's *latest* one — filtering by
+# status=failed instead returns every historical failure. The MR-list
+# endpoint can't substitute here: it returns head_pipeline: null.
 sub gl_failed_mr_iids ($repo) {
     my $enc   = url_escape($repo);
     my $pipes = _gl_api(
         "projects/${enc}/pipelines?source=merge_request_event&per_page=100"
-    ) or return ();
+    ) or return;
     my %latest;
     for my $p (@$pipes) {
         my ($iid) = ($p->{ref} // '') =~ m{^refs/merge-requests/(\d+)/head$} or next;
-        $latest{$iid} //= $p->{status};   # first occurrence is newest (sorted DESC)
+        $latest{$iid} //= $p->{status};   # API returns newest-first
     }
     grep { ($latest{$_} // '') eq 'failed' } keys %latest;
 }
-
-# ---------------------------------------------------------------------------
-# Prompt helpers
-# ---------------------------------------------------------------------------
 
 sub _repos_header (@repos) {
     sprintf "\n## Repos\n```\n%s\n```\n", join "\n", @repos;
@@ -168,17 +158,13 @@ sub _repo_block ($repo, $text) {
     "### $repo\n```\n$text\n```\n";
 }
 
-# ---------------------------------------------------------------------------
-# Prompt builders
-# ---------------------------------------------------------------------------
-
 sub dev_prompt (@repos) {
     my $out = _repos_header(@repos);
 
     my $mine = '';
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, "agent::$ENV{HOSTNAME}")};
-        # Skip issues already in review; dev has nothing to do until human acts.
+        # Skip in-review issues: dev has nothing to do until a human acts.
         @issues = grep {
             !grep { $_ eq 'workflow::in review' } @{$_->{labels} // []}
         } @issues;
@@ -188,7 +174,6 @@ sub dev_prompt (@repos) {
     }
     $out .= _section('My in-progress issues', $mine);
 
-    # MRs this agent was working on (left from a previous run)
     my $my_mrs = '';
     for my $repo (@repos) {
         my $mrs = gl_open_mrs($repo, "agent::$ENV{HOSTNAME}", "workflow::in dev");
@@ -196,7 +181,6 @@ sub dev_prompt (@repos) {
     }
     $out .= _section('My in-progress MRs', $my_mrs);
 
-    # Issues stuck in "in dev" with no agent claim (orphaned)
     my $stale = '';
     for my $repo (@repos) {
         my @issues = @{gl_issues_api($repo, 'workflow::in dev', "model::$ENV{ANTHROPIC_MODEL}")};
@@ -210,7 +194,6 @@ sub dev_prompt (@repos) {
     }
     $out .= _section('Unclaimed in-dev issues', $stale);
 
-    # New work available
     my $ready = '';
     for my $repo (@repos) {
         my $t = gl_issues(
@@ -225,7 +208,6 @@ sub dev_prompt (@repos) {
     }
     $out .= _section('Issues ready for dev', $ready);
 
-    # MR triage (CI failures, conflicts, human feedback)
     my %excl = map { $_ => 1 } 'workflow::in review', 'workflow::in dev';
     my ($ci_fail, $conflicts, $needs_work) = ('', '', '');
     for my $repo (@repos) {
@@ -288,10 +270,9 @@ sub reviewer_prompt (@repos) {
             my $is_renovate = ($mr->{source_branch} // '') =~ m{^renovate/};
             my $in_review   = grep { $_ eq 'workflow::in review' } @labels;
             next unless $is_renovate || $in_review;
-            # Deliberately NOT filtering agent::* here: workflow::in review is the
-            # authoritative "dev is done" signal; any agent::* on an in-review MR is
-            # a stale claim the dev forgot to strip. The 10s verify on claim handles
-            # multi-reviewer races.
+            # No agent::* filter here: workflow::in review is the authoritative
+            # "dev is done" signal; multi-reviewer races are handled by the
+            # 10s verify-on-claim.
             my $a = _gl_api("projects/$enc/merge_requests/$mr->{iid}/approvals");
             next if $a && ($a->{approved} || @{$a->{approved_by} // []});
             if ($is_renovate) { push @ren, $mr }
@@ -323,10 +304,6 @@ END
     $out;
 }
 
-# ---------------------------------------------------------------------------
-# Main loop
-# ---------------------------------------------------------------------------
-
 my %ROLES = (
     dev => {
         label      => 'Iteration',
@@ -354,10 +331,6 @@ my %ROLES = (
     },
 );
 
-# ---------------------------------------------------------------------------
-# tmux supervisor
-# ---------------------------------------------------------------------------
-
 sub _tmux (@args) {
     system('tmux', '-L', TMUX_SOCKET, @args) == 0;
 }
@@ -366,13 +339,12 @@ sub _ensure_fifo () {
     my $p = TURN_FIFO;
     (my $dir = $p) =~ s{/[^/]+$}{};
     path($dir)->make_path;
-    return 1 if -p $p;
+    return if -p $p;
     unlink $p if -e $p;
     mkfifo($p, 0600) or die "mkfifo $p: $!\n";
-    1;
 }
 
-# Open the FIFO O_RDWR so writers never block on open and reads never EOF.
+# O_RDWR: writers never block on open; reader never sees EOF.
 sub _open_fifo () {
     _ensure_fifo();
     sysopen(my $fh, TURN_FIFO, O_RDWR | O_NONBLOCK)
@@ -380,8 +352,7 @@ sub _open_fifo () {
     $fh;
 }
 
-# Idempotent: succeeds whether or not a session exists. Forks to keep
-# tmux's "no such session/server" noise off our stderr.
+# Idempotent. Forks so tmux's "no such session" message stays off our stderr.
 sub _kill_tmux_session () {
     my $pid = fork // die "fork: $!";
     if ($pid == 0) {
@@ -392,8 +363,7 @@ sub _kill_tmux_session () {
     waitpid $pid, 0;
 }
 
-# Write the combined common + role prompt to ~/.claude/CLAUDE.md so claude
-# loads role context automatically at startup.
+# Combined common+role prompt; claude loads it as CLAUDE.md at startup.
 sub _install_claude_md ($cmd) {
     my $out = path(CLAUDE_MD);
     $out->dirname->make_path;
@@ -401,47 +371,36 @@ sub _install_claude_md ($cmd) {
     $out->spew($body);
 }
 
-sub _spawn_tmux_session () {
+# Passing the prompt via "$(cat FILE)" inside double quotes is a literal
+# expansion — no further word-splitting or metachar parsing — so backticks,
+# $, newlines, etc. in the prompt survive intact.
+sub _spawn_tmux_session ($prompt) {
+    my $f = path(PROMPT_FILE);
+    $f->dirname->make_path;
+    open my $fh, '>:encoding(UTF-8)', $f or die "open $f: $!\n";
+    print $fh $prompt;
+    close $fh or die "close $f: $!\n";
+
     _tmux('new-session', '-d', '-s', TMUX_SESSION,
         '-e', 'TERM=' . TMUX_TERM,
         '-e', 'LANG=C.UTF-8',
         '-e', 'LC_ALL=C.UTF-8',
         '-x', TMUX_WIDTH, '-y', TMUX_HEIGHT,
-        'exec ' . CLAUDE_BIN . ' --dangerously-skip-permissions')
+        sprintf('exec %s --dangerously-skip-permissions "$(cat %s)"',
+                CLAUDE_BIN, PROMPT_FILE))
       or die "Failed to spawn tmux session\n";
-    # Pin the window: attaching clients otherwise resize claude's viewport.
+    # Pin the window so attaching clients don't resize claude's viewport.
     _tmux('set-option', '-t', TMUX_SESSION, 'window-size', 'manual');
     sleep CLAUDE_BOOT_DELAY;
-    # First-run workspace-trust prompt: press Enter to accept. If no prompt
-    # is shown, the empty submit is a no-op.
+    # Dismiss the first-run workspace-trust prompt (no-op if absent).
     _tmux('send-keys', '-t', TMUX_SESSION, 'Enter');
-    sleep 1;
 }
 
-sub _restart_tmux_session () {
+sub _restart_tmux_session ($prompt) {
     _kill_tmux_session();
-    _spawn_tmux_session();
+    _spawn_tmux_session($prompt);
 }
 
-# load-buffer + paste-buffer avoids send-keys' literal-text quoting traps
-# (newlines, $, `, etc); trailing Enter submits the turn.
-sub _enqueue_prompt ($prompt) {
-    open my $w, '|-',
-      'tmux', '-L', TMUX_SOCKET, 'load-buffer', '-'
-      or die "tmux load-buffer: $!\n";
-    binmode $w, ':encoding(UTF-8)';
-    print $w $prompt;
-    close $w or die "tmux load-buffer failed (exit @{[$? >> 8]})\n";
-
-    _tmux('paste-buffer', '-d', '-t', TMUX_SESSION)
-      or die "tmux paste-buffer failed\n";
-    sleep 1;
-    _tmux('send-keys', '-t', TMUX_SESSION, 'Enter')
-      or die "tmux send-keys failed\n";
-}
-
-# Block until the next newline-delimited Stop event on the FIFO, or until
-# $timeout seconds elapse. Returns the decoded hash, or undef on timeout.
 sub _await_stop ($fifo, $timeout) {
     my $sel      = IO::Select->new($fifo);
     my $deadline = time + $timeout;
@@ -454,7 +413,7 @@ sub _await_stop ($fifo, $timeout) {
         if (!defined $n) {
             next if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
             warn "FIFO sysread: $!\n";
-            return undef;
+            return;
         }
         next if $n == 0;
         if ((my $nl = index $buf, "\n") >= 0) {
@@ -462,7 +421,7 @@ sub _await_stop ($fifo, $timeout) {
             return eval { decode_json($line) } || { evt => 'stop' };
         }
     }
-    undef;
+    return;
 }
 
 sub run_loop ($role, $cmd, $dry_run) {
@@ -488,8 +447,7 @@ sub run_loop ($role, $cmd, $dry_run) {
         }
 
         # Fresh claude every iteration: clean context, no auto-compact games.
-        _restart_tmux_session();
-        _enqueue_prompt($prompt);
+        _restart_tmux_session($prompt);
         my $stop = _await_stop($fifo, STOP_TIMEOUT);
         _kill_tmux_session();
 
@@ -497,10 +455,6 @@ sub run_loop ($role, $cmd, $dry_run) {
         sleep TIMEOUT_INTERVAL;
     }
 }
-
-# ---------------------------------------------------------------------------
-# Entry point
-# ---------------------------------------------------------------------------
 
 my $dry_run = 0;
 
