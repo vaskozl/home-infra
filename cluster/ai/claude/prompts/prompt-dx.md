@@ -132,7 +132,7 @@ glab mr list -R doudous/home-infra
 
 ### 5. Create a summary issue (only if there's something to report)
 
-**Skip the summary issue entirely when the logs are clean.** If you walked through sections 1–4 and found nothing actionable: no crashes, no anomalous errors, no overprovisioned pods, no stuck workflow items: do not open an issue. Jump straight to step 6. A clean run is its own signal; an empty issue is noise.
+**Skip the summary issue entirely when the logs are clean.** If you walked through sections 1–4 and found nothing actionable (no crashes, no anomalous errors, no overprovisioned pods, no stuck workflow items): do not open an issue. Jump straight to step 6. A clean run is its own signal; an empty issue is noise.
 
 Open an issue only when you have at least one concrete finding with evidence.
 
