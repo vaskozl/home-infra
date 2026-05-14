@@ -229,7 +229,7 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/prometheus-node-exporter
-        tag: 1.11.1
+        tag: 1.11.1@sha256:92ba362b39279e9033ddbb7993ecd090f0c25fd839e45165d489e1c4d40d2a7d
         digest: sha256:9cef742bcd4cd37923068c2ea0344315457d60cfe3ec60cd27d572ea0891dd81
       extraArgs:
         - --collector.disable-defaults
