@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: renovate
 resources:
   - _namespace.yaml
+  - cache-pvc.yaml
   - cron.yaml
   - apk-index.yaml
   - env.enc.yaml
