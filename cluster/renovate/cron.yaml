@@ -13,6 +13,10 @@ spec:
         spec:
           nodeSelector:
             kubernetes.io/arch: amd64
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
           containers:
             - name: renovate
               image: ghcr.io/vaskozl/renovate:43.170.15@sha256:632806352d73e26a578c23cae98abdea6f2ad27a454329ecdb1970291e07070f
