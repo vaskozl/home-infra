@@ -30,6 +30,18 @@ spec:
         memory: 128Mi
       limits:
         memory: 256Mi
+    controller:
+      replicaCount: 2
+      podDisruptionBudget:
+        minAvailable: 1
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: agentgateway
+                app.kubernetes.io/instance: agentgateway
+            topologyKey: kubernetes.io/hostname
     gatewayClassParametersRefs:
       agentgateway:
         name: agw-params
