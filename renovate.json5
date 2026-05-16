@@ -44,6 +44,13 @@
       pinDigests: false,
     },
     {
+      // prometheus-node-exporter subchart's daemonset runs
+      // `semverCompare ">=1.4.0-0" .Values.image.tag`, so the tag must stay
+      // pure semver. The digest is pinned in the separate `image.digest` field.
+      matchPackageNames: ['ghcr.io/vaskozl/prometheus-node-exporter'],
+      pinDigests: false,
+    },
+    {
       matchDatasources: [ 'helm' ],
       commitMessageTopic: 'chart {{depName}}',
     },
