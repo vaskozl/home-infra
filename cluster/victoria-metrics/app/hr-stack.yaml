@@ -36,6 +36,42 @@ spec:
   values:
     fullnameOverride: stack
     experimentalDashboardsEnabled: false
+    # Disable rules whose underlying metrics we intentionally drop:
+    #   - node-exporter runs with --collector.disable-defaults and only cpu/meminfo/nfs/uname
+    #     (no loadavg, vmstat, diskstats, netdev)
+    #   - kubelet metricRelabelConfigs drops container_memory_swap
+    #   - KubeMemoryOvercommit is expected on this 7-node cluster, not actionable
+    defaultRules:
+      groups:
+        k8sContainerMemorySwap:
+          create: false
+      rules:
+        KubeMemoryOvercommit:
+          create: false
+        "instance:node_load1_per_cpu:ratio":
+          create: false
+        "instance:node_vmstat_pgmajfault:rate5m":
+          create: false
+        "instance_device:node_disk_io_time_seconds:rate5m":
+          create: false
+        "instance_device:node_disk_io_time_weighted_seconds:rate5m":
+          create: false
+        "instance:node_network_receive_bytes_excluding_lo:rate5m":
+          create: false
+        "instance:node_network_transmit_bytes_excluding_lo:rate5m":
+          create: false
+        "instance:node_network_receive_drop_excluding_lo:rate5m":
+          create: false
+        "instance:node_network_transmit_drop_excluding_lo:rate5m":
+          create: false
+        "instance:node_network_receive_bytes_physical:rate5m":
+          create: false
+        "instance:node_network_transmit_bytes_physical:rate5m":
+          create: false
+        "instance:node_network_receive_drop_physical:rate5m":
+          create: false
+        "instance:node_network_transmit_drop_physical:rate5m":
+          create: false
     grafana:
       image:
         registry: ghcr.io
@@ -81,7 +117,7 @@ spec:
         route:
           routes:
             - matchers:
-                - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit"
+                - alertname=~"WatchDog|InfoInhibitor"
               receiver: 'blackhole'
             # tmp: dotnet 6 sdk is no longer packaged
             - matchers:
