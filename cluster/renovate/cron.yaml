@@ -36,4 +36,11 @@ spec:
                   memory: 1.3Gi
               securityContext:
                 allowPrivilegeEscalation: false
+              volumeMounts:
+                - name: cache
+                  mountPath: /tmp/renovate/cache
           restartPolicy: Never
+          volumes:
+            - name: cache
+              persistentVolumeClaim:
+                claimName: renovate-cache
