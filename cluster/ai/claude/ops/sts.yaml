@@ -13,7 +13,7 @@ spec:
             - name: ANTHROPIC_MODEL
               value: opus
             - name: ALERTMANAGER_URL
-              value: https://am.sko.ai
+              value: http://vmalertmanager-stack.victoria-metrics.svc.cluster.local:9093
       volumes:
         - name: ralph
           configMap:
