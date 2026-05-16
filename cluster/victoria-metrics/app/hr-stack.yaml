@@ -265,8 +265,10 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/prometheus-node-exporter
-        tag: 1.11.1@sha256:b737b3f6752093cc02f0b98b37bd5c8e25fc70132724fa95e95709b73c7b063a
-        digest: sha256:9cef742bcd4cd37923068c2ea0344315457d60cfe3ec60cd27d572ea0891dd81
+        # Keep digest out of `tag` — the subchart's daemonset.yaml runs
+        # `semverCompare ">=1.4.0-0" .Values.image.tag` and chokes on `@sha256:`.
+        tag: 1.11.1
+        digest: sha256:b737b3f6752093cc02f0b98b37bd5c8e25fc70132724fa95e95709b73c7b063a
       extraArgs:
         - --collector.disable-defaults
         - --collector.uname
