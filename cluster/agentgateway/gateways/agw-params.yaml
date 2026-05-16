@@ -12,6 +12,15 @@ spec:
   deployment:
     spec:
       replicas: 2
+      template:
+        spec:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: ScheduleAnyway
+              labelSelector:
+                matchLabels:
+                  gateway.networking.k8s.io/gateway-class-name: agentgateway
   service:
     spec:
       type: LoadBalancer
