@@ -94,6 +94,9 @@ spec:
               mountPath: /etc/claude/prompt-dx.md
               subPath: prompt-dx.md
             - name: ralph
+              mountPath: /etc/claude/prompt-ops.md
+              subPath: prompt-ops.md
+            - name: ralph
               mountPath: /home/nonroot/.claude/settings.json
               subPath: claude-settings.json
             - name: buildkit-certs

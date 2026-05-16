@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# ralph: Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>
+# ralph: Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx|ops>
 #
 # Drives one claude TUI per iteration through a tmux session. The role's
 # work list is piped in as a single user turn; a Stop hook writes one line
@@ -34,6 +34,11 @@ use constant PROMPT_FILE       => $ENV{PROMPT_FILE}       // '/run/claude/prompt
 use constant CLAUDE_BIN        => $ENV{CLAUDE_BIN}        // 'claude';
 use constant CLAUDE_MD         => ($ENV{HOME} // '/home/nonroot') . '/.claude/CLAUDE.md';
 use constant IGNORE_TITLE_RE   => qr/renovate dashboard/i;
+use constant ALERTMANAGER_URL  => $ENV{ALERTMANAGER_URL};
+use constant OPS_SNOOZE        => $ENV{OPS_SNOOZE_DURATION} // 3600;
+use constant OPS_BRANCH_RE     => qr{^claude-ops(?:-\d+)?/};
+use constant OPS_AGENT_LABEL   => "agent::$ENV{HOSTNAME}";
+use constant OPS_FP_RE         => qr/`([a-f0-9]{16})`/;
 
 my $ua = Mojo::UserAgent->new->request_timeout(30);
 $ua->on(start => sub ($ua, $tx) {
@@ -304,6 +309,145 @@ END
     $out;
 }
 
+# ── ops role ──────────────────────────────────────────────────────────────
+# Alert-driven counterpart to the other roles: work comes from Alertmanager
+# active alerts plus our own open `claude-ops/*` MRs, not GitLab issues.
+#
+# Snooze: fingerprints we've already shown claude that produced no MR are
+# suppressed for OPS_SNOOZE seconds so we don't re-present them every loop.
+# Entries clear when the alert stops firing (a re-fire deserves a fresh look).
+my %ops_snoozed;          # fp → expiry epoch
+my @ops_last_presented;   # fps shown to claude in the previous iteration
+
+sub am_alerts () {
+    my $base = ALERTMANAGER_URL // return [];
+    $base =~ s{/+$}{};
+    my $res = eval {
+        $ua->get("$base/api/v2/alerts?active=true&silenced=false&inhibited=false")->result
+    } or return [];
+    return [] unless $res->is_success;
+    [ grep { ($_->{status}{state} // '') eq 'active' } @{ $res->json // [] } ];
+}
+
+sub _ops_mrs (@repos) {
+    my @out;
+    for my $repo (@repos) {
+        my $mrs = gl_open_mrs($repo);
+        for my $mr (@$mrs) {
+            next unless ($mr->{source_branch} // '') =~ OPS_BRANCH_RE;
+            push @out, { %$mr, _repo => $repo };
+        }
+    }
+    @out;
+}
+
+sub _ops_known_fps (@mrs) {
+    my %fp;
+    for my $mr (@mrs) {
+        my $d = $mr->{description} // '';
+        $fp{$1} = 1 while $d =~ /@{[ OPS_FP_RE ]}/g;
+    }
+    \%fp;
+}
+
+# rework: human pulled `workflow::in review` to request changes — act first.
+# in-flight: still tagged `agent::claude-ops` — orphaned mid-work, resume.
+# in-review: handed off to humans — don't touch.
+sub _ops_classify ($mr) {
+    my @l = @{ $mr->{labels} // [] };
+    return 'in-review' if grep { $_ eq 'workflow::in review' } @l;
+    return 'in-flight' if grep { $_ eq OPS_AGENT_LABEL } @l;
+    'rework';
+}
+
+sub _first_line ($s) {
+    return '' unless defined $s;
+    $s =~ s/^\s+|\s+$//g;
+    (split /\n/, $s, 2)[0] // '';
+}
+
+sub _format_alert ($a) {
+    my $L = $a->{labels}      // {};
+    my $A = $a->{annotations} // {};
+    my $out = sprintf "[%s] %s  fp=%s\n",
+      ($L->{severity} // ''), ($L->{alertname} // ''), ($a->{fingerprint} // '');
+    my @lp = map "$_=$L->{$_}",
+      sort grep { $_ ne 'alertname' && $_ ne 'severity' } keys %$L;
+    $out .= "  labels: " . join(' ', @lp) . "\n" if @lp;
+    my $sum = _first_line($A->{summary});
+    my $dsc = _first_line($A->{description});
+    $out .= "  summary: $sum\n"               if length $sum;
+    $out .= "  description: $dsc\n"           if length $dsc && $dsc ne $sum;
+    $out .= "  runbook: $A->{runbook_url}\n"  if $A->{runbook_url};
+    $out .= "  generator: $a->{generatorURL}\n" if $a->{generatorURL};
+    $out;
+}
+
+sub _ops_mr_section ($header, $note, @mrs) {
+    return '' unless @mrs;
+    my %by_repo;
+    push @{ $by_repo{ $_->{_repo} } }, $_ for @mrs;
+    my $body = join '',
+      map { _mr_block($_, @{ $by_repo{$_} }) } sort keys %by_repo;
+    "\n## $header\n$note\n$body";
+}
+
+sub ops_prompt (@repos) {
+    my $now = time;
+
+    # Expire old snoozes.
+    delete $ops_snoozed{$_} for grep { $ops_snoozed{$_} <= $now } keys %ops_snoozed;
+
+    my $alerts = am_alerts();
+    my @mrs    = _ops_mrs(@repos);
+    my $known  = _ops_known_fps(@mrs);
+
+    # Deferred snooze: any fp shown last round still without an MR → claude
+    # saw it and chose not to act. Snooze so we stop nagging.
+    for my $fp (@ops_last_presented) {
+        $ops_snoozed{$fp} = $now + OPS_SNOOZE unless $known->{$fp};
+    }
+    @ops_last_presented = ();
+
+    # Clear snoozes for alerts no longer firing — a re-fire gets fresh eyes.
+    my %active = map { ($_->{fingerprint} // '') => 1 } @$alerts;
+    delete $ops_snoozed{$_} for grep { !$active{$_} } keys %ops_snoozed;
+
+    my (@rework, @inflight, @inreview);
+    for my $mr (@mrs) {
+        my $c = _ops_classify($mr);
+        push @rework,   $mr if $c eq 'rework';
+        push @inflight, $mr if $c eq 'in-flight';
+        push @inreview, $mr if $c eq 'in-review';
+    }
+
+    my @fresh;
+    for my $a (@$alerts) {
+        my $fp = $a->{fingerprint} // next;
+        next if $known->{$fp} || $ops_snoozed{$fp};
+        push @fresh, $a;
+    }
+    @ops_last_presented = map { $_->{fingerprint} } @fresh;
+
+    my $out = _repos_header(@repos);
+    $out .= _ops_mr_section('MRs needing rework',
+        "No `workflow::in review` label — a human removed it to request changes. Address these first.",
+        @rework);
+    $out .= _ops_mr_section("MRs in flight (@{[ OPS_AGENT_LABEL ]})",
+        "Orphaned from a previous iteration. Resume and hand off to review.",
+        @inflight);
+    $out .= _ops_mr_section('MRs awaiting review (workflow::in review)',
+        "Already handed off; do not touch unless a human removes the label.",
+        @inreview);
+
+    if (@fresh) {
+        $out .= "\n## Active alerts\n"
+              . "Skip any alert whose fingerprint already appears in an MR description above.\n"
+              . join("\n", map { _format_alert($_) } @fresh) . "\n";
+    }
+    $out;
+}
+
 my %ROLES = (
     dev => {
         label      => 'Iteration',
@@ -328,6 +472,12 @@ my %ROLES = (
         idle       => 'No analysis needed, sleeping',
         idle_sleep => SLEEP_INTERVAL,
         prompt     => \&dx_prompt
+    },
+    ops => {
+        label      => 'Ops iteration',
+        idle       => 'No fresh alerts and no MRs needing attention, sleeping',
+        idle_sleep => TIMEOUT_INTERVAL,
+        prompt     => \&ops_prompt
     },
 );
 
@@ -459,9 +609,9 @@ sub run_loop ($role, $cmd, $dry_run) {
 my $dry_run = 0;
 
 GetOptions('dry-run|n' => \$dry_run)
-  or die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
+  or die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx|ops>\n";
 
-my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx>\n";
+my $cmd  = shift @ARGV  // die "Usage: ralph [--dry-run|-n] <dev|lead|reviewer|dx|ops>\n";
 my $role = $ROLES{$cmd} // die "Unknown command: $cmd\n";
 
 run_loop($role, $cmd, $dry_run);
