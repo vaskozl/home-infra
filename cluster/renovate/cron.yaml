@@ -42,7 +42,7 @@ spec:
                 allowPrivilegeEscalation: false
               volumeMounts:
                 - name: cache
-                  mountPath: /tmp/renovate/cache
+                  mountPath: /tmp/renovate
           restartPolicy: Never
           volumes:
             - name: cache
