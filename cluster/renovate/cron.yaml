@@ -9,7 +9,6 @@ spec:
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      ttlSecondsAfterFinished: 3600
       template:
         spec:
           nodeSelector:
