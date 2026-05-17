@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: logging
 resources:
   - hr.yaml
+  - vmservicescrape.yaml
 configMapGenerator:
   - name: aggregator-config
     files:

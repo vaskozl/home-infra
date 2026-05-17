@@ -1,7 +1,14 @@
+service:
+  http_server: 'on'
+  http_listen: 0.0.0.0
+  http_port: 2020
+  storage.path: /var/log/k8s/.flb-storage
+  storage.metrics: 'on'
 pipeline:
   inputs:
     - name: forward
-      mem_buf_limit: 10M
+      mem_buf_limit: 2M
+      storage.type: filesystem
   outputs:
     - name: file
       match: '*'

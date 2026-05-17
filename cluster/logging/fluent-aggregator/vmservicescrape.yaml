@@ -1,0 +1,14 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: fluent-aggregator
+spec:
+  endpoints:
+    - port: http
+      path: /api/v1/metrics/prometheus
+  namespaceSelector:
+    matchNames:
+      - logging
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: fluent-aggregator
