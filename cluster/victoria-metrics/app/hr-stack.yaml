@@ -41,12 +41,17 @@ spec:
     #     (no loadavg, vmstat, diskstats, netdev)
     #   - kubelet metricRelabelConfigs drops container_memory_swap
     #   - KubeMemoryOvercommit is expected on this 7-node cluster, not actionable
+    #   - InfoInhibitor/Watchdog are meta-alerts with no consumer here
     defaultRules:
       groups:
         k8sContainerMemorySwap:
           create: false
       rules:
         KubeMemoryOvercommit:
+          create: false
+        InfoInhibitor:
+          create: false
+        Watchdog:
           create: false
         "instance:node_load1_per_cpu:ratio":
           create: false
@@ -116,9 +121,6 @@ spec:
       config:
         route:
           routes:
-            - matchers:
-                - alertname=~"WatchDog|InfoInhibitor"
-              receiver: 'blackhole'
             # tmp: dotnet 6 sdk is no longer packaged
             - matchers:
                 - alertgroup="container-vulns"
