@@ -61,9 +61,15 @@ spec:
         existingClaim: logging-pvc
         globalMounts:
           - path: /var/log/k8s
+      flb-storage:
+        type: emptyDir
+        globalMounts:
+          - path: /flb-storage
     service:
       app:
         controller: fluent-aggregator
         ports:
           forward:
             port: 24224
+          http:
+            port: 2020
