@@ -42,6 +42,9 @@ spec:
     #   - kubelet metricRelabelConfigs drops container_memory_swap
     #   - KubeMemoryOvercommit is expected on this 7-node cluster, not actionable
     #   - InfoInhibitor/Watchdog are meta-alerts with no consumer here
+    #   - CPUThrottlingHigh only ever fires on ephemeral pods here (gitlab runner
+    #     build/helper containers with intentional cpu_limit, logrotate cronjobs);
+    #     throttling on short-lived CPU-bound work is expected, not actionable
     defaultRules:
       groups:
         k8sContainerMemorySwap:
@@ -52,6 +55,8 @@ spec:
         InfoInhibitor:
           create: false
         Watchdog:
+          create: false
+        CPUThrottlingHigh:
           create: false
         "instance:node_load1_per_cpu:ratio":
           create: false
