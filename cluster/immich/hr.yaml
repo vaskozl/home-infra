@@ -59,7 +59,7 @@ spec:
                 memory: 1300Mi
               requests:
                 cpu: 50m
-                memory: 1300Mi
+                memory: 900Mi
             securityContext: *securityContext
       postgres:
         containers:
