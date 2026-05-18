@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - sts.yaml
   - scaledobject.yaml
+components:
+  - ../components/common
+  - ../components/chromium
 labels:
   - pairs:
       app.kubernetes.io/instance: claude-dx-sonnet

@@ -11,10 +11,6 @@ resources:
   - reviewer
   - dx
   - ops
-patches:
-  - path: common/sts.yaml
-    target:
-      kind: StatefulSet
 labels:
   - pairs:
       app.kubernetes.io/name: claude
@@ -36,4 +32,4 @@ configMapGenerator:
       - prompt-dx.md=prompts/prompt-dx.md
       - prompt-ops.md=prompts/prompt-ops.md
       - ralph.pl=prompts/ralph.pl
-      - claude-settings.json=common/claude-settings.json
+      - claude-settings.json=components/common/claude-settings.json
