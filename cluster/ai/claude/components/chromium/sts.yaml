@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: mcp-setup-chrome
+          image: ghcr.io/vaskozl/claude:2.1.143@sha256:e1fcb69159e44d29ff6d676560dda0e972ec9f4aed9013947f2bf191e1d1e61b
+          command: ["sh", "-c"]
+          args:
+            - |
+              claude mcp remove chrome-devtools 2>/dev/null
+              claude mcp add --transport http chrome-devtools http://127.0.0.1:8080/mcp
+          volumeMounts:
+            - name: claude
+              mountPath: /home/nonroot
+      containers:
+        - name: chromium
+          image: ghcr.io/vaskozl/chromium:148.0.7778@sha256:58dc25c7564fd07ada3e780a4406ef61cadc4045aa45713acc888e00728cddac
+          args:
+            - --headless
+            - --remote-debugging-port=9222
+            - --no-sandbox
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500Mi
+            limits:
+              memory: 1500Mi
+        - name: chrome-devtools-mcp
+          image: cgr.dev/chainguard/node:latest@sha256:b03abc833c40b5795c7740c83b44dbfe054db0da7bc93f924edcc64f2f26c05b
+          command: ["npx"]
+          args:
+            - -y
+            - mcp-proxy@latest
+            - --transport
+            - streamablehttp
+            - --port
+            - "8080"
+            - --
+            - npx
+            - -y
+            - chrome-devtools-mcp@latest
+            - --browserUrl=http://127.0.0.1:9222
+          resources:
+            requests:
+              cpu: 50m
+              memory: 600Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: screenshots
+              mountPath: /tmp/screenshots
