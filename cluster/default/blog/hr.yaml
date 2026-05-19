@@ -55,6 +55,10 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      public:
+        existingClaim: blog-public
+        globalMounts:
+          - path: /usr/share/nginx/html/public
     route:
       app:
         hostnames:
