@@ -29,7 +29,7 @@ spec:
                   value: install
                 - name: RENOVATE_ALLOWED_COMMANDS
                   value: |-
-                    ["^BASE_REF=HEAD \\.gitlab/bump-epochs\\.pl$"]
+                    ["^\\.gitlab/bump-epochs\\.pl --base-ref HEAD$"]
               envFrom:
                 - secretRef:
                     name: renovate-env
