@@ -76,7 +76,7 @@ spec:
                 memory: 950Mi
               requests:
                 cpu: 10m
-                memory: 950Mi
+                memory: 700Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
