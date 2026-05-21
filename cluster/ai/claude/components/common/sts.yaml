@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: ghcr.io/vaskozl/claude:2.1.144@sha256:7b511818f87f11ab7d99ec36ed2bf1865d9d40b1f463ae56d4f07957bec68d44
+          image: ghcr.io/vaskozl/claude:2.1.144@sha256:8dff1c583a1b9c698280f92ee5a0da72ac02387d0f6fcbed0348999b8b8d6d33
           command: ["sh", "-c"]
           args:
             - |
@@ -37,7 +37,7 @@ spec:
               mountPath: /home/nonroot
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:2.1.144@sha256:7b511818f87f11ab7d99ec36ed2bf1865d9d40b1f463ae56d4f07957bec68d44
+          image: ghcr.io/vaskozl/claude:2.1.144@sha256:8dff1c583a1b9c698280f92ee5a0da72ac02387d0f6fcbed0348999b8b8d6d33
           securityContext:
             procMount: Unmasked
             seccompProfile:
