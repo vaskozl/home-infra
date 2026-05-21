@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: registry.sko.ai/vasko/blog
-              tag: head@sha256:690046beb7894423b87339fb664411a8994182ca83097ea5cc0546916518e1e4
+              tag: head@sha256:73b5ce27a229d4db55f83030e92c036a6454dd25aef34257252e4009dec08707
             probes:
               liveness:
                 enabled: true
