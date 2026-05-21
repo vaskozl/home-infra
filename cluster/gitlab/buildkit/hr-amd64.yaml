@@ -48,7 +48,7 @@ spec:
               requests:
                 cpu: 200m
                 ephemeral-storage: 10Gi
-                memory: 0.6Gi
+                memory: 200Mi
             securityContext:
               privileged: true
     defaultPodOptions:
