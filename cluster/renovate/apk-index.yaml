@@ -24,7 +24,7 @@ spec:
               <<: &app
                 image:
                   repository: ghcr.io/vaskozl/renovate-apk-indexer
-                  tag: 0.1.0@sha256:fce3242c9c105d678cb74c96feaa5e6fdbf12a9bb4d3988c01a97a8e512e91f1
+                  tag: 0.1.0@sha256:5bd383c349ceb3d68aa0589222f01e1509de104c3bd4ed975525a4b30475680a
                 args: ['-apk-index-url', 'https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz,https://apks.sko.ai/aarch64/APKINDEX.tar.gz']
                 probes:
                   liveness:
