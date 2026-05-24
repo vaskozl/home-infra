@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/helmrelease-helm-v2.json
-
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -157,6 +156,8 @@ spec:
       enabled: false
     gitlab-runner:
       install: false
+    gatewayApi:
+      enabled: false
   postRenderers:
     - kustomize:
         patches:
