@@ -55,7 +55,6 @@ spec:
           key: secret
       psql:
         host: gitlab-postgresql
-        username: postgres
         password:
           secret: gitlab-postgresql-password
           key: postgresql-password
