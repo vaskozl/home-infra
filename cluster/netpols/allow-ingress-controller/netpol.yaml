@@ -6,12 +6,8 @@ metadata:
 spec:
   podSelector: {}
   ingress:
-    # Allow traffic from ingress and gateway controllers
+    # Allow traffic from gateway controllers
     - from:
         - namespaceSelector:
             matchLabels:
               kubernetes.io/metadata.name: "agentgateway"
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: "haproxy"

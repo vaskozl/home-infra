@@ -26,13 +26,8 @@ spec:
       hosts:
         domain: sko.ai
       ingress:
-        class: &class haproxy-internal
-        provider: *class
-        # Wildcard is configured by default
+        enabled: false
         configureCertmanager: false
-        # TLS is enabled by default
-        tls:
-          enabled: false
       gatewayApi:
         enabled: false
         configureCertmanager: false
@@ -86,6 +81,8 @@ spec:
         ciSecureFiles: *rails
     # Reduce memory usage
     gitlab:
+      gitlab-exporter:
+        enabled: false
       gitaly:
         resources:
           requests:
@@ -98,14 +95,6 @@ spec:
         maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 1
-        ingress:
-          annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/description: Git and everything but the kitchen sink
-            gethomepage.dev/group: Cloud
-            gethomepage.dev/icon: gitlab
-            gethomepage.dev/name: Gitlab
-            gethomepage.dev/pod-selector: "app=webservice"
         resources:
           limits:
             memory: 2Gi
@@ -137,9 +126,6 @@ spec:
               secret: object-storage
               key: toolbox.minio.toml
     registry:
-      ingress:
-        annotations:
-          haproxy.org/timeout-server: 600s
       storage:
         secret: object-storage
         key: registry.minio.yaml
