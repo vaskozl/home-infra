@@ -27,7 +27,6 @@ spec:
                 secretKeyRef:
                   name: gitlab-postgresql-password
                   key: postgresql-password
-              PGDATA: /volume
             image:
               repository: postgres
               tag: 16.14-alpine
@@ -55,15 +54,15 @@ spec:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /volume
+                - path: /var/lib/postgres
               name: data
               size: 8Gi
         type: statefulset
     defaultPodOptions:
       securityContext:
-        fsGroup: 1001
-        runAsGroup: 1001
-        runAsUser: 1001
+        fsGroup: 70
+        runAsGroup: 70
+        runAsUser: 70
         runAsNonRoot: true
     service:
       main:
