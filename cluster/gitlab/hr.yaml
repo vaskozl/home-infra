@@ -33,6 +33,8 @@ spec:
         # TLS is enabled by default
         tls:
           enabled: false
+      gatewayApi:
+        enabled: false
       kas:
         enabled: false
       pages:
@@ -156,8 +158,6 @@ spec:
       enabled: false
     gitlab-runner:
       install: false
-    gatewayApi:
-      enabled: false
   postRenderers:
     - kustomize:
         patches:
