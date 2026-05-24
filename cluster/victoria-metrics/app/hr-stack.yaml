@@ -98,6 +98,8 @@ spec:
       route:
         main:
           enabled: true
+          labels:
+            agentgateway.sko.ai/auth: oauth2
           parentRefs:
             - name: internal
               namespace: agentgateway
@@ -120,6 +122,8 @@ spec:
           org_role: Editor
     alertmanager:
       route:
+        extraLabels:
+          agentgateway.sko.ai/auth: oauth2
         parentRefs:
           - name: internal
             namespace: agentgateway
@@ -185,6 +189,8 @@ spec:
             memory: 1.2Gi
       route:
         enabled: true
+        extraLabels:
+          agentgateway.sko.ai/auth: oauth2
         parentRefs:
           - name: internal
             namespace: agentgateway
@@ -200,6 +206,8 @@ spec:
     vmalert:
       route:
         enabled: true
+        extraLabels:
+          agentgateway.sko.ai/auth: oauth2
         parentRefs:
           - name: internal
             namespace: agentgateway

@@ -6,6 +6,7 @@ resources:
   - ../netpols/allow-ingress-controller
   - ../netpols/allow-vm-ingress
   - ../netpols/allow-namespace-ingress
+  - oauth2-policy.yaml
 patches:
   # -----------------------------------------------------------
   # All HRs

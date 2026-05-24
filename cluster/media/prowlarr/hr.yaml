@@ -65,7 +65,7 @@ spec:
         hostnames:
           - prowlarr.sko.ai
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
     service:
       app:

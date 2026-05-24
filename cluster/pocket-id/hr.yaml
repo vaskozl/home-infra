@@ -73,7 +73,7 @@ spec:
         hostnames:
           - pi.sko.ai
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
     service:
       app:

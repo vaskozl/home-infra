@@ -7,6 +7,8 @@ resources:
   - hr-stack.yaml
   - prom-adapter.yaml
   - mcp
+components:
+  - ../../common
 secretGenerator:
   - name: vm-secrets
     files:

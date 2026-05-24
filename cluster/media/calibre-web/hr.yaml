@@ -85,6 +85,8 @@ spec:
           gethomepage.dev/name: Calibre Web
         hostnames:
           - cw.sko.ai
+        labels:
+          agentgateway.sko.ai/auth: oauth2
         parentRefs:
           - name: internal
             namespace: agentgateway

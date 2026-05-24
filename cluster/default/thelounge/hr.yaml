@@ -61,6 +61,8 @@ spec:
           type: RuntimeDefault
     route:
       app:
+        labels:
+          agentgateway.sko.ai/auth: oauth2
         hostnames:
           - irc.sko.ai
         parentRefs:

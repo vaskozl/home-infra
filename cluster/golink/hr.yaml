@@ -72,7 +72,7 @@ spec:
           gethomepage.dev/icon: sh-tailscale
           gethomepage.dev/name: golink
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
         hostnames:
           - go.sko.ai

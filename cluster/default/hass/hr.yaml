@@ -63,7 +63,7 @@ spec:
         hostnames:
           - ha.sko.ai
         parentRefs:
-          - name: internal-noauth
+          - name: internal
             namespace: agentgateway
         rules:
           - backendRefs:
