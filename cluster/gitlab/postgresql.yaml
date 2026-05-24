@@ -54,7 +54,8 @@ spec:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /var/lib/postgresql
+                - path: /var/lib/postgresql/data
+                  subPath: data
               name: data
               size: 8Gi
         type: statefulset
