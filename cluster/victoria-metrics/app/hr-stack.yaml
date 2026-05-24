@@ -139,6 +139,13 @@ spec:
                 - alertgroup="container-vulns"
                 - image="ghcr.io/vaskozl/sonarr:4.0.16@sha256:e84d53f89f4774dc62c2632300d31a3b40ff64e9c19b4f82825729ddf256830e"
               receiver: 'blackhole'
+            # gitlab-sidekiq HPA is intentionally capped at 2 replicas; queueing
+            # under sustained load is acceptable and not actionable.
+            - matchers:
+                - alertname="KubeHpaMaxedOut"
+                - namespace="gitlab"
+                - horizontalpodautoscaler="gitlab-sidekiq-all-in-1-v2"
+              receiver: 'blackhole'
             - matchers:
                 - severity=~"warning|critical"
               receiver: mail-monitoring
