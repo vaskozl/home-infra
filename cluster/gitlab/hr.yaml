@@ -39,7 +39,7 @@ spec:
       kas:
         enabled: false
       pages:
-        enabled: true
+        enabled: false
       email:
         display_name: 'GitLab'
         from: 'gitlab@sko.ai'
@@ -130,12 +130,6 @@ spec:
         extraVolumeMounts: |
           - name: var-log-gitlab-shell
             mountPath: /var/log/gitlab-shell
-      gitlab-pages:
-        # The default requests are massive for a static server
-        resources:
-          requests:
-            cpu: 10m
-            memory: 10Mi
       toolbox:
         backups:
           objectStorage:
