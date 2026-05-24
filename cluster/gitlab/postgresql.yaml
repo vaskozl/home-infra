@@ -21,40 +21,53 @@ spec:
         containers:
           app:
             env:
-              PGDATA: /data/17
               POSTGRES_USER: gitlab
-              POSTGRES_DATABASE: gitlabhq_production
+              POSTGRES_DB: gitlabhq_production
               POSTGRES_PASSWORD:
                 secretKeyRef:
                   name: gitlab-postgresql-password
                   key: postgresql-password
-            command: ["sleep", "36000"]
+              PGDATA: /volume
             image:
-              repository: ghcr.io/vaskozl/postgresql
-              tag: 17.6@sha256:55f0fa514c6b5bb5f2af57adbc29dd1a6abb3e3aa6b07fbe3a1e44b3abb68129
+              repository: postgres
+              tag: 16.14-alpine
             probes:
               liveness:
                 enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
               readiness:
                 enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
             resources:
               limits:
-                memory: 256Mi
+                memory: 1Gi
               requests:
-                cpu: 250m
-                memory: 256Mi
+                cpu: 50m
+                memory: 768Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /data
+                - path: /volume
               name: data
-              size: 1Mi
+              size: 8Gi
         type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsUser: 1001
+        runAsNonRoot: true
     service:
       main:
         controller: main
         ports:
           postgresql:
-            port: 6379
+            port: 5432

@@ -160,7 +160,7 @@ spec:
     redis:
       install: false
     postgresql:
-      install: true
+      install: false
   postRenderers:
     - kustomize:
         patches:
