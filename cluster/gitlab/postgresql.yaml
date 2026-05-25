@@ -28,8 +28,8 @@ spec:
                   name: gitlab-postgresql-password
                   key: postgresql-password
             image:
-              repository: postgres
-              tag: 16.14-alpine@sha256:16bc17c64a573ef34162af9298258d1aec548232985b33ed7b1eac33ba35c229
+              repository: pgautoupgrade/pgautoupgrade
+              tag: 17-alpine@sha256:b3f73a24d826a55ca7ee57347f0adfb944c6ff434d6cfea8b2c386feccc46037
             probes:
               liveness:
                 enabled: true
