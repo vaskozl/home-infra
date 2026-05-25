@@ -31,18 +31,20 @@ spec:
               repository: pgautoupgrade/pgautoupgrade
               tag: 17.10-alpine@sha256:b3f73a24d826a55ca7ee57347f0adfb944c6ff434d6cfea8b2c386feccc46037
             probes:
-              liveness:
+              liveness: &probe
                 enabled: true
                 custom: true
                 spec:
                   exec:
                     command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
-              readiness:
-                enabled: true
-                custom: true
+              readiness: *probe
+              startup:
+                <<: *probe
                 spec:
                   exec:
                     command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
+                  periodSeconds: 30
+                  failureThreshold: 120
             resources:
               limits:
                 memory: 1Gi
