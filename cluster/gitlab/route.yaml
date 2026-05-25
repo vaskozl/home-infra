@@ -23,7 +23,12 @@ spec:
       backendRefs:
         - name: gitlab-webservice-default
           port: 8181
-          weight: 1
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: X-Forwarded-Proto
+                value: https
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -43,7 +48,12 @@ spec:
       backendRefs:
         - name: gitlab-registry
           port: 5000
-          weight: 1
+      filters:
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: X-Forwarded-Proto
+                value: https
 ---
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TCPRoute
