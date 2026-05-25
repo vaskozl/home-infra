@@ -11,17 +11,6 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    - name: ssh
-      port: 22
-      protocol: TCP
-      allowedRoutes:
-        kinds:
-          - kind: TCPRoute
-        namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              kubernetes.io/metadata.name: gitlab
     - name: https
       protocol: HTTPS
       port: 443
