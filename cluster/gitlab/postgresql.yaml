@@ -21,12 +21,12 @@ spec:
         containers:
           app:
             env:
-              POSTGRES_USER: gitlab
+              POSTGRES_USER: postgres
               POSTGRES_DB: gitlabhq_production
               POSTGRES_PASSWORD:
                 secretKeyRef:
                   name: gitlab-postgresql-password
-                  key: postgresql-password
+                  key: postgresql-postgres-password
             image:
               repository: pgautoupgrade/pgautoupgrade
               tag: 17.10-alpine@sha256:b3f73a24d826a55ca7ee57347f0adfb944c6ff434d6cfea8b2c386feccc46037
