@@ -1,7 +1,7 @@
 version: '3'
 services:
   syncthing:
-    image: ghcr.io/vaskozl/syncthing:2.0.16@sha256:e0749cc8ae531eed9c3c68cf0b7f181d1512bf608cae9abc91fdd916ddc578ef
+    image: ghcr.io/vaskozl/syncthing:2.1.0@sha256:530f493e0397284db14f2731d54dbb1efc33ce6c42dc4420496929e95add7f9c
     container_name: syncthing
     restart: unless-stopped
     network_mode: host
