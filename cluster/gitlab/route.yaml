@@ -11,7 +11,7 @@ metadata:
     gethomepage.dev/pod-selector: "app=webservice"
 spec:
   parentRefs:
-    - name: public
+    - name: internal
       namespace: agentgateway
   hostnames:
     - gitlab.sko.ai
@@ -36,7 +36,7 @@ metadata:
   name: gitlab-registry
 spec:
   parentRefs:
-    - name: public
+    - name: internal
       namespace: agentgateway
   hostnames:
     - registry.sko.ai
@@ -61,7 +61,7 @@ metadata:
   name: gitlab-shell
 spec:
   parentRefs:
-    - name: public
+    - name: internal
       namespace: agentgateway
       sectionName: ssh
   rules:
