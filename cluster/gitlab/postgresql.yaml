@@ -29,7 +29,7 @@ spec:
                   key: postgresql-password
             image:
               repository: pgautoupgrade/pgautoupgrade
-              tag: 17-alpine@sha256:b3f73a24d826a55ca7ee57347f0adfb944c6ff434d6cfea8b2c386feccc46037
+              tag: 17.10-alpine@sha256:b3f73a24d826a55ca7ee57347f0adfb944c6ff434d6cfea8b2c386feccc46037
             probes:
               liveness:
                 enabled: true
