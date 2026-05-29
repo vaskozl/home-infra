@@ -29,6 +29,7 @@ use constant TMUX_SESSION      => $ENV{TMUX_SESSION}      // 'ralph';
 use constant TMUX_WIDTH        => $ENV{TMUX_WIDTH}        // 120;
 use constant TMUX_HEIGHT       => $ENV{TMUX_HEIGHT}       // 32;
 use constant TMUX_TERM         => $ENV{TMUX_TERM}         // 'xterm-256color';
+use constant TMUX_ENTER_EVERY  => $ENV{TMUX_ENTER_EVERY}  // 64;
 use constant TURN_FIFO         => $ENV{TURN_FIFO}         // '/run/claude/turn.fifo';
 use constant PROMPT_FILE       => $ENV{PROMPT_FILE}       // '/run/claude/prompt.md';
 use constant CLAUDE_BIN        => $ENV{CLAUDE_BIN}        // 'claude';
@@ -557,8 +558,15 @@ sub _await_stop ($fifo, $timeout) {
     my $buf      = '';
     while (time < $deadline) {
         my $remain = $deadline - time;
-        my @ready  = $sel->can_read($remain);
-        last unless @ready;
+        # Cap each wait at TMUX_ENTER_EVERY so we periodically nudge claude:
+        # a stray dialog or a paused prompt can otherwise stall the turn until
+        # STOP_TIMEOUT. A bare Enter is a no-op when nothing's waiting.
+        my $wait   = $remain < TMUX_ENTER_EVERY ? $remain : TMUX_ENTER_EVERY;
+        my @ready  = $sel->can_read($wait);
+        unless (@ready) {
+            _tmux('send-keys', '-t', TMUX_SESSION, 'Enter');
+            next;
+        }
         my $n = sysread $fifo, $buf, 8192, length $buf;
         if (!defined $n) {
             next if $! == EAGAIN || $! == EWOULDBLOCK || $! == EINTR;
