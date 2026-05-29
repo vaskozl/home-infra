@@ -134,6 +134,17 @@
       enabled: false,
     },
     {
+      // fluent-bit 5.0.6 leaks memory on the aggregator's forward->file path:
+      // working set climbs ~5 MiB/h under steady load until the container is
+      // OOMKilled (~30h cycle), whereas 5.0.5 stays bounded (~100 MiB peak).
+      // Hold the aggregator at 5.0.5 until a fixed upstream release ships. The
+      // forwarder daemonset (ds.yaml) does not hit the leak, so it is unscoped.
+      matchDatasources: ['docker'],
+      matchPackageNames: ['ghcr.io/vaskozl/fluent-bit'],
+      matchFileNames: ['cluster/logging/fluent-aggregator/hr.yaml'],
+      allowedVersions: '<5.0.6',
+    },
+    {
       // The agentgateway OCI repos contain both legacy kgateway-era v2.x tags
       // (Feb 2026) and the standalone v1.x lineage (Mar 2026+). Despite v2 > v1,
       // v1.x is the current line — pin to <2.0.0 to stop Renovate proposing
