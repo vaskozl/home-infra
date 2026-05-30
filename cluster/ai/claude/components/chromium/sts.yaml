@@ -8,7 +8,7 @@ spec:
     spec:
       initContainers:
         - name: mcp-setup-chrome
-          image: ghcr.io/vaskozl/claude:2.1.154@sha256:60ca04e2f63076e5bf0c21258f6f05f7308395d161238f20eaf9f678b74cd7e5
+          image: ghcr.io/vaskozl/claude:2.1.154@sha256:030e25e0b99a77deb5f8399d13cfb2d9c988592e69d7d1223f91abd2cddb2fad
           command: ["sh", "-c"]
           args:
             - |
@@ -19,7 +19,7 @@ spec:
               mountPath: /home/nonroot
       containers:
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:148.0.7778@sha256:68fa457338fe1b55afaeeb32caafb93b31c29d6bd5c2e374a5c7590f0dbea28d
+          image: ghcr.io/vaskozl/chromium:148.0.7778@sha256:ba600b58ef246676c9e89fff4cfe0b6607d9597815df52a8e6dca3f312573705
           args:
             - --headless
             - --remote-debugging-port=9222

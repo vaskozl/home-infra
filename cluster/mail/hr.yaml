@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/maddy
-              tag: 0.9.4@sha256:c6750473a1928080e18b1f36c1f6a948f1ee886263aae45e269c513366606355
+              tag: 0.9.4@sha256:e30cf7b69c191176fa21c710c57e1ff24cece793ebd73bed7478d5415d208f34
             envFrom:
               - secretRef:
                   name: maddy-secrets
