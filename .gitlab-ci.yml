@@ -5,6 +5,6 @@ include:
 
 run:val:
   stage: test
-  image: ghcr.io/vaskozl/kubeconform:0.7.0@sha256:59434eeac1a597ade8f4efbf347a7d4871e02c95c78b28849d22d6b505e1621b
+  image: ghcr.io/vaskozl/kubeconform:0.7.0@sha256:8ab67ee5cdd320b3b6527dd67a252e061285e218918c71191535c0473a455e33
   script:
     - scripts/validate.sh
