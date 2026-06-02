@@ -20,7 +20,7 @@ spec:
             fsGroup: 568
           containers:
             - name: renovate
-              image: ghcr.io/vaskozl/renovate:43.170.15@sha256:a703edaf062eaff39329bfd2cf4c40e3998d6f6abb7d696242ae54ee536b4a82
+              image: ghcr.io/vaskozl/renovate:43.170.15@sha256:c9e37956b8ef93e9e0ff973c438ca8c3771659f7de8caad672a3a15d79fbdd84
               # Environment Variables
               env:
                 - name: LOG_LEVEL
