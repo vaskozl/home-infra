@@ -136,9 +136,11 @@
     {
       // fluent-bit 5.0.6 leaks memory on the aggregator's forward->file path:
       // working set climbs ~5 MiB/h under steady load until the container is
-      // OOMKilled (~30h cycle), whereas 5.0.5 stays bounded (~100 MiB peak).
-      // Hold the aggregator at 5.0.5 until a fixed upstream release ships. The
-      // forwarder daemonset (ds.yaml) does not hit the leak, so it is unscoped.
+      // OOMKilled (~30h cycle), whereas 5.0.5 stays bounded (~80 MiB, flat).
+      // Both 5.0.6 Wolfi builds observed (01d40fd and 4540851f) leak, so the
+      // hold spans the whole version, not a single digest. Keep the aggregator
+      // at 5.0.5 until a non-leaking release (5.0.7+) ships. The forwarder
+      // daemonset (ds.yaml) does not hit the leak, so it is unscoped.
       matchDatasources: ['docker'],
       matchPackageNames: ['ghcr.io/vaskozl/fluent-bit'],
       matchFileNames: ['cluster/logging/fluent-aggregator/hr.yaml'],
