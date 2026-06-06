@@ -35,7 +35,7 @@ spec:
           command: ["npx"]
           args:
             - -y
-            - mcp-proxy@latest
+            - mcp-proxy@6.5.1
             - --transport
             - streamablehttp
             - --port
@@ -43,7 +43,7 @@ spec:
             - --
             - npx
             - -y
-            - chrome-devtools-mcp@latest
+            - chrome-devtools-mcp@1.1.1
             - --browserUrl=http://127.0.0.1:9222
           resources:
             requests:
