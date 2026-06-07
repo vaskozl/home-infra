@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/golink
-              tag: 1.0.0@sha256:13d7834d37a7f7593ae6804b765ff072bbe1888c7c9dc4be62c19b109a246bca
+              tag: 1.0.0@sha256:7f632d173bcae5672bde5c7ad41575b74d919423f150ad8f014e98039b34267a
             args:
               - "-dev-listen=[::]:3000"
               - "-sqlitedb=/home/nonroot/golink.db"
