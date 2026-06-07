@@ -97,10 +97,10 @@ spec:
         workerProcesses: 1
         resources:
           limits:
-            memory: 2Gi
+            memory: 2560Mi
           requests:
             cpu: 100m
-            memory: 2Gi
+            memory: 2560Mi
       sidekiq:
         minReplicas: 1
         maxReplicas: 2
