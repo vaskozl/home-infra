@@ -43,10 +43,10 @@ spec:
             command: ["sh", "-c"]
             args:
               - |
-                claude mcp remove -s user victoriametrics 2>/dev/null
-                claude mcp remove-s user  chrome-devtools 2>/dev/null
-                claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
-                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
+                echo claude mcp remove -s user victoriametrics 2>/dev/null
+                echo claude mcp remove-s user  chrome-devtools 2>/dev/null
+                echo claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
+                echo claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
         containers:
           app:
             image:
