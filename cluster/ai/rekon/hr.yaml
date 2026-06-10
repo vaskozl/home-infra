@@ -64,7 +64,7 @@ spec:
               DISABLE_ERROR_REPORTING: "1"
             envFrom:
               - secretRef:
-                  name: claude-env
+                  name: rekon-env
             resources:
               limits:
                 memory: 2.5Gi
