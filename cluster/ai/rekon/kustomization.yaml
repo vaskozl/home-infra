@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ai
+resources:
+  - hr.yaml
+  - rbac.yaml
+    #  - ../../gitlab/buildkit/buildkit-client-certs.yaml
+secretGenerator:
+  - name: claude-env
+    envs:
+      - claude.enc.env
+configMapGenerator:
+  - name: config
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - claude-settings.json=config/claude-settings.json
+      - CLAUDE.md=config/CLAUDE.md
+      - agents.yaml=config/agents.yaml
+      - policy.yaml=config/policy.yaml
+      - repos.yaml=config/repos.yaml
+configurations:
+  - kustomizeconfig.yaml

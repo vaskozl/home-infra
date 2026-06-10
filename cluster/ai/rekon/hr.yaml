@@ -1,0 +1,216 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: rekon
+  namespace: ai
+spec:
+  chart:
+    spec:
+      chart: app-template
+      interval: 24h
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 5.0.1
+  interval: 24h
+  values:
+    controllers:
+      main:
+        type: statefulset
+        serviceAccount:
+          identifier: rekon
+        pod:
+          hostUsers: false
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /home/nonroot
+              name: home
+              size: 20Gi
+        initContainers:
+          mcp-setup:
+            image: &claudeImage
+              repository: ghcr.io/vaskozl/claude
+              tag: 2.1.170@sha256:652ecaeb247ad007cbdbc917f273410497c7eb4f7a459bc0a3654d8e38f2fadf
+            command: ["sh", "-c"]
+            args:
+              - |
+                claude mcp remove -s user victoriametrics 2>/dev/null
+                claude mcp remove-s user  chrome-devtools 2>/dev/null
+                claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
+                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/rekon-pkgupdate
+              tag: 0.0.2@sha256:83a466fe451858f0e1886d2c53d9e9f8e5ef21ccbce30dc49d0d8b2fa0133a8f
+            args:
+              - -redis
+              - rekon-redis:6379
+              - -v
+              - -execute
+            env:
+              DISABLE_TELEMETRY: "1"
+              DISABLE_BUG_COMMAND: "1"
+              DISABLE_AUTOUPDATER: "1"
+              DISABLE_ERROR_REPORTING: "1"
+            envFrom:
+              - secretRef:
+                  name: claude-env
+            resources:
+              limits:
+                memory: 2.5Gi
+              requests:
+                cpu: 200m
+                memory: 384Mi
+            securityContext:
+              allowPrivilegeEscalation: true
+              procMount: Unmasked
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: Unconfined
+          chromium:
+            image:
+              repository: ghcr.io/vaskozl/chromium
+              tag: 149.0.7827.53@sha256:bdbabcc7731fdda6ad8368f43f30d0668c0bd06ddde47c3b8563a1d033f71266
+            args:
+              - --headless
+              - --remote-debugging-port=9222
+              - --no-sandbox
+            resources:
+              limits:
+                memory: 1500Mi
+              requests:
+                cpu: 100m
+                memory: 500Mi
+          chrome-devtools-mcp:
+            image:
+              repository: cgr.dev/chainguard/node
+              tag: latest@sha256:f83d27823d677f8425414121560ad70e349c16097e37c4029dfc347e97782bfb
+            command: ["npx"]
+            args:
+              - -y
+              - mcp-proxy@latest
+              - --transport
+              - streamablehttp
+              - --port
+              - "8080"
+              - --
+              - npx
+              - -y
+              - chrome-devtools-mcp@latest
+              - --browserUrl=http://127.0.0.1:9222
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 50m
+                memory: 600Mi
+      redis:
+        type: statefulset
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+              name: data
+              size: 1Gi
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/redis
+              tag: 8.6.2@sha256:231c5452a6fc792b27290ddc6e9feff25a3b8322720bf53a55c7004a660d379e
+            args:
+              - --appendonly
+              - "yes"
+              - --protected-mode
+              - "no"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 250Mi
+              requests:
+                cpu: 10m
+                memory: 250Mi
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    persistence:
+      #buildkit-certs:
+      #  type: secret
+      #  name: buildkit-client-certs
+      #  advancedMounts:
+      #    main:
+      #      app:
+      #        - path: /etc/buildkit/certs
+      #          readOnly: true
+      config:
+        type: configMap
+        name: config
+        advancedMounts:
+          main:
+            app:
+              - path: /home/nonroot/config
+              - path: /home/nonroot/.claude/settings.json
+                subPath: claude-settings.json
+              - path: /home/nonroot/.claude/CLAUDE.md
+                subPath: CLAUDE.md
+      screenshots:
+        type: emptyDir
+        advancedMounts:
+          main:
+            app:
+              - path: /tmp/screenshots
+            chrome-devtools-mcp:
+              - path: /tmp/screenshots
+      turn-fifo:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 1Mi
+        advancedMounts:
+          main:
+            app:
+              - path: /run/claude
+    route:
+      app:
+        hostnames:
+          - rekon.sko.ai
+        labels:
+          agentgateway.sko.ai/auth: oauth2
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8088
+    service:
+      app:
+        controller: main
+        ports:
+          http:
+            port: 8088
+      redis:
+        controller: redis
+        ports:
+          redis:
+            port: 6379

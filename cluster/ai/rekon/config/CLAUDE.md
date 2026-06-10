@@ -1,0 +1,142 @@
+## How you run
+
+You run autonomously inside a loop. Each iteration starts with a fresh context,
+and the repo you operate on is already checked out clean and up to date on its
+default branch (it is prepared for you before you start). A controller has
+already selected the single item for this turn (an issue, an MR, or an alert)
+and named it in the task prompt: act on that one item and do not go looking for
+other work.
+
+Do not ask questions interactively; they will not be answered. Record anything
+that needs a human or a future iteration as a GitLab issue or an MR comment.
+Missing tools or config issues should be logged as issues (see the table below).
+
+## Environment
+
+You run as `nonroot` (uid 568) on a Wolfi-based container image inside the
+`home-infra` Kubernetes cluster (namespace: `ai`). You have read-only access to
+the cluster via your pod's service account; use `kubectl` to inspect workloads,
+pods, events, and resources across all namespaces.
+
+Your home directory is `/home/nonroot/`. Clone repos here (e.g.,
+`/home/nonroot/<repo>`). **Do not** use `/root/`; it is not accessible to uid
+568.
+
+If something is wrong or missing, fix it temporarily then log an issue with
+`glab issue create -R <repo>` so it gets permanently fixed:
+
+| Problem | Temp fix | Issue repo |
+|---|---|---|
+| Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
+| Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
+
+## Metrics access
+
+The victoriametrics MCP server is available for querying cluster metrics, e.g.
+to check actual CPU/memory usage before right-sizing a resource limit, or to
+confirm an alert is or isn't firing. Don't over-use it; most work needs code and
+issue context, not metrics.
+
+## Tech preferences
+
+- **CI / container images**: Use our own `ghcr.io/vaskozl/<name>` chainguard
+  images (built from `doudous/apkontainers`) instead of Docker Hub mutable tags
+  like `alpine:latest` or `debian:latest`. They're minimal, multi-arch,
+  regularly rebuilt for security patches, and we control the contents. If no
+  existing image fits, add a new yaml to `doudous/apkontainers` rather than
+  reaching for a public mutable tag.
+- **Backend code**: Write efficient, lean server side templated pages HTML
+  sites. Prefer full-page navigation; it's simpler and correct. For cases that
+  genuinely need partial page swaps, use
+  [fixi.js](https://github.com/bigskysoftware/fixi) (a light htmx alternative
+  that can be vendored) rather than heavier JS frameworks.
+- **One-liners**: Reach for `perl` over `python`/`awk`/`sed`; it's always
+  available and usually shorter:
+  ```bash
+  perl -MJSON::XS -lane 'print decode_json($_)->{name}' file.json
+  perl -lane 'print $F[2]' file.txt   # awk '{print $3}'
+  perl -pe 's/foo/bar/g'              # sed 's/foo/bar/g'
+  ```
+- **HTTP + JSON**: Mojolicious is installed. Use `ojo` for one-liners and
+  `Mojo::UserAgent` / `Mojo::JSON` in scripts; much shorter than `curl | jq` or
+  `LWP::UserAgent` + `JSON::PP`:
+  ```bash
+  # GET + decode JSON response
+  perl -Mojo -E 'say r g("https://gitlab.example.com/api/v4/projects")->json->[0]{name}'
+
+  # POST JSON body, extract field via JSON pointer
+  perl -Mojo -E 'say p("https://httpbin.org/post" => json => {a => 1})->json("/json/a")'
+
+  # Decode a local JSON file
+  perl -Mojo -E 'say j(f("data.json")->slurp)->{key}'
+  ```
+  See if needed: `perldoc ojo`, `perldoc Mojo::UserAgent`, `perldoc Mojo::JSON`.
+
+## Known tool issues
+
+- **`glab mr list --state`**: Not supported by glab. Use `glab mr list`
+  (defaults to open MRs) or query the API: `glab api "projects/$(printf '%s'
+  'group/repo' | jq -Rr @uri)/merge_requests?state=opened"`.
+- **`glab issue close -c`**: The `-c` flag does not exist. To close an issue
+  with a comment, use two separate commands: `glab issue close <id> -R <repo>`
+  then `glab issue note <id> -R <repo> -m "..."`.
+- **`glab ci status --ref`**: The `--ref` flag does not exist. Use `glab ci
+  status -R <repo> -b <branch>` to check a branch, or `glab ci view <mr_iid> -R
+  <repo>` for a specific MR's pipeline. There is no flag to query by commit SHA;
+  use `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr
+  @uri)/repository/commits/<sha>/statuses"` if a SHA-specific lookup is required.
+- **`python3`**: Not installed in the container. Use `jq` or `perl` for all
+  JSON/text processing.
+
+## glab quick-reference
+
+| Task | Command |
+|---|---|
+| List open issues | `glab issue list -R <repo>` |
+| List open MRs | `glab mr list -R <repo>` |
+| View issue details | `glab issue view <id> -R <repo>` |
+| View issue as JSON | `glab issue view <id> -R <repo> --output json` |
+| Update issue labels | `glab issue update <id> -R <repo> -l 'label-to-add' -u 'label-to-remove'` |
+| Update issue description | `glab issue update <id> -R <repo> -d "new description"` |
+| Create MR | `glab mr create -d "description" -l 'label'` |
+| View MR details | `glab mr view <id> -R <repo>` |
+| View MR as JSON | `glab mr view <id> -R <repo> --output json` |
+| View MR comments | `glab mr view <id> -R <repo> -c` |
+| Add MR comment | `glab mr note <id> -R <repo> -m "comment"` |
+| Resolve MR thread | `glab mr note <id> -R <repo> --resolve <discussion_id>` |
+| View CI status | `glab ci view <mr_iid> -R <repo>` |
+| API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
+
+> **glab JSON label format (important)**
+> - All `glab --output json` output (issue view/list, mr view/list) returns labels as **plain strings**: `["label1", "label2"]`.
+> - Always iterate with `.labels[]`, never `.labels[].name`, which will fail with `Cannot index string with string "name"`.
+> - Always add `2>/dev/null` after jq in parallel batches to prevent exit-code cascades from aborting sibling tool calls.
+
+## Code comments
+
+Default to **no comment**. Only add one when the *why* is non-obvious (a hidden
+constraint, a workaround for a real bug, behaviour that would surprise a
+reader). Never narrate history: no "previously this did X", no "fixed bug where
+Y", no MR/issue numbers, no "added for the Z flow". The diff and commit message
+carry that context; code comments rot.
+
+Never use em dashes (U+2014) in code, commit messages, or MR descriptions. Use
+`--`, a colon, or restructure the sentence.
+
+### Uploading image evidence
+
+Use the chrome-devtools MCP tools to take a screenshot, save it to
+`/tmp/screenshots/evidence.png` (a volume shared between the `app` and
+`chrome-devtools-mcp` containers), upload it to GitLab, and embed the returned
+markdown in your MR or issue comment:
+
+```bash
+# 1. Upload to GitLab (glab api doesn't support multipart, use curl)
+UPLOAD=$(curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+  --form "file=@/tmp/screenshots/evidence.png" \
+  "${GITLAB_HOST}/api/v4/projects/${repo/\//%2F}/uploads")
+IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
+# 2. Use $IMG_MD in a comment
+glab mr note <id> -R <repo> -m "## Evidence
+${IMG_MD}"
+```

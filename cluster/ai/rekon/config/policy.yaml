@@ -1,0 +1,48 @@
+# Default update policy attaching to every Package/Image via a wildcard
+# selector: allow minor/patch/digest auto-MRs, labeled "renovate", and automerge
+# them once CI passes (the MR reconciler gates on the head pipeline). rebase is
+# off, so an open bump branch isn't force-pushed just because its base moved
+# (only a real change to the bump re-pushes).
+apiVersion: pkg.example/v1
+kind: updatepolicies
+metadata:
+  id: package-defaults
+spec:
+  selectorKind: packages
+  matchNames: ["*"]
+  updateTypes: [major, minor, patch, digest]
+  automerge: true
+  rebase: true
+  labels: [renovate,pkgupdate]
+---
+apiVersion: pkg.example/v1
+kind: updatepolicies
+metadata:
+  id: image-automerge
+spec:
+  selectorKind: images
+  matchNames: ["*"]
+  updateTypes: [patch, digest]
+  automerge: true
+  rebase: true
+  labels: [renovate,pkgupdate]
+---
+# fluent-bit 5.0.6 leaks memory on the log aggregator's forward->file path: the
+# working set climbs ~5-7 MiB/h until the container is OOMKilled (~30h cycle),
+# whereas 5.0.5 stays flat. A higher-priority range overlay holds the image at
+# 5.0.5 (the bumper-side twin of home-infra's renovate.json5 <5.0.6 hold, which
+# this controller does not read). Without it the image-automerge policy above
+# classifies 5.0.5->5.0.6 as a patch and auto-merges it straight back; digest
+# refreshes of 5.0.5 stay allowed. Drop this once a non-leaking release (5.0.7+)
+# ships. The forwarder daemonset shares the image but does not hit the leak, and
+# a hold never forces a downgrade, so it is left where it is.
+apiVersion: pkg.example/v1
+kind: updatepolicies
+metadata:
+  id: fluent-bit-leak-hold
+spec:
+  name: fluent-bit 5.0.6 leak hold
+  selectorKind: images
+  matchNames: ["ghcr.io/vaskozl/fluent-bit"]
+  priority: 10
+  range: "<5.0.6"

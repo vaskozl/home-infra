@@ -1,0 +1,26 @@
+apiVersion: pkg.example/v1
+kind: gitlabrepos
+metadata:
+  id: packages
+spec:
+  url: https://gitlab.sko.ai/doudous/packages.git
+  branch: main
+  intervalSeconds: 600
+---
+apiVersion: pkg.example/v1
+kind: gitlabrepos
+metadata:
+  id: home-infra
+spec:
+  url: https://gitlab.sko.ai/doudous/home-infra.git
+  branch: main
+  intervalSeconds: 600
+---
+apiVersion: pkg.example/v1
+kind: gitlabrepos
+metadata:
+  id: rekon
+spec:
+  url: https://gitlab.sko.ai/doudous/rekon.git
+  branch: main
+  intervalSeconds: 600
