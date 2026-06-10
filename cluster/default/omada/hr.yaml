@@ -42,6 +42,15 @@ spec:
               requests:
                 cpu: 100m
                 memory: 3100Mi
+        initContainers:
+          clear-repair-marker:
+            command:
+              - /bin/sh
+              - -c
+              - rm -f /opt/tplink/EAPController/data/db/_repair_incomplete
+            image:
+              repository: mbentley/omada-controller
+              tag: '6.2@sha256:b2f3735f5a4e6e59c5f6fc2feea3999c4cd0d0ec5db58f82f20e3d33d8c43f55'
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
