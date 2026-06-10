@@ -12,8 +12,8 @@ spec:
           command: ["sh", "-c"]
           args:
             - |
-              claude mcp remove chrome-devtools 2>/dev/null
-              claude mcp add --transport http chrome-devtools http://127.0.0.1:8080/mcp
+              claude mcp remove -s user chrome-devtools 2>/dev/null
+              claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
           volumeMounts:
             - name: claude
               mountPath: /home/nonroot
