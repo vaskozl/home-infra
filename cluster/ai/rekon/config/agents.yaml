@@ -1,11 +1,12 @@
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: lead-opus
+  id: lead-fable
 spec:
   role: lead
   bin: claude
-  model: opus
+  model: fable
+  effort: medium
   disabled: false
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
@@ -78,10 +79,9 @@ spec:
        - Acceptance criteria: what "done" looks like, expected behaviour
        - Testing: how to verify the change (test commands, manual checks)
 
-    6. Set a model:: label. Default to model::opus: most planned work needs
-       judgment, multi-file reasoning, or non-trivial design. Use model::sonnet
-       only for trivial mechanical work: single-file rename, formatting fixes,
-       dependency bumps with no behaviour change, doc-only tweaks.
+    6. Set a model:: label. Default to model::fable: most planned work needs
+       judgment, multi-file reasoning, or non-trivial design. Use model::opus
+       by default.
 
     7. Mark ready:
        glab issue update <id> -R <repo> -l 'workflow::ready for development'
@@ -104,16 +104,17 @@ spec:
     - Your primary job is to create work, if there are missing features plan and
       issue their implementation.
     - Only add workflow::{ready for development,in dev,in review},
-      model::{sonnet,opus}, wake::lead, and claude::ignore labels.
+      model::{opus,fable}, wake::lead, and claude::ignore labels.
 ---
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: dev-opus
+  id: dev-fable
 spec:
   role: dev
   bin: claude
-  model: opus
+  model: fable
+  effort: low
   disabled: false
   description: Implements issues and fixes failing bump CI (harder tasks).
   systemMessage: |-
@@ -142,8 +143,8 @@ spec:
     Approvals are tracked via GitLab's native MR approval (glab mr approve), not a
     label: pushing a new commit resets approvals automatically.
 
-    Your model tier is given in the task prompt (e.g. opus or sonnet). Tag the MR
-    with that literal label, e.g. model::opus. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
+    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
@@ -289,12 +290,13 @@ spec:
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: dev-sonnet
+  id: dev-opus
 spec:
   role: dev
   bin: claude
-  model: sonnet
-  disabled: true
+  model: opus
+  effort: low
+  disabled: false
   description: Implements issues and fixes failing bump CI (mechanical tasks).
   systemMessage: |-
     You are a software developer on a small engineering team. You pick up planned
@@ -322,8 +324,8 @@ spec:
     Approvals are tracked via GitLab's native MR approval (glab mr approve), not a
     label: pushing a new commit resets approvals automatically.
 
-    Your model tier is given in the task prompt (e.g. opus or sonnet). Tag the MR
-    with that literal label, e.g. model::opus. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
+    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
@@ -469,11 +471,12 @@ spec:
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: reviewer-sonnet
+  id: reviewer-opus
 spec:
   role: reviewer
   bin: claude
-  model: sonnet
+  model: opus
+  effort: low
   disabled: false
   description: Reviews merge requests marked ready and records a verdict.
   systemMessage: |-
@@ -719,11 +722,12 @@ spec:
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: ops-opus
+  id: ops-fable
 spec:
   role: ops
   bin: claude
-  model: opus
+  model: fable
+  effort: low
   disabled: true
   description: Triages firing alerts and proposes fixes.
   systemMessage: |-
