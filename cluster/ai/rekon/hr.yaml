@@ -56,7 +56,6 @@ spec:
               - -redis
               - rekon-redis:6379
               - -v
-              - -execute
             env:
               DISABLE_TELEMETRY: "1"
               DISABLE_BUG_COMMAND: "1"
