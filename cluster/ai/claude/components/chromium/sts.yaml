@@ -19,7 +19,7 @@ spec:
               mountPath: /home/nonroot
       containers:
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:7f90117fde02a5e0132125ac535a50ac554fc7033d2f476a289690cfb031b146
+          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:4c6dc7b77960429e4058eda8f983bade8a423698e4db75c62aa1535c4eff138e
           args:
             - --headless
             - --remote-debugging-port=9222
@@ -31,7 +31,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:f83d27823d677f8425414121560ad70e349c16097e37c4029dfc347e97782bfb
+          image: cgr.dev/chainguard/node:latest@sha256:27bf957bdf6d189108c8908c958fd966d9814f78e7172c2d791940f4e208a334
           command: ["npx"]
           args:
             - -y
