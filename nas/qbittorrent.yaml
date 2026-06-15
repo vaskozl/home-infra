@@ -13,7 +13,11 @@ services:
     volumes:
       - /volume3/docker/qbittorrent/config:/config
       - /volume1/torrents-v2/torrents:/torrents
-    entrypoint: nice -n 10 ionice -c3 qbittorrent-nox --webui-port='55555'
+    entrypoint:
+      - /bin/sh
+      - -c
+      - rm -f /config/qBittorrent/lockfile; exec nice -n 10 ionice -c3 qbittorrent-nox --webui-port='55555'
+    stop_grace_period: 2m
     cpu_shares: 16
     mem_limit: 4G
   cross-seedd:
