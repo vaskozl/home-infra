@@ -24,7 +24,7 @@ spec:
               SMTPHOST: mx-maddy.mailserver.svc.cluster.local:2225
             image:
               repository: ghcr.io/vaskozl/baikal
-              tag: 0.11.1@sha256:919796c85e398a00f83aa28f2ce584ecfbc923ce9283483b43b8ecbf5ce93011
+              tag: 0.11.1@sha256:3f60193f61c83f602a5788f501ba5cba733a3fe62cbcfcdc241b4ab9882d7e20
             probes:
               liveness:
                 enabled: true
