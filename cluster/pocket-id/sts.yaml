@@ -16,7 +16,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: app
-          image: ghcr.io/pocket-id/pocket-id@sha256:a073640418b2cfc8587c488a7270580b3ab95cae2c543f5d64bbbe1fd7ccbae8
+          image: ghcr.io/pocket-id/pocket-id@sha256:a2a38a96699d7483d65b5849b015d954f294938306a03a9c0699bc5b79554e86
           env:
             - name: APP_URL
               value: https://pi.sko.ai
