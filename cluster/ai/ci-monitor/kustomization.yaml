@@ -6,5 +6,8 @@ resources:
   - cron.yaml
 configMapGenerator:
   - name: ci-monitor-script
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - ci-monitor.pl

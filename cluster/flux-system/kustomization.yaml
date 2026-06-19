@@ -11,3 +11,10 @@ resources:
   - monitoring
   - sources/helm
   - webhook
+patches:
+  - target:
+      kind: CustomResourceDefinition
+    patch: |
+      - op: add
+        path: /metadata/annotations/kustomize.toolkit.fluxcd.io~1substitute
+        value: disabled
