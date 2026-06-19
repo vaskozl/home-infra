@@ -18,43 +18,51 @@ spec:
   values:
     controllers:
       wolfi:
-        <<: &base-controller
-          containers:
-            app:
-              <<: &app
-                image:
-                  repository: ghcr.io/vaskozl/renovate-apk-indexer
-                  tag: 0.2.0@sha256:0964e1f44a70284674623ff18dcddc928d8822b0fac8b44238ee8e6da22fdba3
-                args: ['-apk-index-url', 'https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz,https://apks.sko.ai/aarch64/APKINDEX.tar.gz']
-                probes:
-                  liveness:
-                    enabled: true
-                  readiness:
-                    enabled: true
-                resources:
-                  limits:
-                    cpu: 1
-                    memory: 360Mi
-                  requests:
-                    cpu: 10m
-                    memory: 360Mi
-                securityContext:
-                  allowPrivilegeEscalation: false
-                  capabilities:
-                    add:
-                      - NET_BIND_SERVICE
-                    drop:
-                      - ALL
-                  readOnlyRootFilesystem: true
-          statefulset:
-            podManagementPolicy: Parallel
-          type: statefulset
-      alpine:
-        <<: *base-controller
         containers:
           app:
-            <<: *app
-            args: ['-apk-index-url', 'https://dl-cdn.alpinelinux.org/edge/main/aarch64/APKINDEX.tar.gz,https://dl-cdn.alpinelinux.org/edge/community/aarch64/APKINDEX.tar.gz,https://dl-cdn.alpinelinux.org/edge/testing/aarch64/APKINDEX.tar.gz']
+            image:
+              repository: ghcr.io/vaskozl/renovate-apk-indexer
+              tag: 0.2.0@sha256:0964e1f44a70284674623ff18dcddc928d8822b0fac8b44238ee8e6da22fdba3
+            args:
+              - ENC[AES256_GCM,data:/b4422jNT6Bm7nVTM+U=,iv:CHKlb4OV3pNZAqpEc+yVpJG0BSlpDz4CduJDjO4FTk4=,tag:rXX8xSm+/y3H9LmNyeNibQ==,type:str]
+              - ENC[AES256_GCM,data:aETOH/3aiwLJ0igLKZe8BRh72p6tbrVHJZqfFsf/M9NskAlvyMlZdI3WbRQvy2RS+o6uzq70uwiCWhPZbHJtJy4UvM+VY7TmXX0Nf+3o6HmPwOrJ7zetjogx2wPgccfRfsq2U/TMUipq1gzwyMft3m6rUBa5oFLr/V7lbpFkS5Dmv+FOHjGVavvWBxp8dXDVZGpg/IIps8P7uY7jnYM3KXZeA2lLCmsqx3pVGHcHAO9JMyKaSuUPAldt/hCk0puWALhdE8Y7vAzUgnPyp2zKdTrLDc3xVFm1276BminBmHnkjgtd1Y5YnWWYGuzVcNMuJHdf8Gy0JAshN7+fqQ==,iv:Nz0OcqKscxoB/mPndeXV3zD6mzhol2B94q4EqCofeeo=,tag:wivSAd3CqtXb3kjrzPHW6w==,type:str]
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 360Mi
+              requests:
+                cpu: 10m
+                memory: 360Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                  - NET_BIND_SERVICE
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
+      alpine:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/renovate-apk-indexer
+              tag: 0.2.0@sha256:0964e1f44a70284674623ff18dcddc928d8822b0fac8b44238ee8e6da22fdba3
+            args:
+              - ENC[AES256_GCM,data:0fvEh+mOft509nTxFFA=,iv:qX2/cyNal5TEw5L3HVeRvET+1QK/gsuqL4PEW5pPTYQ=,tag:7/vzlE1hGZHHB51g6VJDFg==,type:str]
+              - ENC[AES256_GCM,data:BcgMbU6A0+b2Sm/kHwtOFb4reqqTNsHyuWE58wPaU+RBFEaih1oTCsv1zjIu1iIzeo/I6twDTXmiGdWx3ihFWJbZldjl4EBVDX3B8l2Guwz8D64K5tab9ldMadHnfPgf0I/LDe4Ml9dJ/UBywJ8OdOLcx9p/UZJtVXUoNRlgBkgJ6L1knB7kjxo4A6oYjTs01HmnN5T8j/TmfVvAnQVIu7eQDYPfnqv5rLW6K4Ool6RE+yaGtcp7PCBJlF5k9TwjfkusoAYeuyQohA==,iv:43V4IKrcCbT1wFlUNOWkSXhhy/BDIvZWl5kymh/lQQw=,tag:I4IYJzq2hZYH/HN0IORpqA==,type:str]
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             resources:
               limits:
                 cpu: 1
@@ -62,6 +70,17 @@ spec:
               requests:
                 cpu: 10m
                 memory: 160Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                add:
+                  - NET_BIND_SERVICE
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        statefulset:
+          podManagementPolicy: Parallel
+        type: statefulset
     defaultPodOptions:
       securityContext:
         fsGroup: 568
@@ -81,3 +100,35 @@ spec:
         ports:
           http:
             port: 3000
+sops:
+  lastmodified: "2026-06-19T23:39:27Z"
+  mac: ENC[AES256_GCM,data:vzgUb2gB+KIFktN26JqsATkxpQstn15K4HuVVTxI5JrAY+RnD38kw8KkuZPzX2KVGmAg4u4cI4+AhRp8X9pWmXByqASG0mPfxWWao1tUMfGW67oadIQ/I9jfN8PiHzr493XNgKGER1DR4P/N6yQrlV0r6sc4C2awbYNfkM1ovAo=,iv:e+W5JknlHOLeKIZjdmoK+yiC1CFtQKdF6lL9E763yiU=,tag:foDkHxxc3HxE0RDgqXe99g==,type:str]
+  pgp:
+    - created_at: "2026-06-19T23:39:27Z"
+      enc: |-
+        -----BEGIN PGP MESSAGE-----
+
+        hQMOA4x50yY5upzjEAv+Pk9XRRk9l7QV2GzoH4ZgP7EwUvc+eNCd2Oi8H9MHdlZK
+        FQo3mEHaO7/VIkSBEJX41RNpTZtA3iXodfzJFv5RvxL0jPyFUwRA5swfjhcoF6c5
+        2nz2fhBcdG3fQek02Zjc/Jf5nBA+W1D3mAmwmJ3WRRMiacD/7X6ngWl5DTImZQDT
+        wRUFQ7Y5H/iDkfYED+mEi+Eo+FatlPicynxFrnVCbHnYH0H0Ng7GhpYPSeTc4xEk
+        RbYD2ZJByk8Mgqnmu5A0xefYmOso1lWOPVm5+qNDU1HwXGP2qcsupNK+rVFPwYlG
+        V3kKJqFC70FJOFNORqiJC+vcKORiMiMBK5VZZzW9duHdz4peYZVRPGtmRrAkNMfo
+        doVEt0HqM6/RmSRMY3ae3z9bUCGzJE9hQsm3YNiYcAgVosOpY20I0iBHubvxgBlu
+        URpyJF66AbCoX0l9+wQo3dTz9b0fNxDcLkHTBzHOq2c/oJ1biEcSEVgxi/31MbQJ
+        lmYJMg79og4M9sYhK5ROC/9tff1Mc09sV528yPFqYPlPld4SGlW/c6BAWZbsFa67
+        3YMzclmGqKr/8Hv/qKUnCyUYXRly2FmwfM6VDllrV3s9qC7jteNSrotiSgQ39zRx
+        ufPdp9x7PciMMImv2KZL4xaR3xj8irAdtX3HNMasbGOHMQ3i9PmE4TDx9ik+QuCr
+        vO0R/FMLTe5qCUshSbFTsjaS/G60PvHQRvc8lwWRiSeEWh0/0XT32vIRYraV84i9
+        aZxkC1fhZzRKWtwJKjWbZ7GTHc/2b60vPVB5LGIBQNxZqwxSFYOB3L8CTLYZBtsS
+        nyZwUnWbVRcsCMx3NLEem9ZRqm9GxIGCQonCeSgl3uyQIjkG3nTfTVGj21UlaC6L
+        /s/LI5C74F1Za6BQAgKuYQmrEogAUpT5gxJ2ulwEuLO4ChkC2KTpSM6C1ynWjaPr
+        gnfnvOToJSN+RYhtOrKQeARO+4oX881A8QR9wRO5jASeD/dgB5EFXpkZUhMfhh8G
+        2kfRZeBEy1wG76+4mzwFoG7SXgE7mg98DKqIwuMTkPTbuZ+4XMlAp5RmkIURpRx5
+        i7ct0tdTCSzrmt5lWVago1SC+4d6KTWpSkuoMPlst4GHpbzV0Rcnh0XtLgEeTLy4
+        4HJ1oGroNqZzuOYbZ69aT3g=
+        =XlCf
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: args
+  version: 3.12.2
