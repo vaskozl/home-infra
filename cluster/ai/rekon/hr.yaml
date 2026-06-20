@@ -162,6 +162,14 @@ spec:
       #      app:
       #        - path: /etc/buildkit/certs
       #          readOnly: true
+      docker-config:
+        type: secret
+        name: rekon-docker-config
+        advancedMounts:
+          main:
+            app:
+              - path: /home/nonroot/.docker/config.json
+                subPath: config.json
       config:
         type: configMap
         name: config
