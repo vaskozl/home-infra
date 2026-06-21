@@ -1,0 +1,16 @@
+apiVersion: pkg.example/v1
+kind: apkoimages
+metadata:
+  id: logrotate
+spec:
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/logrotate
+  versionFrom: logrotate
+  config: |
+    contents:
+      packages:
+        - logrotate
+    entrypoint:
+      command: logrotate
