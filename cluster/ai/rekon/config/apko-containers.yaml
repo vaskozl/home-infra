@@ -14,3 +14,91 @@ spec:
         - logrotate
     entrypoint:
       command: logrotate
+---
+apiVersion: pkg.example/v1
+kind: apkoimages
+metadata:
+  id: claude
+spec:
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/claude
+  versionFrom: claude
+  config: |
+    environment:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/linuxbrew/.linuxbrew/bin"
+    contents:
+      packages:
+        - claude
+        - apk-tools
+        - apko
+        - bash
+        - bind-tools
+        - brew
+        - busybox
+        - busybox-full
+        - conntrack-tools
+        - curl
+        - ethtool
+        - fzf
+        - gettext
+        - gh
+        - git
+        - glab
+        - go
+        - gofumpt
+        - golangci-lint
+        - htop
+        - iftop
+        - iproute2
+        - jq
+        - just
+        - kubectl
+        - kubectl-default
+        - melange
+        - perl
+        - perl-common-sense
+        - perl-email-date-format
+        - perl-io-socket-ssl
+        - perl-json-xs
+        - perl-mime-lite
+        - perl-mime-types
+        - perl-mojolicious
+        - perl-path-tiny
+        - perl-timedate
+        - perl-types-serialiser
+        - perl-yaml-pp
+        - rustup
+        - tmux
+        - util-linux-misc
+        - wget
+        - yq
+        - zlib-dev
+    work-dir: /home/nonroot
+    paths:
+      - path: /home/linuxbrew/.linuxbrew
+        type: directory
+        uid: 568
+        gid: 568
+        permissions: 0o755
+        recursive: true
+---
+apiVersion: pkg.example/v1
+kind: apkoimages
+metadata:
+  id: rekon-pkgupdate
+spec:
+  includes: [claude]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/rekon-pkgupdate
+  versionFrom: rekon-pkgupdate
+  config: |
+    contents:
+      packages:
+        - rekon-pkgupdate
+    entrypoint:
+      command: rekon-pkgupdate
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
