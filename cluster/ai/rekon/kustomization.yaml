@@ -10,7 +10,6 @@ secretGenerator:
   - name: rekon-env
     envs:
       - claude.enc.env
-configMapGenerator:
   - name: config
     options:
       annotations:

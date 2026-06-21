@@ -171,7 +171,7 @@ spec:
               - path: /home/nonroot/.docker/config.json
                 subPath: config.json
       config:
-        type: configMap
+        type: secret
         name: config
         advancedMounts:
           main:
