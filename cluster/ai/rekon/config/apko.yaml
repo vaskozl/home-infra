@@ -1,0 +1,182 @@
+apiVersion: pkg.example/v1
+kind: apkrepos
+metadata:
+    id: chainguard
+spec:
+    url: ENC[AES256_GCM,data:LiKef7WkGmqFZ3As45zOiWzzp2sEZHTJMIn1DPCdaahlJWSBwikCliShBgSkWB3Xk/qPUsIzhbdFslAkR3Pa+jVK1HCmRcq9hBs9Aemr,iv:n8sNCOm5zatz7UMeLWrlFGgEug4wsdS9+TVBIP3rjlQ=,tag:TwDM1U8ohjKlqogSfcYyog==,type:str]
+    arches:
+        - x86_64
+        - aarch64
+    intervalSeconds: 713
+sops:
+    lastmodified: "2026-06-21T12:24:54Z"
+    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    pgp:
+        - created_at: "2026-06-21T12:19:33Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv8Db8uxxi0yy+1r0VhISi9SRX1TAYaQOfz+liCCBF+Wt/w
+            meUeYJ9dDVDVtIVSyoQ9kyAczVEg0Y8JvxFvAofxo9iwpDkMzq+IDZmuvGnmRsx0
+            o3j7JD5mw09Tqmh9YkraSKRw0nvL/gR+PS78vXam39xjsYITzThyBH96z/Fod0sq
+            rEM0W5NKRbaphNMtwB+zskqYJLF0znl3FpKo52ZSSxTCeMgtRRU2p+YujX9DQ1+G
+            WP0eUcixDGoxyXDi1Oc/k+WvgM/XWUuIUNwJoRqJm8SfUcU0Xy7vVMkq5iX3ZN7R
+            7zSESb0qrDxy3lG8HOQXoMHMHn7u3ePL3kfD2s+7MxVMIIhKk8q9nWutCQj62+ZT
+            B5eCwsPuK7OBTUGNPP+ee1eBKtxgdgPhd7rckltxoYrEZgaAm+8WwLU79njTia8k
+            gxUwiXY/l/H92ZLC9y8bCcVrSqCmx0v2Arzwt+yIimHuP1tfqt4+odw8xvMoO693
+            oV870VljVAeoxN0EDKx8DADGE7sY6zAVU4pnFrvDWk6hZ6DqxelPGvfuEt2S0oq0
+            uJTgjS0qAUQoZjVtMOneJjYlQ4xoC46ih+H7DclqjQkufH/e+zv39KSVY54wbieY
+            lqX1vOxzve6IUTSgUspvD4ltXUH5gpwz+Xu0wH3neFO6OnnhbUOb3ib1Jlp1EDn4
+            YB10uYM8immNBBkHsjCoY7k8UWwsqsBLtMEvi6j0fwsHvDQzz8sE6AkG2bJ17ag3
+            SPNFXwpvGRletnv9Ww/NywKyNFFQlr6/7m9rYKvm2BDtlqt+tM8zD+/8yq6Q+4pu
+            01V4KkbsOltC87ehgOpBZU5J9EOrm3qaIfd37JTyHrI/Hjo2IMeg6Y9cAtNAF5Y5
+            +3s7uGDCCCoTKB/XGROFh2W9i3sCARjFWPSEZdHsHmCbWOW8cpc5vDlOOfZhdN8S
+            F6qVCjvdHhKE2OK1GpnHnlX8RgrvKbaF8Kcqzx2Fpnjc8Xsd7JfDNSNnzRUn3o74
+            tIvHbfBqdQZch/6jIod/m5vSXgFbLrX3CJ4hidwZeO6PiUupvXveVPeW3Mdcqxbb
+            qZcZxpL4zyVXNy10oL5rtRw9JkfmZPAtr31IbBHgFgx9IrDBDT5LxYusRrnav/mQ
+            3OcdM4Nvl5NBjY21tH1ku2A=
+            =CZB7
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: (repo|url)
+    version: 3.12.2
+---
+apiVersion: pkg.example/v1
+kind: apkrepos
+metadata:
+    id: chainguard-extra
+spec:
+    url: ENC[AES256_GCM,data:kphiV/8AKgBZPNdrOqhK6bDRImOH2j0ubmTZA0wmhZKDBETWGMN0CQDxjOvy0Ihmk5MSQ3PNFByfkVsH7f+fSwUkFCOHNIN317xjbzlOT0hITg==,iv:RkRA6E0JVAONA/qrJx0kPWVnnAsRcGZ4ujRjAjST2S0=,tag:Taxj2pqKVNAMSD1CJh9ydg==,type:str]
+    arches:
+        - x86_64
+        - aarch64
+    intervalSeconds: 713
+sops:
+    lastmodified: "2026-06-21T12:24:54Z"
+    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    pgp:
+        - created_at: "2026-06-21T12:19:33Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv8Db8uxxi0yy+1r0VhISi9SRX1TAYaQOfz+liCCBF+Wt/w
+            meUeYJ9dDVDVtIVSyoQ9kyAczVEg0Y8JvxFvAofxo9iwpDkMzq+IDZmuvGnmRsx0
+            o3j7JD5mw09Tqmh9YkraSKRw0nvL/gR+PS78vXam39xjsYITzThyBH96z/Fod0sq
+            rEM0W5NKRbaphNMtwB+zskqYJLF0znl3FpKo52ZSSxTCeMgtRRU2p+YujX9DQ1+G
+            WP0eUcixDGoxyXDi1Oc/k+WvgM/XWUuIUNwJoRqJm8SfUcU0Xy7vVMkq5iX3ZN7R
+            7zSESb0qrDxy3lG8HOQXoMHMHn7u3ePL3kfD2s+7MxVMIIhKk8q9nWutCQj62+ZT
+            B5eCwsPuK7OBTUGNPP+ee1eBKtxgdgPhd7rckltxoYrEZgaAm+8WwLU79njTia8k
+            gxUwiXY/l/H92ZLC9y8bCcVrSqCmx0v2Arzwt+yIimHuP1tfqt4+odw8xvMoO693
+            oV870VljVAeoxN0EDKx8DADGE7sY6zAVU4pnFrvDWk6hZ6DqxelPGvfuEt2S0oq0
+            uJTgjS0qAUQoZjVtMOneJjYlQ4xoC46ih+H7DclqjQkufH/e+zv39KSVY54wbieY
+            lqX1vOxzve6IUTSgUspvD4ltXUH5gpwz+Xu0wH3neFO6OnnhbUOb3ib1Jlp1EDn4
+            YB10uYM8immNBBkHsjCoY7k8UWwsqsBLtMEvi6j0fwsHvDQzz8sE6AkG2bJ17ag3
+            SPNFXwpvGRletnv9Ww/NywKyNFFQlr6/7m9rYKvm2BDtlqt+tM8zD+/8yq6Q+4pu
+            01V4KkbsOltC87ehgOpBZU5J9EOrm3qaIfd37JTyHrI/Hjo2IMeg6Y9cAtNAF5Y5
+            +3s7uGDCCCoTKB/XGROFh2W9i3sCARjFWPSEZdHsHmCbWOW8cpc5vDlOOfZhdN8S
+            F6qVCjvdHhKE2OK1GpnHnlX8RgrvKbaF8Kcqzx2Fpnjc8Xsd7JfDNSNnzRUn3o74
+            tIvHbfBqdQZch/6jIod/m5vSXgFbLrX3CJ4hidwZeO6PiUupvXveVPeW3Mdcqxbb
+            qZcZxpL4zyVXNy10oL5rtRw9JkfmZPAtr31IbBHgFgx9IrDBDT5LxYusRrnav/mQ
+            3OcdM4Nvl5NBjY21tH1ku2A=
+            =CZB7
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: (repo|url)
+    version: 3.12.2
+---
+apiVersion: pkg.example/v1
+kind: apkrepos
+metadata:
+    id: apks
+spec:
+    url: ENC[AES256_GCM,data:OllETGUR3Ntpq9scbKC53Dg3SA==,iv:htvd75kE7gL5c8lFG2rH+2kunkNSpMj53dMUmyb7BAw=,tag:VI+fwRopyN4D8FZBVkojJQ==,type:str]
+    arches:
+        - x86_64
+        - aarch64
+    intervalSeconds: 713
+sops:
+    lastmodified: "2026-06-21T12:24:54Z"
+    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    pgp:
+        - created_at: "2026-06-21T12:19:33Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv8Db8uxxi0yy+1r0VhISi9SRX1TAYaQOfz+liCCBF+Wt/w
+            meUeYJ9dDVDVtIVSyoQ9kyAczVEg0Y8JvxFvAofxo9iwpDkMzq+IDZmuvGnmRsx0
+            o3j7JD5mw09Tqmh9YkraSKRw0nvL/gR+PS78vXam39xjsYITzThyBH96z/Fod0sq
+            rEM0W5NKRbaphNMtwB+zskqYJLF0znl3FpKo52ZSSxTCeMgtRRU2p+YujX9DQ1+G
+            WP0eUcixDGoxyXDi1Oc/k+WvgM/XWUuIUNwJoRqJm8SfUcU0Xy7vVMkq5iX3ZN7R
+            7zSESb0qrDxy3lG8HOQXoMHMHn7u3ePL3kfD2s+7MxVMIIhKk8q9nWutCQj62+ZT
+            B5eCwsPuK7OBTUGNPP+ee1eBKtxgdgPhd7rckltxoYrEZgaAm+8WwLU79njTia8k
+            gxUwiXY/l/H92ZLC9y8bCcVrSqCmx0v2Arzwt+yIimHuP1tfqt4+odw8xvMoO693
+            oV870VljVAeoxN0EDKx8DADGE7sY6zAVU4pnFrvDWk6hZ6DqxelPGvfuEt2S0oq0
+            uJTgjS0qAUQoZjVtMOneJjYlQ4xoC46ih+H7DclqjQkufH/e+zv39KSVY54wbieY
+            lqX1vOxzve6IUTSgUspvD4ltXUH5gpwz+Xu0wH3neFO6OnnhbUOb3ib1Jlp1EDn4
+            YB10uYM8immNBBkHsjCoY7k8UWwsqsBLtMEvi6j0fwsHvDQzz8sE6AkG2bJ17ag3
+            SPNFXwpvGRletnv9Ww/NywKyNFFQlr6/7m9rYKvm2BDtlqt+tM8zD+/8yq6Q+4pu
+            01V4KkbsOltC87ehgOpBZU5J9EOrm3qaIfd37JTyHrI/Hjo2IMeg6Y9cAtNAF5Y5
+            +3s7uGDCCCoTKB/XGROFh2W9i3sCARjFWPSEZdHsHmCbWOW8cpc5vDlOOfZhdN8S
+            F6qVCjvdHhKE2OK1GpnHnlX8RgrvKbaF8Kcqzx2Fpnjc8Xsd7JfDNSNnzRUn3o74
+            tIvHbfBqdQZch/6jIod/m5vSXgFbLrX3CJ4hidwZeO6PiUupvXveVPeW3Mdcqxbb
+            qZcZxpL4zyVXNy10oL5rtRw9JkfmZPAtr31IbBHgFgx9IrDBDT5LxYusRrnav/mQ
+            3OcdM4Nvl5NBjY21tH1ku2A=
+            =CZB7
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: (repo|url)
+    version: 3.12.2
+---
+apiVersion: pkg.example/v1
+kind: apkoimages
+metadata:
+    id: wolfi-base
+spec:
+    target: ghcr.io/vaskozl/wolfi-base
+    config: |
+        contents:
+            runtime_repositories:
+                - https://packages.wolfi.dev/os
+            build_repositories:
+                - https://virtualapk.cgr.dev/0ac7ff905850c35723a7f376e10d007c958c45c8/chainguard
+                - https://virtualapk.cgr.dev/0ac7ff905850c35723a7f376e10d007c958c45c8/extra-packages
+                - https://apks.sko.ai
+            keyring:
+                - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+            packages:
+                - wolfi-base
+        archs:
+            - x86_64
+            - aarch64
+sops:
+    lastmodified: "2026-06-21T12:24:54Z"
+    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    pgp:
+        - created_at: "2026-06-21T12:19:33Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQMOA4x50yY5upzjEAv8Db8uxxi0yy+1r0VhISi9SRX1TAYaQOfz+liCCBF+Wt/w
+            meUeYJ9dDVDVtIVSyoQ9kyAczVEg0Y8JvxFvAofxo9iwpDkMzq+IDZmuvGnmRsx0
+            o3j7JD5mw09Tqmh9YkraSKRw0nvL/gR+PS78vXam39xjsYITzThyBH96z/Fod0sq
+            rEM0W5NKRbaphNMtwB+zskqYJLF0znl3FpKo52ZSSxTCeMgtRRU2p+YujX9DQ1+G
+            WP0eUcixDGoxyXDi1Oc/k+WvgM/XWUuIUNwJoRqJm8SfUcU0Xy7vVMkq5iX3ZN7R
+            7zSESb0qrDxy3lG8HOQXoMHMHn7u3ePL3kfD2s+7MxVMIIhKk8q9nWutCQj62+ZT
+            B5eCwsPuK7OBTUGNPP+ee1eBKtxgdgPhd7rckltxoYrEZgaAm+8WwLU79njTia8k
+            gxUwiXY/l/H92ZLC9y8bCcVrSqCmx0v2Arzwt+yIimHuP1tfqt4+odw8xvMoO693
+            oV870VljVAeoxN0EDKx8DADGE7sY6zAVU4pnFrvDWk6hZ6DqxelPGvfuEt2S0oq0
+            uJTgjS0qAUQoZjVtMOneJjYlQ4xoC46ih+H7DclqjQkufH/e+zv39KSVY54wbieY
+            lqX1vOxzve6IUTSgUspvD4ltXUH5gpwz+Xu0wH3neFO6OnnhbUOb3ib1Jlp1EDn4
+            YB10uYM8immNBBkHsjCoY7k8UWwsqsBLtMEvi6j0fwsHvDQzz8sE6AkG2bJ17ag3
+            SPNFXwpvGRletnv9Ww/NywKyNFFQlr6/7m9rYKvm2BDtlqt+tM8zD+/8yq6Q+4pu
+            01V4KkbsOltC87ehgOpBZU5J9EOrm3qaIfd37JTyHrI/Hjo2IMeg6Y9cAtNAF5Y5
+            +3s7uGDCCCoTKB/XGROFh2W9i3sCARjFWPSEZdHsHmCbWOW8cpc5vDlOOfZhdN8S
+            F6qVCjvdHhKE2OK1GpnHnlX8RgrvKbaF8Kcqzx2Fpnjc8Xsd7JfDNSNnzRUn3o74
+            tIvHbfBqdQZch/6jIod/m5vSXgFbLrX3CJ4hidwZeO6PiUupvXveVPeW3Mdcqxbb
+            qZcZxpL4zyVXNy10oL5rtRw9JkfmZPAtr31IbBHgFgx9IrDBDT5LxYusRrnav/mQ
+            3OcdM4Nvl5NBjY21tH1ku2A=
+            =CZB7
+            -----END PGP MESSAGE-----
+          fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+    encrypted_regex: (repo|url)
+    version: 3.12.2

@@ -21,5 +21,6 @@ configMapGenerator:
       - agents.yaml=config/agents.yaml
       - policy.yaml=config/policy.yaml
       - repos.yaml=config/repos.yaml
+      - apko.yaml=config/apko.yaml
 configurations:
   - kustomizeconfig.yaml
