@@ -21,6 +21,9 @@ configMapGenerator:
       - agents.yaml=config/agents.yaml
       - policy.yaml=config/policy.yaml
       - repos.yaml=config/repos.yaml
-      - apko.yaml=config/apko.yaml
+      - apko-chainguard.yaml=config/apko-chainguard.yaml
+      - apko-chainguard-extra.yaml=config/apko-chainguard-extra.yaml
+      - apko-apks.yaml=config/apko-apks.yaml
+      - apko-wolfi-base.yaml=config/apko-wolfi-base.yaml
 configurations:
   - kustomizeconfig.yaml

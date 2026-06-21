@@ -1,0 +1,42 @@
+apiVersion: pkg.example/v1
+kind: apkrepos
+metadata:
+  id: chainguard-extra
+spec:
+  url: ENC[AES256_GCM,data:CGEcNnNQms8J2LLldGnHfPRo+IxS3ftzr6Jd1Kog6RR/205x4jCKCSMI/uP8+xZeVO/FgTiiAfuPj2m4YZisn+sNVDyaxXBBB6lVTuPy8PxH+A==,iv:yoPrxAP/UuoL0M3Urcrlz6QZf0Dx6MG/k1cWIIWrhjc=,tag:Vi/7ncy8H1txAey7rVqMww==,type:str]
+  arches:
+    - x86_64
+    - aarch64
+  intervalSeconds: 713
+sops:
+  lastmodified: "2026-06-21T13:00:49Z"
+  mac: ENC[AES256_GCM,data:VhOUmVY9aSXJ0jx9/GTC+4IJnERtkIBcBsNqnxA9IwcxTA5o1IiAQ6lS2OjYqRXFg0dxlDvJoLKuTbR+2zSY11uH4be563fkg/kNjbr0VZeVrkJy8BFxom6jJGr4gl1EKFFFmIz1WfPGxFwf9vNXH2YszfD+292/B55yVc0k/HM=,iv:E3Ydb4BPdHe/VCXdDXHYFZM3zqD7Mm6y0CmWvbMBB6s=,tag:e6AF7k5cbupTiPPwEgmwPg==,type:str]
+  pgp:
+    - created_at: "2026-06-21T13:00:49Z"
+      enc: |-
+        -----BEGIN PGP MESSAGE-----
+
+        hQMOA4x50yY5upzjEAwAqJZHC8f6grB+LH2QaBFljTe7aomOdK3+kGKOHGkQLHwQ
+        oxGVgIiPAmAjDSv7YYCukcI3MiSvur8+qJjSvBqpwPHmxJDxhiLbrbS8vdAxCKRV
+        8qHsrIX38u+WDjdPCqBGjGSL+HThcXOWfxJaDBVYd4gnuvbFcny1JdvFYEGhYorh
+        OnqGkVPG0Dhx7zAT7ljwOlO+KgDcTIxJKZj7GtfKRo/NJ59VtiG4MXv5nqdt2qKA
+        TB7xPfr0I2qKNPm7AK9G1NjoK652rqs2w64NjDIDtvwekjB5403Z4v7w6VfyB7dX
+        gIBMvh3iyIBjhZ1pKbxMp4k4g9WlbvMTq1mLXmQXNuu0QcnA+b+rfqxonuyE46/J
+        n+SsgZ4Fl8YR4nbeuCe14jm7C+AjX6IU9XsCUBk6WA1BWYVAozBoazUwZ1s0KFF1
+        VM8gNZxiHtRukMGZYLrV9Ea+J0P9SgazBS5K9CEdymAbQlFO4myCoO2DHSFxbtKq
+        CtBTShjuPu3oX8irWuchC/9Pnr7xm0tjUaPDI3LsBQeIKe/bylU0yO7lnQlydj4P
+        u3ny7NEltC5OLbaBeis4CRaqYxi9sKNwOrL8oC37sVxDTCfA1rERxc8hAsQUCS0q
+        rN3foKluuH2nOmxfWRtwXTm0iaoPkcuj/cQIh/0lHAj0L6F+r5Nuzdrf5KMGN9/u
+        bot/dt724gbUmhdsloNJRvAKX2DrZlFLwyfa7Zi94EWpX3v9CuUTY7YkKwTk04VB
+        PTySuIk8tt+FT8PCZ5Zey5ZwJIyPyeKZLRRju+2BWGN3Tk1t+sN2uVktIm+LHfqS
+        2CpTvQV171mnSYUE8cjgNYHXD6FxiXjgJI5SrRk58AggbwNuP/tpuxA0Xu4iiU18
+        IGbPj/RxdBhgp4GfLj5SFZsZPYFAC6xK3TZfqQJFJrEGAyhKsQIU+tdEAYP9Oqxc
+        nDF7ahQtLOXeROzjP+dNEPqCVVYrIy4dVSdRy7XTnC+RuExPRe4BkMG7+1wGmx2P
+        sbUOACL0lrCO+uFBtpVHIHXSXgFFMbTSiDT81lKhRoK6s9e4wfW6QwWIU6Wa4BBK
+        bt4407ivQPgmaIYHFitX3zZiAi2Af+iNhC/AX/6x03MP0yBBcnmTvzhboaXMT2PH
+        q31rqpHecF0lLcPQ5f+33ds=
+        =b3ly
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  encrypted_regex: url
+  version: 3.12.2
