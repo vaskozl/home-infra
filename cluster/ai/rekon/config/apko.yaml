@@ -9,8 +9,8 @@ spec:
         - aarch64
     intervalSeconds: 713
 sops:
-    lastmodified: "2026-06-21T12:24:54Z"
-    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    lastmodified: "2026-06-21T12:42:12Z"
+    mac: ENC[AES256_GCM,data:7VfGjNozOAgYLTIx22ZMVvyDqFGRKT8kZsMuRH/MdKOXvoLQ2pLjLXXnbgZagc/UairJOVoEPFAaofuOUs9BXTjzLaUP2b8ROHl/ZyxZe0d7hi5FJcppO0tFXpiVoixVyMTb2Dguu1RAPvI0DWPEtJocpLujof+leOYEa5ugKHE=,iv:Sev4fz74q4L2Fwsk7xkGNYjEitS8Ifp86ZVIyavYrrM=,tag:ToGaxwjOwkg41loeNvZglQ==,type:str]
     pgp:
         - created_at: "2026-06-21T12:19:33Z"
           enc: |-
@@ -52,8 +52,8 @@ spec:
         - aarch64
     intervalSeconds: 713
 sops:
-    lastmodified: "2026-06-21T12:24:54Z"
-    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    lastmodified: "2026-06-21T12:42:12Z"
+    mac: ENC[AES256_GCM,data:7VfGjNozOAgYLTIx22ZMVvyDqFGRKT8kZsMuRH/MdKOXvoLQ2pLjLXXnbgZagc/UairJOVoEPFAaofuOUs9BXTjzLaUP2b8ROHl/ZyxZe0d7hi5FJcppO0tFXpiVoixVyMTb2Dguu1RAPvI0DWPEtJocpLujof+leOYEa5ugKHE=,iv:Sev4fz74q4L2Fwsk7xkGNYjEitS8Ifp86ZVIyavYrrM=,tag:ToGaxwjOwkg41loeNvZglQ==,type:str]
     pgp:
         - created_at: "2026-06-21T12:19:33Z"
           enc: |-
@@ -95,8 +95,8 @@ spec:
         - aarch64
     intervalSeconds: 713
 sops:
-    lastmodified: "2026-06-21T12:24:54Z"
-    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    lastmodified: "2026-06-21T12:42:12Z"
+    mac: ENC[AES256_GCM,data:7VfGjNozOAgYLTIx22ZMVvyDqFGRKT8kZsMuRH/MdKOXvoLQ2pLjLXXnbgZagc/UairJOVoEPFAaofuOUs9BXTjzLaUP2b8ROHl/ZyxZe0d7hi5FJcppO0tFXpiVoixVyMTb2Dguu1RAPvI0DWPEtJocpLujof+leOYEa5ugKHE=,iv:Sev4fz74q4L2Fwsk7xkGNYjEitS8Ifp86ZVIyavYrrM=,tag:ToGaxwjOwkg41loeNvZglQ==,type:str]
     pgp:
         - created_at: "2026-06-21T12:19:33Z"
           enc: |-
@@ -137,20 +137,23 @@ spec:
         contents:
             runtime_repositories:
                 - https://packages.wolfi.dev/os
+                - https://packages.cgr.dev/extras
             build_repositories:
                 - https://virtualapk.cgr.dev/0ac7ff905850c35723a7f376e10d007c958c45c8/chainguard
                 - https://virtualapk.cgr.dev/0ac7ff905850c35723a7f376e10d007c958c45c8/extra-packages
                 - https://apks.sko.ai
             keyring:
                 - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+                - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
+                - https://apks.sko.ai/melange.rsa.pub
             packages:
                 - wolfi-base
         archs:
             - x86_64
             - aarch64
 sops:
-    lastmodified: "2026-06-21T12:24:54Z"
-    mac: ENC[AES256_GCM,data:X0AqLYzo0ZSZKEWpYxHc1DtoG4ODDBOEPU3wg35ppKRQo1MWM8t4sy1TyfQITBXTMx9ggJON5B/Sb/57JMPmdfGla1AbzNhzbCKY8vFslSdtr1JejBZq2vSig+RRov7S96JCKF5G0AvAqGuisJT+1V74xhEaZ1jnUe3M86Md8eE=,iv:8Bhej7uGrnFwW3epy5N6WvLHS6vvlnEMaQFNqUvnrXg=,tag:Sp/20pc07XR7bW9pG3znzw==,type:str]
+    lastmodified: "2026-06-21T12:42:12Z"
+    mac: ENC[AES256_GCM,data:7VfGjNozOAgYLTIx22ZMVvyDqFGRKT8kZsMuRH/MdKOXvoLQ2pLjLXXnbgZagc/UairJOVoEPFAaofuOUs9BXTjzLaUP2b8ROHl/ZyxZe0d7hi5FJcppO0tFXpiVoixVyMTb2Dguu1RAPvI0DWPEtJocpLujof+leOYEa5ugKHE=,iv:Sev4fz74q4L2Fwsk7xkGNYjEitS8Ifp86ZVIyavYrrM=,tag:ToGaxwjOwkg41loeNvZglQ==,type:str]
     pgp:
         - created_at: "2026-06-21T12:19:33Z"
           enc: |-
