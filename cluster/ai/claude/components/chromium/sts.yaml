@@ -8,7 +8,7 @@ spec:
     spec:
       initContainers:
         - name: mcp-setup-chrome
-          image: ghcr.io/vaskozl/claude:2.1.186@sha256:1e15e47fc2cdb4396603447097b8e5ac8a8c4041be7409e0f54fa7751a5a264c
+          image: ghcr.io/vaskozl/claude:2.1.186@sha256:8f8c52bd5d890234dae8186b0642535c1be2e1d1714438d28f51d99cca52dc5e
           command: ["sh", "-c"]
           args:
             - |
