@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.15@sha256:47ed1627e2e21520f720bb603043ad551077b9cb58407ad74e105dc20179d9bd
+              tag: 0.0.15@sha256:bb4ac0a7811aa1124482dfbedd2255fabc31868be31e05baf1be21de74067252
             args:
               - -redis
               - rekon-redis:6379
@@ -94,7 +94,7 @@ spec:
           chrome-devtools-mcp:
             image:
               repository: cgr.dev/chainguard/node
-              tag: latest@sha256:cd685308172e6cefc15ef66813743d0ba498692fc4bb11a2e248f003ad1c6059
+              tag: latest@sha256:61db1ce1142fa38639ac49071f796c3f04409ef371c5005db18ff1604c429f7e
             command: ["npx"]
             args:
               - -y
