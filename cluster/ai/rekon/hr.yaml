@@ -61,6 +61,7 @@ spec:
               DISABLE_BUG_COMMAND: "1"
               DISABLE_AUTOUPDATER: "1"
               DISABLE_ERROR_REPORTING: "1"
+              OPERATOR_ORG: doudous
             envFrom:
               - secretRef:
                   name: rekon-env
