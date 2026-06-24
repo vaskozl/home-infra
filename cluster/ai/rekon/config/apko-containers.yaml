@@ -116,6 +116,7 @@ spec:
   config: |
     contents:
       packages:
+        - dragonfly
         - dragonfly-oci-compat
     entrypoint:
       command: /usr/bin/entrypoint.sh
