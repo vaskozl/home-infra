@@ -121,21 +121,3 @@ spec:
     entrypoint:
       command: /usr/bin/entrypoint.sh
     cmd: dragonfly --logtostderr
----
-apiVersion: pkg.example/v1
-kind: apkoimages
-metadata:
-  id: dragonfly-operator
-spec:
-  includes: [wolfi-base]
-  tags: [latest]
-  registries:
-    - ghcr.io/vaskozl/dragonfly-operator
-  versionFrom: dragonfly-operator
-  config: |
-    contents:
-      packages:
-        - dragonfly-operator
-        - dragonfly-operator-compat
-    entrypoint:
-      command: /manager
