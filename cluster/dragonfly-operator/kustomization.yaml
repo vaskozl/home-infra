@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: dragonfly-operator
 resources:
   - _namespace.yaml
-  - ocirepository.yaml
   - hr.yaml
 components:
   - ../common
