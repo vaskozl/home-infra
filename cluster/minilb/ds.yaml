@@ -16,7 +16,7 @@ spec:
       serviceAccountName: minilb
       containers:
         - name: minilb
-          image: ghcr.io/vaskozl/minilb:0.2.2@sha256:fee01bf32ef6bdf7e2488593ba4396b40280c747552669edcf72be4b2d4fbbf0
+          image: ghcr.io/vaskozl/minilb:0.2.2@sha256:cddac29a65906013147b16958a3c3fb624d95ceaf8c53162d302d077e0890e60
           ports:
             - containerPort: 53
               hostPort: 5353
