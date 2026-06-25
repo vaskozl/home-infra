@@ -8,7 +8,7 @@ spec:
     spec:
       initContainers:
         - name: mcp-setup-chrome
-          image: ghcr.io/vaskozl/claude:2.1.187@sha256:9e983baaad984fd91350da76ce5e1722779915548801c4e6c3917a1d7cb24616
+          image: ghcr.io/vaskozl/claude:2.1.187@sha256:74c9ce3a62c2f6e70afaecac57c2fddc5621b6af5e9a7c36137d35b27d983dfc
           command: ["sh", "-c"]
           args:
             - |
@@ -31,7 +31,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:7ce7491612c80eac34419a2d765ff73d4e1a5e791af0ef98c8d990b721340f46
+          image: cgr.dev/chainguard/node:latest@sha256:05d2ed6a0b3e6d3b9ca1d7f0b76e88dd06b91fa95c4f1e849f99bba7bd5a21b8
           command: ["npx"]
           args:
             - -y
