@@ -115,41 +115,6 @@ spec:
               requests:
                 cpu: 50m
                 memory: 600Mi
-      redis:
-        type: statefulset
-        pod:
-          securityContext:
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-        statefulset:
-          podManagementPolicy: Parallel
-          volumeClaimTemplates:
-            - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /data
-              name: data
-              size: 1Gi
-        containers:
-          app:
-            image:
-              repository: ghcr.io/vaskozl/redis
-              tag: 8.6.4@sha256:acec70ebcc5b6340e2be43e48a3eea5c27be8d5f1bf20bb9ba15034929d171e2
-            args:
-              - --appendonly
-              - "yes"
-              - --protected-mode
-              - "no"
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-            resources:
-              limits:
-                memory: 250Mi
-              requests:
-                cpu: 10m
-                memory: 250Mi
     defaultPodOptions:
       automountServiceAccountToken: true
       nodeSelector:
@@ -217,8 +182,3 @@ spec:
         ports:
           http:
             port: 8088
-      redis:
-        controller: redis
-        ports:
-          redis:
-            port: 6379

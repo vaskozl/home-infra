@@ -5,6 +5,7 @@ namespace: ai
 resources:
   - hr.yaml
   - rbac.yaml
+  - dragonfly.yaml
     #  - ../../gitlab/buildkit/buildkit-client-certs.yaml
 secretGenerator:
   - name: rekon-env
