@@ -8,7 +8,7 @@ spec:
     spec:
       initContainers:
         - name: mcp-setup-chrome
-          image: ghcr.io/vaskozl/claude:2.1.191@sha256:32bc3716c44d5cb581e2c818a6b2ad20a2745e5da64deb34d85d958ab44b5bd0
+          image: ghcr.io/vaskozl/claude:2.1.191@sha256:0227d8bd8491297ff5fba06afe1daac4f3c838f4e05464ac40e522ba9c783064
           command: ["sh", "-c"]
           args:
             - |
@@ -19,7 +19,7 @@ spec:
               mountPath: /home/nonroot
       containers:
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:16b9d0842b4065dda5edfac9b71e2449e1a267ef6accc55529a72bbd85440bee
+          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:46695dd750e4697d3d6fad4613b81227ab29f21a0449696965b99a731fec5327
           args:
             - --headless
             - --remote-debugging-port=9222
@@ -31,7 +31,7 @@ spec:
             limits:
               memory: 1500Mi
         - name: chrome-devtools-mcp
-          image: cgr.dev/chainguard/node:latest@sha256:05d2ed6a0b3e6d3b9ca1d7f0b76e88dd06b91fa95c4f1e849f99bba7bd5a21b8
+          image: cgr.dev/chainguard/node:latest@sha256:955b52dd59f8a73419fe1931e13a9b9eb822e7e5fda21ca754688b55753ea6ca
           command: ["npx"]
           args:
             - -y

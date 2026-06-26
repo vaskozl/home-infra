@@ -39,7 +39,7 @@ spec:
           mcp-setup:
             image: &claudeImage
               repository: ghcr.io/vaskozl/claude
-              tag: 2.1.191@sha256:32bc3716c44d5cb581e2c818a6b2ad20a2745e5da64deb34d85d958ab44b5bd0
+              tag: 2.1.191@sha256:0227d8bd8491297ff5fba06afe1daac4f3c838f4e05464ac40e522ba9c783064
             command: ["sh", "-c"]
             args:
               - |
@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.18@sha256:cd022d8b0374c9c63b1a1a0a867b11d0e9ee79868c6711a5a1929fb473fdbd38
+              tag: 0.0.18@sha256:3c4caea45ed07b0eff5b2e2492fcf46f0c6338bd1492ed87b5f1eccfe3d1b747
             args:
               - -redis
               - rekon-redis:6379
@@ -81,7 +81,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 149.0.7827.196@sha256:16b9d0842b4065dda5edfac9b71e2449e1a267ef6accc55529a72bbd85440bee
+              tag: 149.0.7827.196@sha256:46695dd750e4697d3d6fad4613b81227ab29f21a0449696965b99a731fec5327
             args:
               - --headless
               - --remote-debugging-port=9222
@@ -95,7 +95,7 @@ spec:
           chrome-devtools-mcp:
             image:
               repository: cgr.dev/chainguard/node
-              tag: latest@sha256:05d2ed6a0b3e6d3b9ca1d7f0b76e88dd06b91fa95c4f1e849f99bba7bd5a21b8
+              tag: latest@sha256:955b52dd59f8a73419fe1931e13a9b9eb822e7e5fda21ca754688b55753ea6ca
             command: ["npx"]
             args:
               - -y
@@ -133,7 +133,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.6.4@sha256:2091737544f2c919b042a16bcb00e368cb23265273930923bbb61b4699ab6d0a
+              tag: 8.6.4@sha256:fff20c326973c53cf72485c497498fb9a957b30e4fbe6f056e85616ab23f0996
             args:
               - --appendonly
               - "yes"
