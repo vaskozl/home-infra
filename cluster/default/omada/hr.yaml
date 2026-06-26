@@ -24,7 +24,7 @@ spec:
               MANAGE_HTTPS_PORT: '443'
             image:
               repository: mbentley/omada-controller
-              tag: '6.2@sha256:aed5093543973de15d070ce322e267cfd2d03c01f2d7e20d6d0d800d5caff98c'
+              tag: '6.2@sha256:b95ed4b4a3bcb8a9861666d0e3fc4966e7134282f646fcfa2a5d27e7d71da1d2'
             probes:
               liveness:
                 enabled: true
@@ -50,7 +50,7 @@ spec:
               - rm -f /opt/tplink/EAPController/data/db/_repair_incomplete
             image:
               repository: mbentley/omada-controller
-              tag: '6.2@sha256:aed5093543973de15d070ce322e267cfd2d03c01f2d7e20d6d0d800d5caff98c'
+              tag: '6.2@sha256:b95ed4b4a3bcb8a9861666d0e3fc4966e7134282f646fcfa2a5d27e7d71da1d2'
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
