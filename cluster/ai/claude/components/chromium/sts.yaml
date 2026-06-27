@@ -19,7 +19,7 @@ spec:
               mountPath: /home/nonroot
       containers:
         - name: chromium
-          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:46695dd750e4697d3d6fad4613b81227ab29f21a0449696965b99a731fec5327
+          image: ghcr.io/vaskozl/chromium:149.0.7827@sha256:a20b567de1e11ce5cce9556fdf9c9bd3a5e8741501e6393468b94b67a3382e51
           args:
             - --headless
             - --remote-debugging-port=9222
