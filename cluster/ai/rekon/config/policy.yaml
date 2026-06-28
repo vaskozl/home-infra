@@ -3,7 +3,7 @@
 # them once CI passes (the MR reconciler gates on the head pipeline). rebase is
 # off, so an open bump branch isn't force-pushed just because its base moved
 # (only a real change to the bump re-pushes).
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
   id: package-defaults
@@ -15,7 +15,7 @@ spec:
   rebase: true
   labels: [renovate,pkgupdate]
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
   id: image-automerge
@@ -36,7 +36,7 @@ spec:
 # refreshes of 5.0.5 stay allowed. Drop this once a non-leaking release (5.0.7+)
 # ships. The forwarder daemonset shares the image but does not hit the leak, and
 # a hold never forces a downgrade, so it is left where it is.
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
   id: fluent-bit-leak-hold
@@ -46,3 +46,19 @@ spec:
   matchNames: ["ghcr.io/vaskozl/fluent-bit"]
   priority: 10
   range: "<5.0.6"
+---
+# pocket-id updates (including digest refreshes) are held for the moment: the
+# latest distroless digest regressed, so a manual revert pinned the image back
+# and this policy stops the bumper from re-proposing it. Drop this once
+# pocket-id is unblocked.
+apiVersion: v1alpha1
+kind: updatepolicies
+metadata:
+  id: pocket-id-hold
+spec:
+  name: pocket-id hold
+  selectorKind: images
+  matchNames: ["ghcr.io/pocket-id/pocket-id"]
+  priority: 10
+  updateTypes: []
+  automerge: false

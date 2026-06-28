@@ -1,4 +1,4 @@
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: gitlabrepos
 metadata:
   id: packages
@@ -8,7 +8,7 @@ spec:
   intervalSeconds: 600
   org: doudous
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: gitlabrepos
 metadata:
   id: home-infra
@@ -18,7 +18,7 @@ spec:
   intervalSeconds: 600
   org: doudous
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: gitlabrepos
 metadata:
   id: rekon
