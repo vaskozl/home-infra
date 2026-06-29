@@ -67,10 +67,10 @@ spec:
                   name: rekon-env
             resources:
               limits:
-                memory: 5.5Gi
+                memory: 8Gi
               requests:
                 cpu: 200m
-                memory: 384Mi
+                memory: 1Gi
             securityContext:
               allowPrivilegeEscalation: true
               procMount: Unmasked
