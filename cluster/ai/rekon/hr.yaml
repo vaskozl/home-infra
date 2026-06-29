@@ -39,7 +39,7 @@ spec:
           mcp-setup:
             image: &claudeImage
               repository: ghcr.io/vaskozl/claude
-              tag: 2.1.193@sha256:c732aa11cde69602de227f3c51987e368740571da5a89cf325b8da2a8d3ad6e2
+              tag: 2.1.193@sha256:5cb4af30b6b3efac544cae613c24141287298af6087bcfdf80f73b990531d67c
             command: ["sh", "-c"]
             args:
               - |
@@ -81,7 +81,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 149.0.7827.200@sha256:c4f38750d0ce5a75331d4558ec6a9d82576a58e8698769d2d0fe1242874a5ee4
+              tag: 149.0.7827.200@sha256:394b4231386fa748decd5882048039aec28204dec01437e9b3b1ed1edf41109c
             args:
               - --headless
               - --remote-debugging-port=9222
