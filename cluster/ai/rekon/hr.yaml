@@ -39,7 +39,7 @@ spec:
           mcp-setup:
             image: &claudeImage
               repository: ghcr.io/vaskozl/claude
-              tag: 2.1.193@sha256:5cb4af30b6b3efac544cae613c24141287298af6087bcfdf80f73b990531d67c
+              tag: 2.1.193@sha256:bb78d5e1bc3a415d2f6205e68095cf837e99a4280e31c7dc83c1fdbbcd18556c
             command: ["sh", "-c"]
             args:
               - |
@@ -51,7 +51,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.19@sha256:7d85a0dd342dec38b2951a514816a69e02dc6ba26bdf12ac8936e827872ca1f2
+              tag: 0.0.19@sha256:dfd669df7aa61f09abd37421b3c3256a59c43b19e79f0c9bbb3a09b6f0034f79
             args:
               - -redis
               - rekon-redis:6379
