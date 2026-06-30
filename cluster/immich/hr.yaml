@@ -28,7 +28,7 @@ spec:
                 DB_HOSTNAME: immich-postgres
                 DB_PASSWORD: immich
                 DB_USERNAME: immich
-                REDIS_HOSTNAME: immich-redis
+                REDIS_URL: ioredis://eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJyZWRpcy1zZW50aW5lbCIsInBvcnQiOjI2Mzc5fV0sIm5hbWUiOiJteW1hc3RlciJ9
               MPLCONFIGDIR: /cache/matplotlib
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
@@ -85,29 +85,6 @@ spec:
                 - path: /var/lib/postgresql/data
               name: pgdata
               size: 1Mi
-        type: statefulset
-      redis:
-        containers:
-          app:
-            args:
-              - --save
-              - ""
-              - --appendonly
-              - "no"
-              - --protected-mode
-              - "no"
-            image:
-              repository: ghcr.io/vaskozl/redis
-              tag: 8.8.0@sha256:5ad168ba2affaa0698b6a80a314cc2865c55e791b1ae6f89821613ed0b8fc253
-            resources:
-              limits:
-                memory: 140Mi
-              requests:
-                cpu: 10m
-                memory: 140Mi
-            securityContext: *securityContext
-        statefulset:
-          podManagementPolicy: Parallel
         type: statefulset
       server:
         containers:
@@ -189,11 +166,6 @@ spec:
         ports:
           http:
             port: 5432
-      redis:
-        controller: redis
-        ports:
-          http:
-            port: 6379
       server:
         controller: server
         ports:

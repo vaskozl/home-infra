@@ -26,7 +26,7 @@ spec:
             value: "1"
       initContainers:
         - name: sentinel
-          image: &image ghcr.io/vaskozl/redis
+          image: &image ghcr.io/vaskozl/redis:8.8.0@sha256:5ad168ba2affaa0698b6a80a314cc2865c55e791b1ae6f89821613ed0b8fc253
           restartPolicy: Always
           command: ["/scripts/sentinel.sh"]
           env: &env
@@ -50,7 +50,6 @@ spec:
               cpu: 5m
               memory: 20Mi
             limits:
-              cpu: 5m
               memory: 20Mi
           volumeMounts: &mounts
             - name: data
