@@ -14,10 +14,14 @@ generatorOptions:
 configMapGenerator:
   - name: redis-scripts
     files:
+      - scripts/lib.sh
       - scripts/sentinel.sh
       - scripts/redis.sh
       - scripts/prestop.sh
+      - scripts/push-master-label.sh
+      - scripts/update-master-label.sh
 
 resources:
+  - rbac.yaml
   - svc.yaml
   - sts.yaml

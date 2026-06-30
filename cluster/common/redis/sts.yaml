@@ -17,6 +17,7 @@ spec:
             storage: 1Gi
   template:
     spec:
+      serviceAccountName: redis
       securityContext:
         fsGroup: 65532
       terminationGracePeriodSeconds: 30
@@ -28,7 +29,7 @@ spec:
         - name: sentinel
           image: &image ghcr.io/vaskozl/redis:8.8.0@sha256:5ad168ba2affaa0698b6a80a314cc2865c55e791b1ae6f89821613ed0b8fc253
           restartPolicy: Always
-          command: ["/scripts/sentinel.sh"]
+          command: ["/usr/local/bin/sentinel.sh"]
           env: &env
             - name: NAMESPACE
               valueFrom:
@@ -53,18 +54,36 @@ spec:
               memory: 20Mi
           volumeMounts: &mounts
             - name: data
-              mountPath: /data
-            - name: scripts
-              mountPath: /scripts
+              mountPath: /var/lib/redis
+            - name: usr-local-bin
+              mountPath: /usr/local/bin
+            - name: run-redis
+              mountPath: /run/redis
+        - name: labeler
+          image: ghcr.io/vaskozl/kubectl:1.35@sha256:0972ccb7fbdeacfcc19442e17dab5b7c8cb260be9e38171fa287073e5748edcb
+          restartPolicy: Always
+          command: ["/usr/local/bin/update-master-label.sh"]
+          env: *env
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 16Mi
+          volumeMounts:
+            - name: usr-local-bin
+              mountPath: /usr/local/bin
+            - name: run-redis
+              mountPath: /run/redis
       containers:
         - name: redis
           image: *image
-          command: ["/scripts/redis.sh"]
+          command: ["/usr/local/bin/redis.sh"]
           env: *env
           lifecycle:
             preStop:
               exec:
-                command: ["/scripts/prestop.sh"]
+                command: ["/usr/local/bin/prestop.sh"]
           ports:
             - name: tcp
               containerPort: 6379
@@ -80,7 +99,9 @@ spec:
               memory: 150Mi
           volumeMounts: *mounts
       volumes:
-        - name: scripts
+        - name: run-redis
+          emptyDir: {}
+        - name: usr-local-bin
           configMap:
             name: redis-scripts
             defaultMode: 0555

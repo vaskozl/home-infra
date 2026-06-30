@@ -16,6 +16,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: redis-master
+spec:
+  selector:
+    isMaster: "true"
+  ports:
+    - name: tcp
+      port: 6379
+      targetPort: tcp
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: redis-sentinel
 spec:
   ports:
