@@ -1,0 +1,25 @@
+---
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  name: rekon-redis
+  namespace: ai
+spec:
+  replicas: 3
+  image: ghcr.io/vaskozl/dragonfly:1.39.0@sha256:1aa5d405b3c4e1b6348b1b8eefb97bdae88596bb5efe6453991a80d98f182e1b
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  resources:
+    requests:
+      cpu: 10m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+  snapshot:
+    cron: "*/5 * * * *"
+    persistentVolumeClaimSpec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
