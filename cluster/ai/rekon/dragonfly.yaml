@@ -5,16 +5,16 @@ metadata:
   name: rekon-redis
   namespace: ai
 spec:
-  replicas: 3
+  replicas: 2
   image: ghcr.io/vaskozl/dragonfly:1.39.0@sha256:1aa5d405b3c4e1b6348b1b8eefb97bdae88596bb5efe6453991a80d98f182e1b
-  nodeSelector:
-    kubernetes.io/arch: amd64
+  args:
+    - "--proactor_threads=2"
   resources:
     requests:
-      cpu: 10m
-      memory: 256Mi
+      cpu: 50m
+      memory: 600Mi
     limits:
-      memory: 512Mi
+      memory: 600Mi
   snapshot:
     cron: "*/5 * * * *"
     persistentVolumeClaimSpec:
