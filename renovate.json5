@@ -147,6 +147,14 @@
       allowedVersions: '<5.0.6',
     },
     {
+      // pocket-id v2.9.0's newer distroless digest (968866bd) is broken; pin to
+      // the known-good digest (e21b1343) by blocking updates until a fixed
+      // release ships.
+      matchDatasources: ['docker'],
+      matchPackageNames: ['ghcr.io/pocket-id/pocket-id'],
+      enabled: false,
+    },
+    {
       // The agentgateway OCI repos contain both legacy kgateway-era v2.x tags
       // (Feb 2026) and the standalone v1.x lineage (Mar 2026+). Despite v2 > v1,
       // v1.x is the current line — pin to <2.0.0 to stop Renovate proposing

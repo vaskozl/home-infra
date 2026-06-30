@@ -1,4 +1,4 @@
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: apkoimages
 metadata:
   id: logrotate
@@ -15,7 +15,7 @@ spec:
     entrypoint:
       command: logrotate
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: apkoimages
 metadata:
   id: claude
@@ -85,7 +85,7 @@ spec:
         permissions: 0o755
         recursive: true
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: apkoimages
 metadata:
   id: rekon-pkgupdate
@@ -103,7 +103,7 @@ spec:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: apkoimages
 metadata:
   id: dragonfly

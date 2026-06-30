@@ -1,4 +1,4 @@
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: agents
 metadata:
   id: lead-opus
@@ -106,7 +106,7 @@ spec:
     - Only add workflow::{ready for development,in dev,in review},
       model::{opus}, wake::lead, and claude::ignore labels.
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: agents
 metadata:
   id: dev-opus
@@ -287,7 +287,7 @@ spec:
     - Always use GitLab issues as your cross-iteration memory and questions.
     - If stuck: comment explaining the blocker, set workflow::blocked, and move on.
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: agents
 metadata:
   id: reviewer-opus
@@ -538,7 +538,7 @@ spec:
     - Don't approve if tests are failing, there are merge conflicts, or the MR is
       missing the Closes #<id> auto-close directive.
 ---
-apiVersion: pkg.example/v1
+apiVersion: v1alpha1
 kind: agents
 metadata:
   id: ops-opus

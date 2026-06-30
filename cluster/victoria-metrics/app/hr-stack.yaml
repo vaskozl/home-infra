@@ -94,7 +94,7 @@ spec:
       image:
         registry: ghcr.io
         repository: vaskozl/grafana
-        tag: 13.0.3@sha256:9bca68006cc296ac50893924d029073819a20b215427e562e5a939d0bf6470a9
+        tag: 13.0.3@sha256:75ec1de4f30b56e78f336b9a6c7bde27e21c9763a97103225fd1f81af9ee3308
       route:
         main:
           enabled: true
@@ -298,7 +298,7 @@ spec:
         # Keep digest out of `tag` — the subchart's daemonset.yaml runs
         # `semverCompare ">=1.4.0-0" .Values.image.tag` and chokes on `@sha256:`.
         tag: 1.11.1
-        digest: sha256:31d858f960695dd4ccfe9f27ea30567e85b30747af019d34b351e253534fe9bb
+        digest: sha256:ebcc7ac3e402b0916ec88ab5305c74b80809a85a2c93dae7a1f8e4330e0f3e01
       extraArgs:
         - --collector.disable-defaults
         - --collector.uname
