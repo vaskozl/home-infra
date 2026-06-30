@@ -47,7 +47,7 @@ spec:
               command: ["redis-cli", "-p", "26379", "ping"]
           resources:
             requests:
-              cpu: 5m
+              cpu: 20m
               memory: 20Mi
             limits:
               memory: 20Mi
@@ -74,7 +74,7 @@ spec:
           readinessProbe: *redis-ping
           resources:
             requests:
-              cpu: 10m
+              cpu: 100m
               memory: 150Mi
             limits:
               memory: 150Mi
