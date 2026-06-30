@@ -7,6 +7,10 @@ labels:
       app.kubernetes.io/instance: redis
     includeSelectors: true
 
+generatorOptions:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+
 configMapGenerator:
   - name: redis-scripts
     files:
