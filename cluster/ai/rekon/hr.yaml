@@ -47,6 +47,13 @@ spec:
                 echo claude mcp remove-s user  chrome-devtools 2>/dev/null
                 echo claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
                 echo claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
+            securityContext: &security-context
+              allowPrivilegeEscalation: true
+              procMount: Unmasked
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: Unconfined
         containers:
           app:
             image:
@@ -71,13 +78,7 @@ spec:
               requests:
                 cpu: 200m
                 memory: 1Gi
-            securityContext:
-              allowPrivilegeEscalation: true
-              procMount: Unmasked
-              runAsGroup: 568
-              runAsUser: 568
-              seccompProfile:
-                type: Unconfined
+            securityContext: *security-context
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
