@@ -8,10 +8,12 @@ spec:
   replicas: 2
   image: ghcr.io/vaskozl/dragonfly:1.39.0@sha256:2aae382d2a321399cfd431b5cd213aec3921fbd189bcc4eeaddf2b5fe75f14f0
   args:
-    - "--proactor_threads=2"
+    - --proactor_threads=1
+    - --cluster_mode=emulated
+    - --lock_on_hashtags
   resources:
     requests:
-      cpu: 50m
+      cpu: 10m
       memory: 600Mi
     limits:
       memory: 600Mi
