@@ -51,6 +51,18 @@ spec:
 # latest distroless digest regressed, so a manual revert pinned the image back
 # and this policy stops the bumper from re-proposing it. Drop this once
 # pocket-id is unblocked.
+#
+# Holding a digest refresh needs both knobs below, not one:
+#   - updateTypes must be NON-empty to override the image-automerge default of
+#     [patch,digest]. An empty list is read as "no opinion" and is ignored, so
+#     the default's digest+patch (and its automerge) stay in force. Listing
+#     [major,minor,patch] drops digest from the effective set, which is the only
+#     gate on the digest-refresh path (that path is not range-checked).
+#   - range blocks tag drift. The bumper only acts on upward drift, so a range
+#     the current tag already sits at the top of freezes tag bumps without ever
+#     forcing a downgrade.
+# A first-class pause would be clearer: see doudous/rekon for the paused-policy
+# request that lets this collapse back to a single field.
 apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
@@ -60,5 +72,5 @@ spec:
   selectorKind: images
   matchNames: ["ghcr.io/pocket-id/pocket-id"]
   priority: 10
-  updateTypes: []
-  automerge: false
+  updateTypes: [major, minor, patch]
+  range: "<2.9.0"
