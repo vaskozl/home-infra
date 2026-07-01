@@ -43,6 +43,9 @@ spec:
             command: ["sh", "-c"]
             args:
               - |
+                mkdir -p /home/nonroot/.claude
+                [ -f /home/nonroot/.claude/settings.json ] || cp /home/nonroot/config/claude-settings.json /home/nonroot/.claude/settings.json
+                [ -f /home/nonroot/.claude/CLAUDE.md ] || cp /home/nonroot/config/CLAUDE.md /home/nonroot/.claude/CLAUDE.md
                 echo claude mcp remove -s user victoriametrics 2>/dev/null
                 echo claude mcp remove-s user  chrome-devtools 2>/dev/null
                 echo claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
@@ -144,10 +147,6 @@ spec:
           main:
             app:
               - path: /home/nonroot/config
-              - path: /home/nonroot/.claude/settings.json
-                subPath: claude-settings.json
-              - path: /home/nonroot/.claude/CLAUDE.md
-                subPath: CLAUDE.md
       screenshots:
         type: emptyDir
         advancedMounts:
