@@ -54,8 +54,6 @@ spec:
             requests:
               cpu: 20m
               memory: 20Mi
-            limits:
-              memory: 20Mi
           volumeMounts: &mounts
             - name: data
               mountPath: /var/lib/redis
@@ -70,13 +68,11 @@ spec:
           env: *env
           readinessProbe:
             exec:
-              command: ["sh", "-c", "test -e /proc/1/fd/3"]
+              command: ["test", "-e", "/proc/1/fd/3"]
             periodSeconds: 5
           resources:
             requests:
               cpu: 10m
-              memory: 16Mi
-            limits:
               memory: 16Mi
           volumeMounts:
             - name: usr-local-bin
@@ -102,8 +98,6 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 150Mi
-            limits:
               memory: 150Mi
           volumeMounts: *mounts
       volumes:
