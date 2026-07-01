@@ -2,8 +2,7 @@
 set -e
 # shellcheck source=scripts/lib.sh
 . /usr/local/bin/lib.sh
-MASTER="$(master_addr -h "redis-sentinel.${NAMESPACE}.svc.cluster.local")"
-[ -n "$MASTER" ] || MASTER="$(default_master)"
+MASTER="$(resolve_master)"
 cat > /run/redis/redis.conf <<EOF
 port 6379
 protected-mode no

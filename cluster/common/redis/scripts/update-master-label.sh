@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+trap 'exit 0' TERM INT
 [ -p /run/redis/events ] || mkfifo -m 0660 /run/redis/events
 exec 3<> /run/redis/events
 apply() {
