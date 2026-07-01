@@ -79,9 +79,7 @@ spec:
        - Acceptance criteria: what "done" looks like, expected behaviour
        - Testing: how to verify the change (test commands, manual checks)
 
-    6. Set a model:: label. Default to model::fable: most planned work needs
-       judgment, multi-file reasoning, or non-trivial design. Use model::opus
-       by default.
+    6. Set a model:: Use model::opus by default, extremely difficult work can use model::facleb.
 
     7. Mark ready:
        glab issue update <id> -R <repo> -l 'workflow::ready for development'
