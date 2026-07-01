@@ -28,7 +28,7 @@ spec:
                 DB_HOSTNAME: immich-postgres
                 DB_PASSWORD: immich
                 DB_USERNAME: immich
-                REDIS_URL: ioredis://eyJzZW50aW5lbHMiOlt7Imhvc3QiOiJyZWRpcy1zZW50aW5lbCIsInBvcnQiOjI2Mzc5fV0sIm5hbWUiOiJteW1hc3RlciJ9
+                REDIS_HOSTNAME: redis-master
               MPLCONFIGDIR: /cache/matplotlib
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
