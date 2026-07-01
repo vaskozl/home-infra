@@ -720,11 +720,11 @@ spec:
 apiVersion: v1alpha1
 kind: agents
 metadata:
-  id: ops-fable
+  id: ops-opus
 spec:
   role: ops
   bin: claude
-  model: fable
+  model: opus
   effort: low
   disabled: true
   description: Triages firing alerts and proposes fixes.
