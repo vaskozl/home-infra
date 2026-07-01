@@ -8,6 +8,7 @@ kind: updatepolicies
 metadata:
   id: package-defaults
 spec:
+  name: package defaults
   selectorKind: packages
   matchNames: ["*"]
   updateTypes: [major, minor, patch, digest]
@@ -20,6 +21,7 @@ kind: updatepolicies
 metadata:
   id: image-automerge
 spec:
+  name: image automerge
   selectorKind: images
   matchNames: ["*"]
   updateTypes: [patch, digest]
