@@ -18,7 +18,7 @@ configMapGenerator:
       - scripts/sentinel.sh
       - scripts/redis.sh
       - scripts/prestop.sh
-      - scripts/push-master-label.sh
+      - scripts/on-event.sh
       - scripts/update-master-label.sh
 
 resources:

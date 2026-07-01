@@ -9,3 +9,4 @@ while [ "$i" -lt 25 ]; do
   [ -n "$NEW" ] && [ "$NEW" != "$ME" ] && exit 0
   sleep 1; i=$((i+1))
 done
+exit 1
