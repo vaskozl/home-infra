@@ -68,6 +68,10 @@ spec:
           restartPolicy: Always
           command: ["/usr/local/bin/update-master-label.sh"]
           env: *env
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "test -e /proc/1/fd/3"]
+            periodSeconds: 5
           resources:
             requests:
               cpu: 10m

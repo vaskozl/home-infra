@@ -2,7 +2,7 @@
 set -e
 # shellcheck source=scripts/lib.sh
 . /usr/local/bin/lib.sh
-[ -p /run/redis/events ] || mkfifo /run/redis/events
+[ -p /run/redis/events ] || mkfifo -m 0660 /run/redis/events
 cat > /run/redis/sentinel.conf <<EOF
 port 26379
 sentinel resolve-hostnames yes
