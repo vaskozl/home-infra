@@ -5,8 +5,8 @@ namespace: ai
 resources:
   - hr.yaml
   - rbac.yaml
-  - ../common/redis
-    #  - ../../gitlab/buildkit/buildkit-client-certs.yaml
+  - ../../common/redis
+#  - ../../gitlab/buildkit/buildkit-client-certs.yaml
 secretGenerator:
   - name: rekon-env
     envs:
