@@ -8,7 +8,10 @@ port 6379
 protected-mode no
 dir /var/lib/redis
 appendonly yes
+appendfsync everysec
 save ""
+min-replicas-to-write 1
+min-replicas-max-lag 10
 replica-announce-ip $ME
 EOF
 [ "$MASTER" = "$ME" ] || echo "replicaof $MASTER 6379" >> /run/redis/redis.conf
