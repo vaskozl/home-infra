@@ -6,7 +6,7 @@ metadata:
   namespace: ai
 spec:
   replicas: 2
-  image: ghcr.io/vaskozl/dragonfly:1.39.0@sha256:2aae382d2a321399cfd431b5cd213aec3921fbd189bcc4eeaddf2b5fe75f14f0
+  image: ghcr.io/vaskozl/dragonfly:1.39.0@sha256:e5e7ef50695161b13a400bbe7e1543611a3376885870a5b4af52d5692c7cb708
   nodeSelector:
     kubernetes.io/arch: amd64
   args:
