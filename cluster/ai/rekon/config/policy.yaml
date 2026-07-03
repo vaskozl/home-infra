@@ -12,8 +12,8 @@ spec:
   selectorKind: packages
   matchNames: ["*"]
   updateTypes: [major, minor, patch, digest]
-  automerge: true
-  rebase: true
+  automerge: 'true'
+  rebase: 'true'
   labels: [renovate,pkgupdate]
 ---
 apiVersion: v1alpha1
@@ -25,8 +25,8 @@ spec:
   selectorKind: images
   matchNames: ["*"]
   updateTypes: [patch, digest]
-  automerge: true
-  rebase: true
+  automerge: 'true'
+  rebase: 'true'
   labels: [renovate,pkgupdate]
 ---
 # fluent-bit 5.0.6 leaks memory on the log aggregator's forward->file path: the
