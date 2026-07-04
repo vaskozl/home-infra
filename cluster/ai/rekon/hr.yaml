@@ -46,10 +46,10 @@ spec:
                 mkdir -p /home/nonroot/.claude
                 [ -f /home/nonroot/.claude/settings.json ] || cp /home/nonroot/config/claude-settings.json /home/nonroot/.claude/settings.json
                 [ -f /home/nonroot/.claude/CLAUDE.md ] || cp /home/nonroot/config/CLAUDE.md /home/nonroot/.claude/CLAUDE.md
-                echo claude mcp remove -s user victoriametrics 2>/dev/null
-                echo claude mcp remove-s user  chrome-devtools 2>/dev/null
-                echo claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
-                echo claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
+                claude mcp remove -s user victoriametrics 2>/dev/null
+                claude mcp remove -s user chrome-devtools 2>/dev/null
+                claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
+                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
             securityContext: &security-context
               allowPrivilegeEscalation: true
               procMount: Unmasked
@@ -103,7 +103,7 @@ spec:
             command: ["npx"]
             args:
               - -y
-              - mcp-proxy@latest
+              - mcp-proxy@6.5.1
               - --transport
               - streamablehttp
               - --port
@@ -111,7 +111,7 @@ spec:
               - --
               - npx
               - -y
-              - chrome-devtools-mcp@latest
+              - chrome-devtools-mcp@1.1.1
               - --browserUrl=http://127.0.0.1:9222
             resources:
               limits:
@@ -146,6 +146,8 @@ spec:
         advancedMounts:
           main:
             app:
+              - path: /home/nonroot/config
+            mcp-setup:
               - path: /home/nonroot/config
       screenshots:
         type: emptyDir
