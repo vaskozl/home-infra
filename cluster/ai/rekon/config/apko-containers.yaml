@@ -1,6 +1,23 @@
 apiVersion: v1alpha1
 kind: apkoimages
 metadata:
+  id: alps
+spec:
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/alps
+  versionFrom: alps
+  config: |
+    contents:
+      packages:
+        - alps
+    entrypoint:
+      command: alps
+---
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
   id: logrotate
 spec:
   includes: [wolfi-base]
