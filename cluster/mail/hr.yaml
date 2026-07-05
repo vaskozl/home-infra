@@ -59,6 +59,35 @@ spec:
               size: 1Mi
               storageClass: nfs-client
         type: statefulset
+      alps:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/alps
+              tag: 1@sha256:db50994bc14749252482a5bb45e8b3daef3b69c2481c46e0b708e35c9444c93e
+            args:
+              - -config
+              - /etc/alps/alps.toml
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: [ALL]
+              runAsUser: 568
+              runAsGroup: 568
+              seccompProfile:
+                type: RuntimeDefault
       rspamd:
         containers:
           app:
@@ -100,6 +129,14 @@ spec:
               storageClass: nfs-client
         type: statefulset
     persistence:
+      alps-config:
+        name: alps-config
+        type: secret
+        advancedMounts:
+          alps:
+            app:
+              - path: /etc/alps/alps.toml
+                subPath: alps.toml
       maddy-config:
         name: maddy-config
         type: configMap
@@ -147,3 +184,8 @@ spec:
         ports:
           http:
             port: 11333
+      alps:
+        controller: alps
+        ports:
+          http:
+            port: 1323

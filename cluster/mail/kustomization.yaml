@@ -6,6 +6,7 @@ resources:
   - _namespace.yaml
   - cert.yaml
   - hr.yaml
+  - route.yaml
   - ../netpols/allow-all-ingress
 components:
   - ../common
@@ -21,6 +22,9 @@ secretGenerator:
   - name: maddy-secrets
     envs:
       - secrets.env
+  - name: alps-config
+    files:
+      - alps.toml
 generatorOptions:
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled

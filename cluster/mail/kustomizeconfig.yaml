@@ -14,3 +14,8 @@ nameReference:
     fieldSpecs:
       - path: spec/values/controllers/maddy/containers/app/envFrom/secretRef/name
         kind: HelmRelease
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - path: spec/values/persistence/alps-config/name
+        kind: HelmRelease
