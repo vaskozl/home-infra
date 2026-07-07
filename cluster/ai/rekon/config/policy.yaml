@@ -1,31 +1,48 @@
-# Default update policy attaching to every Package/Image via a wildcard
-# selector: allow minor/patch/digest auto-MRs, labeled "renovate", and automerge
-# them once CI passes (the MR reconciler gates on the head pipeline). rebase is
-# off, so an open bump branch isn't force-pushed just because its base moved
-# (only a real change to the bump re-pushes).
+# Update policies for the pkgupdate fleet, in the refSet/expression shape the
+# rekon main branch ships (types/updatepolicy.yaml). Policies attach by typed
+# refSets, not a kind selector: entity rung (packages/images/apkoImages), repo
+# rung (repos), org rung (orgs, the fleet default). Overlaps fold per field down
+# the ladder entity > repo > org, then priority, then lower id. The per-candidate
+# gates are CEL over `candidate` (name/type/from/to) and `now`; empty = no
+# opinion. `rebase`/`ignoreTests` are tri-state strings; `labels` union across
+# every attaching policy; `model` pins the dev tier that repairs a broken bump.
+#
+# Fleet default: auto-open MRs for every bump class and automerge only
+# patch/digest once CI passes. The `packages` repo overrides this to automerge
+# everything (its bumps are melange version bumps we trust), and the pocket-id
+# image is held out of automation entirely.
 apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
-  id: package-defaults
+  id: image-defaults
 spec:
-  name: package defaults
-  match: 'self.kind == "Package"'
-  matchNames: ["*"]
-  updateTypes: [major, minor, patch, digest]
-  automergeTypes: [major, minor, patch, digest]
-  automerge: 'true'
+  name: fleet defaults
+  orgs: [doudous]
+  update: 'true'
+  automerge: "candidate.type in ['patch', 'digest']"
   rebase: 'true'
-  labels: [renovate,pkgupdate]
+  labels: [renovate, pkgupdate]
+  model: fable
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
 metadata:
-  id: image-automerge
+  id: package-defaults-v2
 spec:
-  name: image automerge
-  match: 'self.kind == "Image" && self.metadata.id != "home-infra-pocket-id-8ac69735"'
-  matchNames: ["*"]
-  updateTypes: [major, minor, patch, digest]
-  automergeTypes: [patch, digest]
+  name: package defaults
+  repos: [packages]
+  update: 'true'
+  automerge: 'true'
   rebase: 'true'
-  labels: [renovate,pkgupdate]
+  labels: [renovate, pkgupdate]
+  model: fable
+---
+apiVersion: v1alpha1
+kind: updatepolicies
+metadata:
+  id: pocket-id-hold
+spec:
+  name: pocket-id hold
+  images: [home-infra-pocket-id-8ac69735]
+  update: 'false'
+  automerge: 'false'
