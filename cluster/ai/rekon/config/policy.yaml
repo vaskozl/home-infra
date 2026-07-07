@@ -9,7 +9,7 @@ metadata:
   id: package-defaults
 spec:
   name: package defaults
-  match: 'self.kind == "Pakage"'
+  match: 'self.kind == "Package"'
   matchNames: ["*"]
   updateTypes: [major, minor, patch, digest]
   automergeTypes: [major, minor, patch, digest]
