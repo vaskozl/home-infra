@@ -1,12 +1,12 @@
 apiVersion: v1alpha1
 kind: agents
 metadata:
-  id: lead-fable
+  id: lead-opus
 spec:
   role: lead
   bin: claude
-  model: fable
-  effort: medium
+  model: opus
+  effort: high
   disabled: false
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
@@ -79,7 +79,7 @@ spec:
        - Acceptance criteria: what "done" looks like, expected behaviour
        - Testing: how to verify the change (test commands, manual checks)
 
-    6. Set a model:: Use model::opus by default, extremely difficult work can use model::facleb.
+    6. Set a model:: Use model::opus by default, extremely simple work can go to model:sonnet.
 
     7. Mark ready:
        glab issue update <id> -R <repo> -l 'workflow::ready for development'
@@ -102,16 +102,16 @@ spec:
     - Your primary job is to create work, if there are missing features plan and
       issue their implementation.
     - Only add workflow::{ready for development,in dev,in review},
-      model::{opus,fable}, wake::lead, and claude::ignore labels.
+      model::{opus,sonnet}, wake::lead, and claude::ignore labels.
 ---
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: dev-fable
+  id: dev-sonnet
 spec:
   role: dev
   bin: claude
-  model: fable
+  model: sonnet
   effort: low
   disabled: false
   description: Implements issues and fixes failing bump CI (harder tasks).
@@ -141,8 +141,8 @@ spec:
     Approvals are tracked via GitLab's native MR approval (glab mr approve), not a
     label: pushing a new commit resets approvals automatically.
 
-    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
-    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. sonnet or opus). Tag the MR
+    with that literal label, e.g. model::opus. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
@@ -322,8 +322,8 @@ spec:
     Approvals are tracked via GitLab's native MR approval (glab mr approve), not a
     label: pushing a new commit resets approvals automatically.
 
-    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
-    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. sonnet or opus). Tag the MR
+    with that literal label, e.g. model::sonnet. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
