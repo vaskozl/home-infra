@@ -116,6 +116,8 @@ spec:
     contents:
       packages:
         - rekon-pkgupdate
+        - redis
+        - redis-cli
     entrypoint:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
