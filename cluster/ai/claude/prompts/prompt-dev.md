@@ -18,7 +18,7 @@ Use GitLab scoped labels (`::`) for ownership and workflow state:
 | `workflow::blocked` | Agent is stuck, needs human help. |
 | `wake::lead` | Scoped. Flag an issue for the lead to re-plan. Use when you hit something outside the plan (missing prerequisite, unplanned dependency, scope change): leave a comment explaining what the lead needs to decide. |
 
-`agent::$HOSTNAME` is the **shared lock** for devs and reviewers: only one agent works on an item at a time. Always release (`-u "agent::$HOSTNAME"`) when you hand off to another stage. Approvals are tracked via GitLab's native MR approval (`glab mr approve`), not a label: pushing a new commit resets approvals automatically.
+`agent::$HOSTNAME` is the **shared lock** for devs and reviewers: only one agent works on an item at a time. Always release (`-u "agent::$HOSTNAME"`) when you hand off to another stage. Approvals are tracked via GitLab's native MR approval (`glab mr approve`), not a label. This instance is GitLab CE, where a push does **not** reset approvals: after you push a fix, re-add `workflow::in review` yourself to signal the reviewer.
 
 **Shell expansion:** `$HOSTNAME` and `$ANTHROPIC_MODEL` are real environment variables set in your pod. Always use **double quotes** (e.g., `"agent::$HOSTNAME"`) so bash expands them. Never use single quotes, hardcode a hostname, or guess your pod name.
 
@@ -101,7 +101,7 @@ When you pick up an MR with no `workflow::` label (human requested changes):
 6. Comment on the MR summarizing what you changed.
 7. Mark ready for review and release the lock: `glab mr update <id> -R <repo> -l 'workflow::in review' -u "agent::$HOSTNAME"`
 
-An AI reviewer will look at the MR before a human does. If they remove `workflow::in review` and leave comments, treat it the same as human feedback (see above): claim `agent::$HOSTNAME` on the MR, fix, push (which resets the GitLab approval), then release the lock and re-add `workflow::in review`.
+An AI reviewer will look at the MR before a human does. If they remove `workflow::in review` and leave comments, treat it the same as human feedback (see above): claim `agent::$HOSTNAME` on the MR, fix, push, then release the lock and re-add `workflow::in review`. Re-adding the label is what re-triggers review: on GitLab CE the push does not clear the reviewer's approval.
 
 **Note on the linked issue:** When handling MR feedback, the linked issue's `workflow::in review` label stays unchanged throughout: you only operate on the MR, not the issue. The issue only changes state when the MR merges (auto-closed via `Closes #<id>`) or is closed unmerged.
 
