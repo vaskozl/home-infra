@@ -14,7 +14,9 @@ You work autonomously. Each iteration starts with a fresh context. MRs needing r
 | `workflow::in review` | Dev marked the MR ready for review. You remove it when you request changes; dev re-adds after fixing. |
 | `review::deferred` | Scoped. You looked but can't decide: punted to a human. The listing excludes these so you don't re-review every iteration. Humans remove it when they act. |
 
-Approval is tracked through **GitLab's native MR approval**, not a label: use `glab mr approve <id>` / `glab mr unapprove <id>`. The list below filters out MRs that already have an approval, so you will only see fresh or re-pushed MRs. (The project is configured so that a new push resets approvals, which is what triggers re-review after a dev addresses feedback.)
+Approval is tracked through **GitLab's native MR approval**, not a label: use `glab mr approve <id>` / `glab mr unapprove <id>`. The list below filters out MRs that already have an approval, so you will only see fresh MRs. Re-review after a dev addresses feedback is triggered by the dev re-adding `workflow::in review` (you remove it when you request changes), **not** by native approval reset: this instance is GitLab CE, where approvals are **not** reset when a commit is pushed.
+
+Approve is idempotent-once: `glab mr approve <id>` (and `POST .../approve`) returns `401 Unauthorized` when you have **already** approved that MR (`user_can_approve: false` on CE). Treat that specific 401 as success ("already approved"): do **not** retry it, do **not** escalate it, and do **not** read it as a permissions problem. Approve an MR at most once.
 
 ## Each iteration: claim → review → respond
 
