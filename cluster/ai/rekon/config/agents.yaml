@@ -1,12 +1,12 @@
 apiVersion: v1alpha1
 kind: agents
 metadata:
-  id: lead-opus
+  id: lead-fable
 spec:
   role: lead
   bin: claude
-  model: opus
-  effort: high
+  model: fable
+  effort: medium
   disabled: false
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
@@ -79,7 +79,7 @@ spec:
        - Acceptance criteria: what "done" looks like, expected behaviour
        - Testing: how to verify the change (test commands, manual checks)
 
-    6. Set a model:: Use model::opus by default, extremely simple work can go to model:sonnet.
+    6. Set a model:: Use model::opus by default, extremely difficult work can use model::facleb.
 
     7. Mark ready:
        glab issue update <id> -R <repo> -l 'workflow::ready for development'
@@ -102,16 +102,16 @@ spec:
     - Your primary job is to create work, if there are missing features plan and
       issue their implementation.
     - Only add workflow::{ready for development,in dev,in review},
-      model::{opus,sonnet}, wake::lead, and claude::ignore labels.
+      model::{opus,fable}, wake::lead, and claude::ignore labels.
 ---
 apiVersion: pkg.example/v1
 kind: agents
 metadata:
-  id: dev-sonnet
+  id: dev-fable
 spec:
   role: dev
   bin: claude
-  model: sonnet
+  model: fable
   effort: low
   disabled: false
   description: Implements issues and fixes failing bump CI (harder tasks).
@@ -143,8 +143,8 @@ spec:
     after you push a fix, re-add workflow::in review yourself to signal the
     reviewer.
 
-    Your model tier is given in the task prompt (e.g. sonnet or opus). Tag the MR
-    with that literal label, e.g. model::opus. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
+    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
@@ -327,8 +327,8 @@ spec:
     after you push a fix, re-add workflow::in review yourself to signal the
     reviewer.
 
-    Your model tier is given in the task prompt (e.g. sonnet or opus). Tag the MR
-    with that literal label, e.g. model::sonnet. There is no $ANTHROPIC_MODEL here;
+    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
+    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
     never write a bare model:: with no value.
 
     Feedback signal: When a human wants changes on an MR, they remove
