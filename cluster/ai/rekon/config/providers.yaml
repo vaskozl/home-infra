@@ -1,8 +1,7 @@
 apiVersion: v1alpha1
 kind: authproviders
-metadata:
-  id: pi
 spec:
+  name: pi
   type: oidc
   displayName: Pocket ID
   icon: fingerprint

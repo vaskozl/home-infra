@@ -1,16 +1,19 @@
-# Login-lookup pointer: maps the verbatim Pocket ID identity key (provider "pi" from
-# providers.yaml, plus the OIDC sub) to the pinned operator user, so the store-minted
-# user-id scheme still lets a known user (the operator-org owner) bootstrap superuser
-# declaratively.
+# Login-lookup pointer: maps the verbatim Pocket ID identity key (the provider's
+# derived id "pi-3bytkcw6" from providers.yaml, plus the OIDC sub) to the pinned
+# operator user, so the store-minted user-id scheme still lets a known user (the
+# operator-org owner) bootstrap superuser declaratively.
 #
-# metadata.id MUST equal identityID(key) -- "id-" + base36(sha256("pi:<sub>")) -- which
-# is exactly what the resolver computes at login (rekon contrib/auth, !441). If it does
-# not match, login mints a fresh random user instead of adopting vasko. Recompute if the
-# key or the digest scheme changes. This id assumes a rekon build that includes !441.
+# The provider part of the key is the provider's metadata.id, which since rekon !463
+# (identity keys) is derived from spec.name: DeriveID("pi") = "pi-3bytkcw6".
+#
+# metadata.id MUST equal identityID(key) -- "id-" + base36(sha256("<provider>:<sub>"))
+# -- which is exactly what the resolver computes at login (rekon contrib/auth, !441).
+# If it does not match, login mints a fresh random user instead of adopting vasko.
+# Recompute if the key or the digest scheme changes.
 apiVersion: v1
 kind: identities
 metadata:
-  id: id-5tl6ikir3w1ylgl2u80acw306m7jd62ua05t34vk
+  id: id-lesry4zcgzaptd5pll4b02cs0o8mwesljdeous52
 spec:
-  key: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
+  key: "pi-3bytkcw6:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
   user: vasko

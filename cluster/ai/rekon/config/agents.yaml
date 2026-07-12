@@ -1,8 +1,7 @@
 apiVersion: v1alpha1
 kind: agents
-metadata:
-  id: lead-fable
 spec:
+  name: lead-fable
   role: lead
   bin: claude
   model: fable
@@ -106,9 +105,8 @@ spec:
 ---
 apiVersion: pkg.example/v1
 kind: agents
-metadata:
-  id: dev-fable
 spec:
+  name: dev-fable
   role: dev
   bin: claude
   model: fable
@@ -290,9 +288,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: agents
-metadata:
-  id: dev-opus
 spec:
+  name: dev-opus
   role: dev
   bin: claude
   model: opus
@@ -474,9 +471,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: agents
-metadata:
-  id: reviewer-opus
 spec:
+  name: reviewer-opus
   role: reviewer
   bin: claude
   model: opus
@@ -732,9 +728,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: agents
-metadata:
-  id: ops-opus
 spec:
+  name: ops-opus
   role: ops
   bin: claude
   model: opus
