@@ -1,10 +1,11 @@
 # Login-lookup pointer: maps the verbatim Pocket ID identity key (the provider's
-# derived id "pi-3bytkcw6" from providers.yaml, plus the OIDC sub) to the pinned
+# derived id "dmqg3emd3xp2" from providers.yaml, plus the OIDC sub) to the pinned
 # operator user, so the store-minted user-id scheme still lets a known user (the
 # operator-org owner) bootstrap superuser declaratively.
 #
 # The provider part of the key is the provider's metadata.id, which since rekon !463
-# (identity keys) is derived from spec.name: DeriveID("pi") = "pi-3bytkcw6".
+# (identity keys) is DeriveID(spec.name): DeriveID("pi") = "dmqg3emd3xp2". This is an
+# opaque 12-char token (schema.DeriveID), not a "<name>-<suffix>" handle.
 #
 # metadata.id MUST equal identityID(key) -- "id-" + base36(sha256("<provider>:<sub>"))
 # -- which is exactly what the resolver computes at login (rekon contrib/auth, !441).
@@ -13,7 +14,7 @@
 apiVersion: v1
 kind: identities
 metadata:
-  id: id-lesry4zcgzaptd5pll4b02cs0o8mwesljdeous52
+  id: id-5oywirgefar16nzz0hqdckijf4uvhvhq0jnjwd5n
 spec:
-  key: "pi-3bytkcw6:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
+  key: "dmqg3emd3xp2:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
   user: vasko
