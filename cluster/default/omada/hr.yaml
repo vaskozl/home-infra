@@ -58,7 +58,7 @@ spec:
               globalMounts:
                 - path: /opt/tplink/EAPController/data
               name: data
-              size: 1Mi
+              size: 1Gi
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
