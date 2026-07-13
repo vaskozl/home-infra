@@ -49,10 +49,33 @@ spec:
     #     (steady-state baseline ~85 warn lines/5m); real failures covered by ServiceDown/TooManyRestarts
     #   - LogErrors: > 0 threshold trips on vmoperator apiserver re-init flakes;
     #     real failures covered by ReconcileErrors/HighQueueDepth
+    # Control-plane rule groups (apiserver/scheduler/controller-manager) are
+    # disabled: the kube*.enabled toggles below only gate scraping and dashboards,
+    # not the sync-job rule sources, so these groups get created and their
+    # KubeAPIDown/KubeSchedulerDown/KubeControllerManagerDown alerts fire absent()
+    # even though we intentionally do not scrape the control plane on Talos.
+    # Group keys must match upstream group names exactly.
     defaultRules:
       groups:
-        k8sContainerMemorySwap:
-          create: false
+        # kubelet metricRelabelConfigs drop container_memory_swap
+        k8s.rules.container_memory_swap:
+          enabled: false
+        kube-apiserver-availability.rules:
+          enabled: false
+        kube-apiserver-burnrate.rules:
+          enabled: false
+        kube-apiserver-histogram.rules:
+          enabled: false
+        kube-apiserver-slos:
+          enabled: false
+        kube-scheduler.rules:
+          enabled: false
+        kubernetes-system-apiserver:
+          enabled: false
+        kubernetes-system-controller-manager:
+          enabled: false
+        kubernetes-system-scheduler:
+          enabled: false
       rules:
         KubeMemoryOvercommit:
           create: false
