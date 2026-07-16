@@ -7,8 +7,7 @@ cat > /run/redis/redis.conf <<EOF
 port 6379
 protected-mode no
 dir /var/lib/redis
-appendonly yes
-appendfsync everysec
+appendonly ${PERSISTENCE:-yes}
 save ""
 min-replicas-to-write 1
 min-replicas-max-lag 10

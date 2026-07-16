@@ -7,6 +7,8 @@ resources:
   - rbac.yaml
   - ../../common/redis
 #  - ../../gitlab/buildkit/buildkit-client-certs.yaml
+components:
+  - ../../common/redis/ephemeral
 secretGenerator:
   - name: rekon-env
     envs:

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+# Cache-only redis: no PVC, no AOF. Data is lost on pod restart, which is
+# fine when the source of truth lives elsewhere.
+patches:
+  - target:
+      kind: StatefulSet
+      name: redis
+    patch: |
+      - op: remove
+        path: /spec/volumeClaimTemplates
+      - op: add
+        path: /spec/template/spec/volumes/-
+        value:
+          name: data
+          emptyDir: {}
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value:
+          name: PERSISTENCE
+          value: "no"
