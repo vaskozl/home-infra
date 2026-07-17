@@ -163,8 +163,8 @@ spec:
        looks complete, mark workflow::in review.
     3. A workflow::in dev issue: orphaned from a previous agent run. Check for an
        existing MR or branch, and resume.
-    4. An MR with conflicts: rebase on latest main, resolve conflicts, and
-       force-push: git fetch origin && git rebase origin/main.
+    4. An MR with conflicts: rebase on latest main per the rebase procedure in
+       "Do the work", resolve conflicts, and force-push.
     5. An MR with failed CI: a pipeline failed on the MR. Check out the existing
        branch, read the CI logs (glab ci view <mr_iid> -R <repo> or check the
        pipeline URL), diagnose and fix the failure, then push. Do not open a new
@@ -195,11 +195,18 @@ spec:
       auto-close the issue on merge. If your description is longer, ensure it still
       contains this text. Verify after creation:
       glab mr view <id> -R <repo> --output json | jq '.description'
-    - Before pushing, always rebase on the latest default branch to avoid
-      conflicts:
-          git fetch origin && git rebase origin/main
-      Resolve any conflicts during rebase before pushing. Do not push a branch that
-      has conflicts.
+    - Before pushing, always rebase on the latest default branch. Your clone may
+      be shallow without origin/main, so fetch both sides with bounded depth and
+      verify a common ancestor exists before rebasing:
+          git fetch --depth=50 origin main <your-branch>
+          git merge-base HEAD origin/main   # MUST print a sha
+      If merge-base prints nothing, deepen (--depth=200) and re-check; do NOT
+      rebase without one. A rebase where every file conflicts as "both added"
+      means there is no common ancestor: abort it (git rebase --abort), it will
+      silently revert main. Once merge-base is non-empty:
+          git rebase origin/main
+      Resolve any real conflicts before pushing. Do not push a branch that has
+      conflicts.
     - After push, before marking workflow::in review, verify GitLab sees the diff
       you expect:
           git diff origin/main...HEAD --stat | tail -1
@@ -236,8 +243,8 @@ spec:
     When the assigned MR has no workflow:: label (human requested changes):
 
     1. Read ALL comments and discussion threads: glab mr view <id> -R <repo> -c
-    2. Check out the existing branch, rebase on latest main (git fetch origin &&
-       git rebase origin/main), and push fixes: do not open a new MR.
+    2. Check out the existing branch, rebase on latest main per the rebase
+       procedure in "Do the work", and push fixes: do not open a new MR.
     3. Address every unresolved comment. After fixing each, resolve the thread:
        glab mr note <mr_id> -R <repo> --resolve <discussion_id>
     4. Provide screenshot evidence for web changes: if the MR touches web UI (HTML,
@@ -346,8 +353,8 @@ spec:
        looks complete, mark workflow::in review.
     3. A workflow::in dev issue: orphaned from a previous agent run. Check for an
        existing MR or branch, and resume.
-    4. An MR with conflicts: rebase on latest main, resolve conflicts, and
-       force-push: git fetch origin && git rebase origin/main.
+    4. An MR with conflicts: rebase on latest main per the rebase procedure in
+       "Do the work", resolve conflicts, and force-push.
     5. An MR with failed CI: a pipeline failed on the MR. Check out the existing
        branch, read the CI logs (glab ci view <mr_iid> -R <repo> or check the
        pipeline URL), diagnose and fix the failure, then push. Do not open a new
@@ -378,11 +385,18 @@ spec:
       auto-close the issue on merge. If your description is longer, ensure it still
       contains this text. Verify after creation:
       glab mr view <id> -R <repo> --output json | jq '.description'
-    - Before pushing, always rebase on the latest default branch to avoid
-      conflicts:
-          git fetch origin && git rebase origin/main
-      Resolve any conflicts during rebase before pushing. Do not push a branch that
-      has conflicts.
+    - Before pushing, always rebase on the latest default branch. Your clone may
+      be shallow without origin/main, so fetch both sides with bounded depth and
+      verify a common ancestor exists before rebasing:
+          git fetch --depth=50 origin main <your-branch>
+          git merge-base HEAD origin/main   # MUST print a sha
+      If merge-base prints nothing, deepen (--depth=200) and re-check; do NOT
+      rebase without one. A rebase where every file conflicts as "both added"
+      means there is no common ancestor: abort it (git rebase --abort), it will
+      silently revert main. Once merge-base is non-empty:
+          git rebase origin/main
+      Resolve any real conflicts before pushing. Do not push a branch that has
+      conflicts.
     - After push, before marking workflow::in review, verify GitLab sees the diff
       you expect:
           git diff origin/main...HEAD --stat | tail -1
@@ -419,8 +433,8 @@ spec:
     When the assigned MR has no workflow:: label (human requested changes):
 
     1. Read ALL comments and discussion threads: glab mr view <id> -R <repo> -c
-    2. Check out the existing branch, rebase on latest main (git fetch origin &&
-       git rebase origin/main), and push fixes: do not open a new MR.
+    2. Check out the existing branch, rebase on latest main per the rebase
+       procedure in "Do the work", and push fixes: do not open a new MR.
     3. Address every unresolved comment. After fixing each, resolve the thread:
        glab mr note <mr_id> -R <repo> --resolve <discussion_id>
     4. Provide screenshot evidence for web changes: if the MR touches web UI (HTML,
