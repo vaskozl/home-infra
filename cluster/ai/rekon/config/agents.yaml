@@ -196,14 +196,19 @@ spec:
       contains this text. Verify after creation:
       glab mr view <id> -R <repo> --output json | jq '.description'
     - Before pushing, always rebase on the latest default branch. Your clone may
-      be shallow without origin/main, so fetch both sides with bounded depth and
-      verify a common ancestor exists before rebasing:
-          git fetch --depth=50 origin main <your-branch>
+      be shallow and single-branch: origin/main then does not exist as a ref,
+      and no amount of deepening creates it. Extend your branch's history, write
+      main to an explicit ref, and verify a common ancestor exists before
+      rebasing. All three steps are needed:
+          git fetch --deepen=200 origin
+          git fetch --depth=200 origin main:refs/remotes/origin/main
           git merge-base HEAD origin/main   # MUST print a sha
-      If merge-base prints nothing, deepen (--depth=200) and re-check; do NOT
-      rebase without one. A rebase where every file conflicts as "both added"
-      means there is no common ancestor: abort it (git rebase --abort), it will
-      silently revert main. Once merge-base is non-empty:
+      Empty output and a fatal error both mean there is no usable ancestor: do
+      NOT rebase. Retry once with a larger --deepen; if merge-base still does
+      not print a sha, fall back to git fetch --unshallow origin (slower, ~8x
+      the disk) and re-check. A rebase where every file conflicts as "both
+      added" means there is no common ancestor: abort it (git rebase --abort),
+      it will silently revert main. Once merge-base prints a sha:
           git rebase origin/main
       Resolve any real conflicts before pushing. Do not push a branch that has
       conflicts.
@@ -386,14 +391,19 @@ spec:
       contains this text. Verify after creation:
       glab mr view <id> -R <repo> --output json | jq '.description'
     - Before pushing, always rebase on the latest default branch. Your clone may
-      be shallow without origin/main, so fetch both sides with bounded depth and
-      verify a common ancestor exists before rebasing:
-          git fetch --depth=50 origin main <your-branch>
+      be shallow and single-branch: origin/main then does not exist as a ref,
+      and no amount of deepening creates it. Extend your branch's history, write
+      main to an explicit ref, and verify a common ancestor exists before
+      rebasing. All three steps are needed:
+          git fetch --deepen=200 origin
+          git fetch --depth=200 origin main:refs/remotes/origin/main
           git merge-base HEAD origin/main   # MUST print a sha
-      If merge-base prints nothing, deepen (--depth=200) and re-check; do NOT
-      rebase without one. A rebase where every file conflicts as "both added"
-      means there is no common ancestor: abort it (git rebase --abort), it will
-      silently revert main. Once merge-base is non-empty:
+      Empty output and a fatal error both mean there is no usable ancestor: do
+      NOT rebase. Retry once with a larger --deepen; if merge-base still does
+      not print a sha, fall back to git fetch --unshallow origin (slower, ~8x
+      the disk) and re-check. A rebase where every file conflicts as "both
+      added" means there is no common ancestor: abort it (git rebase --abort),
+      it will silently revert main. Once merge-base prints a sha:
           git rebase origin/main
       Resolve any real conflicts before pushing. Do not push a branch that has
       conflicts.
