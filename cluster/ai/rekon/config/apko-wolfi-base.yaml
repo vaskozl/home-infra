@@ -1,8 +1,7 @@
 apiVersion: v1alpha1
 kind: apkoimages
-metadata:
-  id: wolfi-base
 spec:
+  name: wolfi-base
   registries:
     - ghcr.io/vaskozl/wolfi-base
   tags:

@@ -9,15 +9,12 @@
 #
 # Fleet default: auto-open MRs for every bump class and automerge only
 # patch/digest once CI passes. The `packages` repo overrides this to automerge
-# everything (its bumps are melange version bumps we trust), and the pocket-id
-# image is held out of automation entirely.
+# everything (its bumps are melange version bumps we trust).
 apiVersion: v1alpha1
 kind: updatepolicies
-metadata:
-  id: image-defaults
 spec:
   name: fleet defaults
-  orgs: [doudous]
+  orgs: [Doudous]
   update: 'true'
   automerge: "candidate.type in ['patch', 'digest']"
   rebase: 'true'
@@ -26,23 +23,11 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
-metadata:
-  id: package-defaults-v2
 spec:
   name: package defaults
-  repos: [packages]
+  repos: [https://gitlab.sko.ai/doudous/packages.git]
   update: 'true'
   automerge: 'true'
   rebase: 'true'
   labels: [renovate, pkgupdate]
   model: fable
----
-apiVersion: v1alpha1
-kind: updatepolicies
-metadata:
-  id: pocket-id-hold
-spec:
-  name: pocket-id hold
-  images: [home-infra-pocket-id-8ac69735]
-  update: 'false'
-  automerge: 'false'

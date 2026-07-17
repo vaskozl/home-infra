@@ -1,10 +1,11 @@
+# The operator org. Org is keyed on spec.displayName, so its metadata.id is
+# DeriveID("Doudous") = ujcwdrohelak, the value OPERATOR_ORG names. owners is a ref,
+# so the create-only DeriveRefs load rewrites the operator's subject into its user id.
 apiVersion: v1alpha1
 kind: orgs
-metadata:
-  id: doudous
 spec:
   displayName: Doudous
   owners:
-    - vasko
+    - "dmqg3emd3xp2:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
   editors: []
   viewers: []

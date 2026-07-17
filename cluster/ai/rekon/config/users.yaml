@@ -1,11 +1,9 @@
-# The operator user, pinned so its metadata.id is stable and can be named in the
-# doudous org's owners (OPERATOR_ORG=doudous), which is what grants superuser. Login
-# adopts this record via the seeded identities pointer (identities.yaml); the profile
-# fields (status.*) fill in from the OIDC claims on first login. Since rekon !439 the
-# durable user id is store-minted, not derived from the OIDC subject, so it can no
-# longer be predicted -- pinning it here (plus the pointer) is the declarative way to
-# keep a known operator id.
+# The operator user. User is keyed on spec.subject, so its metadata.id is
+# DeriveID(subject) for the provider-scoped subject ("<provider>:<sub>"). The
+# identities pointer (identities.yaml) lets login adopt this record; status.* fills
+# from the OIDC claims on login. Naming this user in the operator org's owners
+# (OPERATOR_ORG) grants superuser.
 apiVersion: v1alpha1
 kind: users
-metadata:
-  id: vasko
+spec:
+  subject: "dmqg3emd3xp2:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
