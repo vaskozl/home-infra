@@ -26,7 +26,7 @@ spec:
         kubernetes.io/arch: amd64
       initContainers:
         - name: mcp-setup
-          image: &image ghcr.io/vaskozl/claude:2.1.212@sha256:c2429da4e6641d4ae31d8f6af6abb4065d8d46d66369fd4ae042a79435ef20e8
+          image: &image ghcr.io/vaskozl/claude:2.1.212@sha256:91a6ef01c49fe61c162c1bca6fa605d27df8b44c569adf4612c15eae35858a17
           command: ["sh", "-c"]
           args:
             - |
