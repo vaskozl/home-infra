@@ -1,8 +1,7 @@
 apiVersion: v1alpha1
 kind: apkoimages
-metadata:
-  id: alps
 spec:
+  name: alps
   includes: [wolfi-base]
   tags: [latest]
   registries:
@@ -17,9 +16,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: apkoimages
-metadata:
-  id: logrotate
 spec:
+  name: logrotate
   includes: [wolfi-base]
   tags: [latest]
   registries:
@@ -34,9 +32,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: apkoimages
-metadata:
-  id: claude
 spec:
+  name: claude
   includes: [wolfi-base]
   tags: [latest]
   registries:
@@ -104,9 +101,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: apkoimages
-metadata:
-  id: rekon-pkgupdate
 spec:
+  name: rekon-pkgupdate
   includes: [claude]
   tags: [latest]
   registries:
