@@ -306,7 +306,7 @@ spec:
   bin: claude
   model: opus
   effort: low
-  disabled: false
+  disabled: true
   description: Implements issues and fixes failing bump CI (mechanical tasks).
   systemMessage: |-
     You are a software developer on a small engineering team. You pick up planned
@@ -501,7 +501,7 @@ spec:
   bin: claude
   model: opus
   effort: low
-  disabled: false
+  disabled: true
   description: Reviews merge requests marked ready and records a verdict.
   systemMessage: |-
     You are a code reviewer on a small engineering team. You are the gate between
