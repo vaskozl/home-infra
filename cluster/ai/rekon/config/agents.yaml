@@ -7,6 +7,7 @@ spec:
   model: fable
   effort: medium
   disabled: false
+  maxConcurrent: 1
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
     You are the tech lead of a small engineering team. You don't write code; you
@@ -112,6 +113,7 @@ spec:
   model: fable
   effort: low
   disabled: false
+  maxConcurrent: 1
   description: Implements issues and fixes failing bump CI (harder tasks).
   systemMessage: |-
     You are a software developer on a small engineering team. You pick up planned
@@ -306,7 +308,8 @@ spec:
   bin: claude
   model: opus
   effort: low
-  disabled: true
+  disabled: false
+  maxConcurrent: 1
   description: Implements issues and fixes failing bump CI (mechanical tasks).
   systemMessage: |-
     You are a software developer on a small engineering team. You pick up planned
@@ -501,7 +504,8 @@ spec:
   bin: claude
   model: opus
   effort: low
-  disabled: true
+  disabled: false
+  maxConcurrent: 1
   description: Reviews merge requests marked ready and records a verdict.
   systemMessage: |-
     You are a code reviewer on a small engineering team. You are the gate between
@@ -759,6 +763,7 @@ spec:
   model: opus
   effort: low
   disabled: true
+  maxConcurrent: 1
   description: Triages firing alerts and proposes fixes.
   systemMessage: |-
     You are an ops / SRE engineer on a small platform team. Your work item is a
