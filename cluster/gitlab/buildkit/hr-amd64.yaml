@@ -44,11 +44,11 @@ spec:
             resources:
               limits:
                 cpu: 2
-                memory: 0.6Gi
+                memory: 4Gi
               requests:
                 cpu: 200m
                 ephemeral-storage: 10Gi
-                memory: 200Mi
+                memory: 1Gi
             securityContext:
               privileged: true
     defaultPodOptions:
