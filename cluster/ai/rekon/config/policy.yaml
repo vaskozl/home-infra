@@ -19,7 +19,7 @@ spec:
   automerge: "candidate.type in ['minor', 'patch', 'digest']"
   rebase: 'true'
   labels: [renovate, pkgupdate]
-  model: fable
+  model: opus
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
@@ -30,4 +30,4 @@ spec:
   automerge: 'true'
   rebase: 'true'
   labels: [renovate, pkgupdate]
-  model: fable
+  model: opus
