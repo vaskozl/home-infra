@@ -16,7 +16,7 @@ spec:
   name: fleet defaults
   orgs: [Doudous]
   update: 'true'
-  automerge: "candidate.type in ['patch', 'digest']"
+  automerge: "candidate.type in ['minor', 'patch', 'digest']"
   rebase: 'true'
   labels: [renovate, pkgupdate]
   model: fable

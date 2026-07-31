@@ -117,3 +117,22 @@ spec:
     entrypoint:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: rekon-homeflow
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/rekon-homeflow
+  versionFrom: rekon-homeflow
+  config: |
+    contents:
+      packages:
+        - rekon-homeflow
+        - redis
+        - redis-cli
+    entrypoint:
+      command: rekon-homeflow
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
