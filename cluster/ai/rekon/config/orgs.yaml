@@ -1,11 +1,11 @@
-# The operator org. Org is keyed on spec.displayName, so its metadata.id is
-# DeriveID("Doudous") = ujcwdrohelak, the value OPERATOR_ORG names. owners is a ref,
-# so the create-only DeriveRefs load rewrites the operator's subject into its user id.
+# The operator org: OPERATOR_ORG (hr.yaml) names it and its owner Memberships are
+# what grant superuser. metadata.id is derived from spec.displayName, so it cannot be
+# pinned. spec.founder confers nothing itself: it names who the org seeds the
+# founding owner Membership for, and that Membership is the grant. Further operators
+# are added by creating Membership{org, user, role: owner}.
 apiVersion: v1alpha1
 kind: orgs
 spec:
   displayName: Doudous
-  owners:
-    - "dmqg3emd3xp2:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
-  editors: []
-  viewers: []
+  # "<provider>:<sub>"; DeriveRefs rewrites it to the user's derived id at load.
+  founder: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"

@@ -71,8 +71,7 @@ spec:
               DISABLE_BUG_COMMAND: "1"
               DISABLE_AUTOUPDATER: "1"
               DISABLE_ERROR_REPORTING: "1"
-              # The operator org's id = DeriveID(org displayName "Doudous").
-              OPERATOR_ORG: ujcwdrohelak
+              OPERATOR_ORG: ujcwdrohelak # derived from Org spec.displayName "Doudous"
             envFrom:
               - secretRef:
                   name: rekon-env
