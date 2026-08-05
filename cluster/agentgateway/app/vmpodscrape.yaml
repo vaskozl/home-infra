@@ -1,0 +1,13 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: agentgateway-dataplane
+spec:
+  namespaceSelector:
+    matchNames:
+      - agentgateway
+  selector:
+    matchLabels:
+      gateway.networking.k8s.io/gateway-class-name: agentgateway
+  podMetricsEndpoints:
+    - port: metrics

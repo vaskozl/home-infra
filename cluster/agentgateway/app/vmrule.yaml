@@ -1,0 +1,23 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: agentgateway-xds
+spec:
+  groups:
+    - name: agentgateway-xds
+      interval: 1m
+      rules:
+        # A dataplane pod that loses XDS keeps serving its last-known config and
+        # stays Ready forever, so only the retry rate exposes the frozen state.
+        - alert: AgentgatewayXdsDisconnected
+          expr: |
+            increase(agentgateway_xds_connection_terminations_total{reason=~"Error|ConnectionError"}[10m]) > 10
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Agentgateway dataplane {{ $labels.pod }} cannot connect to XDS"
+            description: |
+              Pod {{ $labels.namespace }}/{{ $labels.pod }} has terminated its XDS
+              connection {{ $value }} times in the last 10 minutes and is serving
+              stale routes and endpoints. Restart the deployment to recover.
