@@ -320,8 +320,8 @@ spec:
         repository: vaskozl/prometheus-node-exporter
         # Keep digest out of `tag` — the subchart's daemonset.yaml runs
         # `semverCompare ">=1.4.0-0" .Values.image.tag` and chokes on `@sha256:`.
-        tag: 1.11.1
-        digest: sha256:98762427470be636f605b6d0515914b77accd6c5f3d972e7ffb553ec4da61e03
+        tag: 1.12.1
+        digest: sha256:b1568452a49b62e04170c4c2bf544cbc9b570115b9b8c11f3c2ec910de78a749
       extraArgs:
         - --collector.disable-defaults
         - --collector.uname
