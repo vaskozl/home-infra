@@ -27,7 +27,11 @@ use POSIX qw(strftime);
 binmode STDOUT, ':encoding(UTF-8)';
 binmode STDERR, ':encoding(UTF-8)';
 
-my @REPOS  = ('doudous/packages', 'doudous/apkontainers');
+# apkontainers is the only active repo not managed by rekon-pkgupdate, whose
+# BranchHealth reconciler covers everything in cluster/ai/rekon/config/repos.yaml.
+# Never list a repo here that rekon watches: both would fight over the same issue.
+# This script retires once apkontainers moves over.
+my @REPOS  = ('doudous/apkontainers');
 
 my $HOST   = $ENV{GITLAB_HOST} // 'https://gitlab.sko.ai';
 my $TOKEN  = $ENV{GITLAB_TOKEN} or die "GITLAB_TOKEN required\n";
