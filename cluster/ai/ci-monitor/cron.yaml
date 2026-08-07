@@ -20,7 +20,7 @@ spec:
               name: ci-monitor
               envFrom:
                 - secretRef:
-                    name: claude-env
+                    name: rekon-env
               resources:
                 requests:
                   cpu: 20m

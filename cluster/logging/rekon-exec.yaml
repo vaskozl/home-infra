@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: claude-ripgrep-exec
+  name: rekon-ripgrep-exec
 rules:
   - apiGroups: [""]
     resources: ["pods/exec"]
@@ -11,12 +11,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: claude-ripgrep-exec
+  name: rekon-ripgrep-exec
 subjects:
   - kind: ServiceAccount
-    name: claude
+    name: rekon
     namespace: ai
 roleRef:
   kind: Role
-  name: claude-ripgrep-exec
+  name: rekon-ripgrep-exec
   apiGroup: rbac.authorization.k8s.io
