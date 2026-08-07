@@ -25,6 +25,9 @@ spec:
           identifier: rekon
         pod:
           hostUsers: false
+          # Lets the app container see and SIGKILL chromium to get a fresh
+          # browser per agent turn.
+          shareProcessNamespace: true
           securityContext:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
@@ -87,10 +90,17 @@ spec:
             image:
               repository: ghcr.io/vaskozl/chromium
               tag: 151.0.7922.75@sha256:dcd06f3859c8a569298c2e00393d1561eee41745883d167deaaa1740f7799a7e
+            # Respawn loop: killing the browser must not exit the container,
+            # or the kubelet applies restart backoff. The profile dir is wiped
+            # first so a SIGKILL leaves no stale SingletonLock or state.
+            command: ["sh", "-c"]
             args:
-              - --headless
-              - --remote-debugging-port=9222
-              - --no-sandbox
+              - |
+                while true; do
+                  rm -rf /tmp/chrome
+                  chromium-browser --headless --remote-debugging-port=9222 --no-sandbox --user-data-dir=/tmp/chrome
+                  sleep 1
+                done
             resources:
               limits:
                 memory: 1500Mi
