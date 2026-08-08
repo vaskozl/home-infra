@@ -18,9 +18,17 @@ spec:
             - args: [/script/ci-monitor.pl]
               image: ghcr.io/vaskozl/perl-mojolicious:9.48@sha256:6f23e9a444900a062aa350320acb5599f267893f961af7290fb33407e4881ff2
               name: ci-monitor
-              envFrom:
-                - secretRef:
-                    name: claude-env
+              env:
+                - name: GITLAB_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: rekon-env
+                      key: GITLAB_HOST
+                - name: GITLAB_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: rekon-env
+                      key: GITLAB_TOKEN
               resources:
                 requests:
                   cpu: 20m
