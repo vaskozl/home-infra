@@ -136,3 +136,22 @@ spec:
     entrypoint:
       command: rekon-homeflow
     vcs-url: https://gitlab.sko.ai/doudous/rekon
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: rekon-dossier
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - registry.sko.ai/doudous/rekon/dossier
+  versionFrom: rekon-dossier
+  config: |
+    contents:
+      packages:
+        - rekon-dossier
+        - redis
+        - redis-cli
+    entrypoint:
+      command: rekon-dossier
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
