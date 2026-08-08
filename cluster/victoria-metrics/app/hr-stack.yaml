@@ -321,7 +321,7 @@ spec:
         # Keep digest out of `tag` — the subchart's daemonset.yaml runs
         # `semverCompare ">=1.4.0-0" .Values.image.tag` and chokes on `@sha256:`.
         tag: 1.12.1
-        digest: sha256:b1568452a49b62e04170c4c2bf544cbc9b570115b9b8c11f3c2ec910de78a749
+        digest: sha256:9592a7928ad8ad947bd4cadbe2a7fb47a1a839178353fafd73e2725140b3aa44
       extraArgs:
         - --collector.disable-defaults
         - --collector.uname
