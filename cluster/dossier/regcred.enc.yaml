@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/secret-v1.json
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5za28uYWkiOnsidXNlcm5hbWUiOiJ2YXNrbyIsInBhc3N3b3JkIjoiZ2xwYXQtT1pGN0xRUjVZQU05NDJmbzR4cFlEVzg2TVFwMU9qSUguMDEuMHcwdmIxdGNuIiwiYXV0aCI6ImRtRnphMjg2WjJ4d1lYUXRUMXBHTjB4UlVqVlpRVTA1TkRKbWJ6UjRjRmxFVnpnMlRWRndNVTlxU1VndU1ERXVNSGN3ZG1JeGRHTnUifX19

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/namespace-v1.json
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dossier
+  labels:
+    pod-security.kubernetes.io/enforce: privileged

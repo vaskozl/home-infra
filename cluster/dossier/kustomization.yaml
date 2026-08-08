@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dossier
+resources:
+  - _namespace.yaml
+  - hr.yaml
+  - regcred.enc.yaml
+  - ../common/redis
+components:
+  - ../common
+  - ../common/redis/ephemeral

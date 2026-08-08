@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: dossier
+  namespace: dossier
+spec:
+  chart:
+    spec:
+      chart: app-template
+      interval: 24h
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 5.0.1
+  interval: 24h
+  values:
+    controllers:
+      main:
+        type: statefulset
+        pod:
+          hostUsers: false
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /home/nonroot
+              name: home
+              size: 20Gi
+        containers:
+          app:
+            env:
+              SAFETY_GATE_LIVE: "1"
+              EURLEX_LIVE: "1"
+              DG_GROW_LIVE: "1"
+            image:
+              repository: registry.sko.ai/doudous/rekon/dossier
+              tag: 0.0.37
+            args:
+              - -redis
+              - redis-master:6379
+              - -v
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 200m
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: true
+              procMount: Unmasked
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: Unconfined
+    defaultPodOptions:
+      imagePullSecrets:
+        - name: regcred
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    persistence:
+      turn-fifo:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 1Mi
+        advancedMounts:
+          main:
+            app:
+              - path: /run/claude
+    route:
+      app:
+        hostnames:
+          - dossier.sko.ai
+        labels:
+          agentgateway.sko.ai/auth: oauth2
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8080
+    service:
+      app:
+        controller: main
+        ports:
+          http:
+            port: 8080
