@@ -1,9 +1,7 @@
-# The operator user. User is keyed on spec.subject, so its metadata.id is
-# DeriveID(subject) for the provider-scoped subject ("<provider>:<sub>"). The
-# identities pointer (identities.yaml) lets login adopt this record; status.* fills
-# from the OIDC claims on login. Naming this user in the operator org's owners
-# (OPERATOR_ORG) grants superuser.
+# The operator user. metadata.id is derived from spec.subject, so it cannot be
+# pinned: a login through `pi` mints this same record. The provider part is the
+# AuthProvider's spec.name, not its id. status.* fills in from the OIDC claims.
 apiVersion: v1alpha1
 kind: users
 spec:
-  subject: "dmqg3emd3xp2:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
+  subject: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
