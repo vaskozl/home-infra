@@ -1,0 +1,28 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: node-health
+  namespace: victoria-metrics
+spec:
+  groups:
+    - name: node-health-rules
+      rules:
+        - alert: KubernetesNodeNotReady
+          expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: Kubernetes node not ready (node {{ $labels.node }})
+            description: "Node {{ $labels.node }} has been unready for more than 2 minutes.\n  VALUE = {{ $value }}\n  LABELS
+              = {{ $labels }}"
+        - alert: KubernetesNodeReadinessFlapping
+          expr: sum(changes(kube_node_status_condition{condition="Ready",status="true"}[15m])) by (node) > 2
+          for: 0m
+          labels:
+            severity: warning
+          annotations:
+            summary: Kubernetes node readiness flapping (node {{ $labels.node }})
+            description: "Node {{ $labels.node }} Ready condition changed {{ $value }} times in the last 15 minutes. Short
+              stalls like this evict pods and time out in-flight gRPC calls without tripping a sustained-NotReady alert.\n
+              \ VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
