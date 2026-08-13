@@ -20,6 +20,7 @@ spec:
   values:
     controllers:
       main:
+        replicas: 2
         type: statefulset
         serviceAccount:
           identifier: rekon
