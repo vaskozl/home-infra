@@ -2,9 +2,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: bimonthly-reminders
+  name: monthly-reminders
 spec:
-  schedule: "30 17 5 */2 *"
+  schedule: "30 17 5 * *"
   jobTemplate:
     spec:
       template:
@@ -12,7 +12,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: msmtp
-              image: ghcr.io/vaskozl/busybox:latest@sha256:87f564c7f130bd742a8c7195f0d916d7f65ea76727294a8c296590ef89d18105
+              image: ghcr.io/vaskozl/busybox:latest@sha256:cbb1bf97f4a0bb2ab1627a2988cec413c71dbc6389bbf91d12d130e407470ace
               env:
                 - name: SMTPHOST
                   value: mx-maddy.mailserver.svc.cluster.local:2225
