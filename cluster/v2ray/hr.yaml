@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/v2ray
-              tag: 5.53.0@sha256:faa5ed48dec357560291111e016811f74634b0e5be75ff3cf2569fe0af1a8eb8
+              tag: 5.53.0@sha256:57acba81f65a6ee854b9b79801fb9360c7b2dc186cf7bcc775db2e8e92c10f1d
             command: ['v2ray', 'run', '-config', '/config/v2ray.json']
             probes:
               liveness:
