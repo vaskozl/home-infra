@@ -18,6 +18,7 @@ spec:
   values:
     controllers:
       guinotia-site:
+        replicas: 0
         containers:
           app:
             image:
