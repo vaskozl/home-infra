@@ -21,7 +21,11 @@ spec:
     controllers:
       main:
         type: statefulset
-        pod:
+        # app-template appends the controller identifier to the resource name
+        # once a release has more than one controller. Pinning it keeps the
+        # existing home-dossier-0 PVC bound.
+        forceRename: dossier
+        pod: &pod
           hostUsers: false
           securityContext:
             fsGroup: 568
@@ -47,10 +51,10 @@ spec:
             # examples/dossier/config/providers.yaml. Absent, dossier falls back
             # to its embedded any-username dev mock -- so this secret is what
             # makes the deployment actually authenticated.
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
                   name: oidc
-            image:
+            image: &dossierImage
               repository: registry.sko.ai/doudous/rekon/dossier
               tag: 0.0.40
             args:
@@ -65,7 +69,7 @@ spec:
               requests:
                 cpu: 2
                 memory: 512Mi
-            securityContext:
+            securityContext: &security-context
               allowPrivilegeEscalation: true
               procMount: Unmasked
               runAsGroup: 568
@@ -75,26 +79,16 @@ spec:
       api:
         type: deployment
         replicas: 1
-        pod:
-          hostUsers: false
-          securityContext:
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+        pod: *pod
         containers:
           app:
             env:
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
-              # The OIDC callback and the DPP passport URLs are derived from this,
-              # so it must be the externally reachable root, not the listen addr.
               DOSSIER_PUBLIC_URL: https://dossier.sko.ai
-            envFrom:
-              - secretRef:
-                  name: oidc
-            image:
-              repository: registry.sko.ai/doudous/rekon/dossier
-              tag: 0.0.40
+            envFrom: *envFrom
+            image: *dossierImage
             args:
               - -redis
               - redis-master:6379
@@ -107,13 +101,7 @@ spec:
               requests:
                 cpu: 700m
                 memory: 128Mi
-            securityContext:
-              allowPrivilegeEscalation: true
-              procMount: Unmasked
-              runAsGroup: 568
-              runAsUser: 568
-              seccompProfile:
-                type: Unconfined
+            securityContext: *security-context
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -122,6 +110,7 @@ spec:
     persistence:
       api-home:
         type: emptyDir
+        sizeLimit: 64Mi
         advancedMounts:
           api:
             app:
