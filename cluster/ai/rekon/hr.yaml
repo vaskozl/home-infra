@@ -43,7 +43,7 @@ spec:
           mcp-setup:
             image: &claudeImage
               repository: ghcr.io/vaskozl/claude
-              tag: 2.1.233@sha256:bbbdc0d131eae2932da11c122285597898068f40bd9db89dab26bda516d76be2
+              tag: 2.1.233@sha256:e36496051ba2f0c4e91a50ab986c2fd39f79296e1d05aa2d65887d21a4d708a6
             command: ["sh", "-c"]
             args:
               - |
