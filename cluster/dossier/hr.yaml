@@ -39,6 +39,7 @@ spec:
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
+              GOMAXPROCS: "2"
               # The OIDC callback and the DPP passport URLs are derived from this,
               # so it must be the externally reachable root, not the listen addr.
               DOSSIER_PUBLIC_URL: https://dossier.sko.ai
@@ -55,13 +56,57 @@ spec:
             args:
               - -redis
               - redis-master:6379
+              - -mode
+              - worker
               - -v
             resources:
               limits:
-                memory: 1Gi
+                memory: 2Gi
               requests:
-                cpu: 200m
-                memory: 1Gi
+                cpu: 2
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: true
+              procMount: Unmasked
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: Unconfined
+      api:
+        type: deployment
+        replicas: 1
+        pod:
+          hostUsers: false
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app:
+            env:
+              SAFETY_GATE_LIVE: "1"
+              EURLEX_LIVE: "1"
+              DG_GROW_LIVE: "1"
+              # The OIDC callback and the DPP passport URLs are derived from this,
+              # so it must be the externally reachable root, not the listen addr.
+              DOSSIER_PUBLIC_URL: https://dossier.sko.ai
+            envFrom:
+              - secretRef:
+                  name: oidc
+            image:
+              repository: registry.sko.ai/doudous/rekon/dossier
+              tag: 0.0.40
+            args:
+              - -redis
+              - redis-master:6379
+              - -mode
+              - api
+              - -v
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 700m
+                memory: 128Mi
             securityContext:
               allowPrivilegeEscalation: true
               procMount: Unmasked
@@ -75,6 +120,12 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
     persistence:
+      api-home:
+        type: emptyDir
+        advancedMounts:
+          api:
+            app:
+              - path: /home/nonroot
       turn-fifo:
         type: emptyDir
         medium: Memory
@@ -96,7 +147,7 @@ spec:
                 port: 8080
     service:
       app:
-        controller: main
+        controller: api
         ports:
           http:
             port: 8080
