@@ -19,10 +19,9 @@ echo "INFO - Validating cluster"
 KUSTOMIZE_FLAGS="--load-restrictor=LoadRestrictionsNone"
 
 echo "INFO - Validating kustomization cluster/kustomization.yaml"
-# run pipeline, ignore kubeconform exit code
-if ! kustomize build cluster/ $KUSTOMIZE_FLAGS | \
-     yq e 'del(.sops)' - | \
-     xargs kubeconform $KUBECONFORM_CONFIG
-then
-    true
-fi
+# POSIX sh has no pipefail, so buffer the build to catch kustomize failures on
+# their own line and leave kubeconform as the exit status of the final pipe
+BUILD=$(mktemp)
+trap 'rm -f "$BUILD"' EXIT
+kustomize build cluster/ $KUSTOMIZE_FLAGS > "$BUILD"
+yq e 'del(.sops)' "$BUILD" | kubeconform $KUBECONFORM_CONFIG
