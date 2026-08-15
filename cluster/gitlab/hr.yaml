@@ -91,7 +91,7 @@ spec:
           limits:
             memory: 660M
       webservice:
-        minReplicas: 1
+        minReplicas: 2
         maxReplicas: 2
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 1
@@ -101,6 +101,25 @@ spec:
           requests:
             cpu: 100m
             memory: 2560Mi
+        deployment:
+          # Only 4 Puma threads per pod: a burst of concurrent requests queues
+          # /-/readiness behind real traffic, so allow more headroom than the
+          # chart default of 2s/2 before pulling the pod from the Service.
+          readinessProbe:
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          # Cold boot measured at ~4min, above the liveness budget. Unlike the
+          # liveness/readiness probes, the chart renders this block verbatim.
+          startupProbe:
+            httpGet:
+              path: /-/liveness
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 40
       sidekiq:
         minReplicas: 1
         maxReplicas: 2
