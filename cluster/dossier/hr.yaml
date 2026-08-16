@@ -19,31 +19,22 @@ spec:
   interval: 24h
   values:
     controllers:
-      main:
-        type: statefulset
-        # app-template appends the controller identifier to the resource name
-        # once a release has more than one controller. Pinning it keeps the
-        # existing home-dossier-0 PVC bound.
-        forceRename: dossier
+      api:
+        type: deployment
+        replicas: 1
         pod: &pod
           hostUsers: false
           securityContext:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-        statefulset:
-          volumeClaimTemplates:
-            - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /home/nonroot
-              name: home
-              size: 20Gi
         containers:
           app:
-            env:
+            # The ingest loops run on every non-worker tier, so api carries the
+            # same live-source toggles as the worker.
+            env: &env
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
-              GOMAXPROCS: "2"
               # The OIDC callback and the DPP passport URLs are derived from this,
               # so it must be the externally reachable root, not the listen addr.
               DOSSIER_PUBLIC_URL: https://dossier.sko.ai
@@ -54,21 +45,21 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: oidc
-            image: &dossierImage
+            image: &image
               repository: registry.sko.ai/doudous/rekon/dossier
               tag: 0.0.40
             args:
               - -redis
               - redis-master:6379
-              - -mode
-              - worker
               - -v
+              - -mode
+              - api
             resources:
               limits:
-                memory: 2Gi
-              requests:
-                cpu: 2
                 memory: 512Mi
+              requests:
+                cpu: 700m
+                memory: 128Mi
             securityContext: &security-context
               allowPrivilegeEscalation: true
               procMount: Unmasked
@@ -76,31 +67,39 @@ spec:
               runAsUser: 568
               seccompProfile:
                 type: Unconfined
-      api:
-        type: deployment
-        replicas: 1
+      main:
+        type: statefulset
+        # app-template appends the controller identifier to the resource name
+        # once a release has more than one controller. Pinning it keeps the
+        # existing home-dossier-0 PVC bound.
+        forceRename: dossier
         pod: *pod
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /home/nonroot
+              name: home
+              size: 20Gi
         containers:
           app:
             env:
-              SAFETY_GATE_LIVE: "1"
-              EURLEX_LIVE: "1"
-              DG_GROW_LIVE: "1"
-              DOSSIER_PUBLIC_URL: https://dossier.sko.ai
+              <<: *env
+              GOMAXPROCS: "2"
             envFrom: *envFrom
-            image: *dossierImage
+            image: *image
             args:
               - -redis
               - redis-master:6379
-              - -mode
-              - api
               - -v
+              - -mode
+              - worker
             resources:
               limits:
-                memory: 512Mi
+                memory: 2Gi
               requests:
-                cpu: 700m
-                memory: 128Mi
+                cpu: 2
+                memory: 512Mi
             securityContext: *security-context
     defaultPodOptions:
       imagePullSecrets:
