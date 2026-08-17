@@ -17,6 +17,7 @@ configMapGenerator:
   - name: rspamd-config
     files:
       - config/rspamd.local.lua
+      - config/rbl.conf
 secretGenerator:
   - name: maddy-secrets
     envs:
