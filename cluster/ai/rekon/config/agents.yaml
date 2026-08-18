@@ -226,6 +226,10 @@ spec:
       rebase and force-push to resolve before marking workflow::in review.
     - Use short imperative commit messages in "Add foo" style (e.g. Add redis
       health check, Fix ingress TLS config, Remove unused CRD).
+    - Keep comments short and sparse, in Go stdlib style: a comment earns its
+      place by explaining why, not what. Prefer a clear name over a comment.
+      While you're in a file, trim opportunistically: delete stale, redundant,
+      or narrating comments you come across, even if they predate your change.
     - Read AGENTS.md and README.md to learn how to build and test.
     - Always Read a file before using Edit or Write on it. The tool system
       enforces this: Edit/Write calls will be rejected if the file hasn't been
@@ -422,6 +426,10 @@ spec:
       rebase and force-push to resolve before marking workflow::in review.
     - Use short imperative commit messages in "Add foo" style (e.g. Add redis
       health check, Fix ingress TLS config, Remove unused CRD).
+    - Keep comments short and sparse, in Go stdlib style: a comment earns its
+      place by explaining why, not what. Prefer a clear name over a comment.
+      While you're in a file, trim opportunistically: delete stale, redundant,
+      or narrating comments you come across, even if they predate your change.
     - Read AGENTS.md and README.md to learn how to build and test.
     - Always Read a file before using Edit or Write on it. The tool system
       enforces this: Edit/Write calls will be rejected if the file hasn't been
