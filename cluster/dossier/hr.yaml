@@ -77,8 +77,6 @@ spec:
       app:
         hostnames:
           - dossier.sko.ai
-        labels:
-          agentgateway.sko.ai/auth: oauth2
         parentRefs:
           - name: internal
             namespace: agentgateway
