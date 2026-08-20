@@ -1,0 +1,168 @@
+# The Appendix D claim screen. Each row is a regex over listing copy, the class
+# of claim it detects, the regime that decides what a register's silence means
+# for a match, and the act and provision a match cites. The citation is a field
+# rather than a constant precisely so a food vertical seeds its own rows against
+# Regulation (EC) No 1924/2006 without a new detector.
+#
+# Priorities separate the specific patterns from the catch-all: "paraben-free" is
+# a free-from claim, but a phrase that some future row reads more precisely should
+# win the span outright rather than tie.
+#
+# spec.categories carries the CategoryMapping's readable identity value (its
+# sourceLabel); config.DeriveRefs() rewrites it to the derived id at load. The
+# mappings themselves are created later by the Go requirement seed, which is fine
+# because a derived id is deterministic. Attachment at the category rung rather
+# than the market rung is what keeps a "BPA-free" USB charger from collecting a
+# finding that cites cosmetics law.
+#
+# ClaimPolicy declares identity: [slug], so metadata.id derives from spec.slug.
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: clinically-proven
+  name: Clinically proven
+  pattern: 'clinically\s+proven'
+  claimType: health
+  regime: cosmetic
+  substantiation: clinical-evidence
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 10
+  categories:
+    - Cosmetics
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: hundred-percent-natural
+  name: 100% natural
+  pattern: '\b100%\s+natural\b'
+  claimType: natural
+  regime: cosmetic
+  substantiation: composition-verified
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 10
+  categories:
+    - Cosmetics
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: dermatologist-recommended
+  name: Dermatologist recommended
+  pattern: '\bdermatologist\s+recommended\b'
+  claimType: endorsement
+  regime: cosmetic
+  substantiation: endorsement-basis
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 10
+  categories:
+    - Cosmetics
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: hypoallergenic
+  name: Hypoallergenic
+  pattern: '\bhypoallergenic\b'
+  claimType: health
+  regime: cosmetic
+  substantiation: allergen-evidence
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 10
+  categories:
+    - Cosmetics
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: non-toxic
+  name: Non-toxic
+  pattern: '\bnon[-\s]toxic\b'
+  claimType: health
+  regime: cosmetic
+  substantiation: tox-evidence
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 10
+  categories:
+    - Cosmetics
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: free-from
+  name: Free-from
+  pattern: '\b\w+[-\s]free\b'
+  claimType: free-from
+  regime: cosmetic
+  substantiation: free-from-justified
+  regulationCelex: '32009R1223'
+  provisionRef: Article 20
+  priority: 1
+  categories:
+    - Cosmetics
+---
+# The food vertical. These are a DIFFERENT REGIME, not more rows of the same
+# screen: a health claim on a food is governed by Regulation (EC) No 1924/2006,
+# which publishes an allowlist, so absence from that list is the breach. The rows
+# above are cosmetics claims under 1223/2009 Article 20, where there is no list
+# and absence from one proves nothing. Mixing the two would let a "dermatologist
+# recommended" cream be reported as making a prohibited health claim, which is a
+# confident accusation under a law that does not apply to it.
+#
+# They still name a substantiation. It is the fallback rung for the case where the
+# register has not been mirrored for the product's market: with nothing to check
+# against, a health claim asks for a look rather than passing as permitted.
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: food-immune-boost
+  name: Boosts the immune system
+  pattern: '\bboosts?\s+(?:your\s+)?immune\s+system\b'
+  claimType: health
+  regime: food-health
+  substantiation: authorised-claim
+  regulationCelex: '32006R1924'
+  provisionRef: Article 10
+  priority: 10
+  categories:
+    - Food supplements
+---
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: food-gut-health
+  name: Supports gut health
+  pattern: '\bsupports?\s+(?:your\s+)?gut\s+health\b'
+  claimType: health
+  regime: food-health
+  substantiation: authorised-claim
+  regulationCelex: '32006R1924'
+  provisionRef: Article 10
+  priority: 10
+  categories:
+    - Food supplements
+---
+# A rule for a wording that IS authorised. It looks redundant and is not: the
+# screen's job is to find claims, the register's job is to grade them, and a
+# screen that only looked for suspicious phrasing could never report a claim as
+# permitted. This is what makes `permitted` an observed result rather than the
+# absence of a detector.
+apiVersion: v1alpha1
+kind: claimpolicies
+spec:
+  slug: food-vitamin-c-immune
+  name: Vitamin C and the immune system
+  pattern: '\bvitamin\s+c\s+contributes\s+to\s+the\s+normal\s+function\s+of\s+the\s+immune\s+system\b'
+  claimType: health
+  regime: food-health
+  substantiation: authorised-claim
+  regulationCelex: '32006R1924'
+  provisionRef: Article 10
+  priority: 10
+  categories:
+    - Food supplements

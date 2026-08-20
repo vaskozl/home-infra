@@ -29,19 +29,12 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
-            # The ingest loops run on every non-worker tier, so api carries the
-            # same live-source toggles as the worker.
             env: &env
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
-              # The OIDC callback and the DPP passport URLs are derived from this,
-              # so it must be the externally reachable root, not the listen addr.
+              CONFIG_DIR: /config
               DOSSIER_PUBLIC_URL: https://dossier.sko.ai
-            # OIDC_CLIENT_SECRET for the `pi` AuthProvider declared in rekon's
-            # examples/dossier/config/providers.yaml. Absent, dossier falls back
-            # to its embedded any-username dev mock -- so this secret is what
-            # makes the deployment actually authenticated.
             envFrom: &envFrom
               - secretRef:
                   name: oidc
@@ -69,9 +62,6 @@ spec:
                 type: Unconfined
       main:
         type: statefulset
-        # app-template appends the controller identifier to the resource name
-        # once a release has more than one controller. Pinning it keeps the
-        # existing home-dossier-0 PVC bound.
         forceRename: dossier
         pod: *pod
         statefulset:
@@ -122,6 +112,13 @@ spec:
           main:
             app:
               - path: /run/claude
+      seed:
+        type: configMap
+        name: seed
+        advancedMounts:
+          main:
+            app:
+              - path: /config
     route:
       app:
         hostnames:
