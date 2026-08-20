@@ -19,23 +19,19 @@ spec:
   interval: 24h
   values:
     controllers:
-      main:
-        type: statefulset
-        pod:
+      api:
+        type: deployment
+        replicas: 1
+        pod: &pod
           hostUsers: false
           securityContext:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-        statefulset:
-          volumeClaimTemplates:
-            - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /home/nonroot
-              name: home
-              size: 20Gi
         containers:
           app:
-            env:
+            # The ingest loops run on every non-worker tier, so api carries the
+            # same live-source toggles as the worker.
+            env: &env
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
@@ -46,35 +42,78 @@ spec:
             # examples/dossier/config/providers.yaml. Absent, dossier falls back
             # to its embedded any-username dev mock -- so this secret is what
             # makes the deployment actually authenticated.
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
                   name: oidc
-            image:
+            image: &image
               repository: registry.sko.ai/doudous/rekon/dossier
               tag: 0.0.41
             args:
               - -redis
               - redis-master:6379
               - -v
+              - -mode
+              - api
             resources:
               limits:
-                memory: 1Gi
+                memory: 512Mi
               requests:
-                cpu: 200m
-                memory: 1Gi
-            securityContext:
+                cpu: 700m
+                memory: 128Mi
+            securityContext: &security-context
               allowPrivilegeEscalation: true
               procMount: Unmasked
               runAsGroup: 568
               runAsUser: 568
               seccompProfile:
                 type: Unconfined
+      main:
+        type: statefulset
+        # app-template appends the controller identifier to the resource name
+        # once a release has more than one controller. Pinning it keeps the
+        # existing home-dossier-0 PVC bound.
+        forceRename: dossier
+        pod: *pod
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /home/nonroot
+              name: home
+              size: 20Gi
+        containers:
+          app:
+            env:
+              <<: *env
+              GOMAXPROCS: "2"
+            envFrom: *envFrom
+            image: *image
+            args:
+              - -redis
+              - redis-master:6379
+              - -v
+              - -mode
+              - worker
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 2
+                memory: 512Mi
+            securityContext: *security-context
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
       nodeSelector:
         kubernetes.io/arch: amd64
     persistence:
+      api-home:
+        type: emptyDir
+        sizeLimit: 64Mi
+        advancedMounts:
+          api:
+            app:
+              - path: /home/nonroot
       turn-fifo:
         type: emptyDir
         medium: Memory
@@ -96,7 +135,7 @@ spec:
                 port: 8080
     service:
       app:
-        controller: main
+        controller: api
         ports:
           http:
             port: 8080
