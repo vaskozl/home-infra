@@ -39,6 +39,16 @@ spec:
               SAFETY_GATE_LIVE: "1"
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
+              # The OIDC callback and the DPP passport URLs are derived from this,
+              # so it must be the externally reachable root, not the listen addr.
+              DOSSIER_PUBLIC_URL: https://dossier.sko.ai
+            # OIDC_CLIENT_SECRET for the `pi` AuthProvider declared in rekon's
+            # examples/dossier/config/providers.yaml. Absent, dossier falls back
+            # to its embedded any-username dev mock -- so this secret is what
+            # makes the deployment actually authenticated.
+            envFrom:
+              - secretRef:
+                  name: oidc
             image:
               repository: registry.sko.ai/doudous/rekon/dossier
               tag: 0.0.40
