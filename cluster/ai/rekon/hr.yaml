@@ -61,6 +61,7 @@ spec:
               seccompProfile:
                 type: Unconfined
       main:
+        forceRename: rekon
         replicas: 1
         type: statefulset
         serviceAccount:
