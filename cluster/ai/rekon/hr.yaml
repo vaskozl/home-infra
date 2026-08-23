@@ -44,7 +44,7 @@ spec:
               DISABLE_AUTOUPDATER: "1"
               DISABLE_ERROR_REPORTING: "1"
               OPERATOR_ORG: ujcwdrohelak # derived from Org spec.displayName "Doudous"
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
                   name: rekon-env
             resources:
@@ -104,7 +104,9 @@ spec:
               - -mode
               - worker
             env: *env
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: rekon-env
             resources:
               limits:
                 memory: 8Gi
