@@ -97,13 +97,6 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
     persistence:
-      api-home:
-        type: emptyDir
-        sizeLimit: 64Mi
-        advancedMounts:
-          api:
-            app:
-              - path: /home/nonroot
       turn-fifo:
         type: emptyDir
         medium: Memory
@@ -116,6 +109,9 @@ spec:
         type: configMap
         name: seed
         advancedMounts:
+          api:
+            app:
+              - path: /config
           main:
             app:
               - path: /config

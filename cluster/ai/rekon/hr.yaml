@@ -19,8 +19,49 @@ spec:
   interval: 24h
   values:
     controllers:
+      api:
+        type: deployment
+        replicas: 1
+        pod:
+          hostUsers: false
+          securityContext: &pod-security-context
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app:
+            image: &appImage
+              repository: ghcr.io/vaskozl/rekon-pkgupdate
+              tag: 0.0.43@sha256:8d97f16f933e9bb1409a741510364c0d49902757abf26703181d8125220ea997
+            args:
+              - -redis
+              - redis-master:6379
+              - -v
+              - -mode
+              - api
+            env: &env
+              DISABLE_TELEMETRY: "1"
+              DISABLE_BUG_COMMAND: "1"
+              DISABLE_AUTOUPDATER: "1"
+              DISABLE_ERROR_REPORTING: "1"
+              OPERATOR_ORG: ujcwdrohelak # derived from Org spec.displayName "Doudous"
+            envFrom: &envFrom
+              - secretRef:
+                  name: rekon-env
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 200m
+                memory: 256Mi
+            securityContext: &security-context
+              allowPrivilegeEscalation: true
+              procMount: Unmasked
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: Unconfined
       main:
-        replicas: 2
+        replicas: 1
         type: statefulset
         serviceAccount:
           identifier: rekon
@@ -29,9 +70,7 @@ spec:
           # Lets the app container see and SIGKILL chromium to get a fresh
           # browser per agent turn.
           shareProcessNamespace: true
-          securityContext:
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+          securityContext: *pod-security-context
         statefulset:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
@@ -54,31 +93,18 @@ spec:
                 claude mcp remove -s user chrome-devtools 2>/dev/null
                 claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
                 claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
-            securityContext: &security-context
-              allowPrivilegeEscalation: true
-              procMount: Unmasked
-              runAsGroup: 568
-              runAsUser: 568
-              seccompProfile:
-                type: Unconfined
+            securityContext: *security-context
         containers:
           app:
-            image:
-              repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.43@sha256:8d97f16f933e9bb1409a741510364c0d49902757abf26703181d8125220ea997
+            image: *appImage
             args:
               - -redis
               - redis-master:6379
               - -v
-            env:
-              DISABLE_TELEMETRY: "1"
-              DISABLE_BUG_COMMAND: "1"
-              DISABLE_AUTOUPDATER: "1"
-              DISABLE_ERROR_REPORTING: "1"
-              OPERATOR_ORG: ujcwdrohelak # derived from Org spec.displayName "Doudous"
-            envFrom:
-              - secretRef:
-                  name: rekon-env
+              - -mode
+              - worker
+            env: *env
+            envFrom: *envFrom
             resources:
               limits:
                 memory: 8Gi
@@ -139,6 +165,9 @@ spec:
         type: secret
         name: config
         advancedMounts:
+          api:
+            app:
+              - path: /home/nonroot/config
           main:
             app:
               - path: /home/nonroot/config
@@ -175,7 +204,7 @@ spec:
                 port: 8088
     service:
       app:
-        controller: main
+        controller: api
         ports:
           http:
             port: 8088
