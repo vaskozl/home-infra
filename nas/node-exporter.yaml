@@ -1,7 +1,7 @@
 version: '3'
 services:
   node-exporter:
-    image: ghcr.io/vaskozl/prometheus-node-exporter:1.12.1@sha256:d9a9440b6ab53a2a8891563c9c57c973a84f9622590b2c60690d1a933a4b84ca
+    image: ghcr.io/vaskozl/prometheus-node-exporter:1.12.1@sha256:7e661e3ca6e52a5708a853d42ea238e264aa964c0c4c029e1bc406362863a6c9
     container_name: node-exporter
     network_mode: host
     volumes:
