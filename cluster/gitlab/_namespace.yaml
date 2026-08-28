@@ -5,4 +5,9 @@ kind: Namespace
 metadata:
   name: gitlab
   labels:
+    # CI build pods need NET_ADMIN and SYS_ADMIN for bubblewrap sandboxing, which
+    # exceeds even the baseline profile, so warn/audit are pinned to privileged
+    # to stop the cluster-wide restricted default from spamming the runner logs.
     pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/audit: privileged
