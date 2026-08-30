@@ -186,3 +186,19 @@ spec:
                       kubernetes.io/arch: amd64
             target:
               kind: StatefulSet
+          - patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: gitlab-registry
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: registry
+                        env:
+                          - name: REGISTRY_STORAGE_S3_MULTIPARTCOPYTHRESHOLDSIZE
+                            value: "1073741824"
+            target:
+              kind: Deployment
+              name: gitlab-registry
