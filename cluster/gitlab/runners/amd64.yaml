@@ -44,10 +44,8 @@ spec:
             helper_cpu_limit = "500m"
             helper_memory_request = "50Mi"
             helper_memory_limit = "200Mi"
-            # NET_ADMIN and SYS_ADMIN are used by bubblewrap; the rest is the
-            # container runtime default set that apk/abuild rely on as root.
-            cap_drop = ["ALL"]
-            cap_add = ["NET_ADMIN", "SYS_ADMIN", "CHOWN", "DAC_OVERRIDE", "FOWNER", "FSETID", "SETGID", "SETUID", "SETPCAP", "KILL", "AUDIT_WRITE", "SYS_CHROOT", "NET_BIND_SERVICE", "MKNOD"]
+            # Used by bubblewrap
+            cap_add = ["NET_ADMIN", "SYS_ADMIN"]
             [[runners.kubernetes.volumes.empty_dir]]
               name = "docker-emptydir"
               mount_path = "/var/run"
