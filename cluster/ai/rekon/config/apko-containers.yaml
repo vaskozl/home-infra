@@ -114,6 +114,8 @@ spec:
         - rekon-pkgupdate
         - chromium
         - xvfb-run
+        - xkbcomp
+        - xkeyboard-config
         - redis
         - redis-cli
     entrypoint:
@@ -154,6 +156,8 @@ spec:
         - rekon-dossier
         - chromium
         - xvfb-run
+        - xkbcomp
+        - xkeyboard-config
         - redis
         - redis-cli
     entrypoint:
