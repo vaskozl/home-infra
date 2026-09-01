@@ -39,6 +39,7 @@ spec:
               - -mode
               - api
             env: &env
+              CONFIG_DIR: /home/nonroot/config
               DISABLE_TELEMETRY: "1"
               DISABLE_BUG_COMMAND: "1"
               DISABLE_AUTOUPDATER: "1"
