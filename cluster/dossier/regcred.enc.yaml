@@ -5,4 +5,36 @@ metadata:
   name: regcred
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5za28uYWkiOnsidXNlcm5hbWUiOiJ2YXNrbyIsInBhc3N3b3JkIjoiZ2xwYXQtT1pGN0xRUjVZQU05NDJmbzR4cFlEVzg2TVFwMU9qSUguMDEuMHcwdmIxdGNuIiwiYXV0aCI6ImRtRnphMjg2WjJ4d1lYUXRUMXBHTjB4UlVqVlpRVTA1TkRKbWJ6UjRjRmxFVnpnMlRWRndNVTlxU1VndU1ERXVNSGN3ZG1JeGRHTnUifX19
+  .dockerconfigjson: ENC[AES256_GCM,data:i/7lgeIrlqbb3UXOZrZ4h2pRF3aSzEGNpHPi5LsUkrhxm0F0qY44bkXrRgwG18AMfTUlA+U4ltPz0Vf983WMoDVJF/nYfXI6bs4wOIk/u7Wsr5U2VT9kAvSeWfT4+NVuNUxewCMFB7MpicMKlvEJTazm/OZZNSgoV6qgiwgUd5HmV91aMcdKlO7EipilH/THxAU2s8fYHE5CkUTfIk0IDRrZRPVYUnuc4k5O0xL2qQoZ9R2SkTUpZQWET7w5VsfoLuISp1RSuNH0TOOeCY0KLe8JYfkQ1YHHlFKIANcKpZUt57M+n1EA7J1nkHndBQEBiParf2Q3tgQiaCyTz/JLoAcvpBQNkMPY599j8g==,iv:k3SSLlHLyl62A/zxyceSMwJ1VSt6EgLpi3IMPnzEcgs=,tag:tPf5rQA7JQcsIKIP4RpRPA==,type:str]
+sops:
+  encrypted_regex: ((?i)(pass|secret($|[^N])|key|token|^data$|^stringData$))
+  lastmodified: "2026-09-02T08:34:46Z"
+  mac: ENC[AES256_GCM,data:/OIqdpi3kALxQ7QGLARyOiUWqeK/mDkjK80MT/N5Ce9cHbZqaUK3FCakTt9CAw7zC62ei6CxuXDAFnb+EOS7NfmYAvEsIekIZak+fOmHJmx+cJ+9YSnWmnVpLEywABYTAfIo64zOvfl2Ivjgyw6UlAe58l8b8VPAxfrVZ/YELMo=,iv:exxVKjtRnuQixWLTK0zHcnFiOXRnA7bwrS9tdNuibnY=,tag:L8P7R2ooQw1bvxLx1LoSzg==,type:str]
+  pgp:
+    - created_at: "2026-09-02T08:34:46Z"
+      enc: |-
+        -----BEGIN PGP MESSAGE-----
+
+        hQMOA4x50yY5upzjEAwAm7G+LHyHqTrvaY2kpQjQPU2FJ3XfFKlXWYbo59F+uBke
+        B8L/UyVfimAymxeqivZDAeY1UKJGlE3cYSEjOUfJRqKqy1Fsx6fXt8mhXJCBWese
+        sQ8XcBlr75xcWzlGA3dhKMf11g0v70Du3+sta9luevHPqtEdm8JPdVaTz3znwVya
+        Qx9CjQtjJ+ZlZgaHkRt9gGuMbwzksxaUARPzwYDRpUy/H8NNw6I3wOP8LAO6cafj
+        vJ5xBRTsYC+9Z57A22D/4gKcCpj5RoDcCfji/4UYTaWqcP9y5nLo1GGerzKowf6A
+        lX2Gc5U92iucKNTsYAeU97/UXx/BD6dwH/fteBh04MU5JWuthgtyOwKTZDsMhupJ
+        XmuqNVVCTkIISHtFWe3Wkv17PxXOU+Xva1fZ4bm8rvjYOKLJXZOD4M2g3IGwAhYY
+        4a98pYWX77L19kesSoz2aeLDN4gDl/FXOcIiEc36o/A4TidsVuS57M+uNkZA5tox
+        xZYYdkGTjTmfwGDkWYrkDACtIuyzippXzzl1ohmHqZftn6xo+NyFixiK2Ll6scDm
+        DxekFZBLvBEkddnIr1Gn3/QNYHCv2R64gqrKx/iFYKFqBGbzsJIr3300mkdNr1Mm
+        TIquEbpq3xNQKor1CxiyrDcbhjAR+dlpxJM3Z4cr7Ljh95KZB8mEsXUi8og1C7aN
+        SLV1ytTmsqS0Qn/ShKknhKWOsl06auAysPUtBOrjNZ1G/RYDSApIyVi2z0A3i8F0
+        U0n5cB6QJ0Qg4jLX/RryyPEUbI/xvftre3QjY1SwheLOFoq+FLv93wSv5U0Emtjy
+        gxxnqpBI1b75bK1CvAKdKEiS3wZn4WBJ2sZzuvT4rel2TcFWEA0nfGQV7AMc9K2E
+        Wous61azVVQjOjjfO/wg7M2AAUa1zvBsXx4Av1A0x03sej7bPOfODdWo7StoMG5f
+        MIbq1YRG7eDNfQSPapOyhduNTK2YCjm1uuCvDr3Wu3o5AK1uZm7OyZlXs5ZB12Pd
+        krElzX2hw3li2qHxqzpxcdPSXgFjNixgyD583vBmzEda7JrhSGrQbYslFF3oe3Lf
+        vp8qX5Kp0RYqg4IBs4MHsk5lOYZ2U98XBLnmfl7X3kICFZQMuPupBwff+N5ovv4A
+        JmjA+v5WjplEVEKwW73cIhM=
+        =mkCF
+        -----END PGP MESSAGE-----
+      fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
+  version: 3.13.2
