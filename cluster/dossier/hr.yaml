@@ -35,9 +35,14 @@ spec:
               DG_GROW_LIVE: "1"
               CONFIG_DIR: /config
               DOSSIER_PUBLIC_URL: https://dossier.sko.ai
+              # A bare host would be dialed as TLS
+              DOSSIER_S3_ENDPOINT: http://minio:9000
+              DOSSIER_S3_BUCKET: dossier
             envFrom: &envFrom
               - secretRef:
                   name: oidc
+              - secretRef:
+                  name: minio
             image: &image
               repository: registry.sko.ai/doudous/rekon/dossier
               tag: 0.0.45
@@ -91,6 +96,86 @@ spec:
                 cpu: 2
                 memory: 512Mi
             securityContext: *security-context
+      minio:
+        type: statefulset
+        replicas: 1
+        pod: *pod
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /data
+              name: data
+              size: 20Gi
+        containers:
+          app:
+            args:
+              - server
+              - /data
+              - --console-address
+              - ":9001"
+            env:
+              MINIO_ROOT_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: minio
+                    key: DOSSIER_S3_ACCESS_KEY
+              MINIO_ROOT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: minio
+                    key: DOSSIER_S3_SECRET_KEY
+            image: &minio-image
+              repository: ghcr.io/vaskozl/minio
+              tag: 0.20260717@sha256:2a6e0b43f8e74f675a3b0fc57324a5ca20536ca9c41727368f21e61921c9ace9
+            probes:
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /minio/health/ready
+                    port: 9000
+                  periodSeconds: 10
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+            securityContext: &minio-security-context
+              runAsGroup: 568
+              runAsUser: 568
+      # Drop once the image ensures the bucket at boot (rekon!1202)
+      bucket-init:
+        type: job
+        pod: *pod
+        job:
+          backoffLimit: 20
+          # Let the Job be collected so a later upgrade recreates it instead of
+          # failing on the immutable pod template
+          ttlSecondsAfterFinished: 600
+        containers:
+          app:
+            command:
+              - sh
+              - -c
+              - >-
+                mc alias set local http://minio:9000 "$DOSSIER_S3_ACCESS_KEY" "$DOSSIER_S3_SECRET_KEY" &&
+                mc mb --ignore-existing local/dossier
+            env:
+              MC_CONFIG_DIR: /tmp/mc
+            envFrom:
+              - secretRef:
+                  name: minio
+            image: *minio-image
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext: *minio-security-context
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -129,6 +214,13 @@ spec:
     service:
       app:
         controller: api
+        forceRename: dossier
         ports:
           http:
             port: 8080
+      minio:
+        controller: minio
+        forceRename: minio
+        ports:
+          s3:
+            port: 9000
