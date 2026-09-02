@@ -40,7 +40,7 @@ spec:
                   name: oidc
             image: &image
               repository: registry.sko.ai/doudous/rekon/dossier
-              tag: 0.0.44
+              tag: 0.0.45
             args:
               - -redis
               - redis-master:6379
