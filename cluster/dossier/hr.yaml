@@ -112,19 +112,11 @@ spec:
             args:
               - server
               - /data
-              - --console-address
-              - ":9001"
             env:
-              MINIO_ROOT_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: minio
-                    key: DOSSIER_S3_ACCESS_KEY
-              MINIO_ROOT_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: minio
-                    key: DOSSIER_S3_SECRET_KEY
+              MINIO_BROWSER: "off"
+            envFrom:
+              - secretRef:
+                  name: minio-root
             image: &minio-image
               repository: ghcr.io/vaskozl/minio
               tag: 0.20260717@sha256:2a6e0b43f8e74f675a3b0fc57324a5ca20536ca9c41727368f21e61921c9ace9
@@ -146,8 +138,7 @@ spec:
             securityContext: &minio-security-context
               runAsGroup: 568
               runAsUser: 568
-      # Drop once the image ensures the bucket at boot (rekon!1202)
-      bucket-init:
+      minio-init:
         type: job
         pod: *pod
         job:
@@ -160,12 +151,43 @@ spec:
             command:
               - sh
               - -c
-              - >-
-                mc alias set local http://minio:9000 "$DOSSIER_S3_ACCESS_KEY" "$DOSSIER_S3_SECRET_KEY" &&
+              - |
+                set -eu
+                mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"
                 mc mb --ignore-existing local/dossier
+                cat > /tmp/dossier-rw.json <<'JSON'
+                {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": ["s3:GetBucketLocation"],
+                      "Resource": ["arn:aws:s3:::dossier"]
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "s3:GetObject",
+                        "s3:PutObject",
+                        "s3:DeleteObject",
+                        "s3:AbortMultipartUpload",
+                        "s3:ListMultipartUploadParts"
+                      ],
+                      "Resource": ["arn:aws:s3:::dossier/*"]
+                    }
+                  ]
+                }
+                JSON
+                mc admin policy create local dossier-rw /tmp/dossier-rw.json
+                mc admin user add local "$DOSSIER_S3_ACCESS_KEY" "$DOSSIER_S3_SECRET_KEY"
+                # attach is not idempotent: it errors once the policy is on the user
+                mc admin user info local "$DOSSIER_S3_ACCESS_KEY" | grep -q dossier-rw ||
+                  mc admin policy attach local dossier-rw --user "$DOSSIER_S3_ACCESS_KEY"
             env:
               MC_CONFIG_DIR: /tmp/mc
             envFrom:
+              - secretRef:
+                  name: minio-root
               - secretRef:
                   name: minio
             image: *minio-image
