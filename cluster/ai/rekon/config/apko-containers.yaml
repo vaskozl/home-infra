@@ -33,26 +33,25 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
-  name: claude
+  name: brew
   includes: [wolfi-base]
   tags: [latest]
   registries:
-    - ghcr.io/vaskozl/claude
-  versionFrom: claude
+    - ghcr.io/vaskozl/brew
+  versionFrom: brew
   config: |
     environment:
       HOMEBREW_NO_AUTO_UPDATE: "1"
       PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/linuxbrew/.linuxbrew/bin"
     contents:
       packages:
-        - claude
+        - brew=6.0.15-r0
         - apk-tools
-        - apko
-        - bash
-        - bind-tools
-        - brew
         - busybox
         - busybox-full
+        - bash
+        - apko
+        - bind-tools
         - conntrack-tools
         - curl
         - ethtool
@@ -98,6 +97,34 @@ spec:
         gid: 568
         permissions: 0o755
         recursive: true
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: claude
+  includes: [brew]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/claude
+  versionFrom: claude
+  config: |
+    contents:
+      packages:
+        - claude
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: codex
+  includes: [brew]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/codex
+  versionFrom: codex
+  config: |
+    contents:
+      packages:
+        - codex
 ---
 apiVersion: v1alpha1
 kind: apkoimages
