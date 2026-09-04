@@ -62,10 +62,10 @@ spec:
                   failureThreshold: 120
             resources:
               limits:
-                memory: 1Gi
+                memory: 2Gi
               requests:
                 cpu: 50m
-                memory: 768Mi
+                memory: 2Gi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
