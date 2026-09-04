@@ -31,18 +31,33 @@ spec:
               repository: pgautoupgrade/pgautoupgrade
               tag: 17.10-alpine@sha256:1805434b932a3454ac26658e5df307254a3eb88fd4094d3fdf4b56513f63694f
             probes:
-              liveness: &probe
+              # Generous liveness margin: a saturated node makes pg_isready slow,
+              # and restarting postgres never fixes an I/O stall.
+              liveness:
                 enabled: true
                 custom: true
                 spec:
                   exec:
                     command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
-              readiness: *probe
-              startup:
-                <<: *probe
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
+              readiness:
+                enabled: true
+                custom: true
                 spec:
                   exec:
                     command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, gitlab, -d, gitlabhq_production]
+                  timeoutSeconds: 5
                   periodSeconds: 30
                   failureThreshold: 120
             resources:
@@ -62,6 +77,9 @@ spec:
               size: 8Gi
         type: statefulset
     defaultPodOptions:
+      # Only GitLab component not pinned to amd64: arm64 CI builds saturate Pi I/O.
+      nodeSelector:
+        kubernetes.io/arch: amd64
       securityContext:
         fsGroup: 70
         runAsGroup: 70
