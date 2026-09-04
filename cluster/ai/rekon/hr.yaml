@@ -94,7 +94,7 @@ spec:
                 claude mcp remove -s user victoriametrics 2>/dev/null
                 claude mcp remove -s user chrome-devtools 2>/dev/null
                 claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
-                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:8080/mcp
+                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:9223/mcp
             securityContext: *security-context
         containers:
           app:
@@ -147,8 +147,10 @@ spec:
               - mcp-proxy@6.5.1
               - --transport
               - streamablehttp
+              # Not 8080: agents boot the app under test on it, and mcp-proxy
+              # binds :: in the pod's single network namespace.
               - --port
-              - "8080"
+              - "9223"
               - --
               - npx
               - -y
