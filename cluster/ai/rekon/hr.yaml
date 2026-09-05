@@ -139,8 +139,8 @@ spec:
                 memory: 500Mi
           chrome-devtools-mcp:
             image:
-              repository: cgr.dev/chainguard/node
-              tag: latest@sha256:5280e63c3d2c81366056926b79f27f70e4adbd3a03a5b45c53503eac2b722b3f
+              repository: ghcr.io/vaskozl/node
+              tag: latest@sha256:721d8cedf3c0982e0b4795bd8301c57428d8c1a83cc0067ceeadebd202c9b460
             command: ["npx"]
             args:
               - -y
