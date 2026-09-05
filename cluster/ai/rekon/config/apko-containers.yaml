@@ -17,6 +17,341 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  name: buildkitd
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/buildkitd
+  versionFrom: buildkitd
+  config: |
+    contents:
+      packages:
+        - buildkitd
+        - git
+    accounts:
+      run-as: root
+    entrypoint:
+      command: buildkitd
+    vcs-url: https://github.com/moby/buildkit
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: cert-manager-acmesolver
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cert-manager-acmesolver
+  versionFrom: cert-manager-acmesolver
+  config: |
+    contents:
+      packages:
+        - cert-manager-acmesolver
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65532
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+      run-as: nonroot
+    entrypoint:
+      command: /usr/bin/acmesolver
+    vcs-url: https://github.com/cert-manager/cert-manager
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: cert-manager-cainjector
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cert-manager-cainjector
+  versionFrom: cert-manager-cainjector
+  config: |
+    contents:
+      packages:
+        - cert-manager-cainjector
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65532
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+      run-as: nonroot
+    entrypoint:
+      command: /usr/bin/cainjector
+    vcs-url: https://github.com/cert-manager/cert-manager
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: cert-manager-controller
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cert-manager-controller
+  versionFrom: cert-manager-controller
+  config: |
+    contents:
+      packages:
+        - cert-manager-controller
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65532
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+      run-as: nonroot
+    entrypoint:
+      command: /usr/bin/controller
+    vcs-url: https://github.com/cert-manager/cert-manager
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: cert-manager-webhook
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cert-manager-webhook
+  versionFrom: cert-manager-webhook
+  config: |
+    contents:
+      packages:
+        - cert-manager-webhook
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65532
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+      run-as: nonroot
+    entrypoint:
+      command: /usr/bin/webhook
+    vcs-url: https://github.com/cert-manager/cert-manager
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: chromium
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/chromium
+  versionFrom: chromium
+  config: |
+    contents:
+      packages:
+        - chromium
+    entrypoint:
+      command: chromium-browser
+    cmd: --headless --no-sandbox --disable-gpu
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: cloudflared
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cloudflared
+  versionFrom: cloudflared
+  config: |
+    contents:
+      packages:
+        - cloudflared
+    entrypoint:
+      command: cloudflared --no-autoupdate
+    cmd: version
+    vcs-url: https://github.com/cloudflare/cloudflared
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: code-server
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/code-server
+  versionFrom: code-server
+  config: |
+    environment:
+      ENTRYPOINTD: /entrypoint.d
+      LANG: en_US.UTF-8
+      USER: coder
+    contents:
+      packages:
+        - code-server
+        - code-server-compat
+        - zsh
+        - apk-tools
+        - docker
+    accounts:
+      run-as: coder
+      groups:
+        - groupname: coder
+          gid: 1000
+      users:
+        - username: coder
+          uid: 1000
+          shell: /bin/zsh
+    entrypoint:
+      command: /usr/bin/entrypoint.sh
+    cmd: --bind-addr 0.0.0.0:8080 .
+    work-dir: /home/coder
+    vcs-url: https://github.com/coder/code-server
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: coredns
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/coredns
+  versionFrom: coredns
+  config: |
+    contents:
+      packages:
+        - coredns
+        - coredns-compat
+    entrypoint:
+      command: /usr/bin/coredns -dns.port=53
+    vcs-url: https://github.com/coredns/coredns
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: flannel
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/flannel
+  versionFrom: flannel
+  config: |
+    contents:
+      packages:
+        - flannel
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: flanneld
+    vcs-url: https://github.com/flannel-io/cni-plugin
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: fluent-bit
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/fluent-bit
+  versionFrom: fluent-bit
+  config: |
+    contents:
+      packages:
+        - fluent-bit
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: fluent-bit
+    cmd: --config=/fluent-bit/etc/fluent-bit.conf
+    vcs-url: https://github.com/fluent/fluent-bit
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: grafana
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/grafana
+  versionFrom: grafana
+  config: |
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_PATHS_DATA: /var/lib/grafana
+      GF_PATHS_HOME: /usr/share/grafana
+      GF_PATHS_LOGS: /var/log/grafana
+      GF_PATHS_PLUGINS: /var/lib/grafana/plugins
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    contents:
+      packages:
+        - grafana
+        - grafana-oci-compat
+    entrypoint:
+      command: /opt/grafana/run.sh
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/grafana/grafana
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: haproxy
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/haproxy
+  versionFrom: haproxy
+  config: |
+    contents:
+      packages:
+        - haproxy
+        - haproxy-oci-entrypoint
+    accounts:
+      run-as: "65532"
+      groups:
+        - groupname: haproxy
+          gid: 65532
+      users:
+        - username: haproxy
+          uid: 65532
+          gid: 65532
+          homedir: /home/haproxy
+    entrypoint:
+      command: /usr/local/bin/docker-entrypoint.sh
+    cmd: haproxy -f /usr/local/etc/haproxy/haproxy.cfg
+    work-dir: /var/lib/haproxy
+    paths:
+      - path: /var/lib/haproxy
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o755
+    vcs-url: https://github.com/haproxy/haproxy
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: k8s-sidecar
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/k8s-sidecar
+  versionFrom: k8s-sidecar
+  config: |
+    environment:
+      PYTHONUNBUFFERED: "1"
+    contents:
+      packages:
+        - k8s-sidecar
+        - python3
+    entrypoint:
+      command: python -u /usr/share/app/sidecar.py
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/kiwigrid/k8s-sidecar
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
   name: logrotate
   includes: [wolfi-base]
   tags: [latest]
@@ -29,6 +364,167 @@ spec:
         - logrotate
     entrypoint:
       command: logrotate
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: mariadb
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/mariadb
+  versionFrom: mariadb
+  config: |
+    contents:
+      packages:
+        - mariadb
+        - mariadb-client
+        - mariadb-oci-entrypoint
+    accounts:
+      run-as: "65532"
+      groups:
+        - groupname: mysql
+          gid: 65532
+      users:
+        - username: mysql
+          uid: 65532
+          gid: 65532
+          homedir: /home/mysql
+    entrypoint:
+      command: /usr/local/bin/docker-entrypoint.sh mariadbd
+    paths:
+      - path: /var/lib/mysql
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o777
+      - path: /var/tmp
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o777
+      - path: /run/mysqld
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o777
+      - path: /docker-entrypoint-initdb.d
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o777
+    vcs-url: https://github.com/MariaDB/server
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: nfs-subdir-external-provisioner
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/nfs-subdir-external-provisioner
+  versionFrom: nfs-subdir-external-provisioner
+  config: |
+    contents:
+      packages:
+        - nfs-subdir-external-provisioner
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: /usr/bin/nfs-subdir-external-provisioner
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: node
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/node
+  versionFrom: nodejs
+  config: |
+    environment:
+      NPM_CONFIG_UPDATE_NOTIFIER: "false"
+    contents:
+      packages:
+        - nodejs
+        - npm
+    entrypoint:
+      command: node
+    vcs-url: https://github.com/nodejs/node
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: oauth2-proxy
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/oauth2-proxy
+  versionFrom: oauth2-proxy
+  config: |
+    contents:
+      packages:
+        - oauth2-proxy
+    entrypoint:
+      command: oauth2-proxy
+    cmd: run
+    vcs-url: https://github.com/oauth2-proxy/oauth2-proxy
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: prometheus-alertmanager
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/prometheus-alertmanager
+  versionFrom: prometheus-alertmanager
+  config: |
+    contents:
+      packages:
+        - prometheus-alertmanager
+    entrypoint:
+      command: alertmanager
+    cmd: --config.file=/etc/alertmanager/alertmanager.yml --storage.path=/alertmanager
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/prometheus/alertmanager
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  name: redis
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/redis
+  versionFrom: redis
+  config: |
+    contents:
+      packages:
+        - redis
+        - redis-cli
+    accounts:
+      run-as: "65532"
+      groups:
+        - groupname: redis
+          gid: 65532
+      users:
+        - username: redis
+          uid: 65532
+          gid: 65532
+          homedir: /home/redis
+    entrypoint:
+      command: /usr/bin/redis-server
+    cmd: --save "" --appendonly "no" --protected-mode "no"
+    work-dir: /data
+    paths:
+      - path: /data
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 0o755
+    vcs-url: https://github.com/redis/redis
 ---
 apiVersion: v1alpha1
 kind: apkoimages
