@@ -22,6 +22,12 @@ spec:
       create: true
     serviceAccount:
       create: true
+    # check-live runs `gitlab-runner verify` against GitLab and fails hard on a
+    # 503, so the default 3x60s kills a healthy manager (and orphans its jobs)
+    # during any GitLab restart. The runner itself rides out an outage; GitLab
+    # only fails a silent job after 1h, so tolerate the same.
+    livenessProbe:
+      failureThreshold: 60
     runners:
       secret: arm64-gitlab-runner-secret
       runUntagged: false
