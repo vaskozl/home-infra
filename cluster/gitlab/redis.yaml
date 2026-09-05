@@ -28,10 +28,19 @@ spec:
               repository: ghcr.io/vaskozl/redis
               tag: 8.8.1@sha256:6690cf4094f0bf8504d345627f50538b96003ebff0766b65e3681d0a135fcec1
             probes:
+              # Wide margin: a restart never fixes an I/O stall on a busy node.
               liveness:
                 enabled: true
+                spec:
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
               readiness:
                 enabled: true
+                spec:
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 3
             resources:
               limits:
                 memory: 250Mi
@@ -41,6 +50,9 @@ spec:
         statefulset:
           podManagementPolicy: Parallel
         type: statefulset
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
     service:
       main:
         controller: main
