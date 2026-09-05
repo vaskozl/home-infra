@@ -5,6 +5,7 @@ namespace: oauth2-proxy
 resources:
   - _namespace.yaml
   - hr.yaml
+  - gateway-policy.yaml
 secretGenerator:
   - name: oauth2-proxy-env
     envs:
