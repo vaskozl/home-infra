@@ -47,6 +47,26 @@ $ua->on(start => sub { $_[1]->req->headers->header('PRIVATE-TOKEN' => $TOKEN) })
 sub clean { (my $s = shift // '') =~ s/[\r\n]+/ /g; $s }
 sub date  { substr(shift // '', 0, 10) }
 
+# The script owns only the marked block of the issue description, matching the
+# convention of rekon's BranchHealth reconciler. Everything outside it (plans,
+# human notes) survives a refresh.
+my $OPEN_MARK  = '<!-- rekon:ci-monitor -->';
+my $CLOSE_MARK = '<!-- /rekon:ci-monitor -->';
+my $OWNED_RE   = qr/\Q$OPEN_MARK\E.*?\Q$CLOSE_MARK\E\n?/s;
+
+sub splice_owned {
+    my ($desc, $body) = @_;
+    $desc //= '';
+    if ($desc =~ /$OWNED_RE/) {
+        substr($desc, $-[0], $+[0] - $-[0]) = $body;
+        return $desc;
+    }
+    # Unmarked description: wholesale replace if it is empty or a legacy
+    # ci-monitor body, otherwise prepend the block and keep the human text.
+    return $body if $desc =~ /^\s*$/ || $desc =~ /_Filed by \[ci-monitor\]/;
+    "$body\n$desc"
+}
+
 sub api {
     my ($method, $path, $body) = @_;
     if ($DRY && $method ne 'GET') { say "    [dry] $method $path"; return { iid => 0, id => 0 } }
@@ -173,7 +193,8 @@ sub process {
     my @names = map { $_->{name} } @broken;
     my $sentinel = "<!-- ci-monitor jobs=" . join(',', @names) . " -->";
     my $title = "CI failed on main: " . scalar(@broken) . " job" . (@broken > 1 ? 's' : '');
-    my $body  = "Currently-failing jobs on `main` (latest finished run is `failed`,"
+    my $body  = "$OPEN_MARK\n"
+              . "Currently-failing jobs on `main` (latest finished run is `failed`,"
               . " no later success in last ${LOOKBACK_HOURS}h):\n\n"
               . join('', map {
                   my $g = $_->{_last_success};
@@ -189,8 +210,10 @@ sub process {
               . "\n_Filed by [ci-monitor](https://gitlab.sko.ai/doudous/home-infra/-/tree/main/cluster/ai/ci-monitor)._"
               . " Close this issue manually if a listed job is no longer relevant"
               . " (e.g. package removed) — ci-monitor will reopen a fresh"
-              . " issue if the same name reappears as failing on `main`.\n"
-              . "\n$sentinel";
+              . " issue if the same name reappears as failing on `main`."
+              . " Only this block is rewritten; any text outside it is preserved.\n"
+              . "\n$sentinel\n"
+              . "$CLOSE_MARK\n";
 
     if (!$open) {
         say "  action: CREATE issue";
@@ -200,22 +223,24 @@ sub process {
         return;
     }
 
-    my ($prev) = ($open->{description} // '') =~ /<!-- ci-monitor jobs=(.+?) -->/;
+    my $desc = $open->{description} // '';
+    my ($prev) = $desc =~ /<!-- ci-monitor jobs=(.+?) -->/;
     my $set_changed = (($prev // '') ne join(',', @names));
-    my $body_drift  = (($open->{description} // '') ne $body);
-    if (!$set_changed && !$body_drift) {
+    my ($cur) = $desc =~ /($OWNED_RE)/;
+    if (!$set_changed && defined $cur && $cur eq $body) {
         say "  action: NO-OP (issue #$open->{iid} already lists these jobs)";
         return;
     }
+    my $new = splice_owned($desc, $body);
     if (!$set_changed) {
-        # same broken set, just stale description (encoding fix, formatting tweak,
+        # same broken set, just stale block (encoding fix, formatting tweak,
         # link refresh): silently re-PUT, no note — avoid pinging subscribers.
         say "  action: REFRESH issue #$open->{iid} description (set unchanged)";
-        api(PUT => "/projects/$e/issues/$open->{iid}", { title => $title, description => $body });
+        api(PUT => "/projects/$e/issues/$open->{iid}", { description => $new });
         return;
     }
     say "  action: UPDATE issue #$open->{iid} (broken set changed: " . ($prev // '(none)') . " -> " . join(',', @names) . ")";
-    api(PUT  => "/projects/$e/issues/$open->{iid}", { title => $title, description => $body });
+    api(PUT  => "/projects/$e/issues/$open->{iid}", { description => $new });
     api(POST => "/projects/$e/issues/$open->{iid}/notes",
         { body => "Broken-job set changed.\n\n$body" });
 }
