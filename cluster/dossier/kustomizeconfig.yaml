@@ -1,4 +1,15 @@
 nameReference:
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - path: spec/values/controllers/api/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
+      - path: spec/values/controllers/main/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
+      - path: spec/values/controllers/minio/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
+      - path: spec/values/controllers/minio-init/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
   - kind: ConfigMap
     version: v1
     fieldSpecs:

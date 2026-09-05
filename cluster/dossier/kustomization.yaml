@@ -7,13 +7,23 @@ resources:
   - hr.yaml
   - regcred.enc.yaml
   - oidc-secret.enc.yaml
-  - minio-secret.enc.yaml
-  - minio-root-secret.enc.yaml
   - vmservicescrape.yaml
   - ../common/redis
 components:
   - ../common
   - ../common/redis/ephemeral
+# Generated so the name hash changes with the values: that is what makes a
+# rotation roll api/main/minio and recreate the TTL-collected minio-init Job,
+# which resets the user's secret. To rotate: sops the file, merge. Change
+# DOSSIER_S3_SECRET_KEY only; a new DOSSIER_S3_ACCESS_KEY adds a second user
+# and leaves the old one valid.
+secretGenerator:
+  - name: minio
+    envs:
+      - minio.enc.env
+  - name: minio-root
+    envs:
+      - minio-root.enc.env
 configMapGenerator:
   - name: seed
     options:
