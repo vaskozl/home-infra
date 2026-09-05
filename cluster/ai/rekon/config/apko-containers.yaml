@@ -33,6 +33,26 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  name: node
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/node
+  versionFrom: nodejs-24
+  config: |
+    environment:
+      NPM_CONFIG_UPDATE_NOTIFIER: "false"
+    contents:
+      packages:
+        - nodejs-24
+        - npm
+    entrypoint:
+      command: node
+    vcs-url: https://github.com/nodejs/node
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
   name: brew
   includes: [wolfi-base]
   tags: [latest]
