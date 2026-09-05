@@ -155,13 +155,16 @@ spec:
                 set -eu
                 mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"
                 mc mb --ignore-existing local/dossier
+                # s3:ListBucket is not for listing: the app's boot-time
+                # BucketExists probe is a HeadBucket, which minio authorizes as
+                # s3:ListBucket. Without it the app fails to start.
                 cat > /tmp/dossier-rw.json <<'JSON'
                 {
                   "Version": "2012-10-17",
                   "Statement": [
                     {
                       "Effect": "Allow",
-                      "Action": ["s3:GetBucketLocation"],
+                      "Action": ["s3:GetBucketLocation", "s3:ListBucket"],
                       "Resource": ["arn:aws:s3:::dossier"]
                     },
                     {
