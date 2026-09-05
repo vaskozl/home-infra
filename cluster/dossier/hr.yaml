@@ -127,7 +127,7 @@ spec:
                     key: DOSSIER_S3_SECRET_KEY
             image: &minio-image
               repository: ghcr.io/vaskozl/minio
-              tag: 0.20260717@sha256:b62ce2fe0d5273ecd9399c23b2261adbffa5adf5070f7923e078291cea0ea2b1
+              tag: 0.20260717@sha256:5a62cb7c4a2848507143fafdf71a176b020419c352ce450f753f0285d2cb462c
             probes:
               readiness:
                 enabled: true
