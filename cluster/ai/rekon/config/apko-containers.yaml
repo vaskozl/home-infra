@@ -45,11 +45,10 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/busybox
-  versionFrom: busybox
+  versionFrom: busybox-full
   config: |
     contents:
       packages:
-        - busybox
         - busybox-full
 ---
 apiVersion: v1alpha1
@@ -580,13 +579,12 @@ spec:
       PATH: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/linuxbrew/.linuxbrew/bin"
     contents:
       packages:
-        - brew=6.0.15-r0
+        - brew
         - apk-tools
-        - busybox
-        - busybox-full
-        - bash
         - apko
+        - bash
         - bind-tools
+        - busybox-full
         - conntrack-tools
         - curl
         - ethtool
@@ -618,6 +616,7 @@ spec:
         - perl-timedate
         - perl-types-serialiser
         - perl-yaml-pp
+        - ripgrep
         - rustup
         - tmux
         - util-linux-misc
