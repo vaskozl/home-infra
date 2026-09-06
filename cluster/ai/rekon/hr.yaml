@@ -63,7 +63,7 @@ spec:
                 type: Unconfined
       main:
         forceRename: rekon
-        replicas: 2
+        replicas: 1
         type: statefulset
         serviceAccount:
           identifier: rekon
