@@ -1,6 +1,7 @@
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: alps
   includes: [wolfi-base]
   tags: [latest]
@@ -17,6 +18,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: buildkitd
   includes: [wolfi-base]
   tags: [latest]
@@ -37,6 +39,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: cert-manager-acmesolver
   includes: [wolfi-base]
   tags: [latest]
@@ -63,6 +66,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: cert-manager-cainjector
   includes: [wolfi-base]
   tags: [latest]
@@ -89,6 +93,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: cert-manager-controller
   includes: [wolfi-base]
   tags: [latest]
@@ -115,6 +120,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: cert-manager-webhook
   includes: [wolfi-base]
   tags: [latest]
@@ -141,6 +147,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: chromium
   includes: [wolfi-base]
   tags: [latest]
@@ -158,6 +165,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: cloudflared
   includes: [wolfi-base]
   tags: [latest]
@@ -176,6 +184,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: code-server
   includes: [wolfi-base]
   tags: [latest]
@@ -212,6 +221,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: coredns
   includes: [wolfi-base]
   tags: [latest]
@@ -230,6 +240,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: flannel
   includes: [wolfi-base]
   tags: [latest]
@@ -249,6 +260,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: fluent-bit
   includes: [wolfi-base]
   tags: [latest]
@@ -269,6 +281,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: grafana
   includes: [wolfi-base]
   tags: [latest]
@@ -295,6 +308,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: haproxy
   includes: [wolfi-base]
   tags: [latest]
@@ -331,6 +345,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: k8s-sidecar
   includes: [wolfi-base]
   tags: [latest]
@@ -352,6 +367,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: logrotate
   includes: [wolfi-base]
   tags: [latest]
@@ -368,6 +384,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: mariadb
   includes: [wolfi-base]
   tags: [latest]
@@ -418,6 +435,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: nfs-subdir-external-provisioner
   includes: [wolfi-base]
   tags: [latest]
@@ -436,6 +454,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: node
   includes: [wolfi-base]
   tags: [latest]
@@ -456,6 +475,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: oauth2-proxy
   includes: [wolfi-base]
   tags: [latest]
@@ -474,6 +494,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: prometheus-alertmanager
   includes: [wolfi-base]
   tags: [latest]
@@ -493,6 +514,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: redis
   includes: [wolfi-base]
   tags: [latest]
@@ -529,6 +551,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: brew
   includes: [wolfi-base]
   tags: [latest]
@@ -597,6 +620,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: claude
   includes: [brew]
   tags: [latest]
@@ -611,6 +635,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: codex
   includes: [brew]
   tags: [latest]
@@ -625,6 +650,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: rekon-pkgupdate
   includes: [claude]
   tags: [latest]
@@ -649,6 +675,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: rekon-homeflow
   includes: [wolfi-base]
   tags: [latest]
@@ -668,6 +695,7 @@ spec:
 apiVersion: v1alpha1
 kind: apkoimages
 spec:
+  org: Doudous
   name: rekon-dossier
   includes: [wolfi-base]
   tags: [latest]
