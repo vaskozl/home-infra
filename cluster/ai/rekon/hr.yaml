@@ -31,7 +31,7 @@ spec:
           app:
             image: &appImage
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.47@sha256:6fe5b4d514dc80cb182cde494c9b1ac4cf9b6afaeae5eb3b4e1bc974c796fc67
+              tag: 0.0.47@sha256:6ccf91be0972f1bde0fe1ba8d6aa25c76cc52e86755a5b39e42e4f3f33581ee8
             args:
               - -redis
               - redis-master:6379
