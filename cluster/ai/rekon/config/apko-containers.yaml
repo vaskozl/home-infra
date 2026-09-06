@@ -475,13 +475,13 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/node
-  versionFrom: nodejs
+  versionFrom: nodejs-26
   config: |
     environment:
       NPM_CONFIG_UPDATE_NOTIFIER: "false"
     contents:
       packages:
-        - nodejs
+        - nodejs-26
         - npm
     entrypoint:
       command: node
