@@ -40,6 +40,22 @@ apiVersion: v1alpha1
 kind: apkoimages
 spec:
   org: Doudous
+  name: busybox
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/busybox
+  versionFrom: busybox
+  config: |
+    contents:
+      packages:
+        - busybox
+        - busybox-full
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  org: Doudous
   name: cert-manager-acmesolver
   includes: [wolfi-base]
   tags: [latest]
