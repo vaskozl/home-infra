@@ -405,13 +405,13 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/mariadb
-  versionFrom: mariadb
+  versionFrom: mariadb-12.3
   config: |
     contents:
       packages:
-        - mariadb
-        - mariadb-client
-        - mariadb-oci-entrypoint
+        - mariadb-12.3
+        - mariadb-12.3-client
+        - mariadb-12.3-oci-entrypoint
     accounts:
       run-as: "65532"
       groups:
@@ -535,12 +535,12 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/redis
-  versionFrom: redis
+  versionFrom: redis-8.8
   config: |
     contents:
       packages:
-        - redis
-        - redis-cli
+        - redis-8.8
+        - redis-cli-8.8
     accounts:
       run-as: "65532"
       groups:
