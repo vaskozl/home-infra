@@ -100,12 +100,18 @@ spec:
           limits:
             memory: 2560Mi
           requests:
-            cpu: 100m
+            # CFS weight comes from the request: at 100m puma was starved
+            # whenever the node saturated and got SIGKILLed mid-shutdown.
+            cpu: 1
             memory: 2560Mi
+        workhorse:
+          readinessProbe:
+            timeoutSeconds: 5
         deployment:
           # Only 4 Puma threads per pod: a burst of concurrent requests queues
           # /-/readiness behind real traffic, so allow more headroom than the
-          # chart default of 2s/2 before pulling the pod from the Service.
+          # chart default of 2s before pulling the pod from the Service. The
+          # workhorse and sidekiq probes are widened for the same reason.
           readinessProbe:
             initialDelaySeconds: 0
             periodSeconds: 5
@@ -128,8 +134,10 @@ spec:
           limits:
             memory: 1750Mi
           requests:
-            cpu: 50m
+            cpu: 500m
             memory: 1300Mi
+        readinessProbe:
+          timeoutSeconds: 5
       gitlab-shell:
         minReplicas: 1
         maxReplicas: 2
