@@ -49,6 +49,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: MEMORY_LIMIT_BYTES
+              valueFrom:
+                resourceFieldRef:
+                  containerName: redis
+                  resource: limits.memory
           ports:
             - name: sentinel
               containerPort: 26379
@@ -101,14 +106,20 @@ spec:
           ports:
             - name: tcp
               containerPort: 6379
-          livenessProbe: &redis-ping
+          livenessProbe:
             exec:
               command: ["redis-cli", "ping"]
-          readinessProbe: *redis-ping
+          readinessProbe:
+            exec:
+              command: ["/usr/local/bin/ready.sh"]
+            periodSeconds: 5
+            timeoutSeconds: 3
           resources:
             requests:
               cpu: 100m
-              memory: 150Mi
+              memory: 384Mi
+            limits:
+              memory: 384Mi
           volumeMounts: *mounts
       volumes:
         - name: run-redis
