@@ -36,7 +36,8 @@ spec:
                   subPath: config.yml
                   name: config
                 - name: torrents-v2
-                  mountPath: /data
+                  mountPath: /torrents
+                  subPath: torrents
           volumes:
             - name: config
               secret:
