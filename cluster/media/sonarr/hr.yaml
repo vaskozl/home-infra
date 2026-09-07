@@ -32,7 +32,7 @@ spec:
               limits:
                 memory: 1120Mi
               requests:
-                cpu: 1
+                cpu: 100m
                 memory: 1120Mi
             securityContext:
               allowPrivilegeEscalation: false

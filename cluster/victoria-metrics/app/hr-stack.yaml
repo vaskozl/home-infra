@@ -208,7 +208,7 @@ spec:
           limits:
             memory: 1.2Gi
           requests:
-            cpu: 530m
+            cpu: 300m
             memory: 1.2Gi
       route:
         enabled: true
@@ -255,7 +255,7 @@ spec:
             cpu: 1
             memory: 500Mi
           requests:
-            cpu: 500m
+            cpu: 150m
             memory: 100Mi
       route:
         enabled: true
