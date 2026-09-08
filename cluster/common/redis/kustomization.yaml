@@ -23,6 +23,7 @@ configMapGenerator:
       - scripts/update-master-label.sh
 
 resources:
+  - pdb.yaml
   - rbac.yaml
   - svc.yaml
   - sts.yaml

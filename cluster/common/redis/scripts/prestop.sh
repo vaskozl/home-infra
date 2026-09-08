@@ -1,7 +1,10 @@
 #!/bin/sh
 # shellcheck source=scripts/lib.sh
 . /usr/local/bin/lib.sh
-[ "$(master_addr)" = "$ME" ] || exit 0
+if [ "$(master_addr)" != "$ME" ]; then
+  sleep 5
+  exit 0
+fi
 redis-cli -p 26379 sentinel failover mymaster >/dev/null 2>&1 || exit 0
 i=0
 while [ "$i" -lt 25 ]; do

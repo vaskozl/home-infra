@@ -65,6 +65,9 @@ spec:
           livenessProbe:
             exec:
               command: ["redis-cli", "-p", "26379", "ping"]
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 5
           resources:
             requests:
               cpu: 20m
@@ -109,6 +112,9 @@ spec:
           livenessProbe:
             exec:
               command: ["redis-cli", "ping"]
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 5
           readinessProbe:
             exec:
               command: ["/usr/local/bin/ready.sh"]

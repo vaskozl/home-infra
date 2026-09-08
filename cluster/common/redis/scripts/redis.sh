@@ -17,6 +17,7 @@ maxmemory $maxmemory
 maxmemory-policy ${MAXMEMORY_POLICY:-noeviction}
 client-output-buffer-limit replica $(( maxmemory / 10 )) $(( maxmemory / 20 )) 60
 repl-backlog-size $(( maxmemory / 100 ))
+repl-diskless-load on-empty-db
 EOF
 [ "$master" = "$ME" ] || echo "replicaof $master 6379" >> /run/redis/redis.conf
 exec redis-server /run/redis/redis.conf
