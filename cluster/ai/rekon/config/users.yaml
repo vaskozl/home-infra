@@ -1,6 +1,3 @@
-# The operator user. metadata.id is derived from spec.subject, so it cannot be
-# pinned: a login through `pi` mints this same record. The provider part is the
-# AuthProvider's spec.name, not its id. status.* fills in from the OIDC claims.
 apiVersion: v1alpha1
 kind: users
 spec:

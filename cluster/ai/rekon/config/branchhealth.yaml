@@ -1,7 +1,3 @@
-# One BranchHealth per repo in repos.yaml: pkgupdate scans the branch's pipelines
-# and files a single ci::main-failed issue, which the repo scan then mirrors into a
-# WorkItem so a red main becomes agent work. `repo` is a ref resolved by identity
-# (GitlabRepo identity is `url`), so it must match repos.yaml verbatim.
 apiVersion: v1alpha1
 kind: branchhealths
 spec:

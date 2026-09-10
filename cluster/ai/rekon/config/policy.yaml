@@ -1,18 +1,7 @@
-# Update policies for the pkgupdate fleet, in the refSet/expression shape the
-# rekon main branch ships (types/updatepolicy.yaml). Policies attach by typed
-# refSets, not a kind selector: entity rung (packages/images/apkoImages), repo
-# rung (repos), org rung (orgs, the fleet default). Overlaps fold per field down
-# the ladder entity > repo > org, then priority, then lower id. The per-candidate
-# gates are CEL over `candidate` (name/type/from/to) and `now`; empty = no
-# opinion. `rebase`/`ignoreTests` are tri-state strings; `labels` union across
-# every attaching policy; `model` pins the dev tier that repairs a broken bump.
-#
-# Fleet default: auto-open MRs for every bump class and automerge only
-# patch/digest once CI passes. The `packages` repo overrides this to automerge
-# everything (its bumps are melange version bumps we trust).
 apiVersion: v1alpha1
 kind: updatepolicies
 spec:
+  org: Doudous
   name: fleet defaults
   orgs: [Doudous]
   update: 'true'
@@ -24,6 +13,7 @@ spec:
 apiVersion: v1alpha1
 kind: updatepolicies
 spec:
+  org: Doudous
   name: package defaults
   repos: [https://gitlab.sko.ai/doudous/packages.git]
   update: 'true'
