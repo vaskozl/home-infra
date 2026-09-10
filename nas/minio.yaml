@@ -1,7 +1,7 @@
 version: '3'
 services:
   s3:
-    image: ghcr.io/vaskozl/minio:0.20260717@sha256:5a62cb7c4a2848507143fafdf71a176b020419c352ce450f753f0285d2cb462c
+    image: ghcr.io/vaskozl/minio:0.20260717@sha256:0c5f98ad85d305a7726ce394d05c985f94550d28ad594384c0a7009edda88440
     command: server /data --console-address ":9001"
     restart: unless-stopped
     user: 1026:100
