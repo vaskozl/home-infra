@@ -18,6 +18,7 @@ spec:
   values:
     controllers:
       omada:
+        replicas: 0
         containers:
           app:
             env:
