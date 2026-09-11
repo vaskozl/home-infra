@@ -221,8 +221,12 @@ spec:
                 # Only clear an entry that still carries a 0.0.47 path, so a
                 # recreated Job on a later upgrade does not blunt the guard.
                 clear() {
-                  redis-cli -h redis-master HGET rekon:schema "$1" | grep -qE "$2" &&
-                    redis-cli -h redis-master HDEL rekon:schema "$1" || true
+                  # Assign rather than pipe: a pipeline reports grep's status,
+                  # which would turn an unreachable redis into a clean no-op.
+                  entry=$(redis-cli -h redis-master HGET rekon:schema "$1")
+                  if printf '%s' "$entry" | grep -qE "$2"; then
+                    redis-cli -h redis-master HDEL rekon:schema "$1"
+                  fi
                 }
                 clear dossiers 'status\.recalled'
                 clear invitations 'status\.grant|status\.priorMember'
