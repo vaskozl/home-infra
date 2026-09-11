@@ -15,12 +15,8 @@ kind: updatepolicies
 spec:
   org: Doudous
   name: chromium upgrades
-  images: [ghcr.io/vaskozl/chromium]
-  update: 'true'
-  automerge: "candidate.type in ['major', 'minor', 'patch', 'digest']"
-  rebase: 'true'
-  labels: [renovate, pkgupdate]
-  model: opus
+  repos: [https://gitlab.sko.ai/doudous/home-infra.git]
+  automerge: "candidate.name == 'ghcr.io/vaskozl/chromium' || candidate.type in ['minor', 'patch', 'digest']"
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
