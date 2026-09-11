@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/radarr
-              tag: 6.4.1@sha256:2f55f140efa4a38af168965420cdf0d3b3370f3946ec14835377dd6789b12737
+              tag: 6.4.1@sha256:200dc95d3159612bb2bcf9c582fcd00e18bd9b2046cf434ab2a37a4158c02777
             probes:
               liveness:
                 enabled: true
