@@ -203,6 +203,41 @@ spec:
                 cpu: 10m
                 memory: 32Mi
             securityContext: *minio-security-context
+      # Clears the 0.0.47 rekon:schema registry entries left by the deliberate
+      # field removals in 0.0.48. Removed by #294.
+      schema-migrate:
+        type: job
+        pod: *pod
+        job:
+          backoffLimit: 6
+          ttlSecondsAfterFinished: 600
+        containers:
+          app:
+            command:
+              - sh
+              - -c
+              - |
+                set -eu
+                # Only clear an entry that still carries a 0.0.47 path, so a
+                # recreated Job on a later upgrade does not blunt the guard.
+                clear() {
+                  redis-cli -h redis-master HGET rekon:schema "$1" | grep -qE "$2" &&
+                    redis-cli -h redis-master HDEL rekon:schema "$1" || true
+                }
+                clear dossiers 'status\.recalled'
+                clear invitations 'status\.grant|status\.priorMember'
+                clear leads 'spec\.claimSecretHash|status\.categories|status\.products'
+                clear orgs 'status\.owners|status\.members|status\.editors|status\.viewers|status\.founded'
+            image:
+              repository: ghcr.io/vaskozl/redis
+              tag: 8.8.2@sha256:fe220c9d3a6336cec73f2a44e37e9bcb7943ded6306592027b9ace5db478b0b3
+            resources:
+              limits:
+                memory: 64Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext: *minio-security-context
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
