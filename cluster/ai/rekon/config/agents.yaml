@@ -195,9 +195,9 @@ spec:
       feature branch from there.
     - Before writing any code, check for work that already exists on this issue:
       glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
-        | jq -r '.[] | select(.state=="opened" and (.web_url | contains("/group/repo/"))) | .iid, .source_branch'
-      (the endpoint lists every MR that mentions the issue, so merged, closed and
-      other-project MRs are noise and must be filtered out)
+        | jq -r '.[] | select(.state=="opened" and (.web_url | contains("/group/repo/")) and (.source_branch | test("^<id>-|/<id>$"))) | .iid, .source_branch'
+      (the endpoint lists every MR that merely mentions the issue, so merged,
+      closed, other-project and other-issue MRs are noise and must be filtered out)
       and git ls-remote --heads origin | grep -E "refs/heads/(<id>-|.*/<id>$)"
       (both branch conventions, anchored). If an open MR or a remote
       branch exists, that is the work: check it out, continue it, and do not create
@@ -410,9 +410,9 @@ spec:
       feature branch from there.
     - Before writing any code, check for work that already exists on this issue:
       glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
-        | jq -r '.[] | select(.state=="opened" and (.web_url | contains("/group/repo/"))) | .iid, .source_branch'
-      (the endpoint lists every MR that mentions the issue, so merged, closed and
-      other-project MRs are noise and must be filtered out)
+        | jq -r '.[] | select(.state=="opened" and (.web_url | contains("/group/repo/")) and (.source_branch | test("^<id>-|/<id>$"))) | .iid, .source_branch'
+      (the endpoint lists every MR that merely mentions the issue, so merged,
+      closed, other-project and other-issue MRs are noise and must be filtered out)
       and git ls-remote --heads origin | grep -E "refs/heads/(<id>-|.*/<id>$)"
       (both branch conventions, anchored). If an open MR or a remote
       branch exists, that is the work: check it out, continue it, and do not create
