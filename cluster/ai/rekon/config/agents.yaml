@@ -208,9 +208,15 @@ spec:
       (glab issue update <id> -R <repo> -l 'workflow::in dev' -u 'workflow::ready for development',
       same for glab mr update). An MR still labelled ready for development reads as
       unclaimed work to everyone else.
-    - Branch using git checkout -b ${HOSTNAME}/<id>, commit, push, then create the
-      MR with:
-      glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
+    - Branch name: the turn prompt's ## Branch section names the branch the
+      controller expects (<id>-<slug>, e.g.
+      297-dev-prompt-check-for-an-existing-mr-branch). Use exactly that name:
+      git checkout -b <branch>, commit, push, then create the MR with:
+      glab mr create --remove-source-branch -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
+      The controller adopts your MR by that branch name; an MR on any other
+      branch is invisible to it and the issue gets handed out again. If the turn
+      prompt gives no branch (should not happen for dev turns), use
+      <id>-<short-slug-of-the-issue-title>; never use $HOSTNAME/.
       Important: Closes #<id> MUST appear in the MR description for GitLab to
       auto-close the issue on merge. If your description is longer, ensure it still
       contains this text. Verify after creation:
@@ -423,9 +429,15 @@ spec:
       (glab issue update <id> -R <repo> -l 'workflow::in dev' -u 'workflow::ready for development',
       same for glab mr update). An MR still labelled ready for development reads as
       unclaimed work to everyone else.
-    - Branch using git checkout -b ${HOSTNAME}/<id>, commit, push, then create the
-      MR with:
-      glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
+    - Branch name: the turn prompt's ## Branch section names the branch the
+      controller expects (<id>-<slug>, e.g.
+      297-dev-prompt-check-for-an-existing-mr-branch). Use exactly that name:
+      git checkout -b <branch>, commit, push, then create the MR with:
+      glab mr create --remove-source-branch -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
+      The controller adopts your MR by that branch name; an MR on any other
+      branch is invisible to it and the issue gets handed out again. If the turn
+      prompt gives no branch (should not happen for dev turns), use
+      <id>-<short-slug-of-the-issue-title>; never use $HOSTNAME/.
       Important: Closes #<id> MUST appear in the MR description for GitLab to
       auto-close the issue on merge. If your description is longer, ensure it still
       contains this text. Verify after creation:
@@ -821,7 +833,9 @@ spec:
 
     Branches must be prefixed $HOSTNAME/ (e.g. claude-ops-0/...) so the loop
     recognises them as your work and dedupes alerts against them. $HOSTNAME is a
-    real env var; always double-quote and never hardcode the pod name.
+    real env var; always double-quote and never hardcode the pod name. This is an
+    ops-loop convention only: dev issues use the controller-assigned <id>-<slug>
+    branch instead.
 
     Include the alert fingerprint(s) backtick-wrapped in the MR description (e.g.
     `a1b2c3d4e5f6a7b8`) -- the loop reads them back to skip alerts already covered.
