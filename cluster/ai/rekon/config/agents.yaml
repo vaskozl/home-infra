@@ -134,7 +134,7 @@ spec:
     | Label | Purpose |
     |---|---|
     | model::<your tier> | Scoped. Model tier that created this MR (your tier is given in the task prompt). |
-    | workflow::ready for development | Available for an agent to pick up. |
+    | workflow::ready for development | Available for an agent to pick up. Applies to MRs too: an MR carrying it is unclaimed. |
     | workflow::in dev | Agent is actively working on it. |
     | workflow::in review | MR ready for human review. |
     | workflow::blocked | Agent is stuck, needs human help. |
@@ -163,8 +163,9 @@ spec:
 
     1. An issue you're resuming: re-read the issue and any linked MR to resume.
     2. An in-progress MR: left from a previous run. Check out the existing branch,
-       rebase on main, and continue where the previous agent left off. If the work
-       looks complete, mark workflow::in review.
+       claim it as described in "Do the work", rebase on main, and continue where
+       the previous agent left off. If the work looks complete, mark
+       workflow::in review.
     3. A workflow::in dev issue: orphaned from a previous agent run. Check for an
        existing MR or branch, and resume.
     4. An MR with conflicts: rebase on latest main per the rebase procedure in
@@ -192,6 +193,17 @@ spec:
 
     - You start in a clean, up-to-date checkout of the default branch; create your
       feature branch from there.
+    - Before writing any code, check for work that already exists on this issue:
+      glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
+      and git ls-remote --heads origin | grep <id>-. If an open MR or a remote
+      branch exists, that is the work: check it out, continue it, and do not create
+      a second branch or MR. Never force-push over a branch you did not create in
+      this turn.
+    - Claim it: move the issue, and any existing MR you are continuing, from
+      workflow::ready for development to workflow::in dev
+      (glab issue update <id> -R <repo> -l 'workflow::in dev' -u 'workflow::ready for development',
+      same for glab mr update). An MR still labelled ready for development reads as
+      unclaimed work to everyone else.
     - Branch using git checkout -b ${HOSTNAME}/<id>, commit, push, then create the
       MR with:
       glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
@@ -239,8 +251,6 @@ spec:
       the same parallel batch.
     - Run tests locally before pushing. Do not push code that fails tests. Include
       passing test/build logs in the MR description.
-    - Check for existing open MRs first - continue improving them rather than
-      opening duplicates.
     - If you find an open MR from a previous iteration with no passing tests, close
       it and start fresh.
     - If an issue turns out to be larger than expected (>3 files or ~200 lines),
@@ -335,7 +345,7 @@ spec:
     | Label | Purpose |
     |---|---|
     | model::<your tier> | Scoped. Model tier that created this MR (your tier is given in the task prompt). |
-    | workflow::ready for development | Available for an agent to pick up. |
+    | workflow::ready for development | Available for an agent to pick up. Applies to MRs too: an MR carrying it is unclaimed. |
     | workflow::in dev | Agent is actively working on it. |
     | workflow::in review | MR ready for human review. |
     | workflow::blocked | Agent is stuck, needs human help. |
@@ -364,8 +374,9 @@ spec:
 
     1. An issue you're resuming: re-read the issue and any linked MR to resume.
     2. An in-progress MR: left from a previous run. Check out the existing branch,
-       rebase on main, and continue where the previous agent left off. If the work
-       looks complete, mark workflow::in review.
+       claim it as described in "Do the work", rebase on main, and continue where
+       the previous agent left off. If the work looks complete, mark
+       workflow::in review.
     3. A workflow::in dev issue: orphaned from a previous agent run. Check for an
        existing MR or branch, and resume.
     4. An MR with conflicts: rebase on latest main per the rebase procedure in
@@ -393,6 +404,17 @@ spec:
 
     - You start in a clean, up-to-date checkout of the default branch; create your
       feature branch from there.
+    - Before writing any code, check for work that already exists on this issue:
+      glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
+      and git ls-remote --heads origin | grep <id>-. If an open MR or a remote
+      branch exists, that is the work: check it out, continue it, and do not create
+      a second branch or MR. Never force-push over a branch you did not create in
+      this turn.
+    - Claim it: move the issue, and any existing MR you are continuing, from
+      workflow::ready for development to workflow::in dev
+      (glab issue update <id> -R <repo> -l 'workflow::in dev' -u 'workflow::ready for development',
+      same for glab mr update). An MR still labelled ready for development reads as
+      unclaimed work to everyone else.
     - Branch using git checkout -b ${HOSTNAME}/<id>, commit, push, then create the
       MR with:
       glab mr create -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
@@ -440,8 +462,6 @@ spec:
       the same parallel batch.
     - Run tests locally before pushing. Do not push code that fails tests. Include
       passing test/build logs in the MR description.
-    - Check for existing open MRs first - continue improving them rather than
-      opening duplicates.
     - If you find an open MR from a previous iteration with no passing tests, close
       it and start fresh.
     - If an issue turns out to be larger than expected (>3 files or ~200 lines),
