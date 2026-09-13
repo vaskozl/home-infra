@@ -195,7 +195,8 @@ spec:
       feature branch from there.
     - Before writing any code, check for work that already exists on this issue:
       glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
-      and git ls-remote --heads origin | grep <id>-. If an open MR or a remote
+      and git ls-remote --heads origin | grep -E "refs/heads/(<id>-|.*/<id>$)"
+      (both branch conventions, anchored). If an open MR or a remote
       branch exists, that is the work: check it out, continue it, and do not create
       a second branch or MR. Never force-push over a branch you did not create in
       this turn.
@@ -406,7 +407,8 @@ spec:
       feature branch from there.
     - Before writing any code, check for work that already exists on this issue:
       glab api "projects/$(printf '%s' 'group/repo' | jq -Rr @uri)/issues/<id>/related_merge_requests"
-      and git ls-remote --heads origin | grep <id>-. If an open MR or a remote
+      and git ls-remote --heads origin | grep -E "refs/heads/(<id>-|.*/<id>$)"
+      (both branch conventions, anchored). If an open MR or a remote
       branch exists, that is the work: check it out, continue it, and do not create
       a second branch or MR. Never force-push over a branch you did not create in
       this turn.
