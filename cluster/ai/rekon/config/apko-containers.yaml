@@ -242,12 +242,12 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/coredns
-  versionFrom: coredns
+  versionFrom: coredns-1.14
   config: |
     contents:
       packages:
-        - coredns
-        - coredns-compat
+        - coredns-1.14
+        - coredns-1.14-compat
     entrypoint:
       command: /usr/bin/coredns -dns.port=53
     vcs-url: https://github.com/coredns/coredns
@@ -302,7 +302,7 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/grafana
-  versionFrom: grafana
+  versionFrom: grafana-13.2
   config: |
     environment:
       GF_PATHS_CONFIG: /etc/grafana/grafana.ini
@@ -313,8 +313,8 @@ spec:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
     contents:
       packages:
-        - grafana
-        - grafana-oci-compat
+        - grafana-13.2
+        - grafana-13.2-oci-compat
     entrypoint:
       command: /opt/grafana/run.sh
     work-dir: /usr/share/grafana
@@ -446,6 +446,25 @@ spec:
         gid: 65532
         permissions: 0o777
     vcs-url: https://github.com/MariaDB/server
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  org: Doudous
+  name: minio
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/minio
+  versionFrom: minio
+  config: |
+    contents:
+      packages:
+        - minio
+        - mc
+    entrypoint:
+      command: minio
+    vcs-url: https://github.com/minio/minio
 ---
 apiVersion: v1alpha1
 kind: apkoimages
