@@ -302,7 +302,7 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/grafana
-  versionFrom: grafana-13.2
+  versionFrom: grafana-13.0
   config: |
     environment:
       GF_PATHS_CONFIG: /etc/grafana/grafana.ini
@@ -313,8 +313,8 @@ spec:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
     contents:
       packages:
-        - grafana-13.2
-        - grafana-13.2-oci-compat
+        - grafana-13.0
+        - grafana-13.0-oci-compat
     entrypoint:
       command: /opt/grafana/run.sh
     work-dir: /usr/share/grafana
