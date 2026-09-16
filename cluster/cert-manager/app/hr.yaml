@@ -33,7 +33,7 @@ spec:
       replicaCount: 1
       image:
         repository: ghcr.io/vaskozl/cert-manager-cainjector
-        tag: 1.20.3@sha256:e54684cf13dcf16b26739d2998a9258e0524deefafa69c275a939ef7866ba889
+        tag: 1.20.3@sha256:1fcd2dfc50984a5331c2c7fc1f3bbfbf8e806d5de17ec8c2259589ce1d8ce40d
     acmesolver:
       image:
         repository: ghcr.io/vaskozl/cert-manager-acmesolver
