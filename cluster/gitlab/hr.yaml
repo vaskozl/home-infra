@@ -92,8 +92,8 @@ spec:
           limits:
             memory: 660M
       webservice:
-        minReplicas: 2
-        maxReplicas: 2
+        minReplicas: 1
+        maxReplicas: 1
         # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
         workerProcesses: 1
         resources:
