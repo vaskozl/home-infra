@@ -34,6 +34,7 @@ Home infrastructure running: 3x Master Raspberry Pi 4GB + 3x Worker 8GB + 1x 11t
   * [buildkitd](https://github.com/moby/buildkit) - Super efficient container build daemon
   * [cert-manager](https://github.com/jetstack/cert-manager) - Automated letsencrypt broker
   * [kgateway/agentgateway](https://github.com/kgateway-dev/kgateway) - The best Gateway API controller
+  * [fdb-kubernetes-operator](https://github.com/FoundationDB/fdb-kubernetes-operator) - FoundationDB clusters, backups and restores as CRDs
   * [flannel](https://docs.projectcalico.org/networking/bgp) - Because flannel is the lightest CNI
   * [fluentbit](https://fluentbit.io/) - Log collection and aggregation
   * [flux2](https://github.com/fluxcd/flux2) - Keep cluster in sync with this repo
