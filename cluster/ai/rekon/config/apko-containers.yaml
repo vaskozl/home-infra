@@ -242,12 +242,12 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/coredns
-  versionFrom: coredns-1.14
+  versionFrom: coredns
   config: |
     contents:
       packages:
-        - coredns-1.14
-        - coredns-1.14-compat
+        - coredns
+        - coredns-compat
     entrypoint:
       command: /usr/bin/coredns -dns.port=53
     vcs-url: https://github.com/coredns/coredns
@@ -302,7 +302,7 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/grafana
-  versionFrom: grafana-13.0
+  versionFrom: grafana
   config: |
     environment:
       GF_PATHS_CONFIG: /etc/grafana/grafana.ini
@@ -313,8 +313,8 @@ spec:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
     contents:
       packages:
-        - grafana-13.0
-        - grafana-13.0-oci-compat
+        - grafana
+        - grafana-oci-compat
     entrypoint:
       command: /opt/grafana/run.sh
     work-dir: /usr/share/grafana
@@ -405,13 +405,13 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/mariadb
-  versionFrom: mariadb-12.3
+  versionFrom: mariadb
   config: |
     contents:
       packages:
-        - mariadb-12.3
-        - mariadb-12.3-client
-        - mariadb-12.3-oci-entrypoint
+        - mariadb
+        - mariadb-client
+        - mariadb-oci-entrypoint
     accounts:
       run-as: "65532"
       groups:
@@ -494,13 +494,13 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/node
-  versionFrom: nodejs-26
+  versionFrom: nodejs
   config: |
     environment:
       NPM_CONFIG_UPDATE_NOTIFIER: "false"
     contents:
       packages:
-        - nodejs-26
+        - nodejs
         - npm
     entrypoint:
       command: node
@@ -554,12 +554,12 @@ spec:
   tags: [latest]
   registries:
     - ghcr.io/vaskozl/redis
-  versionFrom: redis-8.8
+  versionFrom: redis
   config: |
     contents:
       packages:
-        - redis-8.8
-        - redis-cli-8.8
+        - redis
+        - redis-cli
     accounts:
       run-as: "65532"
       groups:
