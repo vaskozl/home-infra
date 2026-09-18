@@ -749,3 +749,67 @@ spec:
     entrypoint:
       command: rekon-dossier
     vcs-url: https://gitlab.sko.ai/doudous/rekon
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  org: Doudous
+  name: gitlab-runner
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/gitlab-runner
+  versionFrom: gitlab-runner
+  config: |
+    contents:
+      packages:
+        - gitlab-runner
+        - gitlab-runner-oci-entrypoint
+        - gitlab-docker-machine
+        - git-lfs
+        - git-lfs-config
+        - bash
+        - dumb-init
+    entrypoint:
+      command: dumb-init -- /entrypoint
+    cmd: run --user=gitlab-runner --working-directory=/home/gitlab-runner
+    vcs-url: https://gitlab.com/gitlab-org/build/CNG
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65533
+      users:
+        - username: gitlab-runner
+          uid: 100
+      run-as: gitlab-runner
+    paths:
+      - path: /home/gitlab-runner
+        type: directory
+        uid: 100
+        gid: 65533
+        permissions: 0o755
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  org: Doudous
+  name: gitlab-runner-helper
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/gitlab-runner-helper
+  versionFrom: gitlab-runner-helper
+  config: |
+    contents:
+      packages:
+        - gitlab-runner-helper
+        - gitlab-runner-helper-oci-entrypoint
+        - gitlab-runner-helper-compat
+        - git-lfs
+        - git-lfs-config
+        - miniperl
+        - dumb-init
+    entrypoint:
+      command: dumb-init -- /entrypoint
+    cmd: sh
+    vcs-url: https://gitlab.com/gitlab-org/build/CNG
