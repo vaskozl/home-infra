@@ -120,7 +120,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 153.0.8010.52@sha256:8b24143ec13299d1acbb815059f205f094c6c105ee849a05b545c831747b362d
+              tag: 153.0.8010.52@sha256:928c8d37358eff912634836319f2552d6e0c9913ec9c81662fb86c6a26cd3e60
             # Respawn loop: killing the browser must not exit the container,
             # or the kubelet applies restart backoff. The profile dir is wiped
             # first so a SIGKILL leaves no stale SingletonLock or state.
