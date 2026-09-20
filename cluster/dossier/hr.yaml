@@ -47,7 +47,7 @@ spec:
                   name: minio
             image: &image
               repository: registry.sko.ai/doudous/rekon/dossier
-              tag: 0.0.56
+              tag: 0.0.57
             args:
               - -redis
               - redis-master:6379
