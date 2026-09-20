@@ -129,7 +129,9 @@ spec:
             failureThreshold: 40
       sidekiq:
         minReplicas: 1
-        maxReplicas: 2
+        # robinsons is the only amd64 node; a second 1300Mi replica has nowhere
+        # else to land and starves runner job pods.
+        maxReplicas: 1
         resources:
           limits:
             memory: 1750Mi
