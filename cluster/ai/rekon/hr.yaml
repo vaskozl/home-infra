@@ -112,10 +112,10 @@ spec:
             resources:
               limits:
                 cpu: 3
-                memory: 12Gi
+                memory: 14Gi
               requests:
                 cpu: 500m
-                memory: 6Gi
+                memory: 8Gi
             securityContext: *security-context
           chromium:
             image:

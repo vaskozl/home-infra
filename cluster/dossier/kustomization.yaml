@@ -30,7 +30,7 @@ patches:
                   limits:
                     memory: 768Mi
                   requests:
-                    memory: 768Mi
+                    memory: 512Mi
 # Generated so the name hash changes with the values: that is what makes a
 # rotation roll api/main/minio and recreate the TTL-collected minio-init Job,
 # which resets the user's secret. To rotate: sops the file, merge. Change
