@@ -203,6 +203,49 @@ spec:
                 cpu: 10m
                 memory: 32Mi
             securityContext: *minio-security-context
+      vllm-qwen3-vl-emb:
+        type: statefulset
+        forceRename: vllm-qwen3-vl-emb
+        pod: *pod
+        statefulset:
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /root/.cache/huggingface
+              name: huggingface-cache
+              size: 20Gi
+        containers:
+          app:
+            image:
+              repository: vllm/vllm-openai-cpu
+              tag: nightly-0bfc7a15d095fe83ecc82b50561a93c177fece2d
+            env:
+              VLLM_ENABLE_V1_MULTIPROCESSING: "0"
+              VLLM_CPU_NUM_OF_RESERVED_CPU: "0"
+              VLLM_CPU_KVCACHE_SPACE: "1"
+              VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "3600"
+            args:
+              - collin-park/Qwen3-VL-Embedding-8B-W8A8
+              - --served-model-name=Qwen3-Embedding-8B
+              - --runner=pooling
+              - --convert=embed
+              - --trust-remote-code
+              - --dtype=float32
+              - --enforce-eager
+              - --max-model-len=1280
+              - --max-num-seqs=1
+              - --max-num-batched-tokens=1280
+              - --no-enable-prefix-caching
+              - --mm-processor-cache-gb=0
+              - '--hf-overrides={"is_matryoshka":true,"matryoshka_dimensions":[64,128,256,512,768,1024,2048,4096]}'
+              - '--mm-processor-kwargs={"max_pixels":262144}'
+            resources:
+              limits:
+                cpu: "4"
+                memory: 16Gi
+              requests:
+                cpu: "1"
+                memory: 6Gi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -251,3 +294,9 @@ spec:
         ports:
           s3:
             port: 9000
+      vllm-qwen3-vl-emb:
+        controller: vllm-qwen3-vl-emb
+        forceRename: vllm-qwen3-vl-emb
+        ports:
+          http:
+            port: 8000
