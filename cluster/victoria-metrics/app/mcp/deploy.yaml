@@ -6,6 +6,8 @@ metadata:
 spec:
   template:
     spec:
+      nodeSelector:
+        kubernetes.io/arch: arm64
       securityContext:
         runAsNonRoot: true
         runAsUser: 65532
