@@ -225,20 +225,46 @@ spec:
               VLLM_CPU_KVCACHE_SPACE: "1"
               VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "3600"
             args:
-              - collin-park/Qwen3-VL-Embedding-8B-W8A8
-              - --served-model-name=Qwen3-Embedding-8B
+              - Qwen/Qwen3-VL-Embedding-2B
               - --runner=pooling
               - --convert=embed
               - --trust-remote-code
-              - --dtype=float32
               - --enforce-eager
               - --max-model-len=1280
               - --max-num-seqs=1
               - --max-num-batched-tokens=1280
               - --no-enable-prefix-caching
               - --mm-processor-cache-gb=0
-              - '--hf-overrides={"is_matryoshka":true,"matryoshka_dimensions":[64,128,256,512,768,1024,2048,4096]}'
+              - '--hf-overrides={"is_matryoshka":true,"matryoshka_dimensions":[64,128,256,512,768,1024,2048]}'
               - '--mm-processor-kwargs={"max_pixels":262144}'
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet: &vllm-health
+                    path: /health
+                    port: 8000
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+                  timeoutSeconds: 15
+                  failureThreshold: 50
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet: *vllm-health
+                  periodSeconds: 30
+                  timeoutSeconds: 15
+                  failureThreshold: 8
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet: *vllm-health
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
             resources:
               limits:
                 cpu: "4"
