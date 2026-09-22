@@ -129,7 +129,7 @@ spec:
               - |
                 while true; do
                   rm -rf /tmp/chrome
-                  chromium-browser --headless --remote-debugging-port=9222 --no-sandbox --user-data-dir=/tmp/chrome
+                  chromium-browser --headless --remote-debugging-port=9222 --user-data-dir=/tmp/chrome
                   sleep 1
                 done
             resources:
