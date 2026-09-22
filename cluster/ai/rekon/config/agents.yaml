@@ -6,7 +6,7 @@ spec:
   role: lead
   bin: claude
   model: fable
-  effort: medium
+  effort: high
   disabled: false
   maxConcurrent: 1
   description: Plans and refines issues into a scoped plan, then marks them ready.
@@ -113,7 +113,7 @@ spec:
   role: dev
   bin: claude
   model: fable
-  effort: low
+  effort: high
   disabled: false
   maxConcurrent: 1
   description: Implements issues and fixes failing bump CI (harder tasks).
@@ -334,7 +334,7 @@ spec:
   role: dev
   bin: claude
   model: opus
-  effort: low
+  effort: high
   disabled: false
   maxConcurrent: 1
   description: Implements issues and fixes failing bump CI (mechanical tasks).
@@ -555,7 +555,7 @@ spec:
   role: reviewer
   bin: claude
   model: opus
-  effort: low
+  effort: high
   disabled: false
   maxConcurrent: 1
   description: Reviews merge requests marked ready and records a verdict.
