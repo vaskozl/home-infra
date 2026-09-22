@@ -40,8 +40,8 @@ spec:
             helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:latest"
             cpu_request = "500m"
             cpu_limit = "1"
-            memory_request = "4Gi"
-            memory_limit = "6Gi"
+            memory_request = "2Gi"
+            memory_limit = "7Gi"
             service_cpu_request = "100m"
             service_cpu_limit = "1"
             service_memory_request = "50Mi"
@@ -51,7 +51,7 @@ spec:
             helper_memory_request = "50Mi"
             helper_memory_limit = "200Mi"
             poll_interval = 5
-            poll_timeout = 1800
+            poll_timeout = 600
             # Used by bubblewrap
             cap_add = ["NET_ADMIN", "SYS_ADMIN"]
             [[runners.kubernetes.volumes.empty_dir]]
