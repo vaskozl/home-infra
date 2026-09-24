@@ -142,7 +142,7 @@ spec:
           capabilities:
             add: ["SYS_ADMIN"]
           allowPrivilegeEscalation: true
-        image: ghcr.io/vaskozl/synology-csi:1.3.1@sha256:9921bb2f4f5905bc34467acba5bbe5b85eaca7730e4e5d19dcc9407843926701
+        image: ghcr.io/vaskozl/synology-csi:1.3.1@sha256:d9e1c8d0ecc8b7f587c598d4e815fd155c3b3f49c7b33833916d5937b8ea317b
         args:
         - --nodeid=NotUsed
         - --endpoint=$(CSI_ENDPOINT)
