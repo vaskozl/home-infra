@@ -15,8 +15,8 @@ Missing tools or config issues should be logged as issues (see the table below).
 
 You run as `nonroot` (uid 568) on a Wolfi-based container image inside the
 `home-infra` Kubernetes cluster (namespace: `ai`). You have read-only access to
-the cluster via your pod's service account; use `kubectl` to inspect workloads,
-pods, events, and resources across all namespaces.
+the cluster, excluding Secrets, via your pod's service account; use `kubectl`
+to inspect workloads, pods, events, and resources across all namespaces.
 
 Your home directory is `/home/nonroot/`. Clone repos here (e.g.,
 `/home/nonroot/<repo>`). **Do not** use `/root/`; it is not accessible to uid
