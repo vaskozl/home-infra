@@ -3,10 +3,21 @@ kind: ClusterRole
 metadata:
   name: rekon-readonly
 # RBAC cannot exclude resources, so core objects are left to the aggregated
-# view role (which omits secrets) and only non-core groups get a wildcard.
+# view role (which omits secrets) and only groups view never touches get a
+# wildcard. view is namespace-scoped, so groups it covers still need their
+# cluster-scoped kinds listed explicitly.
 rules:
   - apiGroups: [""]
-    resources: ["nodes", "nodes/status", "persistentvolumes", "componentstatuses"]
+    resources: ["nodes", "nodes/status", "persistentvolumes", "componentstatuses", "podtemplates"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["cert-manager.io"]
+    resources: ["clusterissuers"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingressclasses", "ipaddresses", "servicecidrs"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["resource.k8s.io"]
+    resources: ["deviceclasses", "resourceslices"]
     verbs: ["get", "list", "watch"]
   - apiGroups:
       - admissionregistration.k8s.io
