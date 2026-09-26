@@ -731,16 +731,16 @@ apiVersion: v1alpha1
 kind: apkoimages
 spec:
   org: Doudous
-  name: rekon-dossier
+  name: rekon-veroso
   includes: [wolfi-base]
   tags: [latest]
   registries:
-    - registry.sko.ai/doudous/rekon/dossier
-  versionFrom: rekon-dossier
+    - registry.sko.ai/doudous/rekon/veroso
+  versionFrom: rekon-veroso
   config: |
     contents:
       packages:
-        - rekon-dossier
+        - rekon-veroso
         - chromium
         - xvfb-run
         - xkbcomp
@@ -748,7 +748,7 @@ spec:
         - redis
         - redis-cli
     entrypoint:
-      command: rekon-dossier
+      command: rekon-veroso
     vcs-url: https://gitlab.sko.ai/doudous/rekon
 ---
 apiVersion: v1alpha1
