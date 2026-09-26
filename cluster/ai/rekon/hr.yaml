@@ -31,13 +31,14 @@ spec:
           app:
             image: &appImage
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.57@sha256:8a0f136eaefe80d93a13075b1d09b7989acb8bc7d7175d305e388afa18c0af9d
+              tag: 0.0.58@sha256:c4a2f3e98cc9c56a26319b00cf42a73f1bc4d9654583515b67c18f102eb1a5bd
             args:
               - -redis
               - redis-master:6379
               - -v
               - -mode
               - api
+              - -prune-stale
             env: &env
               CONFIG_DIR: /home/nonroot/config
               DISABLE_TELEMETRY: "1"
