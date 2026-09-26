@@ -1,0 +1,7 @@
+apiVersion: v1alpha1
+kind: inferencebackends
+spec:
+  name: embeddings
+  baseURL: http://vllm-qwen3-vl-emb.dossier.svc:8000
+  model: Qwen/Qwen3-VL-Embedding-2B
+  dimensions: 512

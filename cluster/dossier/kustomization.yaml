@@ -51,6 +51,7 @@ configMapGenerator:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - claimpolicies.yaml=config/claimpolicies.yaml
+      - inferencebackends.yaml=config/inferencebackends.yaml
       - providers.yaml=config/providers.yaml
 configurations:
   - kustomizeconfig.yaml
