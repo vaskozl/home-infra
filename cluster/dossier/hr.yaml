@@ -34,7 +34,7 @@ spec:
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
               CONFIG_DIR: /config
-              VEROSO_PUBLIC_URL: https://dossier.sko.ai
+              VEROSO_PUBLIC_URL: https://veroso.com
               VEROSO_OPERATOR_ORG: Doudous
               VEROSO_OPERATOR_FOUNDER: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
               # A bare host would be dialed as TLS
@@ -300,7 +300,7 @@ spec:
     route:
       app:
         hostnames:
-          - dossier.sko.ai
+          - veroso.com
         parentRefs:
           - name: internal
             namespace: agentgateway
