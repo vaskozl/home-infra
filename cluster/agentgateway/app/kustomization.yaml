@@ -5,8 +5,9 @@ namespace: agentgateway
 resources:
   - _namespace.yaml
   - hr.yaml
-  - sko-ai-tls.yaml
   - leane-dev-tls.yaml
+  - sko-ai-tls.yaml
+  - veroso-com-tls.yaml
   - vmpodscrape.yaml
   - vmrule.yaml
   - ../../netpols/allow-all-ingress
