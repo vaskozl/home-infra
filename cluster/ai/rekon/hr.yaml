@@ -209,10 +209,10 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: 8088
+                port: 8080
     service:
       app:
         controller: api
         ports:
           http:
-            port: 8088
+            port: 8080
