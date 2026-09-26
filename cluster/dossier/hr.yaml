@@ -46,14 +46,15 @@ spec:
               - secretRef:
                   name: minio
             image: &image
-              repository: registry.sko.ai/doudous/rekon/dossier
-              tag: 0.0.57
+              repository: registry.sko.ai/doudous/rekon/veroso
+              tag: 0.0.58@sha256:4e06968ec64e26616331fe1902a23fe5a147a875d3a709e7852c7058f3688961
             args:
               - -redis
               - redis-master:6379
               - -v
               - -mode
               - api
+              - -prune-stale
             resources:
               limits:
                 memory: 512Mi
