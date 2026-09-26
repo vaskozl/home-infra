@@ -123,7 +123,7 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 384Mi
+              memory: 128Mi
             limits:
               memory: 384Mi
           volumeMounts: *mounts
