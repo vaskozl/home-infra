@@ -5,6 +5,7 @@ include:
 
 run:val:
   stage: test
+  tags: [arm64]
   image: ghcr.io/vaskozl/kubeconform:0.8.0@sha256:5f5a470f35b032a0bb9828355088bec970830e629282dbbe6fdaa1c4606d19d3
   script:
     - scripts/validate.sh
