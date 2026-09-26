@@ -34,12 +34,12 @@ spec:
               EURLEX_LIVE: "1"
               DG_GROW_LIVE: "1"
               CONFIG_DIR: /config
-              DOSSIER_PUBLIC_URL: https://dossier.sko.ai
-              DOSSIER_OPERATOR_ORG: Doudous
-              DOSSIER_OPERATOR_FOUNDER: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
+              VEROSO_PUBLIC_URL: https://dossier.sko.ai
+              VEROSO_OPERATOR_ORG: Doudous
+              VEROSO_OPERATOR_FOUNDER: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
               # A bare host would be dialed as TLS
-              DOSSIER_S3_ENDPOINT: http://minio:9000
-              DOSSIER_S3_BUCKET: dossier
+              VEROSO_S3_ENDPOINT: http://minio:9000
+              VEROSO_S3_BUCKET: dossier
             envFrom: &envFrom
               - secretRef:
                   name: oidc
@@ -185,10 +185,10 @@ spec:
                 }
                 JSON
                 mc admin policy create local dossier-rw /tmp/dossier-rw.json
-                mc admin user add local "$DOSSIER_S3_ACCESS_KEY" "$DOSSIER_S3_SECRET_KEY"
+                mc admin user add local "$VEROSO_S3_ACCESS_KEY" "$VEROSO_S3_SECRET_KEY"
                 # attach is not idempotent: it errors once the policy is on the user
-                mc admin user info local "$DOSSIER_S3_ACCESS_KEY" | grep -q dossier-rw ||
-                  mc admin policy attach local dossier-rw --user "$DOSSIER_S3_ACCESS_KEY"
+                mc admin user info local "$VEROSO_S3_ACCESS_KEY" | grep -q dossier-rw ||
+                  mc admin policy attach local dossier-rw --user "$VEROSO_S3_ACCESS_KEY"
             env:
               MC_CONFIG_DIR: /tmp/mc
             envFrom:
