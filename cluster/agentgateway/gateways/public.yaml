@@ -37,6 +37,32 @@ spec:
           - kind: Secret
             group: ""
             name: sko-ai-tls
+    - name: https-veroso
+      protocol: HTTPS
+      port: 443
+      hostname: "*.veroso.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: veroso-com-tls
+    - name: https-veroso-apex
+      protocol: HTTPS
+      port: 443
+      hostname: "veroso.com"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            group: ""
+            name: veroso-com-tls
     - name: https-leane
       protocol: HTTPS
       port: 443
