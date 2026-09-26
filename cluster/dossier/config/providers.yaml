@@ -14,3 +14,21 @@ spec:
     - email
   emailVerifiedRequired: true
   enabled: true
+---
+apiVersion: v1alpha1
+kind: authproviders
+spec:
+  name: google
+  type: oidc
+  displayName: Google
+  icon: rectangle-goggles
+  issuer: "https://accounts.google.com"
+  clientId: "253514321271-gnf26856evk2anpldcn88opfkr08s8r6.apps.googleusercontent.com"
+  clientSecretEnv: GOOGLE_CLIENT_SECRET
+  scopes:
+    - openid
+    - profile
+    - email
+  emailVerifiedRequired: true
+  enabled: true
+
