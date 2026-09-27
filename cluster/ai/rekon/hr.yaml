@@ -108,7 +108,7 @@ spec:
               - worker
             env:
               <<: *env
-              REKON_KINDS_INCLUDE: AgentRun
+              REKON_KINDS_INCLUDE: agentruns
             envFrom:
               - secretRef:
                   name: rekon-env
@@ -170,9 +170,9 @@ spec:
       worker:
         type: deployment
         replicas: 1
-        serviceAccount:
-          identifier: rekon
         pod:
+          # Only agent turns shell out to kubectl.
+          automountServiceAccountToken: false
           hostUsers: false
           securityContext: *pod-security-context
         containers:
@@ -186,13 +186,13 @@ spec:
               - worker
             env:
               <<: *env
-              REKON_KINDS_EXCLUDE: AgentRun
+              REKON_KINDS_EXCLUDE: agentruns
             envFrom:
               - secretRef:
                   name: rekon-env
             resources:
               limits:
-                memory: 1Gi
+                memory: 2Gi
               requests:
                 cpu: 200m
                 memory: 256Mi
@@ -221,9 +221,12 @@ spec:
               - path: /home/nonroot/config
             mcp-setup:
               - path: /home/nonroot/config
+      clones:
+        type: emptyDir
+        advancedMounts:
           worker:
             app:
-              - path: /home/nonroot/config
+              - path: /home/nonroot/.cache
       screenshots:
         type: emptyDir
         advancedMounts:
