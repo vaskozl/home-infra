@@ -85,7 +85,7 @@ spec:
           mcp-setup:
             image: &claudeImage
               repository: ghcr.io/vaskozl/claude
-              tag: 2.1.281@sha256:0bbe173f5ed51203f89d4559496e8a8b44c52397616c1144f77c5f199c9f054b
+              tag: 2.1.281@sha256:17a8960d2ca59d349f6c59d7957b6577a7219ea57da7f4c294074ac786e6e593
             command: ["sh", "-c"]
             args:
               - |
@@ -121,7 +121,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 153.0.8010.52@sha256:d610590bdf557fc62ed39c5f5c5a41721febebdf35861370d5feffc42536bedb
+              tag: 153.0.8010.52@sha256:5a9473ac5b52961f5aa083793c0c2d24e9b46d9dfd305885b1a92579277eab6a
             # Respawn loop: killing the browser must not exit the container,
             # or the kubelet applies restart backoff. The profile dir is wiped
             # first so a SIGKILL leaves no stale SingletonLock or state.
@@ -142,7 +142,7 @@ spec:
           chrome-devtools-mcp:
             image:
               repository: ghcr.io/vaskozl/node
-              tag: latest@sha256:0a54bcb4f6647d81b30c1fa403f94b3e5c7c283bd061718d7d22c0c956d60bd0
+              tag: latest@sha256:fe24eee53865b525c53974c0d4a827cb14e4755966f2e899b78ba396d1c471d7
             command: ["npx"]
             args:
               - -y
