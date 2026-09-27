@@ -2,10 +2,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: rekon-readonly
-# RBAC cannot exclude resources, so core objects are left to the aggregated
-# view role (which omits secrets) and only groups view never touches get a
-# wildcard. view is namespace-scoped, so groups it covers still need their
-# cluster-scoped kinds listed explicitly.
 rules:
   - apiGroups: [""]
     resources: ["nodes", "nodes/status", "persistentvolumes", "componentstatuses", "podtemplates"]
@@ -24,25 +20,16 @@ rules:
       - agentgateway.dev
       - apiextensions.k8s.io
       - apiregistration.k8s.io
-      - apps.foundationdb.org
       - certificates.k8s.io
       - coordination.k8s.io
-      - core.haproxy.org
-      - dragonflydb.io
       - eventing.keda.sh
       - flowcontrol.apiserver.k8s.io
-      - gateway.envoyproxy.io
       - gateway.networking.k8s.io
-      - gateway.networking.x-k8s.io
-      - ingress.v1.haproxy.org
-      - ingress.v3.haproxy.org
       - keda.sh
-      - monitoring.coreos.com
       - node.k8s.io
       - rbac.authorization.k8s.io
       - scheduling.k8s.io
       - storage.k8s.io
-      - traefik.containo.us
     resources: ["*"]
     verbs: ["get", "list", "watch"]
 ---
