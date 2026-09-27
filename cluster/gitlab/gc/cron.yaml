@@ -6,7 +6,7 @@ metadata:
   name: gitlab-registry-garbage-collect
   namespace: gitlab
 spec:
-  schedule: "0 5 * * *" # Run at 5:00 AM every day
+  schedule: "0 5 * * *"
   jobTemplate:
     spec:
       template:
@@ -25,4 +25,13 @@ spec:
                 - "garbage-collect"
                 - "--delete-untagged"
                 - "/etc/docker/registry/config.yml"
+            # Job pods orphaned by a runner manager restart are never reaped by the runner.
+            - name: delete-failed-runner-pods
+              image: ghcr.io/vaskozl/kubectl:1.35@sha256:627bbff5f0bb2fd0e6c23b50bde9c0645519ab23a98b05f01f054bd8ed892941
+              args:
+                - delete
+                - pod
+                - --namespace=gitlab
+                - --selector=job.runner.gitlab.com/pod
+                - --field-selector=status.phase=Failed
           restartPolicy: OnFailure
