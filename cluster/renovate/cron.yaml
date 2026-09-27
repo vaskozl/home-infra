@@ -18,6 +18,27 @@ spec:
             runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+          initContainers:
+            # Nothing else evicts old clones and tool installs; once the
+            # volume fills, every clone fails with ENOSPC and no MRs are made.
+            - name: prune-cache
+              image: ghcr.io/vaskozl/busybox:latest@sha256:0efb14263ee7463d26fb5b0f5be2d9e52c0fa00257c58916d835cfa87507b2aa
+              command: [sh, -c]
+              args:
+                - |
+                  set -- $(df -P /tmp/renovate | tail -1)
+                  used=${5%\%}
+                  echo "renovate-cache ${used}% used"
+                  if [ "$used" -ge 80 ]; then
+                    find /tmp/renovate -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+                    df -P /tmp/renovate
+                  fi
+              securityContext:
+                allowPrivilegeEscalation: false
+              volumeMounts:
+                - name: cache
+                  mountPath: /tmp/renovate
           containers:
             - name: renovate
               image: ghcr.io/vaskozl/renovate:43.233.2@sha256:4f179c1a5b47ae6a4bb351b4dde0fd975c6d50d6f117436eab97e5ad8456bc3f
