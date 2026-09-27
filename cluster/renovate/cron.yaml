@@ -19,26 +19,6 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-          initContainers:
-            # Nothing else evicts old clones and tool installs; once the
-            # volume fills, every clone fails with ENOSPC and no MRs are made.
-            - name: prune-cache
-              image: ghcr.io/vaskozl/busybox:latest@sha256:49bbce2cf9f310c8f997f978a4bf150c98191974d819f551165a8e55d2b59e4c
-              command: [sh, -c]
-              args:
-                - |
-                  set -- $(df -P /tmp/renovate | tail -1)
-                  used=${5%\%}
-                  echo "renovate-cache ${used}% used"
-                  if [ "$used" -ge 80 ]; then
-                    find /tmp/renovate -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-                    df -P /tmp/renovate
-                  fi
-              securityContext:
-                allowPrivilegeEscalation: false
-              volumeMounts:
-                - name: cache
-                  mountPath: /tmp/renovate
           containers:
             - name: renovate
               image: ghcr.io/vaskozl/renovate:43.233.2@sha256:4f179c1a5b47ae6a4bb351b4dde0fd975c6d50d6f117436eab97e5ad8456bc3f
@@ -48,6 +28,11 @@ spec:
                   value: debug
                 - name: BINARY_SOURCE
                   value: install
+                # Clones are ephemeral; only the cache persists.
+                - name: RENOVATE_BASE_DIR
+                  value: /tmp/renovate
+                - name: RENOVATE_CACHE_DIR
+                  value: /cache
                 - name: RENOVATE_ALLOWED_COMMANDS
                   value: |-
                     ["^\\.gitlab/bump-epochs\\.pl --base-ref HEAD$"]
@@ -63,10 +48,14 @@ spec:
               securityContext:
                 allowPrivilegeEscalation: false
               volumeMounts:
-                - name: cache
+                - name: base
                   mountPath: /tmp/renovate
+                - name: cache
+                  mountPath: /cache
           restartPolicy: Never
           volumes:
+            - name: base
+              emptyDir: {}
             - name: cache
               persistentVolumeClaim:
                 claimName: renovate-cache
