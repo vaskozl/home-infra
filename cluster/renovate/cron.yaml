@@ -23,7 +23,7 @@ spec:
             # Nothing else evicts old clones and tool installs; once the
             # volume fills, every clone fails with ENOSPC and no MRs are made.
             - name: prune-cache
-              image: ghcr.io/vaskozl/busybox:latest@sha256:0efb14263ee7463d26fb5b0f5be2d9e52c0fa00257c58916d835cfa87507b2aa
+              image: ghcr.io/vaskozl/busybox:latest@sha256:49bbce2cf9f310c8f997f978a4bf150c98191974d819f551165a8e55d2b59e4c
               command: [sh, -c]
               args:
                 - |
