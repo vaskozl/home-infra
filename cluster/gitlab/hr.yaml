@@ -85,6 +85,9 @@ spec:
       gitlab-exporter:
         enabled: false
       gitaly:
+        # Reuse packfiles across repeated CI clones of the same commit.
+        packObjectsCache:
+          enabled: true
         resources:
           requests:
             cpu: 80m
@@ -94,8 +97,8 @@ spec:
       webservice:
         minReplicas: 1
         maxReplicas: 1
-        # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/examples/ref/2k.yaml
-        workerProcesses: 1
+        # Puma single mode: no idle master process alongside a lone worker.
+        workerProcesses: 0
         resources:
           limits:
             memory: 2560Mi
@@ -143,12 +146,10 @@ spec:
       gitlab-shell:
         minReplicas: 1
         maxReplicas: 2
-        extraVolumes: |
-          - name: var-log-gitlab-shell
-            emptyDir: {}
-        extraVolumeMounts: |
-          - name: var-log-gitlab-shell
-            mountPath: /var/log/gitlab-shell
+        sshDaemon: gitlab-sshd
+        config:
+          lfs:
+            pureSSHProtocol: true
       toolbox:
         resources:
           requests:
