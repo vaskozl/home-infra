@@ -38,6 +38,7 @@ spec:
         [[runners]]
           [runners.kubernetes]
             helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:latest"
+            pull_policy = ["always", "if-not-present"]
             cpu_request = "500m"
             cpu_limit = "1"
             memory_request = "256Mi"
