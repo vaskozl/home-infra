@@ -81,22 +81,6 @@ spec:
                 - path: /home/nonroot
               name: home
               size: 20Gi
-        initContainers:
-          mcp-setup:
-            image: &claudeImage
-              repository: ghcr.io/vaskozl/claude
-              tag: 2.1.283@sha256:39b4625d3b6a36a554468c9184322f713134ef8c55bb949c6569391cc923028f
-            command: ["sh", "-c"]
-            args:
-              - |
-                mkdir -p /home/nonroot/.claude
-                [ -f /home/nonroot/.claude/settings.json ] || cp /home/nonroot/config/claude-settings.json /home/nonroot/.claude/settings.json
-                [ -f /home/nonroot/.claude/CLAUDE.md ] || cp /home/nonroot/config/CLAUDE.md /home/nonroot/.claude/CLAUDE.md
-                claude mcp remove -s user victoriametrics 2>/dev/null
-                claude mcp remove -s user chrome-devtools 2>/dev/null
-                claude mcp add -s user --transport http victoriametrics http://mcp-victoriametrics.victoria-metrics.svc.cluster.local:8080/mcp
-                claude mcp add -s user --transport http chrome-devtools http://127.0.0.1:9223/mcp
-            securityContext: *security-context
         containers:
           app:
             image: *appImage
