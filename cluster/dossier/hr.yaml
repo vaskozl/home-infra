@@ -223,6 +223,10 @@ spec:
             env:
               VLLM_ENABLE_V1_MULTIPROCESSING: "0"
               VLLM_CPU_NUM_OF_RESERVED_CPU: "0"
+              # Auto-binding spawns one OpenMP thread per visible core (12), which
+              # the 4 CPU limit throttles; match the thread count to the limit.
+              VLLM_CPU_OMP_THREADS_BIND: nobind
+              OMP_NUM_THREADS: "4"
               VLLM_CPU_KVCACHE_SPACE: "1"
               VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "3600"
             args:
