@@ -240,6 +240,9 @@ spec:
               requests:
                 cpu: "1"
                 memory: 4Gi
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
         containers:
           app:
             image: *ovms-image
