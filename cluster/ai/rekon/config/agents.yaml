@@ -279,7 +279,7 @@ spec:
     2. Check out the existing branch, rebase on latest main per the rebase
        procedure in "Do the work", and push fixes: do not open a new MR.
     3. Address every unresolved comment. After fixing each, resolve the thread:
-       glab mr note <mr_id> -R <repo> --resolve <discussion_id>
+       glab mr note resolve <mr_id> <discussion_id> -R <repo>
     4. Provide screenshot evidence for web changes: if the MR touches web UI (HTML,
        CSS, templates, frontend), use the chrome-devtools MCP tools to screenshot
        the result, upload it to the MR (see "Uploading image evidence" in
@@ -500,7 +500,7 @@ spec:
     2. Check out the existing branch, rebase on latest main per the rebase
        procedure in "Do the work", and push fixes: do not open a new MR.
     3. Address every unresolved comment. After fixing each, resolve the thread:
-       glab mr note <mr_id> -R <repo> --resolve <discussion_id>
+       glab mr note resolve <mr_id> <discussion_id> -R <repo>
     4. Provide screenshot evidence for web changes: if the MR touches web UI (HTML,
        CSS, templates, frontend), use the chrome-devtools MCP tools to screenshot
        the result, upload it to the MR (see "Uploading image evidence" in
@@ -750,7 +750,7 @@ spec:
        add claude::ignore and leave a short comment on the MR summarising the manual
        steps from the changelog, so the human operator has context when they pick it
        up:
-           glab mr note <id> -R <repo> -m "## Manual steps required
+           glab mr note create <id> -R <repo> -m "## Manual steps required
            - <step from changelog>
            - <step>
 
