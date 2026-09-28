@@ -236,10 +236,10 @@ spec:
             resources: &ovms-resources
               limits:
                 cpu: "4"
-                memory: 16Gi
+                memory: 2Gi
               requests:
-                cpu: "1"
-                memory: 4Gi
+                cpu: "0.5"
+                memory: 1.4Gi
             securityContext:
               runAsUser: 0
               runAsGroup: 0
