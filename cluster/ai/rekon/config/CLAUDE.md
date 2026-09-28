@@ -85,6 +85,11 @@ issue context, not metrics.
   <repo>` for a specific MR's pipeline. There is no flag to query by commit SHA;
   use `glab api "projects/$(printf '%s' 'group/repo' | jq -Rr
   @uri)/repository/commits/<sha>/statuses"` if a SHA-specific lookup is required.
+- **`glab mr note -m` / `--resolve`**: Deprecated flags, print a warning on every
+  use. Use `glab mr note create <id> -m "..."` (add `--resolvable=false` for
+  summary or status comments, otherwise it opens a resolvable thread) and `glab
+  mr note resolve <id> <discussion_id>` (MR id first, then discussion id; the
+  `--help` usage line shows the reverse and is wrong).
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all
   JSON/text processing.
 
@@ -102,8 +107,9 @@ issue context, not metrics.
 | View MR details | `glab mr view <id> -R <repo>` |
 | View MR as JSON | `glab mr view <id> -R <repo> --output json` |
 | View MR comments | `glab mr view <id> -R <repo> -c` |
-| Add MR comment | `glab mr note <id> -R <repo> -m "comment"` |
-| Resolve MR thread | `glab mr note <id> -R <repo> --resolve <discussion_id>` |
+| Add MR comment | `glab mr note create <id> -R <repo> -m "comment" --resolvable=false` |
+| Add inline MR diff comment | `glab mr note create <id> -R <repo> --file <path> --line <n> -m "comment"` |
+| Resolve MR thread | `glab mr note resolve <id> <discussion_id> -R <repo>` |
 | View CI status | `glab ci view <mr_iid> -R <repo>` |
 | API query | `glab api "projects/$(printf '%s' 'group/repo' \| jq -Rr @uri)/merge_requests?state=opened"` |
 
@@ -137,6 +143,6 @@ UPLOAD=$(curl -s --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
   "${GITLAB_HOST}/api/v4/projects/${repo/\//%2F}/uploads")
 IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
 # 2. Use $IMG_MD in a comment
-glab mr note <id> -R <repo> -m "## Evidence
+glab mr note create <id> -R <repo> -m "## Evidence
 ${IMG_MD}"
 ```
