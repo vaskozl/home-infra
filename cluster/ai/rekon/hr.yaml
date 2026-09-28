@@ -121,7 +121,8 @@ spec:
                 done
             resources:
               limits:
-                memory: 1500Mi
+                # Includes the /dev/shm tmpfs, charged to this cgroup.
+                memory: 2Gi
               requests:
                 cpu: 100m
                 memory: 500Mi
@@ -219,6 +220,17 @@ spec:
               - path: /tmp/screenshots
             chrome-devtools-mcp:
               - path: /tmp/screenshots
+      dshm:
+        # The 64Mi default is too small for captureScreenshot: chromium backs
+        # each CopyOutputResult bitmap with a file here and kills its GPU
+        # process when the allocation fails.
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 512Mi
+        advancedMounts:
+          main:
+            chromium:
+              - path: /dev/shm
       turn-fifo:
         type: emptyDir
         medium: Memory
