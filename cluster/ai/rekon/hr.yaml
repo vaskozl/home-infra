@@ -90,9 +90,7 @@ spec:
               - -v
               - -mode
               - worker
-            env:
-              <<: *env
-              REKON_KINDS_INCLUDE: agentruns
+            env: *env
             envFrom:
               - secretRef:
                   name: rekon-env
@@ -151,44 +149,6 @@ spec:
               requests:
                 cpu: 50m
                 memory: 600Mi
-      # The cheap reconcilers: no browser, no agent home, no relaxed sandbox.
-      worker:
-        type: deployment
-        replicas: 1
-        pod:
-          # Only agent turns shell out to kubectl.
-          automountServiceAccountToken: false
-          hostUsers: false
-          securityContext: *pod-security-context
-        containers:
-          app:
-            image: *appImage
-            args:
-              - -redis
-              - redis-master:6379
-              - -v
-              - -mode
-              - worker
-            env:
-              <<: *env
-              REKON_KINDS_EXCLUDE: agentruns
-            envFrom:
-              - secretRef:
-                  name: rekon-env
-            resources:
-              limits:
-                memory: 4Gi
-              requests:
-                cpu: 200m
-                memory: 256Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              runAsGroup: 568
-              runAsUser: 568
-              capabilities:
-                drop: ["ALL"]
-              seccompProfile:
-                type: RuntimeDefault
     defaultPodOptions:
       automountServiceAccountToken: true
       nodeSelector:
@@ -206,12 +166,6 @@ spec:
               - path: /home/nonroot/config
             mcp-setup:
               - path: /home/nonroot/config
-      clones:
-        type: emptyDir
-        advancedMounts:
-          worker:
-            app:
-              - path: /home/nonroot/.cache
       screenshots:
         type: emptyDir
         advancedMounts:
