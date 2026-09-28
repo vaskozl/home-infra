@@ -1,8 +1,9 @@
 # /// script
-# dependencies = ["optimum-intel[openvino]", "torch"]
+# dependencies = ["optimum-intel[openvino]", "torch", "torchvision"]
 #
 # [tool.uv.sources]
 # torch = { index = "pytorch-cpu" }
+# torchvision = { index = "pytorch-cpu" }
 #
 # [[tool.uv.index]]
 # name = "pytorch-cpu"
