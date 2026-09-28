@@ -215,31 +215,13 @@ spec:
                 - path: /models
               name: models
               size: 20Gi
-        # The OVMS image has no Python: uv fetches one and export.py's
-        # dependencies onto the volume, then plain OVMS serves the result.
         initContainers:
-          uv:
-            image:
-              repository: ghcr.io/astral-sh/uv
-              tag: 0.12.19-trixie-slim@sha256:c40e42de0e1516439b5139d7a214657dbffbbd3d2366661347efae7b8337c197
-            command:
-              - install
-              - -D
-              - /usr/local/bin/uv
-              - /models/.uv/uv
-            resources:
-              limits:
-                memory: 64Mi
-              requests:
-                cpu: 10m
-                memory: 16Mi
           export:
-            dependsOn: uv
             image: &ovms-image
               repository: openvino/model_server
               tag: 2026.4.0@sha256:11d3acfb28b38412f17752856cb3ea33c3680648c9268ff5a680cc7ef4287cd9
             command:
-              - /models/.uv/uv
+              - /opt/uv/uv
               - run
               - /opt/ovms-export/export.py
             args:
@@ -309,6 +291,15 @@ spec:
           main:
             app:
               - path: /run/claude
+      uv:
+        type: image
+        image:
+          repository: ghcr.io/astral-sh/uv
+          tag: 0.12.19@sha256:04d046b13e60d6bcec73cbc5e1cad25d680dea90c8573340950a0ac2d1aef424
+        advancedMounts:
+          ovms:
+            export:
+              - path: /opt/uv
       ovms-export:
         type: configMap
         name: ovms-export
