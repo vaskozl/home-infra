@@ -2,9 +2,11 @@ nameReference:
   - kind: Secret
     version: v1
     fieldSpecs:
+      - path: spec/values/controllers/main/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
       - path: spec/values/controllers/api/containers/app/envFrom/secretRef/name
         kind: HelmRelease
-      - path: spec/values/controllers/main/containers/app/envFrom/secretRef/name
+      - path: spec/values/controllers/worker/containers/app/envFrom/secretRef/name
         kind: HelmRelease
       - path: spec/values/persistence/config/name
         kind: HelmRelease
