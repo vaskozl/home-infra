@@ -204,62 +204,85 @@ spec:
                 cpu: 10m
                 memory: 32Mi
             securityContext: *minio-security-context
-      vllm-qwen3-vl-emb:
-        replicas: 0
+      ovms:
         type: statefulset
-        forceRename: vllm-qwen3-vl-emb
+        forceRename: ovms
         pod: *pod
         statefulset:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /root/.cache/huggingface
-              name: huggingface-cache
+                - path: /models
+              name: models
               size: 20Gi
+        # The OVMS image has no Python: uv fetches one and export.py's
+        # dependencies onto the volume, then plain OVMS serves the result.
+        initContainers:
+          uv:
+            image:
+              repository: ghcr.io/astral-sh/uv
+              tag: 0.12.19-trixie-slim@sha256:c40e42de0e1516439b5139d7a214657dbffbbd3d2366661347efae7b8337c197
+            command:
+              - install
+              - -D
+              - /usr/local/bin/uv
+              - /models/.uv/uv
+            resources:
+              limits:
+                memory: 64Mi
+              requests:
+                cpu: 10m
+                memory: 16Mi
+          export:
+            dependsOn: uv
+            image: &ovms-image
+              repository: openvino/model_server
+              tag: 2026.4.0@sha256:11d3acfb28b38412f17752856cb3ea33c3680648c9268ff5a680cc7ef4287cd9
+            command:
+              - /models/.uv/uv
+              - run
+              - /opt/ovms-export/export.py
+            args:
+              - google/siglip2-so400m-patch16-256
+            env:
+              UV_CACHE_DIR: /models/.uv/cache
+              UV_PYTHON_INSTALL_DIR: /models/.uv/python
+              # Let the script's openvino load its own libs; ovms has a RUNPATH
+              LD_LIBRARY_PATH: ""
+              # Keep downloads on the volume so an interrupted export resumes
+              HF_HOME: /models/.cache/huggingface
+            resources: &ovms-resources
+              limits:
+                cpu: "4"
+                memory: 16Gi
+              requests:
+                cpu: "1"
+                memory: 4Gi
         containers:
           app:
-            image:
-              repository: vllm/vllm-openai-cpu
-              tag: nightly-0bfc7a15d095fe83ecc82b50561a93c177fece2d
-            env:
-              VLLM_ENABLE_V1_MULTIPROCESSING: "0"
-              VLLM_CPU_NUM_OF_RESERVED_CPU: "0"
-              # Auto-binding spawns one OpenMP thread per visible core (12), which
-              # the 4 CPU limit throttles; match the thread count to the limit.
-              VLLM_CPU_OMP_THREADS_BIND: nobind
-              OMP_NUM_THREADS: "4"
-              VLLM_CPU_KVCACHE_SPACE: "1"
-              VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS: "3600"
+            image: *ovms-image
             args:
-              - Qwen/Qwen3-VL-Embedding-2B
-              - --runner=pooling
-              - --convert=embed
-              - --trust-remote-code
-              - --enforce-eager
-              - --max-model-len=1280
-              - --max-num-seqs=1
-              - --max-num-batched-tokens=1280
-              - --no-enable-prefix-caching
-              - --mm-processor-cache-gb=0
-              - '--hf-overrides={"is_matryoshka":true,"matryoshka_dimensions":[64,128,256,512,768,1024,2048]}'
-              - '--mm-processor-kwargs={"max_pixels":262144}'
+              - --rest_port=8000
+              - --port=9000
+              - --config_path=/models/config.json
             probes:
               startup:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet: &vllm-health
-                    path: /health
+                  httpGet: &ovms-ready
+                    path: /v2/health/ready
                     port: 8000
-                  initialDelaySeconds: 20
                   periodSeconds: 10
-                  timeoutSeconds: 15
-                  failureThreshold: 50
+                  timeoutSeconds: 5
+                  failureThreshold: 60
               liveness:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet: *vllm-health
+                  httpGet:
+                    path: /v2/health/live
+                    port: 8000
                   periodSeconds: 30
                   timeoutSeconds: 15
                   failureThreshold: 8
@@ -267,17 +290,11 @@ spec:
                 enabled: true
                 custom: true
                 spec:
-                  httpGet: *vllm-health
+                  httpGet: *ovms-ready
                   periodSeconds: 30
                   timeoutSeconds: 10
                   failureThreshold: 3
-            resources:
-              limits:
-                cpu: "4"
-                memory: 16Gi
-              requests:
-                cpu: "1"
-                memory: 4Gi
+            resources: *ovms-resources
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -292,6 +309,14 @@ spec:
           main:
             app:
               - path: /run/claude
+      ovms-export:
+        type: configMap
+        name: ovms-export
+        advancedMounts:
+          ovms:
+            export:
+              - path: /opt/ovms-export
+                readOnly: true
       seed:
         type: configMap
         name: seed
@@ -326,9 +351,9 @@ spec:
         ports:
           s3:
             port: 9000
-      vllm-qwen3-vl-emb:
-        controller: vllm-qwen3-vl-emb
-        forceRename: vllm-qwen3-vl-emb
+      ovms:
+        controller: ovms
+        forceRename: ovms
         ports:
           http:
             port: 8000

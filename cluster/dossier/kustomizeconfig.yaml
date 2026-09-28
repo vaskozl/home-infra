@@ -15,3 +15,5 @@ nameReference:
     fieldSpecs:
       - path: spec/values/persistence/seed/name
         kind: HelmRelease
+      - path: spec/values/persistence/ovms-export/name
+        kind: HelmRelease

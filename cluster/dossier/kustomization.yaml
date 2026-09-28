@@ -54,5 +54,11 @@ configMapGenerator:
       - claimpolicies.yaml=config/claimpolicies.yaml
 #      - inferencebackends.yaml=config/inferencebackends.yaml
       - providers.yaml=config/providers.yaml
+  - name: ovms-export
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - openvino/export.py
 configurations:
   - kustomizeconfig.yaml
