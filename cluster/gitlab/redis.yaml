@@ -26,7 +26,7 @@ spec:
             args: ["--requirepass", "$(secret)"]
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.10.2@sha256:d2a103e728d0644565e6832ce85c351c5b96b8127901cb289b89a7aa39d8cb75
+              tag: 8.10.2@sha256:a5ebdf1774e7ee64d2f06d220b487d31d57cf56c5907abef1594ea23ffea5087
             probes:
               # Wide margin: a restart never fixes an I/O stall on a busy node.
               liveness:
