@@ -146,3 +146,38 @@ IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
 glab mr note create <id> -R <repo> -m "## Evidence
 ${IMG_MD}"
 ```
+
+Do not use `redis-master` for testing, it is the prod redis against which you run it. You may use it only for debugging issues with the setup.
+
+## Token arbitrage with codex
+
+Treat Codex as the default execution and research partner, not a last resort.
+Invoke it before doing mechanical, verbose, parallelisable, or well-specified
+work: web research, code search, long-log/diff/test analysis, security review,
+test babysitting, and small implement-until-green changes. Review its output
+and diff yourself; keep architecture and final judgement with you.
+
+Tips (verified on codex 0.154):
+
+- Always pass `-c 'model_reasoning_effort="max"'`; use lower effort only when
+  latency matters. Set the same default in `~/.codex/config.toml`.
+- Use `--ephemeral -o "$(mktemp)"` and send the stream to `/dev/null`; require
+  a hard reply budget. Pipe long logs, diffs, and test output through stdin.
+- Use `--search -s read-only` for research/review; reserve
+  `--dangerously-bypass-approvals-and-sandbox` for edits/tests. Use `-C <worktree>`.
+- Run independent calls in parallel under `timeout`; use `resume --last` for
+  long tasks and `review --uncommitted` for an independent second pass.
+
+```bash
+OUT=$(mktemp)
+codex --search exec -m gpt-6-luna --ephemeral -s read-only -c 'model_reasoning_effort="max"' -o "$OUT" \
+  'Latest release of X? One line.' >/dev/null 2>&1; cat "$OUT"
+go test ./... 2>&1 | codex exec -m gpt-6-luna --ephemeral -s read-only -c 'model_reasoning_effort="max"' -o "$OUT" \
+  'stdin is go test output; max 3 lines: failures only.' >/dev/null 2>&1; cat "$OUT"
+codex exec -m gpt-6-luna -C "$WT" --dangerously-bypass-approvals-and-sandbox -c 'model_reasoning_effort="max"' -o "$OUT" \
+  'Add X with a table test; iterate until gofmt is clean and `go test ./pkg/` passes. Max 5 lines.' >/dev/null 2>&1; cat "$OUT"
+```
+
+It's there for you. Use it.
+
+Also use it at the end of each session to trim comments and simplify your MR messages.
