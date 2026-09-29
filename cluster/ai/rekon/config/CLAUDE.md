@@ -30,6 +30,39 @@ If something is wrong or missing, fix it temporarily then log an issue with
 | Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
 | Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
 
+## Shared pod: scratch files and local app runs
+
+Many turns share this pod's filesystem and localhost. Another turn's binary,
+server or redis is one `ls /tmp` or `ss -ltnp` away, and yours is visible to
+them. Never run or connect to something you did not start in this turn. If
+your `cd` or build fails, fix it; a binary that already exists at the path you
+meant to write is another turn's.
+
+- **Scratch files**: use `$TMPDIR` (private, wiped with the turn) via
+  `mktemp`, `go build -o "$TMPDIR/<app>"`, etc. Never a fixed `/tmp/<name>`.
+  `/tmp/screenshots` is the one path that is meant to be shared.
+- **Ports**: never bind a fixed port (8080, 6379, 63xx, 5432, 3000...). 9222
+  and 9223 belong to the chromium sidecars. Pick a free loopback port and pass
+  it explicitly to the app:
+  ```bash
+  PORT=$(perl -MIO::Socket::INET -e '$s=IO::Socket::INET->new(Listen=>1,LocalAddr=>"127.0.0.1",LocalPort=>0) or die; print $s->sockport')
+  ```
+- **Redis**: start a throwaway one:
+  ```bash
+  REDIS_PORT=$(perl -MIO::Socket::INET -e '$s=IO::Socket::INET->new(Listen=>1,LocalAddr=>"127.0.0.1",LocalPort=>0) or die; print $s->sockport')
+  redis-server --bind 127.0.0.1 --port "$REDIS_PORT" --save "" --appendonly no --dir "$TMPDIR" --loglevel warning &
+  redis-cli -p "$REDIS_PORT" ping
+  ```
+  `flushall`, `flushdb`, `shutdown` and `config set` only against a redis you
+  started this turn. To reset state, kill yours and start it again (it is
+  ephemeral, so a restart is a clean slate). Before touching any redis you did
+  not just start, `redis-cli -p <port> config get dir` must print a path under
+  your `$TMPDIR`; anything else is another turn's or prod. Do not use
+  `redis-master` for testing: it is the prod redis this runner uses. You may
+  use it only for debugging issues with the setup.
+- **Cleanup**: processes you start are killed when the turn ends, but stop
+  your servers when you are done so the port frees up for other turns.
+
 ## Metrics access
 
 The victoriametrics MCP server is available for querying cluster metrics, e.g.
@@ -146,8 +179,6 @@ IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
 glab mr note create <id> -R <repo> -m "## Evidence
 ${IMG_MD}"
 ```
-
-Do not use `redis-master` for testing, it is the prod redis against which you run it. You may use it only for debugging issues with the setup.
 
 ## Token arbitrage with codex
 
