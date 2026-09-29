@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/oauth2-proxy
-              tag: 7.15.4@sha256:2da6ae906068dd8123359a558110e6ca777331867710ed9d1c81a09bf9a6c3f8
+              tag: 7.15.4@sha256:b1dbafec75527b51d3570e08300885ed3d66f43c2bd39aea857d97d4ddd77941
             envFrom:
               - secretRef:
                   name: oauth2-proxy-env
