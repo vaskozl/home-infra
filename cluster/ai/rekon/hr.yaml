@@ -150,6 +150,9 @@ spec:
                 cpu: 50m
                 memory: 600Mi
       redis:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
         containers:
           app:
             image:
