@@ -188,8 +188,8 @@ spec:
           main:
             app:
               - path: /home/nonroot/config
-            mcp-setup:
-              - path: /home/nonroot/config
+              - path: /home/nonroot/.claude/CLAUDE.md
+                subPath: CLAUDE.md
       screenshots:
         type: emptyDir
         advancedMounts:
