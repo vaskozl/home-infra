@@ -300,10 +300,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 768Mi
+                memory: 1024Mi
               requests:
-                cpu: 10m
-                memory: 512Mi
+                cpu: 200m
+                memory: 1024Mi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
