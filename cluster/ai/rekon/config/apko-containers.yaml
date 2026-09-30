@@ -733,6 +733,7 @@ spec:
     contents:
       packages:
         - rekon-pkgupdate
+        - rekon
         - codex
         - chromium
         - xvfb-run
@@ -758,6 +759,7 @@ spec:
     contents:
       packages:
         - rekon-homeflow
+        - rekon
         - redis
         - redis-cli
     entrypoint:
@@ -778,6 +780,7 @@ spec:
     contents:
       packages:
         - rekon-veroso
+        - rekon
         - chromium
         - xvfb-run
         - xkbcomp
