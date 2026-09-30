@@ -155,7 +155,7 @@ spec:
             image:
               repository: ghcr.io/vaskozl/redstream
               tag: 0.0.2@sha256:3ccd1c93e80a571307a95fef6117cd66435efe8969a4c227dbde768dceaed569
-            args: ['run', '--replica=s3://veroso-redis/rekon-v0', '--', '--maxmemory', '192mb', '--bind', '*', '-::*']
+            args: ['run', '--replica=s3://veroso-redis/rekon-v0', '--', '--maxmemory', '192mb', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
