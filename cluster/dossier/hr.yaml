@@ -50,7 +50,7 @@ spec:
               tag: 0.0.60@sha256:a93c0eb824c7d1af13a409614dcfd81d801fe8825f034fbc8c4712c9a9507c59
             args:
               - -redis
-              - redis-master:6379
+              - dossier-redis:6379
               - -v
               - -mode
               - api
@@ -88,7 +88,7 @@ spec:
             image: *image
             args:
               - -redis
-              - redis-master:6379
+              - dossier-redis:6379
               - -v
               - -mode
               - worker
@@ -280,6 +280,30 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 3
             resources: *ovms-resources
+      redis:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/redstream
+              tag: 0.0.3@sha256:04d5685811a5134e7153dea5e8dfd46be4e18f18826ed1f83c1bb54f15d86f09
+            args: ['run', '--replica=s3://veroso-redis/dossier-v0', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            envFrom:
+              - secretRef:
+                  name: r2-credentials
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 768Mi
+              requests:
+                cpu: 10m
+                memory: 512Mi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -351,3 +375,8 @@ spec:
         ports:
           http:
             port: 8000
+      redis:
+        controller: redis
+        ports:
+          redis:
+            port: 6379
