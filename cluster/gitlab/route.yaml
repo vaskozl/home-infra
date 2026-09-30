@@ -55,7 +55,7 @@ spec:
               - name: X-Forwarded-Proto
                 value: https
 ---
-apiVersion: gateway.networking.k8s.io/v1alpha2
+apiVersion: gateway.networking.k8s.io/v1
 kind: TCPRoute
 metadata:
   name: gitlab-shell
