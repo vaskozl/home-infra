@@ -32,7 +32,7 @@ spec:
           app:
             image: &appImage
               repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.60@sha256:60c0e34e33dc75e94ded038fa3495ca14f3633431da5ad08e35eed2d89e5d462
+              tag: 0.0.60@sha256:94563a5cfafe495b93712a20563e63d1ee05b7d295253e7b5d7b1f08b839e660
             args:
               - -redis
               - rekon-redis:6379
@@ -106,7 +106,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 153.0.8010.52@sha256:3e1253eb21fbe57ec2dd2f5bf5b213c70017996baceccc1018615ae98a857752
+              tag: 153.0.8010.52@sha256:459e931f028641e4490c03f212ffa4a579dc3b4b8cf297ec4168c1fb98590370
             # Respawn loop: killing the browser must not exit the container,
             # or the kubelet applies restart backoff. The profile dir is wiped
             # first so a SIGKILL leaves no stale SingletonLock or state.
