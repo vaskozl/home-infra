@@ -123,7 +123,7 @@ spec:
                   name: minio-root
             image: &minio-image
               repository: ghcr.io/vaskozl/minio
-              tag: 0.20260922@sha256:c5e6927ebbcd5a28466cf5e336256378a69d62d1e973b30f275fd4ab5b09c326
+              tag: 0.20260922@sha256:55a7b87521e70cc3fee0b6f34d1f6e05cfe029bb31161916d2d00c14c9f8c164
             probes:
               readiness:
                 enabled: true
