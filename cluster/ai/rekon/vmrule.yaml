@@ -1,0 +1,33 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: rekon-replica-ack
+spec:
+  groups:
+    - name: rekon-replica-ack
+      interval: 1m
+      rules:
+        - alert: RekonReplicaAckOff
+          expr: |
+            min by (namespace, job) (rekon_replica_ack_replicas{job="rekon"}) == 0
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: "{{ $labels.namespace }}/{{ $labels.job }} api writes do not wait for the bucket"
+            description: |
+              An api pod came up without -wait-replicas, so a 2xx can be up to
+              redstream's sync interval plus one commit ahead of the bucket.
+        # A short ack never fails the write, so this counter is the only sign
+        # that a 2xx is no longer durable: redstream is slow or lost its lease.
+        - alert: RekonReplicaAckShortfall
+          expr: |
+            sum by (namespace, job) (increase(rekon_replica_ack_shortfalls_total{job="rekon"}[15m])) > 0
+          labels:
+            severity: warning
+          annotations:
+            summary: "{{ $labels.namespace }}/{{ $labels.job }} writes are returning before the bucket has them"
+            description: |
+              {{ $value }} user-facing writes in the last 15m timed out waiting
+              for redstream's ack. Check the redis pod's redstream logs for
+              slow commits or a lost lease, or raise -wait-timeout (max 1.5s).
