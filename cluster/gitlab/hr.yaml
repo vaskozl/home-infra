@@ -80,12 +80,10 @@ spec:
         terraformState: *rails
         dependencyProxy: *rails
         ciSecureFiles: *rails
-    # Reduce memory usage
     gitlab:
       gitlab-exporter:
         enabled: false
       gitaly:
-        # Reuse packfiles across repeated CI clones of the same commit.
         packObjectsCache:
           enabled: true
         resources:
@@ -97,32 +95,30 @@ spec:
       webservice:
         minReplicas: 1
         maxReplicas: 1
-        # Puma single mode: no idle master process alongside a lone worker.
         workerProcesses: 0
+        # Gitaly hooks call back into this pod (/internal/allowed) while a merge
+        # holds a thread, so as many concurrent merges as threads deadlock Puma.
+        puma:
+          threads:
+            min: 8
+            max: 8
         resources:
           limits:
             memory: 2560Mi
           requests:
-            # CFS weight comes from the request: at 100m puma was starved
-            # whenever the node saturated and got SIGKILLed mid-shutdown.
             cpu: 1
             memory: 2560Mi
         workhorse:
           readinessProbe:
             timeoutSeconds: 5
         deployment:
-          # Only 4 Puma threads per pod: a burst of concurrent requests queues
-          # /-/readiness behind real traffic, so allow more headroom than the
-          # chart default of 2s before pulling the pod from the Service. The
-          # workhorse and sidekiq probes are widened for the same reason.
           readinessProbe:
             initialDelaySeconds: 0
             periodSeconds: 5
             timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 3
-          # Cold boot measured at ~4min, above the liveness budget. Unlike the
-          # liveness/readiness probes, the chart renders this block verbatim.
+          # Cold boot takes ~4min. The chart renders this block verbatim.
           startupProbe:
             httpGet:
               path: /-/liveness
@@ -132,8 +128,7 @@ spec:
             failureThreshold: 40
       sidekiq:
         minReplicas: 1
-        # robinsons is the only amd64 node; a second 1300Mi replica has nowhere
-        # else to land and starves runner job pods.
+        # robinsons is the only amd64 node; a second replica starves runner pods.
         maxReplicas: 1
         resources:
           limits:
@@ -166,7 +161,6 @@ spec:
       storage:
         secret: object-storage
         key: registry.minio.yaml
-    # Disable things we handle by ourselves
     installCertmanager: false
     nginx-ingress:
       enabled: false
@@ -221,7 +215,7 @@ spec:
               name: gitlab-registry
           # A pod sandbox restart re-runs init containers against the surviving
           # emptyDir, where the chart's plain cp cannot overwrite the 0440
-          # secrets it left behind. -f matches the other components' scripts.
+          # secrets it left behind.
           - patch: |-
               apiVersion: v1
               kind: ConfigMap
