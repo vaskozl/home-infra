@@ -20,6 +20,7 @@ spec:
       extraEnv:
         GITLAB_LOG_LEVEL: 'error'
         GITLAB_LOGGER_TRUNCATE_LOGS: true
+        GITLAB_PRODUCT_USAGE_DATA_ENABLED: false
       nodeSelector:
         kubernetes.io/arch: amd64
       edition: ce
@@ -95,19 +96,19 @@ spec:
       webservice:
         minReplicas: 1
         maxReplicas: 1
-        workerProcesses: 0
+        workerProcesses: 2
         # Gitaly hooks call back into this pod (/internal/allowed) while a merge
-        # holds a thread, so as many concurrent merges as threads deadlock Puma.
+        # holds a thread, so as many concurrent merges as total threads deadlock Puma.
         puma:
           threads:
             min: 8
             max: 8
         resources:
           limits:
-            memory: 2560Mi
+            memory: 3584Mi
           requests:
             cpu: 1
-            memory: 2560Mi
+            memory: 3584Mi
         workhorse:
           readinessProbe:
             timeoutSeconds: 5
@@ -158,6 +159,9 @@ spec:
               secret: object-storage
               key: toolbox.minio.toml
     registry:
+      hpa:
+        minReplicas: 1
+        maxReplicas: 3
       storage:
         secret: object-storage
         key: registry.minio.yaml
