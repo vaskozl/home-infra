@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: dossier
 resources:
   - _namespace.yaml
+  - indexnow.yaml
   - hr.yaml
   - regcred.enc.yaml
   - oidc-secret.enc.yaml
