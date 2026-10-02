@@ -451,6 +451,24 @@ apiVersion: v1alpha1
 kind: apkoimages
 spec:
   org: Doudous
+  name: minilb
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/minilb
+  versionFrom: minilb
+  config: |
+    contents:
+      packages:
+        - minilb
+    entrypoint:
+      command: minilb
+    vcs-url: https://github.com/vaskozl/minilb
+---
+apiVersion: v1alpha1
+kind: apkoimages
+spec:
+  org: Doudous
   name: minio
   includes: [wolfi-base]
   tags: [latest]
