@@ -301,10 +301,10 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 1024Mi
+                memory: 2Gi
               requests:
                 cpu: 100m
-                memory: 1024Mi
+                memory: 2Gi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
