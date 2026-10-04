@@ -170,6 +170,12 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8081
+                  periodSeconds: 1
             resources:
               limits:
                 memory: 256Mi
