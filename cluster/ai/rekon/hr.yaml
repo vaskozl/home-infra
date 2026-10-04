@@ -40,6 +40,8 @@ spec:
               - -mode
               - api
               - -prune-stale
+              - -wait-replicas
+              - "1"
             env: &env
               CONFIG_DIR: /home/nonroot/config
               DISABLE_TELEMETRY: "1"
