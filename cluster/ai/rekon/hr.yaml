@@ -31,8 +31,8 @@ spec:
         containers:
           app:
             image: &appImage
-              repository: ghcr.io/vaskozl/rekon-pkgupdate
-              tag: 0.0.63@sha256:92722dbba5dd5ce3ed730b32d329d2b7fabdf107bf7563b13655ca8ac56bc361
+              repository: registry.sko.ai/doudous/rekon/pkgupdate
+              tag: 0.0.64@sha256:05e437f9b0b41662fe917b183cc7b7899fe1eb9664122ff0f5ad3b5a3f86b8c8
             args:
               - -redis
               - rekon-redis:6379
@@ -184,6 +184,8 @@ spec:
                 memory: 32Mi
     defaultPodOptions:
       automountServiceAccountToken: true
+      imagePullSecrets:
+        - name: regcred
       nodeSelector:
         kubernetes.io/arch: amd64
     persistence:
