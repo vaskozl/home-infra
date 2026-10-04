@@ -290,7 +290,7 @@ spec:
             image:
               repository: ghcr.io/vaskozl/redstream
               tag: 0.0.4@sha256:63a3440a8eb7f5ab73e17eeace2c640e9dbfbb6d03051f8f8c3bcef64bb6e1c2
-            args: ['run', '--replica=s3://veroso-redis/dossier-v0', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            args: ['run', '--replica=s3://veroso-redis/dossier-v1', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
