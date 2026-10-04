@@ -52,6 +52,8 @@ spec:
             args:
               - -redis
               - dossier-redis:6379
+              - -vector-redis
+              - dossier-vector-redis:6379
               - -v
               - -mode
               - api
@@ -90,6 +92,8 @@ spec:
             args:
               - -redis
               - dossier-redis:6379
+              - -vector-redis
+              - dossier-vector-redis:6379
               - -v
               - -mode
               - worker
@@ -287,24 +291,50 @@ spec:
           podManagementPolicy: Parallel
         containers:
           app:
-            image:
+            image: &redstream-image
               repository: ghcr.io/vaskozl/redstream
               tag: 0.0.4@sha256:63a3440a8eb7f5ab73e17eeace2c640e9dbfbb6d03051f8f8c3bcef64bb6e1c2
-            args: ['run', '--replica=s3://veroso-redis/dossier-v0', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
-            probes:
+            probes: &redstream-probes
               liveness:
                 enabled: true
               readiness:
                 enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8081
+                  periodSeconds: 1
             resources:
               limits:
                 memory: 2Gi
               requests:
                 cpu: 100m
                 memory: 2Gi
+      vector-redis:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+        containers:
+          app:
+            image: *redstream-image
+            # Reset together with the main redis prefix: alerts record what
+            # they embedded and never refill a vector set wiped on its own
+            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v2', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            envFrom:
+              - secretRef:
+                  name: r2-credentials
+            probes: *redstream-probes
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 1Gi
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
@@ -378,6 +408,11 @@ spec:
             port: 8000
       redis:
         controller: redis
+        ports:
+          redis:
+            port: 6379
+      vector-redis:
+        controller: vector-redis
         ports:
           redis:
             port: 6379
