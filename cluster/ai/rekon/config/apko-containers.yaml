@@ -745,7 +745,7 @@ spec:
   includes: [claude]
   tags: [latest]
   registries:
-    - ghcr.io/vaskozl/rekon-pkgupdate
+    - registry.sko.ai/doudous/rekon/veroso
   versionFrom: rekon-pkgupdate
   config: |
     contents:
@@ -761,27 +761,6 @@ spec:
         - redis-cli
     entrypoint:
       command: rekon-pkgupdate
-    vcs-url: https://gitlab.sko.ai/doudous/rekon
----
-apiVersion: v1alpha1
-kind: apkoimages
-spec:
-  org: Doudous
-  name: rekon-homeflow
-  includes: [wolfi-base]
-  tags: [latest]
-  registries:
-    - ghcr.io/vaskozl/rekon-homeflow
-  versionFrom: rekon-homeflow
-  config: |
-    contents:
-      packages:
-        - rekon-homeflow
-        - rekon
-        - redis
-        - redis-cli
-    entrypoint:
-      command: rekon-homeflow
     vcs-url: https://gitlab.sko.ai/doudous/rekon
 ---
 apiVersion: v1alpha1
