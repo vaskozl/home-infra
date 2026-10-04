@@ -5,6 +5,7 @@ namespace: ai
 resources:
   - hr.yaml
   - rbac.yaml
+  - regcred.enc.yaml
   - vmservicescrape.yaml
 #  - ../../gitlab/buildkit/buildkit-client-certs.yaml
 secretGenerator:
