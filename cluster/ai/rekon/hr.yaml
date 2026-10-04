@@ -199,6 +199,8 @@ spec:
               - path: /tmp/screenshots
             chrome-devtools-mcp:
               - path: /tmp/screenshots
+            chromium:
+              - path: /tmp/screenshots
       dshm:
         # The 64Mi default is too small for captureScreenshot: chromium backs
         # each CopyOutputResult bitmap with a file here and kills its GPU
