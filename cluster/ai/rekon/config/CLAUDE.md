@@ -165,9 +165,9 @@ Never use em dashes (U+2014) in code, commit messages, or MR descriptions. Use
 ### Uploading image evidence
 
 Use the chrome-devtools MCP tools to take a screenshot, save it to
-`/tmp/screenshots/evidence.png` (a volume shared between the `app` and
-`chrome-devtools-mcp` containers), upload it to GitLab, and embed the returned
-markdown in your MR or issue comment:
+`/tmp/screenshots/evidence.png` (a volume shared between the `app`,
+`chrome-devtools-mcp` and `chromium` browser containers), upload it to GitLab,
+and embed the returned markdown in your MR or issue comment:
 
 ```bash
 # 1. Upload to GitLab (glab api doesn't support multipart, use curl)
@@ -179,6 +179,13 @@ IMG_MD=$(echo "$UPLOAD" | jq -r '.markdown')
 glab mr note create <id> -R <repo> -m "## Evidence
 ${IMG_MD}"
 ```
+
+To submit a file through a form `<input type=file>` during web QA, write it
+under `/tmp/screenshots` (or `$TMPDIR`, which lives under the shared
+`/home/nonroot`) and pass its absolute path to `upload_file`. The browser
+process opens the file at submit time, so it must be on a path the `chromium`
+container also mounts; anywhere else (e.g. a fixed `/tmp/<name>`) fails at
+submit with `net::ERR_FILE_NOT_FOUND`.
 
 ## Token arbitrage with codex
 
