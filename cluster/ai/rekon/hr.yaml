@@ -108,7 +108,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 153.0.8010.52@sha256:20ed32e2c1134f55f0b6793978d95ddbaa3ea658c372fa117026a6e3772db367
+              tag: 153.0.8010.52@sha256:fc77d19c3d3c0df1ea50470152083d04d832b4c4e8bd2f266428fd5a8e989210
             # Respawn loop: killing the browser must not exit the container,
             # or the kubelet applies restart backoff. The profile dir is wiped
             # first so a SIGKILL leaves no stale SingletonLock or state.
@@ -160,7 +160,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.4@sha256:63a3440a8eb7f5ab73e17eeace2c640e9dbfbb6d03051f8f8c3bcef64bb6e1c2
+              tag: 0.0.4@sha256:58265cc7f3c9152419497999a15627c47490784e9c3c1416f23586be88b18bdb
             args: ['run', '--replica=s3://veroso-redis/rekon-v2', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
