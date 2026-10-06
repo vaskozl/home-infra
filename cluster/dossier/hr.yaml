@@ -223,7 +223,7 @@ spec:
           export:
             image: &ovms-image
               repository: openvino/model_server
-              tag: 2026.4.0@sha256:11d3acfb28b38412f17752856cb3ea33c3680648c9268ff5a680cc7ef4287cd9
+              tag: 2026.4.1@sha256:148e3fe802261ed0b5b634de3bbccdefe7176a218ec34a88e382b40704c34a1c
             command:
               - /opt/uv/uv
               - run
