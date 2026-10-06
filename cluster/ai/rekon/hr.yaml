@@ -105,7 +105,7 @@ spec:
                 memory: 14Gi
               requests:
                 cpu: 400m
-                memory: 4Gi
+                memory: 3.2Gi
             securityContext: *security-context
           chromium:
             image:
@@ -188,8 +188,6 @@ spec:
       automountServiceAccountToken: true
       imagePullSecrets:
         - name: regcred
-      nodeSelector:
-        kubernetes.io/arch: amd64
     persistence:
       config:
         type: secret
