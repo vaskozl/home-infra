@@ -211,10 +211,7 @@ spec:
       ovms:
         type: statefulset
         forceRename: ovms
-        pod:
-          <<: *pod
-          nodeSelector:
-            kubernetes.io/arch: amd64
+        pod: *pod
         statefulset:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
@@ -340,6 +337,8 @@ spec:
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
+      nodeSelector:
+        kubernetes.io/arch: amd64
     persistence:
       turn-fifo:
         type: emptyDir
