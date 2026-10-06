@@ -44,6 +44,8 @@ spec:
               - "1"
             env: &env
               CONFIG_DIR: /home/nonroot/config
+              # Agent turns override this with a private per-turn dir.
+              TMPDIR: /tmp
               DISABLE_TELEMETRY: "1"
               DISABLE_BUG_COMMAND: "1"
               DISABLE_AUTOUPDATER: "1"
