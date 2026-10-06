@@ -106,6 +106,16 @@ def radio_pos_embeddings(self, batch_size, input_dims):
     return pos[..., :h, :w].flatten(2).permute(0, 2, 1)
 
 
+def cpu_quota():
+    """CPU limit of this container, which ovms shares. OpenVINO sizes its thread
+    pool from the host CPUs, ignoring the quota, so the extra threads only get throttled."""
+    try:
+        quota, period = Path("/sys/fs/cgroup/cpu.max").read_text().split()
+    except (OSError, ValueError):
+        return None
+    return None if quota == "max" else max(1, -(-int(quota) // int(period)))
+
+
 def inputs_of(model, output):
     seen, stack = set(), [output.get_node()]
     while stack:
@@ -179,7 +189,11 @@ def main():
             # Constants optimum left in fp32 (norms, biases, ...) go to fp16 unless asked not to.
             served = plain_config(out, name, "fp32" not in args)
         config.write_text(json.dumps(served, indent=2))
-    shutil.copy(config, CONFIG)
+    served = json.loads(config.read_text())
+    if threads := cpu_quota():
+        for entry in served["model_config_list"]:
+            entry["config"].setdefault("plugin_config", {})["INFERENCE_NUM_THREADS"] = str(threads)
+    CONFIG.write_text(json.dumps(served, indent=2))
     print(f"wrote {CONFIG} for {name}", file=sys.stderr, flush=True)
 
 
