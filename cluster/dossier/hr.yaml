@@ -31,13 +31,12 @@ spec:
         containers:
           app:
             env: &env
-              SAFETY_GATE_LIVE: "1"
-              EURLEX_LIVE: "1"
-              DG_GROW_LIVE: "1"
+              VEROSO_LIVE: "1"
               CONFIG_DIR: /config
               VEROSO_PUBLIC_URL: https://veroso.com
               VEROSO_OPERATOR_ORG: Doudous
               VEROSO_OPERATOR_FOUNDER: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
+              VEROSO_OPERATOR_QUOTA: "50"
               # A bare host would be dialed as TLS
               VEROSO_S3_ENDPOINT: http://minio:9000
               VEROSO_S3_BUCKET: dossier
