@@ -30,8 +30,8 @@ configMapGenerator:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
-      - claimpolicies.yaml=config/claimpolicies.yaml
       - inferencebackends.yaml=config/inferencebackends.yaml
+      - listingrules.yaml=config/listingrules.yaml
       - providers.yaml=config/providers.yaml
       - platform.yaml=config/platform.yaml
       - provisions.yaml=config/provisions.yaml

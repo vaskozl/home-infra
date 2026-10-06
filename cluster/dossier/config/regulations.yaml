@@ -143,6 +143,20 @@ spec:
   market: EU
   sourceURL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1781
 ---
+# Not ingested: the green-claims listing rules cite the points it adds to the
+# Annex I blacklist of the Unfair Commercial Practices Directive.
+apiVersion: v1alpha1
+kind: regulations
+spec:
+  actID: "32024L0825"
+  shortName: Empowering Consumers Directive
+  title: >-
+    Directive (EU) 2024/825 amending Directives 2005/29/EC and 2011/83/EU as
+    regards empowering consumers for the green transition through better
+    protection against unfair practices and through better information
+  market: EU
+  sourceURL: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024L0825
+---
 # The group act behind the batteries passport: it is what puts a product in the
 # batteries group, while the duty it bears is still cited to ESPR Article 9.
 apiVersion: v1alpha1

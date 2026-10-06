@@ -19,6 +19,27 @@ spec:
 apiVersion: v1alpha1
 kind: provisions
 spec:
+  regulation: "32024L0825"
+  ref: Annex
+  citation: Directive (EU) 2024/825 Annex
+  unit: annex
+  heading: Practices added to Annex I to Directive 2005/29/EC
+  sourceVersion: "32024L0825"
+---
+# The toy warnings listing rule cites Article 11(2).
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32009L0048"
+  ref: Article 11
+  citation: Directive 2009/48/EC Article 11
+  unit: article
+  heading: General requirements for warnings
+  sourceVersion: "32009L0048"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
   regulation: "32014L0035"
   ref: Article 6
   citation: Directive 2014/35/EU Article 6
