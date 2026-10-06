@@ -1,0 +1,79 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
+# The articles and annexes of the acts nothing ingests (regulations.yaml rows
+# naming no register), stated here because a requirement cites them. The
+# source text is the act as enacted: no consolidation is read, so
+# sourceVersion is the base act.
+#
+# spec.regulation carries the act's actID; config.DeriveRefs() rewrites it to
+# the derived id. Provision declares identity: [regulation, ref].
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32024R1781"
+  ref: Article 9
+  citation: Regulation (EU) 2024/1781 Article 9
+  unit: article
+  heading: Product passport
+  sourceVersion: "32024R1781"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32014L0035"
+  ref: Article 6
+  citation: Directive 2014/35/EU Article 6
+  unit: article
+  heading: Obligations of manufacturers
+  sourceVersion: "32014L0035"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32014L0035"
+  ref: Article 15
+  citation: Directive 2014/35/EU Article 15
+  unit: article
+  heading: EU declaration of conformity
+  sourceVersion: "32014L0035"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32014L0035"
+  ref: Annex I
+  citation: Directive 2014/35/EU Annex I
+  unit: annex
+  heading: >-
+    Principal elements of the safety objectives for electrical equipment
+    designed for use within certain voltage limits
+  sourceVersion: "32014L0035"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32016R0425"
+  ref: Article 15
+  citation: Regulation (EU) 2016/425 Article 15
+  unit: article
+  heading: EU declaration of conformity
+  sourceVersion: "32016R0425"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32016R0425"
+  ref: Article 19
+  citation: Regulation (EU) 2016/425 Article 19
+  unit: article
+  heading: Conformity assessment procedures
+  sourceVersion: "32016R0425"
+---
+apiVersion: v1alpha1
+kind: provisions
+spec:
+  regulation: "32016R0425"
+  ref: Annex II
+  citation: Regulation (EU) 2016/425 Annex II
+  unit: annex
+  heading: Essential health and safety requirements
+  sourceVersion: "32016R0425"
