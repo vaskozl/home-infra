@@ -69,7 +69,7 @@ spec:
                 type: Unconfined
       main:
         forceRename: rekon
-        replicas: 1
+        replicas: 2
         type: statefulset
         serviceAccount:
           identifier: rekon
@@ -101,11 +101,11 @@ spec:
                   name: rekon-env
             resources:
               limits:
-                cpu: 3
+                cpu: 4
                 memory: 14Gi
               requests:
-                cpu: 500m
-                memory: 8Gi
+                cpu: 400m
+                memory: 4Gi
             securityContext: *security-context
           chromium:
             image:
