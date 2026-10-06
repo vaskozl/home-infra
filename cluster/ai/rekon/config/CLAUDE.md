@@ -30,6 +30,10 @@ If something is wrong or missing, fix it temporarily then log an issue with
 | Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
 | Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
 
+An issue meant to be implemented is only picked up with both labels
+`workflow::ready for development` and `model::opus`; add them on create
+(`-l 'workflow::ready for development' -l 'model::opus'`).
+
 ## Shared pod: scratch files and local app runs
 
 Many turns share this pod's filesystem and localhost. Another turn's binary,
