@@ -79,8 +79,6 @@ spec:
           # browser per agent turn.
           shareProcessNamespace: true
           securityContext: *pod-security-context
-          nodeSelector:
-            kubernetes.io/arch: amd64
         statefulset:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
@@ -107,7 +105,7 @@ spec:
                 memory: 14Gi
               requests:
                 cpu: 400m
-                memory: 4Gi
+                memory: 3.2Gi
             securityContext: *security-context
           chromium:
             image:
