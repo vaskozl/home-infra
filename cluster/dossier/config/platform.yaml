@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
+# veroso's Platform: the deployment-wide settings it used to read from VEROSO_*
+# variables. The bucket credentials stay in the minio Secret; the blob*Env fields
+# name them.
+apiVersion: v1alpha1
+kind: platforms
+spec:
+  operatorOrg: Doudous
+  sources: live
+  publicURL: https://veroso.com
+  # A bare host would be dialed as TLS
+  blobEndpoint: http://minio:9000
+  blobBucket: dossier
+  blobAccessKeyEnv: VEROSO_S3_ACCESS_KEY
+  blobSecretKeyEnv: VEROSO_S3_SECRET_KEY
+---
+# The operator org. Create-only: it already exists here, founded by its
+# operator, and its quota is the operators' to change in the UI.
+apiVersion: v1alpha1
+kind: orgs
+metadata:
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  name: Doudous
+  scanQuota: 50

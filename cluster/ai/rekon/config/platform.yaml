@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/pkgupdate/types/objects.schema.json
+# pkgupdate's Platform: the deployment-wide settings it used to read from the
+# environment. Secrets stay in rekon-env; the *TokenEnv fields name them.
+apiVersion: v1alpha1
+kind: platforms
+spec:
+  operatorOrg: Doudous
+  publicURL: https://rekon.sko.ai
+  gitlabHost: gitlab.sko.ai
+  gitlabTokenEnv: GITLAB_TOKEN
+  gitlabRetryTokenEnv: GITLAB_RETRY_TOKEN
+  githubTokenEnv: GITHUB_TOKEN
+  alertAllowedHosts: []

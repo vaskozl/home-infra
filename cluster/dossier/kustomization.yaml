@@ -33,6 +33,7 @@ configMapGenerator:
       - claimpolicies.yaml=config/claimpolicies.yaml
       - inferencebackends.yaml=config/inferencebackends.yaml
       - providers.yaml=config/providers.yaml
+      - platform.yaml=config/platform.yaml
   - name: ovms-export
     options:
       annotations:
