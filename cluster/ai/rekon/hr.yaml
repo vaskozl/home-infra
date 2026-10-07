@@ -35,7 +35,7 @@ spec:
               tag: 0.0.66@sha256:7b2c1bb5c8c93c4d219fbb274622f2b3515fd5c197371ad8395988333539192c
             args:
               - -redis
-              - rekon-redis:6379
+              - redis://rekon-redis:6379
               - -config
               - /home/nonroot/config
               - -v
@@ -93,7 +93,7 @@ spec:
             image: *appImage
             args:
               - -redis
-              - rekon-redis:6379
+              - redis://rekon-redis:6379
               - -config
               - /home/nonroot/config
               - -v

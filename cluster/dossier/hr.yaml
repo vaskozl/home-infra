@@ -40,9 +40,9 @@ spec:
               tag: 0.0.66@sha256:1b87a0f3bfc7dc20f0e5defa38cb61b0f857f5e7baed4c28fad2968a249d3b9c
             args:
               - -redis
-              - dossier-redis:6379
+              - redis://dossier-redis:6379
               - -vector-redis
-              - dossier-vector-redis:6379
+              - redis://dossier-vector-redis:6379
               - -config
               - /config
               - -v
@@ -81,9 +81,9 @@ spec:
             image: *image
             args:
               - -redis
-              - dossier-redis:6379
+              - redis://dossier-redis:6379
               - -vector-redis
-              - dossier-vector-redis:6379
+              - redis://dossier-vector-redis:6379
               - -config
               - /config
               - -v
