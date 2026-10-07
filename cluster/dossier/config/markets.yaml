@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
+# The market tree and where each market's law comes from. A member state sits
+# under the EU, so an EU Law's Rules judge the pages sold in it.
+#
+# The EU's law source is EUR-Lex (the eurlex-cellar register): the roots are the
+# acts discovery starts from, and CELLAR's links (repeals, amends, based on)
+# find the rest -- a replaced act still in force (the Toy Safety Directive the
+# 2025 Regulation repeals), the standards decisions listing harmonised
+# standards. The topics name the fields of law those roots were chosen for. The
+# horizontal roots bind every product placed on the market. Its alert sources
+# file the enforcement records the risk assessments vote over.
+#
+# No autoApprove: every Rule and scope category the extractor reads out of a
+# Law waits on the Law page until an owner of the operator org approves it.
+#
+# parent carries the readable market code; config.DeriveRefs() rewrites it.
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: EU
+  name: European Union
+  launchPriority: true
+  lawSource: eurlex-cellar
+  topics:
+    - product safety
+    - consumer law
+  roots:
+    - "32023R0988" # General Product Safety Regulation
+    - "32005L0029" # Unfair Commercial Practices Directive, with the 2024/825 green claims
+    - "32009R1223" # Cosmetics Regulation
+    - "32006R1924" # Nutrition and Health Claims Regulation
+    - "32012R0432" # the list of approved health claims
+    - "32025R2509" # Toy Safety Regulation
+    - "32006R1907" # REACH
+    - "32019R1021" # POPs Regulation
+    - "32011L0065" # RoHS Directive
+    - "32008R1272" # CLP Regulation
+    - "32024R1781" # Ecodesign for Sustainable Products Regulation
+    - "32014L0035" # Low Voltage Directive
+    - "32016R0425" # PPE Regulation
+  horizontal:
+    - "32023R0988"
+    - "32005L0029"
+  alertSources:
+    - safety-gate-weekly
+    - rasff-window
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: FR
+  name: France
+  parent: EU
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: DE
+  name: Germany
+  parent: EU
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: US
+  name: United States
+  launchPriority: true
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: UK
+  name: United Kingdom

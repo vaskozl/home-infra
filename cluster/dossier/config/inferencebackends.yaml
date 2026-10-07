@@ -5,3 +5,12 @@ spec:
   name: embeddings
   baseURL: http://ovms:8000
   model: siglip2-so400m-patch16-256
+---
+# The decision model veroso's soft Rule tests are put to: the codex CLI in the
+# image, logged in once on the worker (see the release notes). With no row
+# every soft test reads Can't tell.
+apiVersion: v1alpha1
+kind: inferencebackends
+spec:
+  name: decisions
+  model: codex/gpt-6-luna

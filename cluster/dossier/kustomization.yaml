@@ -31,11 +31,9 @@ configMapGenerator:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - inferencebackends.yaml=config/inferencebackends.yaml
-      - listingrules.yaml=config/listingrules.yaml
+      - markets.yaml=config/markets.yaml
       - providers.yaml=config/providers.yaml
       - platform.yaml=config/platform.yaml
-      - provisions.yaml=config/provisions.yaml
-      - regulations.yaml=config/regulations.yaml
   - name: ovms-export
     options:
       annotations:
