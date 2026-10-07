@@ -79,8 +79,6 @@ spec:
           # browser per agent turn.
           shareProcessNamespace: true
           securityContext: *pod-security-context
-          nodeSelector:
-            kubernetes.io/arch: amd64
         statefulset:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
@@ -188,6 +186,8 @@ spec:
                 memory: 32Mi
     defaultPodOptions:
       automountServiceAccountToken: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
       imagePullSecrets:
         - name: regcred
     persistence:
