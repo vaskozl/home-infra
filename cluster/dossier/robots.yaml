@@ -1,0 +1,42 @@
+# Public crawler policy for veroso.com, served directly by the gateway.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: robots
+spec:
+  parentRefs:
+    - name: public
+      namespace: agentgateway
+  hostnames:
+    - veroso.com
+  rules:
+    - matches:
+        - path:
+            type: Exact
+            value: /robots.txt
+---
+apiVersion: agentgateway.dev/v1alpha1
+kind: AgentgatewayPolicy
+metadata:
+  name: robots
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: robots
+  traffic:
+    directResponse:
+      status: 200
+      headers:
+        - name: content-type
+          value: '"text/plain; charset=utf-8"'
+      body: |
+        User-agent: *
+        Allow: /
+        Disallow: /artifacts
+        Disallow: /documents
+        Disallow: /invitations
+        Disallow: /leads
+        Disallow: /scans
+        Disallow: /supplierrequests
+        Disallow: /users
