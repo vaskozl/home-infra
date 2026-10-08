@@ -132,7 +132,7 @@ spec:
           chrome-devtools-mcp:
             image:
               repository: ghcr.io/vaskozl/node
-              tag: latest@sha256:5e467d7eba72bc74bcf21b78219337f71a022d013b05b8fdabeadc7f1028b4c3
+              tag: latest@sha256:60ba96c2e5e4fda5565bdacd9c7e250005867f1aeb78c269542550128fed8173
             command: ["npx"]
             args:
               - -y
@@ -162,7 +162,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.4@sha256:cf38347d63bba1dc58a247af236ff7c2833acfa846b2e511764bb4ae69fbeb7e
+              tag: 0.0.4@sha256:ed043970f0529df8a647a7b0c9c5a324da5d50708abf76185d737c6883ec8f18
             args: ['run', '--replica=s3://veroso-redis/rekon-v2', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
