@@ -41,8 +41,6 @@ spec:
             args:
               - -redis
               - redis://dossier-redis:6379
-              - -vector-redis
-              - redis://dossier-vector-redis:6379
               - -config
               - /config
               - -v
@@ -82,8 +80,6 @@ spec:
             args:
               - -redis
               - redis://dossier-redis:6379
-              - -vector-redis
-              - redis://dossier-vector-redis:6379
               - -config
               - /config
               - -v

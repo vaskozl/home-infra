@@ -1,19 +1,6 @@
 # yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
-# The market tree and where each market's law comes from. A member state sits
-# under the EU, so an EU Law's Rules judge the pages sold in it.
-#
-# The EU's law source is EUR-Lex (the eurlex-cellar register): the roots are the
-# acts discovery starts from, and CELLAR's links (repeals, amends, based on)
-# find the rest -- a replaced act still in force (the Toy Safety Directive the
-# 2025 Regulation repeals), the standards decisions listing harmonised
-# standards. The topics name the fields of law those roots were chosen for. The
-# horizontal roots bind every product placed on the market. Its alert sources
-# file the enforcement records the risk assessments vote over.
-#
-# No autoApprove: every Rule and scope category the extractor reads out of a
-# Law waits on the Law page until an owner of the operator org approves it.
-#
-# parent carries the readable market code; config.DeriveRefs() rewrites it.
+# EU roots drive EUR-Lex discovery; France and Germany inherit EU law.
+# Production Rules wait for operator approval because no market auto-approves.
 apiVersion: v1alpha1
 kind: markets
 spec:
