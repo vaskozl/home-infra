@@ -47,7 +47,7 @@ spec:
                   name: minio
             image: &image
               repository: registry.sko.ai/doudous/rekon/veroso
-              tag: 0.0.66@sha256:34aa15dc936ed1200f9e93384db552a19315a966c4ca033c4381ce1c754ba48d
+              tag: 0.0.66@sha256:2bbd816e273ca7ca7196194d347e76911e58c8744dab6ddb783933bf9371af82
             args:
               - -redis
               - dossier-redis:6379
