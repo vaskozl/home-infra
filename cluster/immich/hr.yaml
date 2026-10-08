@@ -94,7 +94,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.10.2@sha256:77ebc372288cecab03243cdf1d6fe37564eaca792ab6ea95d161d08b4722cade
+              tag: 8.10.2@sha256:3b26f205ddd81f90e7a465deddf27b42d5b332f6765e511c613bbc4db3856610
             probes:
               liveness:
                 enabled: true
