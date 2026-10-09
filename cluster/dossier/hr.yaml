@@ -281,7 +281,7 @@ spec:
           app:
             image: &redstream-image
               repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.4@sha256:a228723fc20cf1b0e069721e7bb0b152d6e01af843ba3791d7325bd02a1fa635
+              tag: 0.0.4@sha256:cdb020d3aa79999ec2f9a5156ae4cea868071f0640af438b45cad8c1a7c20f14
             args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
