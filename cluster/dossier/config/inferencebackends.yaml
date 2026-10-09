@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
-apiVersion: v1alpha1
-kind: inferencebackends
-spec:
-  name: embeddings
-  baseURL: http://ovms:8000
-  model: siglip2-so400m-patch16-256

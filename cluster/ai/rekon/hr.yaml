@@ -35,7 +35,9 @@ spec:
               tag: 0.0.67@sha256:73d612014ac6921f16589cf71a62986ca5a022d60c82b9e4706644275a7a76b4
             args:
               - -redis
-              - rekon-redis:6379
+              - redis://rekon-redis:6379
+              - -config
+              - /home/nonroot/config
               - -v
               - -mode
               - api
@@ -43,14 +45,12 @@ spec:
               - -wait-replicas
               - "1"
             env: &env
-              CONFIG_DIR: /home/nonroot/config
               # Agent turns override this with a private per-turn dir.
               TMPDIR: /tmp
               DISABLE_TELEMETRY: "1"
               DISABLE_BUG_COMMAND: "1"
               DISABLE_AUTOUPDATER: "1"
               DISABLE_ERROR_REPORTING: "1"
-              OPERATOR_ORG: Doudous
             envFrom:
               - secretRef:
                   name: rekon-env
@@ -91,7 +91,9 @@ spec:
             image: *appImage
             args:
               - -redis
-              - rekon-redis:6379
+              - redis://rekon-redis:6379
+              - -config
+              - /home/nonroot/config
               - -v
               - -mode
               - worker

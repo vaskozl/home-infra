@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
+# EU roots drive EUR-Lex discovery; France and Germany inherit EU law.
+# Production Rules wait for operator approval because no market auto-approves.
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: EU
+  name: European Union
+  launchPriority: true
+  lawSource: eurlex-cellar
+  topics:
+    - product safety
+    - consumer law
+  roots:
+    - "32023R0988" # General Product Safety Regulation
+    - "32005L0029" # Unfair Commercial Practices Directive, with the 2024/825 green claims
+    - "32009R1223" # Cosmetics Regulation
+    - "32006R1924" # Nutrition and Health Claims Regulation
+    - "32012R0432" # the list of approved health claims
+    - "32025R2509" # Toy Safety Regulation
+    - "32006R1907" # REACH
+    - "32019R1021" # POPs Regulation
+    - "32011L0065" # RoHS Directive
+    - "32008R1272" # CLP Regulation
+    - "32024R1781" # Ecodesign for Sustainable Products Regulation
+    - "32014L0035" # Low Voltage Directive
+    - "32016R0425" # PPE Regulation
+  horizontal:
+    - "32023R0988"
+    - "32005L0029"
+  alertSources:
+    - safety-gate-weekly
+    - rasff-window
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: FR
+  name: France
+  parent: EU
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: DE
+  name: Germany
+  parent: EU
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: US
+  name: United States
+  launchPriority: true
+---
+apiVersion: v1alpha1
+kind: markets
+spec:
+  code: UK
+  name: United Kingdom

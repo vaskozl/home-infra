@@ -30,16 +30,6 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
-            env: &env
-              VEROSO_LIVE: "1"
-              CONFIG_DIR: /config
-              VEROSO_PUBLIC_URL: https://veroso.com
-              VEROSO_OPERATOR_ORG: Doudous
-              VEROSO_OPERATOR_FOUNDER: "pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d"
-              VEROSO_OPERATOR_QUOTA: "50"
-              # A bare host would be dialed as TLS
-              VEROSO_S3_ENDPOINT: http://minio:9000
-              VEROSO_S3_BUCKET: dossier
             envFrom: &envFrom
               - secretRef:
                   name: oidc
@@ -50,9 +40,9 @@ spec:
               tag: 0.0.67@sha256:3bb1fc35f978c599fc31da0dbdbb0de46207066c9df52b5293c3d4ee34e23b69
             args:
               - -redis
-              - dossier-redis:6379
-              - -vector-redis
-              - dossier-vector-redis:6379
+              - redis://dossier-redis:6379
+              - -config
+              - /config
               - -v
               - -mode
               - api
@@ -84,15 +74,14 @@ spec:
         containers:
           app:
             env:
-              <<: *env
               GOMAXPROCS: "2"
             envFrom: *envFrom
             image: *image
             args:
               - -redis
-              - dossier-redis:6379
-              - -vector-redis
-              - dossier-vector-redis:6379
+              - redis://dossier-redis:6379
+              - -config
+              - /config
               - -v
               - -mode
               - worker

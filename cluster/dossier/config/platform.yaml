@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/examples/veroso/types/objects.schema.json
+# Deployment settings; secret values stay in their Kubernetes Secrets.
+apiVersion: v1alpha1
+kind: platforms
+spec:
+  operatorOrg: Doudous
+  sources: live
+  publicURL: https://veroso.com
+  blobEndpoint: http://minio:9000
+  blobBucket: dossier
+  blobAccessKeyEnv: VEROSO_S3_ACCESS_KEY
+  blobSecretKeyEnv: VEROSO_S3_SECRET_KEY
+  embeddingBaseURL: http://ovms:8000
+  embeddingModel: siglip2-so400m-patch16-256
+  decisionModel: codex/gpt-6-luna
+  vectorRedisURL: redis://dossier-vector-redis:6379
+---
+# Create the operator org once; operators manage its quota.
+apiVersion: v1alpha1
+kind: orgs
+metadata:
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  name: Doudous
+  scanQuota: 50
