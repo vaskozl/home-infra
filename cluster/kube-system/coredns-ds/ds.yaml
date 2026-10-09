@@ -14,7 +14,7 @@ spec:
       serviceAccountName: coredns
       containers:
         - name: coredns
-          image: ghcr.io/vaskozl/coredns:1.14.7@sha256:0c6e3f013b85f65e776ee5fa77e619e6a5abbd60daf8158858a199dee88473a8
+          image: ghcr.io/vaskozl/coredns:1.14.7@sha256:e4839dc4cc43a4edc2c99a1ccf63c682689fe51e162f37e49dbc82f3d14dd45b
           args:
             - -conf
             - /etc/coredns/Corefile
