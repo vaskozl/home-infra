@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/openresty
-              tag: 1.31.1@sha256:7b615b5461616d0b38faa8ca18cd9d91e312e469b93602539402187c7b3a854a
+              tag: 1.31.1@sha256:55badb7183b3f752ad5bf0651f7d1fc72b0d9c98d96a484143f443f48db8e06d
             probes:
               liveness:
                 enabled: true
