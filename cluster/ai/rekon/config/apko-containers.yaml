@@ -721,6 +721,13 @@ spec:
     contents:
       packages:
         - claude
+        - bun
+        - gnupg
+        - kubeconform
+        - kustomize
+        - redis
+        - redis-cli
+        - sops
 ---
 apiVersion: v1alpha1
 kind: apkoimages
