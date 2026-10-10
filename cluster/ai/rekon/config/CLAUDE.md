@@ -9,7 +9,8 @@ other work.
 
 Do not ask questions interactively; they will not be answered. Record anything
 that needs a human or a future iteration as a GitLab issue or an MR comment.
-Missing tools or config issues should be logged as issues (see the table below).
+Missing tools or config issues should be logged as issues in the owning repo
+(see the table below).
 
 ## Environment
 
@@ -27,8 +28,13 @@ If something is wrong or missing, fix it temporarily then log an issue with
 
 | Problem | Temp fix | Issue repo |
 |---|---|---|
-| Missing tool / binary or apk package | `brew install <pkg>` | `doudous/apkontainers` (edit `claude.yaml`) |
+| Missing tool / binary or agent image package | `brew install <pkg>` | `doudous/home-infra` |
 | Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
+
+Do not create issues in `doudous/apkontainers` for tools or packages missing
+from an agent image. Those images are defined in `doudous/home-infra`. Use
+`cluster/ai/rekon/config/apko-containers.yaml` for agent image package changes
+and `doudous/apkontainers` for new application image recipes.
 
 An issue meant to be implemented is only picked up with both labels
 `workflow::ready for development` and `model::opus`; add them on create
@@ -80,8 +86,10 @@ issue context, not metrics.
   images (built from `doudous/apkontainers`) instead of Docker Hub mutable tags
   like `alpine:latest` or `debian:latest`. They're minimal, multi-arch,
   regularly rebuilt for security patches, and we control the contents. If no
-  existing image fits, add a new yaml to `doudous/apkontainers` rather than
-  reaching for a public mutable tag.
+  existing application image fits, add a new yaml to `doudous/apkontainers`.
+  For tools needed in the agent image, update
+  `cluster/ai/rekon/config/apko-containers.yaml` in `doudous/home-infra` or
+  file an issue there.
 - **Backend code**: Write efficient, lean server side templated pages HTML
   sites. Prefer full-page navigation; it's simpler and correct. For cases that
   genuinely need partial page swaps, use
