@@ -25,6 +25,8 @@ spec:
               env:
                 - name: QBT_WEB_SERVER
                   value: 'false'
+                - name: QBT_SKIP_QB_VERSION_CHECK
+                  value: 'true'
               resources:
                 requests:
                   cpu: 1200m
