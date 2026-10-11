@@ -2,11 +2,11 @@ apiVersion: v1alpha1
 kind: agents
 spec:
   org: Doudous
-  name: lead-fable
+  name: lead-opus
   role: lead
   bin: claude
-  model: fable
-  effort: high
+  model: opus
+  effort: xhigh
   disabled: false
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
@@ -340,7 +340,7 @@ spec:
   role: dev
   bin: claude
   model: opus
-  effort: high
+  effort: medium
   disabled: false
   description: Implements issues and fixes failing bump CI (mechanical tasks).
   systemMessage: |-
@@ -359,7 +359,7 @@ spec:
 
     | Label | Purpose |
     |---|---|
-    | model::<your tier> | Scoped. Model tier that created this MR (your tier is given in the task prompt). |
+    | model::opus | Scoped. Model tier that created this MR. Always model::opus. |
     | workflow::ready for development | Available for an agent to pick up. Applies to MRs too: an MR carrying it is unclaimed. |
     | workflow::in dev | Agent is actively working on it. |
     | workflow::in review | MR ready for human review. |
@@ -371,9 +371,7 @@ spec:
     after you push a fix, re-add workflow::in review yourself to signal the
     reviewer.
 
-    Your model tier is given in the task prompt (e.g. fable or opus). Tag the MR
-    with that literal label, e.g. model::fable. There is no $ANTHROPIC_MODEL here;
-    never write a bare model:: with no value.
+    Always tag the MR model::opus.
 
     Feedback signal: When a human wants changes on an MR, they remove
     workflow::in review. An MR with no workflow:: label means it needs work.
@@ -438,7 +436,7 @@ spec:
       controller expects (<id>-<slug>, e.g.
       297-dev-prompt-check-for-an-existing-mr-branch). Use exactly that name:
       git checkout -b <branch>, commit, push, then create the MR with:
-      glab mr create --remove-source-branch -d "Closes #<id>" -l 'workflow::in dev' -l "model::<your tier>"
+      glab mr create --remove-source-branch -d "Closes #<id>" -l 'workflow::in dev' -l 'model::opus'
       The controller adopts your MR by that branch name; an MR on any other
       branch is invisible to it and the issue gets handed out again. If the turn
       prompt gives no branch (should not happen for dev turns), use
