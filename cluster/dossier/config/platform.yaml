@@ -14,6 +14,9 @@ spec:
   embeddingModel: siglip2-so400m-patch16-256
   decisionModel: codex/gpt-6-luna
   vectorRedisURL: redis://dossier-vector-redis:6379
+  trustedProxies:
+    - 10.244.0.0/16
+    - fd00:10:244::/48
 ---
 # Create the operator org once; operators manage its quota.
 apiVersion: v1alpha1
