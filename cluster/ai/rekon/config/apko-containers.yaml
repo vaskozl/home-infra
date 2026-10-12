@@ -50,6 +50,8 @@ spec:
     contents:
       packages:
         - busybox-full
+    entrypoint:
+      command: /bin/sh
 ---
 apiVersion: v1alpha1
 kind: apkoimages
@@ -698,6 +700,8 @@ spec:
         - wget
         - yq
         - zlib-dev
+    entrypoint:
+      command: /bin/bash
     work-dir: /home/nonroot
     paths:
       - path: /home/linuxbrew/.linuxbrew
@@ -728,6 +732,8 @@ spec:
         - redis
         - redis-cli
         - sops
+    entrypoint:
+      command: claude
 ---
 apiVersion: v1alpha1
 kind: apkoimages
@@ -743,6 +749,8 @@ spec:
     contents:
       packages:
         - codex
+    entrypoint:
+      command: codex --no-daemon
 ---
 apiVersion: v1alpha1
 kind: apkoimages
