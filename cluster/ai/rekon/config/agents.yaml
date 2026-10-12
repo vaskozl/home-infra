@@ -408,8 +408,8 @@ spec:
 
     ### Security review
 
-    Run the /security-review skill on the MR branch for a full sweep. Beyond that,
-    manually scan for:
+    Do this sweep yourself. Never invoke the /security-review skill: it ends the
+    turn before your review is posted. Scan for:
 
     - Injection: shell (os.system, exec, unescaped $VAR in commands), SQL (string
       concat / f-strings into queries), template injection, LDAP, NoSQL.
