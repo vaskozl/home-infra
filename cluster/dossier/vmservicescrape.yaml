@@ -4,7 +4,7 @@ metadata:
   name: dossier
 spec:
   endpoints:
-    - port: http
+    - port: metrics
       path: /metrics
   namespaceSelector:
     matchNames:
