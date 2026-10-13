@@ -282,7 +282,7 @@ spec:
             image: &redstream-image
               repository: ghcr.io/vaskozl/redstream
               tag: 0.0.4@sha256:f53471de46b1eea09eff7fb8416815fa7e0ede641d34b81aaf4f72b5b26d9228
-            args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--lease-ttl=30s', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
@@ -312,7 +312,7 @@ spec:
             image: *redstream-image
             # Reset together with the main redis prefix: alerts record what
             # they embedded and never refill a vector set wiped on its own
-            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v2', '--lease-ttl=30s', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
