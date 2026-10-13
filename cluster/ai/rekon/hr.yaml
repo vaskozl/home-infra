@@ -32,7 +32,7 @@ spec:
           app:
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
-              tag: 0.0.72@sha256:168fa436c3f51e538fff23dc29ae9ab69adfb5dad98c7c2af9f9e9b75acee7d1
+              tag: 0.0.72@sha256:94c005cd9da85456a96cb396c35c26635feaf41fc18173978527638c269a4ad7
             args:
               - -redis
               - redis://rekon-redis:6379
