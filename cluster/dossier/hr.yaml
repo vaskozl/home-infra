@@ -329,14 +329,6 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
     persistence:
-      turn-fifo:
-        type: emptyDir
-        medium: Memory
-        sizeLimit: 1Mi
-        advancedMounts:
-          main:
-            app:
-              - path: /run/claude
       uv:
         type: image
         image:
