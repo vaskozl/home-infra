@@ -297,7 +297,6 @@ spec:
               tag: 18.6@sha256:c3b310fdd6782b743cd116dfeefa14c78992675e9461cf2e43dca414d4008ac5
             env:
               POSTGRES_DB: veroso
-              # Unauthenticated like the redis next to it
               POSTGRES_HOST_AUTH_METHOD: trust
             probes:
               liveness: &pg-probe
@@ -316,20 +315,22 @@ spec:
               requests:
                 cpu: 50m
                 memory: 512Mi
-      redis:
+      vector-redis:
         type: statefulset
         statefulset:
           podManagementPolicy: Parallel
         containers:
           app:
-            image: &redstream-image
+            image:
               repository: ghcr.io/vaskozl/redstream
               tag: 0.0.5@sha256:601c69d50437ea56446bf8c1933ba0ed40658f07ba4d728e4155f09358a5ff6f
-            args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+            # Reset together with the main store: alerts record what
+            # they embedded and never refill a vector set wiped on its own
+            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v3', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
-            probes: &redstream-probes
+            probes:
               liveness:
                 enabled: true
               readiness:
@@ -340,26 +341,6 @@ spec:
                     path: /
                     port: 8081
                   periodSeconds: 1
-            resources:
-              limits:
-                memory: 2Gi
-              requests:
-                cpu: 100m
-                memory: 2Gi
-      vector-redis:
-        type: statefulset
-        statefulset:
-          podManagementPolicy: Parallel
-        containers:
-          app:
-            image: *redstream-image
-            # Reset together with the main redis prefix: alerts record what
-            # they embedded and never refill a vector set wiped on its own
-            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
-            envFrom:
-              - secretRef:
-                  name: r2-credentials
-            probes: *redstream-probes
             resources:
               limits:
                 memory: 1Gi
@@ -444,11 +425,6 @@ spec:
         ports:
           postgresql:
             port: 5432
-      redis:
-        controller: redis
-        ports:
-          redis:
-            port: 6379
       vector-redis:
         controller: vector-redis
         ports:
