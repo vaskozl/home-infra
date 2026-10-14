@@ -156,6 +156,50 @@ spec:
               requests:
                 cpu: 50m
                 memory: 600Mi
+      postgres:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/postgresql/data
+                  subPath: data
+              name: data
+              size: 5Gi
+        pod:
+          securityContext:
+            fsGroup: 70
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 18.6@sha256:b8f808252649efe4c4e687af74f6c6a4aa77b4e72f8a2ac564f944074189a88b
+            env:
+              POSTGRES_DB: rekon
+              # Unauthenticated like the redis next to it
+              POSTGRES_HOST_AUTH_METHOD: trust
+            probes:
+              liveness: &pg-probe
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, postgres, -d, rekon]
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
+              readiness: *pg-probe
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
       redis:
         type: statefulset
         statefulset:
@@ -256,6 +300,11 @@ spec:
             port: 8080
           metrics:
             port: 9090
+      postgres:
+        controller: postgres
+        ports:
+          postgresql:
+            port: 5432
       redis:
         controller: redis
         ports:
