@@ -40,7 +40,9 @@ spec:
             helper_image = "ghcr.io/vaskozl/gitlab-runner-helper:latest"
             pull_policy = ["always", "if-not-present"]
             cpu_request = "500m"
-            cpu_limit = "1"
+            # Pis have 4 cores; heavy Rust builds (niri) blow the 3h timeout at 1.
+            cpu_limit = "3"
+            cpu_limit_overwrite_max_allowed = "4"
             memory_request = "2Gi"
             memory_limit = "7Gi"
             service_cpu_request = "100m"
