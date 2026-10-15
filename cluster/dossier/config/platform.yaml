@@ -3,7 +3,7 @@
 apiVersion: v1alpha1
 kind: platforms
 spec:
-  operatorOrg: Doudous
+  operatorOrg: Veroso
   sources: live
   publicURL: https://veroso.com
   blobEndpoint: http://minio:9000
@@ -22,5 +22,6 @@ metadata:
   annotations:
     rekon.dev/apply: create-only
 spec:
-  name: Doudous
-  scanQuota: 50
+  name: Veroso
+  founder: google:116964319553884215020
+  scanQuota: 100
