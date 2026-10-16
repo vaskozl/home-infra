@@ -164,7 +164,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.5@sha256:72577c4a806407f2f471b126be31e182a746292cfadcf2590231b0652e8aab63
+              tag: 0.0.5@sha256:601c69d50437ea56446bf8c1933ba0ed40658f07ba4d728e4155f09358a5ff6f
             args: ['run', '--replica=s3://veroso-redis/rekon-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
