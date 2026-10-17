@@ -301,15 +301,6 @@ spec:
             args:
               - -c
               - shared_preload_libraries=pg_stat_statements
-            lifecycle:
-              postStart:
-                exec:
-                  command:
-                    - /bin/sh
-                    - -ec
-                    - |
-                      until pg_isready -U postgres -d veroso; do sleep 1; done
-                      psql -U postgres -d veroso --set=ON_ERROR_STOP=1 --command='CREATE EXTENSION IF NOT EXISTS pg_stat_statements'
             probes:
               liveness: &pg-probe
                 enabled: true

@@ -1,45 +1,33 @@
 # PostgreSQL / Overview
 
-Adapted from the Prometheus PostgreSQL Exporter project's
-[Postgres Overview mixin dashboard](https://github.com/prometheus-community/postgres_exporter/blob/v0.19.1/postgres_mixin/dashboards/postgres-overview.json),
-originally released with exporter v0.19.1. The Apache-2.0 license copy is in
-[`../THIRD_PARTY_LICENSES.md`](../THIRD_PARTY_LICENSES.md).
+This dashboard is authored for the Rekon and Veroso databases. It combines
+PostgreSQL health and workload metrics with rankings from `pg_stat_statements`:
 
-Local adaptations:
+- Availability, exporter errors, database size, uptime and transaction rate.
+- Rows fetched, buffer activity, cache hit ratio, connections, locks, deadlocks,
+  dead tuples, rollbacks and checkpoints.
+- Queries ranked by execution time, average execution time and call volume over
+  the selected dashboard range.
 
-- Namespace, job, instance and database selectors cover Rekon (`ai`) and dossier.
-- PostgreSQL 18 checkpoint buffers use `pg_stat_checkpointer_buffers_written_total`;
-  the removed backend buffer/fsync metrics are omitted. Both exporters enable
-  the checkpointer collector.
-- Health, scrape errors, uptime, database size, locks, dead tuples, transaction
-  rollbacks and checkpoint rates complement the upstream activity/cache panels.
-- Transaction throughput and connection counts are labelled accurately: they
-  count transactions rather than SQL statements, and sessions in all states.
-- Top SQL tables use `pg_stat_statements` counters over the selected dashboard
-  range. Query text is limited to 120 characters and the exporter collects at
-  most 50 statements per database.
+Both database containers preload `pg_stat_statements`. After the updated pods
+have rolled out, check whether each database has the extension installed:
 
-`pg_stat_statements` aggregates normalized SQL statistics since its last reset;
-these panels do not retain individual executions, plans, or wait-event history.
-For deeper Query Analytics, use a tool such as Percona PMM's
-[QAN for PostgreSQL](https://docs.percona.com/percona-monitoring-and-management/3/use/qan/).
+```sh
+kubectl exec -n ai rekon-postgres-0 -c app -- psql -X -U postgres -d rekon -c "SELECT current_setting('shared_preload_libraries') AS preload, EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements') AS installed;"
+kubectl exec -n dossier dossier-postgres-0 -c app -- psql -X -U postgres -d veroso -c "SELECT current_setting('shared_preload_libraries') AS preload, EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_stat_statements') AS installed;"
+```
 
-The `dashboards-postgres` ConfigMap carries the `grafana_dashboard` label. The
-stack's existing dashboard sidecar copies it into its provisioned folder; no
-manual Grafana import or extra data source is required. Queries use the dashboard's
-Prometheus-compatible data source variable and need no recording rules or custom
-SQL metrics.
+If `installed` is `f`, create the extension once in that database:
 
-Both DB pods enable the preloaded `pg_stat_statements` module and create its
-extension in their application database. Exporters use the official
-`ghcr.io/prometheus-community/postgres-exporter:v0.20.1` image, the existing
-local database login with sessions configured read-only, run as UID/GID 568,
-and do not mount the Postgres data volume. Query text is exported as a Prometheus
-label, so access to these metrics also grants access to normalized SQL text.
+```sh
+kubectl exec -n ai rekon-postgres-0 -c app -- psql -X -v ON_ERROR_STOP=1 -U postgres -d rekon -c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements;"
+kubectl exec -n dossier dossier-postgres-0 -c app -- psql -X -v ON_ERROR_STOP=1 -U postgres -d veroso -c "CREATE EXTENSION IF NOT EXISTS pg_stat_statements;"
+```
 
-After rollout, check both `pg_up` series are 1 and
-`pg_exporter_last_scrape_error` is 0, then confirm that
-`pg_stat_statements_seconds_total` is present after each database's first
-extension setup. Open `PostgreSQL / Overview` in Grafana and switch
-namespace/instance to compare the two databases. The application's handled
-duplicate inserts can legitimately increase the rollback rate.
+The panels show aggregate normalized SQL statistics, not individual executions,
+query plans or wait-event history. The exporter returns at most 50 statements
+per database and includes up to 120 characters of query text in a Prometheus
+label. Limit access to these metrics accordingly.
+
+The dashboard is provisioned from the `dashboards-postgres` ConfigMap by the
+Grafana dashboard sidecar. No manual import or additional data source is needed.
