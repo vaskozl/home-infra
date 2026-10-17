@@ -1,8 +1,9 @@
 # PostgreSQL / Overview
 
-Derived from the Prometheus PostgreSQL Exporter project's
+Adapted from the Prometheus PostgreSQL Exporter project's
 [Postgres Overview mixin dashboard](https://github.com/prometheus-community/postgres_exporter/blob/v0.19.1/postgres_mixin/dashboards/postgres-overview.json),
-pinned to exporter v0.19.1. Its Apache-2.0 license is included alongside the JSON.
+pinned to exporter v0.19.1. The Apache-2.0 license copy is in
+[`../THIRD_PARTY_LICENSES.md`](../THIRD_PARTY_LICENSES.md).
 
 Local adaptations:
 
@@ -14,6 +15,12 @@ Local adaptations:
   rollbacks and checkpoint rates complement the upstream activity/cache panels.
 - Transaction throughput and connection counts are labelled accurately: they
   count transactions rather than SQL statements, and sessions in all states.
+
+This dashboard covers server and database health. It does not show per-query
+rankings, wait breakdowns, query plans, or slow-query history. This MR does not
+enable the exporter's `stat_statements` collector or install `pg_stat_statements`.
+For query-level analysis, use a Query Analytics tool such as Percona PMM's
+[QAN for PostgreSQL](https://docs.percona.com/percona-monitoring-and-management/3/use/qan/).
 
 The `dashboards-postgres` ConfigMap carries the `grafana_dashboard` label. The
 stack's existing dashboard sidecar copies it into its provisioned folder; no
