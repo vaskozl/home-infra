@@ -757,6 +757,8 @@ spec:
         - gnupg
         - kubeconform
         - kustomize
+        - postgresql
+        - postgresql-client
         - redis
         - redis-cli
         - sops
@@ -805,8 +807,6 @@ spec:
         - xvfb-run
         - xkbcomp
         - xkeyboard-config
-        - redis
-        - redis-cli
     entrypoint:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
@@ -829,16 +829,12 @@ spec:
         - rekon
         - codex
         - poppler-utils
-        - tesseract
-        - tesseract-eng
         - onnxruntime
         - ppocrv6-tiny-models
         - chromium
         - xvfb-run
         - xkbcomp
         - xkeyboard-config
-        - redis
-        - redis-cli
     entrypoint:
       command: rekon-veroso
     vcs-url: https://gitlab.sko.ai/doudous/rekon
@@ -908,3 +904,22 @@ spec:
       command: dumb-init -- /entrypoint
     cmd: sh
     vcs-url: https://gitlab.com/gitlab-org/build/CNG
+---
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: prometheus-postgres-exporter
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/prometheus-postgres-exporter
+  versionFrom: prometheus-postgres-exporter
+  config: |
+    contents:
+      packages:
+        - prometheus-postgres-exporter
+    entrypoint:
+      command: postgres_exporter
+    vcs-url: https://github.com/prometheus-community/postgres_exporter
