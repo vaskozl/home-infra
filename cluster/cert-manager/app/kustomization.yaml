@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
   - _namespace.yaml
   - hr.yaml
+patches:
+  - path: ../../common/patches/hr-failure-policy.yaml
+    target:
+      kind: HelmRelease

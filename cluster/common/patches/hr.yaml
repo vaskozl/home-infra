@@ -9,12 +9,5 @@ spec:
   maxHistory: 2
   install:
     createNamespace: true
-    remediation:
-      retries: 1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: uninstall
-      retries: 1
   uninstall:
     keepHistory: false

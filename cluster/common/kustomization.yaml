@@ -11,6 +11,9 @@ patches:
   # -----------------------------------------------------------
   # All HRs
   # -----------------------------------------------------------
+  - path: patches/hr-failure-policy.yaml
+    target:
+      kind: HelmRelease
   - path: patches/hr.yaml
     target:
       kind: HelmRelease

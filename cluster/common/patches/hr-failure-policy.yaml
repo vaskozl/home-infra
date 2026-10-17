@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: stub
+spec:
+  # Leave failed releases in place for inspection; retry after a change or reset.
+  install:
+    strategy:
+      name: RemediateOnFailure
+    remediation:
+      retries: 0
+      remediateLastFailure: false
+  upgrade:
+    cleanupOnFail: false
+    strategy:
+      name: RemediateOnFailure
+    remediation:
+      retries: 0
+      remediateLastFailure: false
