@@ -32,7 +32,7 @@ spec:
           app:
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
-              tag: 0.0.73@sha256:6681046f7151a4cd069a0cdf749aae7089d0db63d562a24a594e55327f5e77df
+              tag: 0.0.73@sha256:b216f1724d3d26ce7b6473f8d0c021b127a3919a5071a1b6abae1cc3d971c4e2
             args:
               - -db
               - postgres://postgres@rekon-postgres/rekon?sslmode=disable
@@ -109,7 +109,7 @@ spec:
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
-              tag: 155.0.8059.79@sha256:a21b26e2ca60c5931d56568ad6114dd78d90e75b9988dbf4b48c985fe7a55d2a
+              tag: 155.0.8059.84@sha256:5c57a5c2b6b15c9ec05f06caff7d4aed17bded1618ccbaca2c46033fbcd74e67
             # Respawn loop: killing the browser must not exit the container,
             # or the kubelet applies restart backoff. The profile dir is wiped
             # first so a SIGKILL leaves no stale SingletonLock or state.
@@ -131,7 +131,7 @@ spec:
           chrome-devtools-mcp:
             image:
               repository: ghcr.io/vaskozl/node
-              tag: latest@sha256:03d286eb7ad52d552d5c87a1f58d14705ec1213032e8dbd8aaf0ad2617c2a4a8
+              tag: latest@sha256:cdd3f1388fc1da8318ce0a496163aa6385a52f4e013e61baacd0f737bd0aa269
             command: ["npx"]
             args:
               - -y
