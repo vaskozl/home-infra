@@ -39,14 +39,13 @@ spec:
               repository: registry.sko.ai/doudous/rekon/veroso
               tag: 0.0.74@sha256:88fe8a47760d4a473ec2538f961b7e64d64a03808d21c64b7302cc580bea54d5
             args:
-              - -redis
-              - redis://dossier-redis:6379
+              - -db
+              - postgres://postgres@dossier-postgres/veroso?sslmode=disable
               - -config
               - /config
               - -v
               - -mode
               - api
-              - -prune-stale
             resources:
               limits:
                 memory: 512Mi
@@ -78,8 +77,8 @@ spec:
             envFrom: *envFrom
             image: *image
             args:
-              - -redis
-              - redis://dossier-redis:6379
+              - -db
+              - postgres://postgres@dossier-postgres/veroso?sslmode=disable
               - -config
               - /config
               - -v
@@ -273,20 +272,65 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 3
             resources: *ovms-resources
-      redis:
+      postgres:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/postgresql/data
+                  subPath: data
+              name: data
+              size: 20Gi
+        pod:
+          securityContext:
+            fsGroup: 70
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 18.6@sha256:c3b310fdd6782b743cd116dfeefa14c78992675e9461cf2e43dca414d4008ac5
+            env:
+              POSTGRES_DB: veroso
+              POSTGRES_HOST_AUTH_METHOD: trust
+            probes:
+              liveness: &pg-probe
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, postgres, -d, veroso]
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
+              readiness: *pg-probe
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 50m
+                memory: 512Mi
+      vector-redis:
         type: statefulset
         statefulset:
           podManagementPolicy: Parallel
         containers:
           app:
-            image: &redstream-image
+            image:
               repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.5@sha256:7c70452403ab5eefaa05b6f656c02308a628528876dc4f7d07a8eb5149ed5bdf
-            args: ['run', '--replica=s3://veroso-redis/dossier-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
+              tag: 0.0.5@sha256:601c69d50437ea56446bf8c1933ba0ed40658f07ba4d728e4155f09358a5ff6f
+            # Reset together with the main store: alerts record what
+            # they embedded and never refill a vector set wiped on its own
+            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v3', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
             envFrom:
               - secretRef:
                   name: r2-credentials
-            probes: &redstream-probes
+            probes:
               liveness:
                 enabled: true
               readiness:
@@ -297,26 +341,6 @@ spec:
                     path: /
                     port: 8081
                   periodSeconds: 1
-            resources:
-              limits:
-                memory: 2Gi
-              requests:
-                cpu: 100m
-                memory: 2Gi
-      vector-redis:
-        type: statefulset
-        statefulset:
-          podManagementPolicy: Parallel
-        containers:
-          app:
-            image: *redstream-image
-            # Reset together with the main redis prefix: alerts record what
-            # they embedded and never refill a vector set wiped on its own
-            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
-            envFrom:
-              - secretRef:
-                  name: r2-credentials
-            probes: *redstream-probes
             resources:
               limits:
                 memory: 1Gi
@@ -396,11 +420,11 @@ spec:
         ports:
           http:
             port: 8000
-      redis:
-        controller: redis
+      postgres:
+        controller: postgres
         ports:
-          redis:
-            port: 6379
+          postgresql:
+            port: 5432
       vector-redis:
         controller: vector-redis
         ports:

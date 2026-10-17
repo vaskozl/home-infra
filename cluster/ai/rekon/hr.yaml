@@ -34,16 +34,13 @@ spec:
               repository: registry.sko.ai/doudous/rekon/pkgupdate
               tag: 0.0.73@sha256:b216f1724d3d26ce7b6473f8d0c021b127a3919a5071a1b6abae1cc3d971c4e2
             args:
-              - -redis
-              - redis://rekon-redis:6379
+              - -db
+              - postgres://postgres@rekon-postgres/rekon?sslmode=disable
               - -config
               - /home/nonroot/config
               - -v
               - -mode
               - api
-              - -prune-stale
-              - -wait-replicas
-              - "1"
             env: &env
               # Agent turns override this with a private per-turn dir.
               TMPDIR: /tmp
@@ -90,8 +87,8 @@ spec:
           app:
             image: *appImage
             args:
-              - -redis
-              - redis://rekon-redis:6379
+              - -db
+              - postgres://postgres@rekon-postgres/rekon?sslmode=disable
               - -config
               - /home/nonroot/config
               - -v
@@ -156,36 +153,49 @@ spec:
               requests:
                 cpu: 50m
                 memory: 600Mi
-      redis:
+      postgres:
         type: statefulset
         statefulset:
           podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /var/lib/postgresql/data
+                  subPath: data
+              name: data
+              size: 5Gi
+        pod:
+          securityContext:
+            fsGroup: 70
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.5@sha256:7c70452403ab5eefaa05b6f656c02308a628528876dc4f7d07a8eb5149ed5bdf
-            args: ['run', '--replica=s3://veroso-redis/rekon-v2', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
-            envFrom:
-              - secretRef:
-                  name: r2-credentials
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 18.6@sha256:c3b310fdd6782b743cd116dfeefa14c78992675e9461cf2e43dca414d4008ac5
+            env:
+              POSTGRES_DB: rekon
+              POSTGRES_HOST_AUTH_METHOD: trust
             probes:
-              liveness:
-                enabled: true
-              readiness:
+              liveness: &pg-probe
                 enabled: true
                 custom: true
                 spec:
-                  httpGet:
-                    path: /
-                    port: 8081
-                  periodSeconds: 1
+                  exec:
+                    command: [pg_isready, -U, postgres, -d, rekon]
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
+              readiness: *pg-probe
             resources:
               limits:
-                memory: 256Mi
+                memory: 512Mi
               requests:
-                cpu: 100m
-                memory: 32Mi
+                cpu: 50m
+                memory: 128Mi
     defaultPodOptions:
       automountServiceAccountToken: true
       nodeSelector:
@@ -256,8 +266,8 @@ spec:
             port: 8080
           metrics:
             port: 9090
-      redis:
-        controller: redis
+      postgres:
+        controller: postgres
         ports:
-          redis:
-            port: 6379
+          postgresql:
+            port: 5432
