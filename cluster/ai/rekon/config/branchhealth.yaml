@@ -1,5 +1,7 @@
 apiVersion: v1alpha1
 kind: branchhealths
+metadata:
+  workspace: doudous
 spec:
   repo: https://gitlab.sko.ai/doudous/packages.git
   branch: main
@@ -7,6 +9,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: branchhealths
+metadata:
+  workspace: doudous
 spec:
   repo: https://gitlab.sko.ai/doudous/home-infra.git
   branch: main
@@ -14,6 +18,8 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: branchhealths
+metadata:
+  workspace: doudous
 spec:
   repo: https://gitlab.sko.ai/doudous/rekon.git
   branch: main

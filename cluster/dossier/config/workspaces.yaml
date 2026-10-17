@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/veroso/types/objects.schema.json
+# The demo workspace: where the landing page's anonymous scans run. An
+# ordinary workspace the operators reach as operators; its scanQuota caps the
+# anonymous scans a day, and its markets are where they are judged. Create-only,
+# so an authoritative reload never resets what its admins changed since.
+apiVersion: v1alpha1
+kind: workspaces
+metadata:
+  id: demo
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  markets: [EU]
+  scanQuota: 50

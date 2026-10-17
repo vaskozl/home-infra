@@ -33,6 +33,7 @@ configMapGenerator:
       - markets.yaml=config/markets.yaml
       - providers.yaml=config/providers.yaml
       - platform.yaml=config/platform.yaml
+      - workspaces.yaml=config/workspaces.yaml
   - name: ovms-export
     options:
       annotations:

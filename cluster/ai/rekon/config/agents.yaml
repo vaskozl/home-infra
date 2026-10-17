@@ -1,7 +1,6 @@
 apiVersion: v1alpha1
 kind: agents
 spec:
-  org: Doudous
   name: lead-opus
   role: lead
   bin: claude
@@ -115,7 +114,6 @@ spec:
 apiVersion: v1alpha1
 kind: agents
 spec:
-  org: Doudous
   name: dev-opus
   role: dev
   bin: claude
@@ -333,7 +331,6 @@ spec:
 apiVersion: v1alpha1
 kind: agents
 spec:
-  org: Doudous
   name: reviewer-opus
   role: reviewer
   bin: claude
@@ -591,7 +588,6 @@ spec:
 apiVersion: v1alpha1
 kind: agents
 spec:
-  org: Doudous
   name: ops-opus
   role: ops
   bin: claude

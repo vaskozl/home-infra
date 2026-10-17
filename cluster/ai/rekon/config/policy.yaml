@@ -1,9 +1,13 @@
 apiVersion: v1alpha1
 kind: updatepolicies
+metadata:
+  workspace: doudous
 spec:
-  org: Doudous
   name: fleet defaults
-  orgs: [Doudous]
+  repos:
+    - https://gitlab.sko.ai/doudous/packages.git
+    - https://gitlab.sko.ai/doudous/home-infra.git
+    - https://gitlab.sko.ai/doudous/rekon.git
   update: 'true'
   automerge: "candidate.type in ['minor', 'patch', 'digest']"
   rebase: 'true'
@@ -12,17 +16,21 @@ spec:
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
+metadata:
+  workspace: doudous
 spec:
-  org: Doudous
   name: chromium upgrades
+  priority: 10
   repos: [https://gitlab.sko.ai/doudous/home-infra.git]
   automerge: "candidate.name == 'ghcr.io/vaskozl/chromium' || candidate.type in ['minor', 'patch', 'digest']"
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
+metadata:
+  workspace: doudous
 spec:
-  org: Doudous
   name: package defaults
+  priority: 10
   repos: [https://gitlab.sko.ai/doudous/packages.git]
   update: 'true'
   automerge: 'true'

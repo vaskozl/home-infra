@@ -1,23 +1,26 @@
 apiVersion: v1alpha1
 kind: gitlabrepos
+metadata:
+  workspace: doudous
 spec:
   url: https://gitlab.sko.ai/doudous/packages.git
   branch: main
   intervalSeconds: 600
-  org: Doudous
 ---
 apiVersion: v1alpha1
 kind: gitlabrepos
+metadata:
+  workspace: doudous
 spec:
   url: https://gitlab.sko.ai/doudous/home-infra.git
   branch: main
   intervalSeconds: 600
-  org: Doudous
 ---
 apiVersion: v1alpha1
 kind: gitlabrepos
+metadata:
+  workspace: doudous
 spec:
   url: https://gitlab.sko.ai/doudous/rekon.git
   branch: main
   intervalSeconds: 600
-  org: Doudous

@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/pkgupdate/types/objects.schema.json
+apiVersion: v1alpha1
+kind: workspaces
+metadata:
+  id: doudous
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  displayName: Doudous
+---
+apiVersion: v1alpha1
+kind: members
+metadata:
+  workspace: doudous
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  user: pi:096e2ba1-0272-4fae-be5e-9f3d76c66a0d
+  role: admin
