@@ -279,8 +279,7 @@ spec:
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
               globalMounts:
-                - path: /var/lib/postgresql/data
-                  subPath: data
+                - path: /var/lib/postgresql
               name: data
               size: 20Gi
         pod:
