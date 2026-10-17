@@ -159,8 +159,9 @@ spec:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
             - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /var/lib/postgresql
+              advancedMounts:
+                app:
+                  - path: /var/lib/postgresql
               name: data
               size: 5Gi
         pod:
@@ -195,6 +196,41 @@ spec:
               requests:
                 cpu: 50m
                 memory: 128Mi
+          exporter:
+            image:
+              repository: ghcr.io/vaskozl/prometheus-postgres-exporter
+              tag: 0.19.1
+            args:
+              - --web.listen-address=:9187
+              - --collector.stat_checkpointer
+              - --collector.postmaster
+            env:
+              DATA_SOURCE_NAME: postgresql://postgres@127.0.0.1:5432/rekon?sslmode=disable&options=-c%20default_transaction_read_only%3Don
+            probes:
+              liveness: &exporter-probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9187
+                  timeoutSeconds: 5
+                  periodSeconds: 30
+              readiness: *exporter-probe
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
     defaultPodOptions:
       automountServiceAccountToken: true
       nodeSelector:
@@ -267,6 +303,10 @@ spec:
             port: 9090
       postgres:
         controller: postgres
+        labels:
+          monitoring.sko.ai/exporter: postgres
         ports:
           postgresql:
             port: 5432
+          postgres-metrics:
+            port: 9187

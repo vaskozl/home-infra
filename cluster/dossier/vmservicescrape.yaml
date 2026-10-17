@@ -12,3 +12,20 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: dossier
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: dossier-postgres
+spec:
+  endpoints:
+    - port: postgres-metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+      - dossier
+  selector:
+    matchLabels:
+      monitoring.sko.ai/exporter: postgres

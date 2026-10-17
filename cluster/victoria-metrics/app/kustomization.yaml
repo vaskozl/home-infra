@@ -38,6 +38,12 @@ configMapGenerator:
   - name: dashboards-node-exporter
     files:
       - node-exporter-full.json=https://raw.githubusercontent.com/rfmoz/grafana-dashboards/master/prometheus/node-exporter-full.json
+  - name: dashboards-postgres
+    options:
+      labels:
+        grafana_dashboard: "1"
+    files:
+      - dashboards/postgres/postgres-overview.json
 generatorOptions:
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
