@@ -904,22 +904,3 @@ spec:
       command: dumb-init -- /entrypoint
     cmd: sh
     vcs-url: https://gitlab.com/gitlab-org/build/CNG
----
-apiVersion: v1alpha1
-kind: apkoimages
-metadata:
-  workspace: doudous
-spec:
-  name: prometheus-postgres-exporter
-  includes: [wolfi-base]
-  tags: [latest]
-  registries:
-    - ghcr.io/vaskozl/prometheus-postgres-exporter
-  versionFrom: prometheus-postgres-exporter
-  config: |
-    contents:
-      packages:
-        - prometheus-postgres-exporter
-    entrypoint:
-      command: postgres_exporter
-    vcs-url: https://github.com/prometheus-community/postgres_exporter
