@@ -179,6 +179,18 @@ spec:
             env:
               POSTGRES_DB: rekon
               POSTGRES_HOST_AUTH_METHOD: trust
+            args:
+              - -c
+              - shared_preload_libraries=pg_stat_statements
+            lifecycle:
+              postStart:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -ec
+                    - |
+                      until pg_isready -U postgres -d rekon; do sleep 1; done
+                      psql -U postgres -d rekon --set=ON_ERROR_STOP=1 --command='CREATE EXTENSION IF NOT EXISTS pg_stat_statements'
             probes:
               liveness: &pg-probe
                 enabled: true
@@ -198,12 +210,16 @@ spec:
                 memory: 128Mi
           exporter:
             image:
-              repository: ghcr.io/vaskozl/prometheus-postgres-exporter
-              tag: 0.19.1
+              repository: ghcr.io/prometheus-community/postgres-exporter
+              tag: v0.20.1@sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e
             args:
               - --web.listen-address=:9187
               - --collector.stat_checkpointer
               - --collector.postmaster
+              - --collector.stat_statements
+              - --collector.stat_statements.include_query
+              - --collector.stat_statements.limit=50
+              - --collector.stat_statements.query_length=120
             env:
               DATA_SOURCE_NAME: postgresql://postgres@127.0.0.1:5432/rekon?sslmode=disable&options=-c%20default_transaction_read_only%3Don
             probes:

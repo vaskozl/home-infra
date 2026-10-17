@@ -21,7 +21,7 @@
       }
     ]
   },
-  "description": "PostgreSQL monitoring for Rekon and dossier. Based on prometheus-community/postgres_exporter v0.19.1's Postgres Overview mixin, adapted to PostgreSQL 18.",
+  "description": "PostgreSQL monitoring and top SQL insights for Rekon and dossier. Based on the prometheus-community/postgres_exporter v0.19.1 Postgres Overview mixin, adapted to PostgreSQL 18.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 455,
@@ -1811,6 +1811,189 @@
       "title": "Checkpoints / second",
       "type": "timeseries",
       "description": ""
+    },
+    {
+      "id": 28,
+      "title": "Top SQL by execution time (selected range)",
+      "description": "Queries with the most accumulated execution time during the dashboard time range. SQL text is normalized by pg_stat_statements and truncated to 120 characters.",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 41,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(10, increase(pg_stat_statements_seconds_total{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\",datname=~\"$db\"}[$__range])) * on (namespace,job,instance,queryid) group_left(query) pg_stat_statements_query_id{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\"}",
+          "format": "table",
+          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Value"
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "title": "Slowest SQL by average execution time",
+      "description": "Average execution time over the selected range, limited to queries with at least five calls to avoid ranking one-off outliers.",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 49,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(10, (increase(pg_stat_statements_seconds_total{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\",datname=~\"$db\"}[$__range]) / increase(pg_stat_statements_calls_total{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\",datname=~\"$db\"}[$__range])) and on (namespace,job,instance,user,datname,queryid) (increase(pg_stat_statements_calls_total{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\",datname=~\"$db\"}[$__range]) >= 5)) * on (namespace,job,instance,queryid) group_left(query) pg_stat_statements_query_id{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\"}",
+          "format": "table",
+          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Value"
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "title": "Most frequently called SQL (selected range)",
+      "description": "Queries with the most calls during the dashboard time range.",
+      "type": "table",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 57,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(10, increase(pg_stat_statements_calls_total{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\",datname=~\"$db\"}[$__range])) * on (namespace,job,instance,queryid) group_left(query) pg_stat_statements_query_id{namespace=~\"$namespace\",job=~\"$job\",instance=~\"$instance\"}",
+          "format": "table",
+          "instant": true,
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Value"
+          }
+        ]
+      }
     }
   ],
   "refresh": "30s",
