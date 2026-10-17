@@ -1,15 +1,17 @@
 apiVersion: v1alpha1
 kind: apkrepos
+metadata:
+  workspace: doudous
 spec:
-  org: Doudous
   url: ENC[AES256_GCM,data:CGEcNnNQms8J2LLldGnHfPRo+IxS3ftzr6Jd1Kog6RR/205x4jCKCSMI/uP8+xZeVO/FgTiiAfuPj2m4YZisn+sNVDyaxXBBB6lVTuPy8PxH+A==,iv:yoPrxAP/UuoL0M3Urcrlz6QZf0Dx6MG/k1cWIIWrhjc=,tag:Vi/7ncy8H1txAey7rVqMww==,type:str]
   arches:
     - x86_64
     - aarch64
   intervalSeconds: 713
 sops:
-  lastmodified: "2026-06-21T13:00:49Z"
-  mac: ENC[AES256_GCM,data:VhOUmVY9aSXJ0jx9/GTC+4IJnERtkIBcBsNqnxA9IwcxTA5o1IiAQ6lS2OjYqRXFg0dxlDvJoLKuTbR+2zSY11uH4be563fkg/kNjbr0VZeVrkJy8BFxom6jJGr4gl1EKFFFmIz1WfPGxFwf9vNXH2YszfD+292/B55yVc0k/HM=,iv:E3Ydb4BPdHe/VCXdDXHYFZM3zqD7Mm6y0CmWvbMBB6s=,tag:e6AF7k5cbupTiPPwEgmwPg==,type:str]
+  encrypted_regex: url
+  lastmodified: "2026-10-17T17:15:28Z"
+  mac: ENC[AES256_GCM,data:65GkUTsxjt/rk+0aKsYf3yXTPLPBJ1KIrNvuPotW/cn6IVd9H48/0AzTAWNDwmfpJTurWcki2v+FDKE53xo22fL6bdxXCGS6W44pLaEv2CYLhbdzg7v63Ybu32DtYL0sYQm2G95fTfV1hry8k+XHwvIr+LwW7Ybem+pT+knQCBQ=,iv:mE/HlZL1LyrWDur7SJxuiNhTz1yEj0smh+aRojuWCxg=,tag:WQpQNFiAXwxLySdm08ucGA==,type:str]
   pgp:
     - created_at: "2026-06-21T13:00:49Z"
       enc: |-
@@ -37,5 +39,4 @@ sops:
         =b3ly
         -----END PGP MESSAGE-----
       fp: E940DD1F01DE41AC266825F72E962083AFA12A4D
-  encrypted_regex: url
-  version: 3.12.2
+  version: 3.13.3
