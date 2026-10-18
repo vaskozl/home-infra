@@ -153,6 +153,36 @@ spec:
               requests:
                 cpu: 50m
                 memory: 600Mi
+      # Requeue every object once the new worker is up, so a release or config
+      # change reaches objects nothing else wakes (docs/resync.md in rekon)
+      resync:
+        type: job
+        annotations:
+          helm.sh/hook: post-upgrade
+          helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+        pod:
+          hostUsers: false
+          securityContext: *pod-security-context
+        containers:
+          app:
+            image: *appImage
+            args:
+              - resync
+              - -db
+              - postgres://postgres@rekon-postgres/rekon?sslmode=disable
+              - -config
+              - /home/nonroot/config
+            env: *env
+            envFrom:
+              - secretRef:
+                  name: rekon-env
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext: *security-context
       postgres:
         type: statefulset
         statefulset:
@@ -250,6 +280,9 @@ spec:
         name: config
         advancedMounts:
           api:
+            app:
+              - path: /home/nonroot/config
+          resync:
             app:
               - path: /home/nonroot/config
           main:

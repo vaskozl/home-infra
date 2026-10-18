@@ -6,6 +6,8 @@ nameReference:
         kind: HelmRelease
       - path: spec/values/controllers/main/containers/app/envFrom/secretRef/name
         kind: HelmRelease
+      - path: spec/values/controllers/resync/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
       - path: spec/values/controllers/minio/containers/app/envFrom/secretRef/name
         kind: HelmRelease
       - path: spec/values/controllers/minio-init/containers/app/envFrom/secretRef/name

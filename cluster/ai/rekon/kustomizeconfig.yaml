@@ -6,6 +6,8 @@ nameReference:
         kind: HelmRelease
       - path: spec/values/controllers/api/containers/app/envFrom/secretRef/name
         kind: HelmRelease
+      - path: spec/values/controllers/resync/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
       - path: spec/values/controllers/worker/containers/app/envFrom/secretRef/name
         kind: HelmRelease
       - path: spec/values/persistence/config/name
