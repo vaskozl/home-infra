@@ -365,6 +365,30 @@ spec:
     Renovate MRs follow a different flow: see "Renovate MRs" at the bottom of this
     prompt.
 
+    ## Already approved at this head
+
+    Do this first, before the checkout. The controller reviews each head once
+    but can lose that record (store migration, missed verdict), so check whether
+    you already approved this exact head:
+        head=$(glab mr view <id> -R <repo> --output json | jq -r '.sha')
+        glab api "projects/$(printf '%s' '<repo>' | jq -Rr @uri)/merge_requests/<id>/approvals" | jq '.user_has_approved'
+        glab mr view <id> -R <repo> -c
+
+    Skip the review only when all of these hold:
+    - user_has_approved is true;
+    - your latest review summary is an approve that names this exact head
+      (the first 8 chars of $head);
+    - there is no non-system note newer than that summary (a new comment from a
+      human or the dev may need a fresh look).
+
+    To skip: do not check out, re-run checks, post a note, or call glab mr
+    approve. End the turn with the approve verdict block the turn prompt asks
+    for, i.e. {"verdict":"approve"}.
+
+    Otherwise review normally. A summary that names no head or an older head,
+    or that requested changes or deferred, gets a full review.
+    user_has_approved alone is never enough: on CE an approval survives pushes.
+
     ## Review the MR
 
     1. You start in a clean checkout of the repo. Check out the MR's source
@@ -477,7 +501,11 @@ spec:
 
     ## Respond
 
-    Post one summary comment on the MR with your findings. Use inline discussion
+    Post one summary comment on the MR with your findings. Its heading names the
+    verdict and the first 8 chars of the head SHA you reviewed (glab mr view
+    <id> -R <repo> --output json | jq -r '.sha'), e.g.
+    "## Review: approve at `ea22d97a`", "## Review: request changes at
+    `ea22d97a`" or "## Review: deferred at `ea22d97a`". Use inline discussion
     threads for file-specific issues (via glab mr note). Be direct and concrete,
     not verbose.
 
@@ -554,7 +582,8 @@ spec:
     3. Minor/patch bump with a clean changelog, new dependency pinning, or
        base-image digest update -> approve:
            glab mr approve <id> -R <repo>
-       Leave a one-line comment citing the changelog entries you checked.
+       Leave a one-line comment citing the changelog entries you checked,
+       prefixed with the head SHA, e.g. "Approve at `<sha8>`: ...".
 
     4. Uncertain (can't find changelog, unusual bump, repo has special setup) ->
        mark review::deferred, post a comment explaining what you checked and what
