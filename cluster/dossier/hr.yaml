@@ -364,25 +364,15 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/vaskozl/redstream
-              tag: 0.0.5@sha256:7c70452403ab5eefaa05b6f656c02308a628528876dc4f7d07a8eb5149ed5bdf
-            # Reset together with the main store: alerts record what
-            # they embedded and never refill a vector set wiped on its own
-            args: ['run', '--replica=s3://veroso-redis/dossier-vectors-v3', '--lease-ttl=30s', '--log-level=debug', '--', '--bind', '*', '-::*', '--protected-mode', 'no']
-            envFrom:
-              - secretRef:
-                  name: r2-credentials
+              repository: ghcr.io/vaskozl/redis
+              tag: 8.10.2@sha256:ff59af1e58e0df71628e4d4ff4fb41165893371ae8bab1988b427aae81a52c61
+            # Ephemeral: veroso's VectorSync refills the vector set from postgres
+            args: ['--save', '', '--appendonly', 'no']
             probes:
               liveness:
                 enabled: true
               readiness:
                 enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /
-                    port: 8081
-                  periodSeconds: 1
             resources:
               limits:
                 memory: 1Gi
