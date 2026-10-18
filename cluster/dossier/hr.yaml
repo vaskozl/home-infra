@@ -91,6 +91,31 @@ spec:
                 cpu: 200m
                 memory: 512Mi
             securityContext: *security-context
+      # Requeue every object once the new worker is up, so a release or seed
+      # change reaches objects nothing else wakes (docs/resync.md in rekon)
+      resync:
+        type: job
+        annotations:
+          helm.sh/hook: post-upgrade
+          helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+        pod: *pod
+        containers:
+          app:
+            envFrom: *envFrom
+            image: *image
+            args:
+              - resync
+              - -db
+              - postgres://postgres@dossier-postgres/veroso?sslmode=disable
+              - -config
+              - /config
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext: *security-context
       minio:
         type: statefulset
         replicas: 1
@@ -410,6 +435,9 @@ spec:
             app:
               - path: /config
           main:
+            app:
+              - path: /config
+          resync:
             app:
               - path: /config
     route:
