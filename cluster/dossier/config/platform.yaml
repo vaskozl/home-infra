@@ -12,4 +12,6 @@ spec:
   blobBucket: dossier
   blobAccessKeyEnv: VEROSO_S3_ACCESS_KEY
   blobSecretKeyEnv: VEROSO_S3_SECRET_KEY
+  embeddingBaseURL: http://ovms:8000
+  embeddingModel: siglip2-so400m-patch16-256
   vectorRedisURL: redis://dossier-vector-redis:6379
