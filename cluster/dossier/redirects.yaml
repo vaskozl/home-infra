@@ -1,0 +1,44 @@
+# Cloudflare overwrites X-Forwarded-Proto with the visitor's protocol, even
+# when it connects to the origin using HTTPS. Match that to avoid duplicate HTTP pages.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: canonical-https
+spec:
+  parentRefs:
+    - name: public
+      namespace: agentgateway
+  hostnames:
+    - veroso.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+          headers:
+            - name: X-Forwarded-Proto
+              value: http
+      filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            hostname: veroso.com
+            statusCode: 301
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: canonical-host
+spec:
+  parentRefs:
+    - name: public
+      namespace: agentgateway
+  hostnames:
+    - www.veroso.com
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            hostname: veroso.com
+            statusCode: 301
