@@ -128,6 +128,10 @@ spec:
               - synchronous_commit=off
               - -c
               - full_page_writes=off
+              # An open transaction in any database holds back every database's
+              # change feed; cap how long a forgotten session can do that.
+              - -c
+              - idle_in_transaction_session_timeout=60s
             resources:
               limits:
                 memory: 2Gi
