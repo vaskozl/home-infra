@@ -29,7 +29,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          app:
+          app: &api
             envFrom: &envFrom
               - secretRef:
                   name: oidc
@@ -101,21 +101,8 @@ spec:
         pod: *pod
         containers:
           app:
-            envFrom: *envFrom
-            image: *image
-            args:
-              - resync
-              - -db
-              - postgres://postgres@dossier-postgres/veroso?sslmode=disable
-              - -config
-              - /config
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 50m
-                memory: 128Mi
-            securityContext: *security-context
+            <<: *api
+            args: [resync, -db, "postgres://postgres@dossier-postgres/veroso?sslmode=disable", -config, /config]
       minio:
         type: statefulset
         replicas: 1

@@ -23,13 +23,13 @@ spec:
         type: deployment
         replicas: 1
         strategy: RollingUpdate
-        pod:
+        pod: &api-pod
           hostUsers: false
           securityContext: &pod-security-context
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          app:
+          app: &api
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
               tag: 0.0.75
@@ -160,29 +160,11 @@ spec:
         annotations:
           helm.sh/hook: post-upgrade
           helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-        pod:
-          hostUsers: false
-          securityContext: *pod-security-context
+        pod: *api-pod
         containers:
           app:
-            image: *appImage
-            args:
-              - resync
-              - -db
-              - postgres://postgres@rekon-postgres/rekon?sslmode=disable
-              - -config
-              - /home/nonroot/config
-            env: *env
-            envFrom:
-              - secretRef:
-                  name: rekon-env
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 50m
-                memory: 128Mi
-            securityContext: *security-context
+            <<: *api
+            args: [resync, -db, "postgres://postgres@rekon-postgres/rekon?sslmode=disable", -config, /home/nonroot/config]
       postgres:
         type: statefulset
         statefulset:
