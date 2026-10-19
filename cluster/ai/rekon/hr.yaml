@@ -94,7 +94,9 @@ spec:
               - -v
               - -mode
               - worker
-            env: *env
+            env:
+              <<: *env
+              PGSTORE_TEST_DSN: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
             envFrom:
               - secretRef:
                   name: rekon-env
@@ -106,6 +108,36 @@ spec:
                 cpu: 400m
                 memory: 3.2Gi
             securityContext: *security-context
+          # Throwaway server for agent turns' tests and app runs. Not 5432: agents
+          # may start other servers in the pod's single network namespace.
+          testdb:
+            image:
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 18.6@sha256:ba47de5492e45c6b43e910cc723f21ed876c002d316df8193d4331c884f73132
+            env:
+              PGPORT: "15432"
+              POSTGRES_HOST_AUTH_METHOD: trust
+            args:
+              - -c
+              - listen_addresses=127.0.0.1
+              - -c
+              - max_connections=500
+              - -c
+              - fsync=off
+              - -c
+              - synchronous_commit=off
+              - -c
+              - full_page_writes=off
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 50m
+                memory: 256Mi
+            securityContext:
+              runAsUser: 70
+              runAsGroup: 70
+              runAsNonRoot: true
           chromium:
             image:
               repository: ghcr.io/vaskozl/chromium
