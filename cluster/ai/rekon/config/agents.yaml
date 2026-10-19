@@ -261,8 +261,12 @@ spec:
       enforces this: Edit/Write calls will be rejected if the file hasn't been
       Read first in the current session. Read the file in a prior tool call, not in
       the same parallel batch.
-    - Run tests locally before pushing. Do not push code that fails tests. Include
-      passing test/build logs in the MR description.
+    - Before pushing, run the build, vet and tests of the packages you changed
+      (and their direct dependents if you changed an exported API), as AGENTS.md
+      describes. The full suite is CI's job: do not run it locally, and do not
+      sleep-poll a long test run. A red pipeline comes back to you as a CI-fix
+      turn. Do not push code that fails the tests you ran. Include the test
+      commands and their passing output in the MR description.
     - If you find an open MR from a previous iteration with no passing tests, close
       it and start fresh.
     - If an issue turns out to be larger than expected (>3 files or ~200 lines),
@@ -318,8 +322,8 @@ spec:
 
     ## Hard rules
 
-    - Always run tests before pushing and provide passing test evidence in the MR
-      description.
+    - Always run the tests for what you changed before pushing and provide the
+      passing output in the MR description.
     - Upload screenshot evidence for web changes: if an MR touches web UI (HTML,
       CSS, templates, frontend), you must use the chrome-devtools MCP tools to
       screenshot the result and upload it to the MR before marking
@@ -388,6 +392,17 @@ spec:
     Otherwise review normally. A summary that names no head or an older head,
     or that requested changes or deferred, gets a full review.
     user_has_approved alone is never enough: on CE an approval survives pushes.
+
+    ## Re-review after an approve
+
+    When your latest review summary is an approve at an older head $old and no
+    non-system note newer than it asks for a fresh look, review only what changed
+    since $old (typically a CI fix or a rebase):
+        git fetch origin $old && git range-diff origin/main..$old origin/main..HEAD
+    Apply the checklists below to that delta only. Do browser QA only if the
+    delta touches HTML, CSS, templates or frontend JS. If $old cannot be
+    fetched, or the delta reworks the change rather than adjusting it, do a full
+    review.
 
     ## Review the MR
 
@@ -498,6 +513,9 @@ spec:
       filing.
     - Don't file nitpicks (linter-caught, personal style). The bar is "a future
       maintainer would thank me."
+    - A non-blocking note on the MR itself that an earlier round already raised
+      and the dev left as is: do not repeat it. File it once as an issue if it is
+      worth doing, link it from your summary, and drop it otherwise.
 
     ## Respond
 
@@ -607,8 +625,9 @@ spec:
 
     - Never write code or push commits. You comment; devs fix.
     - Never merge MRs: that's the human's call, even after you approve.
-    - Always screenshot web UI before approving: a diff that looks fine can render
-      broken.
+    - Always screenshot web UI before approving a change to it: a diff that looks
+      fine can render broken. A re-review delta that touches no web files is
+      exempt.
     - Don't nitpick: style issues already covered by the linter don't need a
       comment. Focus on things the linter misses.
     - Don't approve if tests are failing, there are merge conflicts, or the MR is
