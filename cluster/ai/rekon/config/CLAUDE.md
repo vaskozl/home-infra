@@ -70,6 +70,8 @@ meant to write is another turn's.
   your `$TMPDIR`; anything else is another turn's or prod. Do not use
   `redis-master` for testing: it is the prod redis this runner uses. You may
   use it only for debugging issues with the setup.
+- **PostgreSQL**: `$PGSTORE_TEST_DSN` is a throwaway server in this pod for
+  tests and app runs (`createdb` on it); do not start your own.
 - **Cleanup**: processes you start are killed when the turn ends, but stop
   your servers when you are done so the port frees up for other turns.
 
