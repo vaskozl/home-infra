@@ -6,7 +6,7 @@ include:
 run:val:
   stage: test
   tags: [arm64]
-  image: ghcr.io/vaskozl/kubeconform:0.8.0@sha256:b793ec7bd0bf4b855c450b3585b959795b08022cad6d57af7c4b97a0a7495cfe
+  image: ghcr.io/vaskozl/kubeconform:0.8.0@sha256:4e2ac433904b4d67d0e0793183211d46847b5d5557fe1f12f04096c9224c3814
   retry:
     max: 2
     when: [runner_system_failure]
