@@ -150,9 +150,9 @@ spec:
         pod: *pod
         job:
           backoffLimit: 20
-          # Let the Job be collected so a later upgrade recreates it instead of
-          # failing on the immutable pod template
-          ttlSecondsAfterFinished: 600
+          # Collect the Job as soon as it finishes so a later upgrade recreates it
+          # instead of failing on the immutable pod template
+          ttlSecondsAfterFinished: 0
         containers:
           app:
             command:
