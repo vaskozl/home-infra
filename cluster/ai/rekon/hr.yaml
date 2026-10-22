@@ -113,7 +113,7 @@ spec:
           testdb:
             image:
               repository: ghcr.io/vaskozl/postgresql
-              tag: 18.6@sha256:ba47de5492e45c6b43e910cc723f21ed876c002d316df8193d4331c884f73132
+              tag: 18.6@sha256:a4284779780379c78a9e3d3a9c1e1f252891243f18eb30c2a3583a759e11677c
             env:
               PGPORT: "15432"
               POSTGRES_HOST_AUTH_METHOD: trust
@@ -223,7 +223,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/postgresql
-              tag: 18.6@sha256:ba47de5492e45c6b43e910cc723f21ed876c002d316df8193d4331c884f73132
+              tag: 18.6@sha256:a4284779780379c78a9e3d3a9c1e1f252891243f18eb30c2a3583a759e11677c
             env:
               POSTGRES_DB: rekon
               POSTGRES_HOST_AUTH_METHOD: trust
