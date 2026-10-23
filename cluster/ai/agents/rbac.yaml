@@ -1,0 +1,55 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: rekon-agent-turns
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch", "create", "delete"]
+  - apiGroups: [""]
+    resources: ["podtemplates"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rekon-agent-turns
+subjects:
+  - kind: ServiceAccount
+    name: rekon
+    namespace: ai
+roleRef:
+  kind: Role
+  name: rekon-agent-turns
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rekon-agent
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rekon-agent-readonly
+subjects:
+  - kind: ServiceAccount
+    name: rekon-agent
+    namespace: ai-agents
+roleRef:
+  kind: ClusterRole
+  name: rekon-readonly
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rekon-agent-view
+subjects:
+  - kind: ServiceAccount
+    name: rekon-agent
+    namespace: ai-agents
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io

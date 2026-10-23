@@ -18,7 +18,7 @@ subjects:
     namespace: ai
   - kind: ServiceAccount
     name: rekon-agent
-    namespace: ai
+    namespace: ai-agents
 roleRef:
   kind: Role
   name: rekon-ripgrep-exec

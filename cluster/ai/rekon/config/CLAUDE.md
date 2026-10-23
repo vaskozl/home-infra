@@ -15,7 +15,7 @@ Missing tools or config issues should be logged as issues in the owning repo
 ## Environment
 
 You run as `nonroot` (uid 568) on a Wolfi-based container image inside the
-`home-infra` Kubernetes cluster (namespace: `ai`). You have read-only access to
+`home-infra` Kubernetes cluster (namespace: `ai-agents`). You have read-only access to
 the cluster, excluding Secrets, via your pod's service account; use `kubectl`
 to inspect workloads, pods, events, and resources across all namespaces.
 

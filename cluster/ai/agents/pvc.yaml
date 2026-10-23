@@ -1,0 +1,42 @@
+# Turn pods share ai/rekon-home with the controller; a PVC is namespaced, so
+# this PV mounts the NFS dir provisioned for that claim.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ai-agents-rekon-home
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  claimRef:
+    namespace: ai-agents
+    name: rekon-home
+  mountOptions:
+    - nfsvers=3
+    - hard
+    - nolock
+    - nocto
+    - noatime
+    - nodiratime
+    - retrans=5
+    - rsize=131072
+    - wsize=131072
+  nfs:
+    server: syno.sko.ai
+    path: /volume3/k8s-volumes/ai-rekon-home-pvc-0a6c0315-050c-48d7-ab40-07a8d689361d
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rekon-home
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: ai-agents-rekon-home
+  resources:
+    requests:
+      storage: 100Gi

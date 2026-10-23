@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ai-agents
+resources:
+  - _namespace.yaml
+  - podtemplate.yaml
+  - pvc.yaml
+  - rbac.yaml
+  - ../rekon/regcred.enc.yaml
+components:
+  - ../../common
+secretGenerator:
+  - name: rekon-env
+    envs:
+      - ../rekon/claude.enc.env
+  - name: config
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - CLAUDE.md=../rekon/config/CLAUDE.md
