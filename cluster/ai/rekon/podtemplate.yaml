@@ -111,7 +111,6 @@ template:
       - name: chromium
         restartPolicy: Always
         image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:ac1cb77b4f128741787d7d1126278aff952f520fe0c15feaf98d542c6a79e708
-        command: [chromium-browser]
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
