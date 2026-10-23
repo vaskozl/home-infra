@@ -25,6 +25,7 @@ spec:
         strategy: RollingUpdate
         pod: &api-pod
           hostUsers: false
+          automountServiceAccountToken: false
           securityContext: &pod-security-context
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
@@ -58,12 +59,13 @@ spec:
                 cpu: 100m
                 memory: 128Mi
             securityContext: &security-context
-              allowPrivilegeEscalation: true
-              procMount: Unmasked
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
               runAsGroup: 568
               runAsUser: 568
               seccompProfile:
-                type: Unconfined
+                type: RuntimeDefault
       main:
         forceRename: rekon
         replicas: 1
@@ -71,18 +73,7 @@ spec:
         serviceAccount:
           identifier: rekon
         pod:
-          hostUsers: false
-          # Lets the app container see and SIGKILL chromium to get a fresh
-          # browser per agent turn.
-          shareProcessNamespace: true
           securityContext: *pod-security-context
-        statefulset:
-          volumeClaimTemplates:
-            - accessMode: ReadWriteOnce
-              globalMounts:
-                - path: /home/nonroot
-              name: home
-              size: 20Gi
         containers:
           app:
             image: *appImage
@@ -96,7 +87,6 @@ spec:
               - worker
             env:
               <<: *env
-              PGSTORE_TEST_DSN: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
             envFrom:
               - secretRef:
                   name: rekon-env
@@ -108,87 +98,6 @@ spec:
                 cpu: 400m
                 memory: 3.2Gi
             securityContext: *security-context
-          # Throwaway server for agent turns' tests and app runs. Not 5432: agents
-          # may start other servers in the pod's single network namespace.
-          testdb:
-            image:
-              repository: ghcr.io/vaskozl/postgresql
-              tag: 18.6@sha256:a4284779780379c78a9e3d3a9c1e1f252891243f18eb30c2a3583a759e11677c
-            env:
-              PGPORT: "15432"
-              POSTGRES_HOST_AUTH_METHOD: trust
-            args:
-              - -c
-              - listen_addresses=127.0.0.1
-              - -c
-              - max_connections=500
-              - -c
-              - fsync=off
-              - -c
-              - synchronous_commit=off
-              - -c
-              - full_page_writes=off
-              # An open transaction in any database holds back every database's
-              # change feed; cap how long a forgotten session can do that.
-              - -c
-              - idle_in_transaction_session_timeout=60s
-            resources:
-              limits:
-                memory: 2Gi
-              requests:
-                cpu: 50m
-                memory: 256Mi
-            securityContext:
-              runAsUser: 70
-              runAsGroup: 70
-              runAsNonRoot: true
-          chromium:
-            image:
-              repository: ghcr.io/vaskozl/chromium
-              tag: 156.0.8078.47@sha256:8d292c744cd2787eaadb500788dd5314a0a8bc4a46fc18f70d49e737520989bd
-            # Respawn loop: killing the browser must not exit the container,
-            # or the kubelet applies restart backoff. The profile dir is wiped
-            # first so a SIGKILL leaves no stale SingletonLock or state.
-            command: ["sh", "-c"]
-            args:
-              - |
-                while true; do
-                  rm -rf /tmp/chrome
-                  chromium-browser --headless --remote-debugging-port=9222 --user-data-dir=/tmp/chrome
-                  sleep 1
-                done
-            resources:
-              limits:
-                # Includes the /dev/shm tmpfs, charged to this cgroup.
-                memory: 2Gi
-              requests:
-                cpu: 100m
-                memory: 500Mi
-          chrome-devtools-mcp:
-            image:
-              repository: ghcr.io/vaskozl/node
-              tag: latest@sha256:09f7e05ece19f3b4524aee65382ad1d6127f740495e55c479e6ca2204860e39e
-            command: ["npx"]
-            args:
-              - -y
-              - mcp-proxy@6.5.1
-              - --transport
-              - streamablehttp
-              # Not 8080: agents boot the app under test on it, and mcp-proxy
-              # binds :: in the pod's single network namespace.
-              - --port
-              - "9223"
-              - --
-              - npx
-              - -y
-              - chrome-devtools-mcp@1.1.1
-              - --browserUrl=http://127.0.0.1:9222
-            resources:
-              limits:
-                memory: 1Gi
-              requests:
-                cpu: 50m
-                memory: 600Mi
       # Requeue every object once the new worker is up, so a release or config
       # change reaches objects nothing else wakes (docs/resync.md in rekon)
       resync:
@@ -213,6 +122,7 @@ spec:
               name: data
               size: 5Gi
         pod:
+          automountServiceAccountToken: false
           securityContext:
             fsGroup: 70
             fsGroupChangePolicy: OnRootMismatch
@@ -293,6 +203,12 @@ spec:
       imagePullSecrets:
         - name: regcred
     persistence:
+      rekon-home:
+        existingClaim: rekon-home
+        advancedMounts:
+          main:
+            app:
+              - path: /home/nonroot
       config:
         type: secret
         name: config
@@ -308,35 +224,6 @@ spec:
               - path: /home/nonroot/config
               - path: /home/nonroot/.claude/CLAUDE.md
                 subPath: CLAUDE.md
-      screenshots:
-        type: emptyDir
-        advancedMounts:
-          main:
-            app:
-              - path: /tmp/screenshots
-            chrome-devtools-mcp:
-              - path: /tmp/screenshots
-            chromium:
-              - path: /tmp/screenshots
-      dshm:
-        # The 64Mi default is too small for captureScreenshot: chromium backs
-        # each CopyOutputResult bitmap with a file here and kills its GPU
-        # process when the allocation fails.
-        type: emptyDir
-        medium: Memory
-        sizeLimit: 512Mi
-        advancedMounts:
-          main:
-            chromium:
-              - path: /dev/shm
-      turn-fifo:
-        type: emptyDir
-        medium: Memory
-        sizeLimit: 1Mi
-        advancedMounts:
-          main:
-            app:
-              - path: /run/claude
     route:
       app:
         hostnames:

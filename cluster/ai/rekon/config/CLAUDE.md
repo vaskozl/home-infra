@@ -40,13 +40,16 @@ An issue meant to be implemented is only picked up with both labels
 `workflow::ready for development` and `model::opus`; add them on create
 (`-l 'workflow::ready for development' -l 'model::opus'`).
 
-## Shared pod: scratch files and local app runs
+## Your turn pod: scratch files and local app runs
 
-Many turns share this pod's filesystem and localhost. Another turn's binary,
-server or redis is one `ls /tmp` or `ss -ltnp` away, and yours is visible to
-them. Never run or connect to something you did not start in this turn. If
-your `cd` or build fails, fix it; a binary that already exists at the path you
-meant to write is another turn's.
+Each turn runs in its own pod: localhost, `/tmp`, the chromium and
+chrome-devtools sidecars (9222, 9223) and the testdb (15432) are yours alone and
+go away with the turn, as does anything installed outside `/home/nonroot`
+(e.g. `brew install`). `/home/nonroot` is a shared volume: the controller and
+every later turn see what you leave there, and you see theirs. Never run or
+connect to something you did not start in this turn. If your `cd` or build
+fails, fix it; a file that already exists at the path you meant to write is
+someone else's.
 
 - **Scratch files**: use `$TMPDIR` (private, wiped with the turn) via
   `mktemp`, `go build -o "$TMPDIR/<app>"`, etc. Never a fixed `/tmp/<name>`.
@@ -78,7 +81,7 @@ meant to write is another turn's.
 - **PostgreSQL**: `$PGSTORE_TEST_DSN` is a throwaway server in this pod for
   tests and app runs (`createdb` on it); do not start your own.
 - **Cleanup**: processes you start are killed when the turn ends, but stop
-  your servers when you are done so the port frees up for other turns.
+  your servers when you are done.
 
 ## Metrics access
 
@@ -214,22 +217,26 @@ work: web research, code search, long-log/diff/test analysis, security review,
 test babysitting, and small implement-until-green changes. Review its output
 and diff yourself; keep architecture and final judgement with you.
 
-Tips (verified on codex 0.154):
+Tips (verified on codex 0.163):
 
 - Always pass `-c 'model_reasoning_effort="max"'`; use lower effort only when
   latency matters. Set the same default in `~/.codex/config.toml`.
 - Use `--ephemeral -o "$(mktemp)"` and send the stream to `/dev/null`; require
   a hard reply budget. Pipe long logs, diffs, and test output through stdin.
-- Use `--search -s read-only` for research/review; reserve
-  `--dangerously-bypass-approvals-and-sandbox` for edits/tests. Use `-C <worktree>`.
+- Always pass `-s danger-full-access` (or `--dangerously-bypass-approvals-and-sandbox`).
+  codex's own sandboxes (`read-only`, `workspace-write`) need user namespaces
+  that this pod does not allow: every command fails. For research/review, say
+  "do not modify files" in the prompt instead. For `codex review`, pass
+  `-c sandbox_mode="danger-full-access"`; leave the shared `~/.codex/config.toml` alone.
+  Add `--search` for web research; use `-C <worktree>`.
 - Run independent calls in parallel under `timeout`; use `resume --last` for
   long tasks and `review --uncommitted` for an independent second pass.
 
 ```bash
 OUT=$(mktemp)
-codex --search exec -m gpt-6-luna --ephemeral -s read-only -c 'model_reasoning_effort="max"' -o "$OUT" \
+codex --search exec -m gpt-6-luna --ephemeral -s danger-full-access -c 'model_reasoning_effort="max"' -o "$OUT" \
   'Latest release of X? One line.' >/dev/null 2>&1; cat "$OUT"
-go test ./... 2>&1 | codex exec -m gpt-6-luna --ephemeral -s read-only -c 'model_reasoning_effort="max"' -o "$OUT" \
+go test ./... 2>&1 | codex exec -m gpt-6-luna --ephemeral -s danger-full-access -c 'model_reasoning_effort="max"' -o "$OUT" \
   'stdin is go test output; max 3 lines: failures only.' >/dev/null 2>&1; cat "$OUT"
 codex exec -m gpt-6-luna -C "$WT" --dangerously-bypass-approvals-and-sandbox -c 'model_reasoning_effort="max"' -o "$OUT" \
   'Add X with a table test; iterate until gofmt is clean and `go test ./pkg/` passes. Max 5 lines.' >/dev/null 2>&1; cat "$OUT"
