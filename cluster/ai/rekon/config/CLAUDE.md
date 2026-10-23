@@ -51,6 +51,11 @@ meant to write is another turn's.
 - **Scratch files**: use `$TMPDIR` (private, wiped with the turn) via
   `mktemp`, `go build -o "$TMPDIR/<app>"`, etc. Never a fixed `/tmp/<name>`.
   `/tmp/screenshots` is the one path that is meant to be shared.
+- **Local Chromium**: `$TMPDIR` is too long for Chromium's `SingletonSocket`
+  (unix socket paths cap at 108 bytes), so a locally launched browser aborts
+  with `Socket path too long` / `browser did not start`. Run such tests
+  (e.g. veroso `chromefetch`, `internal/crawl`) with a short private dir:
+  `TMPDIR=$(mktemp -d /tmp/cf.XXXXXX) go test ./chromefetch/`.
 - **Ports**: never bind a fixed port (8080, 6379, 63xx, 5432, 3000...). 9222
   and 9223 belong to the chromium sidecars. Pick a free loopback port and pass
   it explicitly to the app:
