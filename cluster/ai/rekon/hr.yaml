@@ -33,7 +33,7 @@ spec:
           app: &api
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
-              tag: 0.0.78@sha256:058a9839a5a16a79fdafd1ca00e179d1afed5e7a6f4158ee1e07be4e41492110
+              tag: 0.0.79@sha256:cbfb3c659a4eac5706b11d4735b9f3b1e9342e0543f2e7884d6fc33858bdcab2
             args:
               - -db
               - postgres://postgres@rekon-postgres/rekon?sslmode=disable
@@ -52,8 +52,6 @@ spec:
             envFrom:
               - secretRef:
                   name: rekon-env
-              - secretRef:
-                  name: rekon-controller-env
             resources:
               limits:
                 memory: 1Gi
@@ -92,8 +90,6 @@ spec:
             envFrom:
               - secretRef:
                   name: rekon-env
-              - secretRef:
-                  name: rekon-controller-env
             resources:
               limits:
                 cpu: 4

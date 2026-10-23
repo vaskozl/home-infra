@@ -14,9 +14,6 @@ secretGenerator:
   - name: rekon-env
     envs:
       - claude.enc.env
-  - name: rekon-controller-env
-    envs:
-      - rekon.enc.env
   - name: config
     options:
       annotations:

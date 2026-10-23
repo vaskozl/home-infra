@@ -35,7 +35,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.78@sha256:058a9839a5a16a79fdafd1ca00e179d1afed5e7a6f4158ee1e07be4e41492110
+        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.79@sha256:cbfb3c659a4eac5706b11d4735b9f3b1e9342e0543f2e7884d6fc33858bdcab2
         env:
           - name: TMPDIR
             value: /tmp
@@ -49,9 +49,30 @@ template:
             value: "1"
           - name: PGSTORE_TEST_DSN
             value: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
-        envFrom:
-          - secretRef:
-              name: rekon-env
+          # Only the agent's keys: AUTH_SECRET, OIDC_CLIENT_SECRET, SMTPHOST
+          # and BASE_URL stay with the controller.
+          - name: GITLAB_TOKEN
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
+          - name: GITLAB_HOST
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_HOST}}
+          - name: GITHUB_TOKEN
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITHUB_TOKEN}}
+          - name: DO_NOT_TRACK
+            valueFrom: {secretKeyRef: {name: rekon-env, key: DO_NOT_TRACK}}
+          - name: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS}}
+          - name: CLAUDE_CODE_DISABLE_CRON
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_CRON}}
+          - name: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS}}
+          - name: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC}}
+          - name: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION}}
+          - name: CLAUDE_CODE_ENABLE_TASKS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_TASKS}}
+          - name: CLAUDE_CODE_OAUTH_401_WAIT_MS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_OAUTH_401_WAIT_MS}}
         resources:
           limits:
             cpu: 4
@@ -110,7 +131,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:ac1cb77b4f128741787d7d1126278aff952f520fe0c15feaf98d542c6a79e708
+        image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:8d292c744cd2787eaadb500788dd5314a0a8bc4a46fc18f70d49e737520989bd
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
