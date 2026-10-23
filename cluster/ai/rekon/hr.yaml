@@ -78,9 +78,6 @@ spec:
         pod:
           # NFS has no idmapped mounts, so rekon-home needs the host user namespace.
           hostUsers: true
-          # Lets the app container see and SIGKILL chromium to get a fresh
-          # browser per agent turn.
-          shareProcessNamespace: true
           securityContext: *pod-security-context
         containers:
           app:
@@ -342,14 +339,6 @@ spec:
           main:
             chromium:
               - path: /dev/shm
-      turn-fifo:
-        type: emptyDir
-        medium: Memory
-        sizeLimit: 1Mi
-        advancedMounts:
-          main:
-            app:
-              - path: /run/claude
     route:
       app:
         hostnames:
