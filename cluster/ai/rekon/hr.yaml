@@ -222,7 +222,7 @@ spec:
           main:
             app:
               - path: /home/nonroot/config
-              - path: /home/nonroot/.claude/CLAUDE.md
+              - path: /etc/claude-code/CLAUDE.md
                 subPath: CLAUDE.md
     route:
       app:

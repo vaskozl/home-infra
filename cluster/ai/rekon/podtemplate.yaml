@@ -90,7 +90,7 @@ template:
           - name: rekon-home
             mountPath: /home/nonroot
           - name: config
-            mountPath: /home/nonroot/.claude/CLAUDE.md
+            mountPath: /etc/claude-code/CLAUDE.md
             subPath: CLAUDE.md
           - name: screenshots
             mountPath: /tmp/screenshots
