@@ -45,7 +45,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.78@sha256:593c17c312ffa88e3071fde6a98458ea7bc5e9a3409dfff3e6322186ae7d2476
+        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.78@sha256:f51098f8a693dec772acd7e4c3ea0e03ee0755faa8d05a7833f61ded7c776d6d
         env:
           - name: TMPDIR
             value: /tmp
@@ -146,7 +146,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:79d7e18bf1d981bd095511327376ecac15591ce13b1a8ca7ebd332414f06b002
+        image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:89e1582bf42be739f8ffa33312c88243b3726ee260c82e95e9663e6c750ac818
         # Respawn loop: a crashed browser must not exit the container, or the
         # kubelet applies restart backoff.
         command: ["sh", "-c"]
