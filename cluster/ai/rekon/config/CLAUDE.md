@@ -40,13 +40,16 @@ An issue meant to be implemented is only picked up with both labels
 `workflow::ready for development` and `model::opus`; add them on create
 (`-l 'workflow::ready for development' -l 'model::opus'`).
 
-## Shared pod: scratch files and local app runs
+## Your turn pod: scratch files and local app runs
 
-Many turns share this pod's filesystem and localhost. Another turn's binary,
-server or redis is one `ls /tmp` or `ss -ltnp` away, and yours is visible to
-them. Never run or connect to something you did not start in this turn. If
-your `cd` or build fails, fix it; a binary that already exists at the path you
-meant to write is another turn's.
+Each turn runs in its own pod: localhost, `/tmp`, the chromium and
+chrome-devtools sidecars (9222, 9223) and the testdb (15432) are yours alone and
+go away with the turn, as does anything installed outside `/home/nonroot`
+(e.g. `brew install`). `/home/nonroot` is a shared volume: the controller and
+every later turn see what you leave there, and you see theirs. Never run or
+connect to something you did not start in this turn. If your `cd` or build
+fails, fix it; a file that already exists at the path you meant to write is
+someone else's.
 
 - **Scratch files**: use `$TMPDIR` (private, wiped with the turn) via
   `mktemp`, `go build -o "$TMPDIR/<app>"`, etc. Never a fixed `/tmp/<name>`.
@@ -76,9 +79,10 @@ meant to write is another turn's.
   `redis-master` for testing: it is the prod redis this runner uses. You may
   use it only for debugging issues with the setup.
 - **PostgreSQL**: `$PGSTORE_TEST_DSN` is a throwaway server in this pod for
-  tests and app runs (`createdb` on it); do not start your own.
+  tests and app runs (`createdb` on it); do not start your own. The prod
+  database (`rekon-postgres`) is unreachable from a turn pod.
 - **Cleanup**: processes you start are killed when the turn ends, but stop
-  your servers when you are done so the port frees up for other turns.
+  your servers when you are done.
 
 ## Metrics access
 

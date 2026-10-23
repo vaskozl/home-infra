@@ -1,0 +1,216 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/podtemplate-v1.json
+# Each agent turn runs as a pod built from this template (Platform
+# agentPodTemplate). pkgupdate overrides the agent container's command, args
+# and workingDir, and sets restartPolicy, activeDeadlineSeconds, the name and
+# its own labels. Keep the pkgupdate image on the HelmRelease's tag and digest.
+apiVersion: v1
+kind: PodTemplate
+metadata:
+  name: rekon-agent-turn
+  namespace: ai
+template:
+  metadata:
+    # Not app.kubernetes.io/instance: rekon, which rekon-postgres-ingress admits.
+    labels:
+      app.kubernetes.io/name: rekon-agent
+  spec:
+    serviceAccountName: rekon-agent
+    automountServiceAccountToken: true
+    # NFS has no idmapped mounts, so rekon-home needs the host user namespace.
+    hostUsers: true
+    enableServiceLinks: false
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+    imagePullSecrets:
+      - name: regcred
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    # rekon-home mounts with nolock,nocto: stay on rekon-0's node so both share
+    # one NFS client cache.
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/instance: rekon
+                app.kubernetes.io/controller: main
+            topologyKey: kubernetes.io/hostname
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      runAsNonRoot: true
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
+    containers:
+      - name: agent
+        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.78@sha256:593c17c312ffa88e3071fde6a98458ea7bc5e9a3409dfff3e6322186ae7d2476
+        env:
+          - name: TMPDIR
+            value: /tmp
+          - name: DISABLE_TELEMETRY
+            value: "1"
+          - name: DISABLE_BUG_COMMAND
+            value: "1"
+          - name: DISABLE_AUTOUPDATER
+            value: "1"
+          - name: DISABLE_ERROR_REPORTING
+            value: "1"
+          - name: PGSTORE_TEST_DSN
+            value: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
+          # Only the agent's keys: AUTH_SECRET, OIDC_CLIENT_SECRET, SMTPHOST
+          # and BASE_URL stay with the controller.
+          - name: GITLAB_TOKEN
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
+          - name: GITLAB_HOST
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_HOST}}
+          - name: GITHUB_TOKEN
+            valueFrom: {secretKeyRef: {name: rekon-env, key: GITHUB_TOKEN}}
+          - name: DO_NOT_TRACK
+            valueFrom: {secretKeyRef: {name: rekon-env, key: DO_NOT_TRACK}}
+          - name: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS}}
+          - name: CLAUDE_CODE_DISABLE_CRON
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_CRON}}
+          - name: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS}}
+          - name: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC}}
+          - name: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION}}
+          - name: CLAUDE_CODE_ENABLE_TASKS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_TASKS}}
+          - name: CLAUDE_CODE_OAUTH_401_WAIT_MS
+            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_OAUTH_401_WAIT_MS}}
+        resources:
+          limits:
+            cpu: 4
+            memory: 14Gi
+          requests:
+            cpu: 400m
+            memory: 3.2Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+          - name: rekon-home
+            mountPath: /home/nonroot
+          - name: config
+            mountPath: /home/nonroot/.claude/CLAUDE.md
+            subPath: CLAUDE.md
+          - name: screenshots
+            mountPath: /tmp/screenshots
+    # Native sidecars, so the pod completes when agent exits.
+    initContainers:
+      # Not 5432: agents may start other servers on the pod's localhost.
+      - name: testdb
+        restartPolicy: Always
+        image: ghcr.io/vaskozl/postgresql:18.6@sha256:a4284779780379c78a9e3d3a9c1e1f252891243f18eb30c2a3583a759e11677c
+        env:
+          - name: PGPORT
+            value: "15432"
+          - name: POSTGRES_HOST_AUTH_METHOD
+            value: trust
+        args:
+          - -c
+          - listen_addresses=127.0.0.1
+          - -c
+          - max_connections=500
+          - -c
+          - fsync=off
+          - -c
+          - synchronous_commit=off
+          - -c
+          - full_page_writes=off
+          # An open transaction in any database holds back every database's
+          # change feed; cap how long a forgotten session can do that.
+          - -c
+          - idle_in_transaction_session_timeout=60s
+        resources:
+          limits:
+            memory: 2Gi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        securityContext:
+          runAsUser: 70
+          runAsGroup: 70
+          runAsNonRoot: true
+        volumeMounts:
+          - name: rekon-home
+            mountPath: /home/nonroot
+      - name: chromium
+        restartPolicy: Always
+        image: ghcr.io/vaskozl/chromium:156.0.8078.47@sha256:79d7e18bf1d981bd095511327376ecac15591ce13b1a8ca7ebd332414f06b002
+        # Respawn loop: a crashed browser must not exit the container, or the
+        # kubelet applies restart backoff.
+        command: ["sh", "-c"]
+        args:
+          - |
+            while true; do
+              rm -rf /tmp/chrome
+              chromium-browser --headless --remote-debugging-port=9222 --user-data-dir=/tmp/chrome
+              sleep 1
+            done
+        resources:
+          limits:
+            # Includes the /dev/shm tmpfs, charged to this cgroup.
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 500Mi
+        volumeMounts:
+          - name: dshm
+            mountPath: /dev/shm
+          - name: rekon-home
+            mountPath: /home/nonroot
+          - name: screenshots
+            mountPath: /tmp/screenshots
+      - name: chrome-devtools-mcp
+        restartPolicy: Always
+        image: ghcr.io/vaskozl/node:latest@sha256:2199603d3767437d01691bf8203a439ff1cdbe7245ba300e32bb65df1e6aaf5f
+        command: ["npx"]
+        args:
+          - -y
+          - mcp-proxy@6.5.1
+          - --transport
+          - streamablehttp
+          # Not 8080: agents boot the app under test on it.
+          - --port
+          - "9223"
+          - --
+          - npx
+          - -y
+          - chrome-devtools-mcp@1.1.1
+          - --browserUrl=http://127.0.0.1:9222
+        resources:
+          limits:
+            memory: 1Gi
+          requests:
+            cpu: 50m
+            memory: 600Mi
+        volumeMounts:
+          - name: rekon-home
+            mountPath: /home/nonroot
+          - name: screenshots
+            mountPath: /tmp/screenshots
+    volumes:
+      - name: rekon-home
+        persistentVolumeClaim:
+          claimName: rekon-home
+      - name: config
+        secret:
+          secretName: config
+      - name: screenshots
+        emptyDir: {}
+      # The 64Mi default is too small for captureScreenshot: chromium backs
+      # each CopyOutputResult bitmap with a file here and kills its GPU
+      # process when the allocation fails.
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 512Mi

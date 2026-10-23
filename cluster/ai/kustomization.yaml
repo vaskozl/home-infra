@@ -8,3 +8,17 @@ resources:
   - rekon
 components:
   - ../common
+patches:
+  # Pods labelled netpol.sko.ai/namespace-ingress=false bring their own
+  # same-namespace policy (rekon-postgres-ingress).
+  - target:
+      kind: NetworkPolicy
+      name: allow-namespace-ingress
+    patch: |
+      - op: replace
+        path: /spec/podSelector
+        value:
+          matchExpressions:
+            - key: netpol.sko.ai/namespace-ingress
+              operator: NotIn
+              values: ["false"]

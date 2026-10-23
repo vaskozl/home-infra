@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/persistentvolumeclaim-v1.json
+# Agent home shared by rekon-0 and its turn pods. nfs-client mounts with
+# nolock,nocto, which is only safe because every pod mounting this runs on the
+# one amd64 node and shares its NFS client cache.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rekon-home
+  namespace: ai
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-client
+  resources:
+    requests:
+      storage: 100Gi

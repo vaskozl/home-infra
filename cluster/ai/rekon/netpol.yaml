@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/networkpolicy-networking-v1.json
+# rekon-postgres trusts every connection, so only this release may reach it:
+# agent turn pods in ai must not. It opts out of allow-namespace-ingress via
+# the netpol.sko.ai/namespace-ingress label.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: rekon-postgres-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: rekon
+      app.kubernetes.io/controller: postgres
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: rekon
+      ports:
+        - port: 5432
+          protocol: TCP

@@ -4,6 +4,9 @@ kind: Kustomization
 namespace: ai
 resources:
   - hr.yaml
+  - netpol.yaml
+  - podtemplate.yaml
+  - pvc.yaml
   - rbac.yaml
   - regcred.enc.yaml
   - vmservicescrape.yaml
