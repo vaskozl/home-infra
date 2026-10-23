@@ -227,8 +227,8 @@ Tips (verified on codex 0.163):
 - Always pass `-s danger-full-access` (or `--dangerously-bypass-approvals-and-sandbox`).
   codex's own sandboxes (`read-only`, `workspace-write`) need user namespaces
   that this pod does not allow: every command fails. For research/review, say
-  "do not modify files" in the prompt instead. Set `sandbox_mode =
-  "danger-full-access"` in `~/.codex/config.toml` so `codex review` works too.
+  "do not modify files" in the prompt instead. For `codex review`, pass
+  `-c sandbox_mode="danger-full-access"`; leave the shared `~/.codex/config.toml` alone.
   Add `--search` for web research; use `-C <worktree>`.
 - Run independent calls in parallel under `timeout`; use `resume --last` for
   long tasks and `review --uncommitted` for an independent second pass.

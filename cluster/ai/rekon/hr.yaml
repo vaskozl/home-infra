@@ -82,48 +82,6 @@ spec:
           # browser per agent turn.
           shareProcessNamespace: true
           securityContext: *pod-security-context
-        statefulset:
-          volumeClaimTemplates:
-            # Superseded by rekon-home; mounted only so migrate-home can copy
-            # from it. volumeClaimTemplates are immutable, so it stays declared.
-            - accessMode: ReadWriteOnce
-              advancedMounts:
-                migrate-home:
-                  - path: /mnt/old-home
-              name: home
-              size: 20Gi
-        initContainers:
-          # One-off copy of the agent state worth keeping onto rekon-home.
-          # Rebuildable caches (go-build, ~/go, Homebrew, go-apk, .rt) are
-          # left behind. OrderedReady with one replica means the old pod is
-          # gone, so the copy is consistent.
-          migrate-home:
-            image: *appImage
-            command: [sh, -c]
-            args:
-              - |
-                set -eu
-                marker=/home/nonroot/.rekon-home-migrated
-                if [ -e "$marker" ]; then
-                  echo "already migrated"
-                  exit 0
-                fi
-                cd /mnt/old-home
-                for p in .claude .claude.json .codex .config .docker .gitconfig \
-                  .gnupg .homebrew .kube .local .ssh .cache/pkgupdate/work/turns; do
-                  [ -e "$p" ] || continue
-                  echo "copying $p"
-                  tar -cf - "$p" | tar -C /home/nonroot -xpf -
-                done
-                touch "$marker"
-                echo "migrated"
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                cpu: 100m
-                memory: 64Mi
-            securityContext: *security-context
         containers:
           app:
             image: *appImage
@@ -343,9 +301,8 @@ spec:
         existingClaim: rekon-home
         advancedMounts:
           main:
-            migrate-home: &home-mount
+            app: &home-mount
               - path: /home/nonroot
-            app: *home-mount
             chromium: *home-mount
             chrome-devtools-mcp: *home-mount
             testdb: *home-mount
