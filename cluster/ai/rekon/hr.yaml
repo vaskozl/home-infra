@@ -58,6 +58,9 @@ spec:
               requests:
                 cpu: 100m
                 memory: 128Mi
+            # No nested user namespaces, hence no codex bubblewrap sandbox: Unmasked
+            # procMount needs hostUsers: false, which the NFS home rules out.
+            # config/CLAUDE.md has agents run codex with danger-full-access.
             securityContext: &security-context
               allowPrivilegeEscalation: false
               capabilities:

@@ -90,6 +90,7 @@ template:
           requests:
             cpu: 400m
             memory: 3.2Gi
+        # No codex bubblewrap sandbox here, as on the worker (see hr.yaml).
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
