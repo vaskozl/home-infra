@@ -58,9 +58,6 @@ spec:
               requests:
                 cpu: 100m
                 memory: 128Mi
-            # No nested user namespaces, hence no codex bubblewrap sandbox: Unmasked
-            # procMount needs hostUsers: false, which the NFS home rules out.
-            # config/CLAUDE.md has agents run codex with danger-full-access.
             securityContext: &security-context
               allowPrivilegeEscalation: false
               capabilities:
@@ -76,8 +73,6 @@ spec:
         serviceAccount:
           identifier: rekon
         pod:
-          # NFS has no idmapped mounts, so rekon-home needs the host user namespace.
-          hostUsers: true
           securityContext: *pod-security-context
         containers:
           app:
@@ -210,10 +205,6 @@ spec:
               size: 5Gi
         pod:
           automountServiceAccountToken: false
-          # Opts out of allow-namespace-ingress; rekon-postgres-ingress admits
-          # only this release, keeping turn pods off the trust-auth database.
-          labels:
-            netpol.sko.ai/namespace-ingress: "false"
           securityContext:
             fsGroup: 70
             fsGroupChangePolicy: OnRootMismatch

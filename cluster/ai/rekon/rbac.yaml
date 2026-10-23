@@ -59,8 +59,6 @@ roleRef:
   name: view
   apiGroup: rbac.authorization.k8s.io
 ---
-# The worker runs each agent turn as a pod built from the rekon-agent-turn
-# PodTemplate.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -86,8 +84,6 @@ roleRef:
   name: rekon-agent-turns
   apiGroup: rbac.authorization.k8s.io
 ---
-# Turn pods: the read-only cluster access the agent prompt promises, and no
-# rights in ai beyond it.
 apiVersion: v1
 kind: ServiceAccount
 metadata:

@@ -79,8 +79,7 @@ someone else's.
   `redis-master` for testing: it is the prod redis this runner uses. You may
   use it only for debugging issues with the setup.
 - **PostgreSQL**: `$PGSTORE_TEST_DSN` is a throwaway server in this pod for
-  tests and app runs (`createdb` on it); do not start your own. The prod
-  database (`rekon-postgres`) is unreachable from a turn pod.
+  tests and app runs (`createdb` on it); do not start your own.
 - **Cleanup**: processes you start are killed when the turn ends, but stop
   your servers when you are done.
 
