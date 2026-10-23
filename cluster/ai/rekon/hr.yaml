@@ -52,6 +52,8 @@ spec:
             envFrom:
               - secretRef:
                   name: rekon-env
+              - secretRef:
+                  name: rekon-controller-env
             resources:
               limits:
                 memory: 1Gi
@@ -91,6 +93,8 @@ spec:
             envFrom:
               - secretRef:
                   name: rekon-env
+              - secretRef:
+                  name: rekon-controller-env
             resources:
               limits:
                 cpu: 4
