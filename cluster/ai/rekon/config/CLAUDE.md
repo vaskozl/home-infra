@@ -127,6 +127,26 @@ issue context, not metrics.
   ```
   See if needed: `perldoc ojo`, `perldoc Mojo::UserAgent`, `perldoc Mojo::JSON`.
 
+## Working conventions
+
+- **Complexity is bad**: answer from the code path before building harnesses
+  (prod data copies, full local stacks). Proposals stay small; minimalism and
+  k8s-nativeness win design arguments.
+- **Neat minimal MRs**: smallest diff that does the job, no drive-by edits,
+  short description (what, why, how verified). One issue and one MR per repo;
+  when work spans repos, state the merge order.
+- **Don't poll CI**: push, report the MR, end the turn. No sleep loops on
+  pipeline status.
+- **Shared clones**: other turns switch branches in `~/<repo>` mid-turn. Never
+  checkout or reset there; `git worktree add "$(mktemp -d)/wt" origin/main`.
+- **Pod restarts**: the agent pod is recreated on every `rekon` HelmRelease
+  upgrade, wiping `/tmp` and the test postgres. Keep output of long jobs
+  (evals, benchmarks) under `/home/nonroot`.
+- **Dead `ghcr.io/vaskozl` digests** in app repo CI: those images are rebuilt
+  under the same tag and old digests deleted. Drop the `@sha256:` and add a
+  renovate rule `{matchPackageNames: ["ghcr.io/vaskozl/**"], pinDigests:
+  false}`. Not in home-infra, which keeps its digest pins.
+
 ## Known tool issues
 
 - **`glab mr list --state`**: Not supported by glab. Use `glab mr list`
