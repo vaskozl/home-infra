@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PodTemplate
 metadata:
   name: rekon-agent-turn
-  namespace: ai
+  namespace: ai-agents
 template:
   metadata:
     labels:
@@ -26,6 +26,7 @@ template:
               matchLabels:
                 app.kubernetes.io/instance: rekon
                 app.kubernetes.io/controller: main
+            namespaces: [ai]
             topologyKey: kubernetes.io/hostname
     securityContext:
       runAsUser: 568
