@@ -68,7 +68,7 @@ spec:
                 type: RuntimeDefault
       main:
         forceRename: rekon
-        replicas: 2
+        replicas: 1
         type: statefulset
         serviceAccount:
           identifier: rekon
@@ -92,10 +92,10 @@ spec:
                   name: rekon-env
             resources:
               limits:
-                memory: 4Gi
+                memory: 6Gi
               requests:
                 cpu: 100m
-                memory: 1.2Gi
+                memory: 1.6Gi
             securityContext: *security-context
       # Requeue every object once the new worker is up, so a release or config
       # change reaches objects nothing else wakes (docs/resync.md in rekon)
