@@ -20,3 +20,4 @@ secretGenerator:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - CLAUDE.md=../rekon/config/CLAUDE.md
+      - managed-mcp.json=../rekon/config/managed-mcp.json
