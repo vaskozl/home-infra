@@ -93,6 +93,9 @@ template:
           - name: config
             mountPath: /etc/claude-code/CLAUDE.md
             subPath: CLAUDE.md
+          - name: config
+            mountPath: /etc/claude-code/managed-mcp.json
+            subPath: managed-mcp.json
           - name: screenshots
             mountPath: /tmp/screenshots
     initContainers:
