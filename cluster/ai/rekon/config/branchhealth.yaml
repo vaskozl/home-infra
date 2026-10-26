@@ -21,6 +21,15 @@ kind: branchhealths
 metadata:
   workspace: doudous
 spec:
+  repo: https://gitlab.sko.ai/doudous/flux-infra.git
+  branch: main
+  intervalSeconds: 1200
+---
+apiVersion: v1alpha1
+kind: branchhealths
+metadata:
+  workspace: doudous
+spec:
   repo: https://gitlab.sko.ai/doudous/rekon.git
   branch: main
   intervalSeconds: 1200

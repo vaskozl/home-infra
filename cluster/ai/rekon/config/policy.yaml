@@ -7,8 +7,10 @@ spec:
   repos:
     - https://gitlab.sko.ai/doudous/packages.git
     - https://gitlab.sko.ai/doudous/home-infra.git
+    - https://gitlab.sko.ai/doudous/flux-infra.git
     - https://gitlab.sko.ai/doudous/rekon.git
-  update: 'true'
+  # flux images bump with gotk-components.
+  update: "!candidate.name.startsWith('ghcr.io/fluxcd/')"
   automerge: "candidate.type in ['minor', 'patch', 'digest']"
   rebase: 'true'
   labels: [renovate, pkgupdate]

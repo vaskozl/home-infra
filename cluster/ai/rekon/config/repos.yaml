@@ -21,6 +21,15 @@ kind: gitlabrepos
 metadata:
   workspace: doudous
 spec:
+  url: https://gitlab.sko.ai/doudous/flux-infra.git
+  branch: main
+  intervalSeconds: 600
+---
+apiVersion: v1alpha1
+kind: gitlabrepos
+metadata:
+  workspace: doudous
+spec:
   url: https://gitlab.sko.ai/doudous/rekon.git
   branch: main
   intervalSeconds: 600
