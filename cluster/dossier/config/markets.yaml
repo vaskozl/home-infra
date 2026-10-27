@@ -1,16 +1,11 @@
 # yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/veroso/types/objects.schema.json
 # EU roots drive EUR-Lex discovery; France and Germany inherit EU law.
-# Production Rules wait for operator approval because no market auto-approves.
 apiVersion: v1alpha1
 kind: markets
 spec:
   code: EU
   name: European Union
-  launchPriority: true
   lawSource: eurlex-cellar
-  topics:
-    - product safety
-    - consumer law
   roots:
     - "32023R0988" # General Product Safety Regulation
     - "32005L0029" # Unfair Commercial Practices Directive, with the 2024/825 green claims
@@ -28,8 +23,6 @@ spec:
   horizontal:
     - "32023R0988"
     - "32005L0029"
-  alertSources:
-    - safety-gate-weekly
 ---
 apiVersion: v1alpha1
 kind: markets
@@ -50,7 +43,6 @@ kind: markets
 spec:
   code: US
   name: United States
-  launchPriority: true
 ---
 apiVersion: v1alpha1
 kind: markets
