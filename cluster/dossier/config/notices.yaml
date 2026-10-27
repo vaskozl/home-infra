@@ -1,0 +1,116 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/veroso/types/objects.schema.json
+# The Commission's guidance notices each market reads. A notice binds no
+# product: its sections are stored and cited, and those selected are sent with
+# the Rules reading of each act it is read with, sharpening how that act's
+# Rules are judged. Which acts a notice is read with, and which of its sections
+# are worth sending, are legal judgements made here, per notice: laws empty
+# reads it with the acts CELLAR records it as based on, sections empty sends it
+# whole. A section brings the sections under it.
+#
+# market carries the readable market code; config.DeriveRefs() rewrites it.
+apiVersion: v1alpha1
+kind: notices
+spec:
+  market: EU
+  celex: "52025XC06233" # C/2025/6233, the GPSR guidelines for businesses, read whole with the GPSR
+---
+# The Blue Guide, read with the acts its Section 1.5 lists and the successor of
+# each (an act repealing one takes over the references to it). Sent: what an
+# offer is judged on, making available and placing on the market, online sales,
+# foreseeable use, the economic operators' duties, traceability, technical
+# documentation, the declaration of conformity, the CE marking and its FAQ.
+# Left out: conformity-assessment modules, notified bodies, accreditation, the
+# authorities' market surveillance and international agreements, nothing a
+# listing is judged on.
+apiVersion: v1alpha1
+kind: notices
+spec:
+  market: EU
+  celex: "52022XC0629(04)" # 2022/C 247/01, the 'Blue Guide' on the implementation of EU product rules
+  laws:
+    - "32011L0065" # RoHS Directive
+    - "32016R0426" # Gas Appliances Regulation
+    - "32014L0029" # Simple Pressure Vessels Directive
+    - "32014L0035" # Low Voltage Directive
+    - "32014L0030" # EMC Directive
+    - "32014L0068" # Pressure Equipment Directive
+    - "32010L0035" # Transportable Pressure Equipment Directive
+    - "32014L0034" # ATEX Directive
+    - "32009L0048" # Toy Safety Directive
+    - "32025R2509" # Toy Safety Regulation, its successor
+    - "32016R0425" # PPE Regulation
+    - "32006L0042" # Machinery Directive
+    - "32023R1230" # Machinery Regulation, its successor
+    - "32014L0033" # Lifts Directive
+    - "32016R0424" # Cableway Installations Regulation
+    - "32013L0053" # Recreational Craft Directive
+    - "32000L0014" # Outdoor Noise Directive
+    - "32016R1628" # Non-Road Mobile Machinery Regulation
+    - "32019R0945" # Drones Regulation
+    - "32014L0032" # Measuring Instruments Directive
+    - "32014L0031" # Non-Automatic Weighing Instruments Directive
+    - "32014L0053" # Radio Equipment Directive
+    - "32014L0090" # Marine Equipment Directive
+    - "32017R0745" # Medical Devices Regulation
+    - "31998L0079" # In Vitro Diagnostic Medical Devices Directive
+    - "32017R0746" # In Vitro Diagnostic Medical Devices Regulation, its successor
+    - "31975L0324" # Aerosol Dispensers Directive
+    - "32014L0028" # Civil Explosives Directive
+    - "32013L0029" # Pyrotechnic Articles Directive
+    - "32009L0125" # Ecodesign Directive
+    - "32024R1781" # Ecodesign for Sustainable Products Regulation, its successor
+    - "32020R0740" # Tyre Labelling Regulation
+    - "32017R1369" # Energy Labelling Regulation
+    - "32019R1009" # Fertilising Products Regulation
+  sections:
+    - Section 2.2 # making available on the market
+    - Section 2.3 # placing on the market
+    - Section 2.4 # distance and online sales
+    - Section 2.8 # reasonably foreseeable use and misuse
+    - Section 3 # the actors in the supply chain and their obligations
+    - Section 4.2 # traceability
+    - Section 4.3 # technical documentation
+    - Section 4.4 # EU declaration of conformity
+    - Section 4.5 # the CE marking
+    - Annex 5 # the CE marking FAQ
+---
+# The guidelines on Article 4 of the Market Surveillance Regulation (EU)
+# 2019/1020, which veroso does not hold. Read with the GPSR, whose Article 16(1)
+# applies Article 4(2) and (3) to every product it covers, and with the acts
+# Article 4(5) lists and their successors. Sent: scope, the economic operator's
+# tasks, the practical implications for operators and the text of Article 4.
+# Left out: the introduction and the authorities' side (Section 5).
+apiVersion: v1alpha1
+kind: notices
+spec:
+  market: EU
+  celex: "52021XC0323(01)" # 2021/C 100/01, the MSR Article 4 guidelines
+  laws:
+    - "32023R0988" # GPSR, by its Article 16(1)
+    - "32011R0305" # Construction Products Regulation
+    - "32016R0425" # PPE Regulation
+    - "32016R0426" # Gas Appliances Regulation
+    - "32000L0014" # Outdoor Noise Directive
+    - "32006L0042" # Machinery Directive
+    - "32009L0048" # Toy Safety Directive
+    - "32009L0125" # Ecodesign Directive
+    - "32011L0065" # RoHS Directive
+    - "32013L0029" # Pyrotechnic Articles Directive
+    - "32013L0053" # Recreational Craft Directive
+    - "32014L0029" # Simple Pressure Vessels Directive
+    - "32014L0030" # EMC Directive
+    - "32014L0031" # Non-Automatic Weighing Instruments Directive
+    - "32014L0032" # Measuring Instruments Directive
+    - "32014L0034" # ATEX Directive
+    - "32014L0035" # Low Voltage Directive
+    - "32014L0053" # Radio Equipment Directive
+    - "32014L0068" # Pressure Equipment Directive
+    - "32023R1230" # Machinery Regulation, the Machinery Directive's successor
+    - "32025R2509" # Toy Safety Regulation, the Toy Safety Directive's successor
+    - "32024R1781" # ESPR, the Ecodesign Directive's successor
+    - "32024R3110" # Construction Products Regulation 2024, its predecessor's successor
+  sections:
+    - Section 2
+    - Section 3
+    - Section 4
+    - Section 6
