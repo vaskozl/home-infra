@@ -32,6 +32,7 @@ configMapGenerator:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
       - markets.yaml=config/markets.yaml
+      - notices.yaml=config/notices.yaml
       - providers.yaml=config/providers.yaml
       - platform.yaml=config/platform.yaml
       - workspaces.yaml=config/workspaces.yaml

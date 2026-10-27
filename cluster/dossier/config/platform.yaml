@@ -8,6 +8,14 @@ spec:
   landingWorkspace: demo
   operators:
     - google:116964319553884215020
+  marketplaces:
+    - Amazon=amazon.*
+    - eBay=ebay.*
+    - Etsy=etsy.com
+    - Zalando=zalando.*
+    - OTTO=otto.de
+    - Kaufland=kaufland.*
+    - bol=bol.com
   blobEndpoint: http://minio:9000
   blobBucket: dossier
   blobAccessKeyEnv: VEROSO_S3_ACCESS_KEY

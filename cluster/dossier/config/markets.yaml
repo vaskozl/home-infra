@@ -1,10 +1,21 @@
 # yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/veroso/types/objects.schema.json
-# EU roots drive EUR-Lex discovery; France and Germany inherit EU law.
+# The market tree and where each market's law comes from. A member state sits
+# under the EU, so an EU Law's Rules judge the pages sold in it.
+#
+# The EU's law source is EUR-Lex (the eurlex-cellar register): the roots are the
+# acts discovery starts from, and CELLAR's links (repeals, amends, based on)
+# find the rest -- a replaced act still in force (the Toy Safety Directive the
+# 2025 Regulation repeals), the standards decisions listing harmonised
+# standards. The horizontal roots bind every product placed on the market. The
+# guidance notices it reads are in notices.yaml.
+#
+# parent carries the readable market code; config.DeriveRefs() rewrites it.
 apiVersion: v1alpha1
 kind: markets
 spec:
   code: EU
   name: European Union
+  country: ie
   lawSource: eurlex-cellar
   roots:
     - "32023R0988" # General Product Safety Regulation
@@ -29,6 +40,7 @@ kind: markets
 spec:
   code: FR
   name: France
+  country: fr
   parent: EU
 ---
 apiVersion: v1alpha1
@@ -36,6 +48,7 @@ kind: markets
 spec:
   code: DE
   name: Germany
+  country: de
   parent: EU
 ---
 apiVersion: v1alpha1
@@ -43,9 +56,11 @@ kind: markets
 spec:
   code: US
   name: United States
+  country: us
 ---
 apiVersion: v1alpha1
 kind: markets
 spec:
   code: UK
   name: United Kingdom
+  country: gb
