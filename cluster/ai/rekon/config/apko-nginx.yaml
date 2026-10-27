@@ -1,0 +1,55 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: nginx
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/nginx
+    - docker.io/vszl/nginx
+  versionFrom: nginx
+  config: |
+    contents:
+      packages:
+        - nginx
+        - nginx-package-config
+    entrypoint:
+      command: /usr/sbin/nginx
+    cmd: -c /etc/nginx/nginx.conf -e /dev/stderr -g "daemon off;"
+    stop-signal: SIGQUIT
+    accounts:
+      run-as: "65532"
+      users:
+        - username: nginx
+          uid: 65532
+          gid: 65532
+          homedir: /home/nginx
+      groups:
+        - groupname: nginx
+          gid: 65532
+    paths:
+      - path: /var/lib/nginx
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 493
+        recursive: true
+      - path: /var/lib/nginx/tmp
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 511
+        recursive: true
+      - path: /var/run
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 511
+      - path: /run
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 511
+    vcs-url: https://github.com/nginx/nginx

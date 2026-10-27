@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: restic
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/restic
+    - docker.io/vszl/restic
+  versionFrom: restic
+  config: |
+    contents:
+      packages:
+        - restic
+    entrypoint:
+      command: restic
+    vcs-url: https://github.com/restic/restic

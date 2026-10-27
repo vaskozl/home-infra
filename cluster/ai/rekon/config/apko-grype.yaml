@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: grype
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/grype
+    - docker.io/vszl/grype
+  versionFrom: grype
+  config: |
+    contents:
+      packages:
+        - grype
+        - kubectl
+    entrypoint:
+      command: grype
+    vcs-url: https://github.com/anchore/grype

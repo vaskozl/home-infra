@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: prometheus-node-exporter
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/prometheus-node-exporter
+    - docker.io/vszl/prometheus-node-exporter
+  versionFrom: prometheus-node-exporter
+  config: |
+    contents:
+      packages:
+      - prometheus-node-exporter
+    entrypoint:
+      command: /usr/bin/node_exporter
+    vcs-url: https://github.com/prometheus/node_exporter

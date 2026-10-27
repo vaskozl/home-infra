@@ -1,0 +1,22 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: apk-tools
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/apk-tools
+    - docker.io/vszl/apk-tools
+  versionFrom: apk-tools
+  config: |
+    contents:
+      packages:
+        - apk-tools
+        - catatonit
+    entrypoint:
+      command: catatonit -g --
+    cmd: /bin/sh -l
+    accounts:
+      run-as: "0"

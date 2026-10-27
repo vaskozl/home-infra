@@ -1,0 +1,129 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: niri
+  includes: [bootc]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/niri
+    - docker.io/vszl/niri
+  versionFrom: niri
+  config: |
+    contents:
+      packages:
+        - niri
+        - chromium
+    
+        # Graphics / GPU
+        - mesa-full
+        - mesa-full-egl
+        - mesa-full-gbm
+        - mesa-full-glx
+        - mesa-full-libgallium
+        - intel-media-driver
+        - linux-firmware
+    
+        # GTK / Icons
+        - gtk-3-compiled-gschemas
+        - hicolor-icon-theme
+        - glycin-2
+        - bubblewrap
+    
+        # Wayland desktop utilities
+        - kitty
+        - xkeyboard-config
+        - fuzzel
+        - grim
+        - mako
+        - slurp
+        - swaybg
+        - swayidle
+        - swaylock
+        - wl-clipboard
+        - brightnessctl
+        - playerctl
+    
+        # Audio
+        - wireplumber
+        - pipewire-full
+        - sof-firmware
+    
+        # Networking
+        - conntrack-tools
+        - curl
+        - ethtool
+        - impala
+        - iproute2
+        - iwd
+        - nftables
+        - systemd-default-network
+        - wireless-regdb
+    
+        # SSH
+        - gpg
+        - openssh
+        - openssh-service
+        - openssl
+    
+        # Rootless containers
+        - just-newuidmap-newgidmap
+        - podman
+        - docker-compose
+        - slirp4netns
+    
+        # Shell
+        - zsh
+        - zsh-autosuggestions
+        - zsh-history-substring-search
+        - zsh-syntax-highlighting
+        - bash-completion
+        - bash-default-config
+    
+        # CLI tools
+        - delta
+        - fastfetch
+        - fd
+        - fzf
+        - git
+        - just
+        - less
+        - man-db
+        - neovim
+        - ripgrep
+    
+        # Hardware / diagnostics
+        - htop
+        - lm-sensors
+        - pciutils
+        - powertop-service
+    
+        # Swap / hibernation
+        - bootc-kargs-zswap
+        - systemd-default-swapfile
+    
+        # Completions
+        - btrfs-progs-bash-completion
+        - kitty-bash-completion
+        - kitty-zsh-completion
+        - kmod-bash-completion
+        - niri-bash-completion
+        - niri-zsh-completion
+        - powertop-bash-completion
+        - wireplumber-zsh-completion
+        - wl-clipboard-bash-completion
+        - wl-clipboard-zsh-completion
+    
+        # Fonts
+        - font-liberation
+        - font-noto
+        - font-noto-cjk
+        - font-noto-emoji
+        - ttf-dejavu
+    paths:
+      - path: /usr/bin/unix_chkpwd
+        type: permissions
+        permissions: 0o4755
+    archs:
+      - amd64

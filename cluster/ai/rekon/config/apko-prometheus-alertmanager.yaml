@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: prometheus-alertmanager
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/prometheus-alertmanager
+  versionFrom: prometheus-alertmanager
+  config: |
+    contents:
+      packages:
+        - prometheus-alertmanager
+    entrypoint:
+      command: alertmanager
+    cmd: --config.file=/etc/alertmanager/alertmanager.yml --storage.path=/alertmanager
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/prometheus/alertmanager

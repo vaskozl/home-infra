@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: ntfy
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/ntfy
+    - docker.io/vszl/ntfy
+  versionFrom: ntfy
+  config: |
+    contents:
+      packages:
+        - ntfy
+    entrypoint:
+      command: ntfy
+    cmd: serve --no-log-dates
+    vcs-url: https://github.com/binwiederhier/ntfy

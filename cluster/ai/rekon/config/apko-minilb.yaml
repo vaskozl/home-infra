@@ -1,0 +1,18 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: minilb
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/minilb
+  versionFrom: minilb
+  config: |
+    contents:
+      packages:
+        - minilb
+    entrypoint:
+      command: minilb
+    vcs-url: https://github.com/vaskozl/minilb

@@ -1,0 +1,47 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: postgresql
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/postgresql
+    - docker.io/vszl/postgresql
+  versionFrom: postgresql
+  config: |
+    contents:
+      packages:
+        - postgresql
+        - postgresql-contrib
+        - postgresql-oci-entrypoint
+        - postgresql-client
+        - gosu
+    entrypoint:
+      command: /usr/bin/docker-entrypoint.sh postgres
+    work-dir: /home/postgres
+    accounts:
+      run-as: "0"
+      users:
+        - username: postgres
+          uid: 70
+          gid: 70
+          homedir: /home/postgres
+      groups:
+        - groupname: postgres
+          gid: 70
+    environment:
+      LANG: C.UTF-8
+      PGDATA: /var/lib/postgresql/data
+    paths:
+      - path: /var/lib/postgresql/data
+        type: directory
+        uid: 70
+        gid: 70
+        permissions: 511
+      - path: /var/run/postgresql
+        type: directory
+        uid: 70
+        gid: 70
+        permissions: 511

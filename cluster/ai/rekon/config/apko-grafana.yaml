@@ -1,0 +1,27 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: grafana
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/grafana
+  versionFrom: grafana
+  config: |
+    environment:
+      GF_PATHS_CONFIG: /etc/grafana/grafana.ini
+      GF_PATHS_DATA: /var/lib/grafana
+      GF_PATHS_HOME: /usr/share/grafana
+      GF_PATHS_LOGS: /var/log/grafana
+      GF_PATHS_PLUGINS: /var/lib/grafana/plugins
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    contents:
+      packages:
+        - grafana
+        - grafana-oci-compat
+    entrypoint:
+      command: /opt/grafana/run.sh
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/grafana/grafana

@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: node
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/node
+  versionFrom: nodejs
+  config: |
+    environment:
+      NPM_CONFIG_UPDATE_NOTIFIER: "false"
+    contents:
+      packages:
+        - nodejs
+        - npm
+    entrypoint:
+      command: node
+    vcs-url: https://github.com/nodejs/node

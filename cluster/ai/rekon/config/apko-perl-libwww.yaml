@@ -1,0 +1,18 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: perl-libwww
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/perl-libwww
+    - docker.io/vszl/perl-libwww
+  versionFrom: perl-libwww
+  config: |
+    contents:
+      packages:
+        - perl-libwww
+    entrypoint:
+      command: perl

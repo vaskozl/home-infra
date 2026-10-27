@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: apko
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/apko
+    - docker.io/vszl/apko
+  versionFrom: apko
+  config: |
+    contents:
+      packages:
+        - apko
+        - yq
+    entrypoint:
+      command: /bin/sh
+    vcs-url: https://github.com/chainguard-dev/apko

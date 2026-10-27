@@ -1,0 +1,25 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: claude
+  includes: [brew]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/claude
+  versionFrom: claude
+  config: |
+    contents:
+      packages:
+        - claude
+        - bun
+        - gnupg
+        - kubeconform
+        - kustomize
+        - postgresql-client
+        - redis
+        - redis-cli
+        - sops
+    entrypoint:
+      command: claude

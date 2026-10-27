@@ -1,0 +1,17 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: alps
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/alps
+  versionFrom: alps
+  config: |
+    contents:
+      packages:
+        - alps
+    entrypoint:
+      command: alps

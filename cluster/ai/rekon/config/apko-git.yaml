@@ -1,0 +1,33 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: git
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/git
+    - docker.io/vszl/git
+  versionFrom: git
+  config: |
+    contents:
+      packages:
+        - git
+        - git-lfs
+        - dash-binsh
+        - dash
+        - openssh-client
+    entrypoint:
+      command: /usr/bin/git
+    work-dir: /home/git
+    accounts:
+      run-as: "65532"
+      users:
+        - username: git
+          uid: 65532
+          gid: 65532
+          homedir: /home/git
+      groups:
+        - groupname: git
+          gid: 65532

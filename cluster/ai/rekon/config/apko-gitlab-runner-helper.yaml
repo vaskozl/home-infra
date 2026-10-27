@@ -1,0 +1,25 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: gitlab-runner-helper
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/gitlab-runner-helper
+  versionFrom: gitlab-runner-helper
+  config: |
+    contents:
+      packages:
+        - gitlab-runner-helper
+        - gitlab-runner-helper-oci-entrypoint
+        - gitlab-runner-helper-compat
+        - git-lfs
+        - git-lfs-config
+        - miniperl
+        - dumb-init
+    entrypoint:
+      command: dumb-init -- /entrypoint
+    cmd: sh
+    vcs-url: https://gitlab.com/gitlab-org/build/CNG

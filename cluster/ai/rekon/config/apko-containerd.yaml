@@ -1,0 +1,31 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: containerd
+  includes: [bootc]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/containerd
+    - docker.io/vszl/containerd
+  versionFrom: containerd
+  config: |
+    contents:
+      packages:
+        - containerd
+        - containerd-service
+        - cni-plugins-bridge-compat
+        - cni-plugins-firewall-compat
+        - cni-plugins-host-local-compat
+        - cni-plugins-loopback-compat
+        - cni-plugins-portmap-compat
+        - cni-plugins-tuning-compat
+        - curl
+        - iptables-nft
+        - nerdctl
+        - nfs-utils
+        - openssh-server-config
+        - openssh-service
+        - openssl
+        - systemd-default-network

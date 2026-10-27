@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: maddy
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/maddy
+    - docker.io/vszl/maddy
+  versionFrom: maddy
+  config: |
+    contents:
+      packages:
+        - maddy
+    entrypoint:
+      command: maddy
+    cmd: run
+    vcs-url: https://github.com/foxcpp/maddy

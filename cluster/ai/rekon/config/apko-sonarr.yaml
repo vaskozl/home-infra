@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: sonarr
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/sonarr
+    - docker.io/vszl/sonarr
+  versionFrom: sonarr
+  config: |
+    contents:
+      packages:
+        - sonarr
+    entrypoint:
+      command: /usr/lib/sonarr/bin/Sonarr
+    cmd: -nobrowser -data=/config
+    vcs-url: https://github.com/Sonarr/Sonarr

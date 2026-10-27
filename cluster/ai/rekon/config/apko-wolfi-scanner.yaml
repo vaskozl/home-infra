@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: wolfi-scanner
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/wolfi-scanner
+    - docker.io/vszl/wolfi-scanner
+  versionFrom: wolfi-scanner
+  config: |
+    contents:
+      packages:
+        - wolfi-scanner
+    entrypoint:
+      command: wolfi-scanner -only-fixed -daemon
+    vcs-url: https://github.com/vaskozl/wolfi-scanner

@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: ripgrep
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/ripgrep
+    - docker.io/vszl/ripgrep
+  versionFrom: ripgrep
+  config: |
+    contents:
+      packages:
+        - ripgrep
+        - gzip
+        - jq
+    entrypoint:
+      command: rg
+    vcs-url: https://github.com/BurntSushi/ripgrep

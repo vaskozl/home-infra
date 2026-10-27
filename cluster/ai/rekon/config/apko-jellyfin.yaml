@@ -1,0 +1,33 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: jellyfin
+  includes: [alpine-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/jellyfin
+    - docker.io/vszl/jellyfin
+  versionFrom: jellyfin
+  config: |
+    contents:
+      packages:
+        - jellyfin
+        - jellyfin-web
+        - intel-media-driver
+        - libva-intel-driver
+        - intel-compute-runtime
+    entrypoint:
+      command: jellyfin
+    environment:
+      JELLYFIN_CACHE_DIR: /cache
+      JELLYFIN_CONFIG_DIR: /config/config
+      JELLYFIN_DATA_DIR: /config
+      JELLYFIN_FFMPEG: /usr/lib/jellyfin-ffmpeg/ffmpeg
+      JELLYFIN_LOG_DIR: /config/log
+      JELLYFIN_WEB_DIR: /usr/share/webapps/jellyfin-web
+      DOTNET_SYSTEM_IO_DISABLEFILELOCKING: 'true'
+    vcs-url: https://github.com/jellyfin/jellyfin
+    archs:
+      - amd64

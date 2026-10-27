@@ -1,0 +1,23 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: podman
+  includes: [bootc]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/podman
+    - docker.io/vszl/podman
+  versionFrom: podman
+  config: |
+    contents:
+      packages:
+        - podman
+        - iproute2
+        - curl
+        - iptables-nft
+        - nfs-utils
+        - openssh-service
+        - openssl
+        - systemd-default-network

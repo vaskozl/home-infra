@@ -1,0 +1,61 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: baikal
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/baikal
+    - docker.io/vszl/baikal
+  versionFrom: baikal
+  config: |
+    contents:
+      packages:
+        - baikal
+        - catatonit
+        - nginx
+        - php-cgi
+        - php-ctype
+        - php-dom
+        - php-fpm
+        - php-iconv
+        - php-mbstring
+        - php-openssl
+        - php-pdo_sqlite
+        - php-simplexml
+        - php-xml
+        - php-xmlreader
+        - php-xmlwriter
+    entrypoint:
+      command: catatonit -g --
+    cmd: sh -c '/usr/sbin/php-fpm* -F & exec /usr/sbin/nginx -e /dev/stderr -g "daemon off;"'
+    vcs-url: https://github.com/sabre-io/Baikal
+    accounts:
+      groups:
+        - groupname: http
+          gid: 33
+      users:
+        - username: http
+          uid: 33
+      run-as: http
+    paths:
+      - path: /run
+        type: directory
+        uid: 33
+        gid: 33
+        permissions: 0o755
+      - path: /var/lib/nginx
+        type: directory
+        uid: 33
+        gid: 33
+        permissions: 0o755
+        recursive: true
+      - path: /var/log
+        type: directory
+        uid: 33
+        gid: 33
+        permissions: 0o755
+        recursive: true
+    stop-signal: SIGQUIT

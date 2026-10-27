@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rakudo
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/rakudo
+    - docker.io/vszl/rakudo
+  versionFrom: rakudo
+  config: |
+    contents:
+      packages:
+        - rakudo
+        - build-base
+        - openssl-dev
+    entrypoint:
+      command: raku
+    vcs-url: https://github.com/rakudo/rakudo

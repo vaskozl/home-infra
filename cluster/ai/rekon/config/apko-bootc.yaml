@@ -1,0 +1,66 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: bootc
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/bootc
+    - docker.io/vszl/bootc
+  versionFrom: bootc
+  config: |
+    contents:
+      packages:
+        - bootc
+        - bind-tools
+        - bootc-baselayout
+        - btrfs-progs
+        - busybox-full
+        - conmon
+        - coreutils
+        - crun
+        - dbus-glib
+        - dosfstools
+        - e2fsprogs
+        - findmnt
+        - kmod-libs
+        - linux-lts
+        - linux-lts-initramfs
+        - losetup
+        - lsblk
+        - netavark
+        - nori-user
+        - posix-libc-utils
+        - sfdisk
+        - shadow
+        - skopeo
+        - sudo-rs
+        - systemd
+        - systemd-init
+        - systemd-logind-service
+        - systemd-repart-rootfs-ext4
+        - udev
+        - wipefs
+        - wolfi-base
+        - xfsprogs
+    cmd: init
+    stop-signal: SIGRTMIN+3
+    accounts:
+      run-as: root
+    annotations:
+      containers.bootc: "1"
+    layering:
+      strategy: origin
+      budget: 128
+    paths:
+      # Strip POSIX ACL xattrs that bootc rejects on amd64 (Wolfi systemd quirk).
+      # `hardlink` is abused here because it's the only mutator that can remove them
+      - path: /var/log/journal-stub
+        type: directory
+        permissions: 0o755
+      - path: /var/log/journal
+        type: hardlink
+        source: /var/log/journal-stub
+        permissions: 0o755

@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: anubis
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/anubis
+    - docker.io/vszl/anubis
+  versionFrom: anubis
+  config: |
+    contents:
+      packages:
+        - anubis
+    entrypoint:
+      command: anubis
+    vcs-url: https://github.com/TecharoHQ/anubis

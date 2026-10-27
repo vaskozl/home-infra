@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kubeconform
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kubeconform
+    - docker.io/vszl/kubeconform
+  versionFrom: kubeconform
+  config: |
+    contents:
+      packages:
+        - kubeconform
+        - kustomize
+        - yq
+    entrypoint:
+      command: kubeconform
+    vcs-url: https://github.com/yannh/kubeconform

@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: lidarr
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/lidarr
+    - docker.io/vszl/lidarr
+  versionFrom: lidarr
+  config: |
+    contents:
+      packages:
+        - lidarr
+    entrypoint:
+      command: /usr/lib/lidarr/bin/Lidarr
+    cmd: -nobrowser -data=/config
+    vcs-url: https://github.com/Lidarr/Lidarr

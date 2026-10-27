@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: radarr
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/radarr
+    - docker.io/vszl/radarr
+  versionFrom: radarr
+  config: |
+    contents:
+      packages:
+        - radarr
+    entrypoint:
+      command: /usr/lib/radarr/bin/Radarr
+    cmd: -nobrowser -data=/config
+    vcs-url: https://github.com/Radarr/Radarr

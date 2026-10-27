@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: trusttunnel
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/trusttunnel
+    - docker.io/vszl/trusttunnel
+  versionFrom: trusttunnel
+  config: |
+    contents:
+      packages:
+        - trusttunnel
+    entrypoint:
+      command: trusttunnel
+    vcs-url: https://github.com/TrustTunnel/TrustTunnel

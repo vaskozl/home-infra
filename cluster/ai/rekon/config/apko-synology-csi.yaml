@@ -1,0 +1,34 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: synology-csi
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/synology-csi
+    - docker.io/vszl/synology-csi
+  versionFrom: synology-csi
+  config: |
+    contents:
+      packages:
+        - synology-csi
+        - bash
+        - blkid
+        - btrfs-progs
+        - ca-certificates
+        - cifs-utils
+        - e2fsprogs
+        - e2fsprogs-extra
+        - iproute2
+        - mount
+        - umount
+        - nfs-utils
+        - util-linux
+        - xfsprogs
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: synology-csi-driver
+    vcs-url: https://github.com/SynologyOpenSource/synology-csi

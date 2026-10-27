@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: buildkitd
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/buildkitd
+  versionFrom: buildkitd
+  config: |
+    contents:
+      packages:
+        - buildkitd
+        - git
+    accounts:
+      run-as: root
+    entrypoint:
+      command: buildkitd
+    vcs-url: https://github.com/moby/buildkit

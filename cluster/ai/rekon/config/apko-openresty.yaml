@@ -1,0 +1,23 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: openresty
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/openresty
+    - docker.io/vszl/openresty
+  versionFrom: openresty
+  config: |
+    contents:
+      packages:
+        - openresty
+    entrypoint:
+      command: /usr/bin/openresty
+    cmd: -e /dev/stderr -g "daemon off;"
+    stop-signal: SIGQUIT
+    accounts:
+      run-as: "0"
+    vcs-url: https://github.com/openresty

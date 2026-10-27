@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: coredns
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/coredns
+  versionFrom: coredns
+  config: |
+    contents:
+      packages:
+        - coredns
+        - coredns-compat
+    entrypoint:
+      command: /usr/bin/coredns -dns.port=53
+    vcs-url: https://github.com/coredns/coredns

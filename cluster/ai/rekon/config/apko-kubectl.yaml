@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kubectl
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kubectl
+    - docker.io/vszl/kubectl
+  versionFrom: kubectl
+  config: |
+    contents:
+      packages:
+        - kubectl
+    entrypoint:
+      command: kubectl
+    vcs-url: https://github.com/kubernetes/kubectl

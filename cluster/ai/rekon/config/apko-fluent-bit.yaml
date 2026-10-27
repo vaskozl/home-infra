@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: fluent-bit
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/fluent-bit
+  versionFrom: fluent-bit
+  config: |
+    contents:
+      packages:
+        - fluent-bit
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: fluent-bit
+    cmd: --config=/fluent-bit/etc/fluent-bit.conf
+    vcs-url: https://github.com/fluent/fluent-bit

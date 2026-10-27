@@ -1,0 +1,17 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kubelet
+  includes: [containerd]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kubelet
+    - docker.io/vszl/kubelet
+  versionFrom: kubelet
+  config: |
+    contents:
+      packages:
+        - kubelet
+        - kubectl-default

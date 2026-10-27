@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: golink
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/golink
+    - docker.io/vszl/golink
+  versionFrom: golink
+  config: |
+    contents:
+      packages:
+        - golink
+    entrypoint:
+      command: golink
+    cmd: "--sqlitedb=/home/nonroot/golink.db --verbose"
+    vcs-url: https://github.com/tailscale/golink

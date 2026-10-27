@@ -1,0 +1,62 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: net-tools
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/net-tools
+    - docker.io/vszl/net-tools
+  versionFrom: net-tools
+  config: |
+    contents:
+      packages:
+        - net-tools
+        - apache2-utils
+        - bash
+        - bind-tools
+        - bird
+        - conntrack-tools
+        - curl
+        - dhcping
+        - drill
+        - ethtool
+        - file
+        - fping
+        - git
+        - httpie
+        - iftop
+        - iperf
+        - iperf3
+        - iproute2
+        - ipset
+        - iptables
+        - iputils
+        - ipvsadm
+        - jq
+        - liboping
+        - ltrace
+        - mtr
+        - net-snmp-tools
+        - netcat-openbsd
+        - nftables
+        - ngrep
+        - nmap
+        - openssh
+        - openssl
+        - perl-net-ssleay
+        - py3-pip
+        - py3-setuptools
+        - socat
+        - strace
+        - swaks
+        - tcpdump
+        - tcptraceroute
+        - tshark-4.4
+        - util-linux
+        - vim
+        - zsh
+    entrypoint:
+      command: zsh

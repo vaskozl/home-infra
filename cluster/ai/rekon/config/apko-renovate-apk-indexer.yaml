@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: renovate-apk-indexer
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/renovate-apk-indexer
+    - docker.io/vszl/renovate-apk-indexer
+  versionFrom: renovate-apk-indexer
+  config: |
+    contents:
+      packages:
+        - renovate-apk-indexer
+    entrypoint:
+      command: renovate-apk-indexer
+    vcs-url: https://github.com/hown3d/renovate-apk-indexer

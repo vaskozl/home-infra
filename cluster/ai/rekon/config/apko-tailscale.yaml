@@ -1,0 +1,22 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: tailscale
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/tailscale
+    - docker.io/vszl/tailscale
+  versionFrom: tailscale
+  config: |
+    contents:
+      packages:
+        - tailscale
+        - iptables
+        - ip6tables
+        - iproute2
+    entrypoint:
+      command: containerboot
+    vcs-url: https://github.com/tailscale/tailscale

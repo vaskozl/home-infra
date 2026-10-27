@@ -1,0 +1,24 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: docker
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/docker
+    - docker.io/vszl/docker
+  versionFrom: docker
+  config: |
+    contents:
+      packages:
+        - docker
+        - docker-cli-buildx
+        - sed
+        - jq
+        - skopeo
+        - git
+    entrypoint:
+      command: sh
+    vcs-url: https://github.com/docker/cli

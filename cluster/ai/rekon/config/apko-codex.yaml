@@ -1,0 +1,17 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: codex
+  includes: [brew]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/codex
+  versionFrom: codex
+  config: |
+    contents:
+      packages:
+        - codex
+    entrypoint:
+      command: codex --no-daemon

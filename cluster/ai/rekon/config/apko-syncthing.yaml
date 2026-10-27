@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: syncthing
+  includes: [alpine-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/syncthing
+    - docker.io/vszl/syncthing
+  versionFrom: syncthing
+  config: |
+    contents:
+      packages:
+        - syncthing
+    entrypoint:
+      command: syncthing
+    vcs-url: https://github.com/syncthing/syncthing

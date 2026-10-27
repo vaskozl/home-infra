@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: qbittorrent-nox
+  includes: [alpine-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/qbittorrent-nox
+    - docker.io/vszl/qbittorrent-nox
+  versionFrom: qbittorrent-nox
+  config: |
+    contents:
+      packages:
+        - qbittorrent-nox
+    entrypoint:
+      command: nice -n10 ionice -c3 qbittorrent-nox
+    cmd: --webui-port='55555' --confirm-legal-notice
+    vcs-url: https://github.com/qbittorrent/qBittorrent

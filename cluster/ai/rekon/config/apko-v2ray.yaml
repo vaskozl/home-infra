@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: v2ray
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/v2ray
+    - docker.io/vszl/v2ray
+  versionFrom: v2ray
+  config: |
+    contents:
+      packages:
+        - v2ray
+    entrypoint:
+      command: v2ray
+    vcs-url: https://github.com/v2ray/v2ray-core

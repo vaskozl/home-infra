@@ -1,0 +1,24 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: go
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/go
+    - docker.io/vszl/go
+  versionFrom: go
+  config: |
+    contents:
+      packages:
+        - go
+    entrypoint:
+      command: /usr/bin/go
+    cmd: help
+    accounts:
+      run-as: "0"
+    environment:
+      GODEBUG: tarinsecurepath=0,zipinsecurepath=0
+      GOTOOLCHAIN: local+auto

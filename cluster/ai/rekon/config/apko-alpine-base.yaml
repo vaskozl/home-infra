@@ -1,0 +1,35 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: alpine-base
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/alpine-base
+    - docker.io/vszl/alpine-base
+  versionFrom: busybox
+  config: |
+    layering:
+      strategy: origin
+      budget: 16
+    contents:
+      repositories:
+        - https://dl-cdn.alpinelinux.org/alpine/edge/main
+        - https://dl-cdn.alpinelinux.org/alpine/edge/community
+        - https://dl-cdn.alpinelinux.org/alpine/edge/testing
+      packages:
+        - busybox
+        - alpine-baselayout
+        - ca-certificates-bundle
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 568
+      users:
+        - username: nonroot
+          uid: 568
+      run-as: nonroot
+    archs:
+      - arm64
+      - amd64

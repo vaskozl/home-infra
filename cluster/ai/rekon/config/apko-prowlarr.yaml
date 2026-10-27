@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: prowlarr
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/prowlarr
+    - docker.io/vszl/prowlarr
+  versionFrom: prowlarr
+  config: |
+    contents:
+      packages:
+        - prowlarr
+    entrypoint:
+      command: /usr/lib/prowlarr/bin/Prowlarr
+    cmd: -nobrowser -data=/config
+    vcs-url: https://github.com/Prowlarr/Prowlarr

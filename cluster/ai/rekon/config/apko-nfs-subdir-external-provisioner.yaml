@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: nfs-subdir-external-provisioner
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/nfs-subdir-external-provisioner
+  versionFrom: nfs-subdir-external-provisioner
+  config: |
+    contents:
+      packages:
+        - nfs-subdir-external-provisioner
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: /usr/bin/nfs-subdir-external-provisioner

@@ -1,0 +1,17 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: logrotate
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/logrotate
+  versionFrom: logrotate
+  config: |
+    contents:
+      packages:
+        - logrotate
+    entrypoint:
+      command: logrotate

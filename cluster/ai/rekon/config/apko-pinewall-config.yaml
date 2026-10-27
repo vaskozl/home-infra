@@ -1,0 +1,36 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: pinewall-config
+  includes: [bootc]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/pinewall-config
+    - docker.io/vszl/pinewall-config
+  versionFrom: pinewall-config
+  config: |
+    contents:
+      packages:
+        - pinewall-config
+        - avahi
+        - bind-tools
+        - blocky
+        - conntrack-tools
+        - curl
+        - dnsmasq
+        - ethtool
+        - htop
+        - iftop
+        - iperf3
+        - iproute2
+        - just
+        - nftables
+        - openssh
+        - openssh-server-config
+        - openssh-service
+        - openssl
+        - podman
+        - prometheus-node-exporter
+        - tcpdump

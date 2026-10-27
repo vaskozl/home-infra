@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kube-network-policies
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kube-network-policies
+    - docker.io/vszl/kube-network-policies
+  versionFrom: kube-network-policies
+  config: |
+    contents:
+      packages:
+        - kube-network-policies
+    entrypoint:
+      command: kube-network-policies
+    accounts:
+      run-as: "0"
+    vcs-url: https://github.com/kubernetes-sigs/kube-network-policies

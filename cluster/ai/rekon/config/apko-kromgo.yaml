@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kromgo
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kromgo
+    - docker.io/vszl/kromgo
+  versionFrom: kromgo
+  config: |
+    contents:
+      packages:
+        - kromgo
+        - ttf-dejavu
+    entrypoint:
+      command: kromgo
+    vcs-url: https://github.com/kashalls/kromgo

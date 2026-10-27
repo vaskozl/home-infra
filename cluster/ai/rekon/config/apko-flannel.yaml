@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: flannel
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/flannel
+  versionFrom: flannel
+  config: |
+    contents:
+      packages:
+        - flannel
+    accounts:
+      run-as: "0"
+    entrypoint:
+      command: flanneld
+    vcs-url: https://github.com/flannel-io/cni-plugin

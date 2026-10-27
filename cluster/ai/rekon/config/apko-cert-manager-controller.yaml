@@ -1,0 +1,27 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: cert-manager-controller
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cert-manager-controller
+  versionFrom: cert-manager-controller
+  config: |
+    contents:
+      packages:
+        - cert-manager-controller
+    accounts:
+      groups:
+        - groupname: nonroot
+          gid: 65532
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+      run-as: nonroot
+    entrypoint:
+      command: /usr/bin/controller
+    vcs-url: https://github.com/cert-manager/cert-manager

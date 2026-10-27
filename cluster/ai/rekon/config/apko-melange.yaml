@@ -1,0 +1,32 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: melange
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/melange
+    - docker.io/vszl/melange
+  versionFrom: melange
+  config: |
+    contents:
+      packages:
+        - melange
+        - git
+        - openssl
+        - perl
+        - perl-yaml-pp
+        - util-linux-misc
+        - wolfi-keys
+    entrypoint:
+      command: /usr/bin/melange
+    cmd: --help
+    work-dir: /work
+    paths:
+      - path: /work
+        type: directory
+        permissions: 511
+    accounts:
+      run-as: '0'

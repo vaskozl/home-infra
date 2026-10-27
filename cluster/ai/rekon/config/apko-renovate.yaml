@@ -1,0 +1,27 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: renovate
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/renovate
+    - docker.io/vszl/renovate
+  versionFrom: renovate
+  config: |
+    contents:
+      packages:
+        - renovate
+        - flux
+        - go
+        - melange
+        - nodejs-24
+        - npm
+        - perl
+        - perl-yaml-pp
+        - rust
+    entrypoint:
+      command: renovate
+    vcs-url: https://github.com/renovatebot/renovate

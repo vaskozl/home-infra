@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: minio
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/minio
+  versionFrom: minio
+  config: |
+    contents:
+      packages:
+        - minio
+        - mc
+    entrypoint:
+      command: minio
+    vcs-url: https://github.com/minio/minio

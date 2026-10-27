@@ -1,0 +1,27 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rekon-pkgupdate
+  includes: [claude]
+  tags: [latest]
+  registries:
+    - registry.sko.ai/doudous/rekon/pkgupdate
+  versionFrom: rekon-pkgupdate
+  config: |
+    contents:
+      packages:
+        - rekon-pkgupdate
+        - rekon
+        - codex
+        - poppler-utils
+        - onnxruntime
+        - ppocrv6-tiny-models
+        - chromium
+        - xvfb-run
+        - xkbcomp
+        - xkeyboard-config
+    entrypoint:
+      command: rekon-pkgupdate
+    vcs-url: https://gitlab.sko.ai/doudous/rekon

@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rest-server
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/rest-server
+    - docker.io/vszl/rest-server
+  versionFrom: rest-server
+  config: |
+    contents:
+      packages:
+        - rest-server
+    entrypoint:
+      command: rest-server
+    vcs-url: https://github.com/restic/rest-server

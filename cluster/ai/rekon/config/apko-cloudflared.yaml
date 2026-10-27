@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: cloudflared
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/cloudflared
+  versionFrom: cloudflared
+  config: |
+    contents:
+      packages:
+        - cloudflared
+    entrypoint:
+      command: cloudflared --no-autoupdate
+    cmd: version
+    vcs-url: https://github.com/cloudflare/cloudflared

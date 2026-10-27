@@ -1,0 +1,22 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: k8s-sidecar
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/k8s-sidecar
+  versionFrom: k8s-sidecar
+  config: |
+    environment:
+      PYTHONUNBUFFERED: "1"
+    contents:
+      packages:
+        - k8s-sidecar
+        - python3
+    entrypoint:
+      command: python -u /usr/share/app/sidecar.py
+    work-dir: /usr/share/grafana
+    vcs-url: https://github.com/kiwigrid/k8s-sidecar

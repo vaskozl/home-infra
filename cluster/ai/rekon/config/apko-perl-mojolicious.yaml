@@ -1,0 +1,30 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: perl-mojolicious
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/perl-mojolicious
+    - docker.io/vszl/perl-mojolicious
+  versionFrom: perl-mojolicious
+  config: |
+    contents:
+      packages:
+        - perl-mojolicious
+        - perl-common-sense
+        - perl-email-date-format
+        - perl-io-socket-ssl
+        - perl-json-xs
+        - perl-mime-lite
+        - perl-mime-types
+        - perl-path-tiny
+        - perl-timedate
+        - perl-types-serialiser
+        - grype
+        - kubectl
+    entrypoint:
+      command: perl
+    vcs-url: https://github.com/mojolicious/mojo

@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: kube-ip-tracker
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/kube-ip-tracker
+    - docker.io/vszl/kube-ip-tracker
+  versionFrom: kube-ip-tracker
+  config: |
+    contents:
+      packages:
+        - kube-ip-tracker
+    entrypoint:
+      command: kube-ip-tracker
+    accounts:
+      run-as: "0"
+    vcs-url: https://github.com/kubernetes-sigs/kube-network-policies

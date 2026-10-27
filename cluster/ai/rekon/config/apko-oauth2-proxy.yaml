@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: oauth2-proxy
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/oauth2-proxy
+  versionFrom: oauth2-proxy
+  config: |
+    contents:
+      packages:
+        - oauth2-proxy
+    entrypoint:
+      command: oauth2-proxy
+    cmd: run
+    vcs-url: https://github.com/oauth2-proxy/oauth2-proxy

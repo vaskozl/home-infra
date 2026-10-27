@@ -1,0 +1,21 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: calibre
+  includes: [alpine-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/calibre
+    - docker.io/vszl/calibre
+  versionFrom: calibre
+  config: |
+    contents:
+      packages:
+        - calibre
+    entrypoint:
+      command: calibre-server
+    vcs-url: https://github.com/kovidgoyal/calibre
+    archs:
+      - amd64

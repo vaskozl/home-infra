@@ -1,0 +1,20 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: thelounge
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/thelounge
+    - docker.io/vszl/thelounge
+  versionFrom: thelounge
+  config: |
+    contents:
+      packages:
+        - thelounge
+    entrypoint:
+      command: thelounge
+    cmd: start
+    vcs-url: https://github.com/thelounge/thelounge

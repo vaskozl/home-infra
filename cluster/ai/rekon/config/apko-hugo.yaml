@@ -1,0 +1,36 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: hugo
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/hugo
+    - docker.io/vszl/hugo
+  versionFrom: hugo
+  config: |
+    contents:
+      packages:
+        - hugo
+    entrypoint:
+      command: hugo
+    vcs-url: https://github.com/gohugoio/hugo
+    work-dir: /hugo
+    accounts:
+      run-as: "65532"
+      users:
+        - username: nonroot
+          uid: 65532
+          gid: 65532
+          homedir: /home/nonroot
+      groups:
+        - groupname: nonroot
+          gid: 65532
+    paths:
+      - path: /hugo
+        type: directory
+        uid: 65532
+        gid: 65532
+        permissions: 509

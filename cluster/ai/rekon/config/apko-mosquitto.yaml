@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: mosquitto
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/mosquitto
+    - docker.io/vszl/mosquitto
+  versionFrom: mosquitto
+  config: |
+    contents:
+      packages:
+        - mosquitto
+    entrypoint:
+      command: /usr/sbin/mosquitto
+    vcs-url: https://github.com/eclipse/mosquitto
