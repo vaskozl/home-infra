@@ -1,0 +1,32 @@
+apiVersion: v1alpha1
+kind: apkrepos
+metadata:
+  workspace: doudous
+spec:
+  url: https://dl-cdn.alpinelinux.org/alpine/edge/main
+  arches:
+    - x86_64
+    - aarch64
+  intervalSeconds: 713
+---
+apiVersion: v1alpha1
+kind: apkrepos
+metadata:
+  workspace: doudous
+spec:
+  url: https://dl-cdn.alpinelinux.org/alpine/edge/community
+  arches:
+    - x86_64
+    - aarch64
+  intervalSeconds: 713
+---
+apiVersion: v1alpha1
+kind: apkrepos
+metadata:
+  workspace: doudous
+spec:
+  url: https://dl-cdn.alpinelinux.org/alpine/edge/testing
+  arches:
+    - x86_64
+    - aarch64
+  intervalSeconds: 713
