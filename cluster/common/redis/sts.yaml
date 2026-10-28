@@ -80,7 +80,7 @@ spec:
             - name: run-redis
               mountPath: /run/redis
         - name: labeler
-          image: ghcr.io/vaskozl/kubectl:1.37@sha256:5adfb9940ef09d61488150ed7c5003ffe815298dcab8d8de629cbd28fc8bf99c
+          image: ghcr.io/vaskozl/kubectl:1.37@sha256:67b35ae061a205457d2ebb24f5934f6a457b1f83547133bd329c9b8625ba2415
           restartPolicy: Always
           command: ["/usr/local/bin/update-master-label.sh"]
           env: *env
