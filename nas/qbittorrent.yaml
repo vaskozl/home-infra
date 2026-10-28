@@ -1,7 +1,7 @@
 version: '3'
 services:
   qbittorrent:
-    image: ghcr.io/vaskozl/qbittorrent-nox:5.2.4@sha256:99886791e7d8994c3a2a79a9dbe6e989f277f51195dfaa5f2ba7565957e38299
+    image: ghcr.io/vaskozl/qbittorrent-nox:5.2.4@sha256:caeeb2a4d502110994ad47db156292c3e7504b3ff9818f3d14e0410bee8cc62b
     container_name: qbittorrent
     restart: unless-stopped
     network_mode: host
