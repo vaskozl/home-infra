@@ -101,7 +101,7 @@ template:
     initContainers:
       - name: testdb
         restartPolicy: Always
-        image: ghcr.io/vaskozl/postgresql:18.6@sha256:a4284779780379c78a9e3d3a9c1e1f252891243f18eb30c2a3583a759e11677c
+        image: ghcr.io/vaskozl/postgresql:18.6@sha256:ecf9c38ddee0d96f24645cd97d95bb6fcf5ef240d2ba6af616a226a8e26c4043
         env:
           - name: PGPORT
             value: "15432"
