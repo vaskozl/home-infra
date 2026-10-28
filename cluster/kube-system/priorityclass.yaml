@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/priorityclass-scheduling-v1.json
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: batch
+value: -10
+preemptionPolicy: Never
+globalDefault: false
+description: Opportunistic CI jobs and agent turns; queue behind and yield to services.

@@ -5,6 +5,7 @@ resources:
   - coredns-ds
   - kube-network-policies
   - metrics-server/hr.yaml
+  - priorityclass.yaml
 patches:
   - path: ../common/patches/hr-failure-policy.yaml
     target:
