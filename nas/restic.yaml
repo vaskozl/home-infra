@@ -1,7 +1,7 @@
 version: '3'
 services:
   restic:
-    image: ghcr.io/vaskozl/rest-server:0.14.0@sha256:64750fe30a5092f98995a860ca3654a9ed2d30eeca3365e38729d0dceb1702af
+    image: ghcr.io/vaskozl/rest-server:0.14.0@sha256:6a1a526d2e50d6ca3234dd5cad05eb61f2b18a3616a04f846eb995f47306d478
     container_name: restic
     restart: unless-stopped
     network_mode: host
