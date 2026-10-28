@@ -76,8 +76,8 @@ template:
             valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_OAUTH_401_WAIT_MS}}
         resources:
           limits:
-            cpu: 4
-            memory: 8Gi
+            cpu: 2
+            memory: 6Gi
           requests:
             cpu: 400m
             memory: 4Gi

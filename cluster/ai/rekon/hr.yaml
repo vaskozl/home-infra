@@ -92,6 +92,7 @@ spec:
                   name: rekon-env
             resources:
               limits:
+                cpu: 2
                 memory: 6Gi
               requests:
                 cpu: 100m
