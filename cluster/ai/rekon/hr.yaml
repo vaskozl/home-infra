@@ -33,7 +33,7 @@ spec:
           app: &api
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
-              tag: 0.0.83@sha256:e990ddff524b2d67acfc161853a9ade1b1a68d0db8eb56bfe399b04745345cf1
+              tag: 0.0.83@sha256:3b16d3b2ba8135b6fedee8a025ca7ae784b7d44758e7b86c0ba09c66243f2ca9
             args:
               - -db
               - postgres://postgres@rekon-postgres/rekon?sslmode=disable
@@ -133,7 +133,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/postgresql
-              tag: 18.6@sha256:2dbe9a914fb303511591ef1b9e48b6c6fe873832fc1c14484f2fd72da8644692
+              tag: 18.6@sha256:77b4680db3692d3655b2dd82998441135d034f7df202c2f06adc01463fcb38ba
             env:
               POSTGRES_DB: rekon
               POSTGRES_HOST_AUTH_METHOD: trust
