@@ -60,10 +60,14 @@ spec:
                 memory: 1.6Gi
             securityContext:
               privileged: true
+        # buildkitd finishes in-flight builds on SIGTERM; surge so new builds
+        # land on the new pod meanwhile.
+        strategy: RollingUpdate
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/arch: arm64
         node-role.kubernetes.io/control-plane: ''
+      terminationGracePeriodSeconds: 3600
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/control-plane
