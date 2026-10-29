@@ -28,6 +28,16 @@ spec:
     # only fails a silent job after 1h, so tolerate the same.
     livenessProbe:
       failureThreshold: 60
+    # SIGTERM makes the runner abort its jobs; SIGQUIT drains them. A rollout
+    # therefore sends SIGQUIT and waits, instead of the chart's default preStop
+    # that unregisters the manager mid-job.
+    unregisterRunners: false
+    shutdown_timeout: 3500
+    terminationGracePeriodSeconds: 3600
+    deploymentLifecycle:
+      preStop:
+        exec:
+          command: ["/bin/bash", "-c", "kill -QUIT 1; while kill -0 1 2>/dev/null; do sleep 1; done"]
     runners:
       secret: amd64-gitlab-runner-secret
       runUntagged: true
