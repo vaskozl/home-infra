@@ -37,7 +37,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.83@sha256:692e6a1d9fbc7a53b9d18a91a220eeacb259d97a69e65d476b12ca060fc3cb05
+        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.83@sha256:590bc70e43c09f330b7d451e997c71faa80095a197adde9fda3166ad733f6feb
         env:
           - name: TMPDIR
             value: /tmp
