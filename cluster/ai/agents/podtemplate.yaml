@@ -9,6 +9,7 @@ template:
     labels:
       app.kubernetes.io/name: rekon-agent
   spec:
+    priorityClassName: batch
     serviceAccountName: rekon-agent
     enableServiceLinks: false
     dnsConfig:
@@ -80,7 +81,7 @@ template:
             memory: 6Gi
           requests:
             cpu: 400m
-            memory: 4Gi
+            memory: 5Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:

@@ -49,6 +49,8 @@ spec:
     #     (steady-state baseline ~85 warn lines/5m); real failures covered by ServiceDown/TooManyRestarts
     #   - LogErrors: > 0 threshold trips on vmoperator apiserver re-init flakes;
     #     real failures covered by ReconcileErrors/HighQueueDepth
+    #   - KubePodNotReady: re-added in rules/pods.yaml without batch-class pods,
+    #     which queue Pending on purpose when the node is full
     # Control-plane rule groups (apiserver/scheduler/controller-manager) are
     # disabled: the kube*.enabled toggles below only gate scraping and dashboards,
     # not the sync-job rule sources, so these groups get created and their
@@ -80,6 +82,8 @@ spec:
         KubeMemoryOvercommit:
           create: false
         InfoInhibitor:
+          create: false
+        KubePodNotReady:
           create: false
         Watchdog:
           create: false

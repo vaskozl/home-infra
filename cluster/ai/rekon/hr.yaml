@@ -96,7 +96,7 @@ spec:
                 memory: 6Gi
               requests:
                 cpu: 100m
-                memory: 3Gi
+                memory: 4Gi
             securityContext: *security-context
       # Requeue every object once the new worker is up, so a release or config
       # change reaches objects nothing else wakes (docs/resync.md in rekon)

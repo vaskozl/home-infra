@@ -1,0 +1,29 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: pods
+  namespace: victoria-metrics
+spec:
+  groups:
+    - name: pods
+      rules:
+        # Upstream kubernetes-apps rule, minus batch-class pods (CI jobs, agent
+        # turns): they queue Pending by design and have their own start deadlines.
+        - alert: KubePodNotReady
+          expr: |
+            (sum(max(kube_pod_status_phase{job="kube-state-metrics",phase=~"Pending|Unknown",namespace=~".*"}
+              or ((kube_pod_status_phase{job="kube-state-metrics",phase="Running",namespace=~".*"} == 1)
+              and on(namespace,pod,cluster) (kube_pod_status_ready{job="kube-state-metrics",condition="true",namespace=~".*"} == 0)))
+              by(namespace,pod,job,cluster) * on(namespace,pod,cluster) group_left()
+              topk(1, max(kube_pod_owner{owner_kind!="Job"}) by(namespace,pod,owner_kind,cluster)) by(namespace,pod,cluster))
+              by(namespace,pod,job,cluster) > 0)
+            unless on(namespace,pod,cluster)
+              (kube_pod_status_reason{job="kube-state-metrics",reason="SchedulingGated",namespace=~".*"} == 1)
+            unless on(namespace,pod,cluster) kube_pod_info{priority_class="batch"}
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            description: Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than 15 minutes on cluster {{ $labels.cluster }}.
+            runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubepodnotready
+            summary: Pod has been in a non-ready state for more than 15 minutes.
