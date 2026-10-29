@@ -10,6 +10,15 @@ template:
       app.kubernetes.io/name: rekon-agent
   spec:
     priorityClassName: batch
+    # Schedule on the pod total: its sidecars and agent do not peak together
+    # (whole pod p90 4.3Gi, p99 7.1Gi vs 6.3Gi of summed container requests),
+    # so two turns fit next to rekon-0 on robinsons.
+    resources:
+      limits:
+        memory: 7Gi
+      requests:
+        cpu: 600m
+        memory: 4Gi
     serviceAccountName: rekon-agent
     enableServiceLinks: false
     dnsConfig:
@@ -54,7 +63,7 @@ template:
             memory: 6Gi
           requests:
             cpu: 400m
-            memory: 4Gi
+            memory: 2Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
