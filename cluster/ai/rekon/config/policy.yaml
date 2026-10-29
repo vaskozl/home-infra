@@ -9,9 +9,10 @@ spec:
     - https://gitlab.sko.ai/doudous/home-infra.git
     - https://gitlab.sko.ai/doudous/flux-infra.git
     - https://gitlab.sko.ai/doudous/rekon.git
-  # flux images bump with gotk-components.
-  update: "!candidate.name.startsWith('ghcr.io/fluxcd/')"
-  automerge: "candidate.type in ['minor', 'patch', 'digest']"
+  # Flux images bump with gotk-components; Renovate handles agentgateway
+  # updates because it filters the legacy kgateway-era v2.x chart tags.
+  update: "!candidate.name.startsWith('ghcr.io/fluxcd/') && !candidate.name.startsWith('ghcr.io/agentgateway/')"
+  automerge: "!candidate.name.startsWith('ghcr.io/agentgateway/') && candidate.type in ['minor', 'patch', 'digest']"
   rebase: 'true'
   labels: [renovate, pkgupdate]
   model: opus
@@ -24,7 +25,7 @@ spec:
   name: chromium upgrades
   priority: 10
   repos: [https://gitlab.sko.ai/doudous/home-infra.git]
-  automerge: "candidate.name == 'ghcr.io/vaskozl/chromium' || candidate.type in ['minor', 'patch', 'digest']"
+  automerge: "!candidate.name.startsWith('ghcr.io/agentgateway/') && (candidate.name == 'ghcr.io/vaskozl/chromium' || candidate.type in ['minor', 'patch', 'digest'])"
 ---
 apiVersion: v1alpha1
 kind: updatepolicies
