@@ -5,6 +5,7 @@ namespace: cloudflared
 resources:
   - _namespace.yaml
   - deploy.yaml
+  - pdb.yaml
   - secret.yaml
 labels:
   - pairs:

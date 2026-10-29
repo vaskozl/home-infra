@@ -8,6 +8,13 @@ spec:
   replicas: 2
   template:
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: cloudflared
+              topologyKey: kubernetes.io/hostname
       securityContext:
         sysctls:
           # Allows ICMP traffic
@@ -28,11 +35,22 @@ spec:
             - --loglevel
             - info
             - --metrics
-            - 0.0.0.0:2000
+            - "[::]:2000"
             - run
-          livenessProbe:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+          readinessProbe:
             httpGet:
               path: /ready
+              port: 2000
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
               port: 2000
             initialDelaySeconds: 10
             periodSeconds: 10
