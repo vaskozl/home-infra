@@ -20,6 +20,15 @@ spec:
       buildkitd-arm64:
         containers:
           app:
+            # A privileged container shares the host cgroupns, so buildkit would
+            # parent executors at the host root, outside the pod's limits.
+            command:
+              - /bin/sh
+              - -c
+              - |
+                printf '[worker.oci]\n  defaultCgroupParent = "%s"\n' "$(dirname "$(cut -d: -f3 /proc/self/cgroup)")" > /tmp/buildkitd.toml
+                exec buildkitd --config /tmp/buildkitd.toml "$@"
+              - buildkitd
             args:
               - --root
               - /cache

@@ -20,6 +20,15 @@ spec:
       buildkitd-amd64:
         containers:
           app:
+            # A privileged container shares the host cgroupns, so buildkit would
+            # parent executors at the host root, outside the pod's limits.
+            command:
+              - /bin/sh
+              - -c
+              - |
+                printf '[worker.oci]\n  defaultCgroupParent = "%s"\n' "$(dirname "$(cut -d: -f3 /proc/self/cgroup)")" > /tmp/buildkitd.toml
+                exec buildkitd --config /tmp/buildkitd.toml "$@"
+              - buildkitd
             args:
               - --root
               - /cache
@@ -33,9 +42,8 @@ spec:
               - /certs/cert.pem
               - --tlskey
               - /certs/key.pem
-              # Build executors run outside the pod cgroup, so the CPU limit does
-              # not bound them. Gate steps here instead: one rekon test build fans
-              # out ~10 `go test` stages that would otherwise all land at once.
+              # One rekon test build fans out ~10 `go test` stages; running them
+              # all at once would blow past the memory limit.
               - --oci-max-parallelism
               - "4"
             image:
@@ -47,13 +55,13 @@ spec:
               readiness:
                 enabled: true
             resources:
+              # No CPU limit: builds use 7-9 cores and throttling would stall CI.
               limits:
-                cpu: 2
-                memory: 4Gi
+                memory: 12Gi
               requests:
-                cpu: 200m
+                cpu: 1
                 ephemeral-storage: 10Gi
-                memory: 1Gi
+                memory: 2Gi
             securityContext:
               privileged: true
     defaultPodOptions:
