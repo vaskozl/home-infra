@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: flate
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/flate
+    - docker.io/vszl/flate
+  versionFrom: flate
+  config: |
+    contents:
+      packages:
+        - flate
+    entrypoint:
+      command: flate
+    vcs-url: https://github.com/home-operations/flate
