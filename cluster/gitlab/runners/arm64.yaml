@@ -75,6 +75,10 @@ spec:
             [[runners.kubernetes.volumes.pvc]]
               name = "apk-repo-pvc"
               mount_path = "/apks"
+            # Without a distributed cache the runner keeps `cache:` archives in /cache.
+            [[runners.kubernetes.volumes.pvc]]
+              name = "runner-cache-pvc"
+              mount_path = "/cache"
             [runners.kubernetes.node_selector]
               "kubernetes.io/arch" = "arm64"
     image:
