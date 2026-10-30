@@ -38,7 +38,7 @@ spec:
                 memory: 2750Mi
               requests:
                 cpu: 70m
-                memory: 384Mi
+                memory: 576Mi
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               capabilities:
@@ -59,7 +59,7 @@ spec:
                 memory: 1500Mi
               requests:
                 cpu: 50m
-                memory: 768Mi
+                memory: 1000Mi
             securityContext: *securityContext
       postgres:
         containers:
@@ -76,7 +76,7 @@ spec:
                 memory: 950Mi
               requests:
                 cpu: 10m
-                memory: 512Mi
+                memory: 700Mi
         statefulset:
           podManagementPolicy: Parallel
           volumeClaimTemplates:
