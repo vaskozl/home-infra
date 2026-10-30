@@ -61,7 +61,7 @@ spec:
               requests:
                 cpu: 1
                 ephemeral-storage: 10Gi
-                memory: 2Gi
+                memory: 1Gi
             securityContext:
               privileged: true
         # buildkitd finishes in-flight builds on SIGTERM; surge so new builds
