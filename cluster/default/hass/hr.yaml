@@ -51,6 +51,8 @@ spec:
         type: statefulset
     defaultPodOptions:
       hostNetwork: true
+      nodeSelector:
+        kubernetes.io/arch: arm64
     route:
       internal:
         annotations:
