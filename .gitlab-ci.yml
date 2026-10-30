@@ -1,14 +1,47 @@
-include:
- - project: doudous/ci-templates
-   ref: main
-   file: build.yaml
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
 
-run:val:
+stages:
+  - test
+
+.flate:
   stage: test
   tags: [arm64]
-  image: ghcr.io/vaskozl/kubeconform:0.8.0@sha256:5b0ecf08a7ce2e8fcee2fe7f67b8c5e33517efb4da729f496879f786a81e5dea
+  image:
+    name: ghcr.io/vaskozl/flate:0.6.5
+    entrypoint: [""]
+  variables:
+    FLATE_VERSION: "0.6.5"
+    FLATE_CACHE_DIR: "$CI_PROJECT_DIR/.cache/flate"
+  cache:
+    key: "flate-${FLATE_VERSION}-${CI_COMMIT_REF_SLUG}"
+    paths:
+      - .cache/flate/
   retry:
     max: 2
     when: [runner_system_failure]
+
+flate:
+  extends: .flate
   script:
-    - scripts/validate.sh
+    - flate test all --path cluster --no-progress
+
+flate:diff:
+  extends: .flate
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  variables:
+    # flate reads the base commit from the local clone
+    GIT_DEPTH: 0
+  script:
+    - flate diff all --path cluster --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --no-progress -o html > flate-diff.html
+    - flate diff all --path cluster --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --no-progress
+  artifacts:
+    expose_as: flate diff
+    paths:
+      - flate-diff.html
+    when: always
