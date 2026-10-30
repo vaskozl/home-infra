@@ -70,6 +70,8 @@ spec:
     defaultPodOptions:
       imagePullSecrets:
         - name: regcred
+      nodeSelector:
+        kubernetes.io/arch: arm64
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
