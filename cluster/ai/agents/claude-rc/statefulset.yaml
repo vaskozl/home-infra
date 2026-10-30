@@ -12,8 +12,6 @@ spec:
         options:
           - name: ndots
             value: "1"
-      imagePullSecrets:
-        - name: regcred
       nodeSelector:
         kubernetes.io/arch: amd64
       securityContext:
@@ -24,8 +22,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: claude
-          image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.84@sha256:b3c182cb8ad7f03979b1b9ef0ec5bf6735ba56eff4ab9df2859e8e53151b55ce
-          command: [claude, --dangerously-skip-permissions, remote-control]
+          image: ghcr.io/vaskozl/claude:2.1.312@sha256:4c447747f116f90f1490d26bb7038274eaeffbb479fe4e6e7b3a15d53b996eb0
+          args: [--dangerously-skip-permissions, remote-control]
           workingDir: /home/nonroot/code
           envFrom:
             - configMapRef:
