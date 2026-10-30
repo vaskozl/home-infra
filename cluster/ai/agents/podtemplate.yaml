@@ -38,43 +38,16 @@ template:
     containers:
       - name: agent
         image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.84@sha256:b3c182cb8ad7f03979b1b9ef0ec5bf6735ba56eff4ab9df2859e8e53151b55ce
+        envFrom:
+          - configMapRef:
+              name: agent-env
         env:
-          - name: TMPDIR
-            value: /tmp
-          - name: DISABLE_TELEMETRY
-            value: "1"
-          - name: DISABLE_BUG_COMMAND
-            value: "1"
-          - name: DISABLE_AUTOUPDATER
-            value: "1"
-          - name: DISABLE_ERROR_REPORTING
-            value: "1"
           - name: PGSTORE_TEST_DSN
             value: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
-          # Only the agent's keys: AUTH_SECRET, OIDC_CLIENT_SECRET, SMTPHOST
-          # and BASE_URL stay with the controller.
           - name: GITLAB_TOKEN
             valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
-          - name: GITLAB_HOST
-            valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_HOST}}
           - name: GITHUB_TOKEN
             valueFrom: {secretKeyRef: {name: rekon-env, key: GITHUB_TOKEN}}
-          - name: DO_NOT_TRACK
-            valueFrom: {secretKeyRef: {name: rekon-env, key: DO_NOT_TRACK}}
-          - name: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_BACKGROUND_TASKS}}
-          - name: CLAUDE_CODE_DISABLE_CRON
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_CRON}}
-          - name: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS}}
-          - name: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC}}
-          - name: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION}}
-          - name: CLAUDE_CODE_ENABLE_TASKS
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_ENABLE_TASKS}}
-          - name: CLAUDE_CODE_OAUTH_401_WAIT_MS
-            valueFrom: {secretKeyRef: {name: rekon-env, key: CLAUDE_CODE_OAUTH_401_WAIT_MS}}
         resources:
           limits:
             cpu: 2

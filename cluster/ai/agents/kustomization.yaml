@@ -5,11 +5,16 @@ namespace: ai-agents
 resources:
   - _namespace.yaml
   - podtemplate.yaml
+  - claude-rc
   - pvc.yaml
   - rbac.yaml
   - ../rekon/regcred.enc.yaml
 components:
   - ../../common
+configMapGenerator:
+  - name: agent-env
+    envs:
+      - agent.env
 secretGenerator:
   - name: rekon-env
     envs:

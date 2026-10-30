@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/statefulset-apps-v1.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: claude-rc
+spec:
+  template:
+    spec:
+      serviceAccountName: rekon-agent
+      enableServiceLinks: false
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+      containers:
+        - name: claude
+          image: ghcr.io/vaskozl/claude:2.1.312@sha256:4c447747f116f90f1490d26bb7038274eaeffbb479fe4e6e7b3a15d53b996eb0
+          args: [--dangerously-skip-permissions, remote-control]
+          workingDir: /home/nonroot/code
+          envFrom:
+            - configMapRef:
+                name: agent-env
+          env:
+            - name: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
+              value: ""
+            - name: GITLAB_TOKEN
+              valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
+            - name: GITHUB_TOKEN
+              valueFrom: {secretKeyRef: {name: rekon-env, key: GITHUB_TOKEN}}
+          resources:
+            limits:
+              cpu: 8
+              memory: 16Gi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: rekon-home
+              mountPath: /home/nonroot
+            - name: config
+              mountPath: /etc/claude-code/CLAUDE.md
+              subPath: CLAUDE.md
+            - name: config
+              mountPath: /etc/claude-code/managed-mcp.json
+              subPath: managed-mcp.json
+      volumes:
+        - name: rekon-home
+          persistentVolumeClaim:
+            claimName: rekon-home
+        - name: config
+          secret:
+            secretName: config
