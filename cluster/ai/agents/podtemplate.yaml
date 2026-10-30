@@ -44,7 +44,6 @@ template:
         env:
           - name: PGSTORE_TEST_DSN
             value: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
-          # rekon-env also holds controller secrets: take only the agent tokens.
           - name: GITLAB_TOKEN
             valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
           - name: GITHUB_TOKEN
