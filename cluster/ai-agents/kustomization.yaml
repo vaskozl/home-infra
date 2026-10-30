@@ -8,9 +8,9 @@ resources:
   - claude-rc
   - pvc.yaml
   - rbac.yaml
-  - ../rekon/regcred.enc.yaml
+  - ../ai/rekon/regcred.enc.yaml
 components:
-  - ../../common
+  - ../common
 configMapGenerator:
   - name: agent-env
     envs:
@@ -18,11 +18,11 @@ configMapGenerator:
 secretGenerator:
   - name: rekon-env
     envs:
-      - ../rekon/claude.enc.env
+      - ../ai/rekon/claude.enc.env
   - name: config
     options:
       annotations:
         kustomize.toolkit.fluxcd.io/substitute: disabled
     files:
-      - CLAUDE.md=../rekon/config/CLAUDE.md
-      - managed-mcp.json=../rekon/config/managed-mcp.json
+      - CLAUDE.md=../ai/rekon/config/CLAUDE.md
+      - managed-mcp.json=../ai/rekon/config/managed-mcp.json

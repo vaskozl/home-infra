@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - agentgateway/ks.yaml
   - ai/ks.yaml
+  - ai-agents/ks.yaml
   - automation
   - cert-manager/ks.yaml
   - cloudflared
