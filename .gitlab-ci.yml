@@ -18,7 +18,9 @@ stages:
     FLATE_VERSION: "0.6.5"
     FLATE_CACHE_DIR: "$CI_PROJECT_DIR/.cache/flate"
   cache:
-    key: "flate-${FLATE_VERSION}-${CI_COMMIT_REF_SLUG}"
+    key: "flate-${FLATE_VERSION}"
+    # Share main's warm chart cache with MR pipelines
+    unprotect: true
     paths:
       - .cache/flate/
   retry:
@@ -44,4 +46,5 @@ flate:diff:
     expose_as: flate diff
     paths:
       - flate-diff.html
+    expire_in: 1 week
     when: always
