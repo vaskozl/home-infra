@@ -51,8 +51,6 @@ spec:
             pull_policy = ["always", "if-not-present"]
             cpu_request = "500m"
             cpu_limit = "1"
-            cpu_limit_overwrite_max_allowed = "12"
-            cpu_request_overwrite_max_allowed = "4"
             memory_request = "2Gi"
             memory_limit = "4Gi"
             service_cpu_request = "100m"
