@@ -18,7 +18,7 @@ stages:
     FLATE_VERSION: "0.6.5"
     FLATE_CACHE_DIR: "$CI_PROJECT_DIR/.cache/flate"
   cache:
-    key: "flate-${FLATE_VERSION}"
+    key: "flate-${FLATE_VERSION}-2"
     # Share main's warm chart cache with MR pipelines
     unprotect: true
     paths:
