@@ -1,0 +1,46 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rekon-ci
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/rekon-ci
+  versionFrom: go
+  config: |
+    contents:
+      packages:
+        - busybox
+        - go
+        - git
+        - bun
+        - postgresql-18
+        - postgresql-18-contrib
+        - redis
+        - minio
+        - curl
+        - poppler-utils
+        - libstdc++
+        - font-liberation
+        - tmux
+        - onnxruntime
+        - ppocrv6-tiny-models
+    entrypoint:
+      command: /bin/sh
+    accounts:
+      run-as: "0"
+      users:
+        - username: postgres
+          uid: 70
+          gid: 70
+          homedir: /home/postgres
+      groups:
+        - groupname: postgres
+          gid: 70
+    environment:
+      GOTOOLCHAIN: local
+      GOFLAGS: -mod=mod
+      LANG: C.UTF-8
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
