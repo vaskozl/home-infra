@@ -11,6 +11,9 @@ stages:
 .flate:
   stage: test
   tags: [arm64]
+  # All flate jobs share one cache.zip on the NFS runner cache; a push from
+  # one node while another extracts it leaves a half-restored cache.
+  resource_group: flate-cache
   image:
     name: ghcr.io/vaskozl/flate:0.6.5
     entrypoint: [""]
