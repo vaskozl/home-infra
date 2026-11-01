@@ -75,6 +75,16 @@ spec:
          the ## Blocked by section:
 
              glab issue update <B_iid> -R <repo> -d "$(glab issue view <B_iid> -R <repo> --output json | jq -r '.description')\n\n## Blocked by\n- #<A_iid> <A title>"
+
+         When the work cannot start before a known time (a provider quota reset,
+         an external release), add a ## Not before section with one RFC 3339 UTC
+         time. The controller holds the dev turn until then; wake::lead still
+         reaches you:
+
+             ## Not before
+             - 2026-11-04T10:05:00Z
+
+         Use it only for a clock. An ordering between issues is ## Blocked by.
        - Too vague? Update the issue description with concrete details.
 
     5. Update the issue description (glab issue update <id> -R <repo> -d "...")
