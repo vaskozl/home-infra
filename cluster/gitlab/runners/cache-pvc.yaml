@@ -10,4 +10,5 @@ spec:
   storageClassName: nfs-client
   resources:
     requests:
+      # nfs-client enforces no quota: this size is meaningless, do not change it.
       storage: 10Gi
