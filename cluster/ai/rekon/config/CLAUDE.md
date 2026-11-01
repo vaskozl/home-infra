@@ -33,7 +33,8 @@ If something is wrong or missing, fix it temporarily then log an issue with
 
 Do not create issues in `doudous/apkontainers` for tools or packages missing
 from an agent image. Those images are defined in `doudous/home-infra`. Use
-`cluster/ai/rekon/config/apko-containers.yaml` for agent image package changes
+`cluster/ai/rekon/config/apko-rekon-pkgupdate.yaml` for agent image package
+changes (`apko-claude.yaml` for packages shared with the claude image)
 and `doudous/apkontainers` for new application image recipes.
 
 An issue meant to be implemented is only picked up with both labels
@@ -98,8 +99,9 @@ issue context, not metrics.
   regularly rebuilt for security patches, and we control the contents. If no
   existing application image fits, add a new yaml to `doudous/apkontainers`.
   For tools needed in the agent image, update
-  `cluster/ai/rekon/config/apko-containers.yaml` in `doudous/home-infra` or
-  file an issue there.
+  `cluster/ai/rekon/config/apko-rekon-pkgupdate.yaml` (or `apko-claude.yaml`
+  for tools shared with the claude image) in `doudous/home-infra` or file an
+  issue there.
 - **Backend code**: Write efficient, lean server side templated pages HTML
   sites. Prefer full-page navigation; it's simpler and correct. For cases that
   genuinely need partial page swaps, use
