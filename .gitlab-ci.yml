@@ -17,9 +17,12 @@ stages:
   variables:
     FLATE_VERSION: "0.6.5"
     FLATE_CACHE_DIR: "$CI_PROJECT_DIR/.cache/flate"
+    FLATE_CACHE_POLICY: pull
   cache:
-    key: "flate-${FLATE_VERSION}-3"
-    # Share main's warm chart cache with MR pipelines
+    key: "flate-${FLATE_VERSION}-4"
+    # Share main's warm chart cache with MR pipelines. Only main pushes it:
+    # concurrent writers on the shared NFS cache truncate the archive.
+    policy: $FLATE_CACHE_POLICY
     unprotect: true
     paths:
       - .cache/flate/
@@ -29,5 +32,10 @@ stages:
 
 flate:
   extends: .flate
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      variables:
+        FLATE_CACHE_POLICY: pull-push
+    - when: on_success
   script:
     - flate test all --path cluster --no-progress
