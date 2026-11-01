@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/cronjob-batch-v1.json
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: runner-cache-prune
+  namespace: gitlab
+spec:
+  schedule: "30 4 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            # The runner never expires `cache:` archives on its local /cache
+            # volume; every cache key bump leaves the old cache.zip behind.
+            # Live keys are rewritten on each push, so only abandoned ones age.
+            - name: prune
+              image: ghcr.io/vaskozl/busybox:latest@sha256:28c99cb25c0ce8b03a0b2b8e69f7b2c77a138f1ee3ebf1ca0707deb645643274
+              command:
+                - find
+                - /cache
+                - -name
+                - cache.zip
+                - -type
+                - f
+                - -mtime
+                - "+14"
+                - -print
+                - -delete
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 10Mi
+                limits:
+                  memory: 50Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
+                runAsUser: 0
+                runAsGroup: 0
+                seccompProfile:
+                  type: RuntimeDefault
+              volumeMounts:
+                - name: cache
+                  mountPath: /cache
+          restartPolicy: OnFailure
+          volumes:
+            - name: cache
+              persistentVolumeClaim:
+                claimName: runner-cache-pvc
