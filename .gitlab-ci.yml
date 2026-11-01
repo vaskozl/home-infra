@@ -31,20 +31,3 @@ flate:
   extends: .flate
   script:
     - flate test all --path cluster --no-progress
-
-flate:diff:
-  extends: .flate
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-  variables:
-    # flate reads the base commit from the local clone
-    GIT_DEPTH: 0
-  script:
-    - flate diff all --path cluster --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --no-progress -o html > flate-diff.html
-    - flate diff all --path cluster --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --no-progress
-  artifacts:
-    expose_as: flate diff
-    paths:
-      - flate-diff.html
-    expire_in: 1 week
-    when: always
