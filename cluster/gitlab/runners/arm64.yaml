@@ -66,8 +66,10 @@ spec:
             poll_interval = 5
             poll_timeout = 3600
             priority_class_name = "batch"
-            # Used by bubblewrap
-            cap_add = ["NET_ADMIN", "SYS_ADMIN"]
+            # SYS_ADMIN: bubblewrap, and the in-job buildkitd remounting its cgroup.
+            # NET_RAW: the runner drops it by default, and runc gives it to every
+            # buildkit RUN step, so without it every RUN fails to apply caps.
+            cap_add = ["NET_ADMIN", "SYS_ADMIN", "NET_RAW"]
             [[runners.kubernetes.volumes.empty_dir]]
               name = "docker-emptydir"
               mount_path = "/var/run"
