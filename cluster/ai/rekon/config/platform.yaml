@@ -13,3 +13,6 @@ spec:
   githubTokenEnv: GITHUB_TOKEN
   agentPodTemplate: ai-agents/rekon-agent-turn
   alertAllowedHosts: []
+  # nfs-subdir does not enforce the PVC size and statfs reports the whole NAS,
+  # so this budget is what bounds the caches under /home/nonroot.
+  cacheBudgetGiB: 40
