@@ -12,7 +12,7 @@ stages:
   stage: test
   tags: [arm64]
   image:
-    name: ghcr.io/vaskozl/flate:0.6.5
+    name: ghcr.io/vaskozl/flate:0.6.5@sha256:bf9780728c2d854053e10aa906679c1462de87c0c3d732d4cca1fab80e9740ed
     entrypoint: [""]
   variables:
     FLATE_VERSION: "0.6.5"
