@@ -37,7 +37,7 @@ spec:
                   name: minio
             image: &image
               repository: registry.sko.ai/doudous/rekon/veroso
-              tag: 0.0.84@sha256:2d44cebf67ad5503814dda0f1f4894fb4ef7c80a14fa602f64a3a7ee30be7394
+              tag: 0.0.84@sha256:fa70fc6753b8389c51ef927b317c956c6598b491fa7749c869175d8d3f8c4333
             args:
               - -db
               - postgres://postgres@dossier-postgres/veroso?sslmode=disable
