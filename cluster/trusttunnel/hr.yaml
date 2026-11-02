@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/trusttunnel
-              tag: 1.1.0@sha256:9e627f7d5f0e2993b8ea0167a4380820559c0449a03ef1be6d7e868f19985295
+              tag: 1.1.0@sha256:23602e5c5f000ba7c48ed288dbacbfaaf0de1bd87297271bf403135cb886a7c2
             command: [trusttunnel, /config/vpn.toml, /config/hosts.toml]
             probes:
               liveness:
