@@ -51,6 +51,8 @@ spec:
     #     real failures covered by ReconcileErrors/HighQueueDepth
     #   - KubePodNotReady: re-added in rules/pods.yaml without batch-class pods,
     #     which queue Pending on purpose when the node is full
+    #   - RecordingRulesError/AlertingRulesError: re-added in rules/vmalert.yaml with a
+    #     threshold; > 0 fires on single datasource connection resets
     # Control-plane rule groups (apiserver/scheduler/controller-manager) are
     # disabled: the kube*.enabled toggles below only gate scraping and dashboards,
     # not the sync-job rule sources, so these groups get created and their
@@ -92,6 +94,10 @@ spec:
         TooManyLogs:
           create: false
         LogErrors:
+          create: false
+        RecordingRulesError:
+          create: false
+        AlertingRulesError:
           create: false
         "instance:node_load1_per_cpu:ratio":
           create: false

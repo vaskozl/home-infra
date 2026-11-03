@@ -1,0 +1,28 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
+metadata:
+  name: vmalert-errors
+  namespace: victoria-metrics
+spec:
+  groups:
+    - name: vmalert-errors
+      rules:
+        # Upstream vmalert rules fire on any single error (> 0). A broken rule
+        # fails every 20s evaluation (~45/15m); one-off datasource connection
+        # resets fail one or two and recover on the next evaluation.
+        - alert: RecordingRulesError
+          expr: sum(increase(vmalert_recording_rules_errors_total[15m])) without(id) > 5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            description: Recording rules execution is failing for "{{ $labels.recording }}" from group "{{ $labels.group }}" in file "{{ $labels.file }}". Check vmalert's logs for detailed error message.
+            summary: Recording rules are failing for vmalert instance {{ $labels.instance }}
+        - alert: AlertingRulesError
+          expr: sum(increase(vmalert_alerting_rules_errors_total[15m])) without(id) > 5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            description: Alerting rules execution is failing for "{{ $labels.alertname }}" from group "{{ $labels.group }}" in file "{{ $labels.file }}". Check vmalert's logs for detailed error message.
+            summary: Alerting rules are failing for vmalert instance {{ $labels.instance }}
