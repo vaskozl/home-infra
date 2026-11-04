@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: ignis
+spec:
+  chart:
+    spec:
+      chart: app-template
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 5.3.0
+  interval: 24h
+  values:
+    controllers:
+      ignis:
+        containers:
+          app:
+            # Upstream entrypoint needs root (useradd/gosu); run the server directly.
+            command:
+              - node
+              - /app/apps/ignis-server/server/index.js
+            env: &env
+              DATA_ROOT: /srv/data
+              HOME: /tmp
+              OBSIDIAN_ASSETS_PATH: /srv/obsidian-app
+              VAULT_ROOT: /srv/vaults
+              WS_ORIGINS: https://ignis.sko.ai
+            image: &image
+              repository: docker.io/nobbe/ignis
+              tag: 0.8.18@sha256:8faba2774dd9069360aedbf9ace87cdf926c454ccee56a2d7bc5ff7556737567
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 256Mi
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+        initContainers:
+          # Obsidian is not redistributable, so it is fetched at runtime for the image's pinned version.
+          obsidian:
+            command:
+              - /bin/bash
+              - -c
+              - |
+                set -eu
+                dir="$OBSIDIAN_ASSETS_PATH"
+                mkdir -p "$dir"
+                v="$IGNIS_OBSIDIAN_PIN"
+                [ "$(cat "$dir/.obsidian-version" 2>/dev/null)" = "$v" ] && exit 0
+                find "$dir" -mindepth 1 -delete
+                curl -fsSL "https://github.com/obsidianmd/obsidian-releases/releases/download/v$v/obsidian-$v.asar.gz" | gunzip > /tmp/obsidian.asar
+                npx --yes @electron/asar extract /tmp/obsidian.asar "$dir"
+                rm /tmp/obsidian.asar
+                echo "$v" > "$dir/.obsidian-version"
+            env: *env
+            image: *image
+            securityContext: *securityContext
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              globalMounts:
+                - path: /srv
+              name: data
+              size: 1Gi
+        type: statefulset
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 568
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    persistence:
+      tmp:
+        type: emptyDir
+    route:
+      app:
+        annotations:
+          gethomepage.dev/description: Obsidian in the browser
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Other
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/0986fef4753b28ee07dfc3ac12c3e45b3aed9b1f/svg/obsidian.svg
+          gethomepage.dev/name: Ignis
+        hostnames:
+          - ignis.sko.ai
+        labels:
+          agentgateway.sko.ai/auth: oauth2
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+    service:
+      app:
+        controller: ignis
+        ports:
+          http:
+            port: 8080
