@@ -32,7 +32,7 @@ spec:
               WS_ORIGINS: https://ignis.sko.ai
             image: &image
               repository: docker.io/nobbe/ignis
-              tag: 0.8.18@sha256:8faba2774dd9069360aedbf9ace87cdf926c454ccee56a2d7bc5ff7556737567
+              tag: 0.9.0@sha256:2049be7dfbbee5ee9fa5c0ae56efd8555ec57f2ac3275448b1c4318b8af49bb5
             probes:
               liveness:
                 enabled: true
