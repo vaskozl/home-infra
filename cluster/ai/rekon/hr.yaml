@@ -133,7 +133,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/postgresql
-              tag: 18.6@sha256:7f7efd71547c5dea4780dea60ad7bc0417bc4eddcb932e9f9bf73f5ced793dbe
+              tag: 18.6@sha256:fcd73897d36f41297258efdf9f3423d613fe0ec48c6b3fe71e3e8b72394bdc81
             env:
               POSTGRES_DB: rekon
               POSTGRES_HOST_AUTH_METHOD: trust
