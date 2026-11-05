@@ -377,7 +377,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/redis
-              tag: 8.10.3@sha256:bf87a076d1286a85cc14278c762b2f1536f77ddcda5f3c70dcc9221cdadd8ed4
+              tag: 8.10.3@sha256:cd9ac31768b86e869261f1e9ae268d9cfe4d4b0290480223f4af8c0c544dbfe7
             # Ephemeral: veroso's VectorSync refills the vector set from postgres
             args: ['--save', '', '--appendonly', 'no']
             probes:
