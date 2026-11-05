@@ -23,6 +23,7 @@ spec:
         - xvfb-run
         - xkbcomp
         - xkeyboard-config
+        - victoriametrics-vmalert
     entrypoint:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
