@@ -33,7 +33,7 @@ spec:
           app: &api
             image: &appImage
               repository: registry.sko.ai/doudous/rekon/pkgupdate
-              tag: 0.0.86@sha256:f16defa594cfdb4ebdb9fba2383c135010c675ed6ef400cd9be576502635e20f
+              tag: 0.0.86@sha256:55ad9f94a9315d2aed0c6e19a3f5a0d3138907c4b5dfbea332cd1760b648323c
             args:
               - -db
               - postgres://postgres@rekon-postgres/rekon?sslmode=disable
