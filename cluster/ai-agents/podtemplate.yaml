@@ -135,7 +135,7 @@ template:
             mountPath: /tmp/screenshots
       - name: chrome-devtools-mcp
         restartPolicy: Always
-        image: ghcr.io/vaskozl/node:latest@sha256:84e9a36cf2323ab9b52f8964f43137d2a090467faf7b84edb4e9e8c91b79bdde
+        image: ghcr.io/vaskozl/node:latest@sha256:8e4eacfad32ab27bc94009ac22fbc7b702707e7e51d39eb2338efe931164e709
         command: ["npx"]
         args:
           - -y
