@@ -6,9 +6,8 @@ spec:
   name: ignis
   includes: [wolfi-base]
   tags: [latest]
-  # Bundles proprietary Obsidian assets: private registry only.
   registries:
-    - registry.sko.ai/doudous/rekon/ignis
+    - ghcr.io/vaskozl/ignis
   versionFrom: ignis
   config: |
     contents:
