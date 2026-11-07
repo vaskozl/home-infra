@@ -1,0 +1,18 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: ignis
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/ignis
+  versionFrom: ignis
+  config: |
+    contents:
+      packages:
+        - ignis
+    entrypoint:
+      command: ignis
+    vcs-url: https://github.com/Nystik-gh/ignis
