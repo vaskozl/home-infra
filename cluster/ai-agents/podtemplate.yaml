@@ -46,7 +46,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.86@sha256:ee8f36d24b551e18bcd50018491edfdbb21ec08dc61b10a596782a4206503488
+        image: registry.sko.ai/doudous/rekon/pkgupdate:0.0.86@sha256:47fff8f10a81ed127a55c8178991b273fbac50f2703f4ed911d3ea43b9112992
         envFrom:
           - configMapRef:
               name: agent-env
@@ -118,7 +118,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:156.0.8078.79@sha256:5dc0f55cd7535d14d9704afeca7f1a995e88afddce965a704093cea6b9ea5283
+        image: ghcr.io/vaskozl/chromium:156.0.8078.79@sha256:4606b22a67ccf646066c87dc23ff53d58c9f7c8d78e4c9f04728d7c7d9b9d338
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
@@ -135,7 +135,7 @@ template:
             mountPath: /tmp/screenshots
       - name: chrome-devtools-mcp
         restartPolicy: Always
-        image: ghcr.io/vaskozl/node:latest@sha256:8027ed824993419862b4d650c3eeccf4e530bcb1588561e6fe9c5ce00fefc726
+        image: ghcr.io/vaskozl/node:latest@sha256:9a820d302fcecb4a38447c6580dcdbc8c5d69adf26f2d9cac615ab76e09cd258
         command: ["npx"]
         args:
           - -y
