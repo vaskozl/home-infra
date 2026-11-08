@@ -1,0 +1,213 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  annotations:
+    patch.sko.ai/app-template: common
+  name: wiki
+  namespace: wiki
+spec:
+  chart:
+    spec:
+      chart: app-template
+      interval: 24h
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 5.3.0
+  interval: 24h
+  values:
+    controllers:
+      api:
+        type: deployment
+        replicas: 1
+        strategy: RollingUpdate
+        pod: &pod
+          hostUsers: false
+          automountServiceAccountToken: false
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app: &api
+            image: &image
+              repository: registry.sko.ai/doudous/rekon/wiki
+              tag: 0.0.87
+            args:
+              - -db
+              - postgres://postgres@wiki-postgres/wiki?sslmode=disable
+              - -v
+              - -mode
+              - api
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 64Mi
+            securityContext: &security-context
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
+              runAsGroup: 568
+              runAsUser: 568
+              seccompProfile:
+                type: RuntimeDefault
+      main:
+        type: statefulset
+        forceRename: wiki
+        pod: *pod
+        containers:
+          app:
+            image: *image
+            args:
+              - -db
+              - postgres://postgres@wiki-postgres/wiki?sslmode=disable
+              - -v
+              - -mode
+              - worker
+            resources:
+              limits:
+                memory: 1Gi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext: *security-context
+      # Requeue every object once the new worker is up, so a release reaches
+      # objects nothing else wakes (docs/resync.md in rekon)
+      resync:
+        type: job
+        annotations:
+          helm.sh/hook: post-upgrade
+          helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+        pod: *pod
+        containers:
+          app:
+            <<: *api
+            args: [resync, -db, "postgres://postgres@wiki-postgres/wiki?sslmode=disable"]
+      postgres:
+        type: statefulset
+        statefulset:
+          podManagementPolicy: Parallel
+          volumeClaimTemplates:
+            - accessMode: ReadWriteOnce
+              advancedMounts:
+                app:
+                  - path: /var/lib/postgresql
+              name: data
+              size: 5Gi
+        pod:
+          automountServiceAccountToken: false
+          securityContext:
+            fsGroup: 70
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 70
+            runAsNonRoot: true
+            runAsUser: 70
+        containers:
+          app:
+            image:
+              repository: ghcr.io/vaskozl/postgresql
+              tag: 18.6@sha256:75e85cb437bdd35bcee74b8bbbfd95967c3e652da690ddf90d47f1f1fa84e64a
+            env:
+              POSTGRES_DB: wiki
+              POSTGRES_HOST_AUTH_METHOD: trust
+            args:
+              - -c
+              - shared_preload_libraries=pg_stat_statements
+            probes:
+              liveness: &pg-probe
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: [pg_isready, -U, postgres, -d, wiki]
+                  timeoutSeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 6
+              readiness: *pg-probe
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+          exporter:
+            image:
+              repository: ghcr.io/prometheus-community/postgres-exporter
+              tag: v0.20.1@sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e
+            args:
+              - --web.listen-address=:9187
+              - --collector.stat_checkpointer
+              - --collector.postmaster
+              - --collector.stat_statements
+              - --collector.stat_statements.include_query
+              - --collector.stat_statements.limit=50
+              - --collector.stat_statements.query_length=120
+            env:
+              DATA_SOURCE_NAME: postgresql://postgres@127.0.0.1:5432/wiki?sslmode=disable&options=-c%20default_transaction_read_only%3Don
+            probes:
+              liveness: &exporter-probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9187
+                  timeoutSeconds: 5
+                  periodSeconds: 30
+              readiness: *exporter-probe
+            resources:
+              limits:
+                memory: 128Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
+              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: [ALL]
+    defaultPodOptions:
+      imagePullSecrets:
+        - name: regcred
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    route:
+      app:
+        hostnames:
+          - wiki.sko.ai
+        parentRefs:
+          - name: internal
+            namespace: agentgateway
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8080
+    service:
+      app:
+        controller: api
+        forceRename: wiki
+        ports:
+          http:
+            port: 8080
+          metrics:
+            port: 9090
+      worker:
+        controller: main
+        ports:
+          metrics:
+            port: 9090
+      postgres:
+        controller: postgres
+        labels:
+          monitoring.sko.ai/exporter: postgres
+        ports:
+          postgresql:
+            port: 5432
+          postgres-metrics:
+            port: 9187

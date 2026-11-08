@@ -1,0 +1,31 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: wiki
+spec:
+  endpoints:
+    - port: metrics
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - wiki
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: wiki
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: wiki-postgres
+spec:
+  endpoints:
+    - port: postgres-metrics
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+      - wiki
+  selector:
+    matchLabels:
+      monitoring.sko.ai/exporter: postgres
