@@ -254,6 +254,14 @@ spec:
           - job_name: "blocky"
             static_configs:
             - targets: ["pinewall:4000"]
+        # Unqueried since stats tracking began (2026-06-30) and exported by several jobs.
+        inlineRelabelConfig:
+          - action: drop
+            sourceLabels: [__name__, is_set]
+            regex: flag;false
+          - action: drop
+            sourceLabels: [__name__]
+            regex: agentgateway_(request|response)_processing_seconds_bucket|controller_runtime_reconcile_time_seconds_bucket|grafana_feature_toggles_info|workqueue_queue_duration_seconds_bucket
         externalLabels:
           cluster: pi-cluster
         resources:
@@ -267,48 +275,39 @@ spec:
         enabled: true
         hostnames:
           - vma.sko.ai
+    kube-state-metrics:
+      metricDenylist:
+        - kube_pod_tolerations
+        - kube_replicaset_status_(fully_labeled|ready|terminating)_replicas
+        - kube_replicaset_status_observed_generation
     kubelet:
       vmScrape:
         spec:
-          # drop high cardinality label and useless metrics for cadvisor and kubelet
-          metricRelabelConfigs:
-            # Drop less useful container CPU metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)'
-            # Drop less useful / always zero container memory metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_memory_(failures_total|mapped_file|swap)'
-            # Drop less useful container process metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_(file_descriptors|tasks_state|threads_max)'
-            # Drop less useful container filesystem metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)'
-            # Drop less useful container blkio metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_blkio_device_usage_total'
-            # Drop container spec metrics that overlap with kube-state-metrics.
-            - sourceLabels: [__name__]
-              action: drop
-              regex: 'container_spec.*'
-            # Drop cgroup metrics with no pod.
-            - sourceLabels: [id, pod]
-              action: drop
-              regex: '.+;'
-            - action: drop
-              sourceLabels: [__name__]
-              regex: prober_probe_duration_seconds_bucket
-            # Drop high-cardinality labels.
+          # Node labels minus the Talos extension versions, which would recreate
+          # every kubelet series on each Talos upgrade, and copies of `node`.
+          relabelConfigs:
+            - action: labelmap
+              regex: __meta_kubernetes_node_label_(.+)
             - action: labeldrop
-              regex: (uid|id|name|pod_uid|interface)
+              regex: extensions_talos_dev_.+|beta_kubernetes_io_.+|kubernetes_io_(hostname|os)
+            - sourceLabels: [__metrics_path__]
+              targetLabel: metrics_path
+            - targetLabel: job
+              replacement: kubelet
+          # Every pod brings its own set of cAdvisor series, so each dropped
+          # container_* metric also cuts churn from CI and agent pods.
+          metricRelabelConfigs:
+            # container_spec_* overlaps with kube-state-metrics.
             - action: drop
               sourceLabels: [__name__]
-              regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+              regex: >-
+                container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)|container_memory_(events_high_total|failcnt|failures_total|file_dirty_bytes|file_writeback_bytes|mapped_file|pgscan_total|pgsteal_total|swap|total_inactive_file_bytes|usage_bytes|workingset_refault_file_total)|container_(creation_time_seconds|file_descriptors|last_seen|start_time_seconds|tasks_state|threads_max|ulimits_soft)|container_swap_(limit|usage)_bytes|container_network_(receive|transmit)_errors_total|container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)|container_blkio_device_usage_total|container_spec_.+|(csi_operations_seconds|kubelet_runtime_operations_duration_seconds|prober_probe_duration_seconds|rest_client_rate_limiter_duration_seconds|rest_client_request_size_bytes|storage_operation_duration_seconds|volume_operation_total_seconds)_bucket|rest_client_request_duration_seconds_(bucket|sum|count)
+            # cgroups without a pod; must run before `id` is dropped below.
+            - action: drop
+              sourceLabels: [id, pod]
+              regex: '.+;'
+            - action: labeldrop
+              regex: uid|id|name|pod_uid|interface
     # Not by most graphs or often useful
     kubeEtcd:
       enabled: false
