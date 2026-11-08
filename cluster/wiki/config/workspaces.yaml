@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/apps/wiki/types/objects.schema.json
+# Create-only, so a reload never resets what members changed since.
+apiVersion: v1alpha1
+kind: workspaces
+metadata:
+  id: demo
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  title: Demo wiki
+  description: A page tree with wikilinks and backlinks.
+---
+# dev:dev is whoever signs in as "dev" on the dev provider.
+apiVersion: v1alpha1
+kind: members
+metadata:
+  workspace: demo
+  annotations:
+    rekon.dev/apply: create-only
+spec:
+  user: dev:dev
+  role: admin

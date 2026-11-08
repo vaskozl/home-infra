@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://gitlab.sko.ai/doudous/rekon/-/raw/main/contrib/auth/types/objects.schema.json
+# Embedded mock OIDC issuer: signs in as any username typed. Stopgap until a
+# real provider is added.
+apiVersion: v1alpha1
+kind: authproviders
+spec:
+  name: dev
+  type: dev
+  displayName: Dev login
+  enabled: true
