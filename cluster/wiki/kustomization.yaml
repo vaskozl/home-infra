@@ -9,3 +9,14 @@ resources:
   - vmservicescrape.yaml
 components:
   - ../common
+configMapGenerator:
+  - name: seed
+    options:
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+    files:
+      - platform.yaml=config/platform.yaml
+      - providers.yaml=config/providers.yaml
+      - workspaces.yaml=config/workspaces.yaml
+configurations:
+  - kustomizeconfig.yaml

@@ -37,6 +37,8 @@ spec:
             args:
               - -db
               - postgres://postgres@wiki-postgres/wiki?sslmode=disable
+              - -config
+              - /config
               - -v
             resources:
               limits:
@@ -63,7 +65,7 @@ spec:
         containers:
           app:
             <<: *api
-            args: [resync, -db, "postgres://postgres@wiki-postgres/wiki?sslmode=disable"]
+            args: [resync, -db, "postgres://postgres@wiki-postgres/wiki?sslmode=disable", -config, /config]
       postgres:
         type: statefulset
         statefulset:
@@ -155,6 +157,17 @@ spec:
         - name: regcred
       nodeSelector:
         kubernetes.io/arch: amd64
+    persistence:
+      seed:
+        type: configMap
+        name: seed
+        advancedMounts:
+          api:
+            app:
+              - path: /config
+          resync:
+            app:
+              - path: /config
     route:
       app:
         hostnames:
