@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rekon-wiki
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - registry.sko.ai/doudous/rekon/wiki
+    - ghcr.io/vaskozl/rekon-wiki
+  versionFrom: rekon-wiki
+  config: |
+    contents:
+      packages:
+        - rekon-wiki
+    entrypoint:
+      command: rekon-wiki
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
