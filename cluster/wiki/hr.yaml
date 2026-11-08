@@ -38,8 +38,6 @@ spec:
               - -db
               - postgres://postgres@wiki-postgres/wiki?sslmode=disable
               - -v
-              - -mode
-              - api
             resources:
               limits:
                 memory: 512Mi
@@ -54,27 +52,7 @@ spec:
               runAsUser: 568
               seccompProfile:
                 type: RuntimeDefault
-      main:
-        type: statefulset
-        forceRename: wiki
-        pod: *pod
-        containers:
-          app:
-            image: *image
-            args:
-              - -db
-              - postgres://postgres@wiki-postgres/wiki?sslmode=disable
-              - -v
-              - -mode
-              - worker
-            resources:
-              limits:
-                memory: 1Gi
-              requests:
-                cpu: 50m
-                memory: 128Mi
-            securityContext: *security-context
-      # Requeue every object once the new worker is up, so a release reaches
+      # Requeue every object once the new release is up, so it reaches
       # objects nothing else wakes (docs/resync.md in rekon)
       resync:
         type: job
@@ -195,11 +173,6 @@ spec:
         ports:
           http:
             port: 8080
-          metrics:
-            port: 9090
-      worker:
-        controller: main
-        ports:
           metrics:
             port: 9090
       postgres:
