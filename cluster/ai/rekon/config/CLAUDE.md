@@ -169,6 +169,12 @@ issue context, not metrics.
   `--help` usage line shows the reverse and is wrong).
 - **`python3`**: Not installed in the container. Use `jq` or `perl` for all
   JSON/text processing.
+- **`melange build` / `melange test`** (`just build`, `just test` in
+  `doudous/packages`): Cannot run in turn pods. The pod's seccomp profile blocks
+  user namespaces, which the bubblewrap runner needs (`unshare failed: Operation
+  not permitted`), and there is no docker or KVM for another runner. Don't work
+  around it (no runner swaps, no hand-replayed build steps): run `just lint`,
+  then push and let the MR pipeline build and test each changed package.
 
 ## glab quick-reference
 
