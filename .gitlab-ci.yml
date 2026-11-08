@@ -21,6 +21,9 @@ stages:
     FLATE_VERSION: "0.6.5"
     FLATE_CACHE_DIR: "$CI_PROJECT_DIR/.cache/flate"
     FLATE_CACHE_POLICY: pull
+    # On a watchdog SIGQUIT, dump the stack of every thread, including the
+    # spinning goroutine that the default level reports as "stack unavailable".
+    GOTRACEBACK: crash
   cache:
     key: "flate-${FLATE_VERSION}-4"
     # Share main's warm chart cache with MR pipelines. Only main pushes it:
@@ -29,9 +32,12 @@ stages:
     unprotect: true
     paths:
       - .cache/flate/
+  timeout: 20m
   retry:
     max: 2
-    when: [runner_system_failure]
+    when: [runner_system_failure, job_execution_timeout]
+    # flate exits only 0 or 1; 134 is the SIGABRT after the watchdog dump.
+    exit_codes: [134]
 
 flate:
   extends: .flate
@@ -41,4 +47,5 @@ flate:
         FLATE_CACHE_POLICY: pull-push
     - when: on_success
   script:
-    - flate test all --path cluster --no-progress
+    - ulimit -c 0
+    - timeout -s QUIT 600 flate test all --path cluster --no-progress
