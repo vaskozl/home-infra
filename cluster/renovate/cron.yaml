@@ -35,7 +35,7 @@ spec:
                   value: /cache
                 - name: RENOVATE_ALLOWED_COMMANDS
                   value: |-
-                    ["^\\.gitlab/bump-epochs\\.pl --base-ref HEAD$"]
+                    ["^\\.gitlab/bump-epochs\\.pl --base-ref HEAD$", "^tools/tidy\\.sh$"]
               envFrom:
                 - secretRef:
                     name: renovate-env
