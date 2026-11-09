@@ -1,0 +1,32 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rekon-agent
+  includes: [claude-rekon]
+  tags: [latest]
+  registries:
+    - registry.sko.ai/doudous/rekon/agent
+  versionFrom: rekon-pkgupdate
+  config: |
+    contents:
+      packages:
+        - rekon-pkgupdate
+        - rekon
+        - codex
+        - helm
+        - poppler-utils
+        - onnxruntime
+        - ppocrv6-tiny-models
+        - chromium
+        - xvfb-run
+        - xkbcomp
+        - xkeyboard-config
+        - victoriametrics-vmalert
+        - yam
+    entrypoint:
+      command: rekon-pkgupdate
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
+    archs:
+      - amd64
