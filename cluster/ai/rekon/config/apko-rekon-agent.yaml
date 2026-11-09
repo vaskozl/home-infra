@@ -4,7 +4,7 @@ metadata:
   workspace: doudous
 spec:
   name: rekon-agent
-  includes: [claude-rekon]
+  includes: [claude]
   tags: [latest]
   registries:
     - registry.sko.ai/doudous/rekon/agent
@@ -13,6 +13,18 @@ spec:
     contents:
       packages:
         - rekon-pkgupdate
+        - bun
+        - gnupg
+        - kubeconform
+        - kustomize
+        - postgresql-client
+        - redis
+        - redis-cli
+        - sops
+        - openvino
+        - openvino-dev
+        - openvino-tokenizers
+        - baselabs-joey-1-bf16
         - rekon
         - codex
         - helm
