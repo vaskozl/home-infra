@@ -213,7 +213,7 @@ spec:
                       - name: registry
                         env:
                           - name: REGISTRY_STORAGE_S3_MULTIPARTCOPYTHRESHOLDSIZE
-                            value: "1073741824"
+                            value: "5368709120"
             target:
               kind: Deployment
               name: gitlab-registry
