@@ -1,0 +1,23 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: rekon-veroso-decide
+  includes: [rekon-veroso]
+  tags: [latest]
+  registries:
+    - registry.sko.ai/doudous/rekon/veroso-decide
+    - ghcr.io/veroso-com/rekon-veroso-decide
+  versionFrom: rekon-veroso
+  config: |
+    contents:
+      packages:
+        - openvino
+        - openvino-tokenizers
+        - baselabs-joey-1-bf16
+    entrypoint:
+      command: rekon-veroso
+    vcs-url: https://gitlab.sko.ai/doudous/rekon
+    archs:
+      - amd64
