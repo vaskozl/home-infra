@@ -4,7 +4,7 @@ metadata:
   workspace: doudous
 spec:
   name: rekon-pkgupdate
-  includes: [claude]
+  includes: [claude-rekon]
   tags: [latest]
   registries:
     - registry.sko.ai/doudous/rekon/pkgupdate
@@ -28,3 +28,5 @@ spec:
     entrypoint:
       command: rekon-pkgupdate
     vcs-url: https://gitlab.sko.ai/doudous/rekon
+    archs:
+      - amd64

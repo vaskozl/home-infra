@@ -1,0 +1,31 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: claude-rekon
+  includes: [claude]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/claude-rekon
+  versionFrom: claude
+  config: |
+    contents:
+      packages:
+        - bun
+        - gnupg
+        - kubeconform
+        - kustomize
+        - postgresql-client
+        - redis
+        - redis-cli
+        - sops
+        # veroso's in-process decision model (doudous/rekon#2362); x86_64 only.
+        - openvino
+        - openvino-dev
+        - openvino-tokenizers
+        - baselabs-joey-1-bf16
+    entrypoint:
+      command: claude
+    archs:
+      - amd64
