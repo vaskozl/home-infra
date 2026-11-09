@@ -34,8 +34,7 @@ If something is wrong or missing, fix it temporarily then log an issue with
 Do not create issues in `doudous/apkontainers` for tools or packages missing
 from an agent image. Those images are defined in `doudous/home-infra`. Use
 `cluster/ai/rekon/config/apko-rekon-agent.yaml` for agent image package
-changes (`apko-claude-rekon.yaml` for rekon dev tools shared with the claude-rekon image)
-and `doudous/apkontainers` for new application image recipes.
+changes and `doudous/apkontainers` for new application image recipes.
 
 An issue meant to be implemented is only picked up with both labels
 `workflow::ready for development` and `model::opus`; add them on create
@@ -99,8 +98,7 @@ issue context, not metrics.
   regularly rebuilt for security patches, and we control the contents. If no
   existing application image fits, add a new yaml to `doudous/apkontainers`.
   For tools needed in the agent image, update
-  `cluster/ai/rekon/config/apko-rekon-agent.yaml` (or `apko-claude-rekon.yaml`
-  for tools shared with the claude-rekon image) in `doudous/home-infra` or file an
+  `cluster/ai/rekon/config/apko-rekon-agent.yaml` in `doudous/home-infra` or file an
   issue there.
 - **Backend code**: Write efficient, lean server side templated pages HTML
   sites. Prefer full-page navigation; it's simpler and correct. For cases that
