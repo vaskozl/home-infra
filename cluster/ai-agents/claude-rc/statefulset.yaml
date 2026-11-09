@@ -22,7 +22,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:2.1.319@sha256:d3bea3fb6f1afd6069165182f13191a49504384702b3e7352aa548d060c247b3
+          image: ghcr.io/vaskozl/claude:2.1.319@sha256:0f8cdbbfe45a8b4be14c02489c8f0d38ff8843b5f1532586371a169b64f4acea
           args: [--dangerously-skip-permissions, remote-control]
           workingDir: /home/nonroot/code
           envFrom:
