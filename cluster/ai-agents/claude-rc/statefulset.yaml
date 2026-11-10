@@ -14,6 +14,8 @@ spec:
             value: "1"
       nodeSelector:
         kubernetes.io/arch: amd64
+      imagePullSecrets:
+        - name: regcred
       securityContext:
         runAsUser: 568
         runAsGroup: 568
@@ -22,7 +24,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: claude
-          image: ghcr.io/vaskozl/claude:2.1.319@sha256:6c07c41457efa49e7f8c8a0827947708b6b3115ded376c813587c88d0caef884
+          image: registry.sko.ai/doudous/rekon/agent:0.0.88@sha256:8ef0257bdfbb56d59918dd192d3f347961974d14a1bc09735f62523980dec209
+          command: [claude]
           args: [--dangerously-skip-permissions, remote-control]
           workingDir: /home/nonroot/code
           envFrom:
