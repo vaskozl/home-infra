@@ -8,12 +8,17 @@ my $MAX = 80;
 my $POW = 2;
 
 # Non-dimmable: shellydimmer2-F4CFA2ECAE73
-my @SHELLIES = qw(
+my @GEN1 = qw(
   shellydimmer2-3C6105E44BF8
   shellydimmer2-3C6105E42925
   shellydimmer2-3C6105E34976
-  shellydimmer2-84CCA8AD776A
-  shellydimmer2-F4CFA2ECDC0B
+);
+
+# Gen2+ RPC API
+my @GEN4 = qw(
+  shellydimmerg4-acebe6e9c5b4
+  shellydimmerg4-acebe6e72550
+  shellydimmerg4-acebe6e90158
 );
 
 sub default_brightness {
@@ -28,6 +33,11 @@ sub default_brightness {
 
 my $brightness = $ARGV[0] || default_brightness;
 
-for my $shelly (@SHELLIES){
+for my $shelly (@GEN1){
   get("http://$shelly.sko.ai/light/0?brightness=$brightness");
+}
+
+# Omitting "on" leaves the output state unchanged.
+for my $shelly (@GEN4){
+  get("http://$shelly.sko.ai/rpc/Light.Set?id=0&brightness=$brightness");
 }
