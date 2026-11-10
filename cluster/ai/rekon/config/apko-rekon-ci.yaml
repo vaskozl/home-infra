@@ -35,6 +35,9 @@ spec:
         - tmux
         - onnxruntime
         - ppocrv6-tiny-models
+        - openvino
+        - openvino-tokenizers
+        - baselabs-joey-1-int8
     entrypoint:
       command: /bin/sh
     accounts:
@@ -52,3 +55,5 @@ spec:
       GOFLAGS: -mod=mod
       LANG: C.UTF-8
     vcs-url: https://gitlab.sko.ai/doudous/rekon
+    archs:
+      - amd64
