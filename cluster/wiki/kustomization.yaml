@@ -9,6 +9,10 @@ resources:
   - vmservicescrape.yaml
 components:
   - ../common
+secretGenerator:
+  - name: wiki-env
+    envs:
+      - wiki.enc.env
 configMapGenerator:
   - name: seed
     options:

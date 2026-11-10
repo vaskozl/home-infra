@@ -4,7 +4,16 @@
 apiVersion: v1alpha1
 kind: authproviders
 spec:
-  name: dev
-  type: dev
-  displayName: Dev login
+  name: pi
+  type: oidc
+  displayName: Pocket ID
+  icon: fingerprint
+  issuer: "https://pi.sko.ai"
+  clientId: "b71b9dea-df63-4d76-aba7-cd9ed1912c4f"
+  clientSecretEnv: OIDC_CLIENT_SECRET
+  scopes:
+    - openid
+    - profile
+    - email
+  emailVerifiedRequired: true
   enabled: true

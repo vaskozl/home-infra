@@ -40,6 +40,9 @@ spec:
               - -config
               - /config
               - -v
+            envFrom:
+              - secretRef:
+                  name: wiki-env
             resources:
               limits:
                 memory: 512Mi

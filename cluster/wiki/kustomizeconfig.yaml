@@ -4,3 +4,10 @@ nameReference:
     fieldSpecs:
       - path: spec/values/persistence/seed/name
         kind: HelmRelease
+  - kind: Secret
+    version: v1
+    fieldSpecs:
+      - path: spec/values/controllers/api/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
+      - path: spec/values/controllers/resync/containers/app/envFrom/secretRef/name
+        kind: HelmRelease
