@@ -46,6 +46,8 @@ spec:
         - playerctl
     
         # Audio
+        - alsa-ucm-conf
+        - alsa-utils
         - wireplumber
         - pipewire-full
         - sof-firmware
