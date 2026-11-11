@@ -53,7 +53,7 @@ spec:
               IMMICH_WORKERS_EXCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v3.4.0@sha256:7b7b575029168bfb9eb901d868ce7dbfda0d7818e78aaace29b7b8a08cd4e7d5
+              tag: v3.4.1@sha256:7c489add298fc2f92cda4c777de6462aa206877e04087b815f62c7664af0b53b
             resources:
               limits:
                 memory: 1500Mi
@@ -115,7 +115,7 @@ spec:
               IMMICH_WORKERS_INCLUDE: api
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v3.4.0@sha256:7b7b575029168bfb9eb901d868ce7dbfda0d7818e78aaace29b7b8a08cd4e7d5
+              tag: v3.4.1@sha256:7c489add298fc2f92cda4c777de6462aa206877e04087b815f62c7664af0b53b
             resources:
               limits:
                 memory: 1Gi
