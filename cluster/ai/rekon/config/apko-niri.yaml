@@ -65,6 +65,7 @@ spec:
         - gpg
         - openssh
         - openssh-service
+        - ssh-agent-user
         - openssl
     
         # Rootless containers
@@ -78,6 +79,7 @@ spec:
         - zsh-autosuggestions
         - zsh-history-substring-search
         - zsh-syntax-highlighting
+        - nori-desktop-config
         - bash-completion
         - bash-default-config
     
