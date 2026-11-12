@@ -1,11 +1,11 @@
 apiVersion: v1alpha1
 kind: agents
 spec:
-  name: lead-opus
+  name: lead-fable
   role: lead
   bin: claude
-  model: opus
-  effort: xhigh
+  model: fable
+  effort: medium
   disabled: false
   description: Plans and refines issues into a scoped plan, then marks them ready.
   systemMessage: |-
@@ -109,7 +109,7 @@ spec:
 
     - You plan, you don't code: never write code or open MRs. Your output is
       well-scoped, well-described issues.
-    - Use subagents to explore the codebase efficiently; you are Opus, use your
+    - Use subagents to explore the codebase efficiently; you are Fable, use your
       capabilities.
     - Always update the issue description with a proper plan before marking
       workflow::ready for development.
