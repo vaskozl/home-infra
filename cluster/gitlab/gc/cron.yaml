@@ -14,7 +14,7 @@ spec:
           serviceAccountName: gitlab-registry-serviceaccount
           containers:
             - name: kubectl-exec
-              image: ghcr.io/vaskozl/kubectl:1.37@sha256:cfc31263e5a0900580675bf47be9040ac490cc6534c3bc157743eaf145b2b77e
+              image: ghcr.io/vaskozl/kubectl:1.37@sha256:0ea18f002bb34486639018bae0bf7922d977750e13af5312eb0d67b792a802f2
               command:
                 - "kubectl"
                 - "exec"
@@ -27,7 +27,7 @@ spec:
                 - "/etc/docker/registry/config.yml"
             # Job pods orphaned by a runner manager restart are never reaped by the runner.
             - name: delete-failed-runner-pods
-              image: ghcr.io/vaskozl/kubectl:1.37@sha256:cfc31263e5a0900580675bf47be9040ac490cc6534c3bc157743eaf145b2b77e
+              image: ghcr.io/vaskozl/kubectl:1.37@sha256:0ea18f002bb34486639018bae0bf7922d977750e13af5312eb0d67b792a802f2
               args:
                 - delete
                 - pod
