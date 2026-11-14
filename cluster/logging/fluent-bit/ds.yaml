@@ -9,7 +9,7 @@ spec:
       shareProcessNamespace: true
       containers:
         - name: fluent-bit
-          image: ghcr.io/vaskozl/fluent-bit:5.2.0@sha256:f43dba51beaf54a48085662823da0809df88ccfcdb64eca2e286c1d3ce347cfb
+          image: ghcr.io/vaskozl/fluent-bit:5.2.0@sha256:b014d22ec6420b02b3a1455cbc6d4f800ac7179b759e3d0a880d191bf6240c68
           args: [-c, "/config/fluent-bit.yaml"]
           resources:
             requests:
