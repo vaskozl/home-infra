@@ -46,7 +46,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/agent:0.0.90@sha256:1cf961da8e033028bea68f498716ff14cb19fea09d676e3cf87801f70b00ad83
+        image: registry.sko.ai/doudous/rekon/agent:0.0.90@sha256:f26cd176761acf3a40bbafbff5130dd5eb52be06bbcf120f1aaf8d2f5c8c6ff9
         envFrom:
           - configMapRef:
               name: agent-env
@@ -84,7 +84,7 @@ template:
     initContainers:
       - name: testdb
         restartPolicy: Always
-        image: ghcr.io/vaskozl/postgresql:18.7@sha256:5b4b664d3f2426281fb2cb86e938acc5f6a876ef7df652bde37d8d4daebd84ab
+        image: ghcr.io/vaskozl/postgresql:18.7@sha256:15374420f96add674a341e07940effd5e92f99ee4c88d75be0269a01cbb0839e
         env:
           - name: PGPORT
             value: "15432"
@@ -118,7 +118,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:5a7cec61acea20b85db19570a3eef71d4c58bab319b120bd43ddc00da866fdc8
+        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:b8ec53fa06db55e7fec6434068a0c6cd2ed207a329b6c05738963a1257f5fb9c
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
