@@ -1,0 +1,19 @@
+apiVersion: v1alpha1
+kind: apkoimages
+metadata:
+  workspace: doudous
+spec:
+  name: aws-cli
+  includes: [wolfi-base]
+  tags: [latest]
+  registries:
+    - ghcr.io/vaskozl/aws-cli
+    - docker.io/vszl/aws-cli
+  versionFrom: aws-cli-2
+  config: |
+    contents:
+      packages:
+        - aws-cli-2
+    entrypoint:
+      command: aws
+    vcs-url: https://github.com/aws/aws-cli
