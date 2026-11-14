@@ -23,7 +23,8 @@ spec:
             envFrom:
               - secretRef:
                  name: gitlab-redis-secret
-            args: ["--requirepass", "$(secret)"]
+            # sidekiq-cron only registers jobs at boot: losing redis stops pipeline schedules.
+            args: ["--requirepass", "$(secret)", "--appendonly", "yes", "--save", ""]
             image:
               repository: ghcr.io/vaskozl/redis
               tag: 8.10.3@sha256:c0fcbca595dc9b0ddbf909b8f5387121b4f81ebc9b84fc38db79046931774f1e
@@ -51,8 +52,19 @@ spec:
           podManagementPolicy: Parallel
         type: statefulset
     defaultPodOptions:
+      securityContext:
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
       nodeSelector:
         kubernetes.io/arch: amd64
+    # A standalone PVC: volumeClaimTemplates are immutable on the existing StatefulSet.
+    persistence:
+      data:
+        accessMode: ReadWriteOnce
+        globalMounts:
+          - path: /data
+        size: 1Gi
+        type: persistentVolumeClaim
     service:
       main:
         controller: main
