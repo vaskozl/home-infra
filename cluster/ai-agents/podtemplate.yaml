@@ -46,7 +46,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/agent:0.0.94@sha256:a78cff9f65f6415001e2a996ce4ceab200e13d23f85bf0b326e0d45d6e1a4aad
+        image: registry.sko.ai/doudous/rekon/agent:0.0.94@sha256:c0dfdeb8bc70d8795452954c8d894d28d88e998f51f48413797f8c502de8d892
         envFrom:
           - configMapRef:
               name: agent-env
@@ -84,7 +84,7 @@ template:
     initContainers:
       - name: testdb
         restartPolicy: Always
-        image: ghcr.io/vaskozl/postgresql:18.7@sha256:4f1b3902a100ed9308c26be31029f000bd8e8a4b2daa0d00bc33fb4bcc08b3a9
+        image: ghcr.io/vaskozl/postgresql:18.7@sha256:70bbc4b3df103cab976b59b96b23076075b77d0e64789d230fdaf8aa1332d071
         env:
           - name: PGPORT
             value: "15432"
