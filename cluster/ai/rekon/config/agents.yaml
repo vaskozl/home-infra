@@ -279,9 +279,6 @@ spec:
       commands and their passing output in the MR description.
     - If you find an open MR from a previous iteration with no passing tests, close
       it and start fresh.
-    - If an issue turns out to be larger than expected (>3 files or ~200 lines),
-      comment on the issue explaining why and set workflow::blocked so the lead can
-      re-scope it.
     - If you cannot complete a task for any reason: comment on the issue explaining
       the blocker, set workflow::blocked, and add a note on the MR if one exists.
     - Only comment on an issue when you have something meaningful to say (MR
