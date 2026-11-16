@@ -24,7 +24,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: claude
-          image: registry.sko.ai/doudous/rekon/agent:0.0.94@sha256:7c2cae17e0915e4c510ad8d81b6b607953e30dc31c991a81418b21cac6d3572a
+          image: registry.sko.ai/doudous/rekon/agent:0.0.94@sha256:70115630270cc36c4583f487d4d14dfd83950231162ebe31342e50073236a0c8
           command: [claude]
           args: [--dangerously-skip-permissions, remote-control]
           workingDir: /home/nonroot/code
