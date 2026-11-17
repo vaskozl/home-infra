@@ -46,7 +46,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/agent:0.0.95@sha256:ccfba6521fb89478ae0aee4ebb675a13711cfdba53d896be8524a69b245ba15f
+        image: registry.sko.ai/doudous/rekon/agent:0.0.95@sha256:5aad1c697b328d691d3279e0664b3297794fd794094c85c703395b0f3997684b
         envFrom:
           - configMapRef:
               name: agent-env
@@ -118,7 +118,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:185fbe13784493a2549b0244e8e92e0c98a278370b51675e9dbca339e64f72dc
+        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:53f3952e343b2750481b168f83e2bff0fc821843a2fdc74db7456c26926e0b6a
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
