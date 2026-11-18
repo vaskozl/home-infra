@@ -37,7 +37,7 @@ spec:
             value: "1"
       initContainers:
         - name: sentinel
-          image: &image ghcr.io/vaskozl/redis:8.10.3@sha256:8439316edbbf103960f6eae8d6c6e330edb0e85093d812bc4e44f144a8581a2f
+          image: &image ghcr.io/vaskozl/redis:8.10.3@sha256:b78f5ee1572c9f1652c13dc03ef70bf26e72a61caafe5a419de1957aaad8c1bc
           restartPolicy: Always
           command: ["/usr/local/bin/sentinel.sh"]
           env: &env
