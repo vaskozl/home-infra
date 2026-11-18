@@ -12,7 +12,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: msmtp
-              image: ghcr.io/vaskozl/busybox:latest@sha256:8f41507abdad1d57283edbdce33f442d4e466801a4fd4b002315528542a491f0
+              image: ghcr.io/vaskozl/busybox:latest@sha256:0394ce858619998257b7d16803cb24d2b3599710aefc34eb64cbb328ea4414ed
               env:
                 - name: SMTPHOST
                   value: mx-maddy.mailserver.svc.cluster.local:2225
