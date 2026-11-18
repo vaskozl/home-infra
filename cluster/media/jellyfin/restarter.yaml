@@ -41,5 +41,5 @@ spec:
           serviceAccountName: jellyfin-restart
           containers:
             - name: kubectl
-              image: ghcr.io/vaskozl/kubectl:1.37@sha256:5dc033316b815fbcad7a3831b2e7c1b47864c8c867ef081cc9dc117396bb76c5
+              image: ghcr.io/vaskozl/kubectl:1.37@sha256:b111edf5b0a37308cc2f88507bc96b80f084a3e2de76c6b4c86d19609fb1b3f3
               args: [rollout, restart, sts/jellyfin]
