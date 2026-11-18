@@ -160,7 +160,7 @@ spec:
           exporter:
             image:
               repository: ghcr.io/prometheus-community/postgres-exporter
-              tag: v0.20.1@sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e
+              tag: v0.21.1@sha256:b0ba6fa4d10f8c0a567566058ddd56b5b1063e225631f1703db0bfac07805cb8
             args:
               - --web.listen-address=:9187
               - --collector.stat_checkpointer
