@@ -16,7 +16,7 @@ spec:
             # volume; every cache key bump leaves the old cache.zip behind.
             # Live keys are rewritten on each push, so only abandoned ones age.
             - name: prune
-              image: ghcr.io/vaskozl/busybox:latest@sha256:10a1b52935627f8177c23dbd4c81d3e4fda96a7906b89c2120568625453864f5
+              image: ghcr.io/vaskozl/busybox:latest@sha256:1c9df870568a6ea2bd994065022ec1d754c39cea9594b62ea1a336b09f30bc11
               command:
                 - find
                 - /cache
