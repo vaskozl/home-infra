@@ -118,7 +118,7 @@ template:
             mountPath: /home/nonroot
       - name: chromium
         restartPolicy: Always
-        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:54cc67b42fd740fd8e7551181c9e9f5df2eef3c5c24aef96c15a2c95885180ed
+        image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:a938eb941bc81aa1bfcdb813647c30fcbb05c8277776144dfd83aa228ed9a14a
         args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
         resources:
           limits:
