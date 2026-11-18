@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
             - args: [/script/ci-monitor.pl]
-              image: ghcr.io/vaskozl/perl-mojolicious:9.54@sha256:9ff20a5c926f1e6252e3e22da49f65b945863d199f7b764141793188a68b6262
+              image: ghcr.io/vaskozl/perl-mojolicious:9.54@sha256:313353d5c358924d7412da4e48665cf76cdbfae1e4d7362be562f75bfd5e8c8a
               name: ci-monitor
               env:
                 - name: GITLAB_HOST
