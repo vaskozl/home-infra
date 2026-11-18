@@ -21,7 +21,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
           containers:
             - name: renovate
-              image: ghcr.io/vaskozl/renovate:44.251.0@sha256:e82d18c90805977c73783a81a5f3d0afc670ddc0d173ef7fdd5a8e9d3e92d1bb
+              image: ghcr.io/vaskozl/renovate:44.252.5@sha256:e391a1868daa0385579c647f602fd9c4b60296c319748e93441bfc23c04108b9
               # Environment Variables
               env:
                 - name: LOG_LEVEL
