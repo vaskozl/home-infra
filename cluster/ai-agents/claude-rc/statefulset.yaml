@@ -34,6 +34,8 @@ spec:
           env:
             - name: CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC
               value: ""
+            - name: PGSTORE_TEST_DSN
+              value: postgres://postgres@127.0.0.1:15432/postgres?sslmode=disable
             - name: GITLAB_TOKEN
               valueFrom: {secretKeyRef: {name: rekon-env, key: GITLAB_TOKEN}}
             - name: GITHUB_TOKEN
@@ -63,6 +65,87 @@ spec:
             - name: config
               mountPath: /etc/claude-code/managed-settings.json
               subPath: managed-settings.json
+            - name: screenshots
+              mountPath: /tmp/screenshots
+      initContainers:
+        - name: testdb
+          restartPolicy: Always
+          image: ghcr.io/vaskozl/postgresql:18.7@sha256:24b02d2559bd3df04a9025343fb453f839eaf47ad51016484f388d5e4f86f18a
+          env:
+            - name: PGPORT
+              value: "15432"
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          args:
+            - -c
+            - listen_addresses=127.0.0.1
+            - -c
+            - max_connections=500
+            - -c
+            - fsync=off
+            - -c
+            - synchronous_commit=off
+            - -c
+            - full_page_writes=off
+            - -c
+            - idle_in_transaction_session_timeout=60s
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          securityContext:
+            runAsUser: 70
+            runAsGroup: 70
+            runAsNonRoot: true
+          volumeMounts:
+            - name: rekon-home
+              mountPath: /home/nonroot
+        - name: chromium
+          restartPolicy: Always
+          image: ghcr.io/vaskozl/chromium:157.0.8103.78@sha256:34f3d32e76ac522a56bc43346f772f6fdb5eac4cf3a4f23066ac0908a44a2503
+          args: [--headless, --remote-debugging-port=9222, --user-data-dir=/tmp/chrome]
+          resources:
+            limits:
+              memory: 2Gi
+            requests:
+              cpu: 100m
+              memory: 500Mi
+          volumeMounts:
+            - name: dshm
+              mountPath: /dev/shm
+            - name: rekon-home
+              mountPath: /home/nonroot
+            - name: screenshots
+              mountPath: /tmp/screenshots
+        - name: chrome-devtools-mcp
+          restartPolicy: Always
+          image: ghcr.io/vaskozl/node:latest@sha256:80bfe58ad1c5ff64aeddcfb71686130efcb956f5e88f4ba258414f76d9a50a09
+          command: ["npx"]
+          args:
+            - -y
+            - mcp-proxy@6.5.1
+            - --transport
+            - streamablehttp
+            - --port
+            - "9223"
+            - --
+            - npx
+            - -y
+            - chrome-devtools-mcp@1.1.1
+            - --browserUrl=http://127.0.0.1:9222
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: 50m
+              memory: 600Mi
+          volumeMounts:
+            - name: rekon-home
+              mountPath: /home/nonroot
+            - name: screenshots
+              mountPath: /tmp/screenshots
       volumes:
         - name: rekon-home
           persistentVolumeClaim:
@@ -70,3 +153,9 @@ spec:
         - name: config
           secret:
             secretName: config
+        - name: screenshots
+          emptyDir: {}
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 512Mi
