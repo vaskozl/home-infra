@@ -41,7 +41,7 @@ spec:
     webhook:
       image:
         repository: ghcr.io/vaskozl/cert-manager-webhook
-        tag: 1.20.5@sha256:0145ad0066b4fa6dae04a61dce2bd4a85ed54467535e859566bf6c89f86531ec
+        tag: 1.20.5@sha256:d2835a26fbc4b80dea2477277cec4cbec77822ce685be429511231b1c0104927
     installCRDs: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53
