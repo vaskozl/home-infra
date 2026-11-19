@@ -46,7 +46,7 @@ template:
       fsGroupChangePolicy: OnRootMismatch
     containers:
       - name: agent
-        image: registry.sko.ai/doudous/rekon/agent:0.0.97@sha256:d56df3009a9a6fac0496877ed5f625bb21b5acb9dec8ce9665b5cd627a3d26ab
+        image: registry.sko.ai/doudous/rekon/agent:0.0.97@sha256:fc63f83d4fdf286ce01bb90346f8a0130a1da85ee75158ba6e579fcbdd0e9da9
         envFrom:
           - configMapRef:
               name: agent-env
