@@ -33,7 +33,7 @@ spec:
           app: &api
             image: &image
               repository: registry.sko.ai/doudous/rekon/wiki
-              tag: 0.0.97@sha256:5396c5050add5bdf1f2702ba908f12203d9edd0143794aca0f27f77805f63664
+              tag: 0.0.97@sha256:0f8816e6be53ac4ce7fc2d99c44aa6e1b358828682dad79b420c8ac4fcaeddcb
             args:
               - -db
               - postgres://postgres@wiki-postgres/wiki?sslmode=disable
