@@ -11,7 +11,7 @@ spec:
       serviceAccountName: scanner-sa
       containers:
         - name: scanner-container
-          image: ghcr.io/vaskozl/wolfi-scanner:0.0.4@sha256:770fbe4f59ade884c36747cc4d15205106cffbcc17b64b653fcff3558a7c123c
+          image: ghcr.io/vaskozl/wolfi-scanner:0.0.4@sha256:3dd5b48187a1e31ffa0e57cb89e52f7f67f2dba1e18917a86ade1dc5667b074e
           args: [-image-filter, 'ghcr.io/vaskozl,cgr.dev/']
           ports:
             - name: metrics
