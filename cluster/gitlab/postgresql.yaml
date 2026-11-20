@@ -23,6 +23,7 @@ spec:
             env:
               POSTGRES_USER: postgres
               POSTGRES_DB: gitlabhq_production
+              PGDATA: /var/lib/postgresql/data
               POSTGRES_PASSWORD:
                 secretKeyRef:
                   name: gitlab-postgresql-password
@@ -81,9 +82,9 @@ spec:
       nodeSelector:
         kubernetes.io/arch: amd64
       securityContext:
-        fsGroup: 70
-        runAsGroup: 70
-        runAsUser: 70
+        fsGroup: 999
+        runAsGroup: 999
+        runAsUser: 999
         runAsNonRoot: true
     service:
       main:
