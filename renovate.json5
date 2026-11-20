@@ -1,16 +1,16 @@
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
-    "config:best-practices",
-    ":automergeBranch",
-    ":automergePatch",
-    ":automergeDigest",
-    ":skipStatusChecks",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
-    "group:allDigest",
+    'config:best-practices',
+    ':automergeBranch',
+    ':automergePatch',
+    ':automergeDigest',
+    ':skipStatusChecks',
+    ':disableRateLimiting',
+    ':dependencyDashboard',
+    'group:allDigest',
   ],
-  recreateWhen: "always",
+  recreateWhen: 'always',
   enabledManagers: [
     'custom.regex',
     'flux',
@@ -21,8 +21,12 @@
     'gitlabci',
     'dockerfile',
   ],
-  dependencyDashboardTitle: 'Renovate Dashboard',
-  suppressNotifications: [ 'prIgnoreNotification' ],
+  dependencyDashboard: {
+    title: 'Renovate Dashboard',
+  },
+  suppressNotifications: [
+    'prIgnoreNotification',
+  ],
   commitMessageTopic: '{{depName}}',
   commitMessageExtra: 'to {{newVersion}}',
   ignoreDeps: [
@@ -33,32 +37,51 @@
     'ghcr.io/fluxcd/notification-controller',
     'ghcr.io/fluxcd/source-controller',
   ],
-  flux: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
-  'helm-values': { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
-  kubernetes: { managerFilePatterns: [ '/cluster/.+\\.ya?ml$/' ] },
-  'docker-compose': { managerFilePatterns: [ '/nas/.+\\.ya?ml$/' ] },
+  flux: {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
+  },
+  'helm-values': {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
+  },
+  kubernetes: {
+    managerFilePatterns: [
+      '/cluster/.+\\.ya?ml$/',
+    ],
+  },
+  'docker-compose': {
+    managerFilePatterns: [
+      '/nas/.+\\.ya?ml$/',
+    ],
+  },
   packageRules: [
     {
-      // flux OCIRepository.ref.tag must not carry inline `@sha256:`
-      matchManagers: ['flux'],
+      matchManagers: [
+        'flux',
+      ],
       pinDigests: false,
     },
     {
-      // prometheus-node-exporter subchart's daemonset runs
-      // `semverCompare ">=1.4.0-0" .Values.image.tag`, so the tag must stay
-      // pure semver. The digest is pinned in the separate `image.digest` field.
-      matchPackageNames: ['ghcr.io/vaskozl/prometheus-node-exporter'],
+      matchPackageNames: [
+        'ghcr.io/vaskozl/prometheus-node-exporter',
+      ],
       pinDigests: false,
     },
     {
-      matchDatasources: [ 'helm' ],
+      matchDatasources: [
+        'helm',
+      ],
       commitMessageTopic: 'chart {{depName}}',
     },
     {
-      matchDatasources: [ 'docker' ],
+      matchDatasources: [
+        'docker',
+      ],
       commitMessageTopic: 'image {{depName}}',
     },
-    // Automerge minor for these allowlist
     {
       matchDatasources: [
         'docker',
@@ -74,7 +97,6 @@
       ],
       automerge: true,
     },
-    // Automerge major using dates
     {
       matchDatasources: [
         'docker',
@@ -85,7 +107,8 @@
         'ghcr.io/vaskozl/renovate',
       ],
       matchUpdateTypes: [
-        'major', 'minor',
+        'major',
+        'minor',
       ],
       automerge: true,
     },
@@ -121,44 +144,43 @@
       ],
     },
     {
-      // Major postgres upgrades require data directory migration (pg_upgrade
-      // or dump/restore) and cannot be done via a simple image tag bump.
-      // Block major updates for stateful postgres images; minor/patch still fine.
-      matchDatasources: ['docker'],
+      matchDatasources: [
+        'docker',
+      ],
       matchPackageNames: [
         'ghcr.io/vaskozl/postgresql',
         'ghcr.io/immich-app/postgres',
       ],
-      matchUpdateTypes: ['major'],
+      matchUpdateTypes: [
+        'major',
+      ],
       enabled: false,
     },
     {
-      // fluent-bit 5.0.6 leaks memory on the aggregator's forward->file path:
-      // working set climbs ~5 MiB/h under steady load until the container is
-      // OOMKilled (~30h cycle), whereas 5.0.5 stays bounded (~80 MiB, flat).
-      // Both 5.0.6 Wolfi builds observed (01d40fd and 4540851f) leak, so the
-      // hold spans the whole version, not a single digest. Keep the aggregator
-      // at 5.0.5 until a non-leaking release (5.0.7+) ships. The forwarder
-      // daemonset (ds.yaml) does not hit the leak, so it is unscoped.
-      matchDatasources: ['docker'],
-      matchPackageNames: ['ghcr.io/vaskozl/fluent-bit'],
-      matchFileNames: ['cluster/logging/fluent-aggregator/hr.yaml'],
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/vaskozl/fluent-bit',
+      ],
+      matchFileNames: [
+        'cluster/logging/fluent-aggregator/hr.yaml',
+      ],
       allowedVersions: '<5.0.6',
     },
     {
-      // pocket-id v2.9.0's newer distroless digest (968866bd) is broken; pin to
-      // the known-good digest (e21b1343) by blocking updates until a fixed
-      // release ships.
-      matchDatasources: ['docker'],
-      matchPackageNames: ['ghcr.io/pocket-id/pocket-id'],
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/pocket-id/pocket-id',
+      ],
       enabled: false,
     },
     {
-      // The agentgateway OCI repos contain both legacy kgateway-era v2.x tags
-      // (Feb 2026) and the standalone v1.x lineage (Mar 2026+). Despite v2 > v1,
-      // v1.x is the current line — pin to <2.0.0 to stop Renovate proposing
-      // downgrades to the legacy chart.
-      matchDatasources: ['docker'],
+      matchDatasources: [
+        'docker',
+      ],
       matchPackageNames: [
         'ghcr.io/agentgateway/charts/agentgateway',
         'ghcr.io/agentgateway/charts/agentgateway-crds',
