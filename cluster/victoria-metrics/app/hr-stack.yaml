@@ -53,6 +53,9 @@ spec:
     #     which queue Pending on purpose when the node is full
     #   - RecordingRulesError/AlertingRulesError: re-added in rules/vmalert.yaml with a
     #     threshold; > 0 fires on single datasource connection resets
+    #   - TooHighChurnRate24h: CI runner and agent turn pods each bring a few hundred
+    #     fresh per-pod series, so 24h churn swings 1-4x active series with CI volume;
+    #     TooHighChurnRate and TooHighSlowInsertsRate still catch churn that hurts vmsingle
     # Control-plane rule groups (apiserver/scheduler/controller-manager) are
     # disabled: the kube*.enabled toggles below only gate scraping and dashboards,
     # not the sync-job rule sources, so these groups get created and their
@@ -98,6 +101,8 @@ spec:
         RecordingRulesError:
           create: false
         AlertingRulesError:
+          create: false
+        TooHighChurnRate24h:
           create: false
         "instance:node_load1_per_cpu:ratio":
           create: false
