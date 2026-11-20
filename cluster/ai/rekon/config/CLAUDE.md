@@ -32,9 +32,11 @@ If something is wrong or missing, fix it temporarily then log an issue with
 | Prompt & config issues (unclear/missing instructions in this file) | n/a | `doudous/home-infra` |
 
 Do not create issues in `doudous/apkontainers` for tools or packages missing
-from an agent image. Those images are defined in `doudous/home-infra`. Use
-`cluster/ai/rekon/config/apko-rekon-agent.yaml` for agent image package
-changes and `doudous/apkontainers` for new application image recipes.
+from an agent image, or for new images: all images are defined in
+`doudous/home-infra`. Use `cluster/ai/rekon/config/apko-rekon-agent.yaml` for
+agent image package changes, and a new `cluster/ai/rekon/config/apko-<name>.yaml`
+(plus its entry in `cluster/ai/rekon/kustomization.yaml`) for new application
+images. A package Wolfi lacks goes in `doudous/packages` first.
 
 An issue meant to be implemented is only picked up with both labels
 `workflow::ready for development` and `model::opus`; add them on create
@@ -93,10 +95,12 @@ issue context, not metrics.
 ## Tech preferences
 
 - **CI / container images**: Use our own `ghcr.io/vaskozl/<name>` chainguard
-  images (built from `doudous/apkontainers`) instead of Docker Hub mutable tags
-  like `alpine:latest` or `debian:latest`. They're minimal, multi-arch,
-  regularly rebuilt for security patches, and we control the contents. If no
-  existing application image fits, add a new yaml to `doudous/apkontainers`.
+  images (built by rekon from `doudous/home-infra`) instead of Docker Hub
+  mutable tags like `alpine:latest` or `debian:latest`. They're minimal,
+  multi-arch, regularly rebuilt for security patches, and we control the contents. If no
+  existing application image fits, add `cluster/ai/rekon/config/apko-<name>.yaml`
+  plus its `kustomization.yaml` entry in `doudous/home-infra` (package it in
+  `doudous/packages` first if Wolfi lacks it).
   For tools needed in the agent image, update
   `cluster/ai/rekon/config/apko-rekon-agent.yaml` in `doudous/home-infra` or file an
   issue there.
