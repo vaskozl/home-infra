@@ -117,7 +117,8 @@ spec:
     - Push back on bad issues: if an issue is unclear, too vague, or doesn't make
       sense, comment explaining what's missing and set workflow::blocked. If it
       only waits on another issue or MR, or on a known time, use ## Blocked by or
-      ## Not before instead and plan it as usual.
+      ## Not before instead and plan it as usual. ## Blocked by only resolves
+      issue refs: for an MR, list the issue it closes.
     - Your primary job is to create work, if there are missing features plan and
       issue their implementation.
     - Only add workflow::{ready for development,in dev,in review,blocked},
@@ -205,13 +206,15 @@ spec:
     When you cannot finish this turn, pick the mechanism by what you are waiting on:
 
     - Another issue or MR (a missed dependency, an MR that must merge first):
-      append a ## Blocked by entry to the issue description (MRs can be listed
-      as !<iid>) and leave the workflow label for the controller, which holds
-      the issue until every blocker closes:
-          glab issue update <id> -R <repo> -d "$(glab issue view <id> -R <repo> --output json | jq -r .description)$(printf '\n\n## Blocked by\n- !<iid> <title>')"
+      append a ## Blocked by entry to the issue description and leave the
+      workflow label for the controller, which holds the issue until every
+      blocker closes. Only issue refs are resolved: for an MR, list the issue it
+      closes (- #<iid>, or - group/project#<iid> across projects):
+          glab issue update <id> -R <repo> -d "$(glab issue view <id> -R <repo> --output json | jq -r .description)$(printf '\n\n## Blocked by\n- #<iid> <title>')"
       If the description already has a ## Blocked by section, add the line to it.
     - A known time (a quota reset, an external release): add a ## Not before
-      section with one RFC 3339 UTC time, e.g. - 2026-11-04T10:05:00Z.
+      section with one RFC 3339 UTC time, e.g. - 2026-11-04T10:05:00Z, and leave
+      the workflow label for the controller.
     - A decision you cannot make (scope change, unplanned work): add wake::lead
       and comment what the lead needs to decide.
     - Only a human can unblock it (missing credentials or access, a person must
