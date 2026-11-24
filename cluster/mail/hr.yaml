@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/maddy
-              tag: 0.9.6@sha256:ff3749e933ed826e9403864c05c00229ed8bc1fa62fde690e0fef3e2b7eb165b
+              tag: 0.9.6@sha256:fd978b0ca9dbf16973b5b6bac9212a130d8add6741e1451b9f67cbf751709032
             envFrom:
               - secretRef:
                   name: maddy-secrets
@@ -64,7 +64,7 @@ spec:
           app:
             image:
               repository: ghcr.io/vaskozl/alps
-              tag: 1@sha256:1a058ea9c12f0949910ea17b35a9477075e0f2331293a0fb7bd5b0f31777ea3e
+              tag: 1@sha256:beb5e1dc23507c48e1fa6c7d2ab16ceb1666370d4b5574de6a17f8e0e3e023c2
             args:
               - -config
               - /etc/alps/alps.toml

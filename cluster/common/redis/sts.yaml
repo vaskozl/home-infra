@@ -37,7 +37,7 @@ spec:
             value: "1"
       initContainers:
         - name: sentinel
-          image: &image ghcr.io/vaskozl/redis:8.10.3@sha256:555ec6cd4c35efeac5bdbe0ea6e4003018d95e0f3c20617e0d7ebfdb13ffe244
+          image: &image ghcr.io/vaskozl/redis:8.10.3@sha256:0b213eb91fdf4da47066fa689e7ec27f87b4d339f3f8006865b0547c552d12b1
           restartPolicy: Always
           command: ["/usr/local/bin/sentinel.sh"]
           env: &env
@@ -80,7 +80,7 @@ spec:
             - name: run-redis
               mountPath: /run/redis
         - name: labeler
-          image: ghcr.io/vaskozl/kubectl:1.37@sha256:c44cfdbd310a3bd0bb554d29c081d0383ef8f1ff29eb10b942e5074c5137c55c
+          image: ghcr.io/vaskozl/kubectl:1.37@sha256:3bbddaff1e73d76f428d3f62e7d786586f50ec58b080d8998dde07d2d19c80ed
           restartPolicy: Always
           command: ["/usr/local/bin/update-master-label.sh"]
           env: *env
