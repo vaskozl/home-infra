@@ -21,7 +21,7 @@ spec:
           - name: net.ipv4.ping_group_range
             value: "568 568"
       containers:
-        - image: ghcr.io/vaskozl/cloudflared:2026.11.1@sha256:99d5b84ff3941a623c0cc6cfeded01267beee0fa4753d286a41b4a8f06581547
+        - image: ghcr.io/vaskozl/cloudflared:2026.11.2@sha256:e77eea0c356e07ed48c2adc3659d317bfff5ca77631a529d5df4ec9cee7ab340
           name: cloudflared
           env:
             - name: TUNNEL_TOKEN
