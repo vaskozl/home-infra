@@ -115,10 +115,12 @@ spec:
       workflow::ready for development.
     - Always set model::opus.
     - Push back on bad issues: if an issue is unclear, too vague, or doesn't make
-      sense, comment explaining what's missing and set workflow::blocked.
+      sense, comment explaining what's missing and set workflow::blocked. If it
+      only waits on another issue or MR, or on a known time, use ## Blocked by or
+      ## Not before instead and plan it as usual.
     - Your primary job is to create work, if there are missing features plan and
       issue their implementation.
-    - Only add workflow::{ready for development,in dev,in review},
+    - Only add workflow::{ready for development,in dev,in review,blocked},
       model::opus, wake::lead, and claude::ignore labels.
 ---
 apiVersion: v1alpha1
@@ -151,7 +153,7 @@ spec:
     | workflow::ready for development | Available for an agent to pick up. Applies to MRs too: an MR carrying it is unclaimed. |
     | workflow::in dev | Agent is actively working on it. |
     | workflow::in review | MR ready for human review. |
-    | workflow::blocked | Agent is stuck, needs human help. |
+    | workflow::blocked | A human must act (credentials, access, a decision only a person can make). Not for waits: see "Waits and blockers". |
     | wake::lead | Scoped. Flag an issue for the lead to re-plan. Use when you hit something outside the plan (missing prerequisite, unplanned dependency, scope change): leave a comment explaining what the lead needs to decide. |
 
     Approvals are tracked via GitLab's native MR approval (glab mr approve), not a
@@ -198,8 +200,25 @@ spec:
     Issues are planned by a separate planner agent: read the planning comment on
     the issue for context on affected files, approach, and acceptance criteria.
 
-    Dependency check: If you discover a missed dependency during implementation,
-    comment explaining the blocker, set workflow::blocked, and stop.
+    ### Waits and blockers
+
+    When you cannot finish this turn, pick the mechanism by what you are waiting on:
+
+    - Another issue or MR (a missed dependency, an MR that must merge first):
+      append a ## Blocked by entry to the issue description (MRs can be listed
+      as !<iid>) and leave the workflow label for the controller, which holds
+      the issue until every blocker closes:
+          glab issue update <id> -R <repo> -d "$(glab issue view <id> -R <repo> --output json | jq -r .description)$(printf '\n\n## Blocked by\n- !<iid> <title>')"
+      If the description already has a ## Blocked by section, add the line to it.
+    - A known time (a quota reset, an external release): add a ## Not before
+      section with one RFC 3339 UTC time, e.g. - 2026-11-04T10:05:00Z.
+    - A decision you cannot make (scope change, unplanned work): add wake::lead
+      and comment what the lead needs to decide.
+    - Only a human can unblock it (missing credentials or access, a person must
+      act): comment explaining what they must do and set workflow::blocked.
+
+    Comment on the issue with what you are waiting on, and add a note on the MR if
+    one exists.
 
     ### Do the work
 
@@ -279,8 +298,8 @@ spec:
       commands and their passing output in the MR description.
     - If you find an open MR from a previous iteration with no passing tests, close
       it and start fresh.
-    - If you cannot complete a task for any reason: comment on the issue explaining
-      the blocker, set workflow::blocked, and add a note on the MR if one exists.
+    - If you cannot complete a task: handle it as described in "Waits and
+      blockers".
     - Only comment on an issue when you have something meaningful to say (MR
       opened, blocked, done).
 
@@ -337,7 +356,8 @@ spec:
       workflow::in review (see "Uploading image evidence" in CLAUDE.md).
       This applies to all web MRs: new work and feedback responses alike.
     - Always use GitLab issues as your cross-iteration memory and questions.
-    - If stuck: comment explaining the blocker, set workflow::blocked, and move on.
+    - If stuck: follow "Waits and blockers" (## Blocked by, ## Not before,
+      wake::lead, or workflow::blocked only when a human must act) and move on.
 ---
 apiVersion: v1alpha1
 kind: agents
