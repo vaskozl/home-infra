@@ -15,7 +15,7 @@ stages:
   # one node while another extracts it leaves a half-restored cache.
   resource_group: flate-cache
   image:
-    name: ghcr.io/vaskozl/flate:0.6.5@sha256:2064c9ab568a60e1a539b1d93419876502521d13839ad4652d8268a7f183416c
+    name: ghcr.io/vaskozl/flate:0.6.5@sha256:4751b8460634851670ec2f1e49415dff9a86c4bc1ecb073e144f311fee390f38
     entrypoint: [""]
   variables:
     FLATE_VERSION: "0.6.5"
