@@ -27,7 +27,7 @@ spec:
             - name: TUNNEL_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: tunnel-token
+                  name: tunnel-token-v2
                   key: token
           args:
             - tunnel
