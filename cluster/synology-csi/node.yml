@@ -85,7 +85,7 @@ spec:
         securityContext:
           privileged: true
         imagePullPolicy: IfNotPresent
-        image: ghcr.io/vaskozl/synology-csi:1.4.0@sha256:cd48be7efc0ad6caa199c714f96362d9b51505168fda434822c8c3a410542b95
+        image: ghcr.io/vaskozl/synology-csi:1.4.0@sha256:63d6a5d639c1468655add0c50fcff7cefafea2869fa9366541636ef001a36361
         args:
         - --nodeid=$(KUBE_NODE_NAME)
         - --endpoint=$(CSI_ENDPOINT)
