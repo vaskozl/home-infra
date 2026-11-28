@@ -30,7 +30,7 @@ spec:
                   key: postgresql-postgres-password
             image:
               repository: pgautoupgrade/pgautoupgrade
-              tag: 18.7-debian@sha256:7756696883b4fede08b0fe0121c90a219505312dea453536b803cc034c18aa52
+              tag: 18.7-debian@sha256:84195717c5f3ff0de2b9c0c4744a269fbe31a893c2fc4ae21136e689ffe4cd52
             probes:
               # Generous liveness margin: a saturated node makes pg_isready slow,
               # and restarting postgres never fixes an I/O stall.
